@@ -1,8 +1,9 @@
 {
-  "name": "project-name",
+  "name": "auslan-fronend",
   "version": "0.0.0",
   "license": "MIT",
   "angular-cli": {},
+  "engines" : { "node" : ">=7.1.2" },
   "scripts": {
     "start": "ng serve",
     "lint": "tslint \"src/**/*.ts\"",
@@ -32,9 +33,10 @@
     "angular-cli": "1.0.0-beta.22-1",
     "codelyzer": "~2.0.0-beta.1",
     "jasmine-core": "2.5.2",
+    "phantomjs":"2.1.7",
     "jasmine-spec-reporter": "2.5.0",
     "karma": "1.2.0",
-    "karma-chrome-launcher": "^2.0.0",
+    "karma-phantomjs-launcher": "~0.1",
     "karma-cli": "^1.0.1",
     "karma-jasmine": "^1.0.2",
     "karma-remap-istanbul": "^0.2.1",
