@@ -5,7 +5,7 @@
   "angular-cli": {},
   "engines" : { "node" : ">=7.1.2" },
   "scripts": {
-    "start": "ng serve",
+    "start": "gem install bundler && bundle install && ng serve",
     "lint": "tslint \"src/**/*.ts\"",
     "test": "ng test",
     "pree2e": "webdriver-manager update",

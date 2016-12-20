@@ -1,5 +1,14 @@
 # AUSLAN BOOKING SYSTEM - FRONTEND
 
+Install pack-mock-service by
+bower install pact-consumer-js-dsl --save-dev
+
+Start pack-mock-service
+bundle exec pact-mock-service -p 1234 --pact-specification-version 2.0.0 -l log/pact.logs --pact-dir tmp/pacts
+
+Stop pack-mock-service
+bundle exec pact-mock-service stop -p 1234
+
 
 This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.22-1.
 

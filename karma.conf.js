@@ -12,6 +12,7 @@ module.exports = function (config) {
       require('angular-cli/plugins/karma')
     ],
     files: [
+	bower_components/pact-consumer-js-dsl/dist/web/pact-consumer-js-dsl.js,
       { pattern: './src/test.ts', watched: false }
     ],
     preprocessors: {
@@ -37,7 +38,15 @@ module.exports = function (config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['PhantomJS'],
+browsers: ['PhantomJS_without_security'],
+   customLaunchers: {
+      PhantomJS_without_security: {
+        base: 'PhantomJS',
+        flags: ['--web-security=false']
+      }
+   }
+    ,
+
     singleRun: false
   });
 };
