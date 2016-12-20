@@ -1,0 +1,9 @@
+machine:
+  node:
+    version: 7.0.0
+
+test:
+  override:
+    - npm run lint
+    - ng test --watch=false
+
