@@ -1,5 +1,10 @@
 # AUSLAN BOOKING SYSTEM - FRONTEND
 
+[![CircleCI](https://circleci.com/bb/curvetomorrow/booking-system-frontend/tree/master.svg?style=svg)](https://circleci.com/bb/curvetomorrow/booking-system-frontend/tree/master)
+[![Code Climate](https://codeclimate.com/repos/5858b42d43c09c72c3000c29/badges/c9005dc4d8c9a34aaa8d/gpa.svg)](https://codeclimate.com/repos/5858b42d43c09c72c3000c29/feed)
+[![Test Coverage](https://codeclimate.com/repos/5858b42d43c09c72c3000c29/badges/c9005dc4d8c9a34aaa8d/coverage.svg)](https://codeclimate.com/repos/5858b42d43c09c72c3000c29/coverage)
+[![Issue Count](https://codeclimate.com/repos/5858b42d43c09c72c3000c29/badges/c9005dc4d8c9a34aaa8d/issue_count.svg)](https://codeclimate.com/repos/5858b42d43c09c72c3000c29/feed)
+
 ##PACK DEPENDENCY
 Install pack-mock-service by
 bower install pact-consumer-js-dsl --save-dev
