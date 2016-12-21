@@ -9,7 +9,6 @@ bundle exec pact-mock-service -p 1234 --pact-specification-version 2.0.0 -l log/
 Stop pack-mock-service
 bundle exec pact-mock-service stop -p 1234
 
-
 This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.22-1.
 
 ## Development server
