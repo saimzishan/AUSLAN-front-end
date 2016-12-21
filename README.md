@@ -1,5 +1,6 @@
 # AUSLAN BOOKING SYSTEM - FRONTEND
 
+##PACK DEPENDENCY
 Install pack-mock-service by
 bower install pact-consumer-js-dsl --save-dev
 
