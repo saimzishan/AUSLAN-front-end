@@ -7,3 +7,12 @@ test:
     - npm run lint
     - ng test --watch=false
 
+deployment:
+  development:
+    branch: master
+    commands:
+      - aws s3 sync dist/* s3://auslan/prod/booking-app/ --delete
+  prod:
+    branch: master
+    commands:
+      - aws s3 sync dist/* s3://auslan/dev/booking-app/ --delete
