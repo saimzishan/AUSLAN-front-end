@@ -8,11 +8,11 @@ test:
     - ng test --watch=false
 
 deployment:
-  development:
-    branch: master
-    commands:
-      - aws s3 sync dist/* s3://auslan/prod/booking-app/ --delete
   prod:
     branch: master
     commands:
-      - aws s3 sync dist/* s3://auslan/dev/booking-app/ --delete
+      -  aws s3 sync dist/  s3://auslan-booking-system/prod/booking-app/ --delete
+  stagging:
+    branch: dev-master
+    commands:
+      -  aws s3 sync dist/  s3://auslan-booking-system/development/booking-app/ --delete

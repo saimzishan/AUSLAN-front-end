@@ -5,6 +5,13 @@
 [![Test Coverage](https://codeclimate.com/repos/5858b42d43c09c72c3000c29/badges/c9005dc4d8c9a34aaa8d/coverage.svg)](https://codeclimate.com/repos/5858b42d43c09c72c3000c29/coverage)
 [![Issue Count](https://codeclimate.com/repos/5858b42d43c09c72c3000c29/badges/c9005dc4d8c9a34aaa8d/issue_count.svg)](https://codeclimate.com/repos/5858b42d43c09c72c3000c29/feed)
 
+##LAZYLOADING BUG && ANGULAR_CLI VERSION DEPENDENCY
+angular-cli@1.0.0-beta.24 has been used due to following issue https://github.com/angular/angular-cli/issues/3662
+ `npm install -g angular-cli@1.0.0-beta.24`
+
+ as well as 2.4.0 @angular\compiler version
+
+
 ##PACK DEPENDENCY
 Install pack-mock-service by
 bower install pact-consumer-js-dsl --save-dev
