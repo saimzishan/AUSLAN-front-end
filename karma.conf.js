@@ -9,10 +9,11 @@ module.exports = function (config) {
       require('karma-jasmine'),
       require('karma-phantomjs-launcher'),
       require('karma-remap-istanbul'),
-      require('angular-cli/plugins/karma')
+      require('angular-cli/plugins/karma'),
+      require('pact-consumer-js-dsl')
     ],
     files: [
-	./node_modules/pact-consumer-js-dsl/dist/web/pact-consumer-js-dsl.js,
+	//node_modules/pact-consumer-js-dsl/dist/web/pact-consumer-js-dsl.js,
       { pattern: './src/test.ts', watched: false }
     ],
     preprocessors: {
