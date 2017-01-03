@@ -11,8 +11,10 @@ deployment:
   prod:
     branch: master
     commands:
-      -  aws s3 sync dist/  s3://auslan-booking-system/prod/booking-app/ --delete
+      - ng build --target=production
+      - aws s3 sync dist/  s3://auslan-booking-system/prod/booking-app/ --delete
   stagging:
     branch: dev-master
     commands:
-      -  aws s3 sync dist/  s3://auslan-booking-system/development/booking-app/ --delete
+      - ng build --target=development
+      - aws s3 sync dist/  s3://auslan-booking-system/development/booking-app/ --delete
