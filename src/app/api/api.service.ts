@@ -17,7 +17,7 @@ export class ApiService {
 		var headers = new Headers();
 		headers.append('Content-Type', 'application/json');
 
-    var newUser = new User('Admin1', 'Joe Doe', 'this is very secure password','this is very secure password', Role.SHITTY_DEVELOPER);
+    var newUser = new User('Admin1', 'Joe Doe', 'this is very secure password','this is very secure password', ROLE.SHITTY_DEVELOPER);
 
 		this.http
 			.post('http://localhost:8080/api/user', JSON.stringify(newUser), headers)
