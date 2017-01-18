@@ -5,7 +5,7 @@ import {MockBackend} from '@angular/http/testing';
 
 import { ApiService } from './api/api.service';
 import {User} from './shared/model/user.entity'
-
+import {ROLE} from './shared/model/role.enum'
 
 // globally loaded lodash
 declare let _: any;
@@ -19,7 +19,7 @@ export class AppComponent {
   title = 'app works!';
 
   private mock_db: User[] = [
-    new User('admin@aus.au', 'Jane Doe', 'mockme', 'mockme', )
+    new User('admin@aus.au', 'Jane Doe', 'mockme', 'mockme', ROLE.SITE_ADMIN )
   ];
 
   constructor(private service: ApiService, private backend: MockBackend)

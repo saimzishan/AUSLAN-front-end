@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import {Http, Headers} from '@angular/http';
-//import 'rxjs/add/operator/map';
 import {User} from '../shared/model/user.entity'
+import {ROLE} from '../shared/model/role.enum'
+import 'rxjs/add/operator/map';
 
 
 @Injectable()
@@ -16,7 +17,7 @@ export class ApiService {
 		var headers = new Headers();
 		headers.append('Content-Type', 'application/json');
 
-    var newUser = new User('Admin1', 'Joe Doe', 'this is very secure password','this is very secure password');
+    var newUser = new User('Admin1', 'Joe Doe', 'this is very secure password','this is very secure password', Role.SHITTY_DEVELOPER);
 
 		this.http
 			.post('http://localhost:8080/api/user', JSON.stringify(newUser), headers)
