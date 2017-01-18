@@ -2,7 +2,8 @@
 
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
-import {GLOBAL} from './shared/global'
+import {GLOBAL} from './shared/global';
+
 describe('AppComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({

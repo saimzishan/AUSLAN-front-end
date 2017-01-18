@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Http,HttpModule, BaseRequestOptions } from '@angular/http';
+import { Http, HttpModule, BaseRequestOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
 
 import { AppComponent } from './app.component';
