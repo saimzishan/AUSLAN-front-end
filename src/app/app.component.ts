@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import {Response, ResponseOptions} from '@angular/http';
 import {MockBackend} from '@angular/http/testing';
 
-
 import { ApiService } from './api/api.service';
 import {User} from './shared/model/user.entity'
 import {ROLE} from './shared/model/role.enum'
+import {GLOBAL} from './shared/global'
 
 // globally loaded lodash
 declare let _: any;
@@ -16,7 +16,7 @@ declare let _: any;
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app works!';
+  title = GLOBAL.TITLE + GLOBAL.VERSION;
 
   private mock_db: User[] = [
     new User('admin@aus.au', 'Jane Doe', 'mockme', 'mockme', ROLE.SITE_ADMIN )
@@ -24,13 +24,14 @@ export class AppComponent {
 
   constructor(private service: ApiService, private backend: MockBackend)
   {
+    //As per prophecy, one day a hero will rise and complete the API part, so we should be keeping this till then
     this.backend.connections.subscribe( c => {
 
-        let singleUserMatcher = /\/api\/User\/([0-9]+)/i;
+        let singleUserMatcher = /\/api\/v1\/User\/([0-9]+)/i;
 
         // return all Users
         // GET: /User
-        if (c.request.url === "http://localhost:8080/api/user" && c.request.method === 0) {
+        if (c.request.url === GLOBAL.USER_API && c.request.method === 0) {
           let res = new Response(new ResponseOptions({
             body: JSON.stringify(this.mock_db)
           }));
@@ -50,7 +51,7 @@ export class AppComponent {
         }
         // Add or update a User
         // POST: /User
-        else if (c.request.url === 'http://localhost:8080/api/user' && c.request.method === 1) {
+        else if (c.request.url === GLOBAL.USER_API && c.request.method === 1) {
           let newUser: User = JSON.parse(c.request._body);
 
           let existingUser = this.mock_db.filter( (u: User) => { return u._id == newUser._id});

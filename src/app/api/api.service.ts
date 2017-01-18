@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import { Injectable } from '@angular/core'
+import {Http, Headers} from '@angular/http'
 import {User} from '../shared/model/user.entity'
 import {ROLE} from '../shared/model/role.enum'
+import {GLOBAL} '../shared/global'
 import 'rxjs/add/operator/map';
 
 
@@ -9,18 +10,16 @@ import 'rxjs/add/operator/map';
 export class ApiService {
 
   users: User[] = [];
-  constructor(private http: Http) {
-
+  constructor(private http: Http, private headers: Headers) {
+    headers.append('Content-Type', 'application/json');
 	}
 
 	addNewUser() {
-		var headers = new Headers();
-		headers.append('Content-Type', 'application/json');
 
-    var newUser = new User('Admin1', 'Joe Doe', 'this is very secure password','this is very secure password', ROLE.SHITTY_DEVELOPER);
+    let newUser = new User('Admin1', 'Joe Doe', 'this is very secure password','this is very secure password', ROLE.SHITTY_DEVELOPER);
 
 		this.http
-			.post('http://localhost:8080/api/user', JSON.stringify(newUser), headers)
+			.post(GLOBAL.USER_API, JSON.stringify(newUser), this.headers)
 			.map(res => res.json())
 			.subscribe(
 				data => this.users.push(data),
@@ -29,12 +28,9 @@ export class ApiService {
 			);
 	}
 
-	saveUser(user: User) {
-		var headers = new Headers();
-		headers.append('Content-Type', 'application/json');
-
-		this.http
-			.post('http://localhost:8080/api/user', JSON.stringify(user), headers)
+	editUser(user: User) {
+			this.http
+			.post(GLOBAL.USER_API, JSON.stringify(user), this.headers)
 			.map(res => res.json())
 			.subscribe(
 				null,
@@ -45,7 +41,7 @@ export class ApiService {
 
 	deleteUser(user: User) {
 		this.http
-			.delete('http://localhost:8080/api/user/' + user._id)
+			.delete(GLOBAL.USER_API + user._id)
 			.map(res => res.text())
 			.subscribe(
 				data => {
@@ -66,7 +62,7 @@ export class ApiService {
 
 	loadAllUsers() {
 		this.http
-			.get('http://localhost:8080/api/user')
+			.get(GLOBAL.USER_API)
 			.map(res => {
         return res.json()
       })
@@ -81,7 +77,7 @@ export class ApiService {
 
   loadUserById(id) {
     this.http
-      .get('http://localhost:8080/api/user/' + id)
+      .get(GLOBAL.USER_API + id)
       .map(res => res.json())
       .subscribe(
         data => this.users = [data],
