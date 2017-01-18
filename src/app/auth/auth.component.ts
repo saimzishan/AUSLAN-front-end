@@ -5,7 +5,9 @@ import {User} from '../shared/model/user.entity'
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
-  styleUrls: ['./auth.component.css']
+  styleUrls: ['./auth.component.css'],
+  providers: [ApiService] //<-- this would override the parent DI instance
+
 })
 export class AuthComponent implements OnInit {
   @Input('user') u: User;
