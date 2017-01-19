@@ -1,11 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Http, HttpModule, BaseRequestOptions } from '@angular/http';
-import { MockBackend } from '@angular/http/testing';
-
+import { HttpModule, BaseRequestOptions } from '@angular/http';
 import { AppComponent } from './app.component';
 import { AuthComponent } from './auth/auth.component';
+import { ApiService } from './api/api.service';
+
 
 @NgModule({
   declarations: [
@@ -16,15 +16,8 @@ import { AuthComponent } from './auth/auth.component';
     BrowserModule,
     FormsModule,
     HttpModule
-  ],
-  providers: [
-    BaseRequestOptions,
-     MockBackend,
-     {
-       provide: Http,
-       deps: [MockBackend, BaseRequestOptions],
-       useFactory: (backend, options) => { return new Http(backend, options); }
-     }],
-  bootstrap: [AppComponent]
+  ],  providers: [ApiService],
+
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

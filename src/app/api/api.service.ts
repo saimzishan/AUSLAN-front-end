@@ -9,9 +9,10 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class ApiService {
 
+  private headers = new Headers();
   users: User[] = [];
-  constructor(private http: Http, private headers: Headers) {
-    headers.append('Content-Type', 'application/json');
+  constructor(private http: Http) {
+    this.headers.append('Content-Type', 'application/json');
 	}
 
 	addNewUser() {

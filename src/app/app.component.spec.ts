@@ -1,15 +1,39 @@
 /* tslint:disable:no-unused-variable */
 
-import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import {GLOBAL} from './shared/global';
+import { AuthComponent } from './auth/auth.component';
+import { ApiService } from './api/api.service';
+import { MockBackend, MockConnection } from '@angular/http/testing';
+import {
+    ResponseOptions,
+    Response,
+    Http,
+    BaseRequestOptions,
+    RequestMethod
+} from '@angular/http';
+
+import {
+    TestBed, fakeAsync, async, inject
+} from '@angular/core/testing';
+
+const mockHttpProvider = {
+    deps: [ MockBackend, BaseRequestOptions ],
+    useFactory: (backend: MockBackend, defaultOptions: BaseRequestOptions) => {
+        return new Http(backend, defaultOptions);
+    }
+};
 
 describe('AppComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [
-        AppComponent
-      ],
+        AppComponent,
+        AuthComponent
+      ], providers: [
+        { provide: Http, useValue: mockHttpProvider },
+        MockBackend,
+        BaseRequestOptions, ApiService]
     });
     TestBed.compileComponents();
   });
@@ -30,6 +54,6 @@ describe('AppComponent', () => {
     let fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     let compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('app works!');
+    expect(compiled.querySelector('h1').textContent).toContain(GLOBAL.TITLE);
   }));
 });

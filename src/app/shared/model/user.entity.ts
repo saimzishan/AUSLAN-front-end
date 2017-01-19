@@ -6,5 +6,4 @@ export class User {
       private password: string, private confirm_password: string, private role: ROLE ) {
       this._id++;
     }
-
 }
