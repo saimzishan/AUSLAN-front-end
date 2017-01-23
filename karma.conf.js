@@ -10,7 +10,12 @@ module.exports = function (config) {
       require('karma-phantomjs-launcher'),
       require('karma-remap-istanbul'),
       require('angular-cli/plugins/karma'),
-      require('pact-consumer-js-dsl')
+      require('pact-consumer-js-dsl'),
+      require('karma-chrome-launcher'),
+      require('karma-safari-launcher'),
+      require('karma-safaritechpreview-launcher'),
+      require('karma-firefox-launcher')
+
     ],
     files: [
 	//node_modules/pact-consumer-js-dsl/dist/web/pact-consumer-js-dsl.js,
@@ -39,11 +44,15 @@ module.exports = function (config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-browsers: ['PhantomJS_without_security'],
+browsers: ['PhantomJS_without_security','Chrome', 'Chrome_without_security'],
    customLaunchers: {
       PhantomJS_without_security: {
         base: 'PhantomJS',
         flags: ['--web-security=false']
+      },
+      Chrome_without_security: {
+        base: 'Chrome',
+        flags: ['--disable-web-security']
       }
    }
     ,

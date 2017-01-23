@@ -1,9 +1,29 @@
 import {ROLE} from './role.enum';
 
 export class User {
-    public _id: number = 0; // We need this only to mocking backend
-    constructor(private email: string, private name: string,
-      private password: string, private confirm_password: string, private role: ROLE ) {
-      this._id++;
+
+    constructor(public _id: number, private _email: string, private _name: string,
+        private _pass: string, private _confirm_pass: string, private _role: ROLE) {
+    }
+
+    get id() { return this._id; }
+
+
+    get email() { return this._email; }
+    get name() { return this._name; }
+    get pass() { return this._pass; }
+    get role() { return this._role; }
+
+    set email(val: string) {
+        this._email = val;
+    }
+    set name(val: string) {
+        this._name = val;
+    }
+    set pass(val: string) {
+        this._pass = val;
+    }
+    set role(val: ROLE) {
+        this._role = val;
     }
 }
