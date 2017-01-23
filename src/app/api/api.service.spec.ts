@@ -20,13 +20,13 @@ import {
     TestBed, fakeAsync, inject, ComponentFixture, async
 } from '@angular/core/testing';
 
-const mockHttpProvider =
-    {
+const mockHttpProvider = {
         provide: Http,
         deps: [MockBackend, BaseRequestOptions],
-        useFactory: (backend: MockBackend, defaultOptions: BaseRequestOptions) =>
-        { return new Http(backend, defaultOptions); }
-    }
+        useFactory: (backend: MockBackend, defaultOptions: BaseRequestOptions) => {
+           return new Http(backend, defaultOptions);
+         }
+    };
 
 
 // globally loaded lodash
@@ -106,7 +106,7 @@ describe('ApiService (Mocked)', () => {
                     if (c.request.url === GLOBAL.USER_API
                         && c.request.method === RequestMethod.Post) {   // Add or update a User POST: /User
                         let data = JSON.parse(c.request._body);
-                        let newUser: User = new User(data._id, data._email, data._name, data._pass, data._confirm_pass, data._role)
+                        let newUser: User = new User(data._id, data._email, data._name, data._pass, data._confirm_pass, data._role);
                         mock_db.push(newUser);
                         c.mockRespond(new Response(new ResponseOptions({
                             body: JSON.stringify(newUser)
@@ -154,7 +154,7 @@ describe('ApiService (Mocked)', () => {
                     if (c.request.url === GLOBAL.USER_API
                         && c.request.method === RequestMethod.Patch) {   // Add or update a User Patch: /User
                           let data = JSON.parse(c.request._body);
-                          let newUser: User = new User(data._id, data._email, data._name, data._pass, data._confirm_pass, data._role)
+                          let newUser: User = new User(data._id, data._email, data._name, data._pass, data._confirm_pass, data._role);
                           let existingUser = mock_db.filter((u: User) => { return u.id === Number(newUser.id); });
                         if (existingUser && existingUser.length === 1) {
                             Object.assign(existingUser[0], newUser);
