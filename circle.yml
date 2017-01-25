@@ -3,12 +3,16 @@ machine:
     version: 7.0.0
 
 test:
+  pre:
+    - npm install codeclimate-test-reporter -g
   override:
     - npm run lint
     - ng test --code-coverage --watch=false
   post:
     - mkdir $CIRCLE_ARTIFACTS/coverage
     - mv coverage/* $CIRCLE_ARTIFACTS/coverage
+    - codeclimate-test-reporter < $CIRCLE_ARTIFACTS/coverage/coverage.lcov
+
 
 
 deployment:
