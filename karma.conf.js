@@ -18,7 +18,7 @@ module.exports = function (config) {
 
     ],
     files: [
-	     'node_modules/pact-consumer-js-dsl/dist/web/pact-consumer-js-dsl.js',
+	     'node_modules/pact-consumer-js-dsl/dist/pact-consumer-js-dsl.js',
       { pattern: './src/test.ts', watched: false }
     ],
     preprocessors: {
@@ -45,7 +45,7 @@ module.exports = function (config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-browsers: ['PhantomJS_without_security'/*,'Chrome', 'Chrome_without_security'*/], //Removing Chrome because of CI error
+browsers: [/*'PhantomJS_without_security','Chrome', */'Chrome_without_security'], //Removing Chrome because of CI error
    customLaunchers: {
       PhantomJS_without_security: {
         base: 'PhantomJS',
@@ -58,6 +58,6 @@ browsers: ['PhantomJS_without_security'/*,'Chrome', 'Chrome_without_security'*/]
    }
     ,
 
-    singleRun: true
+    singleRun: false
   });
 };

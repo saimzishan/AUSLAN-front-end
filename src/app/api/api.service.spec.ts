@@ -8,6 +8,7 @@ import {ROLE} from '../shared/model/role.enum';
 import {} from 'jasmine';
 import { BrowserModule } from '@angular/platform-browser';
 
+
 import {
     ResponseOptions,
     Response,
@@ -27,7 +28,6 @@ const mockHttpProvider = {
            return new Http(backend, defaultOptions);
          }
     };
-
 
 // globally loaded lodash
 declare let _: any;
