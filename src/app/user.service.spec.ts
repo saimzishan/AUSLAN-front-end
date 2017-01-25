@@ -43,16 +43,27 @@ describe('UserService', () => {
             }, {
                 reply: 'Hello'
             });
-        let out = '';
         // Run the tests
-        helloProvider.run(function(error) {
+        /*helloProvider.run(function(error) {
             // expect(error).toBe(null);
         }, function(runComplete) {
-            out = service.sayHello('http://127.0.0.1:1234');
+            service.sayHello('http://127.0.0.1:1234')
+            .then(helloProvider.verify)
+            .then(function (xhr) {
+                expect(JSON.parse(JSON.parse(xhr.responseText).reply)).toEqual({ reply: 'Hello' });
+              })
+              .catch(function (err) {
+                //  done.fail(err)
+              });
             runComplete();
-        });
-
-        expect(out).toEqual('Hello');
+        });*/
+        service.sayHello('http://127.0.0.1:1234')
+        .then(function (xhr) {
+            expect(JSON.parse(xhr.responseText).reply).toEqual( 'Hello' );
+          })
+          .catch(function (err) {
+            //  done.fail(err)
+          });
 
     }));
 });

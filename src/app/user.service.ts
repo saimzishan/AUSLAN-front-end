@@ -5,14 +5,13 @@ import {Response} from '@angular/http';
 export class UserService {
 
 
-    sayHello(url: string) {
+    sayHello(url: string): Promise<XMLHttpRequest> {
       // Makes a synchronous request
       let xhr = new XMLHttpRequest();
 
       xhr.open('GET', url + '/sayHello', false);
       xhr.send();
-      let out = JSON.parse(xhr.responseText).reply;
-      return out;
+      return Promise.resolve(xhr);
     };
   constructor() { }
 
