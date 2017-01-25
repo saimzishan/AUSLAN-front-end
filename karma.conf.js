@@ -18,7 +18,7 @@ module.exports = function (config) {
 
     ],
     files: [
-	//node_modules/pact-consumer-js-dsl/dist/web/pact-consumer-js-dsl.js,
+	     'node_modules/pact-consumer-js-dsl/dist/web/pact-consumer-js-dsl.js',
       { pattern: './src/test.ts', watched: false }
     ],
     preprocessors: {
@@ -40,6 +40,7 @@ module.exports = function (config) {
     reporters: config.angularCli && config.angularCli.codeCoverage
               ? ['progress', 'karma-remap-istanbul']
               : ['progress'],
+
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
@@ -57,6 +58,6 @@ browsers: ['PhantomJS_without_security'/*,'Chrome', 'Chrome_without_security'*/]
    }
     ,
 
-    singleRun: false
+    singleRun: true
   });
 };

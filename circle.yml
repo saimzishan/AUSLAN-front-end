@@ -5,7 +5,7 @@ machine:
 test:
   override:
     - npm run lint
-    - ng test --watch=false
+    - ng test --code-coverage --watch=false
 
 deployment:
   prod:
