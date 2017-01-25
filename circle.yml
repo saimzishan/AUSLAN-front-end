@@ -6,6 +6,10 @@ test:
   override:
     - npm run lint
     - ng test --code-coverage --watch=false
+  post:
+    - mkdir $CIRCLE_ARTIFACTS/coverage
+    - mv coverage/* $CIRCLE_ARTIFACTS/coverage
+
 
 deployment:
   prod:
