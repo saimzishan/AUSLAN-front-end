@@ -1,6 +1,8 @@
 typings
+dist
 app/**/*.js
 app/**/*.map
 node_modules
+coverage
 jspm_packages
 bower_components
