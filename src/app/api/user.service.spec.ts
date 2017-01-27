@@ -8,7 +8,6 @@ let Pact = require('pact-consumer-js-dsl');
 
 describe('UserService', () => {
     let helloProvider;
-    // let service = new UserService();
     let val = '';
     beforeEach((done) => {
       TestBed.configureTestingModule({
@@ -35,7 +34,6 @@ describe('UserService', () => {
     });
     it('should say hello', function(done) {
         inject([UserService], (service: UserService) => {
-          // expect(val).toEqual('Hello');
           helloProvider
               .uponReceiving('a request for hello')
               .withRequest('get', '/sayHello')
@@ -59,9 +57,6 @@ describe('UserService', () => {
 
           });
         })();
-        // This is a workaround. Pact actually generate the file if use helloProvider.run
-
-
     });
 
 });
