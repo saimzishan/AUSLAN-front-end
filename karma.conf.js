@@ -27,6 +27,9 @@ module.exports = function(config) {
         preprocessors: {
             './src/test.ts': ['angular-cli']
         },
+        exclude: [
+      'node_modules/**/*spec.js'
+      ],
         mime: {
             'text/x-typescript': ['ts', 'tsx']
         },
@@ -60,6 +63,6 @@ module.exports = function(config) {
             }
         },
 
-        singleRun: false
+        singleRun: true
     });
 };

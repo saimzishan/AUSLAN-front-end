@@ -2,60 +2,66 @@
 
 import { TestBed, async, inject } from '@angular/core/testing';
 import { UserService } from './user.service';
-declare function require(name: string);
 
+declare function require(name: string);
 let Pact = require('pact-consumer-js-dsl');
 
 describe('UserService', () => {
     let helloProvider;
+    // let service = new UserService();
+    let val = '';
     beforeEach((done) => {
-        helloProvider = Pact.mockService({
+      TestBed.configureTestingModule({
+          providers: [UserService]
+      });
+      helloProvider = Pact.mockService({
             consumer: 'Booking-System-frontend',
             provider: 'Booking-System-Api',
             port: 1234,
-            done: (error) => {
-                expect(error).toBe(null);
-            }
+            done: done
         });
-        TestBed.configureTestingModule({
-            providers: [UserService]
-        });
-        setTimeout(function() { done(); }, 2000);
-
+        done();
     });
 
     afterAll(function(done) {
         helloProvider.finalize()
             .then(function() { done(); }, function(err) { done.fail(err); });
     });
-
-    it('should ...', inject([UserService], (service: UserService) => {
+    it('should ...', function(done) {
+      inject([UserService], (service: UserService) => {
         expect(service).toBeTruthy();
-    }));
+        done();
+    })();
+    });
+    it('should say hello', function(done) {
+        inject([UserService], (service: UserService) => {
+          // expect(val).toEqual('Hello');
+          helloProvider
+              .uponReceiving('a request for hello')
+              .withRequest('get', '/sayHello')
+              .willRespondWith(200, {
+                  'Content-Type': 'application/json'
+              }, {
+                  reply: 'Hello'
+              });
 
-    it('should say hello', inject([UserService], function(service: UserService) {
+          helloProvider.run(done, function(runComplete) {
+              service.sayHello('http://127.0.0.1:1234')
+                  .then(function(xhr) {
+                      val = JSON.parse(xhr.responseText).reply;
+                      expect(val).toEqual('Hello');
+                      done();
+                  })
+                  .catch(function(err) {
+                      done.fail(err);
+                  });
+              runComplete();
 
-        helloProvider
-            .uponReceiving('a request for hello')
-            .withRequest('get', '/sayHello')
-            .willRespondWith(200, {
-                'Content-Type': 'application/json'
-            }, {
-                reply: 'Hello'
-            });
+          });
+        })();
         // This is a workaround. Pact actually generate the file if use helloProvider.run
-        helloProvider.run(function(error) {
-             expect(error).toBe(null);
-        }, function(runComplete) {
-          service.sayHello('http://127.0.0.1:1234')
-          .then(function (xhr) {
-              expect(JSON.parse(xhr.responseText).reply).toEqual( 'Hello' );
-            })
-            .catch(function (err) {
-              //  done.fail(err)
-            });
-            runComplete();
 
-        });
-    }));
+
+    });
+
 });
