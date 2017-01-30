@@ -4,9 +4,11 @@
 module.exports = function(config) {
     config.set({
         basePath: '',
-        frameworks: ['jasmine', 'angular-cli'],
+        frameworks: ['jasmine','es6-shim' ,'angular-cli'],
         plugins: [
-            require('karma-jasmine'),
+          require('karma-es6-shim'),
+          require('karma-jasmine'),
+          require('karma-requirejs'),
             require('karma-phantomjs-launcher'),
             require('karma-remap-istanbul'),
             require('angular-cli/plugins/karma'),
@@ -51,7 +53,7 @@ module.exports = function(config) {
         colors: true,
         logLevel: config.LOG_INFO,
         autoWatch: true,
-        browsers: ['PhantomJS_without_security', /*'Chrome_without_security'*/ ], //Removing Chrome because of CI error
+        browsers: ['PhantomJS_without_security', /*'Chrome_without_security' */], //Removing Chrome because of CI error
         customLaunchers: {
             PhantomJS_without_security: {
                 base: 'PhantomJS',
