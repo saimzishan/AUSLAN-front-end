@@ -19,6 +19,8 @@ test:
 
 
 deployment:
+  pre:
+    - aws s3 sync tmp/pacts s3://auslan-booking-system/pacts --delete
   prod:
     branch: master
     commands:
