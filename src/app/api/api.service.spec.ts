@@ -84,7 +84,7 @@ describe('ApiService (Mocked)', () => {
                 (c) => {
 
                     // return all Users GET: /User
-                    if (c.request.url === GLOBAL.USER_API && c.request.method === RequestMethod.Get) {
+                    if (c.request.url === GLOBAL.USER_API_DEPRECIATED && c.request.method === RequestMethod.Get) {
                         let res = new Response(new ResponseOptions({
                             body: JSON.stringify(mock_db)
                         }));
@@ -103,7 +103,7 @@ describe('ApiService (Mocked)', () => {
             backend.connections.subscribe(
                 (c) => {
 
-                    if (c.request.url === GLOBAL.USER_API
+                    if (c.request.url === GLOBAL.USER_API_DEPRECIATED
                         && c.request.method === RequestMethod.Post) {   // Add or update a User POST: /User
                         let data = JSON.parse(c.request._body);
                         let newUser: User = new User(data._id, data._email, data._name, data._pass, data._confirm_pass, data._role);
@@ -151,7 +151,7 @@ describe('ApiService (Mocked)', () => {
             backend.connections.subscribe(
                 (c) => {
 
-                    if (c.request.url === GLOBAL.USER_API
+                    if (c.request.url === GLOBAL.USER_API_DEPRECIATED
                         && c.request.method === RequestMethod.Patch) {   // Add or update a User Patch: /User
                           let data = JSON.parse(c.request._body);
                           let newUser: User = new User(data._id, data._email, data._name, data._pass, data._confirm_pass, data._role);

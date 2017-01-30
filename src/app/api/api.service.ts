@@ -33,7 +33,7 @@ export class ApiService {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        this.http.post(GLOBAL.USER_API, JSON.stringify(user), options)
+        this.http.post(GLOBAL.USER_API_DEPRECIATED, JSON.stringify(user), options)
             .map(res => res.json())
             .subscribe(
             data => this.users.push(data),
@@ -49,7 +49,7 @@ export class ApiService {
         let u: User = null;
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
-        this.http.patch(GLOBAL.USER_API, JSON.stringify(user), options)
+        this.http.patch(GLOBAL.USER_API_DEPRECIATED, JSON.stringify(user), options)
             .map(res => res.json())
             .subscribe(
             data => {
@@ -66,7 +66,7 @@ export class ApiService {
     */
     fetchUsers(): number {
         this.http
-            .get(GLOBAL.USER_API)
+            .get(GLOBAL.USER_API_DEPRECIATED)
             .map(res => {
                 return res.json();
             })
@@ -87,7 +87,7 @@ export class ApiService {
     getUser(id: number): User {
         let u: User = null;
         this.http
-            .get(GLOBAL.USER_API + id)
+            .get(GLOBAL.USER_API_DEPRECIATED + id)
             .map(res => res.json())
             .subscribe(
             data => {
@@ -104,7 +104,7 @@ export class ApiService {
     */
     deleteUser(user: User) {
         this.http
-            .delete(GLOBAL.USER_API + user.id)
+            .delete(GLOBAL.USER_API_DEPRECIATED + user.id)
             .map(res => res.text())
             .subscribe(
             data => {
