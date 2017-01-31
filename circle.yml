@@ -16,15 +16,15 @@ test:
     - codeclimate-test-reporter < $CIRCLE_ARTIFACTS/coverage/coverage.lcov
 
 deployment:
-  prod:
-    branch: master
-    commands:
-      - ng build --target=production
-      - aws s3 sync dist/  s3://auslan-booking-system/prod/booking-app/ --delete
-
   stagging:
     branch: dev-master
     commands:
       - ng build --target=development
       - aws s3 sync dist/  s3://auslan-booking-system/development/booking-app/ --delete
       - aws s3 sync tmp/pacts s3://auslan-booking-system/pacts --delete
+
+  prod:
+    branch: master
+    commands:
+      - ng build --target=production
+      - aws s3 sync dist/  s3://auslan-booking-system/prod/booking-app/ --delete
