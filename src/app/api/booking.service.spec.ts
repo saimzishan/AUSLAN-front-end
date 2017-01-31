@@ -59,7 +59,7 @@ describe('BookingService', () => {
     // if the calls are not seen.
     beforeAll(done => {
         provider = Pact.mockService({
-            consumer: 'Booking-System-frontend',
+            consumer: 'Booking-Specs',
             provider: 'Booking-Api',
             port: GLOBAL.MOCK_SERVER_PORT,
             done: done
