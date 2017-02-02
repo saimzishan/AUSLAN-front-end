@@ -1,0 +1,22 @@
+<section class="userapp">
+  <header class="header">
+    <h1>Admin Area - User Management</h1>
+    <input class="new-user" placeholder="Enter your email ? " autofocus="" [(ngModel)]="newUser.email" (keyup.enter)="addUser()">
+    <input class="new-user" placeholder="Enter your password ?" autofocus="" [(ngModel)]="newUser.pass" (keyup.enter)="addUser()">
+
+  </header>
+  <section class="main" *ngIf="users.length > 0">
+    <ul class="user-list">
+      <li *ngFor="let user of users">
+        <div class="view">
+          <label>{{user.title}}</label>
+          <button class="destroy-user" (click)="editUser(user)"></button>
+          <button class="edit-user" (click)="removeUser(user)"></button>
+        </div>
+      </li>
+    </ul>
+  </section>
+  <footer class="footer" *ngIf="users.length > 0">
+    <span class="users-count"><strong>{{users.length}}</strong> {{users.length == 1 ? 'item' : 'items'}} left</span>
+  </footer>
+</section>

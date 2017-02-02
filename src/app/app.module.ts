@@ -6,19 +6,22 @@ import { AppComponent } from './app.component';
 import { AuthComponent } from './auth/auth.component';
 import { ApiService } from './api/api.service';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { AdminComponent } from './admin/admin.component';
+import { UserService } from './api/user.service';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     AuthComponent,
-    DashboardComponent
+    DashboardComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule
-  ],  providers: [ApiService],
+  ],  providers: [ApiService, UserService],
 
   bootstrap: [AppComponent],
 })

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Http, Headers, Response, RequestOptions} from '@angular/http';
-import {User} from '../shared/model/user.entity';
+import {User, OrganisationalRepresentative, Accountant, Client,
+    BookingOfficer, Administrator, Interpreter} from '../shared/model/user.entity';
 import {ROLE} from '../shared/model/role.enum';
 import {GLOBAL} from '../shared/global';
 import { Observable } from 'rxjs/Observable';
@@ -28,14 +29,48 @@ export class UserService {
         return (this.http !== undefined || this.http !== null);
     }
 
+    private getRoute(u: User): string {
+        let route = GLOBAL.USER_API;
+
+        switch (u.constructor) {
+
+            case OrganisationalRepresentative:
+                route = GLOBAL.API_ENDPOINT + 'organisational_representatives';
+                break;
+
+            case Accountant:
+                route = GLOBAL.API_ENDPOINT + 'accountants';
+                break;
+
+            case Client:
+                route = GLOBAL.API_ENDPOINT + 'individual_clients';
+                break;
+
+            case BookingOfficer:
+                route = GLOBAL.API_ENDPOINT + 'booking_officers';
+                break;
+
+            case Administrator:
+                route = GLOBAL.API_ENDPOINT + 'administrators';
+                break;
+
+            case Interpreter:
+                route = GLOBAL.API_ENDPOINT + 'interpreters';
+                break;
+
+        }
+        return route;
+    }
+
     /*
       The Api should be able to create different type of users.
     */
     createUser(user: User): Observable<Object> {
+
         let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': '*/*' });
         let options = new RequestOptions({ headers: headers });
 
-        return this.http.post(GLOBAL.USER_API, JSON.stringify(user), options)
+        return this.http.post(this.getRoute(user), JSON.stringify(user), options)
             .map(ApiService.extractData)
             .catch(ApiService.handleError);
     }

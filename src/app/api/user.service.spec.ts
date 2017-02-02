@@ -16,9 +16,16 @@ import {
 declare function require(name: string);
 let Pact = require('pact-consumer-js-dsl');
 
+  // Alias flexible matchers for simplicity
+  const term = Pact.Matchers.term;
+  const like = Pact.Matchers.somethingLike;
+  const eachLike = Pact.Matchers.eachLike;
+
 let mock_db: User[] = [
-    new User(1, 'admin1@aus.au', 'Jane Doe', 'mockme', 'mockme', ROLE.SITE_ADMIN),
-    new User(2, 'admin2@aus.au', 'Jane Doe', 'mockme', 'mockme', ROLE.SITE_ADMIN)
+  new User({id: 2, email: 'admin1@aus.au', name: 'Joe Doe 2',
+     pass: 'secure_password', role: ROLE.SHITTY_DEVELOPER}),
+     new User({id: 1, email: 'admin1@aus.au', name: 'Joe Doe 1',
+        pass: 'secure_password', role: ROLE.SHITTY_DEVELOPER})
 ];
 
 describe('UserService', () => {
@@ -110,7 +117,7 @@ describe('UserService', () => {
                 service.getUser(1)
                     .subscribe((res: any) => {
                         let data = res.data;
-                        let u = new User(data._id, data._email, data._name, data._pass, data._confirm_pass, data._role);
+                        let u = new User(data);
                         expect(u).toEqual(jasmine.any(User));
                     });
 
@@ -163,9 +170,10 @@ describe('UserService', () => {
                 });
 
             userProvider.run(done, function(runComplete) {
+              let u: User = new User({id: 3, email: 'admin1@aus.au', name: 'Joe Doe3',
+                  pass: 'secure_password', role: ROLE.SHITTY_DEVELOPER});
 
-                let status_code = service.updateUser(new User(3, 'admin1@aus.au', 'Joe Doe 3',
-                    'secure_password', 'secure_password', ROLE.SHITTY_DEVELOPER))
+                let status_code = service.updateUser(u)
                     .subscribe((res: any) => {
                         expect(res.status).toEqual(200);
                     });
@@ -212,8 +220,9 @@ describe('UserService', () => {
                 }, Pact.Match.somethingLike(123));
 
             userProvider.run(done, function(runComplete) {
-                service.createUser(new User(3, 'admin1@aus.au', 'Joe Doe',
-                    'secure_password', 'secure_password', ROLE.SHITTY_DEVELOPER))
+                let u: User = new User({id: 3, email: 'admin1@aus.au', name: 'Joe Doe',
+                    pass: 'secure_password', role: ROLE.SHITTY_DEVELOPER});
+                service.createUser(u)
                     .subscribe((res: any) => {
                         service.users.push(res.data);
                         expect(res.status).toEqual(201);
