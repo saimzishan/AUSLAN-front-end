@@ -1,29 +1,38 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import {UserService} from '../api/user.service';
 import {User} from '../shared/model/user.entity';
+import {ROLE} from '../shared/model/role.enum';
 
 
 @Component({
     selector: 'app-admin',
     templateUrl: './admin.component.html',
-    styleUrls: ['./admin.component.css']
-})
-export class AdminComponent implements OnInit {
+    styleUrls: ['./admin.component.css'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 
+})
+
+export class AdminComponent implements OnInit {
     newUser: User = new User();
+    roles: any;
+    @Input() users: User[] = [];
 
     ngOnInit() {
+      if ( this.users.length < 1 ) {
+        this.fetchUsers();
+      }
     }
 
     constructor(private userDataService: UserService) {
+      this.roles = ROLE;
     }
 
     addUser() {
         this.userDataService.createUser(this.newUser)
         .subscribe(data => {
-          this.userDataService.users.push(this.newUser);
+          this.users.push(this.newUser);
           this.newUser = new User();
-        });
+        }, err => console.log(err));
       }
 
     editUser(user) {
@@ -34,8 +43,12 @@ export class AdminComponent implements OnInit {
         this.userDataService.deleteUser(user.id);
     }
 
-    get users() {
-        return this.userDataService.fetchUsers();
+    fetchUsers() {
+        this.userDataService.fetchUsers()
+        .subscribe((res: any) => {
+          this.users = res.data;
+        }, err => console.log(err));
+
     }
 
 }

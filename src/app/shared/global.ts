@@ -2,7 +2,7 @@ import { environment } from '../../environments/environment';
 
 
 export class GLOBAL {
-  public static MOCK_SERVER_PORT = 1234;
+  public static MOCK_SERVER_PORT = 3000;
   public static LOG_LEVEL = 'INFO';
   public static API_ENDPOINT = (environment.production) ? 'http://<prod_ip>:8080/api/v1' :
   `http://127.0.0.1:${GLOBAL.MOCK_SERVER_PORT}/api/v1` ;

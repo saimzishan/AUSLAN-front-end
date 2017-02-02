@@ -13,10 +13,11 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/observable/throw';
+import { AuthHttp } from 'angular2-jwt';
 
 @Injectable()
 export class UserService {
-
+    public token: string;
     users: User[] = [];
     constructor(private http: Http) {
     }
@@ -32,30 +33,30 @@ export class UserService {
     private getRoute(u: User): string {
         let route = GLOBAL.USER_API;
 
-        switch (u.constructor) {
+        switch (+u.role) {
 
-            case OrganisationalRepresentative:
-                route = GLOBAL.API_ENDPOINT + 'organisational_representatives';
+            case ROLE.OrganisationalRepresentative:
+                route = GLOBAL.API_ENDPOINT + '/organisational_representatives';
                 break;
 
-            case Accountant:
-                route = GLOBAL.API_ENDPOINT + 'accountants';
+            case ROLE.Accountant:
+                route = GLOBAL.API_ENDPOINT + '/accountants';
                 break;
 
-            case Client:
-                route = GLOBAL.API_ENDPOINT + 'individual_clients';
+            case ROLE.Client:
+                route = GLOBAL.API_ENDPOINT + '/individual_clients';
                 break;
 
-            case BookingOfficer:
-                route = GLOBAL.API_ENDPOINT + 'booking_officers';
+            case ROLE.BookingOfficer:
+                route = GLOBAL.API_ENDPOINT + '/booking_officers';
                 break;
 
-            case Administrator:
-                route = GLOBAL.API_ENDPOINT + 'administrators';
+            case ROLE.Administrator:
+                route = GLOBAL.API_ENDPOINT + '/administrators';
                 break;
 
-            case Interpreter:
-                route = GLOBAL.API_ENDPOINT + 'interpreters';
+            case ROLE.Interpreter:
+                route = GLOBAL.API_ENDPOINT + '/interpreters';
                 break;
 
         }
@@ -69,8 +70,9 @@ export class UserService {
 
         let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': '*/*' });
         let options = new RequestOptions({ headers: headers });
+        let obj =  { 'user': user };
 
-        return this.http.post(this.getRoute(user), JSON.stringify(user), options)
+        return this.http.post(this.getRoute(user), JSON.stringify(obj), options)
             .map(ApiService.extractData)
             .catch(ApiService.handleError);
     }
