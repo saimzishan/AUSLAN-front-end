@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { HttpModule, BaseRequestOptions } from '@angular/http';
 import { AppComponent } from './app.component';
 import { AuthComponent } from './auth/auth.component';
@@ -11,10 +10,15 @@ import { UserService } from './api/user.service';
 import { Http, RequestOptions } from '@angular/http';
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
 import { EnumValPipe } from './shared/pipe/enum-val.pipe';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { CustomFormsModule } from 'ng2-validation';
 
-const authService =  (http: Http, options: RequestOptions) => {
+export function authService(http: Http, options: RequestOptions) {
   return new AuthHttp(new AuthConfig(), http, options);
 };
+
 
 @NgModule({
   declarations: [
@@ -22,9 +26,10 @@ const authService =  (http: Http, options: RequestOptions) => {
     AuthComponent,
     DashboardComponent,
     AdminComponent,
-    EnumValPipe
+    EnumValPipe,
+    NotFoundComponent,
   ], exports: [EnumValPipe],
-  imports: [
+  imports: [CustomFormsModule,
     BrowserModule,
     FormsModule,
     HttpModule
@@ -36,4 +41,8 @@ const authService =  (http: Http, options: RequestOptions) => {
 
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {
+  /*constructor(router: Router) {
+    console.log('Routes: ', JSON.stringify(router.config, undefined, 2));
+  }*/
+ }
