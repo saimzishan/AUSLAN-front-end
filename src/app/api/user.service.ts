@@ -84,8 +84,8 @@ export class UserService {
 
         let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
         let options = new RequestOptions({ headers: headers });
-
-        return this.http.patch(GLOBAL.USER_API, JSON.stringify(user), options)
+        let obj =  { 'user': user };
+        return this.http.patch(GLOBAL.USER_API + '/' + user.id, JSON.stringify(obj), options)
             .map(ApiService.extractData)
             .catch(ApiService.handleError);
 
@@ -95,7 +95,7 @@ export class UserService {
       The Api should be able to fetch all the users.
     */
     fetchUsers(): Observable<Object> {
-        let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
+        let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': '*/*' });
         let options = new RequestOptions({ headers: headers });
         return this.http.get(GLOBAL.USER_API, options)
             .map(ApiService.extractData)

@@ -16,10 +16,12 @@ import {
 declare function require(name: string);
 let Pact = require('pact-consumer-js-dsl');
 
-  // Alias flexible matchers for simplicity
+  // Commented Due to error - Alias flexible matchers for simplicity
+  /*
   const term = Pact.Matchers.term;
   const like = Pact.Matchers.somethingLike;
   const eachLike = Pact.Matchers.eachLike;
+  */
 
 let mock_db: User[] = [
   new User({id: 2, email: 'admin1@aus.au', name: 'Joe Doe 2',

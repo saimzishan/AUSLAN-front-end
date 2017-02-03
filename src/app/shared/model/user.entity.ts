@@ -1,4 +1,4 @@
-import {ROLE} from './role.enum';
+  import {ROLE} from './role.enum';
 
 export class User {
 
@@ -9,6 +9,8 @@ export class User {
   public first_name = 'Major';
   public last_name = 'Lazer';
   public id: number;
+  public type = 'unknown';
+  public mobile = null;
 
   constructor(values: Object = {}) {
     Object.assign(this, values);

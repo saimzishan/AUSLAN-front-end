@@ -1,23 +1,39 @@
 <section class="userapp">
   <header class="header">
     <h1>Admin Area - User Management</h1>
-    <input class="new-user-email" placeholder="Enter your email" autofocus="" [(ngModel)]="newUser.email" >
-    <input class="new-user-pass" type="password" placeholder="Enter your password" [(ngModel)]="newUser.password" >
-    <input class="new-user-confirm_pass" type="password" placeholder="Confirm password" [(ngModel)]="newUser.confirm_password" >
-    <input class="new-user-first_name" placeholder="What is your first name" [(ngModel)]="newUser.first_name" >
-    <input class="new-user-last_name" placeholder="What is your last name" [(ngModel)]="newUser.last_name" >
-    <select [(ngModel)]="newUser.role">
-       <option *ngFor="let item of roles | enumVal" [selected]="item.value == 'Accountant'" [value]="item.key">{{item.value}}</option>
+    <input class="new-user-email" placeholder="Enter your email" autofocus="" [(ngModel)]="newUser.email" name="email" #email="ngModel" email required>
+    <p *ngIf="email.errors?.email;">The email is required and has to be in email format</p>
+    <input class="new-user-pass" type="password" placeholder="Enter your password" [(ngModel)]="newUser.password" name="password" #password="ngModel" required>
+    <p *ngIf="password.errors?.required">The password is required and has to be strong</p>
+    <input class="new-user-confirm_pass" type="password" placeholder="Confirm password" [(ngModel)]="newUser.confirm_password" name="certainPassword" #certainPassword="ngModel" [equalTo]="password">
+    <p *ngIf="certainPassword.errors?.equalTo">The confirm password should match with password</p>
+    <input class="new-user-first_name" placeholder="What is your first name" [(ngModel)]="newUser.first_name"
+    name="first_name" #first_name="ngModel"  [rangeLength]="[2, 30]" required>
+    <p *ngIf="first_name.errors?.rangeLength">The first name is required and should have minimum 2 characters</p>
+
+    <input class="new-user-last_name" placeholder="What is your last name" [(ngModel)]="newUser.last_name"   name="last_name" #last_name="ngModel" [min]="2" required>
+    <p *ngIf="last_name.errors?.rangeLength">The last name is required and should have minimum 2 characters</p>
+
+    <select name="role" [(ngModel)]="newUser.role">
+       <option *ngFor="let item of roles | enumVal" [selected]="item.value =='Accountant'" [value]="item.key">{{item.value}}</option>
     </select>
-<button class="add-user" (click)="addUser(user)"> ADD User </button>
+<button name="add_user" class="add-user" [disabled]="last_name.errors || first_name.errors || password.errors || email.errors || certainPassword.errors " (click)="addUser(user)"> ADD User </button>
   </header>
   <section class="main" *ngIf="users?.length > 0">
     <ul class="user-list">
-      <li *ngFor="let user of users | async">
+      <li *ngFor="let user of users">
         <div class="view">
-          <label>{{user.email}}</label>
-          <button class="destroy-user" (click)="editUser(user)"> EDIT User </button>
-          <button class="edit-user" (click)="removeUser(user)"> DELETE User </button>
+          <label name="id" >{{user.id  | json }}</label>
+          <label name="email1" >{{user.email  | json }}</label>
+          <label name="type" >{{user.type  | json }}</label>
+          <input [ngModel]="user.first_name"    [rangeLength]="[2, 30]"  (ngModelChange)="user.first_name=$event" name="first_name_1" #first_name_1="ngModel" [min]="2" required />
+          <p *ngIf="first_name_1.errors?.rangeLength">The first name is required and should have minimum 2 characters</p>
+
+          <input [ngModel]="user.last_name"   [rangeLength]="[2, 30]"  (ngModelChange)="user.last_name=$event" name="last_name_1" #last_name_1="ngModel" [min]="2" required  />
+          <p *ngIf="last_name_1.errors?.rangeLength">The last name is required and should have minimum 2 characters</p>
+
+          <button name="del_user" [disabled]="last_name_1.errors || first_name_1.errors" class="destroy-user" (click)="editUser(user)"> EDIT User </button>
+          <button name="edit_user" class="edit-user" (click)="removeUser(user)"> DELETE User </button>
         </div>
       </li>
     </ul>
