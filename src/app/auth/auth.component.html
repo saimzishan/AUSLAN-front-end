@@ -8,25 +8,33 @@
 							<img src="assets/img/logo.svg" alt="">
 						</div>
 						<!-- form login-->
-						<form class="form-login" action="#">
+						<form (ngSubmit)="onSubmit()" class="form-login" #loginForm="ngForm">
+
 							<label class="icon-email">
 								EMAIL
-								<input type="email" placeholder="Enter email" name="email">
+								<input type="email" id="email" name="email"
+								placeholder="Enter your email"
+								[(ngModel)]="model.email" name="email" #email="ngModel" email required>
+								<p *ngIf="email.errors?.email;">The email is required and has to be in email format</p>
 							</label>
+
 							<label class="icon-lock">
 								PASSWORD
-								<input type="password" placeholder="Enter password" name="pass">
+								<input id="pass" name="pass"  type="password"
+								placeholder="Enter your password"
+								[(ngModel)]="model.password" name="pass" #pass="ngModel" required>
+						    <p *ngIf="pass.errors?.required">The password is required and has to be strong</p>
 							</label>
 
 							<p class="forgot-pass">
-								<a href="#">Forgot your password?</a>
+								<a [routerLink]="['/reset']" >Forgot your password?</a>
 							</p>
 
-							<button type="submit" class="login button">Log In</button>
+							<button type="submit" [disabled]="!loginForm.form.valid" class="login button">Log In</button>
 
 							<div class="sep-or"><span>or</span></div>
 							<p class="text-muted">Don’t Have an Account ?</p>
-							<a href="signup.html" class="signup button">CREATE AN ACCOUNT</a>
+							<a [routerLink]="['/register']" class="signup button">CREATE AN ACCOUNT</a>
 						</form>
 						<!-- /form login-->
 					</div>

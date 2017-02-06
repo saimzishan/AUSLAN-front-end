@@ -22,7 +22,11 @@ const appRoutes: Routes = [
   { path: 'authenticate', component: AuthComponent },
   { path: '404', component: NotFoundComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
-  {path: 'register', component: AuthComponent}
+  {path: 'register', component: AuthComponent},
+  {path: 'reset', component: NotFoundComponent},
+  {path: 'verify', component: NotFoundComponent},
+
+
 ];
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes);

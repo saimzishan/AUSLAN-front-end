@@ -13,10 +13,23 @@ import {
     BaseRequestOptions,
     RequestMethod
 } from '@angular/http';
-
+import { UserService } from '../api/user.service';
+import {User} from '../shared/model/user.entity';
 import {
     TestBed, fakeAsync, async, inject, ComponentFixture
 } from '@angular/core/testing';
+import { CustomFormsModule } from 'ng2-validation';
+import { FormsModule } from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
+import { routing } from '../app.routing';
+import { APP_BASE_HREF } from '@angular/common';
+import { NotFoundComponent }   from '../not-found/not-found.component';
+import { AuthGuard } from '../auth/auth.guard';
+import { AdminComponent } from '../admin/admin.component';
+import { DashboardComponent } from '../dashboard/dashboard.component';
+import { ModuleWithProviders }  from '@angular/core';
+import { RegisterComponent } from '../register/register.component';
+import { EnumValPipe } from '../shared/pipe/enum-val.pipe';
 
 const mockHttpProvider = {
     deps: [ MockBackend, BaseRequestOptions ],
@@ -32,8 +45,9 @@ describe('AuthComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AuthComponent ],
-      providers: [
+      declarations: [ EnumValPipe, AdminComponent, NotFoundComponent, DashboardComponent, AuthComponent ],
+      imports: [CustomFormsModule, routing, FormsModule, RouterModule],
+      providers: [UserService, {provide: APP_BASE_HREF, useValue : '/' },
         { provide: Http, useValue: mockHttpProvider },
         MockBackend,
         BaseRequestOptions, ApiService]

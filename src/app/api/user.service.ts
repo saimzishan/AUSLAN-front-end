@@ -115,7 +115,30 @@ export class UserService {
             .map(ApiService.extractData)
             .catch(ApiService.handleError);
     }
+    /*
+      The Api that should login the user
+    */
+    login(user: User ): Observable<Object> {
+        let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
 
+        return this.http
+            .get(GLOBAL.USER_API + '/login' , options)
+            .map(ApiService.extractData)
+            .catch(ApiService.handleError);
+    }
+    /*
+      The Api that should logout the user
+    */
+    logout(user: User ): Observable<Object> {
+        let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http
+            .get(GLOBAL.USER_API + '/logout' , options)
+            .map(ApiService.extractData)
+            .catch(ApiService.handleError);
+    }
     /*
       The Api should be get user by its ID (The Id should be email)
     */
