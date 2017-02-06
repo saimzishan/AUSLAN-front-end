@@ -7,7 +7,7 @@ import {User} from '../shared/model/user.entity';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  @Input() model: User;
+  @Input() model: User = new User();
   constructor() { }
 
   ngOnInit() {
