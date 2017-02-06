@@ -27,6 +27,7 @@ import {
 } from '@angular/core/testing';
 import {APP_BASE_HREF} from '@angular/common';
 import {authService} from './shared/global';
+import { Title } from '@angular/platform-browser';
 
 describe('AppComponent', () => {
   beforeEach(() => {
@@ -43,7 +44,7 @@ describe('AppComponent', () => {
         BrowserModule,
         FormsModule,
         HttpModule
-      ],  providers: [ApiService, UserService, {provide: APP_BASE_HREF, useValue : '/' }, {
+      ],  providers: [Title, ApiService, UserService, {provide: APP_BASE_HREF, useValue : '/' }, {
           provide: AuthHttp,
           useFactory: authService,
           deps: [Http, RequestOptions]
@@ -58,16 +59,8 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   }));
 
-  it(`should have as title as declared in GLOBAL`, async(() => {
-    let fixture = TestBed.createComponent(AppComponent);
-    let app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual(GLOBAL.TITLE + GLOBAL.VERSION);
+  it(`should have as title as declared in GLOBAL`, inject([Title], (service: Title) => {
+    expect(service.getTitle()).toEqual(GLOBAL.TITLE + GLOBAL.VERSION);
   }));
 
-  it('should render title in a h1 tag', async(() => {
-    let fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    let compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain(GLOBAL.TITLE);
-  }));
 });

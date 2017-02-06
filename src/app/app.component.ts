@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-
+import { Title } from '@angular/platform-browser';
 import {GLOBAL} from './shared/global';
 
 
@@ -10,6 +10,8 @@ import {GLOBAL} from './shared/global';
 })
 export class AppComponent {
 
-  title = GLOBAL.TITLE + GLOBAL.VERSION;
+  public constructor(private titleService: Title ) {
+    this.titleService.setTitle(GLOBAL.TITLE + GLOBAL.VERSION);
+  }
 
 }

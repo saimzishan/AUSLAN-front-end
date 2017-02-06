@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpModule, BaseRequestOptions } from '@angular/http';
 import { AppComponent } from './app.component';
@@ -17,6 +17,7 @@ import { CustomFormsModule } from 'ng2-validation';
 import { routing } from './app.routing';
 import {APP_BASE_HREF} from '@angular/common';
 import {authService} from './shared/global';
+import { RegisterComponent } from './register/register.component';
 
 
 
@@ -28,12 +29,13 @@ import {authService} from './shared/global';
     AdminComponent,
     EnumValPipe,
     NotFoundComponent,
+    RegisterComponent,
   ], exports: [EnumValPipe],
   imports: [CustomFormsModule, routing,
     BrowserModule,
     FormsModule,
     HttpModule
-  ],  providers: [ApiService, UserService, {provide: APP_BASE_HREF, useValue : '/' }, {
+  ],  providers: [Title, ApiService, UserService, {provide: APP_BASE_HREF, useValue : '/' }, {
       provide: AuthHttp,
       useFactory: authService,
       deps: [Http, RequestOptions]
@@ -42,8 +44,5 @@ import {authService} from './shared/global';
   bootstrap: [AppComponent],
 })
 export class AppModule {
-  /*
-  constructor(router: Router) {
-    console.log('Routes: ', JSON.stringify(router.config, undefined, 2));
-  }*/
+
  }
