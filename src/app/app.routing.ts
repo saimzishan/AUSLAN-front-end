@@ -24,7 +24,7 @@ const appRoutes: Routes = [
   { path: 'authenticate', component: AuthComponent },
   { path: '404', component: NotFoundComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
-  {path: 'register', component: AuthComponent},
+  {path: 'register', component: RegisterComponent},
   {path: 'reset', component: ResetComponent},
   {path: 'verify', component: VerifyComponent}
 ];
