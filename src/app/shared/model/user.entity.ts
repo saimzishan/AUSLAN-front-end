@@ -23,7 +23,7 @@ export class User {
   public last_name = 'Lazer';
   public id: number;
   public mobile = '';
-
+  public token = '';
   protected get type() {
     return '';
   }

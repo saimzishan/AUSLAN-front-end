@@ -1,7 +1,7 @@
 import { environment } from '../../environments/environment';
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
 import { Http, RequestOptions } from '@angular/http';
-
+import {User} from './model/user.entity';
 
 export class GLOBAL {
   public static MOCK_SERVER_PORT = 3000;
@@ -14,7 +14,7 @@ export class GLOBAL {
   public static BOOKING_API = GLOBAL.API_ENDPOINT + '/bookings' ;
   public static TITLE = 'Auslan Booking System' ;
   public static VERSION = ' => 0.1.9' ; // This should be broken into MAJOR and MINOR version?
-
+  public static currentUser: User;
 }
 
 export function authService(http: Http, options: RequestOptions) {
