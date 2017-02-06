@@ -9,6 +9,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthComponent } from './auth/auth.component';
 import { ModuleWithProviders }  from '@angular/core';
 import { RegisterComponent } from './register/register.component';
+import { ResetComponent } from './reset/reset.component';
+import { VerifyComponent } from './verify/verify.component';
 
 
 
@@ -23,10 +25,8 @@ const appRoutes: Routes = [
   { path: '404', component: NotFoundComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   {path: 'register', component: AuthComponent},
-  {path: 'reset', component: NotFoundComponent},
-  {path: 'verify', component: NotFoundComponent},
-
-
+  {path: 'reset', component: ResetComponent},
+  {path: 'verify', component: VerifyComponent}
 ];
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes);

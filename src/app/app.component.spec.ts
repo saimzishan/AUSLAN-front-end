@@ -28,6 +28,8 @@ import {
 import {APP_BASE_HREF} from '@angular/common';
 import {authService} from './shared/global';
 import { Title } from '@angular/platform-browser';
+import { ResetComponent } from './reset/reset.component';
+import { VerifyComponent } from './verify/verify.component';
 
 describe('AppComponent', () => {
   beforeEach(() => {
@@ -38,7 +40,7 @@ describe('AppComponent', () => {
         DashboardComponent,
         AdminComponent,
         EnumValPipe,
-        NotFoundComponent,
+        NotFoundComponent, ResetComponent, VerifyComponent
       ],
       imports: [CustomFormsModule, routing,
         BrowserModule,

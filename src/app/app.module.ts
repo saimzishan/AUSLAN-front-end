@@ -18,6 +18,8 @@ import { routing } from './app.routing';
 import {APP_BASE_HREF} from '@angular/common';
 import {authService} from './shared/global';
 import { RegisterComponent } from './register/register.component';
+import { VerifyComponent } from './verify/verify.component';
+import { ResetComponent } from './reset/reset.component';
 
 
 
@@ -30,6 +32,8 @@ import { RegisterComponent } from './register/register.component';
     EnumValPipe,
     NotFoundComponent,
     RegisterComponent,
+    VerifyComponent,
+    ResetComponent,
   ], exports: [EnumValPipe],
   imports: [CustomFormsModule, routing,
     BrowserModule,

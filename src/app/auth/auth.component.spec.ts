@@ -31,6 +31,8 @@ import { ModuleWithProviders }  from '@angular/core';
 import { RegisterComponent } from '../register/register.component';
 import { EnumValPipe } from '../shared/pipe/enum-val.pipe';
 
+import { ResetComponent } from '../reset/reset.component';
+import { VerifyComponent } from '../verify/verify.component';
 const mockHttpProvider = {
     deps: [ MockBackend, BaseRequestOptions ],
     useFactory: (backend: MockBackend, defaultOptions: BaseRequestOptions) => {
@@ -45,7 +47,7 @@ describe('AuthComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EnumValPipe, AdminComponent, NotFoundComponent, DashboardComponent, AuthComponent ],
+      declarations: [ EnumValPipe, AdminComponent, NotFoundComponent, DashboardComponent, AuthComponent, ResetComponent, VerifyComponent ],
       imports: [CustomFormsModule, routing, FormsModule, RouterModule],
       providers: [UserService, {provide: APP_BASE_HREF, useValue : '/' },
         { provide: Http, useValue: mockHttpProvider },
