@@ -24,7 +24,7 @@ export class AuthComponent implements OnInit {
         if ( res.data.token) {
         this.model.token = res.data.token;
         GLOBAL.currentUser = this.model;
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/dashboard', this.model]);
       }else { // show errors
       }
       }, err => console.log(err));
