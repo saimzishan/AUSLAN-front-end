@@ -15,10 +15,9 @@ import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CustomFormsModule } from 'ng2-validation';
 import { routing } from './app.routing';
+import {APP_BASE_HREF} from '@angular/common';
+import {authService} from './shared/global';
 
-export function authService(http: Http, options: RequestOptions) {
-  return new AuthHttp(new AuthConfig(), http, options);
-};
 
 
 @NgModule({
@@ -34,7 +33,7 @@ export function authService(http: Http, options: RequestOptions) {
     BrowserModule,
     FormsModule,
     HttpModule
-  ],  providers: [ApiService, UserService, {
+  ],  providers: [ApiService, UserService, {provide: APP_BASE_HREF, useValue : '/' }, {
       provide: AuthHttp,
       useFactory: authService,
       deps: [Http, RequestOptions]

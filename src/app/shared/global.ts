@@ -1,4 +1,6 @@
 import { environment } from '../../environments/environment';
+import { AuthHttp, AuthConfig } from 'angular2-jwt';
+import { Http, RequestOptions } from '@angular/http';
 
 
 export class GLOBAL {
@@ -14,3 +16,7 @@ export class GLOBAL {
   public static VERSION = ' => 0.1.9' ; // This should be broken into MAJOR and MINOR version?
 
 }
+
+export function authService(http: Http, options: RequestOptions) {
+  return new AuthHttp(new AuthConfig(), http, options);
+};

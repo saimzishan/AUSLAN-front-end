@@ -12,6 +12,11 @@ import { ModuleWithProviders }  from '@angular/core';
 
 
 const appRoutes: Routes = [
+  {
+    path: '',
+    redirectTo: '/authenticate',
+    pathMatch: 'full'
+  },
   { path: 'admin-center', component: AdminComponent },
   { path: 'authenticate', component: AuthComponent },
   { path: '404', component: NotFoundComponent },
