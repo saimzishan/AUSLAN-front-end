@@ -5032,11 +5032,11 @@ input[type=tel] {
 }
 
 input[type=email] {
-    background-image: url(../img/icon-email.svg)
+    // background-image: url(../img/icon-email.svg)
 }
 
 input[type=password] {
-    background-image: url(../img/icon-lock.svg)
+    // background-image: url(../img/icon-lock.svg)
 }
 
 input.icon-map-marker {

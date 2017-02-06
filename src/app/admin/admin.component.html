@@ -1,12 +1,28 @@
+
+        <div class="columns">
+
+          <!-- form login-->
+          <form class="form-admin" #adminForm="ngForm">
+
 <section class="userapp">
   <header class="header">
     <h1>Admin Area - User Management</h1>
-    <input class="new-user-email" placeholder="Enter your email" autofocus="" [(ngModel)]="newUser.email" name="email" #email="ngModel" email required>
+    <label class="icon-email1">
+      EMAIL  </label>
+
+    <input type="email" id="email" name="email" placeholder="Enter your email" autofocus="" [(ngModel)]="newUser.email" name="email" #email="ngModel" email required>
     <p *ngIf="email.errors?.email;">The email is required and has to be in email format</p>
-    <input class="new-user-pass" type="password" placeholder="Enter your password" [(ngModel)]="newUser.password" name="password" #password="ngModel" required>
+
+  <label class="icon-lock">
+    PASSWORD
+  <input id="pass" name="pass"  type="password" placeholder="Enter your password" [(ngModel)]="newUser.password" name="password" #password="ngModel" required>
     <p *ngIf="password.errors?.required">The password is required and has to be strong</p>
-    <input class="new-user-confirm_pass" type="password" placeholder="Confirm password" [(ngModel)]="newUser.confirm_password" name="certainPassword" #certainPassword="ngModel" [equalTo]="password">
+  </label>
+  <label class="icon-lock">
+    PASSWORD
+<input id="certainPassword" name="certainPassword"  type="password" placeholder="Confirm password" [(ngModel)]="newUser.confirm_password" name="certainPassword" #certainPassword="ngModel" [equalTo]="password">
     <p *ngIf="certainPassword.errors?.equalTo">The confirm password should match with password</p>
+  </label>
     <input class="new-user-first_name" placeholder="What is your first name" [(ngModel)]="newUser.first_name"
     name="first_name" #first_name="ngModel"  [rangeLength]="[2, 30]" required>
     <p *ngIf="first_name.errors?.rangeLength">The first name is required and should have minimum 2 characters</p>
@@ -42,3 +58,6 @@
     <span class="users-count"><strong>{{users.length}}</strong> {{users.length == 1 ? 'item' : 'items'}} left</span>
   </footer>
 </section>
+</form>
+<!-- /form login-->
+</div>
