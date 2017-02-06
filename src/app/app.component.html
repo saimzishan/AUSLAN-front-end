@@ -1,5 +1,11 @@
 <h1>
   {{title}}
 </h1>
-<app-auth></app-auth>
-<app-admin></app-admin>
+<base href="/">
+<nav>
+           <a [routerLink]="['/dashboard']">Dashboard</a>
+           <a [routerLink]="['/admin-center']">Admin Center</a>
+           <a [routerLink]="['/authenticate']">Login</a>
+         </nav>
+<!-- Router Outlet -->
+<router-outlet></router-outlet>

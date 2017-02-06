@@ -14,6 +14,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CustomFormsModule } from 'ng2-validation';
+import { routing } from './app.routing';
 
 export function authService(http: Http, options: RequestOptions) {
   return new AuthHttp(new AuthConfig(), http, options);
@@ -29,7 +30,7 @@ export function authService(http: Http, options: RequestOptions) {
     EnumValPipe,
     NotFoundComponent,
   ], exports: [EnumValPipe],
-  imports: [CustomFormsModule,
+  imports: [CustomFormsModule, routing,
     BrowserModule,
     FormsModule,
     HttpModule
@@ -42,7 +43,8 @@ export function authService(http: Http, options: RequestOptions) {
   bootstrap: [AppComponent],
 })
 export class AppModule {
-  /*constructor(router: Router) {
+  /*
+  constructor(router: Router) {
     console.log('Routes: ', JSON.stringify(router.config, undefined, 2));
   }*/
  }
