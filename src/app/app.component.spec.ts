@@ -3,37 +3,35 @@
 import { AppComponent } from './app.component';
 import {GLOBAL} from './shared/global';
 import { AuthComponent } from './auth/auth.component';
-import { ApiService } from './api/api.service';
-import { MockBackend, MockConnection } from '@angular/http/testing';
 import {
     ResponseOptions,
     Response,
-    Http,
+    Http, HttpModule,
     BaseRequestOptions,
     RequestMethod
 } from '@angular/http';
+import {UserService} from './api/user.service';
 
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { AdminComponent } from './admin/admin.component';
 import {
     TestBed, fakeAsync, async, inject
 } from '@angular/core/testing';
 
-const mockHttpProvider = {
-    deps: [ MockBackend, BaseRequestOptions ],
-    useFactory: (backend: MockBackend, defaultOptions: BaseRequestOptions) => {
-        return new Http(backend, defaultOptions);
-    }
-};
+import { FormsModule }   from '@angular/forms';
+import { CustomFormsModule } from 'ng2-validation';
+import { EnumValPipe } from './shared/pipe/enum-val.pipe';
 
 describe('AppComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [
         AppComponent,
-        AuthComponent
-      ], providers: [
-        { provide: Http, useValue: mockHttpProvider },
-        MockBackend,
-        BaseRequestOptions, ApiService]
+        AuthComponent,
+        DashboardComponent,
+        AdminComponent, EnumValPipe
+      ],  providers: [UserService], imports: [CustomFormsModule,  HttpModule,  FormsModule
+  ]
     });
     TestBed.compileComponents();
   });
