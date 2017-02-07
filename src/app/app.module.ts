@@ -20,7 +20,7 @@ import {authService} from './shared/global';
 import { RegisterComponent } from './register/register.component';
 import { VerifyComponent } from './verify/verify.component';
 import { ResetComponent } from './reset/reset.component';
-
+import {AuthGuard} from './auth/auth.guard';
 
 
 @NgModule({
@@ -39,7 +39,7 @@ import { ResetComponent } from './reset/reset.component';
     BrowserModule, RouterModule,
     FormsModule,
     HttpModule
-  ],  providers: [Title, ApiService, UserService, {provide: APP_BASE_HREF, useValue : '/' }, {
+  ],  providers: [AuthGuard, Title, ApiService, UserService, {provide: APP_BASE_HREF, useValue : '/' }, {
       provide: AuthHttp,
       useFactory: authService,
       deps: [Http, RequestOptions]

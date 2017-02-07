@@ -13,6 +13,9 @@ import {
     RequestMethod
 } from '@angular/http';
 
+import {authService} from '../shared/global';
+import { RequestOptions } from '@angular/http';
+import { AuthHttp, AuthConfig } from 'angular2-jwt';
 declare function require(name: string);
 let Pact = require('pact-consumer-js-dsl');
 
@@ -25,9 +28,9 @@ let Pact = require('pact-consumer-js-dsl');
 
 let mock_db: User[] = [
   new User({id: 2, email: 'admin1@aus.au', name: 'Joe Doe 2',
-     pass: 'secure_password', role: ROLE.SHITTY_DEVELOPER}),
+     password: 'secure_password', role: ROLE.Accountant}),
      new User({id: 1, email: 'admin1@aus.au', name: 'Joe Doe 1',
-        pass: 'secure_password', role: ROLE.SHITTY_DEVELOPER})
+        password: 'secure_password', role: ROLE.Interpreter})
 ];
 
 describe('UserService', () => {
@@ -35,7 +38,11 @@ describe('UserService', () => {
     let val = '';
     beforeEach((done) => {
         TestBed.configureTestingModule({
-            providers: [UserService],
+            providers: [UserService, {
+                provide: AuthHttp,
+                useFactory: authService,
+                deps: [Http, RequestOptions]
+              }],
             imports: [HttpModule]
         });
 
@@ -173,7 +180,7 @@ describe('UserService', () => {
 
             userProvider.run(done, function(runComplete) {
               let u: User = new User({id: 3, email: 'admin1@aus.au', name: 'Joe Doe3',
-                  pass: 'secure_password', role: ROLE.SHITTY_DEVELOPER});
+                  password: 'secure_password', role: ROLE.Client});
 
                 let status_code = service.updateUser(u)
                     .subscribe((res: any) => {
@@ -223,7 +230,7 @@ describe('UserService', () => {
 
             userProvider.run(done, function(runComplete) {
                 let u: User = new User({id: 3, email: 'admin1@aus.au', name: 'Joe Doe',
-                    pass: 'secure_password', role: ROLE.SHITTY_DEVELOPER});
+                    password: 'secure_password', role: ROLE.BookingOfficer});
                 service.createUser(u)
                     .subscribe((res: any) => {
                         service.users.push(res.data);

@@ -3,7 +3,7 @@ import {Http, Headers, Response, RequestOptions} from '@angular/http';
 import {User, OrganisationalRepresentative, Accountant, Client,
     BookingOfficer, Administrator, Interpreter} from '../shared/model/user.entity';
 import {ROLE} from '../shared/model/role.enum';
-import {GLOBAL} from '../shared/global';
+import {GLOBAL, authService} from '../shared/global';
 import { Observable } from 'rxjs/Observable';
 import { ApiService } from './api.service';
 import 'rxjs/add/operator/catch';
@@ -19,7 +19,7 @@ import { AuthHttp } from 'angular2-jwt';
 export class UserService {
     public token: string;
     users: User[] = [];
-    constructor(private http: Http) {
+    constructor(private http: AuthHttp ) {
     }
 
     /*
@@ -119,11 +119,12 @@ export class UserService {
       The Api that should login the user
     */
     login(user: User ): Observable<Object> {
-        let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
+        let headers = new Headers({ 'Content-Type': 'application/json; charset=utf-8', 'Accept': 'application/json' });
         let options = new RequestOptions({ headers: headers });
+        let obj =  { 'auth': user };
 
         return this.http
-            .get(GLOBAL.USER_API + '/login' , options)
+            .post(GLOBAL.USER_API + '/login' , JSON.stringify(obj), options)
             .map(ApiService.extractData)
             .catch(ApiService.handleError);
     }

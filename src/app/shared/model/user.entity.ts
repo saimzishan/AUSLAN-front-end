@@ -19,10 +19,10 @@ export class User {
   public password: string;
   public confirm_password: string;
   public role: ROLE;
-  public first_name = 'Major';
-  public last_name = 'Lazer';
+  public first_name = 'John';
+  public last_name = 'Dane';
   public id: number;
-  public mobile = '';
+  public mobile = 'xxxx xxx xxx';
   public token = '';
   protected get type() {
     return '';

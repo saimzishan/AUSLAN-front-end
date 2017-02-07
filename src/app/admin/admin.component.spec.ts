@@ -8,7 +8,9 @@ import { FormsModule }   from '@angular/forms';
 import { CustomFormsModule } from 'ng2-validation';
 import { EnumValPipe } from '../shared/pipe/enum-val.pipe';
 import { HttpModule, BaseRequestOptions } from '@angular/http';
-
+import {authService} from '../shared/global';
+import {  Http, RequestOptions } from '@angular/http';
+import { AuthHttp, AuthConfig } from 'angular2-jwt';
 import { AdminComponent } from './admin.component';
 
 describe('AdminComponent', () => {
@@ -19,7 +21,11 @@ describe('AdminComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ AdminComponent, EnumValPipe ],
-      providers: [UserService],
+      providers: [UserService, {
+          provide: AuthHttp,
+          useFactory: authService,
+          deps: [Http, RequestOptions]
+        }],
       imports: [CustomFormsModule,  HttpModule,  FormsModule
   ]
     })

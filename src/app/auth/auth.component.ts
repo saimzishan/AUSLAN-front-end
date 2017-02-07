@@ -21,10 +21,11 @@ export class AuthComponent implements OnInit {
     onSubmit() {
       this.service.login(this.model)
       .subscribe((res: any) => {
-        if ( res.data.token) {
-        this.model.token = res.data.token;
+        if ( res.data.jwt) {
+        this.model.token = res.data.jwt;
         GLOBAL.currentUser = this.model;
-        this.router.navigate(['/dashboard', this.model]);
+        sessionStorage.setItem('token', this.model.token);
+        this.router.navigate(['/dashboard']);
       }else { // show errors
       }
       }, err => console.log(err));

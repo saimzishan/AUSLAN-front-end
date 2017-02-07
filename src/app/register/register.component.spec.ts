@@ -17,13 +17,14 @@ import { ModuleWithProviders }  from '@angular/core';
 import { ResetComponent } from '../reset/reset.component';
 import { VerifyComponent } from '../verify/verify.component';
 import { EnumValPipe } from '../shared/pipe/enum-val.pipe';
-
-
+import {authService} from '../shared/global';
+import { RequestOptions } from '@angular/http';
+import { AuthHttp, AuthConfig } from 'angular2-jwt';
 import {UserService} from '../api/user.service';
 import { Observable } from 'rxjs/Observable';
 import { FormsModule }   from '@angular/forms';
 import { CustomFormsModule } from 'ng2-validation';
-import { HttpModule, BaseRequestOptions } from '@angular/http';
+import { HttpModule, Http, BaseRequestOptions } from '@angular/http';
 
 describe('RegisterComponent', () => {
   let component: RegisterComponent;
@@ -33,7 +34,11 @@ describe('RegisterComponent', () => {
     TestBed.configureTestingModule({
       declarations: [EnumValPipe,  AdminComponent, RegisterComponent,
           NotFoundComponent, DashboardComponent, AuthComponent, ResetComponent, VerifyComponent ],
-      providers: [UserService, {provide: APP_BASE_HREF, useValue : '/' }],
+      providers: [UserService, {provide: APP_BASE_HREF, useValue : '/' }, {
+          provide: AuthHttp,
+          useFactory: authService,
+          deps: [Http, RequestOptions]
+        }],
       imports: [CustomFormsModule, routing, RouterModule, HttpModule,  FormsModule
   ]
     })

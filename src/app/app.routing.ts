@@ -20,7 +20,7 @@ const appRoutes: Routes = [
     redirectTo: '/authenticate',
     pathMatch: 'full'
   },
-  { path: 'admin-center', component: AdminComponent },
+  { path: 'admin-center', component: AdminComponent, canActivate: [AuthGuard] },
   { path: 'authenticate', component: AuthComponent },
   { path: '404', component: NotFoundComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },

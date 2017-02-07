@@ -5,14 +5,6 @@ import { DebugElement } from '@angular/core';
 import { AuthComponent } from './auth.component';
 import {GLOBAL} from '../shared/global';
 import { ApiService } from '../api/api.service';
-import { MockBackend, MockConnection } from '@angular/http/testing';
-import {
-    ResponseOptions,
-    Response,
-    Http,
-    BaseRequestOptions,
-    RequestMethod
-} from '@angular/http';
 import { UserService } from '../api/user.service';
 import {User} from '../shared/model/user.entity';
 import {
@@ -30,15 +22,11 @@ import { DashboardComponent } from '../dashboard/dashboard.component';
 import { ModuleWithProviders }  from '@angular/core';
 import { RegisterComponent } from '../register/register.component';
 import { EnumValPipe } from '../shared/pipe/enum-val.pipe';
-
+import { AuthHttp, AuthConfig } from 'angular2-jwt';
 import { ResetComponent } from '../reset/reset.component';
 import { VerifyComponent } from '../verify/verify.component';
-const mockHttpProvider = {
-    deps: [ MockBackend, BaseRequestOptions ],
-    useFactory: (backend: MockBackend, defaultOptions: BaseRequestOptions) => {
-        return new Http(backend, defaultOptions);
-    }
-};
+import {authService} from '../shared/global';
+import {  HttpModule, Http, RequestOptions } from '@angular/http';
 
 
 describe('AuthComponent', () => {
@@ -49,11 +37,13 @@ describe('AuthComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ EnumValPipe, AdminComponent, RegisterComponent,
           NotFoundComponent, DashboardComponent, AuthComponent, ResetComponent, VerifyComponent ],
-      imports: [CustomFormsModule, routing, FormsModule, RouterModule],
-      providers: [UserService, {provide: APP_BASE_HREF, useValue : '/' },
-        { provide: Http, useValue: mockHttpProvider },
-        MockBackend,
-        BaseRequestOptions, ApiService]
+      imports: [CustomFormsModule, HttpModule, routing, FormsModule, RouterModule],
+      providers: [UserService, ApiService, {provide: APP_BASE_HREF, useValue : '/' },
+      {
+          provide: AuthHttp,
+          useFactory: authService,
+          deps: [Http, RequestOptions]
+        }]
     })
     .compileComponents();
   }));
