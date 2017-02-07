@@ -11,7 +11,7 @@ import { Http, RequestOptions } from '@angular/http';
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
 import { EnumValPipe } from './shared/pipe/enum-val.pipe';
 import { NotFoundComponent } from './not-found/not-found.component';
-import { Router } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CustomFormsModule } from 'ng2-validation';
 import { routing } from './app.routing';
@@ -36,7 +36,7 @@ import { ResetComponent } from './reset/reset.component';
     ResetComponent,
   ], exports: [EnumValPipe],
   imports: [CustomFormsModule, routing,
-    BrowserModule,
+    BrowserModule, RouterModule,
     FormsModule,
     HttpModule
   ],  providers: [Title, ApiService, UserService, {provide: APP_BASE_HREF, useValue : '/' }, {

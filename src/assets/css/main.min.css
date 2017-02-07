@@ -5028,7 +5028,7 @@ textarea {
 }
 
 input[type=tel] {
-    background-image: url(../img/icon-mobile.svg)
+    // background-image: url(../img/icon-mobile.svg)
 }
 
 input[type=email] {
@@ -5040,15 +5040,15 @@ input[type=password] {
 }
 
 input.icon-map-marker {
-    background-image: url(../img/icon-map-marker.svg)
+    // background-image: url(../img/icon-map-marker.svg)
 }
 
 input.icon-user-circle {
-    background-image: url(../img/icon-user-circle.svg)
+    // background-image: url(../img/icon-user-circle.svg)
 }
 
 input.icon-suitcase {
-    background-image: url(../img/icon-suitcase.svg)
+    // background-image: url(../img/icon-suitcase.svg)
 }
 
 textarea[rows] {

@@ -7,33 +7,45 @@
 <section class="userapp">
   <header class="header">
     <h1>Admin Area - User Management</h1>
-    <label class="icon-email1">
-      EMAIL  </label>
+    <label class="icon-email">
+      EMAIL *
 
     <input type="email" id="email" name="email" placeholder="Enter your email" autofocus="" [(ngModel)]="newUser.email" name="email" #email="ngModel" email required>
     <p *ngIf="email.errors?.email;">The email is required and has to be in email format</p>
-
+  </label>
   <label class="icon-lock">
-    PASSWORD
+    PASSWORD *
   <input id="pass" name="pass"  type="password" placeholder="Enter your password" [(ngModel)]="newUser.password" name="password" #password="ngModel" required>
     <p *ngIf="password.errors?.required">The password is required and has to be strong</p>
   </label>
   <label class="icon-lock">
-    PASSWORD
+    CONFIRM PASSWORD *
 <input id="certainPassword" name="certainPassword"  type="password" placeholder="Confirm password" [(ngModel)]="newUser.confirm_password" name="certainPassword" #certainPassword="ngModel" [equalTo]="password">
     <p *ngIf="certainPassword.errors?.equalTo">The confirm password should match with password</p>
   </label>
-    <input class="new-user-first_name" placeholder="What is your first name" [(ngModel)]="newUser.first_name"
+
+  <label>FIRST NAME *
+    <input type="text" class="new-user-first_name" placeholder="What is your first name" [(ngModel)]="newUser.first_name"
     name="first_name" #first_name="ngModel"  [rangeLength]="[2, 30]" required>
     <p *ngIf="first_name.errors?.rangeLength">The first name is required and should have minimum 2 characters</p>
 
-    <input class="new-user-last_name" placeholder="What is your last name" [(ngModel)]="newUser.last_name"   name="last_name" #last_name="ngModel" [min]="2" required>
-    <p *ngIf="last_name.errors?.rangeLength">The last name is required and should have minimum 2 characters</p>
+  </label>
+    <label>LAST NAME *
+
+          <input type="text" class="new-user-last_name" placeholder="What is your last name" [(ngModel)]="newUser.last_name"
+            name="last_name" #last_name="ngModel"  [rangeLength]="[2, 30]" required>
+          <p *ngIf="last_name.errors?.rangeLength">The last name is required and should have minimum 2 characters</p>
+
+    </label>
+    <label>ROLE *
 
     <select name="role" [(ngModel)]="newUser.role">
-       <option *ngFor="let item of roles | enumVal" [selected]="item.value =='Accountant'" [value]="item.key">{{item.value}}</option>
+       <option *ngFor="let item of roles | enumVal" [selected]="item.key =='4'" [value]="item.key">{{item.value}}</option>
     </select>
-<button name="add_user" class="add-user" [disabled]="last_name.errors || first_name.errors || password.errors || email.errors || certainPassword.errors " (click)="addUser(user)"> ADD User </button>
+  </label>
+
+<button name="add_user" class="button"
+[disabled]="last_name.errors ||first_name.errors  || email.errors || password.errors|| certainPassword.errors " (click)="addUser(user)"> ADD User </button>
   </header>
   <section class="main" *ngIf="users?.length > 0">
     <ul class="user-list">
