@@ -30,6 +30,7 @@ import {authService} from './shared/global';
 import { Title } from '@angular/platform-browser';
 import { ResetComponent } from './reset/reset.component';
 import { VerifyComponent } from './verify/verify.component';
+import { RegisterComponent } from './register/register.component';
 
 describe('AppComponent', () => {
   beforeEach(() => {
@@ -40,7 +41,7 @@ describe('AppComponent', () => {
         DashboardComponent,
         AdminComponent,
         EnumValPipe,
-        NotFoundComponent, ResetComponent, VerifyComponent
+        NotFoundComponent, RegisterComponent, ResetComponent, VerifyComponent
       ],
       imports: [CustomFormsModule, routing,
         BrowserModule,
