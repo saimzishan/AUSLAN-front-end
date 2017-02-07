@@ -20,6 +20,7 @@ export class GLOBAL {
 export function authService(http: Http, options: RequestOptions) {
   return new AuthHttp(new AuthConfig({
     tokenName: 'jwt',
+        noJwtError: true,
         tokenGetter: (() => sessionStorage.getItem('token')),
         globalHeaders: [{'Content-Type': 'application/json'}],
     }), http, options);

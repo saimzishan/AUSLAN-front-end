@@ -54,14 +54,11 @@
           <label name="id" >{{user.id  | json }}</label>
           <label name="email1" >{{user.email  | json }}</label>
           <label name="type" >{{user.type  | json }}</label>
-          <input [ngModel]="user.first_name"    [rangeLength]="[2, 30]"  (ngModelChange)="user.first_name=$event" name="first_name_1" #first_name_1="ngModel" [min]="2" required />
-          <p *ngIf="first_name_1.errors?.rangeLength">The first name is required and should have minimum 2 characters</p>
-
-          <input [ngModel]="user.last_name"   [rangeLength]="[2, 30]"  (ngModelChange)="user.last_name=$event" name="last_name_1" #last_name_1="ngModel" [min]="2" required  />
-          <p *ngIf="last_name_1.errors?.rangeLength">The last name is required and should have minimum 2 characters</p>
-
-          <button name="del_user" [disabled]="last_name_1.errors || first_name_1.errors" class="destroy-user" (click)="editUser(user)"> EDIT User </button>
-          <button name="edit_user" class="edit-user" (click)="removeUser(user)"> DELETE User </button>
+          <label name="type" >{{user.first_name  | json }}</label>
+          <label name="type" >{{user.last_name  | json }}</label>
+          
+          <button name="edit_user" class="button" (click)="editUser(user)"> EDIT User </button>
+          <button name="del_user" class="button" (click)="removeUser(user)"> DELETE User </button>
         </div>
       </li>
     </ul>
