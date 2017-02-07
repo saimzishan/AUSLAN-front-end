@@ -55,7 +55,13 @@
 									<input type="text" autofocus="" class="new-user-first_name" placeholder="What is your first name"
 									[(ngModel)]="model.first_name"
 							    name="first_name" #first_name="ngModel"  [rangeLength]="[2, 30]" required>
-
+									<span *ngIf="first_name.touched && !first_name.rangeLength?.required;" class="form-valid"></span>
+									<span *ngIf="first_name.touched && first_name.rangeLength?.required;" class="form-error is-visible">
+											<span data-tooltip="86bu89-tooltip" aria-haspopup="true"
+											class="has-tip left" data-template-classes="tooltip-error" data-disable-hover="false" tabindex="4" title=""
+											aria-describedby="1i4eab-tooltip" data-yeti-box="1i4eab-tooltip"
+											data-toggle="1i4eab-tooltip" data-resize="1i4eab-tooltip" data-events="resize">!</span>
+										</span>
 								</label>
 							</div>
 							<div class="medium-6 columns">
@@ -63,7 +69,13 @@
 
 									    <input type="text" class="new-user-last_name" placeholder="What is your last name"
 											 [(ngModel)]="model.last_name"   name="last_name" #last_name="ngModel"  [rangeLength]="[2, 30]" required>
-
+											 <span *ngIf="last_name.touched && !last_name.rangeLength?.required;" class="form-valid"></span>
+										 	<span *ngIf="last_name.touched && last_name.rangeLength?.required;" class="form-error is-visible">
+										 			<span data-tooltip="86bu89-tooltip" aria-haspopup="true"
+										 			class="has-tip left" data-template-classes="tooltip-error" data-disable-hover="false" tabindex="4" title=""
+										 			aria-describedby="1i4eab-tooltip" data-yeti-box="1i4eab-tooltip"
+										 			data-toggle="1i4eab-tooltip" data-resize="1i4eab-tooltip" data-events="resize">!</span>
+										 		</span>
 								</label>
 							</div>
 
@@ -72,6 +84,14 @@
 							    PASSWORD *
 							  <input id="pass" name="pass"  type="password" placeholder="Enter your password"
 								[(ngModel)]="model.password" name="password" #password="ngModel" required>
+
+								<span *ngIf="password.touched && !password.errors?.required;" class="form-valid"></span>
+								<span *ngIf="password.touched && password.errors?.required;" class="form-error is-visible">
+										<span data-tooltip="86bu89-tooltip" aria-haspopup="true"
+										class="has-tip left" data-template-classes="tooltip-error" data-disable-hover="false" tabindex="4" title=""
+										aria-describedby="1i4eab-tooltip" data-yeti-box="1i4eab-tooltip"
+										data-toggle="1i4eab-tooltip" data-resize="1i4eab-tooltip" data-events="resize">!</span>
+									</span>
 							  </label>
 							</div>
 							<div class="medium-6 columns">
@@ -80,6 +100,13 @@
 							<input id="certainPassword" name="certainPassword"
 							type="password" placeholder="Confirm password"
 							[(ngModel)]="model.confirm_password" name="certainPassword" #certainPassword="ngModel" [equalTo]="password">
+							<span *ngIf="certainPassword.touched && !certainPassword.errors?.equalTo;" class="form-valid"></span>
+							<span *ngIf="certainPassword.touched && certainPassword.errors?.equalTo;" class="form-error is-visible">
+									<span data-tooltip="86bu89-tooltip" aria-haspopup="true"
+									class="has-tip left" data-template-classes="tooltip-error" data-disable-hover="false" tabindex="4" title=""
+									aria-describedby="1i4eab-tooltip" data-yeti-box="1i4eab-tooltip"
+									data-toggle="1i4eab-tooltip" data-resize="1i4eab-tooltip" data-events="resize">!</span>
+								</span>
 							  </label>
 							</div>
 
@@ -89,12 +116,27 @@
 
 						    <input type="email" id="email" name="email" placeholder="Enter your email"
 								 [(ngModel)]="model.email" name="email" #email="ngModel" email required>
+								 <span *ngIf="email.touched && !email.errors?.email;" class="form-valid"></span>
+ 								<!-- p *ngIf="email.errors?.email;">The email is required and has to be in email format</p -->
+ 								<span *ngIf="(email.dirty || email.touched) && (email.errors?.required || email.errors?.email);" class="form-error is-visible">
+ 										<span data-tooltip="86bu89-tooltip" aria-haspopup="true"
+ 										class="has-tip left" data-template-classes="tooltip-error" data-disable-hover="false" tabindex="4" title=""
+ 										aria-describedby="1i4eab-tooltip" data-yeti-box="1i4eab-tooltip"
+ 										data-toggle="1i4eab-tooltip" data-resize="1i4eab-tooltip" data-events="resize">!</span>
+ 									</span>
 						  </label>
 							</div>
 
 							<div class="medium-6 columns">
 								<label>MOBILE *
 									<input type="tel" placeholder="" [(ngModel)]="model.mobile" name="mobile" #mobile="ngModel" required>
+									<span *ngIf="mobile.touched && !mobile.errors?.required;" class="form-valid"></span>
+									<span *ngIf="mobile.touched && mobile.errors?.required;" class="form-error is-visible">
+											<span data-tooltip="86bu89-tooltip" aria-haspopup="true"
+											class="has-tip left" data-template-classes="tooltip-error" data-disable-hover="false" tabindex="4" title=""
+											aria-describedby="1i4eab-tooltip" data-yeti-box="1i4eab-tooltip"
+											data-toggle="1i4eab-tooltip" data-resize="1i4eab-tooltip" data-events="resize">!</span>
+										</span>
 								</label>
 							</div>
 
@@ -105,11 +147,11 @@
 								<div class="text-center">
 									<button type="submit" [disabled]="last_name.errors || first_name.errors || password.errors || email.errors || certainPassword.errors " (click)="addUser(user)" class="button">Register</button>
 								</div>
-								<p *ngIf="password.errors?.required">The password is required and has to be strong</p>
+								<!-- p *ngIf="password.errors?.required">The password is required and has to be strong</p>
 							 <p *ngIf="last_name.errors?.rangeLength">The last name is required and should have minimum 2 characters</p>
 							 <p *ngIf="first_name.errors?.rangeLength">The first name is required and should have minimum 2 characters</p>
 									 <p *ngIf="certainPassword.errors?.equalTo">The confirm password should match with password</p>
-							 <p *ngIf="email.errors?.email;">The email is required and has to be in email format</p>
+							 <p *ngIf="email.errors?.email;">The email is required and has to be in email format</p -->
 
 							 <div [hidden]="!userCreated">
 								 <p> Congrats Your user has been created. Kindly go back to <a [routerLink]="['/authenticate']">Login Page</a> and Login </p>
