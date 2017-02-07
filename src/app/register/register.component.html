@@ -85,8 +85,8 @@
 							  <input id="pass" name="pass"  type="password" placeholder="Enter your password"
 								[(ngModel)]="model.password" name="password" #password="ngModel" required>
 
-								<span *ngIf="password.touched && !password.errors?.required;" class="form-valid"></span>
-								<span *ngIf="password.touched && password.errors?.required;" class="form-error is-visible">
+								<span *ngIf="password.touched &&  (!password.errors?.required && password.errors?.rangeLength);" class="form-valid"></span>
+								<span *ngIf="password.touched && (password.errors?.required || password.errors?.rangeLength);" class="form-error is-visible">
 										<span data-tooltip="86bu89-tooltip" aria-haspopup="true"
 										class="has-tip left" data-template-classes="tooltip-error" data-disable-hover="false" tabindex="4" title=""
 										aria-describedby="1i4eab-tooltip" data-yeti-box="1i4eab-tooltip"
@@ -99,9 +99,9 @@
 							    CONFIRM PASSWORD *
 							<input id="certainPassword" name="certainPassword"
 							type="password" placeholder="Confirm password"
-							[(ngModel)]="model.confirm_password" name="certainPassword" #certainPassword="ngModel" [equalTo]="password">
-							<span *ngIf="certainPassword.touched && !certainPassword.errors?.equalTo;" class="form-valid"></span>
-							<span *ngIf="certainPassword.touched && certainPassword.errors?.equalTo;" class="form-error is-visible">
+							[(ngModel)]="model.confirm_password" name="certainPassword" #certainPassword="ngModel" [equalTo]="password" required>
+							<span *ngIf="certainPassword.touched && (!certainPassword.errors?.required && !certainPassword.errors?.equalTo);" class="form-valid"></span>
+							<span *ngIf="certainPassword.touched && (certainPassword.errors?.required || certainPassword.errors?.equalTo);" class="form-error is-visible">
 									<span data-tooltip="86bu89-tooltip" aria-haspopup="true"
 									class="has-tip left" data-template-classes="tooltip-error" data-disable-hover="false" tabindex="4" title=""
 									aria-describedby="1i4eab-tooltip" data-yeti-box="1i4eab-tooltip"
