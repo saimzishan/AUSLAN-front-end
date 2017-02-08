@@ -52,11 +52,12 @@
       <li *ngFor="let user of users">
         <div class="view">
           <label name="id" >{{user.id  | json }}</label>
-          <label name="email1" >{{user.email  | json }}</label>
+          <label name="email" >{{user.email  | json }}</label>
           <label name="type" >{{user.type  | json }}</label>
-          <label name="type" >{{user.first_name  | json }}</label>
-          <label name="type" >{{user.last_name  | json }}</label>
-          
+          <!-- label name="first_name" >{{user.first_name  | json }}</label -->
+          <input type="text"  name="first_name" [value]="user.first_name">
+          <label (keyup)="onKey($event)" name="last_name" >{{user.last_name  | json }}</label>
+
           <button name="edit_user" class="button" (click)="editUser(user)"> EDIT User </button>
           <button name="del_user" class="button" (click)="removeUser(user)"> DELETE User </button>
         </div>

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import {GLOBAL} from './shared/global';
-
+import {AuthGuard} from './auth/auth.guard';
 
 @Component({
   selector: 'app-root',
@@ -14,4 +14,7 @@ export class AppComponent {
     this.titleService.setTitle(GLOBAL.TITLE + GLOBAL.VERSION);
   }
 
+  isLoggedIn() {
+    return GLOBAL.isLoggedIn();
+  }
 }

@@ -23,33 +23,38 @@ export class AdminComponent implements OnInit {
     newUser: User = new User();
     roles: any;
     users: Array<User> = [];
+    // this is bad
+    selectedLastName = '';
+
     ngOnInit() {
 
     }
 
+    onKey(event: any) { // without type info
+      this.selectedLastName = event.target.value;
+    }
     constructor(private userDataService: UserService) {
       this.roles = ROLE;
-
-          this.userDataService.fetchUsers()
-          .subscribe((res: any) => {
-            this.users = res.data.users;
-          }, err => console.log(err));
+      this.fetchUsers();
     }
 
     addUser() {
         this.userDataService.createUser(this.newUser)
         .subscribe((res: any) => {
-           this.newUser.id =  res.data.id;
-           this.users.push(this.newUser);
-          this.newUser = new User();
+           if ( res.data.id &&  0 < res.data.id) {
+           this.newUser = new User();
+           this.fetchUsers();
+         }
         }, err => console.log(err));
       }
 
     editUser(user) {
+        user.last_name = this.selectedLastName;
         this.userDataService.updateUser(user)
         .subscribe((res: any) => {
             if ( res.status === 200) {
               // UI Notification
+              this.fetchUsers();
             }
         }, err => console.log(err));
     }
@@ -58,10 +63,16 @@ export class AdminComponent implements OnInit {
         this.userDataService.deleteUser(user.id)
         .subscribe((res: any) => {
           if ( res.status === 204 ) {
-            // UI Notification
-             this.users.splice(this.users.indexOf(user), 1);
+            this.fetchUsers();
           }
         }, err => console.log(err));
+    }
+
+    fetchUsers() {
+      this.userDataService.fetchUsers()
+      .subscribe((res: any) => {
+        this.users = res.data.users;
+      }, err => console.log(err));
     }
 
 }

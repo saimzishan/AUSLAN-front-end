@@ -22,6 +22,7 @@ const appRoutes: Routes = [
   },
   { path: 'admin-center', component: AdminComponent, canActivate: [AuthGuard] },
   { path: 'authenticate', component: AuthComponent },
+  { path: 'authenticate/logout', component: AuthComponent },
   { path: '404', component: NotFoundComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   {path: 'register', component: RegisterComponent},

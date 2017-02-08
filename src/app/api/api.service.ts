@@ -56,7 +56,7 @@ export class ApiService {
         if (error instanceof Response) {
             let body, err: any;
             try {
-              body = error.json() || '';
+              body = error.json() || error.text() || '';
               err = body.error || JSON.stringify(body);
             }catch ( er ) {
 

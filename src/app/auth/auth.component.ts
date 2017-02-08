@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { UserService } from '../api/user.service';
 import {User} from '../shared/model/user.entity';
 import {GLOBAL} from '../shared/global';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-auth',
@@ -12,10 +12,17 @@ import { Router } from '@angular/router';
 
 })
 export class AuthComponent implements OnInit {
+  error: any;
   model: User = new User();
-  constructor(private service: UserService, private router: Router) { }
+  constructor(private service: UserService, private routes: ActivatedRoute, private router: Router) {
+  }
 
    ngOnInit() {
+     this.routes.url.subscribe( v => {
+       if (v.length > 1 && v[1].path === 'logout') {
+         this.logout();
+       }
+     });
    }
 
     onSubmit() {
@@ -23,18 +30,19 @@ export class AuthComponent implements OnInit {
       .subscribe((res: any) => {
         if ( res.data.jwt) {
         this.model.token = res.data.jwt;
-        GLOBAL.currentUser = this.model;
-        sessionStorage.setItem('token', this.model.token);
+        GLOBAL.login(this.model);
         this.router.navigate(['/dashboard']);
       }else { // show errors
       }
-      }, err => console.log(err));
+    },
+    err => {console.log(err); this.error = err; },
+    () => {});
     }
 
     logout(): void {
+        this.model.token = null;
         // clear token remove user from local storage to log user out
-        this.model.token = null;
-        GLOBAL.currentUser = null;
+        GLOBAL.logout();
     }
 
 }

@@ -8,10 +8,13 @@ import {GLOBAL} from '../shared/global';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  model: User = GLOBAL.currentUser ;
+  first_name = '';
+  last_name = '';
   constructor() { }
 
   ngOnInit() {
+    this.first_name = GLOBAL.currentUser.first_name;
+    this.last_name = GLOBAL.currentUser.last_name;
   }
 
 }

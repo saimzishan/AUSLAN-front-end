@@ -46,6 +46,10 @@
 
 							<button type="submit" [disabled]="!loginForm.form.valid" class="login button">Log In</button>
 
+							<p hidden="!error">
+								{{error}}
+							</p>
+
 							<div class="sep-or"><span>or</span></div>
 							<p class="text-muted">Don’t Have an Account ?</p>
 							<a [routerLink]="['/register']" class="signup button">CREATE AN ACCOUNT</a>
@@ -55,9 +59,9 @@
 				</div>
 				<div class="small-7 columns columns-slogan">
 					<div class="slogan">
-						CONNECTING PEOPLE
+						INVESTING BACK INTO
 						<br>
-						TO THE WORLD
+						THE DEAF COMMUNITY
 					</div>
 				</div>
 			</div>

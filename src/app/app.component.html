@@ -3,6 +3,7 @@
 <nav>
            <a [routerLink]="['/dashboard']">Dashboard</a>
            <a [routerLink]="['/admin-center']">Admin Center</a>
-           <a [routerLink]="['/authenticate']">Login</a>
+           <a *ngIf="!isLoggedIn()" [routerLink]="['/authenticate']">Login</a>
+           <a *ngIf="isLoggedIn()" [routerLink]="['/authenticate','logout']">Logout</a>
            <a [routerLink]="['/register']">Register</a>
          </nav>
