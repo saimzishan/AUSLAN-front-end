@@ -7,7 +7,7 @@
 				<div class="small-4 columns interpreter">
 					<div class="row align-middle">
 						<div class="columns">
-							<a href="" class="button-img">
+							<a (click)="roleSelected('Interpreter')" class="button-img">
 								<img src="assets/img/interpreter-icon.svg" alt="">
 							</a>
 							<button (click)="roleSelected('Interpreter')" class="button">Interpreter</button>
@@ -17,7 +17,7 @@
 				<div class="small-4 columns client">
 					<div class="row align-middle">
 						<div class="columns">
-							<a href="" class="button-img">
+							<a (click)="roleSelected('Client')" class="button-img">
 								<img src="assets/img/client-icon.svg" alt="">
 							</a>
 							<button (click)="roleSelected('Client')" class="button">Client</button>
@@ -27,7 +27,7 @@
 				<div class="small-4 columns organization">
 					<div class="row align-middle">
 						<div class="columns">
-							<a href="signup-organization.html" class="button-img">
+							<a (click)="roleSelected('Organization')" class="button-img">
 								<img src="assets/img/organisation-icon.svg" alt="">
 							</a>
 							<button (click)="roleSelected('Organization')" class="button">Organization</button>
