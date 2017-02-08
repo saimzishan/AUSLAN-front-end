@@ -1,9 +1,7 @@
 <!-- Router Outlet -->
-<router-outlet></router-outlet>
 <nav>
-           <a [routerLink]="['/dashboard']">Dashboard</a>
-           <a [routerLink]="['/admin-center']">Admin Center</a>
-           <a *ngIf="!isLoggedIn()" [routerLink]="['/authenticate']">Login</a>
+           <a *ngIf="isLoggedIn()" [routerLink]="['/dashboard']">Dashboard</a>
+           <a *ngIf="isLoggedIn()" [routerLink]="['/admin-center']">Admin Center</a>
            <a *ngIf="isLoggedIn()" [routerLink]="['/authenticate','logout']">Logout</a>
-           <a [routerLink]="['/register']">Register</a>
          </nav>
+         <router-outlet></router-outlet>
