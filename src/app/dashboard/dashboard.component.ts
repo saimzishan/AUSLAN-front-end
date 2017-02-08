@@ -9,12 +9,10 @@ import {GLOBAL} from '../shared/global';
 })
 export class DashboardComponent implements OnInit {
   first_name = '';
-  last_name = '';
   constructor() { }
 
   ngOnInit() {
-    this.first_name = GLOBAL.currentUser.first_name;
-    this.last_name = GLOBAL.currentUser.last_name;
+    this.first_name = GLOBAL.getName();
   }
 
 }

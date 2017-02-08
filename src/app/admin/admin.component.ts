@@ -24,15 +24,15 @@ export class AdminComponent implements OnInit {
     roles: any;
     users: Array<User> = [];
     // this is bad
-    selectedLastName = '';
+    selectedLastName = 'I am ';
 
     ngOnInit() {
 
     }
-
+    /*
     onKey(event: any) { // without type info
       this.selectedLastName = event.target.value;
-    }
+    }*/
     constructor(private userDataService: UserService) {
       this.roles = ROLE;
       this.fetchUsers();
@@ -48,8 +48,8 @@ export class AdminComponent implements OnInit {
         }, err => console.log(err));
       }
 
-    editUser(user) {
-        user.last_name = this.selectedLastName;
+    editUser(user, val) {
+        user.first_name = val ? val : this.selectedLastName + user.first_name;
         this.userDataService.updateUser(user)
         .subscribe((res: any) => {
             if ( res.status === 200) {

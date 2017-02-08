@@ -10,7 +10,7 @@ export class AuthGuard implements CanActivate {
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
          let token = sessionStorage.getItem('token');
-        if (tokenNotExpired('token', token)) {
+        if (GLOBAL.isLoggedIn() && tokenNotExpired('token', token)) {
             // logged in so return true
             return true;
         }

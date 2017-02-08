@@ -55,10 +55,10 @@
           <label name="email" >{{user.email  | json }}</label>
           <label name="type" >{{user.type  | json }}</label>
           <!-- label name="first_name" >{{user.first_name  | json }}</label -->
-          <input type="text"  name="first_name" [value]="user.first_name">
-          <label (keyup)="onKey($event)" name="last_name" >{{user.last_name  | json }}</label>
+          <input #box (keyup)="0"  type="text"  name="first_name" [value]="user.first_name">
+          <label  name="last_name" >{{user.last_name  | json }}</label>
 
-          <button name="edit_user" class="button" (click)="editUser(user)"> EDIT User </button>
+          <button name="edit_user" class="button" (click)="editUser(user, box.value)"> EDIT User </button>
           <button name="del_user" class="button" (click)="removeUser(user)"> DELETE User </button>
         </div>
       </li>

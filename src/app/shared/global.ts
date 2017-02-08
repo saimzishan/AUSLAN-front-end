@@ -14,21 +14,24 @@ export class GLOBAL {
   public static BOOKING_API = GLOBAL.API_ENDPOINT + '/bookings' ;
   public static TITLE = 'Auslan Booking System' ;
   public static VERSION = ' => 0.1.9' ; // This should be broken into MAJOR and MINOR version?
-  public static currentUser: User = new User();
 
   public static isLoggedIn() {
     let token = sessionStorage.getItem('token');
-    return token && token.length > 0;
+    let name = sessionStorage.getItem('name');
+    return token && token.length > 0 && name && name.length > 0;
   }
 
   public static logout() {
-            GLOBAL.currentUser = null;
             sessionStorage.removeItem('token');
-  }
+            sessionStorage.removeItem('name');
 
+  }
+  public static getName() {
+    return sessionStorage.getItem('name');
+  }
   public static login(user) {
-    GLOBAL.currentUser = user;
     sessionStorage.setItem('token', user.token);
+    sessionStorage.setItem('name', user.first_name + ' ' + user.last_name);
   }
 }
 
