@@ -6,8 +6,8 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./notification.component.css']
 })
 export class NotificationComponent implements OnInit {
-
-  constructor(@Input() private notification: string) { }
+  @Input('notification') public notification: string;
+  constructor() { }
 
   ngOnInit() {
   }

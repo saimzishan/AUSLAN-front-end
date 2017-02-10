@@ -1,30 +1,31 @@
 import { Component, OnInit } from '@angular/core';
 import {UserService} from '../api/user.service';
+import {NotificationComponent} from '../notification/notification.component';
 
 @Component({
-  selector: 'app-verify',
-  templateUrl: './verify.component.html',
-  styleUrls: ['./verify.component.css']
+    selector: 'app-verify',
+    templateUrl: './verify.component.html',
+    styleUrls: ['./verify.component.css']
 })
 export class VerifyComponent implements OnInit {
+    errors: any;
+    constructor(public verificationCode: string, private service: UserService) { }
 
-  constructor(public errors: any, private verificationCode: string, private service: UserService) { }
-
-  ngOnInit() {
-  }
-
-  verifyUser() {
-
-    this.service.verifyUser(this.verificationCode)
-    .subscribe((res: any) => {
-      if ( res.data.verify) {
-    }else { // show errors
+    ngOnInit() {
     }
-  },
-  err => {
-    console.log(err);
-    this.errors = 'The verification Code is not right.';
-  },
-  () => {});
-  }
+
+    verifyUser() {
+
+        this.service.verifyUser(this.verificationCode)
+            .subscribe((res: any) => {
+                if (res.data.verify) {
+                } else { // show errors
+                }
+            },
+            err => {
+                console.log(err);
+                this.errors = 'The verification Code is not right.';
+            },
+            () => { });
+    }
 }

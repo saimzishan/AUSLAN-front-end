@@ -117,7 +117,7 @@ export class UserService extends ApiService {
     /*
       The Api should be to verify user
     */
-    verifyUser(verifyCode: number): Observable<Object> {
+    verifyUser(verifyCode: string): Observable<Object> {
         let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 

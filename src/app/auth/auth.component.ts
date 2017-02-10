@@ -12,7 +12,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 })
 export class AuthComponent implements OnInit {
-  errors;
+  errors: any;
   model: User = new User();
   constructor(private service: UserService, private routes: ActivatedRoute, private router: Router) {
   }

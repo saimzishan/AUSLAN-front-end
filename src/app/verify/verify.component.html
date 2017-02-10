@@ -14,7 +14,8 @@
 
   </label>
                 <button name="verify_user" class="button" [disabled]="verification_code.errors" (click)="verifyUser()"> Verify User </button>
-            <app-notification [notification]={{errors}}></app-notification>
+                <app-notification [notification]='errors'></app-notification>
+
           </header>
         </section>
     </form>
