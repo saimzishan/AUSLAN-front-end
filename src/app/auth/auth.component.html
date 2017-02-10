@@ -46,9 +46,7 @@
 
 							<button type="submit" [disabled]="!loginForm.form.valid" class="login button">Log In</button>
 
-							<div *ngIf="errors" class="alert">
-  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-{{errors}}</div>
+							<app-notification [notification]={{errors}}></app-notification>
 
 							<div class="sep-or"><span>or</span></div>
 							<p class="text-muted">Don’t Have an Account ?</p>

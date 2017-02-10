@@ -1,3 +1,22 @@
-<p>
-  verify works!
-</p>
+<div class="columns">
+
+    <!-- form login-->
+    <form class="form-admin" #verifyForm="ngForm">
+
+        <section class="userapp">
+            <header class="header">
+
+                <label>VERIFICATION CODE *
+    <input type="text" placeholder="Kindly enter the verification code that has been sent to your email"
+    [(ngModel)]='verificationCode'
+    name="verification_code" #verification_code="ngModel"  [rangeLength]="[4, 8]" required>
+    <p *ngIf="verification_code.errors?.rangeLength">The verification code t name is required and should have 4 characters</p>
+
+  </label>
+                <button name="verify_user" class="button" [disabled]="verification_code.errors" (click)="verifyUser()"> Verify User </button>
+            <app-notification [notification]={{errors}}></app-notification>
+          </header>
+        </section>
+    </form>
+    <!-- /form login-->
+</div>

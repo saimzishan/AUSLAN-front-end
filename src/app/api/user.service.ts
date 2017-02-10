@@ -67,7 +67,7 @@ export class UserService extends ApiService {
 
         let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': '*/*' });
         let options = new RequestOptions({ headers: headers });
-        let obj =  { 'user': user };
+        let obj = { 'user': user };
 
         return this.http.post(this.getRoute(user), JSON.stringify(obj), options)
             .map(this.extractData)
@@ -81,7 +81,7 @@ export class UserService extends ApiService {
 
         let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
         let options = new RequestOptions({ headers: headers });
-        let obj =  { 'user': user };
+        let obj = { 'user': user };
         return this.http.patch(GLOBAL.USER_API + '/' + user.id, JSON.stringify(obj), options)
             .map(this.extractData)
             .catch(this.handleError);
@@ -113,6 +113,20 @@ export class UserService extends ApiService {
             .catch(this.handleError);
     }
 
+
+    /*
+      The Api should be to verify user
+    */
+    verifyUser(verifyCode: number): Observable<Object> {
+        let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http
+            .get(GLOBAL.USER_API + '/verify' + verifyCode + options)
+            .map(this.extractData)
+            .catch(this.handleError);
+    }
+
     /*
       The Api should be get user by its ID (The Id should be email)
     */
@@ -128,25 +142,25 @@ export class UserService extends ApiService {
     /*
       The Api that should login the user
     */
-    login(user: User ): Observable<Object> {
+    login(user: User): Observable<Object> {
         let headers = new Headers({ 'Content-Type': 'application/json; charset=utf-8', 'Accept': 'application/json' });
         let options = new RequestOptions({ headers: headers });
-        let obj =  { 'auth': user };
+        let obj = { 'auth': user };
 
         return this.http
-            .post(GLOBAL.USER_API + '/login' , JSON.stringify(obj), options)
+            .post(GLOBAL.USER_API + '/login', JSON.stringify(obj), options)
             .map(this.extractData)
-            .catch((err) => {return Observable.throw(err); });
+            .catch((err) => { return Observable.throw(err); });
     }
     /*
       The Api that should logout the user
     */
-    logout(user: User ): Observable<Object> {
+    logout(user: User): Observable<Object> {
         let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
         return this.http
-            .get(GLOBAL.USER_API + '/logout' , options)
+            .get(GLOBAL.USER_API + '/logout', options)
             .map(this.extractData)
             .catch(this.handleError);
     }

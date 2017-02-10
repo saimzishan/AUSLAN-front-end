@@ -7,9 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ResetComponent implements OnInit {
 
-  constructor() { }
+  constructor(private verificationCode: string) { }
 
   ngOnInit() {
+  }
+
+  verifyUser() {
+
   }
 
 }

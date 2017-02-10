@@ -22,6 +22,7 @@ import { VerifyComponent } from './verify/verify.component';
 import { ResetComponent } from './reset/reset.component';
 import {AuthGuard} from './auth/auth.guard';
 import {enableProdMode} from '@angular/core';
+import { NotificationComponent } from './notification/notification.component';
 
 enableProdMode();
 
@@ -36,6 +37,7 @@ enableProdMode();
     RegisterComponent,
     VerifyComponent,
     ResetComponent,
+    NotificationComponent,
   ], exports: [EnumValPipe],
   imports: [CustomFormsModule, routing,
     BrowserModule, RouterModule,
