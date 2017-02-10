@@ -12,6 +12,7 @@ import {authService} from '../shared/global';
 import {  Http, RequestOptions } from '@angular/http';
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
 import { AdminComponent } from './admin.component';
+import { NotificationComponent } from '../notification/notification.component';
 
 describe('AdminComponent', () => {
   let component: AdminComponent;
@@ -20,7 +21,7 @@ describe('AdminComponent', () => {
   let userService, spy;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdminComponent, EnumValPipe ],
+      declarations: [ AdminComponent, EnumValPipe, NotificationComponent ],
       providers: [UserService, {
           provide: AuthHttp,
           useFactory: authService,

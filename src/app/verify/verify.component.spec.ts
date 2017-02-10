@@ -2,8 +2,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
-
+import { NotificationComponent } from '../notification/notification.component';
 import { VerifyComponent } from './verify.component';
+import { FormsModule }   from '@angular/forms';
+import { CustomFormsModule } from 'ng2-validation';
+import { EnumValPipe } from '../shared/pipe/enum-val.pipe';
 
 describe('VerifyComponent', () => {
   let component: VerifyComponent;
@@ -11,7 +14,8 @@ describe('VerifyComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ VerifyComponent ]
+      declarations: [ EnumValPipe, VerifyComponent, NotificationComponent ],
+      imports: [FormsModule, CustomFormsModule]
     })
     .compileComponents();
   }));

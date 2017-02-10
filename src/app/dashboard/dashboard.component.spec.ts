@@ -4,6 +4,7 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import {User} from '../shared/model/user.entity';
 import { DashboardComponent } from './dashboard.component';
+import { NotificationComponent } from '../notification/notification.component';
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
@@ -11,7 +12,7 @@ describe('DashboardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DashboardComponent ],
+      declarations: [ DashboardComponent, NotificationComponent ],
     })
     .compileComponents();
   }));

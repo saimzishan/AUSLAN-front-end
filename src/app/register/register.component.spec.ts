@@ -2,13 +2,12 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
-
 import { RegisterComponent } from './register.component';
 import { RouterModule, Router } from '@angular/router';
 import { routing } from '../app.routing';
 import {APP_BASE_HREF} from '@angular/common';
 import { AdminComponent } from '../admin/admin.component';
-
+import { NotificationComponent } from '../notification/notification.component';
 import { NotFoundComponent }   from '../not-found/not-found.component';
 import { AuthGuard } from '../auth/auth.guard';
 import { DashboardComponent } from '../dashboard/dashboard.component';
@@ -32,7 +31,7 @@ describe('RegisterComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [EnumValPipe,  AdminComponent, RegisterComponent,
+      declarations: [EnumValPipe,  AdminComponent, RegisterComponent, NotificationComponent, 
           NotFoundComponent, DashboardComponent, AuthComponent, ResetComponent, VerifyComponent ],
       providers: [UserService, {provide: APP_BASE_HREF, useValue : '/' }, {
           provide: AuthHttp,

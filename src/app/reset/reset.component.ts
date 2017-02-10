@@ -8,7 +8,7 @@ import {NotificationComponent} from '../notification/notification.component';
 })
 export class ResetComponent implements OnInit {
 
-  constructor(private verificationCode: string) { }
+  constructor(public verificationCode: string) { }
 
   ngOnInit() {
   }

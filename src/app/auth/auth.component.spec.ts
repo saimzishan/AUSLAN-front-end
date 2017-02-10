@@ -1,7 +1,7 @@
 /* tslint:disable:no-unused-variable */
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
-
+import { NotificationComponent } from '../notification/notification.component';
 import { AuthComponent } from './auth.component';
 import {GLOBAL} from '../shared/global';
 import { ApiService } from '../api/api.service';
@@ -35,7 +35,7 @@ describe('AuthComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EnumValPipe, AdminComponent, RegisterComponent,
+      declarations: [ EnumValPipe, AdminComponent, RegisterComponent, NotificationComponent
           NotFoundComponent, DashboardComponent, AuthComponent, ResetComponent, VerifyComponent ],
       imports: [CustomFormsModule, HttpModule, routing, FormsModule, RouterModule],
       providers: [UserService, ApiService, {provide: APP_BASE_HREF, useValue : '/' },
