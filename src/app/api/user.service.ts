@@ -16,12 +16,9 @@ import 'rxjs/add/observable/throw';
 import { AuthHttp } from 'angular2-jwt';
 
 @Injectable()
-export class UserService {
+export class UserService extends ApiService {
     public token: string;
     users: User[] = [];
-    constructor(private http: AuthHttp ) {
-    }
-
     /*
       While this method seems to have no significance, Most of the method below would fail, if DI fails.
       Also when running test cases, mocking backend needs to ensure the HTTP is in provider and injector
@@ -73,8 +70,8 @@ export class UserService {
         let obj =  { 'user': user };
 
         return this.http.post(this.getRoute(user), JSON.stringify(obj), options)
-            .map(ApiService.extractData)
-            .catch(ApiService.handleError);
+            .map(this.extractData)
+            .catch(this.handleError);
     }
 
     /*
@@ -86,8 +83,8 @@ export class UserService {
         let options = new RequestOptions({ headers: headers });
         let obj =  { 'user': user };
         return this.http.patch(GLOBAL.USER_API + '/' + user.id, JSON.stringify(obj), options)
-            .map(ApiService.extractData)
-            .catch(ApiService.handleError);
+            .map(this.extractData)
+            .catch(this.handleError);
 
     }
 
@@ -98,8 +95,8 @@ export class UserService {
         let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': '*/*' });
         let options = new RequestOptions({ headers: headers });
         return this.http.get(GLOBAL.USER_API, options)
-            .map(ApiService.extractData)
-            .catch(ApiService.handleError);
+            .map(this.extractData)
+            .catch(this.handleError);
 
     }
 
@@ -112,8 +109,21 @@ export class UserService {
 
         return this.http
             .get(GLOBAL.USER_API + '/' + id, options)
-            .map(ApiService.extractData)
-            .catch(ApiService.handleError);
+            .map(this.extractData)
+            .catch(this.handleError);
+    }
+
+    /*
+      The Api should be get user by its ID (The Id should be email)
+    */
+    getUserByEmail(email: string): Observable<Object> {
+        let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http
+            .get(GLOBAL.USER_API + '/email' + email, options)
+            .map(this.extractData)
+            .catch(this.handleError);
     }
     /*
       The Api that should login the user
@@ -125,8 +135,8 @@ export class UserService {
 
         return this.http
             .post(GLOBAL.USER_API + '/login' , JSON.stringify(obj), options)
-            .map(ApiService.extractData)
-            .catch(ApiService.handleError);
+            .map(this.extractData)
+            .catch((err) => {return Observable.throw(err); });
     }
     /*
       The Api that should logout the user
@@ -137,8 +147,8 @@ export class UserService {
 
         return this.http
             .get(GLOBAL.USER_API + '/logout' , options)
-            .map(ApiService.extractData)
-            .catch(ApiService.handleError);
+            .map(this.extractData)
+            .catch(this.handleError);
     }
     /*
       The Api should be get user by its ID (The Id should be email)
@@ -149,8 +159,8 @@ export class UserService {
 
         return this.http
             .delete(GLOBAL.USER_API + '/' + id, options)
-            .map(ApiService.extractData)
-            .catch(ApiService.handleError);
+            .map(this.extractData)
+            .catch(this.handleError);
 
     }
 

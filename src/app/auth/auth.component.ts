@@ -12,7 +12,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 })
 export class AuthComponent implements OnInit {
-  error: any;
+  errors;
   model: User = new User();
   constructor(private service: UserService, private routes: ActivatedRoute, private router: Router) {
   }
@@ -35,7 +35,10 @@ export class AuthComponent implements OnInit {
       }else { // show errors
       }
     },
-    err => {console.log(err); this.error = err; },
+    err => {
+      console.log(err);
+      this.errors = 'Email or Password not found';
+    },
     () => {});
     }
 
