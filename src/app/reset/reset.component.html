@@ -1,5 +1,5 @@
 <div class="wrapper">
-    <form #registerForm="ngForm" class="auslan-form" action="#">
+    <form #resetForm="ngForm" class="auslan-form" action="#">
       <div class="row">
         <div class="medium-9 medium-centered columns">
           <div class="heading">
@@ -26,12 +26,12 @@
             </label>
             </div>
 
-              <div class="text-center">
+                        </div>
 
                               <button name="reset_user" class="button"
                               [disabled]="email.errors" (click)="resetUser()"> Reset User </button>
                             </div>
-              <app-notification [notification]='errors'></app-notification>
+                            <app-notification [notification]='errors' [isError]="true" ></app-notification>
               <!-- p *ngIf="password.errors?.required">The password is required and has to be strong</p>
              <p *ngIf="last_name.errors?.rangeLength">The last name is required and should have minimum 2 characters</p>
              <p *ngIf="first_name.errors?.rangeLength">The first name is required and should have minimum 2 characters</p>
@@ -40,8 +40,6 @@
 
 
 
-            </div>
-          </div>
         </div>
     </form>
   </div>

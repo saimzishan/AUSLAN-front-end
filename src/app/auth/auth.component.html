@@ -8,7 +8,8 @@
 							<img src="assets/img/logo.svg" alt="">
 						</div>
 						<!-- form login-->
-						<form (ngSubmit)="onSubmit()" class="form-login" #loginForm="ngForm">
+
+						<form (ngSubmit)="onSubmit()" class="auslan-form" #loginForm="ngForm">
 
 							<label class="icon-email">
 								EMAIL
@@ -46,7 +47,7 @@
 
 							<button type="submit" [disabled]="!loginForm.form.valid" class="login button">Log In</button>
 
-							<app-notification [notification]='errors'></app-notification>
+							<app-notification [notification]='errors' [isError]="true" ></app-notification>
 
 							<div class="sep-or"><span>or</span></div>
 							<p class="text-muted">Don’t Have an Account ?</p>

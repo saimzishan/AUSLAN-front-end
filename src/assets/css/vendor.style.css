@@ -1,7 +1,15 @@
+/* The msg message box */
+.msg {
+    padding: 20px;
+    background-color: #006700; /* light-green */
+    color: white;
+    margin-bottom: 15px;
+}
+
 /* The alert message box */
 .alert {
     padding: 20px;
-    background-color: #f4433f; /* Red */
+    background-color: #f4433f; /* light-red */
     color: white;
     margin-bottom: 15px;
 }
