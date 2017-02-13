@@ -7,13 +7,13 @@ import {NotificationComponent} from '../notification/notification.component';
   styleUrls: ['./reset.component.css']
 })
 export class ResetComponent implements OnInit {
-
-  constructor(public verificationCode: string) { }
+  public verificationCode= '';
+  constructor() { }
 
   ngOnInit() {
   }
 
-  verifyUser() {
+  resetUser() {
 
   }
 

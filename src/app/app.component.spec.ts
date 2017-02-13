@@ -31,6 +31,7 @@ import { Title } from '@angular/platform-browser';
 import { ResetComponent } from './reset/reset.component';
 import { VerifyComponent } from './verify/verify.component';
 import { RegisterComponent } from './register/register.component';
+import { NotificationComponent } from './notification/notification.component';
 
 describe('AppComponent', () => {
   beforeEach(() => {
@@ -38,7 +39,7 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent,
         AuthComponent,
-        DashboardComponent,
+        DashboardComponent, NotificationComponent,
         AdminComponent,
         EnumValPipe,
         NotFoundComponent, RegisterComponent, ResetComponent, VerifyComponent

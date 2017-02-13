@@ -9,7 +9,8 @@ import {NotificationComponent} from '../notification/notification.component';
 })
 export class VerifyComponent implements OnInit {
     errors: any;
-    constructor(public verificationCode: string, private service: UserService) { }
+    public verificationCode= '';
+    constructor(private service: UserService) { }
 
     ngOnInit() {
     }
