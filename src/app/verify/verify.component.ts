@@ -20,6 +20,19 @@ export class VerifyComponent implements OnInit {
       });
     }
 
+    resendVerificationCode(){
+      this.service.resendVerificationCode(this.userID)
+          .subscribe((res: any) => {
+            if (res.status === 200 ) {
+            }
+          },
+          err => {
+              console.log(err);
+              this.errors = err;
+          },
+          () => { });
+    }
+
     verifyUser() {
 
         this.service.verifyUser(this.userID, this.verificationCode)

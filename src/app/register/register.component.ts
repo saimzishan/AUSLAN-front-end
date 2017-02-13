@@ -16,7 +16,8 @@ export class RegisterComponent implements OnInit {
   public model: User = new User();
   public selected = false;
   public selectedRole = 'Interpreter'.toUpperCase();
-
+  public successMessage = `Congrats Your user has been created.
+  Kindly go back to <a [routerLink]="['/authenticate']">Login Page</a> and Login`;
   ngOnInit() { }
 
   constructor(private userService: UserService) {

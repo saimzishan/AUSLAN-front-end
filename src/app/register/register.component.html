@@ -144,8 +144,8 @@
 								</div>
 								<app-notification [notification]='errors' [isError]="true" ></app-notification>
 								<div [hidden]="!this.model.id">
-								 <p> Congrats Your user has been created. Kindly go back to <a [routerLink]="['/authenticate']">Login Page</a> and Login </p>
-							 </div>
+								 <app-notification [notification]='successMessage' [isError]="false" ></app-notification>
+ 								</div>
 								<!-- p *ngIf="password.errors?.required">The password is required and has to be strong</p>
 							 <p *ngIf="last_name.errors?.rangeLength">The last name is required and should have minimum 2 characters</p>
 							 <p *ngIf="first_name.errors?.rangeLength">The first name is required and should have minimum 2 characters</p>

@@ -130,6 +130,19 @@ export class UserService extends ApiService {
     }
 
     /*
+      The Api should be to verify user
+    */
+    resendVerificationCode(userID: number): Observable<Object> {
+        let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http
+            .post(GLOBAL.USER_API + '/' + userID + '/resend_verification_code' , options)
+            .map(this.extractData)
+            .catch((err) => { return Observable.throw(err); });
+    }
+
+    /*
       The Api should be to reset user password
     */
     resetUser( emailAddress: string): Observable<Object> {

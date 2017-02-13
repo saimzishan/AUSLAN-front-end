@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import {User} from '../shared/model/user.entity';
 import {GLOBAL} from '../shared/global';
+import { UserService } from '../api/user.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,10 +11,22 @@ import {GLOBAL} from '../shared/global';
 })
 export class DashboardComponent implements OnInit {
   first_name = '';
-  constructor() { }
+  constructor(private service: UserService, private routes: ActivatedRoute, private router: Router) {
+  }
 
   ngOnInit() {
-    this.first_name = GLOBAL.getName();
+    let user = GLOBAL.currentUser;
+    this.service.getUserByEmail(user.email)
+    .subscribe((res: any) => {
+      if ( res.data.verified) {
+    }else { // show errors
+      this.router.navigate(['/verify/' + user.id]);
+    }
+  },
+  err => {
+    console.log(err);
+  },
+  () => {     this.first_name = user.first_name + ' ' + user.last_name; });
   }
 
 }
