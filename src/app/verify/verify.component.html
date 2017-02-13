@@ -28,7 +28,7 @@
   </label></div>                </div>
 
   <button name="verify_user" class="button" [disabled]="verification_code.errors" (click)="verifyUser()"> Verify User </button>
-  <button name="resend_code" class="button" (click)="resendVerificationCode()"> Resend Verification Code </button>
+  <button name="resend_code" class="button" [disabled]="(userID < 1)" (click)="resendVerificationCode()"> Resend Verification Code </button>
 
                     <app-notification [notification]='errors' [isError]="true"></app-notification>
 

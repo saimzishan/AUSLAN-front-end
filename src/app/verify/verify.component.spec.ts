@@ -31,6 +31,8 @@ import { NotificationComponent } from '../notification/notification.component';
 describe('VerifyComponent', () => {
   let component: VerifyComponent;
   let fixture: ComponentFixture<VerifyComponent>;
+  let de:      DebugElement;
+  let el:      HTMLElement;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -51,9 +53,44 @@ describe('VerifyComponent', () => {
     fixture = TestBed.createComponent(VerifyComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+
+    spyOn(component, 'verifyUser').and.callThrough();
+    spyOn(component, 'resendVerificationCode').and.callThrough();
+
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should call verifyUser if verification Code and user ID is present', () => {
+    component.verificationCode = '123456';
+    component.userID = 1;
+    fixture.detectChanges();
+    de = fixture.debugElement.query(By.css('button[name=verify_user]'));
+    el = de.nativeElement;
+
+     el.click();
+
+     fixture.whenStable().then(() => {
+       expect(component.verifyUser).toHaveBeenCalled();
+     });
+
+  });
+  /* // Enable when API is there
+  it('should call resend verification', () => {
+    component.verificationCode = 'dummy';
+    component.userID = 1;
+    fixture.detectChanges();
+
+
+     de = fixture.debugElement.query(By.css('button[name=resend_code]'));
+     el = de.nativeElement;
+
+     fixture.whenStable().then(() => {
+       expect(component.resendVerificationCode).toHaveBeenCalled();
+     });
+
+  }); */
+
 });

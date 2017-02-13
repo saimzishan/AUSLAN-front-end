@@ -10,7 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class VerifyComponent implements OnInit {
     errors: any; // I don;t like them in every component
-    private userID= -1;
+    public userID= -1;
     public verificationCode= '';
     constructor(private service: UserService , private router: Router, private routes: ActivatedRoute) { }
 
@@ -20,7 +20,7 @@ export class VerifyComponent implements OnInit {
       });
     }
 
-    resendVerificationCode(){
+    resendVerificationCode() {
       this.service.resendVerificationCode(this.userID)
           .subscribe((res: any) => {
             if (res.status === 200 ) {
