@@ -68,6 +68,7 @@ describe('VerifyComponent', () => {
 
         it('should create', (done) => {
             expect(component).toBeTruthy();
+            done();
         });
         // Enable when API is there
         it('should call resend verification', (done) => {
