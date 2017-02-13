@@ -117,14 +117,14 @@ export class UserService extends ApiService {
     /*
       The Api should be to verify user
     */
-    verifyUser(verifyCode: string): Observable<Object> {
+    verifyUser(userID: number, verifyCode: string): Observable<Object> {
         let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
         return this.http
-            .get(GLOBAL.USER_API + '/verify' + verifyCode + options)
+            .post(GLOBAL.USER_API + '/' + userID + '/' + verifyCode , options) // Better add verify in path
             .map(this.extractData)
-            .catch(this.handleError);
+            .catch((err) => { return Observable.throw(err); });
     }
 
     /*

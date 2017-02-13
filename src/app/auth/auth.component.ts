@@ -31,7 +31,7 @@ export class AuthComponent implements OnInit {
         if ( res.data.jwt) {
         this.model.token = res.data.jwt;
         GLOBAL.login(this.model);
-        this.router.navigate(['/verify']);
+        this.router.navigate(['/dashboard']);
       }else { // show errors
       }
     },
