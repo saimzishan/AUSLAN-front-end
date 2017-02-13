@@ -31,7 +31,7 @@ describe('RegisterComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [EnumValPipe,  AdminComponent, RegisterComponent, NotificationComponent, 
+      declarations: [EnumValPipe,  AdminComponent, RegisterComponent, NotificationComponent,
           NotFoundComponent, DashboardComponent, AuthComponent, ResetComponent, VerifyComponent ],
       providers: [UserService, {provide: APP_BASE_HREF, useValue : '/' }, {
           provide: AuthHttp,

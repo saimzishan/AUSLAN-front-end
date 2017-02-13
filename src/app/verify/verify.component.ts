@@ -9,10 +9,10 @@ import { ActivatedRoute, Router } from '@angular/router';
     styleUrls: ['./verify.component.css']
 })
 export class VerifyComponent implements OnInit {
-    errors: any;
+    errors: any; // I don;t like them in every component
     private userID= -1;
     public verificationCode= '';
-    constructor(private service: UserService , private routes: ActivatedRoute) { }
+    constructor(private service: UserService , private router: Router, private routes: ActivatedRoute) { }
 
     ngOnInit() {
       this.routes.params.subscribe( (p: any) => {
@@ -24,9 +24,9 @@ export class VerifyComponent implements OnInit {
 
         this.service.verifyUser(this.userID, this.verificationCode)
             .subscribe((res: any) => {
-                if (res.data.verify) {
-                } else { // show errors
-                }
+              if (res.status === 200 ) {
+                this.router.navigate(['/dashboard']);
+              }
             },
             err => {
                 console.log(err);

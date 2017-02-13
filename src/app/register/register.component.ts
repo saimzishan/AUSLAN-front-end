@@ -4,6 +4,7 @@ import {User} from '../shared/model/user.entity';
 import {GLOBAL} from '../shared/global';
 import { Router } from '@angular/router';
 import { ROLE } from '../shared/model/role.enum';
+import {NotificationComponent} from '../notification/notification.component';
 
 @Component({
   selector: 'app-register',
@@ -11,10 +12,11 @@ import { ROLE } from '../shared/model/role.enum';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
+  errors: any;
   public model: User = new User();
   public selected = false;
   public selectedRole = 'Interpreter'.toUpperCase();
-  public userCreated = false;
+
   ngOnInit() { }
 
   constructor(private userService: UserService,  private router: Router) {
@@ -47,10 +49,12 @@ export class RegisterComponent implements OnInit {
       this.userService.createUser(this.model)
       .subscribe((res: any) => {
          this.model.id =  res.data.id;
-         // this.model = new User();
-         this.userCreated = true;
          this.router.navigate(['/verify/' + this.model.id]);
 
-      }, err => console.log(err));
+      }, err => {
+          console.log(err);
+          this.errors = err;
+      },
+      () => { });
     }
 }
