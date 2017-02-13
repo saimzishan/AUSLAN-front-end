@@ -20,6 +20,9 @@ export class VerifyComponent implements OnInit {
       });
     }
 
+    /*
+      Handler to ask for verification code to be sent again
+    */
     resendVerificationCode() {
       this.service.resendVerificationCode(this.userID)
           .subscribe((res: any) => {
@@ -33,8 +36,10 @@ export class VerifyComponent implements OnInit {
           () => { });
     }
 
+    /*
+      Handler to send the verification code
+    */
     verifyUser() {
-
         this.service.verifyUser(this.userID, this.verificationCode)
             .subscribe((res: any) => {
               if (res.status === 200 ) {

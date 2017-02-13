@@ -162,7 +162,7 @@ export class UserService extends ApiService {
         let options = new RequestOptions({ headers: headers });
 
         return this.http
-            .get(GLOBAL.USER_API + '/email' + email, options)
+            .get(GLOBAL.USER_API + '/email/' + email, options)
             .map(this.extractData)
             .catch(this.handleError);
     }

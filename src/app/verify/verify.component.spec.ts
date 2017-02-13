@@ -29,68 +29,62 @@ import { NotificationComponent } from '../notification/notification.component';
 
 
 describe('VerifyComponent', () => {
-  let component: VerifyComponent;
-  let fixture: ComponentFixture<VerifyComponent>;
-  let de:      DebugElement;
-  let el:      HTMLElement;
+    let component: VerifyComponent;
+    let fixture: ComponentFixture<VerifyComponent>;
+    let de: DebugElement;
+    let el: HTMLElement;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ EnumValPipe, AdminComponent, RegisterComponent, NotificationComponent,
-          NotFoundComponent, DashboardComponent, AuthComponent, ResetComponent, VerifyComponent ],
-      imports: [FormsModule, RouterModule, HttpModule, routing, CustomFormsModule],
-      providers: [UserService, {provide: APP_BASE_HREF, useValue : '/' },
-      {
-          provide: AuthHttp,
-          useFactory: authService,
-          deps: [Http, RequestOptions]
-        }]
-    })
-    .compileComponents();
-  }));
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            declarations: [EnumValPipe, AdminComponent, RegisterComponent, NotificationComponent,
+                NotFoundComponent, DashboardComponent, AuthComponent, ResetComponent, VerifyComponent],
+            imports: [FormsModule, RouterModule, HttpModule, routing, CustomFormsModule],
+            providers: [UserService, { provide: APP_BASE_HREF, useValue: '/' },
+                {
+                    provide: AuthHttp,
+                    useFactory: authService,
+                    deps: [Http, RequestOptions]
+                }]
+        })
+            .compileComponents();
+    }));
+    describe('VerifyComponent', () => {
+        beforeEach((done) => {
+            fixture = TestBed.createComponent(VerifyComponent);
+            component = fixture.componentInstance;
+            spyOn(component, 'resendVerificationCode').and.callThrough();
+            spyOn(component, 'verifyUser').and.callThrough();
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(VerifyComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+            fixture.detectChanges();
+            component.verificationCode = 'dummy';
+            component.userID = 1;
 
-    spyOn(component, 'verifyUser').and.callThrough();
-    spyOn(component, 'resendVerificationCode').and.callThrough();
+            fixture.debugElement.query(By.css('button[name=resend_code]')).nativeElement.click();
 
-  });
+            fixture.debugElement.query(By.css('button[name=verify_user]')).nativeElement.click();
+            done();
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+        });
 
-  it('should call verifyUser if verification Code and user ID is present', () => {
-    component.verificationCode = '123456';
-    component.userID = 1;
-    fixture.detectChanges();
-    de = fixture.debugElement.query(By.css('button[name=verify_user]'));
-    el = de.nativeElement;
-
-     el.click();
-
-     fixture.whenStable().then(() => {
-       expect(component.verifyUser).toHaveBeenCalled();
-     });
-
-  });
-  /* // Enable when API is there
-  it('should call resend verification', () => {
-    component.verificationCode = 'dummy';
-    component.userID = 1;
-    fixture.detectChanges();
+        it('should create', (done) => {
+            expect(component).toBeTruthy();
+        });
+        // Enable when API is there
+        it('should call resend verification', (done) => {
+            fixture.whenStable().then(() => {
+                expect(component.resendVerificationCode).toHaveBeenCalled();
+                done();
+            });
+        });
 
 
-     de = fixture.debugElement.query(By.css('button[name=resend_code]'));
-     el = de.nativeElement;
+        it('should call verifyUser if verification Code and user ID is present', (done) => {
+            fixture.whenStable().then(() => {
+                expect(component.verifyUser).toHaveBeenCalled();
+                done();
+            });
 
-     fixture.whenStable().then(() => {
-       expect(component.resendVerificationCode).toHaveBeenCalled();
-     });
+        });
 
-  }); */
-
+    });
 });

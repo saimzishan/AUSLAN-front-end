@@ -15,11 +15,11 @@
 
 
                         <label>VERIFICATION CODE *
-    <input type="text" placeholder="Kindly enter the verification code that has been sent to your email"
+    <input type="password" placeholder=""
     [(ngModel)]='verificationCode'
-    name="verification_code" #verification_code="ngModel"  [rangeLength]="[4, 8]" required>
-    <span *ngIf="verification_code.touched && !verification_code.errors?.rangeLength;" class="form-valid"></span>
-    <span *ngIf="(verification_code.dirty || verification_code.touched) && (verification_code.errors?.required || verification_code.errors?.rangeLength);" class="form-error is-visible">
+    name="verification_code" #verification_code="ngModel" [rangeLength]="[4, 8]" >
+    <span *ngIf="verification_code.touched && !verification_code.errors" class="form-valid"></span>
+    <span *ngIf="(verification_code.dirty || verification_code.touched) && (verification_code.errors?.rangeLength);" class="form-error is-visible">
      <span data-tooltip aria-haspopup="true" class="has-tip left"
      data-template-classes="tooltip-error" data-disable-hover="false" tabindex="4"
      title="This field is required.">!</span>
