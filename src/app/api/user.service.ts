@@ -120,9 +120,11 @@ export class UserService extends ApiService {
     verifyUser(userID: number, verifyCode: string): Observable<Object> {
         let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
         let options = new RequestOptions({ headers: headers });
+        let obj = { 'code': verifyCode };
 
         return this.http
-            .post(GLOBAL.USER_API + '/' + userID + '/' + verifyCode , options) // Better add verify in path
+            .post(GLOBAL.USER_API + '/' + userID + '/confirm_verification_code' ,
+             JSON.stringify(obj) , options) // Better add verify in path
             .map(this.extractData)
             .catch((err) => { return Observable.throw(err); });
     }

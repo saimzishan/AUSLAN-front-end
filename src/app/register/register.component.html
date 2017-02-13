@@ -1,5 +1,5 @@
 
-<div [hidden]="selected" class="page-signup">
+<div [hidden]="selected" >
 		<div class="wrapper">
 			<div class="expanded row signup-list">
 				<h1 class="title">SIGN UP AS</h1>
@@ -40,7 +40,7 @@
 	</div>
 
 	<div [hidden]="!selected" class="wrapper">
-			<form #registerForm="ngForm" action="#">
+			<form #registerForm="ngForm" class="auslan-form" action="#">
 				<div class="row">
 					<div class="medium-9 medium-centered columns">
 						<div class="heading">
@@ -52,30 +52,29 @@
 						<div class="row">
 							<div class="medium-6 columns">
 								<label>FIRST NAME *
-									<input type="text" autofocus="" class="new-user-first_name" placeholder="What is your first name"
+									<input type="text" class="icon-user-circle" placeholder=""
 									[(ngModel)]="model.first_name"
-							    name="first_name" #first_name="ngModel"  [rangeLength]="[2, 30]" required>
-									<span *ngIf="first_name.touched && !first_name.rangeLength?.required;" class="form-valid"></span>
-									<span *ngIf="first_name.touched && first_name.rangeLength?.required;" class="form-error is-visible">
-											<span data-tooltip="86bu89-tooltip" aria-haspopup="true"
-											class="has-tip left" data-template-classes="tooltip-error" data-disable-hover="false" tabindex="4" title=""
-											aria-describedby="1i4eab-tooltip" data-yeti-box="1i4eab-tooltip"
-											data-toggle="1i4eab-tooltip" data-resize="1i4eab-tooltip" data-events="resize">!</span>
+							    name="first_name" #first_name="ngModel"  [rangeLength]="[3, 20]" required>
+									<span *ngIf="first_name.touched && !first_name.errors?.required && !first_name.errors?.rangeLength;" class="form-valid"></span>
+									<span *ngIf="first_name.touched && (first_name.errors?.required || first_name.errors?.rangeLength);" class="form-error is-visible">
+											<span data-tooltip aria-haspopup="true" class="has-tip left"
+											data-template-classes="tooltip-error" data-disable-hover="false" tabindex="4"
+											title="This field is required. Min 3 characters required.">!</span>
 										</span>
 								</label>
 							</div>
 							<div class="medium-6 columns">
 								<label>LAST NAME *
 
-									    <input type="text" class="new-user-last_name" placeholder="What is your last name"
-											 [(ngModel)]="model.last_name"   name="last_name" #last_name="ngModel"  [rangeLength]="[2, 30]" required>
-											 <span *ngIf="last_name.touched && !last_name.rangeLength?.required;" class="form-valid"></span>
-										 	<span *ngIf="last_name.touched && last_name.rangeLength?.required;" class="form-error is-visible">
-										 			<span data-tooltip="86bu89-tooltip" aria-haspopup="true"
-										 			class="has-tip left" data-template-classes="tooltip-error" data-disable-hover="false" tabindex="4" title=""
-										 			aria-describedby="1i4eab-tooltip" data-yeti-box="1i4eab-tooltip"
-										 			data-toggle="1i4eab-tooltip" data-resize="1i4eab-tooltip" data-events="resize">!</span>
-										 		</span>
+									    <input type="text" class="icon-user-circle" placeholder=""
+											 [(ngModel)]="model.last_name"   name="last_name" #last_name="ngModel"
+											 [rangeLength]="[3, 30]" required>
+											 <span *ngIf="last_name.touched && !last_name.errors?.required && !last_name.errors?.rangeLength;" class="form-valid"></span>
+		 									<span *ngIf="last_name.touched && (last_name.errors?.required || last_name.errors?.rangeLength);" class="form-error is-visible">
+		 											<span data-tooltip aria-haspopup="true" class="has-tip left"
+		 											data-template-classes="tooltip-error" data-disable-hover="false" tabindex="4"
+		 											title="This field is required. Min 3 characters required.">!</span>
+		 										</span>
 								</label>
 							</div>
 
