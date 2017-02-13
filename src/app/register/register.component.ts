@@ -19,7 +19,7 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() { }
 
-  constructor(private userService: UserService,  private router: Router) {
+  constructor(private userService: UserService) {
   }
 
   roleSelected(role) {
@@ -49,7 +49,6 @@ export class RegisterComponent implements OnInit {
       this.userService.createUser(this.model)
       .subscribe((res: any) => {
          this.model.id =  res.data.id;
-         this.router.navigate(['/verify/' + this.model.id]);
 
       }, err => {
           console.log(err);

@@ -37,7 +37,7 @@ describe('AuthComponent', () => {
       declarations: [ EnumValPipe, AdminComponent, RegisterComponent, NotificationComponent,
           NotFoundComponent, DashboardComponent, AuthComponent, ResetComponent, VerifyComponent ],
       imports: [CustomFormsModule, HttpModule, routing, FormsModule, RouterModule],
-      providers: [UserService, ApiService, {provide: APP_BASE_HREF, useValue : '/' },
+      providers: [UserService, {provide: APP_BASE_HREF, useValue : '/' },
       {
           provide: AuthHttp,
           useFactory: authService,
