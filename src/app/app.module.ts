@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { HttpModule, BaseRequestOptions } from '@angular/http';
 import { AppComponent } from './app.component';
 import { AuthComponent } from './auth/auth.component';
-import { ApiService } from './api/api.service';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AdminComponent } from './admin/admin.component';
 import { UserService } from './api/user.service';
@@ -43,7 +42,7 @@ enableProdMode();
     BrowserModule, RouterModule,
     FormsModule,
     HttpModule
-  ],  providers: [AuthGuard, Title, ApiService, UserService, {provide: APP_BASE_HREF, useValue : '/' }, {
+  ],  providers: [AuthGuard, Title, UserService, {provide: APP_BASE_HREF, useValue : '/' }, {
       provide: AuthHttp,
       useFactory: authService,
       deps: [Http, RequestOptions]

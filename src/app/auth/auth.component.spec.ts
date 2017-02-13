@@ -3,7 +3,6 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { AuthComponent } from './auth.component';
 import {GLOBAL} from '../shared/global';
-import { ApiService } from '../api/api.service';
 import { UserService } from '../api/user.service';
 import {User} from '../shared/model/user.entity';
 import {
