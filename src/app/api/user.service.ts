@@ -150,7 +150,7 @@ export class UserService extends ApiService {
         let options = new RequestOptions({ headers: headers });
 
         return this.http
-            .get(GLOBAL.USER_API + '/reset_password/' + emailAddress  , options) // Better add verify in path
+            .get(GLOBAL.USER_API + '/reset_password/' + (emailAddress)  , options) // Better add verify in path
             .map(this.extractData)
             .catch((err) => { return Observable.throw(err); });
     }
@@ -162,7 +162,7 @@ export class UserService extends ApiService {
         let options = new RequestOptions({ headers: headers });
 
         return this.http
-            .get(GLOBAL.USER_API + '/email/' + email, options)
+            .get(GLOBAL.USER_API + '/email/' + (email) , options)
             .map(this.extractData)
             .catch((err) => { return Observable.throw(err); });
     }

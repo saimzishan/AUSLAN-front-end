@@ -48,13 +48,29 @@ describe('ResetComponent', () => {
     .compileComponents();
   }));
 
-  beforeEach(() => {
+  beforeEach((done) => {
     fixture = TestBed.createComponent(ResetComponent);
     component = fixture.componentInstance;
+    spyOn(component, 'resetUser').and.callThrough();
+
     fixture.detectChanges();
+    component.emailAddress = "dummy@admin.com";
+    fixture.debugElement.query(By.css('button[name=reset_user]')).nativeElement.click();
+    done();
+
   });
 
-  it('should create', () => {
+  it('should create', (done) => {
     expect(component).toBeTruthy();
+    done();
   });
+
+
+  it('should request the reset user for valid email', (done) => {
+      fixture.whenStable().then(() => {
+          expect(component.resetUser).toHaveBeenCalled();
+          done();
+      });
+  });
+
 });

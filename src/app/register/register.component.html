@@ -10,7 +10,7 @@
 							<a (click)="roleSelected('Interpreter')" class="button-img">
 								<img src="assets/img/interpreter-icon.svg" alt="">
 							</a>
-							<button (click)="roleSelected('Interpreter')" class="button">Interpreter</button>
+							<button name="btnInterpreter" (click)="roleSelected('Interpreter')" class="button">Interpreter</button>
 						</div>
 					</div>
 				</div>
@@ -20,7 +20,7 @@
 							<a (click)="roleSelected('Client')" class="button-img">
 								<img src="assets/img/client-icon.svg" alt="">
 							</a>
-							<button (click)="roleSelected('Client')" class="button">Client</button>
+							<button name="btnClient" (click)="roleSelected('Client')" class="button">Client</button>
 						</div>
 					</div>
 				</div>
@@ -30,7 +30,7 @@
 							<a (click)="roleSelected('Organization')" class="button-img">
 								<img src="assets/img/organisation-icon.svg" alt="">
 							</a>
-							<button (click)="roleSelected('Organization')" class="button">Organization</button>
+							<button name="btnOrganization" (click)="roleSelected('Organization')" class="button">Organization</button>
 						</div>
 					</div>
 
@@ -81,7 +81,7 @@
 							<div class="medium-6 columns">
 								<label class="icon-lock">
 							    PASSWORD *
-							  <input id="pass" name="pass"  type="password" placeholder="Enter your password"
+							  <input id="pass" type="password" placeholder="Enter your password"
 								[(ngModel)]="model.password" name="password" #password="ngModel" required>
 
 								<span *ngIf="password.touched &&  (!password.errors?.required && password.errors?.rangeLength);" class="form-valid"></span>
@@ -111,7 +111,7 @@
 								<label class="icon-email">
 						      EMAIL *
 
-						    <input type="email" id="email" name="email" placeholder="Enter your email"
+						    <input type="email" id="email" placeholder="Enter your email"
 								 [(ngModel)]="model.email" name="email" #email="ngModel" email required>
 								 <span *ngIf="email.touched && !email.errors?.email;" class="form-valid"></span>
  								<!-- p *ngIf="email.errors?.email;">The email is required and has to be in email format</p -->
@@ -140,7 +140,7 @@
 							</div>
 
 								<div class="text-center">
-									<button type="submit" [disabled]="mobile.errors || last_name.errors || first_name.errors || password.errors || email.errors || certainPassword.errors " (click)="addUser(user)" class="button">Register</button>
+									<button name="register_user" type="submit" [disabled]="mobile.errors || last_name.errors || first_name.errors || password.errors || email.errors || certainPassword.errors " (click)="addUser(user)" class="button">Register</button>
 								</div>
 								<app-notification [notification]='errors' [isError]="true" ></app-notification>
 								<div [hidden]="!this.model.id">

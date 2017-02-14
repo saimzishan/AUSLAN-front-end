@@ -31,8 +31,6 @@ import { NotificationComponent } from '../notification/notification.component';
 describe('VerifyComponent', () => {
     let component: VerifyComponent;
     let fixture: ComponentFixture<VerifyComponent>;
-    let de: DebugElement;
-    let el: HTMLElement;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -70,7 +68,7 @@ describe('VerifyComponent', () => {
             expect(component).toBeTruthy();
             done();
         });
-        // Enable when API is there
+
         it('should call resend verification', (done) => {
             fixture.whenStable().then(() => {
                 expect(component.resendVerificationCode).toHaveBeenCalled();
