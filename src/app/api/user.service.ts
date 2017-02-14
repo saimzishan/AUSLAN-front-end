@@ -164,7 +164,7 @@ export class UserService extends ApiService {
         return this.http
             .get(GLOBAL.USER_API + '/email/' + email, options)
             .map(this.extractData)
-            .catch(this.handleError);
+            .catch((err) => { return Observable.throw(err); });
     }
     /*
       The Api that should login the user
@@ -189,7 +189,7 @@ export class UserService extends ApiService {
         return this.http
             .get(GLOBAL.USER_API + '/logout', options)
             .map(this.extractData)
-            .catch(this.handleError);
+            .catch((err) => { return Observable.throw(err); });
     }
     /*
       The Api should be get user by its ID (The Id should be email)
@@ -201,7 +201,7 @@ export class UserService extends ApiService {
         return this.http
             .delete(GLOBAL.USER_API + '/' + id, options)
             .map(this.extractData)
-            .catch(this.handleError);
+            .catch((err) => { return Observable.throw(err); });
 
     }
 

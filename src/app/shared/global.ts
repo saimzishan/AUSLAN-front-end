@@ -19,7 +19,8 @@ export class GLOBAL {
     public static isLoggedIn() {
         let token = sessionStorage.getItem('token');
         let user = GLOBAL.currentUser;
-        return token && token.length > 0 && user && user.id > 0;
+        return token && token.length > 0 && user && user.email.length > 0;
+
     }
 
     public static logout() {
