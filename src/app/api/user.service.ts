@@ -71,7 +71,7 @@ export class UserService extends ApiService {
 
         return this.http.post(this.getRoute(user), JSON.stringify(obj), options)
             .map(this.extractData)
-            .catch(this.handleError);
+            .catch((err) => { return Observable.throw(err); });
     }
 
     /*
@@ -137,7 +137,7 @@ export class UserService extends ApiService {
         let options = new RequestOptions({ headers: headers });
 
         return this.http
-            .post(GLOBAL.USER_API + '/' + userID + '/resend_verification_code' , options)
+            .get(GLOBAL.USER_API + '/' + userID + '/resend_verification_code' , options)
             .map(this.extractData)
             .catch((err) => { return Observable.throw(err); });
     }
