@@ -46,14 +46,26 @@ describe('DashboardComponent', () => {
     .compileComponents();
   }));
 
-  beforeEach(() => {
+  beforeEach((done) => {
     GLOBAL.currentUser = new User({id: 2, email: 'admin1@aus.au', name: 'Joe Doe'}); // mimic as user has logged in
     fixture = TestBed.createComponent(DashboardComponent);
     component = fixture.componentInstance;
+    spyOn(component, 'getUserProfile').and.callThrough();
+
     fixture.detectChanges();
+
+    done();
   });
 
-  it('should create', () => {
+  it('should create', (done) => {
     expect(component).toBeTruthy();
+    done();
+  });
+
+  it('should have called for user profile', (done) => {
+    fixture.whenStable().then(() => {
+        expect(component.getUserProfile).toHaveBeenCalled();
+        done();
+    });
   });
 });

@@ -15,22 +15,26 @@ export class DashboardComponent implements OnInit {
     }
 
     ngOnInit() {
-        let user = GLOBAL.currentUser;
-        this.service.getUserByEmail(user.email)
-            .subscribe((res: any) => {
-                if (res.status === 200) {
-                    user = res.data;
-                    GLOBAL.currentUser = user;
+      this.getUserProfile();
+    }
 
-                    if (!res.data.verified) { // show errors
-                        this.router.navigate(['/verify/' + user.id]);
-                    }
-                }
-            },
-            err => {
-                console.log(err);
-            },
-            () => { this.first_name = user.first_name + ' ' + user.last_name; });
+    getUserProfile() {
+      let user = GLOBAL.currentUser;
+      this.service.getUserByEmail(user.email)
+          .subscribe((res: any) => {
+              if (res.status === 200) {
+                  user = res.data;
+                  GLOBAL.currentUser = user;
+
+                  if (!res.data.verified) { // show errors
+                      this.router.navigate(['/verify/' + user.id]);
+                  }
+              }
+          },
+          err => {
+              console.log(err);
+          },
+          () => { this.first_name = user.first_name + ' ' + user.last_name; });
     }
 
 }
