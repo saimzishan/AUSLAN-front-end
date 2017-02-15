@@ -6,11 +6,11 @@ import {GLOBAL} from '../shared/global';
 import { UserService } from '../api/user.service';
 import {User} from '../shared/model/user.entity';
 import {
-    TestBed, fakeAsync, async, inject, ComponentFixture
+     ComponentFixture
 } from '@angular/core/testing';
 import { CustomFormsModule } from 'ng2-validation';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
 import { routing } from '../app.routing';
 import { APP_BASE_HREF } from '@angular/common';
 import { NotFoundComponent }   from '../not-found/not-found.component';
@@ -26,33 +26,56 @@ import { VerifyComponent } from '../verify/verify.component';
 import {authService} from '../shared/global';
 import {  HttpModule, Http, RequestOptions } from '@angular/http';
 import { NotificationComponent } from '../notification/notification.component';
+import { Location } from '@angular/common';
+import { fakeAsync, async, inject, TestBed, getTestBed } from '@angular/core/testing';
+import { BrowserModule, Title } from '@angular/platform-browser';
+import {
+    RouterModule, ActivatedRoute
+} from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
+
 
 describe('AuthComponent', () => {
-  let component: AuthComponent;
-  let fixture: ComponentFixture<AuthComponent>;
+    let component: AuthComponent;
+    let fixture: ComponentFixture<AuthComponent>;
+    beforeEach(async(() => {
+      TestBed.configureTestingModule({
+          declarations: [EnumValPipe, AdminComponent, RegisterComponent, NotificationComponent,
+              NotFoundComponent, DashboardComponent, AuthComponent, ResetComponent, VerifyComponent],
+          providers: [UserService, { provide: APP_BASE_HREF, useValue: '/' }, {
+              provide: AuthHttp,
+              useFactory: authService,
+              deps: [Http, RequestOptions]
+          }],
+          imports: [CustomFormsModule, routing, RouterModule, HttpModule, FormsModule,
+            RouterTestingModule.withRoutes(
+        [{ path: 'authenticate', component: AuthComponent },
+        { path: 'authenticate/logout', component: AuthComponent }])]
+      }).compileComponents();
+    }));
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ EnumValPipe, AdminComponent, RegisterComponent, NotificationComponent,
-          NotFoundComponent, DashboardComponent, AuthComponent, ResetComponent, VerifyComponent ],
-      imports: [CustomFormsModule, HttpModule, routing, FormsModule, RouterModule],
-      providers: [UserService, {provide: APP_BASE_HREF, useValue : '/' },
-      {
-          provide: AuthHttp,
-          useFactory: authService,
-          deps: [Http, RequestOptions]
-        }]
-    })
-    .compileComponents();
-  }));
+    beforeEach((done) => {
+        fixture = TestBed.createComponent(AuthComponent);
+        component = fixture.componentInstance;
+        spyOn(component, 'onSubmit').and.callThrough();
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(AuthComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+        fixture.debugElement.query(By.css('input[name=email]')).nativeElement.value = 'dummy@admin.com.au';
+        fixture.debugElement.query(By.css('input[name=pass]')).nativeElement.value = 'dummy@admin.com.au';
+        fixture.detectChanges();
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+        fixture.debugElement.query(By.css('button[name=login_user]')).nativeElement.click();
+        done();
+    });
+
+    it('should create', (done) => {
+        expect(component).toBeTruthy();
+        done();
+    });
+
+    it('should login', (done) => {
+        fixture.whenStable().then(() => {
+            expect(component.onSubmit).toHaveBeenCalled();
+            done();
+        });
+    });
 });

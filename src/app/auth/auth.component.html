@@ -28,7 +28,7 @@
 
 							<label class="icon-lock">
 								PASSWORD
-								<input id="pass" name="pass"  type="password"
+								<input id="pass"  type="password"
 								placeholder="Enter your password"
 								[(ngModel)]="model.password" [rangeLength]="[6, 20]" name="pass" #pass="ngModel" required>
 						    <!-- p *ngIf="pass.errors?.required">The password is required and has to be strong</p -->
@@ -45,7 +45,7 @@
 								<a [routerLink]="['/reset']" >Forgot your password?</a>
 							</p>
 
-							<button type="submit" [disabled]="!loginForm.form.valid" class="login button">Log In</button>
+							<button type="submit" [disabled]="!loginForm.form.valid" name="login_user" class="login button">Log In</button>
 
 							<app-notification [notification]='errors' [isError]="true" ></app-notification>
 
