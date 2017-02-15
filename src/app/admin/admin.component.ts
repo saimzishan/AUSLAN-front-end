@@ -29,10 +29,7 @@ export class AdminComponent implements OnInit {
     ngOnInit() {
 
     }
-    /*
-    onKey(event: any) { // without type info
-      this.selectedLastName = event.target.value;
-    }*/
+
     constructor(private userDataService: UserService) {
       this.roles = ROLE;
       this.fetchUsers();
@@ -68,10 +65,12 @@ export class AdminComponent implements OnInit {
         }, err => console.log(err));
     }
 
-    fetchUsers() {
+    private fetchUsers() {
       this.userDataService.fetchUsers()
       .subscribe((res: any) => {
+        if ( res.status === 200 ) {
         this.users = res.data.users;
+      }
       }, err => console.log(err));
     }
 

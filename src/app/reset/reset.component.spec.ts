@@ -54,7 +54,7 @@ describe('ResetComponent', () => {
     spyOn(component, 'resetUser').and.callThrough();
 
     fixture.detectChanges();
-    component.emailAddress = "dummy@admin.com";
+    component.emailAddress = 'dummy@admin.com';
     fixture.debugElement.query(By.css('button[name=reset_user]')).nativeElement.click();
     done();
 

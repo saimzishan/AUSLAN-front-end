@@ -15,7 +15,7 @@
   </label>
   <label class="icon-lock">
     PASSWORD *
-  <input id="pass" name="pass"  type="password" placeholder="Enter your password" [(ngModel)]="newUser.password" name="password" #password="ngModel" required>
+  <input id="pass" type="password" placeholder="Enter your password" [(ngModel)]="newUser.password" name="password" #password="ngModel" required>
     <p *ngIf="password.errors?.required">The password is required and has to be strong</p>
   </label>
   <label class="icon-lock">
@@ -47,7 +47,7 @@
 <button name="add_user" class="button"
 [disabled]="last_name.errors ||first_name.errors  || email.errors || password.errors|| certainPassword.errors " (click)="addUser(user)"> ADD User </button>
   </header>
-  <section class="main" *ngIf="users?.length > 0">
+  <section name="list_user" class="main" *ngIf="users?.length > 0">
     <ul class="user-list">
       <li *ngFor="let user of users">
         <div class="view">
@@ -55,7 +55,7 @@
           <label name="email" >{{user.email  | json }}</label>
           <label name="type" >{{user.type  | json }}</label>
           <!-- label name="first_name" >{{user.first_name  | json }}</label -->
-          <input #box (keyup)="0"  type="text"  name="first_name" [value]="user.first_name">
+          <input #box (keyup)="0"  type="text"  name="first_name_1" [value]="user.first_name">
           <label  name="last_name" >{{user.last_name  | json }}</label>
 
           <button name="edit_user" class="button" (click)="editUser(user, box.value)"> EDIT User </button>
