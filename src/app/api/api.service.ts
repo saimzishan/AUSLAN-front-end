@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import {Http, Headers, Response, RequestOptions} from '@angular/http';
 import { AuthHttp } from 'angular2-jwt';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/throw';
 
 @Injectable()
 export class ApiService {
@@ -19,22 +21,8 @@ export class ApiService {
     /*
       The Error Handler from HTTP
     */
-    protected handleError(error: Response | any): string {
-        // In a real world app, we might use a remote logging infrastructure
-        let errMsg: string;
-        if (error instanceof Response) {
-            let body, err: any;
-            try {
-              body = error.json() || error.text() || '';
-              err = body.error || JSON.stringify(body);
-            }catch ( er ) {
-
-            }
-            errMsg = `${error.status} - ${error.statusText || ''} ${err || ''}`;
-        } else {
-            errMsg = error.message ? error.message : error.toString();
-        }
-        return (errMsg);
+    protected handleError(error): any {
+        return Observable.throw(error);
     }
 
 }

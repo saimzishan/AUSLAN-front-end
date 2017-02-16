@@ -15,25 +15,6 @@ export class GLOBAL {
     public static TITLE = 'Auslan Booking System';
     public static VERSION = ' => 0.1.9'; // This should be broken into MAJOR and MINOR version?
     public static currentUser: User;
-
-    public static isLoggedIn() {
-        let token = sessionStorage.getItem('token');
-        let user = GLOBAL.currentUser;
-        return token && token.length > 0 && user && user.email.length > 0;
-
-    }
-
-    public static logout() {
-        sessionStorage.removeItem('token');
-        GLOBAL.currentUser = null;
-
-
-    }
-
-    public static login(user) {
-        sessionStorage.setItem('token', user.token);
-        GLOBAL.currentUser = user;
-    }
 }
 
 export function authService(http: Http, options: RequestOptions) {

@@ -34,7 +34,6 @@ import {
 } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 
-
 describe('AuthComponent', () => {
     let component: AuthComponent;
     let fixture: ComponentFixture<AuthComponent>;

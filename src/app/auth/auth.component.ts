@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { UserService } from '../api/user.service';
 import {User} from '../shared/model/user.entity';
-import {GLOBAL} from '../shared/global';
 import { ActivatedRoute, Router } from '@angular/router';
+import {AuthGuard} from './auth.guard';
 
 @Component({
   selector: 'app-auth',
@@ -29,7 +29,7 @@ export class AuthComponent implements OnInit {
       .subscribe((res: any) => {
         if ( res.data.jwt) {
         this.model.token = res.data.jwt;
-        GLOBAL.login(this.model);
+        AuthGuard.login(this.model);
         this.router.navigate(['/dashboard']);
       }
     },
@@ -43,7 +43,7 @@ export class AuthComponent implements OnInit {
     logout(): void {
         this.model.token = null;
         // clear token remove user from local storage to log user out
-        GLOBAL.logout();
+        AuthGuard.logout();
     }
 
 }

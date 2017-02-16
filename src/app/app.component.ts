@@ -15,6 +15,6 @@ export class AppComponent {
   }
 
   isLoggedIn() {
-    return GLOBAL.isLoggedIn();
+    return AuthGuard.isLoggedIn();
   }
 }

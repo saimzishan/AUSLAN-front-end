@@ -71,7 +71,7 @@ export class UserService extends ApiService {
 
         return this.http.post(this.getRoute(user), JSON.stringify(obj), options)
             .map(this.extractData)
-            .catch((err) => { return Observable.throw(err); });
+            .catch((err) => { return this.handleError(err); });
     }
 
     /*
