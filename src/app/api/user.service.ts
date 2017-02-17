@@ -27,7 +27,7 @@ export class UserService extends ApiService {
         return (this.http !== undefined || this.http !== null);
     }
 
-    private getRoute(u: User): string {
+    public getRoute(u: User): string {
         let route = GLOBAL.USER_API;
 
         switch (+u.role) {
@@ -65,7 +65,7 @@ export class UserService extends ApiService {
     */
     createUser(user: User): Observable<Object> {
 
-        let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': '*/*' });
+        let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
         let options = new RequestOptions({ headers: headers });
         let obj = { 'user': user };
 
@@ -84,7 +84,7 @@ export class UserService extends ApiService {
         let obj = { 'user': user };
         return this.http.patch(GLOBAL.USER_API + '/' + user.id, JSON.stringify(obj), options)
             .map(this.extractData)
-            .catch(this.handleError);
+            .catch((err) => { return this.handleError(err); });
 
     }
 
@@ -92,11 +92,11 @@ export class UserService extends ApiService {
       The Api should be able to fetch all the users.
     */
     fetchUsers(): Observable<Object> {
-        let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': '*/*' });
+        let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
         let options = new RequestOptions({ headers: headers });
         return this.http.get(GLOBAL.USER_API, options)
             .map(this.extractData)
-            .catch(this.handleError);
+            .catch((err) => { return this.handleError(err); });
 
     }
 
@@ -110,7 +110,7 @@ export class UserService extends ApiService {
         return this.http
             .get(GLOBAL.USER_API + '/' + id, options)
             .map(this.extractData)
-            .catch(this.handleError);
+            .catch((err) => { return this.handleError(err); });
     }
 
 

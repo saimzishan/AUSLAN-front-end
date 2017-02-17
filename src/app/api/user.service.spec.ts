@@ -16,21 +16,25 @@ import {
 import {authService} from '../shared/global';
 import { RequestOptions } from '@angular/http';
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
-declare function require(name: string);
-let Pact = require('pact-consumer-js-dsl');
+// declare function require(name: string);
+// let Pact = require('pact-consumer-js-dsl');
 
-  // Commented Due to error - Alias flexible matchers for simplicity
-  /*
-  const term = Pact.Matchers.term;
-  const like = Pact.Matchers.somethingLike;
-  const eachLike = Pact.Matchers.eachLike;
-  */
+// Commented Due to error - Alias flexible matchers for simplicity
+/*
+const term = Pact.Matchers.term;
+const like = Pact.Matchers.somethingLike;
+const eachLike = Pact.Matchers.eachLike;
+*/
 
 let mock_db: User[] = [
-  new User({id: 2, email: 'admin1@aus.au', name: 'Joe Doe 2',
-     password: 'secure_password', role: ROLE.Accountant}),
-     new User({id: 1, email: 'admin1@aus.au', name: 'Joe Doe 1',
-        password: 'secure_password', role: ROLE.Interpreter})
+    new User({
+        id: 2, email: 'admin1@aus.au', name: 'Joe Doe 2',
+        password: 'secure_password', role: ROLE.Accountant
+    }),
+    new User({
+        id: 1, email: 'admin1@aus.au', name: 'Joe Doe 1',
+        password: 'secure_password', role: ROLE.Interpreter
+    })
 ];
 
 describe('UserService', () => {
@@ -42,13 +46,10 @@ describe('UserService', () => {
                 provide: AuthHttp,
                 useFactory: authService,
                 deps: [Http, RequestOptions]
-              }],
+            }],
             imports: [HttpModule]
         });
 
-        done();
-    });
-    beforeAll(function(done) {
         userProvider = Pact.mockService({
             consumer: 'User-Specs',
             provider: 'User-Api',
@@ -78,43 +79,51 @@ describe('UserService', () => {
             done();
         })();
     });
+    describe('Fetach All user Api', () => {
 
-    it('should return a collection of users for fetch all users', function(done) {
-        inject([UserService], (service: UserService) => {
-            userProvider
-                .given('there are users already added inside the database')
-                .uponReceiving('a request to get all users')
-                .withRequest('GET', '/api/v1/users/', {
-                    'Accept': 'application/json'
-                })
-                .willRespondWith(200, {
-                    'Content-Type': 'application/json; charset=utf-8'
-                }, Pact.Match.somethingLike(mock_db));
+        it('should return a collection of users for fetch all users', function(done) {
+            inject([UserService], (service: UserService) => {
+                let int = userProvider
+                    .given('there are users already added inside the database')
+                    .uponReceiving('a request to get all users')
+                    .withRequest({
+                        method: 'GET',
+                        path: '/api/v1/users',
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    }
+                    )
+                    .willRespondWith(200, {
+                        'Content-Type': 'application/json; charset=utf-8'
+                    }, Pact.Match.somethingLike(mock_db));
 
-            userProvider.run(done, function(runComplete) {
-                service.fetchUsers()
-                    .subscribe((res: any) => {
-                        expect(res.status).toEqual(200);
-                        service.users = res.data;
-                        expect(service.users.length).toBeGreaterThan(0);
-                    });
-                runComplete();
+                userProvider.run(done, function(runComplete) {
+                    service.fetchUsers()
+                        .subscribe((res: any) => {
+                            expect(res.status).toEqual(200);
+                            service.users = res.data;
+                            expect(service.users.length).toBeGreaterThan(0);
+                            done();
+                        }, err => done.fail(err), () => {
+                            runComplete();
+                        });
 
-            });
-        })();
+                });
+            })();
+        });
     });
-
 
     it('should get an individual user by its *id*', function(done) {
         inject([UserService], (service: UserService) => {
             userProvider
                 .given('user api should return user by its id')
-                .uponReceiving('a request for all users')
+                .uponReceiving('a request for singe users')
                 .withRequest({
                     method: 'GET',
                     path: '/api/v1/users/1',
                     headers: {
-                      'Accept': 'application/json'
+                        'Accept': 'application/json'
                     }
                 }
                 )
@@ -128,9 +137,10 @@ describe('UserService', () => {
                         let data = res.data;
                         let u = new User(data);
                         expect(u).toEqual(jasmine.any(User));
+                        done();
+                    }, err => done.fail(err), () => {
+                        runComplete();
                     });
-
-                runComplete();
 
             });
         })();
@@ -145,7 +155,7 @@ describe('UserService', () => {
                     method: 'GET',
                     path: '/api/v1/users/-1',
                     headers: {
-                      'Accept': 'application/json'
+                        'Accept': 'application/json'
                     }
                 })
                 .willRespondWith(404, {
@@ -155,12 +165,10 @@ describe('UserService', () => {
             userProvider.run(done, function(runComplete) {
                 service.getUser(-1)
                     .subscribe((res: any) => {
-                        expect(res.status).toEqual(404);
-                    }, err => console.log(err));
-
-
-                runComplete();
-
+                        done.fail(res);
+                    }, err => { expect(err.status).toEqual(404); done() }, () => {
+                        runComplete();
+                    });
             });
         })();
     });
@@ -171,7 +179,7 @@ describe('UserService', () => {
                 .given('user exists in database')
                 .uponReceiving('a request to update a user, containing user object')
                 .withRequest('PATCH', '/api/v1/users', {
-                  'Accept': 'application/json'
+                    'Accept': 'application/json'
                 }, Pact.Match.somethingLike(mock_db[0])
                 )
                 .willRespondWith(200, {
@@ -179,15 +187,18 @@ describe('UserService', () => {
                 });
 
             userProvider.run(done, function(runComplete) {
-              let u: User = new User({id: 3, email: 'admin1@aus.au', name: 'Joe Doe3',
-                  password: 'secure_password', role: ROLE.Client});
+                let u: User = new User({
+                    id: 3, email: 'admin1@aus.au', name: 'Joe Doe3',
+                    password: 'secure_password', role: ROLE.Client
+                });
 
                 let status_code = service.updateUser(u)
                     .subscribe((res: any) => {
                         expect(res.status).toEqual(200);
+                        done();
+                    }, err => done.fail(err), () => {
+                        runComplete();
                     });
-
-                runComplete();
 
             });
         })();
@@ -199,7 +210,7 @@ describe('UserService', () => {
                 .given('user exists in database')
                 .uponReceiving('a request to delete a user')
                 .withRequest('DELETE', '/api/v1/users/1', {
-                  'Accept': 'application/json'
+                    'Accept': 'application/json'
                 })
                 .willRespondWith(204, {
                     'Content-Type': 'application/json; charset=utf-8'
@@ -209,38 +220,47 @@ describe('UserService', () => {
                 service.deleteUser(1)
                     .subscribe((res: any) => {
                         expect(res.status).toEqual(204);
+                        done();
+                    }, err => done.fail(err), () => {
+                        runComplete();
                     });
-                runComplete();
-
             });
         })();
     });
 
-    it('should create a new users', function(done) {
+    it('should create a booking users', function(done) {
         inject([UserService], (service: UserService) => {
-            userProvider
-                .given('user does not exists in database')
-                .uponReceiving('a request to create user')
-                .withRequest('POST', '/api/v1/users/', {
-                  'Accept': 'application/json'
-                })
-                .willRespondWith(201, {
-                    'Content-Type': 'application/json; charset=utf-8'
-                }, Pact.Match.somethingLike(123));
+            for (var r in ROLE) {
+                if ( r ) {
+                  let u: User = new User({
+                      id: 3, email: 'admin1@aus.au', name: 'Joe Doe',
+                      password: 'secure_password', role: r
+                  });
+                userProvider
+                    .given('user does not exists in database')
+                    .uponReceiving('a request to create user')
+                    .withRequest('POST', '/api/v1' + service.getRoute(u), {
+                        'Accept': 'application/json'
+                    })
+                    .willRespondWith(201, {
+                        'Content-Type': 'application/json; charset=utf-8'
+                    }, Pact.Match.somethingLike(123));
 
-            userProvider.run(done, function(runComplete) {
-                let u: User = new User({id: 3, email: 'admin1@aus.au', name: 'Joe Doe',
-                    password: 'secure_password', role: ROLE.BookingOfficer});
-                service.createUser(u)
-                    .subscribe((res: any) => {
-                        service.users.push(res.data);
-                        expect(res.status).toEqual(201);
-                    });
+                userProvider.run(done, function(runComplete) {
 
-                runComplete();
-
-            });
+                    service.createUser(u)
+                        .subscribe((res: any) => {
+                            service.users.push(res.data);
+                            expect(res.status).toEqual(201);
+                            done();
+                        }, err => done.fail(err), () => {
+                            runComplete();
+                        });
+                });
+            }
+          }
         })();
     });
+
 
 });

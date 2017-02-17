@@ -4,9 +4,10 @@ import { Http, RequestOptions } from '@angular/http';
 import {User} from './model/user.entity';
 
 export class GLOBAL {
-    public static MOCK_SERVER_PORT = 3000;
+    public static MOCK_SERVER_PORT = 1234;
     public static LOG_LEVEL = 'INFO';
-    public static API_ENDPOINT = (environment.production) ? 'https://auslan.herokuapp.com/api/v1' :
+    public static localTesting = false;
+    public static API_ENDPOINT = (environment.production || GLOBAL.localTesting) ? 'https://auslan.herokuapp.com/api/v1' :
         `http://localhost:${GLOBAL.MOCK_SERVER_PORT}/api/v1`;
     public static USER_API = GLOBAL.API_ENDPOINT + '/users';
     public static USER_API_DEPRECIATED = 'http://localhost:8080/api/v1/users/';
