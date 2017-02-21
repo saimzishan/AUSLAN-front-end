@@ -4,7 +4,7 @@ machine:
 
 test:
   pre:
-    - bundle exec pact-mock-service start -p 1234 -l tmp/pact.log --pact-dir tmp/pacts
+    - bundle exec pact-mock-service restart -p 1234 -l tmp/pact.log --pact-dir tmp/pacts
     - npm install codeclimate-test-reporter -g
   override:
     - npm run lint
