@@ -26,34 +26,34 @@ export class UserService extends ApiService {
     private isValidHttp(): boolean {
         return (this.http !== undefined || this.http !== null);
     }
-
+    /*Only making it public for test case*/
     public getRoute(u: User): string {
-        let route = GLOBAL.USER_API;
+        let route = '';
 
         switch (+u.role) {
 
             case ROLE.OrganisationalRepresentative:
-                route = GLOBAL.API_ENDPOINT + '/organisational_representatives';
+                route = '/organisational_representatives';
                 break;
 
             case ROLE.Accountant:
-                route = GLOBAL.API_ENDPOINT + '/accountants';
+                route = '/accountants';
                 break;
 
             case ROLE.Client:
-                route = GLOBAL.API_ENDPOINT + '/individual_clients';
+                route = '/individual_clients';
                 break;
 
             case ROLE.BookingOfficer:
-                route = GLOBAL.API_ENDPOINT + '/booking_officers';
+                route = '/booking_officers';
                 break;
 
             case ROLE.Administrator:
-                route = GLOBAL.API_ENDPOINT + '/administrators';
+                route = '/administrators';
                 break;
 
             case ROLE.Interpreter:
-                route = GLOBAL.API_ENDPOINT + '/interpreters';
+                route = '/interpreters';
                 break;
 
         }
@@ -69,7 +69,7 @@ export class UserService extends ApiService {
         let options = new RequestOptions({ headers: headers });
         let obj = { 'user': user };
 
-        return this.http.post(this.getRoute(user), JSON.stringify(obj), options)
+        return this.http.post(GLOBAL.API_ENDPOINT + this.getRoute(user), JSON.stringify(obj), options)
             .map(this.extractData)
             .catch((err) => { return this.handleError(err); });
     }
@@ -83,7 +83,6 @@ export class UserService extends ApiService {
         let options = new RequestOptions({ headers: headers });
         let obj = { 'user': user };
         return this.http.patch(GLOBAL.USER_API + '/' + user.id, JSON.stringify(obj), options)
-            .map(this.extractData)
             .catch((err) => { return this.handleError(err); });
 
     }
@@ -125,7 +124,6 @@ export class UserService extends ApiService {
         return this.http
             .post(GLOBAL.USER_API + '/' + userID + '/confirm_verification_code' ,
              JSON.stringify(obj) , options) // Better add verify in path
-            .map(this.extractData)
             .catch((err) => { return Observable.throw(err); });
     }
 
@@ -138,7 +136,6 @@ export class UserService extends ApiService {
 
         return this.http
             .get(GLOBAL.USER_API + '/' + userID + '/resend_verification_code' , options)
-            .map(this.extractData)
             .catch((err) => { return Observable.throw(err); });
     }
 
@@ -151,7 +148,6 @@ export class UserService extends ApiService {
 
         return this.http
             .get(GLOBAL.USER_API + '/reset_password/' + (emailAddress)  , options) // Better add verify in path
-            .map(this.extractData)
             .catch((err) => { return Observable.throw(err); });
     }
     /*
@@ -188,7 +184,6 @@ export class UserService extends ApiService {
 
         return this.http
             .get(GLOBAL.USER_API + '/logout', options)
-            .map(this.extractData)
             .catch((err) => { return Observable.throw(err); });
     }
     /*

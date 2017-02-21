@@ -13,9 +13,16 @@
     "target": "es5",
     "typeRoots": [
       "../node_modules/@types"
-    ]
-  },
-  "exclude": [
-    "node_modules"
-  ]
+    ],
+       "types": [
+           "jasmine"
+       ]
+   },
+   "include": [
+       "src/**/*.ts",
+       "node_modules/@types"
+   ],
+   "atom": {
+       "rewriteTsconfig": false
+   }
 }
