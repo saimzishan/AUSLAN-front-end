@@ -26,6 +26,13 @@ const like = Pact.Matchers.somethingLike;
 const eachLike = Pact.Matchers.eachLike;
 */
 
+let mock_response: Object[] = [
+    new Object({
+        id: 2, email: 'admin1@aus.au', first_name: 'Joe', last_name: 'Joe',
+        mobile: 'xxxx xxx xxx', verified: false, disabled: false
+    })
+];
+
 let mock_db: User[] = [
     new User({
         id: 2, email: 'admin1@aus.au', name: 'Joe Doe 2',
@@ -36,6 +43,7 @@ let mock_db: User[] = [
         password: 'secure_password', role: ROLE.Interpreter
     })
 ];
+
 
 describe('UserService', () => {
     let userProvider;
@@ -96,7 +104,7 @@ describe('UserService', () => {
                     )
                     .willRespondWith(200, {
                         'Content-Type': 'application/json; charset=utf-8'
-                    }, Pact.Match.somethingLike(mock_db));
+                    }, {'users': Pact.Match.somethingLike(mock_response)});
 
                 userProvider.run(done, function(runComplete) {
                     service.fetchUsers()
@@ -129,7 +137,7 @@ describe('UserService', () => {
                 )
                 .willRespondWith(200, {
                     'Content-Type': 'application/json; charset=utf-8'
-                }, Pact.Match.somethingLike(mock_db[0]));
+                }, Pact.Match.somethingLike(mock_response[0]));
 
             userProvider.run(done, function(runComplete) {
                 service.getUser(1)

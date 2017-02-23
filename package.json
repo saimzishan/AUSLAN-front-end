@@ -14,7 +14,8 @@
     "e2e": "protractor",
     "posttest": "node_modules/.bin/remap-istanbul -i coverage/coverage-final.json -o coverage -t html",
     "coverage": "http-server -c-1 -o -p 9870 ./coverage",
-    "postinstall": "ng build -prod"
+    "postinstall": "ng build -prod",
+    "pact": "curl -v -XPUT \\-H \"Content-Type: application/json\" -d@pacts/user-specs-user-api.json https://auslan-pact-broker.herokuapp.com//pacts/latest --user admin:auslanPACT"
   },
   "private": true,
   "dependencies": {
