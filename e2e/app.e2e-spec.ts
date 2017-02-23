@@ -1,14 +1,15 @@
-import { PROJECTNAMEPage } from './app.po';
+import { PageHelper } from './app.po';
+import {} from 'jasmine';
 
-describe('project-name App', function() {
-  let page: PROJECTNAMEPage;
+describe('Auslan Booking System', function() {
+  let page = new PageHelper();
 
   beforeEach(() => {
-    page = new PROJECTNAMEPage();
+
   });
 
-  it('should display message saying app works', () => {
-    page.navigateTo();
-    expect(page.getParagraphText()).toEqual('app works!');
+  it('should go to authenticate by default', () => {
+    page.navigateTo('/');
+    expect(page.currentPath()).toContain('authenticate');
   });
 });

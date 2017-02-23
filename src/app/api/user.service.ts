@@ -178,7 +178,7 @@ export class UserService extends ApiService {
     /*
       The Api that should logout the user
     */
-    logout(user: User): Observable<Object> {
+    logout(): Observable<Object> {
         let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
