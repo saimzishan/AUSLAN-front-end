@@ -17,17 +17,16 @@ test:
 
 
 deployment:
-  stagging:
-    branch: dev-master
-    commands:
-      - ng build --target=development
-      - aws s3 sync dist/  s3://auslan-booking-system-ct/ --delete
-      - npm run pact
-
-
   prod:
     branch: master
     commands:
       - ng build --target=production
+      - aws s3 sync dist/  s3://auslan-booking-system-ct/ --delete
+      - npm run pact
+      
+  stagging:
+    branch: dev-master
+    commands:
+      - ng build --target=development
       - aws s3 sync dist/  s3://auslan-booking-system-ct/ --delete
       - npm run pact
