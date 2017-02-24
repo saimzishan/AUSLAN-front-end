@@ -110,7 +110,7 @@ describe('UserService', () => {
                     service.fetchUsers()
                         .subscribe((res: any) => {
                             expect(res.status).toEqual(200);
-                            service.users = res.data;
+                            service.users = res.data.users;
                             expect(service.users.length).toBeGreaterThan(0);
                             done();
                         }, err => done.fail(err), () => {
