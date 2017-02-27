@@ -10,6 +10,7 @@ import {UserService} from '../api/user.service';
 export class ResetComponent implements OnInit {
   public emailAddress= '';
   errors: any;
+  isError=false;
 
   constructor(private service: UserService) { }
 
@@ -20,10 +21,13 @@ export class ResetComponent implements OnInit {
     this.service.resetUser(this.emailAddress)
         .subscribe((res: any) => {
             if (res.status === 200 ) {
+              this.isError = false;
+              this.errors = 'The email address has been sent to your address';
             }
         },
         err => {
             console.log(err);
+            this.isError = true;
             this.errors = 'The email address is not registered with us.';
         },
         () => { });

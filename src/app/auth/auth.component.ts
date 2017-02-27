@@ -4,6 +4,7 @@ import {User} from '../shared/model/user.entity';
 import { ActivatedRoute, Router } from '@angular/router';
 import {AuthGuard} from './auth.guard';
 import {SpinnerComponent} from '../spinner/spinner.component';
+import { SpinnerService } from '../spinner/spinner.service';
 
 @Component({
   selector: 'app-auth',
@@ -13,9 +14,10 @@ import {SpinnerComponent} from '../spinner/spinner.component';
 })
 export class AuthComponent implements OnInit {
   errors: any;
-  public isRequesting: boolean;
   model: User = new User();
-  constructor(private service: UserService, private routes: ActivatedRoute, private router: Router) {
+
+  constructor(private spinnerService: SpinnerService, private service: UserService,
+     private routes: ActivatedRoute, private router: Router) {
   }
 
    ngOnInit() {
@@ -27,11 +29,12 @@ export class AuthComponent implements OnInit {
    }
 
     onSubmit() {
-      this.isRequesting = true;
+      this.spinnerService.requestInProcess(true);
       this.errors = '';
       this.service.login(this.model)
       .subscribe((res: any) => {
-        this.isRequesting = false;
+        this.spinnerService.requestInProcess(false);
+
         if ( res.data.jwt) {
         this.model.token = res.data.jwt;
         AuthGuard.login(this.model);
@@ -41,7 +44,8 @@ export class AuthComponent implements OnInit {
     err => {
       console.log(err);
       this.errors = 'Email or Password not found';
-      this.isRequesting = false;
+      this.spinnerService.requestInProcess(false);
+
     },
     () => {});
     }

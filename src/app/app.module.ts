@@ -25,6 +25,7 @@ import { NotificationComponent } from './notification/notification.component';
 import { BookingComponent } from './booking/booking.component';
 import { BookingDetailComponent } from './booking/booking-detail/booking-detail.component';
 import { SpinnerComponent } from './spinner/spinner.component';
+import { SpinnerService } from './spinner/spinner.service';
 
 
 @NgModule({
@@ -47,7 +48,7 @@ import { SpinnerComponent } from './spinner/spinner.component';
     BrowserModule, RouterModule,
     FormsModule,
     HttpModule
-  ],  providers: [AuthGuard, Title, UserService, {provide: APP_BASE_HREF, useValue : '/' }, {
+  ],  providers: [AuthGuard, Title, SpinnerService, UserService, {provide: APP_BASE_HREF, useValue : '/' }, {
       provide: AuthHttp,
       useFactory: authService,
       deps: [Http, RequestOptions]

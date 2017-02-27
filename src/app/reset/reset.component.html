@@ -31,7 +31,7 @@
                               <button name="reset_user" class="button"
                               [disabled]="email.errors" (click)="resetUser()"> Reset User </button>
                             </div>
-                            <app-notification [notification]='errors' [isError]="true" ></app-notification>
+                            <app-notification [notification]='errors' [isError]='isError' ></app-notification>
               <!-- p *ngIf="password.errors?.required">The password is required and has to be strong</p>
              <p *ngIf="last_name.errors?.rangeLength">The last name is required and should have minimum 2 characters</p>
              <p *ngIf="first_name.errors?.rangeLength">The first name is required and should have minimum 2 characters</p>

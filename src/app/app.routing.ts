@@ -15,11 +15,6 @@ import {BookingComponent} from './booking/booking.component';
 
 
 const appRoutes: Routes = [
-  {
-    path: '',
-    redirectTo: 'authenticate',
-    pathMatch: 'full'
-  }, { path: '**', redirectTo: 'authenticate', pathMatch: 'full'},
   { path: 'admin-center', component: AdminComponent, canActivate: [AuthGuard] },
   { path: 'authenticate', component: AuthComponent },
   { path: 'authenticate/logout', component: AuthComponent },
@@ -28,7 +23,8 @@ const appRoutes: Routes = [
   {path: 'register', component: RegisterComponent},
   {path: 'reset', component: ResetComponent},
   {path: 'verify/:id', component: VerifyComponent},
-  {path: 'bookings', component: BookingComponent}
+  {path: 'bookings', component: BookingComponent},
+  { path: '**', redirectTo: 'authenticate', pathMatch: 'full'}
 ];
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes);
