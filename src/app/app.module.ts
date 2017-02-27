@@ -22,8 +22,10 @@ import { ResetComponent } from './reset/reset.component';
 import {AuthGuard} from './auth/auth.guard';
 import {enableProdMode} from '@angular/core';
 import { NotificationComponent } from './notification/notification.component';
+import { BookingComponent } from './booking/booking.component';
+import { BookingDetailComponent } from './booking/booking-detail/booking-detail.component';
+import { SpinnerComponent } from './spinner/spinner.component';
 
-enableProdMode();
 
 @NgModule({
   declarations: [
@@ -37,6 +39,9 @@ enableProdMode();
     VerifyComponent,
     ResetComponent,
     NotificationComponent,
+    BookingComponent,
+    BookingDetailComponent,
+    SpinnerComponent,
   ], exports: [EnumValPipe],
   imports: [CustomFormsModule, routing,
     BrowserModule, RouterModule,

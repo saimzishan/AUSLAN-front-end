@@ -11,7 +11,7 @@ import { ModuleWithProviders }  from '@angular/core';
 import { RegisterComponent } from './register/register.component';
 import { ResetComponent } from './reset/reset.component';
 import { VerifyComponent } from './verify/verify.component';
-
+import {BookingComponent} from './booking/booking.component';
 
 
 const appRoutes: Routes = [
@@ -27,7 +27,8 @@ const appRoutes: Routes = [
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   {path: 'register', component: RegisterComponent},
   {path: 'reset', component: ResetComponent},
-  {path: 'verify/:id', component: VerifyComponent}
+  {path: 'verify/:id', component: VerifyComponent},
+  {path: 'bookings', component: BookingComponent}
 ];
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes);
