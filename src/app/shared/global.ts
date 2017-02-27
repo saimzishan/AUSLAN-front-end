@@ -15,6 +15,9 @@ export class GLOBAL {
     public static TITLE = 'Auslan Booking System';
     public static VERSION = ' => 0.1.9'; // This should be broken into MAJOR and MINOR version?
     public static currentUser: User;
+    public static FAKE_TOKEN = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.' +
+    'eyJpc3MiOiJPbmxpbmUgSldUIEJ1aWxkZXIiLCJpYXQiOjE0ODgxOTM0MTAsImV4cCI6MzMwNzY2M' +
+    'zgyMTAsImF1ZCI6Ind3dy5wYWN0LmNvbSIsInN1YiI6Imthcm1hQHBhY3QuY29tIn0.lVWLJAYQRZcQTMtdDrxTHMwboSOqNQPISLDAKDkPy58';
 }
 
 export function authService(http: Http, options: RequestOptions) {

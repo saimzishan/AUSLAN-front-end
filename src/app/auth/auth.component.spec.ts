@@ -38,23 +38,42 @@ import { BookingComponent } from '../booking/booking.component';
 import { BookingDetailComponent } from '../booking/booking-detail/booking-detail.component';
 import { SpinnerComponent } from '../spinner/spinner.component';
 import { SpinnerService } from '../spinner/spinner.service';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/of';
+import {Injectable} from '@angular/core';
+import { ApiService } from '../api/api.service';
+
+let res: Object = {'res': { 'data': { 'jwt': GLOBAL.FAKE_TOKEN}}};
+
+@Injectable()
+class MockUserService extends ApiService {
+
+     login(user: User): Observable<Object>  {
+       return Observable.of(res).map(this.extractData);
+     }
+
+     logout() {
+       return '';
+     }
+ }
 
 describe('AuthComponent', () => {
     let component: AuthComponent;
     let fixture: ComponentFixture<AuthComponent>;
     beforeEach(async(() => {
+
       TestBed.configureTestingModule({
           declarations: [EnumValPipe, AdminComponent, RegisterComponent, NotificationComponent,
               NotFoundComponent, DashboardComponent, AuthComponent, ResetComponent, VerifyComponent,
               BookingComponent,
               BookingDetailComponent,
               SpinnerComponent],
-          providers: [UserService, SpinnerService, { provide: APP_BASE_HREF, useValue: '/' }, {
+          providers: [{ provide: UserService, useClass: MockUserService}, SpinnerService, { provide: APP_BASE_HREF, useValue: '/' }, {
               provide: AuthHttp,
               useFactory: authService,
               deps: [Http, RequestOptions]
           }],
-          imports: [CustomFormsModule, routing, RouterModule, HttpModule, FormsModule,
+          imports: [CustomFormsModule, RouterModule, HttpModule, FormsModule,
             RouterTestingModule.withRoutes(
         [{ path: 'authenticate', component: AuthComponent },
         { path: 'authenticate/logout', component: AuthComponent }])]
