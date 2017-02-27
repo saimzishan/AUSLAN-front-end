@@ -37,6 +37,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { BookingComponent } from '../booking/booking.component';
 import { BookingDetailComponent } from '../booking/booking-detail/booking-detail.component';
 import { SpinnerComponent } from '../spinner/spinner.component';
+import { SpinnerService } from '../spinner/spinner.service';
 
 describe('AuthComponent', () => {
     let component: AuthComponent;
@@ -48,7 +49,7 @@ describe('AuthComponent', () => {
               BookingComponent,
               BookingDetailComponent,
               SpinnerComponent],
-          providers: [UserService, { provide: APP_BASE_HREF, useValue: '/' }, {
+          providers: [UserService, SpinnerService, { provide: APP_BASE_HREF, useValue: '/' }, {
               provide: AuthHttp,
               useFactory: authService,
               deps: [Http, RequestOptions]

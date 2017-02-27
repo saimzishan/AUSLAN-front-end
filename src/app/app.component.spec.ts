@@ -38,6 +38,7 @@ import {
 import { BookingComponent } from './booking/booking.component';
 import { BookingDetailComponent } from './booking/booking-detail/booking-detail.component';
 import { SpinnerComponent } from './spinner/spinner.component';
+import { SpinnerService } from './spinner/spinner.service';
 
 
 describe('AppComponent', () => {
@@ -58,7 +59,7 @@ describe('AppComponent', () => {
         BrowserModule,
         FormsModule,
         HttpModule, routing
-      ],  providers: [Title, UserService, {provide: APP_BASE_HREF, useValue : '/' }, {
+      ],  providers: [Title, SpinnerService, UserService, {provide: APP_BASE_HREF, useValue : '/' }, {
           provide: AuthHttp,
           useFactory: authService,
           deps: [Http, RequestOptions]
