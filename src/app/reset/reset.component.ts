@@ -10,7 +10,7 @@ import {UserService} from '../api/user.service';
 export class ResetComponent implements OnInit {
   public emailAddress= '';
   errors: any;
-  isError=false;
+  isError = false;
 
   constructor(private service: UserService) { }
 
