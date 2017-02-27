@@ -27,6 +27,10 @@ import {authService} from '../shared/global';
 import {  HttpModule, Http, RequestOptions } from '@angular/http';
 import { NotificationComponent } from '../notification/notification.component';
 
+import { BookingComponent } from '../booking/booking.component';
+import { BookingDetailComponent } from '../booking/booking-detail/booking-detail.component';
+import { SpinnerComponent } from '../spinner/spinner.component';
+
 
 describe('VerifyComponent', () => {
     let component: VerifyComponent;
@@ -35,7 +39,10 @@ describe('VerifyComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [EnumValPipe, AdminComponent, RegisterComponent, NotificationComponent,
-                NotFoundComponent, DashboardComponent, AuthComponent, ResetComponent, VerifyComponent],
+                NotFoundComponent, DashboardComponent, AuthComponent, ResetComponent, VerifyComponent,
+                BookingComponent,
+                BookingDetailComponent,
+                SpinnerComponent],
             imports: [FormsModule, RouterModule, HttpModule, routing, CustomFormsModule],
             providers: [UserService, { provide: APP_BASE_HREF, useValue: '/' },
                 {

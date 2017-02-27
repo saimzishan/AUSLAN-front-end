@@ -28,6 +28,10 @@ import {authService} from '../shared/global';
 import {  HttpModule, Http, RequestOptions } from '@angular/http';
 import { NotificationComponent } from '../notification/notification.component';
 
+import { BookingComponent } from '../booking/booking.component';
+import { BookingDetailComponent } from '../booking/booking-detail/booking-detail.component';
+import { SpinnerComponent } from '../spinner/spinner.component';
+
 
 describe('ResetComponent', () => {
   let component: ResetComponent;
@@ -36,7 +40,10 @@ describe('ResetComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ EnumValPipe, AdminComponent, RegisterComponent, NotificationComponent,
-          NotFoundComponent, DashboardComponent, AuthComponent, ResetComponent, VerifyComponent ],
+          NotFoundComponent, DashboardComponent, AuthComponent, ResetComponent, VerifyComponent,
+          BookingComponent,
+          BookingDetailComponent,
+          SpinnerComponent ],
       imports: [CustomFormsModule, HttpModule, routing, FormsModule, RouterModule],
       providers: [UserService, {provide: APP_BASE_HREF, useValue : '/' },
       {

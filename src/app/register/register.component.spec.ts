@@ -25,6 +25,9 @@ import { FormsModule }   from '@angular/forms';
 import { CustomFormsModule } from 'ng2-validation';
 import { HttpModule, Http, BaseRequestOptions } from '@angular/http';
 import { ROLE } from '../shared/model/role.enum';
+import { BookingComponent } from '../booking/booking.component';
+import { BookingDetailComponent } from '../booking/booking-detail/booking-detail.component';
+import { SpinnerComponent } from '../spinner/spinner.component';
 
 describe('RegisterComponent', () => {
     let component: RegisterComponent;
@@ -33,7 +36,10 @@ describe('RegisterComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [EnumValPipe, AdminComponent, RegisterComponent, NotificationComponent,
-                NotFoundComponent, DashboardComponent, AuthComponent, ResetComponent, VerifyComponent],
+                NotFoundComponent, DashboardComponent, AuthComponent, ResetComponent, VerifyComponent,
+                BookingComponent,
+                BookingDetailComponent,
+                SpinnerComponent],
             providers: [UserService, { provide: APP_BASE_HREF, useValue: '/' }, {
                 provide: AuthHttp,
                 useFactory: authService,

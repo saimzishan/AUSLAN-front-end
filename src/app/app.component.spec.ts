@@ -35,6 +35,11 @@ import { RouterTestingModule } from '@angular/router/testing';
 import {
     RouterModule, ActivatedRoute
 } from '@angular/router';
+import { BookingComponent } from './booking/booking.component';
+import { BookingDetailComponent } from './booking/booking-detail/booking-detail.component';
+import { SpinnerComponent } from './spinner/spinner.component';
+
+
 describe('AppComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -44,7 +49,10 @@ describe('AppComponent', () => {
         DashboardComponent, NotificationComponent,
         AdminComponent,
         EnumValPipe,
-        NotFoundComponent, RegisterComponent, ResetComponent, VerifyComponent
+        NotFoundComponent, RegisterComponent, ResetComponent, VerifyComponent,
+        BookingComponent,
+        BookingDetailComponent,
+        SpinnerComponent
       ],
       imports: [CustomFormsModule, RouterModule,
         BrowserModule,

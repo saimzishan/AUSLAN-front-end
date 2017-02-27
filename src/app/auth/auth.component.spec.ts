@@ -34,13 +34,20 @@ import {
 } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 
+import { BookingComponent } from '../booking/booking.component';
+import { BookingDetailComponent } from '../booking/booking-detail/booking-detail.component';
+import { SpinnerComponent } from '../spinner/spinner.component';
+
 describe('AuthComponent', () => {
     let component: AuthComponent;
     let fixture: ComponentFixture<AuthComponent>;
     beforeEach(async(() => {
       TestBed.configureTestingModule({
           declarations: [EnumValPipe, AdminComponent, RegisterComponent, NotificationComponent,
-              NotFoundComponent, DashboardComponent, AuthComponent, ResetComponent, VerifyComponent],
+              NotFoundComponent, DashboardComponent, AuthComponent, ResetComponent, VerifyComponent,
+              BookingComponent,
+              BookingDetailComponent,
+              SpinnerComponent],
           providers: [UserService, { provide: APP_BASE_HREF, useValue: '/' }, {
               provide: AuthHttp,
               useFactory: authService,
