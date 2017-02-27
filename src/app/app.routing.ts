@@ -17,9 +17,9 @@ import { VerifyComponent } from './verify/verify.component';
 const appRoutes: Routes = [
   {
     path: '',
-    redirectTo: '/authenticate',
+    redirectTo: 'authenticate',
     pathMatch: 'full'
-  },
+  }, { path: '**', redirectTo: 'authenticate', pathMatch: 'full'},
   { path: 'admin-center', component: AdminComponent, canActivate: [AuthGuard] },
   { path: 'authenticate', component: AuthComponent },
   { path: 'authenticate/logout', component: AuthComponent },

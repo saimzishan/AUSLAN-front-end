@@ -31,7 +31,10 @@ import { ResetComponent } from './reset/reset.component';
 import { VerifyComponent } from './verify/verify.component';
 import { RegisterComponent } from './register/register.component';
 import { NotificationComponent } from './notification/notification.component';
-
+import { RouterTestingModule } from '@angular/router/testing';
+import {
+    RouterModule, ActivatedRoute
+} from '@angular/router';
 describe('AppComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -43,10 +46,10 @@ describe('AppComponent', () => {
         EnumValPipe,
         NotFoundComponent, RegisterComponent, ResetComponent, VerifyComponent
       ],
-      imports: [CustomFormsModule, routing,
+      imports: [CustomFormsModule, RouterModule,
         BrowserModule,
         FormsModule,
-        HttpModule
+        HttpModule, routing
       ],  providers: [Title, UserService, {provide: APP_BASE_HREF, useValue : '/' }, {
           provide: AuthHttp,
           useFactory: authService,
@@ -56,10 +59,12 @@ describe('AppComponent', () => {
     TestBed.compileComponents();
   });
 
-  it('should create the app', async(() => {
+  it('should create the app', (() => {
+
     let fixture = TestBed.createComponent(AppComponent);
     let app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
+
   }));
 
   it(`should have as title as declared in GLOBAL`, inject([Title], (service: Title) => {
