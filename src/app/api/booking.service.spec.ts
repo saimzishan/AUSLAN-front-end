@@ -163,8 +163,7 @@ describe('BookingService', () => {
             bookingProvider.run(done, function(runComplete) {
                 service.getBooking(-1)
                     .subscribe((res: any) => {
-                     done.fail(res); 
-                     
+                     done.fail(res);
                     }, err => { expect(err.status).toEqual(404); done(); }, () => {
                         runComplete();
                     });
