@@ -1,3 +1,3 @@
-<div *ngIf="notification" [ngClass]="{'alert': isError , 'msg': !isError}">
-<!-- span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span -->
+<div *ngIf="shouldShow" [ngClass]="{'alert': isError , 'msg': !isError}">
+<span class="closebtn" (click)="hide()">&times;</span>
 {{notification}}</div>

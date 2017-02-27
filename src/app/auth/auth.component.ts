@@ -3,6 +3,7 @@ import { UserService } from '../api/user.service';
 import {User} from '../shared/model/user.entity';
 import { ActivatedRoute, Router } from '@angular/router';
 import {AuthGuard} from './auth.guard';
+import {SpinnerComponent} from '../spinner/spinner.component';
 
 @Component({
   selector: 'app-auth',
@@ -12,6 +13,7 @@ import {AuthGuard} from './auth.guard';
 })
 export class AuthComponent implements OnInit {
   errors: any;
+  public isRequesting: boolean;
   model: User = new User();
   constructor(private service: UserService, private routes: ActivatedRoute, private router: Router) {
   }
@@ -25,8 +27,11 @@ export class AuthComponent implements OnInit {
    }
 
     onSubmit() {
+      this.isRequesting = true;
+      this.errors = '';
       this.service.login(this.model)
       .subscribe((res: any) => {
+        this.isRequesting = false;
         if ( res.data.jwt) {
         this.model.token = res.data.jwt;
         AuthGuard.login(this.model);
@@ -36,6 +41,7 @@ export class AuthComponent implements OnInit {
     err => {
       console.log(err);
       this.errors = 'Email or Password not found';
+      this.isRequesting = false;
     },
     () => {});
     }

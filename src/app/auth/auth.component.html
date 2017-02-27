@@ -1,3 +1,4 @@
+<app-spinner [isRunning]="isRequesting"></app-spinner>
 	<div class="page-login">
 		<div class="wrapper">
 			<div class="row align-middle">
@@ -46,9 +47,9 @@
 							</p>
 
 							<button type="submit" [disabled]="!loginForm.form.valid" name="login_user" class="login button">Log In</button>
-
-							<app-notification [notification]='errors' [isError]="true" ></app-notification>
-
+							<div *ngIf="errors">
+								<app-notification [notification]='errors' [isError]="true" ></app-notification>
+							</div>
 							<div class="sep-or"><span>or</span></div>
 							<p class="text-muted">Don’t Have an Account ?</p>
 							<a [routerLink]="['/register']" class="signup button">CREATE AN ACCOUNT</a>
