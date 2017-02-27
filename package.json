@@ -62,7 +62,6 @@
     "pact-consumer-js-dsl": "^0.2.2",
     "phantomjs-prebuilt": "~2.1.7",
     "protractor": "4.0.9",
-    "protractor-cucumber-framework": "^0.6.0",
     "remap-istanbul": "^0.8.4",
     "requirejs": "^2.1.11",
     "source-map-support": "^0.4.3",
