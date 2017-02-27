@@ -4,7 +4,6 @@ machine:
 
 test:
   pre:
-    - bundle install
     - rm -rf tmp
     - bundle exec pact-mock-service restart -p 1234 -l tmp/pact.log --pact-dir tmp/pacts
     - npm install codeclimate-test-reporter -g

@@ -174,7 +174,9 @@ describe('UserService', () => {
                 service.getUser(-1)
                     .subscribe((res: any) => {
                         done.fail(res);
-                    }, err => { expect(err.status).toEqual(404); done(); }, () => {
+                    }, err => {
+                      expect(err.status).toEqual(404); done();
+                    }, () => {
                         runComplete();
                     });
             });

@@ -65,7 +65,7 @@ export class UserService extends ApiService {
     */
     createUser(user: User): Observable<Object> {
 
-        let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
+        let headers = new Headers({/* 'Content-Type': 'application/json',*/ 'Accept': 'application/json' });
         let options = new RequestOptions({ headers: headers });
         let obj = { 'user': user };
 
@@ -79,7 +79,7 @@ export class UserService extends ApiService {
     */
     updateUser(user: User): Observable<Object> {
 
-        let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
+        let headers = new Headers({/* 'Content-Type': 'application/json',*/ 'Accept': 'application/json' });
         let options = new RequestOptions({ headers: headers });
         let obj = { 'user': user };
         return this.http.patch(GLOBAL.USER_API + '/' + user.id, JSON.stringify(obj), options)
@@ -91,7 +91,7 @@ export class UserService extends ApiService {
       The Api should be able to fetch all the users.
     */
     fetchUsers(): Observable<Object> {
-        let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
+        let headers = new Headers({/* 'Content-Type': 'application/json',*/ 'Accept': 'application/json' });
         let options = new RequestOptions({ headers: headers });
         return this.http.get(GLOBAL.USER_API, options)
             .map(this.extractData)
@@ -103,7 +103,7 @@ export class UserService extends ApiService {
       The Api should be get user by its ID (The Id should be email)
     */
     getUser(id: number): Observable<Object> {
-        let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
+        let headers = new Headers({/* 'Content-Type': 'application/json',*/ 'Accept': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
         return this.http
@@ -117,7 +117,7 @@ export class UserService extends ApiService {
       The Api should be to verify user
     */
     verifyUser(userID: number, verifyCode: string): Observable<Object> {
-        let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
+        let headers = new Headers({/* 'Content-Type': 'application/json',*/ 'Accept': 'application/json' });
         let options = new RequestOptions({ headers: headers });
         let obj = { 'code': verifyCode };
 
@@ -131,7 +131,7 @@ export class UserService extends ApiService {
       The Api should be to verify user
     */
     resendVerificationCode(userID: number): Observable<Object> {
-        let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
+        let headers = new Headers({/* 'Content-Type': 'application/json',*/ 'Accept': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
         return this.http
@@ -143,7 +143,7 @@ export class UserService extends ApiService {
       The Api should be to reset user password
     */
     resetUser( emailAddress: string): Observable<Object> {
-        let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
+        let headers = new Headers({/* 'Content-Type': 'application/json',*/ 'Accept': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
         return this.http
@@ -154,7 +154,7 @@ export class UserService extends ApiService {
       The Api should be get user by its ID (The Id should be email)
     */
     getUserByEmail(email: string): Observable<Object> {
-        let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
+        let headers = new Headers({/* 'Content-Type': 'application/json',*/ 'Accept': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
         return this.http
@@ -166,7 +166,7 @@ export class UserService extends ApiService {
       The Api that should login the user
     */
     login(user: User): Observable<Object> {
-        let headers = new Headers({ 'Content-Type': 'application/json; charset=utf-8', 'Accept': 'application/json' });
+        let headers = new Headers({ /* 'Content-Type': 'application/json',*/ 'Accept': 'application/json' });
         let options = new RequestOptions({ headers: headers });
         let obj = { 'auth': user };
 
@@ -179,7 +179,7 @@ export class UserService extends ApiService {
       The Api that should logout the user
     */
     logout(): Observable<Object> {
-        let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
+        let headers = new Headers({/* 'Content-Type': 'application/json',*/ 'Accept': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
         return this.http
@@ -190,7 +190,7 @@ export class UserService extends ApiService {
       The Api should be get user by its ID (The Id should be email)
     */
     deleteUser(id: number): Observable<Object> {
-        let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
+        let headers = new Headers({/* 'Content-Type': 'application/json',*/ 'Accept': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
         return this.http
