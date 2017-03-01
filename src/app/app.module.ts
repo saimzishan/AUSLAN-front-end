@@ -26,6 +26,9 @@ import { BookingComponent } from './booking/booking.component';
 import { BookingDetailComponent } from './booking/booking-detail/booking-detail.component';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { SpinnerService } from './spinner/spinner.service';
+import { HeaderComponent } from './ui/header/header.component';
+import { FilterComponent } from './booking/filter/filter.component';
+import { BookingListComponent } from './booking/booking-list/booking-list.component';
 
 
 @NgModule({
@@ -43,6 +46,9 @@ import { SpinnerService } from './spinner/spinner.service';
     BookingComponent,
     BookingDetailComponent,
     SpinnerComponent,
+    HeaderComponent,
+    FilterComponent,
+    BookingListComponent,
   ], exports: [EnumValPipe],
   imports: [CustomFormsModule, routing,
     BrowserModule, RouterModule,
