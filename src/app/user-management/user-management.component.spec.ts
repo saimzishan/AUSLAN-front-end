@@ -11,19 +11,19 @@ import { HttpModule, BaseRequestOptions } from '@angular/http';
 import {authService} from '../shared/global';
 import {  Http, RequestOptions } from '@angular/http';
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
-import { AdminComponent } from './admin.component';
+import { UserManagementComponent } from './user-management.component';
 import { NotificationComponent } from '../notification/notification.component';
 import { dispatchEvent } from '@angular/platform-browser/testing/browser_util';
 import {User} from '../shared/model/user.entity';
 import {ROLE} from '../shared/model/role.enum';
 
-describe('AdminComponent', () => {
-    let component: AdminComponent;
-    let fixture: ComponentFixture<AdminComponent>;
+describe('UserManagement', () => {
+    let component: UserManagementComponent;
+    let fixture: ComponentFixture<UserManagementComponent>;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [AdminComponent, EnumValPipe, NotificationComponent],
+            declarations: [UserManagementComponent, EnumValPipe, NotificationComponent],
             providers: [UserService, {
                 provide: AuthHttp,
                 useFactory: authService,
@@ -36,7 +36,7 @@ describe('AdminComponent', () => {
     }));
 
     beforeEach((done) => {
-        fixture = TestBed.createComponent(AdminComponent);
+        fixture = TestBed.createComponent(UserManagementComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
         done();

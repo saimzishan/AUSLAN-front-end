@@ -3,6 +3,7 @@ import { Title } from '@angular/platform-browser';
 import {GLOBAL} from './shared/global';
 import {AuthGuard} from './auth/auth.guard';
 import { SpinnerService } from './spinner/spinner.service';
+import {HeaderComponent} from './ui/header/header.component';
 
 @Component({
   selector: 'app-root',

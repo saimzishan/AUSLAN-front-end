@@ -12,7 +12,7 @@ import { HttpModule, BaseRequestOptions } from '@angular/http';
 import { AppComponent } from './app.component';
 import { AuthComponent } from './auth/auth.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { AdminComponent } from './admin/admin.component';
+import { UserManagementComponent } from './user-management/user-management.component';
 import { Http, RequestOptions } from '@angular/http';
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
 import { EnumValPipe } from './shared/pipe/enum-val.pipe';
@@ -48,7 +48,7 @@ describe('AppComponent', () => {
         AppComponent,
         AuthComponent,
         DashboardComponent, NotificationComponent,
-        AdminComponent,
+        UserManagementComponent,
         EnumValPipe,
         NotFoundComponent, RegisterComponent, ResetComponent, VerifyComponent,
         BookingComponent,

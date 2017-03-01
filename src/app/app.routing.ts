@@ -4,7 +4,7 @@ import {
 } from '@angular/router';
 import { NotFoundComponent }   from './not-found/not-found.component';
 import { AuthGuard } from './auth/auth.guard';
-import { AdminComponent } from './admin/admin.component';
+import { UserManagementComponent } from './user-management/user-management.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthComponent } from './auth/auth.component';
 import { ModuleWithProviders }  from '@angular/core';
@@ -15,7 +15,7 @@ import {BookingComponent} from './booking/booking.component';
 
 
 const appRoutes: Routes = [
-  { path: 'admin-center', component: AdminComponent, canActivate: [AuthGuard] },
+  { path: 'user-management', component: UserManagementComponent, canActivate: [AuthGuard]},
   { path: 'authenticate', component: AuthComponent },
   { path: 'authenticate/logout', component: AuthComponent },
   { path: '404', component: NotFoundComponent },

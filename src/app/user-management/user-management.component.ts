@@ -10,16 +10,18 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/observable/throw';
+import {UserFilterComponent} from './user-filter/user-filter.component';
+import {UserListComponent} from './user-list/user-list.component';
 
 @Component({
     selector: 'app-admin',
-    templateUrl: './admin.component.html',
-    styleUrls: ['./admin.component.css'],
+    templateUrl: './user-management.component.html',
+    styleUrls: ['./user-management.component.css'],
     changeDetection: ChangeDetectionStrategy.Default
 
 })
 
-export class AdminComponent implements OnInit {
+export class UserManagementComponent implements OnInit {
     newUser: User = new User();
     roles: any;
     users: Array<User> = [];

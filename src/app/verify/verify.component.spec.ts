@@ -15,8 +15,7 @@ import { routing } from '../app.routing';
 import { APP_BASE_HREF } from '@angular/common';
 import { NotFoundComponent }   from '../not-found/not-found.component';
 import { AuthGuard } from '../auth/auth.guard';
-import { AdminComponent } from '../admin/admin.component';
-import { DashboardComponent } from '../dashboard/dashboard.component';
+import { UserManagementComponent } from '../user-management/user-management.component';
 import { ModuleWithProviders }  from '@angular/core';
 import { RegisterComponent } from '../register/register.component';
 import { EnumValPipe } from '../shared/pipe/enum-val.pipe';
@@ -38,7 +37,7 @@ describe('VerifyComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [EnumValPipe, AdminComponent, RegisterComponent, NotificationComponent,
+            declarations: [EnumValPipe, UserManagementComponent, RegisterComponent, NotificationComponent,
                 NotFoundComponent, DashboardComponent, AuthComponent, ResetComponent, VerifyComponent,
                 BookingComponent,
                 BookingDetailComponent,

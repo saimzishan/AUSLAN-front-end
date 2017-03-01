@@ -38,7 +38,7 @@ export class AuthComponent implements OnInit {
         if ( res.data.jwt) {
         this.model.token = res.data.jwt;
         AuthGuard.login(this.model);
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/user-management']);
       }
     },
     err => {

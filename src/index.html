@@ -1,21 +1,53 @@
 <!doctype html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <title>Auslan Index page</title>
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
   <base href="/">
-
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="stylesheet" href="assets/css/main.min.css">
   <link rel="stylesheet" href="assets/css/vendor.style.css">
+  <meta charset="UTF-8">
+  	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  	<meta name="keywords" content="">
+  	<meta name="description" content="">
+  	<title>AUSLAN</title>
+  	<meta name="msapplication-TileColor" content="#ffffff">
+  	<meta name="msapplication-TileImage" content="/assets/img/favicon/ms-icon-144x144.png">
+  	<meta name="theme-color" content="#ffffff">
 
-  <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600" rel="stylesheet">
-
+  	<link rel="apple-touch-icon" sizes="57x57" href="/assets/img/favicon/apple-icon-57x57.png">
+  	<link rel="apple-touch-icon" sizes="60x60" href="/assets/img/favicon/apple-icon-60x60.png">
+  	<link rel="apple-touch-icon" sizes="72x72" href="/assets/img/favicon/apple-icon-72x72.png">
+  	<link rel="apple-touch-icon" sizes="76x76" href="/assets/img/favicon/apple-icon-76x76.png">
+  	<link rel="apple-touch-icon" sizes="114x114" href="/assets/img/favicon/apple-icon-114x114.png">
+  	<link rel="apple-touch-icon" sizes="120x120" href="/assets/img/favicon/apple-icon-120x120.png">
+  	<link rel="apple-touch-icon" sizes="144x144" href="/assets/img/favicon/apple-icon-144x144.png">
+  	<link rel="apple-touch-icon" sizes="152x152" href="/assets/img/favicon/apple-icon-152x152.png">
+  	<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicon/apple-icon-180x180.png">
+  	<link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon/android-icon-192x192.png">
+  	<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon/favicon-32x32.png">
+  	<link rel="icon" type="image/png" sizes="96x96" href="/assets/img/favicon/favicon-96x96.png">
+  	<link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon/favicon-16x16.png">
+  	<link rel="manifest" href="/assets/img/favicon/manifest.json">
+  	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+  	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.0/css/foundation.min.css">
+  	<link rel="stylesheet" href="https://cdn.rawgit.com/angular/bower-material/master/angular-material.css">
 </head>
 <body>
   <app-root>Loading...</app-root>
    <script src="assets/js/scripts.min.js"></script>
+   <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.0/js/foundation.min.js"></script>
+   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.js"></script>
+   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-animate.min.js"></script>
+   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-route.min.js"></script>
+   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-aria.min.js"></script>
+   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-messages.min.js"></script>
+   <script src="https://cdn.rawgit.com/angular/bower-material/master/angular-material.js"></script>
+   <script>
+   	$(document).foundation();
+    $(function(){$("#filters button").click(function()
+    {$(this).toggleClass("active")}),$("#search").focus(function(){$(this).parent().addClass("active")}).blur(function(){$(this).parent().removeClass("active")})});
+
+   </script>
 </body>
 </html>

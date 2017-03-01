@@ -4,7 +4,7 @@ import { HttpModule, BaseRequestOptions } from '@angular/http';
 import { AppComponent } from './app.component';
 import { AuthComponent } from './auth/auth.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { AdminComponent } from './admin/admin.component';
+import { UserManagementComponent } from './user-management/user-management.component';
 import { UserService } from './api/user.service';
 import { Http, RequestOptions } from '@angular/http';
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
@@ -29,6 +29,9 @@ import { SpinnerService } from './spinner/spinner.service';
 import { HeaderComponent } from './ui/header/header.component';
 import { FilterComponent } from './booking/filter/filter.component';
 import { BookingListComponent } from './booking/booking-list/booking-list.component';
+import { UserListComponent } from './user-management/user-list/user-list.component';
+import { UserFilterComponent } from './user-management/user-filter/user-filter.component';
+import { UserHeaderComponent } from './user-management/user-header/user-header.component';
 
 
 @NgModule({
@@ -36,7 +39,7 @@ import { BookingListComponent } from './booking/booking-list/booking-list.compon
     AppComponent,
     AuthComponent,
     DashboardComponent,
-    AdminComponent,
+    UserManagementComponent,
     EnumValPipe,
     NotFoundComponent,
     RegisterComponent,
@@ -49,6 +52,9 @@ import { BookingListComponent } from './booking/booking-list/booking-list.compon
     HeaderComponent,
     FilterComponent,
     BookingListComponent,
+    UserListComponent,
+    UserFilterComponent,
+    UserHeaderComponent,
   ], exports: [EnumValPipe],
   imports: [CustomFormsModule, routing,
     BrowserModule, RouterModule,
