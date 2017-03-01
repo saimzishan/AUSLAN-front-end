@@ -32,6 +32,7 @@ import { BookingListComponent } from './booking/booking-list/booking-list.compon
 import { UserListComponent } from './user-management/user-list/user-list.component';
 import { UserFilterComponent } from './user-management/user-filter/user-filter.component';
 import { UserHeaderComponent } from './user-management/user-header/user-header.component';
+import { UserDetailComponent } from './user-management/user-detail/user-detail.component';
 
 
 @NgModule({
@@ -55,6 +56,7 @@ import { UserHeaderComponent } from './user-management/user-header/user-header.c
     UserListComponent,
     UserFilterComponent,
     UserHeaderComponent,
+    UserDetailComponent,
   ], exports: [EnumValPipe],
   imports: [CustomFormsModule, routing,
     BrowserModule, RouterModule,

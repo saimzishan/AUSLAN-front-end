@@ -1,0 +1,75 @@
+<md-dialog>
+			<md-dialog-content>
+				<header>
+					<h1>Create New User</h1>
+					<button ng-click="closeDialog()"><i class="icon-settings"></i></button>
+				</header>
+				<main>
+					<h2>Select user type</h2>
+
+					<nav>
+						<button ng-click="makeFormVisible()" ng-class="{ active : showForm }">Booking Officer</button>
+						<button>Organisation</button>
+						<button>Client</button>
+						<button>Interpreter</button>
+					</nav>
+
+					<form ng-show="showForm">
+						<div class="row small-collapse">
+							<div class="medium-6 columns">
+								<label>NAME
+									<div class="valid"><input type="text"></div>
+								</label>
+							</div>
+							<div class="medium-6 columns">
+								<label>NAME
+									<input type="text">
+								</label>
+							</div>
+						</div>
+						<div class="row small-collapse">
+							<div class="medium-6 columns">
+								<label>STATUS
+									<md-select placeholder="Status" ng-model="selectedStatus">
+										<md-option>Status 1</md-option>
+										<md-option>Status 2</md-option>
+									</md-select>
+								</label>
+							</div>
+							<div class="medium-6 columns">
+								<label>ORGANISATION
+									<input type="text">
+								</label>
+							</div>
+						</div>
+						<div class="row small-collapse">
+							<div class="medium-6 columns">
+								<label>NAME
+									<input type="text">
+								</label>
+							</div>
+							<div class="medium-6 columns">
+								<label>MOBILE
+									<input type="text">
+								</label>
+							</div>
+						</div>
+						<div class="row small-collapse">
+							<div class="medium-6 columns">
+								<label>STATUS
+									<md-select placeholder="Status" ng-model="selectedStatus">
+										<md-option>Status 1</md-option>
+										<md-option>Status 2</md-option>
+									</md-select>
+								</label>
+							</div>
+							<div class="medium-6 columns"></div>
+						</div>
+					</form>
+				</main>
+			</md-dialog-content>
+
+			<md-dialog-actions ng-show="showForm">
+				<button ng-click="closeDialog()">CREATE</button>
+			</md-dialog-actions>
+		</md-dialog>
