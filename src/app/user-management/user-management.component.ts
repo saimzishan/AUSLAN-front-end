@@ -12,6 +12,7 @@ import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/observable/throw';
 import {UserFilterComponent} from './user-filter/user-filter.component';
 import {UserListComponent} from './user-list/user-list.component';
+declare var $:JQueryStatic;
 
 @Component({
     selector: 'app-admin',
@@ -35,6 +36,10 @@ export class UserManagementComponent implements OnInit {
     constructor(private userDataService: UserService) {
       this.roles = ROLE;
       this.fetchUsers();
+
+      setTimeout( function(){
+            $(document).foundation();
+      		}, 1000);
     }
 
     addUser() {

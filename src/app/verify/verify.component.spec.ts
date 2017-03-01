@@ -25,7 +25,7 @@ import { VerifyComponent } from '../verify/verify.component';
 import {authService} from '../shared/global';
 import {  HttpModule, Http, RequestOptions } from '@angular/http';
 import { NotificationComponent } from '../notification/notification.component';
-
+import {DashboardComponent} from '../dashboard/dashboard.component';
 import { BookingComponent } from '../booking/booking.component';
 import { BookingDetailComponent } from '../booking/booking-detail/booking-detail.component';
 import { SpinnerComponent } from '../spinner/spinner.component';

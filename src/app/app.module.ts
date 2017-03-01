@@ -33,6 +33,8 @@ import { UserListComponent } from './user-management/user-list/user-list.compone
 import { UserFilterComponent } from './user-management/user-filter/user-filter.component';
 import { UserHeaderComponent } from './user-management/user-header/user-header.component';
 import { UserDetailComponent } from './user-management/user-detail/user-detail.component';
+import { MaterialModule } from '@angular/material';
+import {} from 'hammerjs';
 
 
 @NgModule({
@@ -58,9 +60,10 @@ import { UserDetailComponent } from './user-management/user-detail/user-detail.c
     UserHeaderComponent,
     UserDetailComponent,
   ], exports: [EnumValPipe],
+  entryComponents: [UserDetailComponent],
   imports: [CustomFormsModule, routing,
     BrowserModule, RouterModule,
-    FormsModule,
+    FormsModule, MaterialModule.forRoot(),
     HttpModule
   ],  providers: [AuthGuard, Title, SpinnerService, UserService, {provide: APP_BASE_HREF, useValue : '/' }, {
       provide: AuthHttp,
