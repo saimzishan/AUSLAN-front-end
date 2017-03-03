@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, AfterViewChecked, Input, ChangeDetectionStrategy } from '@angular/core';
 import {UserService} from '../api/user.service';
 import {User} from '../shared/model/user.entity';
 import {ROLE} from '../shared/model/role.enum';
@@ -12,7 +12,7 @@ import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/observable/throw';
 import {UserFilterComponent} from './user-filter/user-filter.component';
 import {UserListComponent} from './user-list/user-list.component';
-declare var $:JQueryStatic;
+declare var $: JQueryStatic;
 
 @Component({
     selector: 'app-admin',
@@ -22,14 +22,15 @@ declare var $:JQueryStatic;
 
 })
 
-export class UserManagementComponent implements OnInit {
+export class UserManagementComponent implements AfterViewChecked {
     newUser: User = new User();
     roles: any;
     users: Array<User> = [];
     // this is bad
     selectedLastName = 'I am ';
 
-    ngOnInit() {
+    ngAfterViewChecked() {
+      $(document).foundation();
 
     }
 
@@ -37,9 +38,6 @@ export class UserManagementComponent implements OnInit {
       this.roles = ROLE;
       this.fetchUsers();
 
-      setTimeout( function(){
-            $(document).foundation();
-      		}, 1000);
     }
 
     addUser() {

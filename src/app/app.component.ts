@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ElementRef } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import {GLOBAL} from './shared/global';
 import {AuthGuard} from './auth/auth.guard';
@@ -10,16 +10,17 @@ import {HeaderComponent} from './ui/header/header.component';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent  {
   public isRequesting: boolean;
 
-  public constructor(private spinnerService: SpinnerService, private titleService: Title ) {
+  public constructor(private el: ElementRef, private spinnerService: SpinnerService, private titleService: Title ) {
     this.titleService.setTitle(GLOBAL.TITLE + GLOBAL.VERSION);
     spinnerService.requestInProcess$.subscribe(
       isDone => {
         this.isRequesting = isDone;
       });
   }
+
 
   isLoggedIn() {
     return AuthGuard.isLoggedIn();

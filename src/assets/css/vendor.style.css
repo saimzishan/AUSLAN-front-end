@@ -109,28 +109,61 @@
     content: "A"
 }
 
-.icon-attach:before {
+.icon-arrow:before {
     content: "B"
 }
 
-.icon-bookings:before {
+.icon-attach:before {
     content: "C"
 }
 
-.icon-logout:before {
+.icon-bookings:before {
     content: "D"
 }
 
-.icon-messages:before {
+.icon-check:before {
     content: "E"
 }
 
-.icon-reports:before {
+.icon-close:before {
     content: "F"
 }
 
-.icon-settings:before {
+.icon-edit:before {
     content: "G"
+}
+
+.icon-glass:before {
+    content: "H"
+}
+
+.icon-link:before {
+    content: "I"
+}
+
+.icon-logout:before {
+    content: "J"
+}
+
+.icon-messages:before {
+    content: "K"
+}
+
+.icon-reports:before {
+    content: "L"
+}
+
+.icon-reset-password:before {
+    content: "M"
+}
+
+.icon-settings:before {
+    content: "N"
+}
+
+.dropdown.menu>li.is-dropdown-submenu-parent>a {
+    border: none;
+    background: none
 }
 
 * {
@@ -215,7 +248,7 @@ body #header .dropdown.menu {
     min-width: 200px
 }
 
-body #header .dropdown.menu>li {
+body #header .dropdown.menu>li.is-dropdown-submenu-parent {
     height: 60px;
     background: #15a262;
     display: -webkit-flex !important;
@@ -230,7 +263,7 @@ body #header .dropdown.menu>li {
     align-items: center
 }
 
-body #header .dropdown.menu>li>a {
+body #header .dropdown.menu>li.is-dropdown-submenu-parent>a {
     color: #fff;
     padding: 0 42px 0 19px;
     display: -webkit-flex !important;
@@ -245,23 +278,23 @@ body #header .dropdown.menu>li>a {
     align-items: center
 }
 
-body #header .dropdown.menu>li>a img {
+body #header .dropdown.menu>li.is-dropdown-submenu-parent>a img {
     display: inline-block;
     margin-right: 10px
 }
 
-body #header .dropdown.menu>li>a::after {
+body #header .dropdown.menu>li.is-dropdown-submenu-parent>a::after {
     right: 12px;
     border: 4px solid transparent;
     border-top-color: #fff
 }
 
-body #header .dropdown.menu>li .is-dropdown-submenu {
+body #header .dropdown.menu>li.is-dropdown-submenu-parent .is-dropdown-submenu {
     border: none;
     background: #02b86e
 }
 
-body #header .dropdown.menu>li .is-dropdown-submenu::before {
+body #header .dropdown.menu>li.is-dropdown-submenu-parent .is-dropdown-submenu::before {
     content: "";
     position: absolute;
     right: 10px;
@@ -270,7 +303,7 @@ body #header .dropdown.menu>li .is-dropdown-submenu::before {
     border-bottom-color: #02b86e
 }
 
-body #header .dropdown.menu>li .is-dropdown-submenu>li a {
+body #header .dropdown.menu>li.is-dropdown-submenu-parent .is-dropdown-submenu>li a {
     line-height: 1.6em;
     color: #fff;
     border-top: 1px solid #eaeaea;
@@ -279,11 +312,11 @@ body #header .dropdown.menu>li .is-dropdown-submenu>li a {
     padding-left: 0
 }
 
-body #header .dropdown.menu>li .is-dropdown-submenu>li a i {
+body #header .dropdown.menu>li.is-dropdown-submenu-parent .is-dropdown-submenu>li a i {
     color: #fff
 }
 
-body #header .dropdown.menu>li .is-dropdown-submenu>li:first-child a {
+body #header .dropdown.menu>li.is-dropdown-submenu-parent .is-dropdown-submenu>li:first-child a {
     border-top: none
 }
 
@@ -1117,39 +1150,39 @@ table.custom tbody tr td .dropdown.menu.actions>li.is-dropdown-submenu-parent>.i
     }
 }
 
-md-dialog {
+.md-dialog {
     min-width: 688px;
     border-radius: 8px
 }
 
-md-dialog md-dialog-content header {
+.md-dialog md-dialog-content header {
     padding: 0 18px;
     position: relative;
     border: 1px solid #eaeaea
 }
 
-md-dialog md-dialog-content header h1 {
+.md-dialog md-dialog-content header h1 {
     font: 18px/55px "PoppinsSemibold", sans-serif;
     margin: 0
 }
 
-md-dialog md-dialog-content header button {
+.md-dialog md-dialog-content header button {
     position: absolute;
     right: 18px;
     top: 18px
 }
 
-md-dialog md-dialog-content main {
+.md-dialog md-dialog-content main {
     padding: 22px 33px
 }
 
-md-dialog md-dialog-content main h2 {
+.md-dialog md-dialog-content main h2 {
     font: 18px/1em "PoppinsRegular", sans-serif;
     text-align: center;
     margin: 0 0 20px 0
 }
 
-md-dialog md-dialog-content main>nav {
+.md-dialog md-dialog-content main>nav {
     display: -webkit-flex !important;
     display: -ms-flexbox !important;
     display: flex !important;
@@ -1162,7 +1195,7 @@ md-dialog md-dialog-content main>nav {
     -ms-flex-pack: justify
 }
 
-md-dialog md-dialog-content main>nav>button {
+.md-dialog md-dialog-content main>nav>button {
     font-size: 13px;
     color: #02b86e;
     height: 46px;
@@ -1185,21 +1218,21 @@ md-dialog md-dialog-content main>nav>button {
     justify-content: center
 }
 
-md-dialog md-dialog-content main>nav>button.active {
+.md-dialog md-dialog-content main>nav>button.active {
     color: #fff;
     background: #02b86e
 }
 
-md-dialog md-dialog-content main>form .medium-6 {
+.md-dialog md-dialog-content main>form .medium-6 {
     margin-top: 17px;
     width: 48%
 }
 
-md-dialog md-dialog-content main>form .medium-6:nth-child(even) {
+.md-dialog md-dialog-content main>form .medium-6:nth-child(even) {
     margin-left: 4%
 }
 
-md-dialog md-dialog-content main>form .medium-6 input, md-dialog md-dialog-content main>form .medium-6 md-select {
+.md-dialog md-dialog-content main>form .medium-6 input, .md-dialog md-dialog-content main>form .medium-6 md-select {
     height: 46px;
     width: 100%;
     padding: 0 18px;
@@ -1212,7 +1245,7 @@ md-dialog md-dialog-content main>form .medium-6 input, md-dialog md-dialog-conte
     box-shadow: none
 }
 
-md-dialog md-dialog-content main>form .medium-6 input:focus, md-dialog md-dialog-content main>form .medium-6 md-select:focus {
+.md-dialog md-dialog-content main>form .medium-6 input:focus, .md-dialog md-dialog-content main>form .medium-6 md-select:focus {
     border: none;
     background: #f2f2f2;
     -webkit-box-shadow: inset 0 1px 2px rgba(10, 10, 10, 0.1);
@@ -1220,19 +1253,19 @@ md-dialog md-dialog-content main>form .medium-6 input:focus, md-dialog md-dialog
     box-shadow: inset 0 1px 2px rgba(10, 10, 10, 0.1)
 }
 
-md-dialog md-dialog-content main>form .medium-6 input:focus md-select-value.md-select-value, md-dialog md-dialog-content main>form .medium-6 md-select:focus md-select-value.md-select-value {
+.md-dialog md-dialog-content main>form .medium-6 input:focus md-select-value.md-select-value, .md-dialog md-dialog-content main>form .medium-6 md-select:focus md-select-value.md-select-value {
     border-bottom: none
 }
 
-md-dialog md-dialog-content main>form .medium-6 input md-select-value.md-select-value, md-dialog md-dialog-content main>form .medium-6 md-select md-select-value.md-select-value {
+.md-dialog md-dialog-content main>form .medium-6 input md-select-value.md-select-value, .md-dialog md-dialog-content main>form .medium-6 md-select md-select-value.md-select-value {
     border-bottom: none
 }
 
-md-dialog md-dialog-content main>form .medium-6 div.valid {
+.md-dialog md-dialog-content main>form .medium-6 div.valid {
     position: relative
 }
 
-md-dialog md-dialog-content main>form .medium-6 div.valid::after {
+.md-dialog md-dialog-content main>form .medium-6 div.valid::after {
     content: "";
     position: absolute;
     right: 5px;
@@ -1245,11 +1278,11 @@ md-dialog md-dialog-content main>form .medium-6 div.valid::after {
     border-radius: 4px
 }
 
-md-dialog md-dialog-content main>form .medium-6 div.valid input, md-dialog md-dialog-content main>form .medium-6 div.valid md-select {
+.md-dialog md-dialog-content main>form .medium-6 div.valid input, .md-dialog md-dialog-content main>form .medium-6 div.valid md-select {
     padding-right: 46px
 }
 
-md-dialog md-dialog-actions {
+.md-dialog md-dialog-actions {
     margin: 0 33px 0 33px;
     padding: 28px 0 23px 0;
     border-top: 1px solid #eaeaea;
@@ -1258,7 +1291,7 @@ md-dialog md-dialog-actions {
     justify-content: center
 }
 
-md-dialog md-dialog-actions>button {
+.md-dialog md-dialog-actions>button {
     color: #02b86e;
     height: 46px;
     background: none;
