@@ -1,0 +1,16 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!--Generator: Xara Designer (www.xara.com), SVG filter version: 6.0.0.4-->
+<svg stroke-width="0.501" stroke-linejoin="bevel" fill-rule="evenodd" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" version="1.1" overflow="visible" width="12pt" height="12pt" viewBox="0 0 12 12">
+ <defs>
+	</defs>
+ <g id="Document" fill="none" stroke="black" font-family="Times New Roman" font-size="16" transform="scale(1 -1)">
+  <g id="Spread" transform="translate(0 -12)">
+   <g id="Layer 1">
+    <g id="Group">
+     <path d="M 10.672,0.271 C 10.658,0.279 9.71,1.225 8.393,2.543 C 6.336,1.003 3.406,1.168 1.537,3.037 C -0.512,5.087 -0.512,8.413 1.537,10.463 C 3.587,12.512 6.913,12.512 8.963,10.463 C 10.832,8.592 10.996,5.658 9.453,3.602 C 10.769,2.285 11.713,1.341 11.723,1.331 C 11.892,1.194 12,0.984 12,0.75 C 12,0.336 11.664,0 11.25,0 C 11.017,0 10.81,0.105 10.672,0.271 Z M 7.902,4.098 C 9.366,5.562 9.366,7.938 7.902,9.402 C 6.438,10.866 4.062,10.866 2.598,9.402 C 1.134,7.938 1.134,5.562 2.598,4.098 C 4.062,2.634 6.438,2.634 7.902,4.098 Z" stroke="none" fill="#b5b5b5" stroke-width="0.5" stroke-linejoin="miter" stroke-linecap="round" marker-start="none" marker-end="none" stroke-miterlimit="79.8403193612775"/>
+    </g>
+   </g>
+  </g>
+ </g>
+</svg>

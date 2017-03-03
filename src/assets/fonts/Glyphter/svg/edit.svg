@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="13px" height="13px" viewBox="0 0 13 13" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 42 (36781) - http://www.bohemiancoding.com/sketch -->
+    <title>Edit</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="CRUD-user" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="22.5_Actions" transform="translate(-828.000000, -422.000000)" stroke="#FFFFFF" stroke-width="0.777777778">
+            <g id="text" transform="translate(827.840000, 410.000000)">
+                <g id="Group-2">
+                    <g id="Group-3">
+                        <g id="Group-4">
+                            <g id="Edit" transform="translate(0.000000, 13.000000)">
+                                <path d="M4.33217391,10.4934237 L1.16,11.5304607 L2.0026087,8.33379407 L9.86782609,0.0660162884 C9.9564472,-0.0220054295 10.1000745,-0.0220054295 10.1886957,0.0660162884 L12.1765217,1.93786814 C12.2208301,1.97841975 12.2471009,2.0348129 12.2495474,2.09462586 C12.2519939,2.15443882 12.2304155,2.21276505 12.1895652,2.25675703 L4.33217391,10.4934237 Z" id="Shape"></path>
+                                <path d="M8.66,2 L10.425114,3.57036414" id="Shape"></path>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
