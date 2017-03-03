@@ -1,22 +1,16 @@
-	<div class="page-login">
-		<div class="wrapper">
-			<div class="row align-middle">
-				<div class="small-5 columns columns-signin row align-middle">
+<section id="page-login">
+		<section>
+			<aside>
+				<a href="#"><img src="assets/img/logo.png" alt=""></a>
 
-					<div class="columns">
-						<div class="logo">
-							<img src="assets/img/logo.svg" alt="">
-						</div>
-						<!-- form login-->
 
 						<form (ngSubmit)="onSubmit()" class="auslan-form" #loginForm="ngForm">
-
-							<label class="icon-email">
-								EMAIL
+							<div class="form-field">
+													<label><i class="icon-email"></i><span>EMAIL</span></label>
 								<input type="email" id="email" name="email"
-								placeholder="Enter your email"
+								placeholder="Enter your email" class="inline-icon inline-icon-valid valid"
 								[(ngModel)]="model.email" name="email" #email="ngModel" email required>
-								<span *ngIf="email.touched && (!email.errors?.required && !email.errors?.email);" class="form-valid"></span>
+								<span *ngIf="email.touched && (!email.errors?.required && !email.errors?.email);" class="inline-icon inline-icon-valid valid"></span>
 								<!-- p *ngIf="email.errors?.email;">The email is required and has to be in email format</p -->
 								<span *ngIf="(email.dirty || email.touched) && (email.errors?.required || email.errors?.email);" class="form-error is-visible">
 										<span data-tooltip="86bu89-tooltip" aria-haspopup="true"
@@ -24,45 +18,41 @@
 										aria-describedby="1i4eab-tooltip" data-yeti-box="1i4eab-tooltip"
 										data-toggle="1i4eab-tooltip" data-resize="1i4eab-tooltip" data-events="resize">!</span>
 									</span>
-							</label>
+								</div>
 
-							<label class="icon-lock">
-								PASSWORD
+								<div class="form-field">
+							<label><i class="icon-lock"></i> PASSWORD</label>
 								<input id="pass"  type="password"
 								placeholder="Enter your password"
 								[(ngModel)]="model.password" [rangeLength]="[6, 20]" name="pass" #pass="ngModel" required>
-						    <!-- p *ngIf="pass.errors?.required">The password is required and has to be strong</p -->
-								<span *ngIf="pass.touched && (!pass.errors?.required && !pass.errors?.rangeLength);" class="form-valid"></span>
+								<span *ngIf="pass.touched && (!pass.errors?.required && !pass.errors?.rangeLength);" class="inline-icon inline-icon-valid valid"></span>
 								<span *ngIf="(pass.dirty || pass.touched) && (pass.errors?.required || pass.errors?.rangeLength);" class="form-error is-visible">
 										<span data-tooltip="86bu89-tooltip" aria-haspopup="true"
 										class="has-tip left" data-template-classes="tooltip-error" data-disable-hover="false" tabindex="4" title=""
 										aria-describedby="1i4eab-tooltip" data-yeti-box="1i4eab-tooltip"
 										data-toggle="1i4eab-tooltip" data-resize="1i4eab-tooltip" data-events="resize">!</span>
 									</span>
-							</label>
-
-							<p class="forgot-pass">
-								<a [routerLink]="['/reset']" >Forgot your password?</a>
-							</p>
-
+								</div>
+							<div align="center">
+								<a [routerLink]="['/reset']" >Forgot your password?</a><br>
 							<button type="submit" [disabled]="!loginForm.form.valid" name="login_user" class="login button">Log In</button>
 							<div *ngIf="errors">
 								<app-notification [notification]='errors' [isError]="true" ></app-notification>
 							</div>
-							<div class="sep-or"><span>or</span></div>
-							<p class="text-muted">Don’t Have an Account ?</p>
+						</div>
+						<div class="separator">
+												<div>
+													<span>or</span>
+												</div>
+											</div>
+											<div align="center">
+												<p>Don't have an account?</p>
 							<a [routerLink]="['/register']" class="signup button">CREATE AN ACCOUNT</a>
-						</form>
-						<!-- /form login-->
-					</div>
-				</div>
-				<div class="small-7 columns columns-slogan">
-					<div class="slogan">
-						INVESTING BACK INTO
-						<br>
-						THE DEAF COMMUNITY
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+						</div>
+				</form>
+			</aside>
+			<main>
+				<h1>INVESTING BACK INTO<br>THE DEAF COMMUNITY</h1>
+			</main>
+		</section>
+	</section>

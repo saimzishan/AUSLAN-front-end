@@ -1,57 +1,39 @@
+<div [hidden]="selected">
+	<section id="page-signup">
+		<section>
+			<a (click)="roleSelected('Interpreter')" class="type">
+				<img src="assets/img/signup-interpreter.svg" alt="">
+			</a>
+			<a name="btnInterpreter" (click)="roleSelected('Interpreter')" class="button">Interpreter</a>
+			</section>
+				<section>
+					<h1>SIGN UP AS</h1>
+					<a (click)="roleSelected('Client')" class="type">
+						<img src="assets/img/signup-client.svg" alt="">
+					</a>
+					<a name="btnClient" (click)="roleSelected('Client')" class="button">Client</a>
+				</section>
+				<section>
+					<a (click)="roleSelected('Organization')" class="type">
+						<img src="assets/img/signup-organisation.svg" alt="">
+					</a>
+					<a name="btnOrganization" (click)="roleSelected('Organization')" class="button">Organization</a>
+				</section>
+		</section>
+</div>
 
-<div [hidden]="selected" >
-		<div class="wrapper">
-			<div class="expanded row signup-list">
-				<h1 class="title">SIGN UP AS</h1>
+<div [hidden]="!selected">
+	<section id="page-signup-organisation">
+		<section>
+			<header>
+				<h1>SIGN UP AS {{ selectedRole }}</h1>
+				<p>Fields with * are required</p>
+			</header>
 
-				<div class="small-4 columns interpreter">
-					<div class="row align-middle">
-						<div class="columns">
-							<a (click)="roleSelected('Interpreter')" class="button-img">
-								<img src="assets/img/interpreter-icon.svg" alt="">
-							</a>
-							<button name="btnInterpreter" (click)="roleSelected('Interpreter')" class="button">Interpreter</button>
-						</div>
-					</div>
-				</div>
-				<div class="small-4 columns client">
-					<div class="row align-middle">
-						<div class="columns">
-							<a (click)="roleSelected('Client')" class="button-img">
-								<img src="assets/img/client-icon.svg" alt="">
-							</a>
-							<button name="btnClient" (click)="roleSelected('Client')" class="button">Client</button>
-						</div>
-					</div>
-				</div>
-				<div class="small-4 columns organization">
-					<div class="row align-middle">
-						<div class="columns">
-							<a (click)="roleSelected('Organization')" class="button-img">
-								<img src="assets/img/organisation-icon.svg" alt="">
-							</a>
-							<button name="btnOrganization" (click)="roleSelected('Organization')" class="button">Organization</button>
-						</div>
-					</div>
-
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div [hidden]="!selected" class="wrapper">
 			<form #registerForm="ngForm" class="auslan-form" novalidate action="#">
-				<div class="row">
-					<div class="medium-9 medium-centered columns">
-						<div class="heading">
-							<h1 class="title">SIGN UP AS {{ selectedRole }}</h1>
-							<p class="subtitle">Fields with * are required</p>
-						</div>
-					</div>
-					<div class="medium-8 medium-centered columns">
-						<div class="row">
-							<div class="medium-6 columns">
-								<label>FIRST NAME *
+				<section>
+					<div class="form-field half">
+						<label>FIRST NAME *
 									<input type="text" class="icon-user-circle" placeholder=""
 									[(ngModel)]="model.first_name"
 							    name="first_name" #first_name="ngModel"  [rangeLength]="[3, 20]" required>
@@ -62,9 +44,9 @@
 											title="This field is required. Min 3 characters required.">!</span>
 										</span>
 								</label>
-							</div>
-							<div class="medium-6 columns">
-								<label>LAST NAME *
+					</div>
+					<div class="form-field half">
+						<label>LAST NAME *
 
 									    <input type="text" class="icon-user-circle" placeholder=""
 											 [(ngModel)]="model.last_name"   name="last_name" #last_name="ngModel"
@@ -76,10 +58,9 @@
 		 											title="This field is required. Min 3 characters required.">!</span>
 		 										</span>
 								</label>
-							</div>
-
-							<div class="medium-6 columns">
-								<label class="icon-lock">
+					</div>
+					<div class="form-field half">
+						<label class="icon-lock">
 							    PASSWORD *
 							  <input id="pass" type="password" placeholder="Enter your password"
 								[(ngModel)]="model.password" name="password" #password="ngModel" required>
@@ -91,9 +72,9 @@
 									title="This field is required.">!</span>
 								</span>
 							  </label>
-							</div>
-							<div class="medium-6 columns">
-								<label class="icon-lock">
+					</div>
+					<div class="form-field half">
+						<label class="icon-lock">
 							    CONFIRM PASSWORD *
 							<input id="certainPassword" name="certainPassword"
 							type="password" placeholder="Confirm password"
@@ -105,26 +86,22 @@
 								title="This field is required.">!</span>
 								</span>
 							  </label>
-							</div>
-
-							<div class="medium-6 columns">
-								<label class="icon-email">
+					</div>
+					<div class="form-field half">
+						<label class="icon-email">
 						      EMAIL *
-
 						    <input type="email" id="email" placeholder="Enter your email"
 								 [(ngModel)]="model.email" name="email" #email="ngModel" email required>
 								 <span *ngIf="email.touched && !email.errors?.email;" class="form-valid"></span>
- 								<!-- p *ngIf="email.errors?.email;">The email is required and has to be in email format</p -->
  								<span *ngIf="(email.dirty || email.touched) && (email.errors?.required || email.errors?.email);" class="form-error is-visible">
 									<span data-tooltip aria-haspopup="true" class="has-tip left"
 									data-template-classes="tooltip-error" data-disable-hover="false" tabindex="4"
 									title="This field is required.">!</span>
  									</span>
 						  </label>
-							</div>
-
-							<div class="medium-6 columns">
-								<label>MOBILE *
+					</div>
+					<div class="form-field half">
+						<label>MOBILE *
 									<input type="tel" placeholder="" [(ngModel)]="model.mobile" name="mobile" #mobile="ngModel" required>
 									<span *ngIf="mobile.touched && !mobile.errors?.required;" class="form-valid"></span>
 									<span *ngIf="mobile.touched && mobile.errors?.required;" class="form-error is-visible">
@@ -133,20 +110,18 @@
 										title="This field is required.">!</span>
 										</span>
 								</label>
-							</div>
+					</div>
+				</section>
 
-							<div class="medium-12 columns">
-								<hr>
-							</div>
+				<div align="center">
 
-								<div class="text-center">
-									<button name="register_user" type="submit" [disabled]="mobile.errors || last_name.errors || first_name.errors || password.errors || email.errors || certainPassword.errors " (click)="addUser(user)" class="button">Register</button>
-								</div>
-								<app-notification [notification]='errors' [isError]="true" ></app-notification>
-								<div [hidden]="!this.model.id">
-								 <app-notification [notification]='successMessage' [isError]="false" ></app-notification>
- 								</div>
-								<!-- p *ngIf="password.errors?.required">The password is required and has to be strong</p>
+					<button name="register_user" type="submit" [disabled]="mobile.errors || last_name.errors || first_name.errors || password.errors || email.errors || certainPassword.errors " (click)="addUser(user)" class="button">Register</button>
+				</div>
+				<app-notification [notification]='errors' [isError]="true"></app-notification>
+				<div [hidden]="!this.model.id">
+					<app-notification [notification]='successMessage' [isError]="false"></app-notification>
+				</div>
+				<!-- p *ngIf="password.errors?.required">The password is required and has to be strong</p>
 							 <p *ngIf="last_name.errors?.rangeLength">The last name is required and should have minimum 2 characters</p>
 							 <p *ngIf="first_name.errors?.rangeLength">The first name is required and should have minimum 2 characters</p>
 									 <p *ngIf="certainPassword.errors?.equalTo">The confirm password should match with password</p>
@@ -154,8 +129,7 @@
 
 
 
-							</div>
-						</div>
-					</div>
 			</form>
-		</div>
+		</section>
+	</section>
+</div>
