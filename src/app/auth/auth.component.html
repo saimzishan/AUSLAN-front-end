@@ -8,16 +8,12 @@
 							<div class="form-field">
 													<label><i class="icon-email"></i><span>EMAIL</span></label>
 								<input type="email" id="email" name="email"
-								placeholder="Enter your email" class="inline-icon inline-icon-valid valid"
+								placeholder="Enter your email"
 								[(ngModel)]="model.email" name="email" #email="ngModel" email required>
 								<span *ngIf="email.touched && (!email.errors?.required && !email.errors?.email);" class="inline-icon inline-icon-valid valid"></span>
 								<!-- p *ngIf="email.errors?.email;">The email is required and has to be in email format</p -->
-								<span *ngIf="(email.dirty || email.touched) && (email.errors?.required || email.errors?.email);" class="form-error is-visible">
-										<span data-tooltip="86bu89-tooltip" aria-haspopup="true"
-										class="has-tip left" data-template-classes="tooltip-error" data-disable-hover="false" tabindex="4" title=""
-										aria-describedby="1i4eab-tooltip" data-yeti-box="1i4eab-tooltip"
-										data-toggle="1i4eab-tooltip" data-resize="1i4eab-tooltip" data-events="resize">!</span>
-									</span>
+								<span *ngIf="(email.dirty || email.touched) && (email.errors?.required || email.errors?.email);" class="inline-icon error">
+										<span>This field is required.</span>!</span>
 								</div>
 
 								<div class="form-field">

@@ -632,7 +632,7 @@ body #header .dropdown.menu>li.is-dropdown-submenu-parent .is-dropdown-submenu>l
     height: 295px
 }
 
-#page-signup>section>a:last-child {
+#page-signup>section>button {
     font-size: 17px;
     color: #32b79c;
     letter-spacing: 0;
@@ -646,7 +646,7 @@ body #header .dropdown.menu>li.is-dropdown-submenu-parent .is-dropdown-submenu>l
     transition: background .5s ease
 }
 
-#page-signup>section>a:last-child:hover {
+#page-signup>section>button:hover {
     background: #e6e6e6
 }
 

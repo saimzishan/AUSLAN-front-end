@@ -4,20 +4,20 @@
 			<a (click)="roleSelected('Interpreter')" class="type">
 				<img src="assets/img/signup-interpreter.svg" alt="">
 			</a>
-			<a name="btnInterpreter" (click)="roleSelected('Interpreter')" class="button">Interpreter</a>
+			<button name="btnInterpreter" (click)="roleSelected('Interpreter')" class="button">Interpreter</button>
 			</section>
 				<section>
 					<h1>SIGN UP AS</h1>
 					<a (click)="roleSelected('Client')" class="type">
 						<img src="assets/img/signup-client.svg" alt="">
 					</a>
-					<a name="btnClient" (click)="roleSelected('Client')" class="button">Client</a>
+					<button name="btnClient" (click)="roleSelected('Client')" class="button">Client</button>
 				</section>
 				<section>
 					<a (click)="roleSelected('Organization')" class="type">
 						<img src="assets/img/signup-organisation.svg" alt="">
 					</a>
-					<a name="btnOrganization" (click)="roleSelected('Organization')" class="button">Organization</a>
+					<button name="btnOrganization" (click)="roleSelected('Organization')" class="button">Organization</button>
 				</section>
 		</section>
 </div>
@@ -33,22 +33,20 @@
 			<form #registerForm="ngForm" class="auslan-form" novalidate action="#">
 				<section>
 					<div class="form-field half">
-						<label>FIRST NAME *
-									<input type="text" class="icon-user-circle" placeholder=""
+						<label>FIRST NAME *	</label>
+
+									<input type="text" class="inline-icon inline-icon-user-circle valid" placeholder=""
 									[(ngModel)]="model.first_name"
 							    name="first_name" #first_name="ngModel"  [rangeLength]="[3, 20]" required>
-									<span *ngIf="first_name.touched && !first_name.errors?.required && !first_name.errors?.rangeLength;" class="form-valid"></span>
-									<span *ngIf="first_name.touched && (first_name.errors?.required || first_name.errors?.rangeLength);" class="form-error is-visible">
-											<span data-tooltip aria-haspopup="true" class="has-tip left"
-											data-template-classes="tooltip-error" data-disable-hover="false" tabindex="4"
-											title="This field is required. Min 3 characters required.">!</span>
-										</span>
-								</label>
+									<span *ngIf="first_name.touched && !first_name.errors?.required && !first_name.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
+									<span *ngIf="first_name.touched && (first_name.errors?.required || first_name.errors?.rangeLength);" class="inline-icon error">
+											<span>Minimum 3 characters required.</span>!</span>
 					</div>
 					<div class="form-field half">
 						<label>LAST NAME *
+						</label>
 
-									    <input type="text" class="icon-user-circle" placeholder=""
+									    <input type="text" class="inline-icon inline-icon-user-circle valid" placeholder=""
 											 [(ngModel)]="model.last_name"   name="last_name" #last_name="ngModel"
 											 [rangeLength]="[3, 30]" required>
 											 <span *ngIf="last_name.touched && !last_name.errors?.required && !last_name.errors?.rangeLength;" class="form-valid"></span>
@@ -57,7 +55,6 @@
 		 											data-template-classes="tooltip-error" data-disable-hover="false" tabindex="4"
 		 											title="This field is required. Min 3 characters required.">!</span>
 		 										</span>
-								</label>
 					</div>
 					<div class="form-field half">
 						<label class="icon-lock">
@@ -121,11 +118,13 @@
 				<div [hidden]="!this.model.id">
 					<app-notification [notification]='successMessage' [isError]="false"></app-notification>
 				</div>
-				<!-- p *ngIf="password.errors?.required">The password is required and has to be strong</p>
+				<!--
+				p *ngIf="password.errors?.required">The password is required and has to be strong</p>
 							 <p *ngIf="last_name.errors?.rangeLength">The last name is required and should have minimum 2 characters</p>
 							 <p *ngIf="first_name.errors?.rangeLength">The first name is required and should have minimum 2 characters</p>
 									 <p *ngIf="certainPassword.errors?.equalTo">The confirm password should match with password</p>
-							 <p *ngIf="email.errors?.email;">The email is required and has to be in email format</p -->
+							 <p *ngIf="email.errors?.email;">The email is required and has to be in email format</p
+				-->
 
 
 
