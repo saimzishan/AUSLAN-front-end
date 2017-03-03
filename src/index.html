@@ -41,12 +41,11 @@
    <script src="assets/js/scripts.min.js"></script>
    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.1/js/foundation.js"></script>
-  
+
    <script src="https://cdn.rawgit.com/angular/bower-material/master/angular-material.js"></script>
    <script>
     $(document).ready(
       ()=>{
-        setTimeout( function(){    $(document).foundation(); }, 3000)
           $(function(){$("#filters button").click(function()
         {$(this).toggleClass("active")}),$("#search").focus(function(){$(this).parent().addClass("active")}).blur(function(){$(this).parent().removeClass("active")})});
 
