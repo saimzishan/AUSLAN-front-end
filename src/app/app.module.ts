@@ -61,7 +61,7 @@ import 'foundation-sites';
     UserHeaderComponent,
     UserDetailComponent,
   ], exports: [EnumValPipe],
-  entryComponents: [UserDetailComponent],
+   entryComponents: [UserDetailComponent],
   imports: [CustomFormsModule, routing,
     BrowserModule, RouterModule,
     FormsModule, MaterialModule.forRoot(),
