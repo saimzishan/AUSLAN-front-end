@@ -78,7 +78,7 @@
 					<div class="form-field half">
 						<label class="icon-email">
 						      EMAIL * </label>
-						    <input type="text" id="email" placeholder="Enter your email"
+						    <input type="email" id="email" placeholder="Enter your email"
 								 [(ngModel)]="model.email" name="email" #email="ngModel" email required>
 								 <span *ngIf="email.touched && !email.errors?.email;" class="inline-icon inline-icon-valid valid"></span>
  								<span *ngIf="(email.dirty || email.touched) && (email.errors?.required || email.errors?.email);" class="inline-icon error">
@@ -86,7 +86,7 @@
 					</div>
 					<div class="form-field half">
 						<label>MOBILE * </label>
-									<input type="text" placeholder="" [(ngModel)]="model.mobile" name="mobile" #mobile="ngModel" required>
+									<input type="tel" placeholder="" [(ngModel)]="model.mobile" name="mobile" #mobile="ngModel" required>
 									<span *ngIf="mobile.touched && !mobile.errors?.required;" class="inline-icon inline-icon-valid valid"></span>
 									<span *ngIf="mobile.touched && mobile.errors?.required;" class="inline-icon error">
 											<span>Minimum 6 digits required.</span>!</span>

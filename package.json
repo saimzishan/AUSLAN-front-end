@@ -28,7 +28,6 @@
     "@angular/platform-browser": "^2.4.8",
     "@angular/platform-browser-dynamic": "^2.4.8",
     "@angular/router": "~3.4.8",
-    "@ngtools/webpack": "^1.2.4",
     "angular2-jwt": "^0.1.28",
     "angularfire2": "^2.0.0-beta.6",
     "core-js": "^2.4.1",
@@ -44,7 +43,7 @@
     "zone.js": "^0.7.2"
   },
   "devDependencies": {
-    "@angular/cli": "1.0.0-rc.0",
+    "@angular/cli": "^1.0.0-rc.1",
     "@angular/compiler-cli": "^2.4.8",
     "@types/jasmine": "2.5.38",
     "@types/node": "^6.0.62",
@@ -56,7 +55,9 @@
     "karma-chrome-launcher": "^2.0.0",
     "karma-cli": "^1.0.1",
     "karma-coverage": "^1.1.1",
+    "karma-coverage-istanbul-reporter": "^0.2.3",
     "karma-jasmine": "^1.0.2",
+    "karma-jasmine-html-reporter": "^0.2.2",
     "karma-phantomjs-launcher": "^1.0.0",
     "karma-remap-istanbul": "^0.2.1",
     "karma-requirejs": "~1.0.0",

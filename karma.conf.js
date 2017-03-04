@@ -4,21 +4,22 @@
 module.exports = function(config) {
     config.set({
         basePath: '',
-        frameworks: ['jasmine','es6-shim' ,'angular-cli'],
+        frameworks: ['jasmine','es6-shim' ,'@angular/cli'],
         plugins: [
           require('karma-es6-shim'),
           require('karma-jasmine'),
           require('karma-requirejs'),
             require('karma-phantomjs-launcher'),
-            require('karma-remap-istanbul'),
-            require('angular-cli/plugins/karma'),
+            require('karma-jasmine-html-reporter'),
+            require('karma-coverage-istanbul-reporter'),
+            require('@angular/cli/plugins/karma'),
             require('pact-consumer-js-dsl'),
-            require('karma-chrome-launcher'),
-            require('karma-safari-launcher'),
-            require('karma-safaritechpreview-launcher'),
-            require('karma-firefox-launcher')
-
+            require('karma-chrome-launcher')
         ],
+        client:{
+     clearContext: false // leave Jasmine Spec Runner output visible in browser
+   },
+
         files: [
             'node_modules/pact-consumer-js-dsl/dist/pact-consumer-js-dsl.js',
             {
@@ -27,7 +28,7 @@ module.exports = function(config) {
             }
         ],
         preprocessors: {
-            './src/test.ts': ['angular-cli']
+            './src/test.ts': ['@angular/cli']
         },
         exclude: [
       'node_modules/**/*spec.js'
@@ -41,13 +42,16 @@ module.exports = function(config) {
                 lcovonly: './coverage/coverage.lcov'
             }
         },
-        angularCli: {
-            config: './angular-cli.json',
-            environment: 'dev'
-        },
-        reporters: config.angularCli && config.angularCli.codeCoverage ?
-            ['progress', 'karma-remap-istanbul'] :
-            ['progress'],
+        coverageIstanbulReporter: {
+   reports: [ 'html', 'lcovonly' ],
+   fixWebpackSourcePaths: true
+ },
+ angularCli: {
+   environment: 'dev'
+ },
+ reporters: config.angularCli && config.angularCli.codeCoverage
+           ? ['progress', 'coverage-istanbul']
+           : ['progress', 'kjhtml'],
 
         port: 9876,
         colors: true,
