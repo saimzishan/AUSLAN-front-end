@@ -1,0 +1,84 @@
+%svg-common {
+	background: url("svg/sprite.css.svg") no-repeat;
+}
+
+.inline-icon-email {
+	@extend %svg-common;
+	background-position: 88.88888888888889% 73.33333333333333%;
+}
+
+.inline-icon-email-dims {
+	width: 16px;
+	height: 14px;
+}
+
+.inline-icon-lock {
+	@extend %svg-common;
+	background-position: 0 0;
+}
+
+.inline-icon-lock-dims {
+	width: 16px;
+	height: 22px;
+}
+
+.inline-icon-map-marker {
+	@extend %svg-common;
+	background-position: 29.62962962962963% 0;
+}
+
+.inline-icon-map-marker-dims {
+	width: 16px;
+	height: 22px;
+}
+
+.inline-icon-mobile {
+	@extend %svg-common;
+	background-position: 59.25925925925926% 0;
+}
+
+.inline-icon-mobile-dims {
+	width: 16px;
+	height: 22px;
+}
+
+.inline-icon-suitcase {
+	@extend %svg-common;
+	background-position: 0 100%;
+}
+
+.inline-icon-suitcase-dims {
+	width: 22px;
+	height: 22px;
+}
+
+.inline-icon-txt {
+	@extend %svg-common;
+	background-position: 45.833333333333336% 64.70588235294117%;
+}
+
+.inline-icon-txt-dims {
+	width: 22px;
+	height: 10px;
+}
+
+.inline-icon-user-circle {
+	@extend %svg-common;
+	background-position: 100% 0;
+}
+
+.inline-icon-user-circle-dims {
+	width: 22px;
+	height: 22px;
+}
+
+.inline-icon-valid {
+	@extend %svg-common;
+	background-position: 40% 96.96969696969697%;
+}
+
+.inline-icon-valid-dims {
+	width: 15px;
+	height: 11px;
+}
+
