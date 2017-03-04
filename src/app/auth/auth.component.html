@@ -11,7 +11,6 @@
 								placeholder="Enter your email"
 								[(ngModel)]="model.email" name="email" #email="ngModel" email required >
 								<span *ngIf="email.touched && (!email.errors?.required && !email.errors?.email);" class="inline-icon inline-icon-valid valid"></span>
-								<!-- p *ngIf="email.errors?.email;">The email is required and has to be in email format</p -->
 								<span *ngIf="(email.dirty || email.touched) && (email.errors?.required || email.errors?.email);" class="inline-icon error">
 										<span>This field is required.</span>!</span>
 								</div>
