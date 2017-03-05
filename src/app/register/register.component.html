@@ -85,7 +85,7 @@
 										<span>Email is required</span>!</span>
 					</div>
 					<div class="form-field half">
-						<label>MOBILE * </label>
+						<label class="icon-mobile">MOBILE * </label>
 									<input type="tel" placeholder="" [(ngModel)]="model.mobile" name="mobile" #mobile="ngModel" required>
 									<span *ngIf="mobile.touched && !mobile.errors?.required;" class="inline-icon inline-icon-valid valid"></span>
 									<span *ngIf="mobile.touched && mobile.errors?.required;" class="inline-icon error">

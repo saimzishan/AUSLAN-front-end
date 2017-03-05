@@ -24,7 +24,11 @@ export class User {
   public id: number;
   public mobile = 'xxxx xxx xxx';
   public token = '';
-  protected get type() {
+  public verified = false;
+  public disabled = true;
+  public type= '';
+
+  protected get user_type() {
     return '';
   }
 
@@ -36,7 +40,7 @@ export class User {
 export class OrganisationalRepresentative extends User {
   public business_hours_phone = '';
 
-  get type() {
+  get user_type() {
     return 'OrganisationalRepresentative';
   }
 }
@@ -50,7 +54,7 @@ export class Organisational extends User {
   public preferred_contact_method: string;
   public phone: string;
 
-  get type() {
+  get user_type() {
     return 'Organisational';
   }
 }
@@ -59,7 +63,7 @@ export class Accountant extends User {
   public primary_contact: User;
   public account_number: number;
   public billing_address: Address;
-  get type() {
+  get user_type() {
     return 'Accountant';
   }
 }
@@ -75,19 +79,19 @@ public eaf_budget_limit: number;
 public eaf_start_date: Date;
 public eaf_end_date: Date;
 
-  get type() {
+  get user_type() {
     return 'Client';
   }
 }
 
 export class BookingOfficer extends User {
-  get type() {
+  get user_type() {
     return 'BookingOfficer';
   }
 }
 
 export class Administrator extends User {
-  get type() {
+  get user_type() {
     return 'Administrator';
   }
 }
@@ -104,7 +108,7 @@ public postal_address: Address;
 public long_term_availability: interpreter_avalability;
 public override_availabilty: blockout_availability;
 
-  get type() {
+  get user_type() {
     return 'Interpreter';
   }
 }

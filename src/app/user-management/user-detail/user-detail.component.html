@@ -1,75 +1,106 @@
 <div class="md-dialog">
-				<md-dialog-content>
-				<header>
-					<h1>Create New User</h1>
-					<button ng-click="closeDialog()"><i class="icon-settings"></i></button>
-				</header>
-				<main>
-					<h2>Select user type</h2>
+	<md-dialog-content>
+		<header>
+			<h1>{{ isNewUser ? 'Create New User' : 'Edit Existing User' }}</h1>
+			<button (click)="closeDialog()"><i class="icon-close"></i></button>
+		</header>
+		<main>
+			<h2>Select user type</h2>
 
-					<nav>
-						<button ng-click="makeFormVisible()" ng-class="{ active : showForm }">Booking Officer</button>
-						<button>Organisation</button>
-						<button>Client</button>
-						<button>Interpreter</button>
-					</nav>
+	    <!-- select name="role" [(ngModel)]="newUser.role">
+	       <option *ngFor="let item of roles | enumVal" [selected]="item.key =='4'" [value]="item.key">{{item.value}}</option>
+	    </select -->
+			<nav>
+				<button *ngFor="let selRole of selRoles" (click)="isNewUser && makeFormVisible(selRole)" [ngClass]="{ 'active' : isRoleSelected(selRole) }">{{selRole}}</button>
+			</nav>
+			<div [hidden]='!showForm && isNewUser'>
+				<form class="common-form">
+					<div class="row small-collapse">
+						<div class="form-field medium-6 columns">
+							<label>FIRST NAME *	</label>
 
-					<form ng-show="showForm">
-						<div class="row small-collapse">
-							<div class="medium-6 columns">
-								<label>NAME
-									<div class="valid"><input type="text"></div>
-								</label>
-							</div>
-							<div class="medium-6 columns">
-								<label>NAME
-									<input type="text">
-								</label>
-							</div>
+							<input type="text" class="inline-icon inline-icon-user-circle valid" placeholder="" [(ngModel)]="userModel.first_name" name="first_name" #first_name="ngModel" [rangeLength]="[3, 20]" required>
+							<span *ngIf="first_name.touched && !first_name.errors?.required && !first_name.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
+							<span *ngIf="first_name.touched && (first_name.errors?.required || first_name.errors?.rangeLength);" class="inline-icon error">
+												<span>Minimum 3 characters required.</span>!</span>
 						</div>
-						<div class="row small-collapse">
-							<div class="medium-6 columns">
-								<label>STATUS
-									<md-select placeholder="Status" ng-model="selectedStatus">
-										<md-option>Status 1</md-option>
-										<md-option>Status 2</md-option>
-									</md-select>
-								</label>
-							</div>
-							<div class="medium-6 columns">
-								<label>ORGANISATION
-									<input type="text">
-								</label>
-							</div>
-						</div>
-						<div class="row small-collapse">
-							<div class="medium-6 columns">
-								<label>NAME
-									<input type="text">
-								</label>
-							</div>
-							<div class="medium-6 columns">
-								<label>MOBILE
-									<input type="text">
-								</label>
-							</div>
-						</div>
-						<div class="row small-collapse">
-							<div class="medium-6 columns">
-								<label>STATUS
-									<md-select placeholder="Status" ng-model="selectedStatus">
-										<md-option>Status 1</md-option>
-										<md-option>Status 2</md-option>
-									</md-select>
-								</label>
-							</div>
-							<div class="medium-6 columns"></div>
-						</div>
-					</form>
-				</main>
-			</md-dialog-content>
+						<div class="form-field medium-6 columns">
+							<label>LAST NAME *
+							</label>
 
-			<md-dialog-actions ng-show="showForm">
-				<button ng-click="closeDialog()">CREATE</button>
-			</md-dialog-actions>
-		</div>
+							<input type="text" class="inline-icon inline-icon-user-circle valid" placeholder="" [(ngModel)]="userModel.last_name" name="last_name" #last_name="ngModel" [rangeLength]="[3, 30]" required>
+							<span *ngIf="last_name.touched && !last_name.errors?.required && !last_name.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
+							<span *ngIf="last_name.touched && (last_name.errors?.required || last_name.errors?.rangeLength);" class="inline-icon error">
+														<span>Minimum 3 characters required.</span>!</span>
+						</div>
+					</div>
+					<div class="row small-collapse">
+						<div class="form-field medium-6 columns">
+							<label>EMAIL *
+							</label>
+							<input type="email" class="inline-icon-user-email" id="email" placeholder="Enter your email"
+							[(ngModel)]="userModel.email" name="email" #email="ngModel" email required>
+							<span *ngIf="email.touched && !email.errors?.email;" class="inline-icon inline-icon-valid valid"></span>
+							<span *ngIf="(email.dirty || email.touched) && (email.errors?.required || email.errors?.email);" class="inline-icon error">
+								<span>Email is required</span>!</span>
+						</div>
+						<div class="form-field medium-6 columns">
+							<label>MOBILE * </label>
+							<input type="tel" placeholder="" [(ngModel)]="userModel.mobile" name="mobile" #mobile="ngModel" required>
+							<span *ngIf="mobile.touched && !mobile.errors?.required;" class="inline-icon inline-icon-valid valid"></span>
+							<span *ngIf="mobile.touched && mobile.errors?.required;" class="inline-icon error">
+												<span>Minimum 6 digits required.</span>!</span>
+						</div>
+
+					</div>
+					<div [hidden]='!isNewUser' class="row small-collapse">
+						<div class="form-field medium-6 columns">
+							<label>
+								    PASSWORD *</label>
+							<input id="pass" type="password" placeholder="Enter your password" [(ngModel)]="userModel.password" name="password" #password="ngModel" required>
+
+							<span *ngIf="password.touched &&  (!password.errors?.required && password.errors?.rangeLength);" class="inline-icon inline-icon-valid valid"></span>
+							<span *ngIf="password.touched && (password.errors?.required || password.errors?.rangeLength);" class="inline-icon error">
+									<span>Minimum 6 characters required.</span>!</span>
+						</div>
+						<div class="form-field medium-6 columns">
+							<label class="icon-lock">
+								   CONFIRM PASSWORD *</label>
+							<input id="certainPassword" name="certainPassword" type="password" placeholder="Confirm password" [(ngModel)]="userModel.confirm_password" name="certainPassword" #certainPassword="ngModel" [equalTo]="password" required>
+							<span *ngIf="certainPassword.touched && (!certainPassword.errors?.required && !certainPassword.errors?.equalTo);" class="inline-icon inline-icon-valid valid"></span>
+							<span *ngIf="certainPassword.touched && (certainPassword.errors?.required || certainPassword.errors?.equalTo);" class="inline-icon error">
+					 				<span>Minimum 6 characters required.</span>!</span>
+						</div>
+					</div>
+					<div [hidden]='isNewUser || !userModel.verified' class="row small-collapse">
+						<div class="form-field medium-6 columns">
+							<label>STATUS</label>
+							<md-select name="selStatus" placeholder="Status" [(ngModel)]="selectedStatus">
+								<md-option *ngFor="let i of userStatusArray" [value]="i.name" >{{i.name}}</md-option>
+							</md-select>
+						</div>
+						<div class="medium-6 columns"></div>
+					</div>
+
+				</form>
+			</div>
+		</main>
+	</md-dialog-content>
+	<div [hidden]='!selectedStatus || selectedStatus.length < 1'>
+		<md-dialog-actions>
+			<strong>Are you sure?</strong>
+			<section>
+				<button (click)="updateStatus(true)">Yes</button>
+				<button (click)="updateStatus(false)" class="red">No</button>
+			</section>
+		</md-dialog-actions>
+	</div>
+	<div [hidden]='!showForm'>
+		<md-dialog-actions>
+			 <button name="add_user" class="button"
+			 [disabled]="last_name.errors ||first_name.errors  || email.errors || (isNewUser && (password.errors|| certainPassword.errors)) "
+			 (click)="applyChanges()"> {{ isNewUser ? 'CREATE' : 'EDIT' }} </button>
+		</md-dialog-actions>
+	</div>
+
+</div>

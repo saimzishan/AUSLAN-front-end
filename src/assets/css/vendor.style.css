@@ -1997,20 +1997,20 @@ table.custom tbody tr td .dropdown.menu.actions>li.is-dropdown-submenu-parent>.i
     background: #02b86e
 }
 
-.md-dialog md-dialog-content main>form .medium-6 {
+.md-dialog md-dialog-content main>div>form .medium-6 {
     margin-top: 17px;
     width: 48%
 }
 
-.md-dialog md-dialog-content main>form .medium-6:nth-child(even) {
+.md-dialog md-dialog-content main>div>form .medium-6:nth-child(even) {
     margin-left: 4%
 }
 
-.md-dialog md-dialog-content main>form .medium-6 md-select:focus md-select-value.md-select-value {
+.md-dialog md-dialog-content main>div>form .medium-6 md-select:focus md-select-value.md-select-value {
     border-bottom: none
 }
 
-.md-dialog md-dialog-content main>form .medium-6 md-select md-select-value.md-select-value {
+.md-dialog md-dialog-content main>div>form .medium-6 md-select md-select-value.md-select-value {
     border-bottom: none
 }
 
@@ -2020,28 +2020,40 @@ table.custom tbody tr td .dropdown.menu.actions>li.is-dropdown-submenu-parent>.i
     border-top: 1px solid #eaeaea;
     -webkit-box-pack: center;
     -webkit-justify-content: center;
-    justify-content: center
+    justify-content: center;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    box-orient: vertical
 }
 
-.md-dialog md-dialog-actions>button {
+.md-dialog md-dialog-actions strong {
+    font-size: 16px;
+    text-align: center;
+    display: block;
+    width: 100%;
+    margin: 0 0 1em 0
+}
+
+.md-dialog md-dialog-actions>section {
+    text-align: center;
+    width: 100%
+}
+
+.md-dialog md-dialog-actions button {
     color: #02b86e;
     height: 46px;
     background: none;
     border: 1px solid #02b86e;
     border-radius: 4px;
     padding: 0 35px;
+    margin: 0 11px;
     -webkit-transition: background .5s ease;
-    transition: background .5s ease;
-    display: -webkit-flex !important;
-    display: -ms-flexbox !important;
-    display: flex !important;
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-    -ms-flex-align: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    -webkit-justify-content: center;
-    justify-content: center
+    transition: background .5s ease
+}
+
+.md-dialog md-dialog-actions button.red {
+    color: #fd4264;
+    border-color: #fd4264
 }
 
 md-select-menu:not(.md-overflow) md-content {

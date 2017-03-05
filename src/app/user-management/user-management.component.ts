@@ -40,34 +40,8 @@ export class UserManagementComponent implements AfterViewChecked {
 
     }
 
-    addUser() {
-        this.userDataService.createUser(this.newUser)
-        .subscribe((res: any) => {
-           if ( res.data.id &&  0 < res.data.id) {
-           this.newUser = new User();
-           this.fetchUsers();
-         }
-        }, err => console.log(err));
-      }
-
-    editUser(user, val) {
-        user.first_name = val ? val : this.selectedLastName + user.first_name;
-        this.userDataService.updateUser(user)
-        .subscribe((res: any) => {
-            if ( res.status === 200) {
-              // UI Notification
-              this.fetchUsers();
-            }
-        }, err => console.log(err));
-    }
-
-    removeUser(user) {
-        this.userDataService.deleteUser(user.id)
-        .subscribe((res: any) => {
-          if ( res.status === 204 ) {
-            this.fetchUsers();
-          }
-        }, err => console.log(err));
+    onEditUser(u: User) {
+        this.newUser = u;
     }
 
     private fetchUsers() {

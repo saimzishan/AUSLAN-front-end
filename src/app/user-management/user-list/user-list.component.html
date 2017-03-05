@@ -5,12 +5,7 @@
 				<table class="custom">
 					<thead>
 						<tr>
-							<!--th width="3%">
-								<div class="checkbox">
-									<input type="checkbox" name="" value="1" id="job-1">
-									<label for="job-1"></label>
-								</div>
-							</th -->
+
 							<th width="11%">
 								<span class="order asc">First Name</span>
 								<input type="text" name="first_name">
@@ -55,9 +50,7 @@
 									</li>
 								</ul>
 							</th>
-							<!-- th width="10%">
-								<span class="order asc">Updated</span>
-							</th -->
+
 							<th width="9%">
 								<span>Actions</span>
 							</th>
@@ -65,12 +58,7 @@
 					</thead>
 					<tbody>
 						<tr *ngFor="let user of userList">
-							<!-- td>
-								<div class="checkbox">
-									<input type="checkbox" name="" value="{{user.id  | json }}" id="job-2">
-									<label for="job-2"></label>
-								</div>
-							</td -->
+
 							<td>{{user.first_name}}</td>
 							<td>{{user.last_name}}</td>
 							<td>{{user.role}}</td>
@@ -80,13 +68,13 @@
 							</td>
 							<td>{{user.mobile}}</td>
 							<td class="{'active':{{user.verified}}}" >{{user.verified}}</td>
-							<!-- td><span class="underline">02-06 TS<br>7:15 A</span></td -->
+
 							<td>
 								<ul class="dropdown menu custom actions" data-dropdown-menu>
 									<li>
 										<a href="javascript:void(0)"><i class="icon-actions"></i></a>
 										<ul class="menu right-side green">
-											<li><a href="#"><i class="icon-settings"></i> Edit</a></li>
+											<li><a  (click)="onUserSelect(user)" ><i class="icon-settings"></i> Edit</a></li>
 											<li><a href="#"><i class="icon-settings"></i> Reset password</a></li>
 										</ul>
 									</li>

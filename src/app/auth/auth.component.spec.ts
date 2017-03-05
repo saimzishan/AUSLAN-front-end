@@ -38,6 +38,13 @@ import { BookingComponent } from '../booking/booking.component';
 import { BookingDetailComponent } from '../booking/booking-detail/booking-detail.component';
 import { SpinnerComponent } from '../spinner/spinner.component';
 import { SpinnerService } from '../spinner/spinner.service';
+import { HeaderComponent } from '../ui/header/header.component';
+import { FilterComponent } from '../booking/filter/filter.component';
+import { BookingListComponent } from '../booking/booking-list/booking-list.component';
+import { UserListComponent } from '../user-management/user-list/user-list.component';
+import { UserFilterComponent } from '../user-management/user-filter/user-filter.component';
+import { UserHeaderComponent } from '../user-management/user-header/user-header.component';
+import { UserDetailComponent } from '../user-management/user-detail/user-detail.component';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import {Injectable} from '@angular/core';
@@ -63,11 +70,26 @@ describe('AuthComponent', () => {
     beforeEach(async(() => {
 
       TestBed.configureTestingModule({
-          declarations: [EnumValPipe, UserManagementComponent, RegisterComponent, NotificationComponent,
-              NotFoundComponent, DashboardComponent, AuthComponent, ResetComponent, VerifyComponent,
-              BookingComponent,
-              BookingDetailComponent,
-              SpinnerComponent],
+          declarations: [EnumValPipe,
+          AuthComponent,
+          DashboardComponent,
+          UserManagementComponent,
+          EnumValPipe,
+          NotFoundComponent,
+          RegisterComponent,
+          VerifyComponent,
+          ResetComponent,
+          NotificationComponent,
+          BookingComponent,
+          BookingDetailComponent,
+          SpinnerComponent,
+          HeaderComponent,
+          FilterComponent,
+          BookingListComponent,
+          UserListComponent,
+          UserFilterComponent,
+          UserHeaderComponent,
+          UserDetailComponent],
           providers: [{ provide: UserService, useClass: MockUserService}, SpinnerService, { provide: APP_BASE_HREF, useValue: '/' }, {
               provide: AuthHttp,
               useFactory: authService,
