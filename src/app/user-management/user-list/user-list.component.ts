@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import {User} from '../../shared/model/user.entity';
+import {ROLE} from '../../shared/model/role.enum';
 
 @Component({
   selector: 'app-user-list',

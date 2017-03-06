@@ -30,6 +30,7 @@ export class UserDetailComponent {
         }
       }
     }
+
     makeFormVisible(val: string) {
         this.selectedRoles[val] = true;
         for (let s in this.selectedRoles) {

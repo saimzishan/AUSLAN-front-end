@@ -7,7 +7,7 @@
 		<main>
 			<h2 *ngIf="isNewUser" >Select user type</h2>
 			<nav>
-				<button *ngFor="let selRole of selRoles" (click)="isNewUser && makeFormVisible(selRole)" [disabled]="!isRoleSelected(selRole)" [ngClass]="{ 'active' : isRoleSelected(selRole) }">{{selRole}}</button>
+				<button *ngFor="let selRole of selRoles" (click)="isNewUser && makeFormVisible(selRole)" [disabled]="!isNewUser && !isRoleSelected(selRole)" [ngClass]="{ 'active' : isRoleSelected(selRole) }">{{selRole}}</button>
 			</nav>
 			<div [hidden]='!showForm && isNewUser'>
 				<form class="common-form">

@@ -37,14 +37,13 @@ export class UserManagementComponent implements AfterViewChecked {
     constructor(private userDataService: UserService) {
       this.roles = ROLE;
       this.fetchUsers();
-
     }
 
     onEditUser(u: User) {
         this.newUser = u;
     }
 
-    private fetchUsers() {
+    fetchUsers() {
       this.userDataService.fetchUsers()
       .subscribe((res: any) => {
         if ( res.status === 200 ) {

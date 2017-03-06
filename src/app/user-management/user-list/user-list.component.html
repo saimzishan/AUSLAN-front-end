@@ -61,13 +61,13 @@
 
 							<td>{{user.first_name}}</td>
 							<td>{{user.last_name}}</td>
-							<td>{{user.role}}</td>
+							<td>{{ user.type }}</td>
 							<td>Auslan</td>
 							<td class="truncated">
 								<a href="mailto:{{user.email}}">{{user.email}}</a>
 							</td>
 							<td>{{user.mobile}}</td>
-							<td [ngClass]="{'active':user.verified}" >{{ user.disabled ? 'Disabled' : !user.verified ? 'Not Verified' : 'Active' }}</td>
+							<td [ngClass]="{'active':user.verified}" >{{ user.disabled ? 'Disabled' : !user.verified ? 'Unverified' : 'Active' }}</td>
 
 							<td>
 								<ul class="dropdown menu custom actions" data-dropdown-menu>

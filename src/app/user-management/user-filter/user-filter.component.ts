@@ -10,6 +10,7 @@ import {User} from '../../shared/model/user.entity';
 })
 export class UserFilterComponent implements OnChanges {
     @Input('userModel') userModel: User;
+    @Output() refreshEmitter = new EventEmitter();
 
     isNewUser = true;
 
@@ -18,6 +19,10 @@ export class UserFilterComponent implements OnChanges {
     constructor(
         public dialog: MdDialog,
         public viewContainerRef: ViewContainerRef) { }
+
+    onRefresh() {
+      this.refreshEmitter.emit();
+    }
 
     ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
         for (let propName in changes) {
@@ -38,6 +43,7 @@ export class UserFilterComponent implements OnChanges {
     }
 
     private showDialogBox() {
+
         let config = new MdDialogConfig();
         config.viewContainerRef = this.viewContainerRef;
 
@@ -46,6 +52,10 @@ export class UserFilterComponent implements OnChanges {
         this.dialogRef.componentInstance.isNewUser = this.isNewUser;
         this.dialogRef.componentInstance.showForm = !this.isNewUser;
         this.dialogRef.componentInstance.setRole();
+
+        this.dialogRef.componentInstance.onRefresh.subscribe( res => {
+          this.onRefresh();
+        });
 
         this.dialogRef.afterClosed().subscribe(result => {
           this.isNewUser = true;
