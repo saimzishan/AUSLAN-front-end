@@ -1,17 +1,13 @@
 <div class="md-dialog">
 	<md-dialog-content>
 		<header>
-			<h1>{{ isNewUser ? 'Create New User' : 'Edit Existing User' }}</h1>
+			<h1>{{ isNewUser ? 'Create New User' : 'Edit ' + userModel.first_name + ' ' +userModel.last_name + ' Details' }}</h1>
 			<button (click)="closeDialog()"><i class="icon-close"></i></button>
 		</header>
 		<main>
-			<h2>Select user type</h2>
-
-	    <!-- select name="role" [(ngModel)]="newUser.role">
-	       <option *ngFor="let item of roles | enumVal" [selected]="item.key =='4'" [value]="item.key">{{item.value}}</option>
-	    </select -->
+			<h2 *ngIf="isNewUser" >Select user type</h2>
 			<nav>
-				<button *ngFor="let selRole of selRoles" (click)="isNewUser && makeFormVisible(selRole)" [ngClass]="{ 'active' : isRoleSelected(selRole) }">{{selRole}}</button>
+				<button *ngFor="let selRole of selRoles" (click)="isNewUser && makeFormVisible(selRole)" [disabled]="!isRoleSelected(selRole)" [ngClass]="{ 'active' : isRoleSelected(selRole) }">{{selRole}}</button>
 			</nav>
 			<div [hidden]='!showForm && isNewUser'>
 				<form class="common-form">

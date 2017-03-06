@@ -67,7 +67,7 @@
 								<a href="mailto:{{user.email}}">{{user.email}}</a>
 							</td>
 							<td>{{user.mobile}}</td>
-							<td class="{'active':{{user.verified}}}" >{{user.verified}}</td>
+							<td [ngClass]="{'active':user.verified}" >{{ user.disabled ? 'Disabled' : !user.verified ? 'Not Verified' : 'Active' }}</td>
 
 							<td>
 								<ul class="dropdown menu custom actions" data-dropdown-menu>
