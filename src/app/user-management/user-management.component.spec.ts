@@ -23,8 +23,6 @@ import { MockBackend, MockConnection } from '@angular/http/testing';
 import {DummyComponent, MockUserService} from '../shared/test/Mock';
 import { RouterTestingModule } from '@angular/router/testing';
 
-declare var $: any;
-
 
 describe('UserManagement', () => {
     let component: UserManagementComponent;
