@@ -54,24 +54,28 @@ module.exports = function(config) {
             }
         },
         coverageIstanbulReporter: {
-          reports: {
-              html: 'coverage',
-              lcovonly: './coverage/coverage.lcov'
-          },
-          fixWebpackSourcePaths: true
+            reports: ['html', 'lcovonly'],
+            dir: './coverage', // base output directory
+            'report-config': {
+                html: { // any options here are valid: https://github.com/istanbuljs/istanbul-reports/blob/master/lib/html/index.js#L134-L139
+                },
+                lcovonly: {
+                    // options from here are valid: https://github.com/istanbuljs/istanbul-reports/blob/master/lib/lcovonly/index.js#L7-L10
+                    file: 'coverage.lcov'
+                }
+            },
+            fixWebpackSourcePaths: true
         },
         angularCli: {
             environment: 'dev'
         },
-        reporters: config.angularCli && config.angularCli.codeCoverage ?
-            ['progress', 'coverage-istanbul'] :
-            ['progress', 'kjhtml'],
+        reporters: config.angularCli && config.angularCli.codeCoverage ? ['progress', 'coverage-istanbul'] : ['progress', 'kjhtml'],
 
         port: 9876,
         colors: true,
         logLevel: config.LOG_INFO,
         autoWatch: true,
-        browsers: ['PhantomJS_without_security', /*'Chrome_without_security'*/], //Removing Chrome because of CI error
+        browsers: ['PhantomJS_without_security', /*'Chrome_without_security'*/ ], //Removing Chrome because of CI error
         customLaunchers: {
             PhantomJS_without_security: {
                 base: 'PhantomJS',
