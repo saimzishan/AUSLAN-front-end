@@ -22,13 +22,15 @@ export class UserDetailComponent {
     }
 
     setRole() {
-      if (this.userModel && this.userModel.type) {
-        this.selectedRoles[this.userModel.type] = true;
-      }else {
-        for (let s in this.selectedRoles) {
-          this.selectedRoles[s] = false;
+        if (this.userModel && this.userModel.type) {
+            this.selectedRoles[this.userModel.type] = true;
+        } else {
+            for (let s in this.selectedRoles) {
+                if (this.selectedRoles.hasOwnProperty(s)) {
+                    this.selectedRoles[s] = false;
+                }
+            }
         }
-      }
     }
 
     makeFormVisible(val: string) {
@@ -47,9 +49,12 @@ export class UserDetailComponent {
     }
 
     closeDialog() {
-      for (let s in this.selectedRoles) {
-        this.selectedRoles[s] = false;
-      }
+        for (let s in this.selectedRoles) {
+            if (this.selectedRoles.hasOwnProperty(s)) {
+
+                this.selectedRoles[s] = false;
+            }
+        }
         this.showForm = false;
         this.isNewUser = true;
         this.userModel = new User();
@@ -82,10 +87,10 @@ export class UserDetailComponent {
     }
 
     updateStatus(e: boolean) {
-      if (e) {
-        this.enableUser();
-      }
-      this.selectedStatus = '';
+        if (e) {
+            this.enableUser();
+        }
+        this.selectedStatus = '';
     }
 
 

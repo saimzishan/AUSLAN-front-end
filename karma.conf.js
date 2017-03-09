@@ -4,11 +4,11 @@
 module.exports = function(config) {
     config.set({
         basePath: '',
-        frameworks: ['jasmine','es6-shim' ,'@angular/cli'],
+        frameworks: ['jasmine', 'es6-shim', '@angular/cli'],
         plugins: [
-          require('karma-es6-shim'),
-          require('karma-jasmine'),
-          require('karma-requirejs'),
+            require('karma-es6-shim'),
+            require('karma-jasmine'),
+            require('karma-requirejs'),
             require('karma-phantomjs-launcher'),
             require('karma-jasmine-html-reporter'),
             require('karma-coverage-istanbul-reporter'),
@@ -16,24 +16,34 @@ module.exports = function(config) {
             require('pact-consumer-js-dsl'),
             require('karma-chrome-launcher')
         ],
-        client:{
-     clearContext: false // leave Jasmine Spec Runner output visible in browser
-   },
+        client: {
+            clearContext: false // leave Jasmine Spec Runner output visible in browser
+        },
 
-        files: [
-          { pattern: './node_modules/jquery/dist/jquery.min.js', watched: false },    
-            'node_modules/pact-consumer-js-dsl/dist/pact-consumer-js-dsl.js',
+        files: [{
+                pattern: './node_modules/jquery/dist/jquery.min.js',
+                watched: false
+            },
+            {
+                pattern: 'node_modules/pact-consumer-js-dsl/dist/pact-consumer-js-dsl.js',
+                watched: false
+            },
+            {
+                pattern: './node_modules/foundation-sites/dist/js/foundation.js',
+                watched: false
+            },
             {
                 pattern: './src/test.ts',
                 watched: false
-            }
+            },
+            'https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.1/js/foundation.js'
         ],
         preprocessors: {
             './src/test.ts': ['@angular/cli']
         },
         exclude: [
-      'node_modules/**/*spec.js'
-      ],
+            'node_modules/**/*spec.js'
+        ],
         mime: {
             'text/x-typescript': ['ts', 'tsx']
         },
@@ -44,15 +54,15 @@ module.exports = function(config) {
             }
         },
         coverageIstanbulReporter: {
-   reports: [ 'html', 'lcovonly' ],
-   fixWebpackSourcePaths: true
- },
- angularCli: {
-   environment: 'dev'
- },
- reporters: config.angularCli && config.angularCli.codeCoverage
-           ? ['progress', 'coverage-istanbul']
-           : ['progress', 'kjhtml'],
+            reports: ['html', 'lcovonly'],
+            fixWebpackSourcePaths: true
+        },
+        angularCli: {
+            environment: 'dev'
+        },
+        reporters: config.angularCli && config.angularCli.codeCoverage ?
+            ['progress', 'coverage-istanbul'] :
+            ['progress', 'kjhtml'],
 
         port: 9876,
         colors: true,

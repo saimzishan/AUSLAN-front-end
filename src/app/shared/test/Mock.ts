@@ -65,19 +65,19 @@ export class MockUserService extends ApiService {
        return '';
      }
      resetUser( emailAddress: string): Observable<Object> {
-         return Observable.of(mock_empty_response).map(res => {return res;});
+         return Observable.of(mock_empty_response).map(res => {return res; });
      }
 
      fetchUsers(): Observable<Object> {
-        return Observable.of(mock_fetch_response).map(res => {return res;});
+        return Observable.of(mock_fetch_response).map(res => {return res; });
      }
 
      resendVerificationCode(userID: number): Observable<Object>  {
-       return Observable.of(mock_empty_response).map(res => {return res;});
+       return Observable.of(mock_empty_response).map(res => {return res; });
      }
 
      verifyUser(userID: number, verifyCode: string): Observable<Object> {
-       return Observable.of(mock_empty_response).map(res => {return res;});
+       return Observable.of(mock_empty_response).map(res => {return res; });
      }
 
  }

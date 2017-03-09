@@ -22,6 +22,7 @@ import {UserListComponent} from './user-list/user-list.component';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import {DummyComponent, MockUserService} from '../shared/test/Mock';
 import { RouterTestingModule } from '@angular/router/testing';
+import 'foundation-sites';
 
 
 describe('UserManagement', () => {
