@@ -2,13 +2,6 @@ machine:
   node:
     version: 7.0.0
 
-dependencies:
-  override:
-    - bundle install
-    - npm install
-  post:
-    - ng build --prod --aot=false
-
 test:
   pre:
     - rm -rf tmp

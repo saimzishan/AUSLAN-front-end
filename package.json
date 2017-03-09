@@ -14,7 +14,7 @@
     "e2e": "protractor",
     "posttest": "node_modules/.bin/remap-istanbul -i coverage/coverage-final.json -o coverage -t html",
     "coverage": "http-server -c-1 -o -p 9870 ./coverage",
-    "postinstall": " ng build --env=prod",
+    "postinstall": "ng build --env=prod",
     "pact": "curl -v -XPUT \\-H \"Content-Type: application/json\" -d@tmp/pacts/booking-specs-booking-api.json  https://auslan-pact-broker.herokuapp.com/pacts/provider/Booking-Api/consumer/Booking-Specs/version/1.0.0  --user admin:auslanPACT && curl -v -XPUT \\-H \"Content-Type: application/json\"   -d@tmp/pacts/user-specs-user-api.json https://auslan-pact-broker.herokuapp.com/pacts/provider/User-Api/consumer/User-Specs/version/2.0.0 --user admin:auslanPACT"
   },
   "private": true,
