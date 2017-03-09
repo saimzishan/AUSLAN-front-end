@@ -28,6 +28,10 @@ import { ROLE } from '../shared/model/role.enum';
 import { BookingComponent } from '../booking/booking.component';
 import { BookingDetailComponent } from '../booking/booking-detail/booking-detail.component';
 import { SpinnerComponent } from '../spinner/spinner.component';
+import { MockBackend, MockConnection } from '@angular/http/testing';
+import {MockUserService, DummyComponent} from '../shared/test/Mock';
+import { RouterTestingModule } from '@angular/router/testing';
+import {AppComponent} from '../app.component';
 
 describe('RegisterComponent', () => {
     let component: RegisterComponent;
@@ -35,24 +39,15 @@ describe('RegisterComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [EnumValPipe, UserManagementComponent, RegisterComponent, NotificationComponent,
-                NotFoundComponent, DashboardComponent, AuthComponent, ResetComponent, VerifyComponent,
-                BookingComponent,
-                BookingDetailComponent,
-                SpinnerComponent],
-            providers: [UserService, { provide: APP_BASE_HREF, useValue: '/' }, {
-                provide: AuthHttp,
-                useFactory: authService,
-                deps: [Http, RequestOptions]
-            }],
-            imports: [CustomFormsModule, routing, RouterModule, HttpModule, FormsModule
-            ]
-        })
-            .compileComponents();
-        // jasmine.clock().install();
+            declarations: [RegisterComponent, NotificationComponent],
+            imports: [FormsModule, CustomFormsModule,
+              RouterTestingModule.withRoutes(
+          [{ path: 'register/step2', redirectTo: 'register', pathMatch: 'full' }])],
+            providers: [{ provide: UserService, useClass: MockUserService}, { provide: AuthHttp, useClass: MockBackend} ]
+        }).compileComponents();
     }));
 
-    describe('RegisterComponent for Organization', () => {
+    describe('RegisterComponent', () => {
         beforeEach((done) => {
             fixture = TestBed.createComponent(RegisterComponent);
             component = fixture.componentInstance;
@@ -96,7 +91,7 @@ describe('RegisterComponent', () => {
                 fixture.whenStable().then(() => {
                     let expected = 1;
                     expect(component.addUser).toHaveBeenCalledTimes(expected);
-                    expect(component.model.role).toEqual(ROLE.Organization);
+                    expect(component.model.role).toEqual(ROLE.Organisation);
                     done();
                 });
 

@@ -20,7 +20,6 @@ import { RegisterComponent } from './register/register.component';
 import { VerifyComponent } from './verify/verify.component';
 import { ResetComponent } from './reset/reset.component';
 import {AuthGuard} from './auth/auth.guard';
-import {enableProdMode} from '@angular/core';
 import { NotificationComponent } from './notification/notification.component';
 import { BookingComponent } from './booking/booking.component';
 import { BookingDetailComponent } from './booking/booking-detail/booking-detail.component';

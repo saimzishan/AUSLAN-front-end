@@ -2,8 +2,14 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
-
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChange, ViewContainerRef } from '@angular/core';
+import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
+import {UserDetailComponent} from '../user-detail/user-detail.component';
+import {User} from '../../shared/model/user.entity';
 import { UserFilterComponent } from './user-filter.component';
+import { CustomFormsModule } from 'ng2-validation';
+import { FormsModule } from '@angular/forms';
+import { MaterialModule } from '@angular/material';
 
 describe('UserFilterComponent', () => {
   let component: UserFilterComponent;
@@ -11,7 +17,9 @@ describe('UserFilterComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UserFilterComponent ]
+      declarations: [ UserFilterComponent, UserDetailComponent ],
+      imports: [FormsModule, CustomFormsModule, MaterialModule],
+      providers: [MdDialog, ViewContainerRef]
     })
     .compileComponents();
   }));

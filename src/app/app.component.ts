@@ -13,7 +13,7 @@ import {HeaderComponent} from './ui/header/header.component';
 export class AppComponent  {
   public isRequesting: boolean;
 
-  public constructor(private el: ElementRef, private spinnerService: SpinnerService, private titleService: Title ) {
+  public constructor(private spinnerService: SpinnerService, private titleService: Title ) {
     this.titleService.setTitle(GLOBAL.TITLE + GLOBAL.VERSION);
     spinnerService.requestInProcess$.subscribe(
       isDone => {

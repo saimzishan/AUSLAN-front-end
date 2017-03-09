@@ -1,8 +1,3 @@
 <app-spinner [isRunning]="isRequesting"></app-spinner>
 <app-header *ngIf="isLoggedIn()" ></app-header>
-<!-- nav>
-           <a id="lnkDashboard" *ngIf="isLoggedIn()" [routerLink]="['/dashboard']">Dashboard</a>
-           <a id="lnkAdminCenter" *ngIf="isLoggedIn()" [routerLink]="['/user-management']">Admin Center</a>
-           <a id="lnkLogout" *ngIf="isLoggedIn()" [routerLink]="['/authenticate','logout']">Logout</a>
-         </nav -->
          <router-outlet></router-outlet>

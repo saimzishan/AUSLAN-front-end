@@ -25,7 +25,6 @@ import { ResetComponent } from '../reset/reset.component';
 import { VerifyComponent } from '../verify/verify.component';
 import {authService} from '../shared/global';
 import {  HttpModule, Http, RequestOptions } from '@angular/http';
-import { NotificationComponent } from '../notification/notification.component';
 import { Location } from '@angular/common';
 import { fakeAsync, async, inject, TestBed, getTestBed } from '@angular/core/testing';
 import { BrowserModule, Title } from '@angular/platform-browser';
@@ -33,7 +32,7 @@ import {
     RouterModule, ActivatedRoute
 } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-
+import { NotificationComponent } from '../notification/notification.component';
 import { BookingComponent } from '../booking/booking.component';
 import { BookingDetailComponent } from '../booking/booking-detail/booking-detail.component';
 import { SpinnerComponent } from '../spinner/spinner.component';
@@ -45,24 +44,12 @@ import { UserListComponent } from '../user-management/user-list/user-list.compon
 import { UserFilterComponent } from '../user-management/user-filter/user-filter.component';
 import { UserHeaderComponent } from '../user-management/user-header/user-header.component';
 import { UserDetailComponent } from '../user-management/user-detail/user-detail.component';
+import { MaterialModule } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import {Injectable} from '@angular/core';
-import { ApiService } from '../api/api.service';
+import {MockUserService} from '../shared/test/Mock';
 
-let res: Object = {'res': { 'data': { 'jwt': GLOBAL.FAKE_TOKEN}}};
-
-@Injectable()
-class MockUserService extends ApiService {
-
-     login(user: User): Observable<Object>  {
-       return Observable.of(res).map(this.extractData);
-     }
-
-     logout() {
-       return '';
-     }
- }
 
 describe('AuthComponent', () => {
     let component: AuthComponent;
@@ -95,7 +82,7 @@ describe('AuthComponent', () => {
               useFactory: authService,
               deps: [Http, RequestOptions]
           }],
-          imports: [CustomFormsModule, RouterModule, HttpModule, FormsModule,
+          imports: [CustomFormsModule, MaterialModule, RouterModule, HttpModule, FormsModule,
             RouterTestingModule.withRoutes(
         [{ path: 'authenticate', component: AuthComponent },
         { path: 'authenticate/logout', component: AuthComponent }])]

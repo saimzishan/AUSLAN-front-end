@@ -16,6 +16,15 @@ import { NotificationComponent } from '../notification/notification.component';
 import { dispatchEvent } from '@angular/platform-browser/testing/browser_util';
 import {User} from '../shared/model/user.entity';
 import {ROLE} from '../shared/model/role.enum';
+import { UserHeaderComponent } from './user-header/user-header.component';
+import {UserFilterComponent} from './user-filter/user-filter.component';
+import {UserListComponent} from './user-list/user-list.component';
+import { MockBackend, MockConnection } from '@angular/http/testing';
+import {DummyComponent, MockUserService} from '../shared/test/Mock';
+import { RouterTestingModule } from '@angular/router/testing';
+
+declare var $: any;
+
 
 describe('UserManagement', () => {
     let component: UserManagementComponent;
@@ -23,20 +32,20 @@ describe('UserManagement', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [UserManagementComponent, EnumValPipe, NotificationComponent],
-            providers: [UserService, {
-                provide: AuthHttp,
-                useFactory: authService,
-                deps: [Http, RequestOptions]
-            }],
-            imports: [CustomFormsModule, HttpModule, FormsModule
-            ]
-        })
-            .compileComponents();
+            declarations: [UserManagementComponent],
+            imports: [FormsModule, RouterTestingModule, CustomFormsModule],
+            providers: [{ provide: UserService, useClass: MockUserService }, { provide: AuthHttp, useClass: MockBackend }]
+        });
     }));
 
     beforeEach((done) => {
-        fixture = TestBed.createComponent(UserManagementComponent);
+        fixture = TestBed.overrideComponent(UserManagementComponent, {
+            set: {
+                template: ''
+            }
+        })
+            .createComponent(UserManagementComponent);
+            TestBed.compileComponents();
         component = fixture.componentInstance;
         fixture.detectChanges();
         done();
@@ -47,95 +56,4 @@ describe('UserManagement', () => {
         done();
     });
 
-    describe('Testing Add User', () => {
-        beforeEach((done) => {
-            spyOn(component, 'addUser').and.callThrough();
-
-            fixture.debugElement.query(By.css('input[name=first_name]')).nativeElement.value = 'dummy';
-            fixture.debugElement.query(By.css('input[name=last_name]')).nativeElement.value = 'dummy';
-            fixture.debugElement.query(By.css('input[name=password]')).nativeElement.value = 'dummy@admin.com';
-            fixture.debugElement.query(By.css('input[name=certainPassword]')).nativeElement.value = 'dummy@admin.com';
-            fixture.debugElement.query(By.css('input[name=email]')).nativeElement.value = 'dummy@admin.com';
-
-            let select = fixture.debugElement.query(By.css('select[name=role]')).nativeElement;
-
-
-            select.value = 'Accountant';
-            dispatchEvent(select, 'change');
-            fixture.detectChanges();
-            fixture.debugElement.query(By.css('button[name=add_user]')).nativeElement.click();
-
-            done();
-        });
-        it('should call the add User Api', (done) => {
-            fixture.whenStable().then(() => {
-                let expected = 1;
-                expect(component.addUser).toHaveBeenCalledTimes(expected);
-                done();
-            });
-
-        });
-
-    });
-
-
-    describe('Testing Edit User', () => {
-        beforeEach((done) => {
-            spyOn(component, 'editUser').and.callThrough();
-
-            component.users = [new User({
-                id: 2, email: 'admin1@aus.au', name: 'Joe Doe 2',
-                password: 'secure_password', role: ROLE.Accountant
-            })];
-            fixture.detectChanges();
-
-            let select = fixture.debugElement.query(By.css('section[name=list_user]')).nativeElement;
-
-            select.value = 'Accountant';
-            dispatchEvent(select, 'change');
-            fixture.detectChanges();
-            fixture.debugElement.query(By.css('button[name=edit_user]')).nativeElement.click();
-            done();
-        });
-        it('should call the edit User Api', (done) => {
-            fixture.whenStable().then(() => {
-                let expected = 1;
-                expect(component.editUser).toHaveBeenCalledTimes(expected);
-                done();
-            });
-
-        });
-
-    });
-
-
-    describe('Testing removeUser ', () => {
-        beforeEach((done) => {
-            spyOn(component, 'removeUser').and.callThrough();
-
-            component.users = [new User({
-                id: 2, email: 'admin1@aus.au', name: 'Joe Doe 2',
-                password: 'secure_password', role: ROLE.Accountant
-            })];
-            fixture.detectChanges();
-
-            let select = fixture.debugElement.query(By.css('section[name=list_user]')).nativeElement;
-
-            select.value = 'Accountant';
-            dispatchEvent(select, 'change');
-            fixture.detectChanges();
-            fixture.debugElement.query(By.css('button[name=del_user]')).nativeElement.click();
-            done();
-
-        });
-        it('should call the remove User Api', (done) => {
-            fixture.whenStable().then(() => {
-                let expected = 1;
-                expect(component.removeUser).toHaveBeenCalledTimes(expected);
-                done();
-            });
-
-        });
-
-    });
 });

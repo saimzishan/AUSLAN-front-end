@@ -1,28 +1,34 @@
 /* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { Component } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
 import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
-
+import { Location, CommonModule } from '@angular/common';
+import { RouterTestingModule } from '@angular/router/testing';
+import { TestBed, inject, ComponentFixture, async } from '@angular/core/testing';
 import { HeaderComponent } from './header.component';
+import { DummyComponent, RouterStub} from '../../shared/test/Mock';
+import {APP_BASE_HREF} from '@angular/common';
+import { AuthComponent } from '../../auth/auth.component';
 
-describe('HeaderComponent', () => {
-  let component: HeaderComponent;
-  let fixture: ComponentFixture<HeaderComponent>;
+describe('component: TestComponent', function() {
+    beforeEach(() => {
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ HeaderComponent ]
-    })
-    .compileComponents();
-  }));
+      TestBed.configureTestingModule({
+        declarations: [HeaderComponent],
+            imports: [RouterTestingModule]
+        }).compileComponents();
+    });
+    describe('HeaderComponent Create', () => {
+        let component: HeaderComponent;
+        let fixture: ComponentFixture<HeaderComponent>;
+        beforeEach(() => {
+            fixture = TestBed.createComponent(HeaderComponent);
+            component = fixture.componentInstance;
+            fixture.detectChanges();
+        });
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(HeaderComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+        it('should create', () => {
+            expect(component).toBeTruthy();
+        });
+    });
 });

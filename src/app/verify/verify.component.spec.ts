@@ -4,6 +4,8 @@ import { DebugElement } from '@angular/core';
 import { AuthComponent } from '../auth/auth.component';
 import {GLOBAL} from '../shared/global';
 import { UserService } from '../api/user.service';
+import { MockUserService } from '../shared/test/Mock';
+
 import {User} from '../shared/model/user.entity';
 import {
     TestBed, fakeAsync, async, inject, ComponentFixture
@@ -29,7 +31,8 @@ import {DashboardComponent} from '../dashboard/dashboard.component';
 import { BookingComponent } from '../booking/booking.component';
 import { BookingDetailComponent } from '../booking/booking-detail/booking-detail.component';
 import { SpinnerComponent } from '../spinner/spinner.component';
-
+import { RouterTestingModule } from '@angular/router/testing';
+import { MockBackend, MockConnection } from '@angular/http/testing';
 
 describe('VerifyComponent', () => {
     let component: VerifyComponent;
@@ -37,18 +40,9 @@ describe('VerifyComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [EnumValPipe, UserManagementComponent, RegisterComponent, NotificationComponent,
-                NotFoundComponent, DashboardComponent, AuthComponent, ResetComponent, VerifyComponent,
-                BookingComponent,
-                BookingDetailComponent,
-                SpinnerComponent],
-            imports: [FormsModule, RouterModule, HttpModule, routing, CustomFormsModule],
-            providers: [UserService, { provide: APP_BASE_HREF, useValue: '/' },
-                {
-                    provide: AuthHttp,
-                    useFactory: authService,
-                    deps: [Http, RequestOptions]
-                }]
+            declarations: [VerifyComponent, NotificationComponent],
+            imports: [FormsModule, RouterTestingModule, HttpModule, CustomFormsModule],
+            providers: [{ provide: UserService, useClass: MockUserService}, { provide: AuthHttp, useClass: MockBackend} ]
         })
             .compileComponents();
     }));

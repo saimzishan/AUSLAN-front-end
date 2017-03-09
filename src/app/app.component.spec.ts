@@ -6,7 +6,6 @@ import {
     RequestMethod
 } from '@angular/http';
 import {UserService} from './api/user.service';
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpModule, BaseRequestOptions } from '@angular/http';
 import { AppComponent } from './app.component';
@@ -39,26 +38,29 @@ import { BookingComponent } from './booking/booking.component';
 import { BookingDetailComponent } from './booking/booking-detail/booking-detail.component';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { SpinnerService } from './spinner/spinner.service';
+import { HeaderComponent } from './ui/header/header.component';
 
+import { UserFilterComponent } from './user-management/user-filter/user-filter.component';
+import { UserHeaderComponent } from './user-management/user-header/user-header.component';
+import { UserListComponent } from './user-management/user-list/user-list.component';
 
 describe('AppComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [
         AppComponent,
-        AuthComponent,
+        AuthComponent, UserFilterComponent, UserHeaderComponent, UserListComponent,
         DashboardComponent, NotificationComponent,
         UserManagementComponent,
-        EnumValPipe,
+        EnumValPipe, HeaderComponent,
         NotFoundComponent, RegisterComponent, ResetComponent, VerifyComponent,
         BookingComponent,
         BookingDetailComponent,
         SpinnerComponent
       ],
-      imports: [CustomFormsModule, RouterModule,
-        BrowserModule,
+      imports: [CustomFormsModule, RouterTestingModule,
         FormsModule,
-        HttpModule, routing
+        HttpModule
       ],  providers: [Title, SpinnerService, UserService, {provide: APP_BASE_HREF, useValue : '/' }, {
           provide: AuthHttp,
           useFactory: authService,

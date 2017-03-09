@@ -49,7 +49,7 @@ export class RegisterComponent implements OnInit {
                 break;
 
             case 'Organization'.toUpperCase():
-                this.model.role = ROLE.Organization;
+                this.model.role = ROLE.Organisation;
                 break;
 
         }

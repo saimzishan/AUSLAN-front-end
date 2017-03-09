@@ -32,25 +32,18 @@ import { BookingComponent } from '../booking/booking.component';
 import { BookingDetailComponent } from '../booking/booking-detail/booking-detail.component';
 import { SpinnerComponent } from '../spinner/spinner.component';
 
-
+import { MockBackend, MockConnection } from '@angular/http/testing';
+import {MockUserService} from '../shared/test/Mock';
+import { RouterTestingModule } from '@angular/router/testing';
 describe('ResetComponent', () => {
   let component: ResetComponent;
   let fixture: ComponentFixture<ResetComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EnumValPipe, UserManagementComponent, RegisterComponent, NotificationComponent,
-          NotFoundComponent, DashboardComponent, AuthComponent, ResetComponent, VerifyComponent,
-          BookingComponent,
-          BookingDetailComponent,
-          SpinnerComponent ],
-      imports: [CustomFormsModule, HttpModule, routing, FormsModule, RouterModule],
-      providers: [UserService, {provide: APP_BASE_HREF, useValue : '/' },
-      {
-          provide: AuthHttp,
-          useFactory: authService,
-          deps: [Http, RequestOptions]
-        }]
+      declarations: [ResetComponent, NotificationComponent],
+      imports: [FormsModule, RouterTestingModule, CustomFormsModule],
+      providers: [{ provide: UserService, useClass: MockUserService}, { provide: AuthHttp, useClass: MockBackend} ]
     })
     .compileComponents();
   }));

@@ -5,6 +5,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { TestBed, async, inject } from '@angular/core/testing';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { User } from '../shared/model/user.entity';
+import { RouterStub } from '../shared/test/Mock';
 
 let sampleTok = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY';
 sampleTok = sampleTok + '3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ';
@@ -54,8 +55,3 @@ describe('AuthGuardService', () => {
 
         })));
 });
-class RouterStub {
-    navigate(routes: string[]) {
-        // do nothing
-    }
-}
