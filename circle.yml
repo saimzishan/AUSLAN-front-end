@@ -2,9 +2,12 @@ machine:
   node:
     version: 7.0.0
 
-compile:
+dependencies:
+  override:
+    - bundle install
+    - npm install
   post:
-    - ng build --env=prod
+    - ng build --prod --aot=false
 
 test:
   pre:
