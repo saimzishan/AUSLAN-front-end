@@ -18,7 +18,7 @@ export class UserDetailComponent {
     showForm = false;
     userStatusArray = [{ name: 'ACTIVE' }, { name: 'DISABLED' }];
     selectedStatus = '';
-    constructor(private userDataService: UserService, public dialogRef: MdDialogRef<any>) {
+    constructor(public userDataService: UserService, public dialogRef: MdDialogRef<any>) {
     }
 
     setRole() {

@@ -16,8 +16,8 @@ export class AuthComponent implements OnInit {
   errors: any;
   model: User = new User();
 
-  constructor(private spinnerService: SpinnerService, private service: UserService,
-     private routes: ActivatedRoute, private router: Router) {
+  constructor(public spinnerService: SpinnerService, public service: UserService,
+     public routes: ActivatedRoute, public router: Router) {
   }
 
    ngOnInit() {

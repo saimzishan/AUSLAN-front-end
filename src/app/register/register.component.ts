@@ -19,8 +19,8 @@ export class RegisterComponent implements OnInit {
     public successMessage = `Congrats Your user has been created.
   Kindly go back to <a [routerLink]="['/authenticate']">Login Page</a> and Login`;
 
-    constructor(private userService: UserService,
-        private routes: ActivatedRoute, private router: Router) {
+    constructor(public userService: UserService,
+        public routes: ActivatedRoute, public router: Router) {
     }
 
     ngOnInit() {

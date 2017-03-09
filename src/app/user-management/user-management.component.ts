@@ -34,7 +34,7 @@ export class UserManagementComponent implements AfterViewChecked {
 
     }
 
-    constructor(private userDataService: UserService) {
+    constructor(public userDataService: UserService) {
       this.roles = ROLE;
       this.fetchUsers();
     }

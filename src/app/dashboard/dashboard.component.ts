@@ -11,7 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class DashboardComponent implements OnInit {
     first_name = '';
-    constructor(private service: UserService, private routes: ActivatedRoute, private router: Router) {
+    constructor(public service: UserService, public routes: ActivatedRoute, public router: Router) {
     }
 
     ngOnInit() {

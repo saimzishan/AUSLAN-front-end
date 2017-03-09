@@ -42,7 +42,7 @@ export class UserFilterComponent implements OnChanges {
       this.showDialogBox();
     }
 
-    private showDialogBox() {
+    public showDialogBox() {
 
         let config = new MdDialogConfig();
         config.viewContainerRef = this.viewContainerRef;

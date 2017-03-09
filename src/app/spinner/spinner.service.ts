@@ -5,7 +5,7 @@ import { Subject }    from 'rxjs/Subject';
 export class SpinnerService {
 
   // Observable string sources
-  private requestInProcessSource = new Subject<boolean>();
+  requestInProcessSource = new Subject<boolean>();
   // Observable string streams
   requestInProcess$ = this.requestInProcessSource.asObservable();
   // Service message commands

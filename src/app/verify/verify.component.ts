@@ -12,7 +12,7 @@ export class VerifyComponent implements OnInit {
     errors: any; // I don;t like them in every component
     public userID= -1;
     public verificationCode= '';
-    constructor(private service: UserService , private router: Router, private routes: ActivatedRoute) { }
+    constructor(public service: UserService , public router: Router, public routes: ActivatedRoute) { }
 
     ngOnInit() {
       this.routes.params.subscribe( (p: any) => {

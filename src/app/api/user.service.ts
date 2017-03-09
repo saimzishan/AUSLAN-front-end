@@ -23,7 +23,7 @@ export class UserService extends ApiService {
       While this method seems to have no significance, Most of the method below would fail, if DI fails.
       Also when running test cases, mocking backend needs to ensure the HTTP is in provider and injector
      */
-    private isValidHttp(): boolean {
+    isValidHttp(): boolean {
         return (this.http !== undefined || this.http !== null);
     }
     /*Only making it public for test case*/

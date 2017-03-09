@@ -12,7 +12,7 @@ export class ResetComponent implements OnInit {
   errors: any;
   isError = false;
 
-  constructor(private service: UserService) { }
+  constructor(public service: UserService) { }
 
   ngOnInit() {
   }
