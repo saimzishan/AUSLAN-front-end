@@ -3,6 +3,7 @@ import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
 import {User} from '../../shared/model/user.entity';
 import {UserService} from '../../api/user.service';
 import { ROLE } from '../../shared/model/role.enum';
+import {SpinnerService} from '../../spinner/spinner.service';
 
 @Component({
     selector: 'app-user-detail',
@@ -18,7 +19,7 @@ export class UserDetailComponent {
     showForm = false;
     userStatusArray = [{ name: 'ACTIVE' }, { name: 'DISABLED' }];
     selectedStatus = '';
-    constructor(public userDataService: UserService, public dialogRef: MdDialogRef<any>) {
+    constructor(public userDataService: UserService, public spinnerService: SpinnerService, public dialogRef: MdDialogRef<any>) {
     }
 
     setRole() {
@@ -59,9 +60,12 @@ export class UserDetailComponent {
         this.isNewUser = true;
         this.userModel = new User();
         this.dialogRef.close();
+        this.spinnerService.requestInProcess(false);
+
     }
 
     applyChanges() {
+      this.spinnerService.requestInProcess(true);
         this.isNewUser ? this.addUser() : this.editUser();
     }
 
@@ -72,7 +76,12 @@ export class UserDetailComponent {
                     this.closeDialog();
                     this.onRefresh.emit();
                 }
-            }, err => console.log(err));
+            },
+             (err) => {
+               this.spinnerService.requestInProcess(false);
+
+               console.log(err);
+             });
     }
 
     editUser() {
@@ -83,10 +92,16 @@ export class UserDetailComponent {
                     this.closeDialog();
                     this.onRefresh.emit();
                 }
-            }, err => console.log(err));
+            },
+             (err) => {
+               this.spinnerService.requestInProcess(false);
+
+               console.log(err);
+             });
     }
 
     updateStatus(e: boolean) {
+      this.spinnerService.requestInProcess(true);
         if (e) {
             this.enableUser();
         }
@@ -102,7 +117,12 @@ export class UserDetailComponent {
                     this.closeDialog();
                     this.onRefresh.emit();
                 }
-            }, err => console.log(err));
+            },
+             (err) => {
+               this.spinnerService.requestInProcess(false);
+
+               console.log(err);
+             });
     }
 
 }

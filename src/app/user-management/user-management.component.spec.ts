@@ -23,7 +23,7 @@ import { MockBackend, MockConnection } from '@angular/http/testing';
 import {DummyComponent, MockUserService} from '../shared/test/Mock';
 import { RouterTestingModule } from '@angular/router/testing';
 import 'foundation-sites';
-
+import {SpinnerService} from '../spinner/spinner.service';
 
 describe('UserManagement', () => {
     let component: UserManagementComponent;
@@ -33,7 +33,7 @@ describe('UserManagement', () => {
         TestBed.configureTestingModule({
             declarations: [UserManagementComponent],
             imports: [FormsModule, RouterTestingModule, CustomFormsModule],
-            providers: [{ provide: UserService, useClass: MockUserService }, { provide: AuthHttp, useClass: MockBackend }]
+            providers: [{ provide: UserService, useClass: MockUserService }, SpinnerService, { provide: AuthHttp, useClass: MockBackend }]
         });
     }));
 

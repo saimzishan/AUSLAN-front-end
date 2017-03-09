@@ -12,6 +12,7 @@ import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/observable/throw';
 import {UserFilterComponent} from './user-filter/user-filter.component';
 import {UserListComponent} from './user-list/user-list.component';
+import {SpinnerService} from '../spinner/spinner.service';
 declare var $: JQueryStatic;
 
 @Component({
@@ -34,7 +35,7 @@ export class UserManagementComponent implements AfterViewChecked {
 
     }
 
-    constructor(public userDataService: UserService) {
+    constructor(public spinnerService: SpinnerService, public userDataService: UserService) {
       this.roles = ROLE;
       this.fetchUsers();
     }
@@ -44,12 +45,19 @@ export class UserManagementComponent implements AfterViewChecked {
     }
 
     fetchUsers() {
+      this.spinnerService.requestInProcess(true);
       this.userDataService.fetchUsers()
       .subscribe((res: any) => {
         if ( res.status === 200 ) {
         this.users = res.data.users;
       }
-      }, err => console.log(err));
+      this.spinnerService.requestInProcess(false);
+      },
+       err => {
+         this.spinnerService.requestInProcess(false);
+
+         console.log(err);
+       });
     }
 
 }
