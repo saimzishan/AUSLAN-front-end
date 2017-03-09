@@ -18,6 +18,7 @@ export class AuthComponent implements OnInit {
 
   constructor(public spinnerService: SpinnerService, public service: UserService,
      public routes: ActivatedRoute, public router: Router) {
+       this.logout();
   }
 
    ngOnInit() {
