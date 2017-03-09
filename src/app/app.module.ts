@@ -33,7 +33,6 @@ import { UserFilterComponent } from './user-management/user-filter/user-filter.c
 import { UserHeaderComponent } from './user-management/user-header/user-header.component';
 import { UserDetailComponent } from './user-management/user-detail/user-detail.component';
 import { MaterialModule } from '@angular/material';
-import {} from 'hammerjs';
 import {} from 'foundation-sites';
 
 

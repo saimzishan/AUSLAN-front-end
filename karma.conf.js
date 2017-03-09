@@ -54,8 +54,11 @@ module.exports = function(config) {
             }
         },
         coverageIstanbulReporter: {
-            reports: ['html', 'lcovonly'],
-            fixWebpackSourcePaths: true
+          reports: {
+              html: 'coverage',
+              lcovonly: './coverage/coverage.lcov'
+          },
+          fixWebpackSourcePaths: true
         },
         angularCli: {
             environment: 'dev'
