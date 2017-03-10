@@ -11,7 +11,7 @@ import { ModuleWithProviders }  from '@angular/core';
 import { RegisterComponent } from './register/register.component';
 import { ResetComponent } from './reset/reset.component';
 import { VerifyComponent } from './verify/verify.component';
-import {BookingComponent} from './booking/booking.component';
+import {BookingComponent} from './booking-management/booking.component';
 
 
 const appRoutes: Routes = [

@@ -1,17 +1,9 @@
 import {ROLE} from './role.enum';
+import {Venue} from './venue.entity';
 
 export enum interpreter_avalability {}
 export enum blockout_availability {}
 
-export class Address {
-
-  public addressline_1: string;
-  public addressline_2: string;
-  public addressline_3: string;
-  public state: string;
-  public post_code: number;
-
-}
 
 export class User {
 
@@ -62,7 +54,7 @@ export class Organisational extends User {
 export class Accountant extends User {
   public primary_contact: User;
   public account_number: number;
-  public billing_address: Address;
+  public billing_address: Venue;
   get user_type() {
     return 'Accountant';
   }
@@ -103,8 +95,8 @@ public naati_validity_end_date: Date;
 public business_hours_phone: string;
 public after_hours_phone: string;
 public date_of_birth: Date;
-public home_address: Address;
-public postal_address: Address;
+public home_address: Venue;
+public postal_address: Venue;
 public long_term_availability: interpreter_avalability;
 public override_availabilty: blockout_availability;
 

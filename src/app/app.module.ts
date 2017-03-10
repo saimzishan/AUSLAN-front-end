@@ -22,7 +22,7 @@ import { VerifyComponent } from './verify/verify.component';
 import { ResetComponent } from './reset/reset.component';
 import {AuthGuard} from './auth/auth.guard';
 import { NotificationComponent } from './notification/notification.component';
-import { BookingComponent } from './booking/booking.component';
+import { BookingComponent } from './booking-management/booking.component';
 import { BookingDetailComponent } from './booking-management/booking-detail/booking-detail.component';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { SpinnerService } from './spinner/spinner.service';
