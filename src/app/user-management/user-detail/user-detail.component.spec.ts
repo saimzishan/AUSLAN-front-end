@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChange, ViewContainerRef } from '@angular/core';
-import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
+import { MdDialog, MdDialogConfig, MdDialogRef, MdIconModule, OverlayContainer } from '@angular/material';
 import {UserDetailComponent} from '../user-detail/user-detail.component';
 import { CustomFormsModule } from 'ng2-validation';
 import { FormsModule } from '@angular/forms';
@@ -18,25 +18,37 @@ import { AuthHttp, AuthConfig } from 'angular2-jwt';
 import { dispatchEvent } from '@angular/platform-browser/testing/browser_util';
 import {User} from '../../shared/model/user.entity';
 import {ROLE} from '../../shared/model/role.enum';
+import { MockBackend, MockConnection } from '@angular/http/testing';
+import {SpinnerService} from '../../spinner/spinner.service';
+import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 
 describe('UserDetailComponent', () => {
   let component: UserDetailComponent;
   let fixture: ComponentFixture<UserDetailComponent>;
-  /* Commenting the Pop tests for now*/
-  /*
+  /* Commenting the Pop tests for now*//*
+  let dialogRef: MdDialogRef<any>;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ UserDetailComponent ],
       imports: [FormsModule, MdDialogModule, CustomFormsModule, MaterialModule],
-      providers: [MdDialogRef, { provide: UserService, useClass: MockUserService}]
+      providers: [{ provide: UserService, useClass: MockUserService}, SpinnerService, { provide: AuthHttp, useClass: MockBackend }]
     })
-    .compileComponents();
+    .overrideModule(BrowserDynamicTestingModule, {
+        set: {
+          entryComponents: [UserDetailComponent],
+        },
+      }).compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(UserDetailComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+
+    let config = new MdDialogConfig();
+    config.viewContainerRef = this.viewContainerRef;
+    this.dialogRef = this.dialog.open(UserDetailComponent, config);
+
   });
 
   it('should create', () => {

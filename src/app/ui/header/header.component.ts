@@ -9,6 +9,5 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent {
   @Input() fullName = GLOBAL.currentUser ? GLOBAL.currentUser.first_name + ' '  + GLOBAL.currentUser.last_name : '';
-  constructor() {
-  }
+  links = {};
 }

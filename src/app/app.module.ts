@@ -34,6 +34,7 @@ import { UserHeaderComponent } from './user-management/user-header/user-header.c
 import { UserDetailComponent } from './user-management/user-detail/user-detail.component';
 import { MaterialModule } from '@angular/material';
 import {} from 'foundation-sites';
+import { BookingHeaderComponent } from './booking-management/booking-header/booking-header.component';
 
 
 @NgModule({
@@ -58,6 +59,7 @@ import {} from 'foundation-sites';
     UserFilterComponent,
     UserHeaderComponent,
     UserDetailComponent,
+    BookingHeaderComponent,
   ], exports: [EnumValPipe],
    entryComponents: [UserDetailComponent],
   imports: [CustomFormsModule, routing,

@@ -16,6 +16,7 @@ import {BookingComponent} from './booking/booking.component';
 
 const appRoutes: Routes = [
   { path: 'user-management', component: UserManagementComponent, canActivate: [AuthGuard]},
+  { path: 'booking-management', component: BookingComponent, canActivate: [AuthGuard]},
   { path: 'authenticate', component: AuthComponent },
   { path: 'authenticate/logout', component: AuthComponent },
   { path: '404', component: NotFoundComponent },

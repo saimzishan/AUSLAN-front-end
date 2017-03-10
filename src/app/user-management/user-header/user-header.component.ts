@@ -5,11 +5,4 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './user-header.component.html',
   styleUrls: ['./user-header.component.css']
 })
-export class UserHeaderComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
-}
+export class UserHeaderComponent {}

@@ -2,7 +2,7 @@
 		<a href="/"><i class="icons icons-logo"></i></a>
 
 		<nav>
-			<a href="#" class="active"><span><i class="icon-bookings"></i> BOOKINGS</span></a>
+			<a id="lnkBooking" [ngClass]="{'active': links['Booking']}" (click)="links['Booking'] = true;" [routerLink]="['/booking-management']"><span><i class="icon-bookings"></i> BOOKINGS</span></a>
 			<a href="#"><span><i class="icon-messages"></i> MESSAGES</span></a>
 			<a href="#"><span><i class="icon-reports"></i> REPORTS</span></a>
 		</nav>
