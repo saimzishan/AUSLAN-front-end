@@ -15,6 +15,6 @@ export class Venue extends Address {
   expected_attendance: number;
   start_time: Date;
   end_time: Date;
-  date: Date;
+  start_date: Date;
   parking_type: PARKING;
 }

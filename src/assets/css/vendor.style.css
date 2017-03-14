@@ -630,6 +630,35 @@ md-checkbox[type=checkbox].md-checked .md-ink-ripple {
     padding-right: 54px
 }
 
+.common-form .form-field md2-datepicker {
+    border: none;
+    background: none;
+    -webkit-appearance: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none
+}
+
+.common-form .form-field md2-datepicker:hover,
+.common-form .form-field md2-datepicker:focus,
+.common-form .form-field md2-datepicker:active {
+    border: none;
+    background: none;
+    -webkit-appearance: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none
+}
+
+.common-form .form-field md2-datepicker .md2-datepicker-trigger {
+    padding-top: 4px;
+    padding-bottom: 4px
+}
+
+.common-form .form-field md2-datepicker .md2-datepicker-trigger .md2-datepicker-icon {
+    top: 7px
+}
+
 .common-form .form-field select {
     background: #f8f8f8 url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' width='32' height='24' viewBox='0 0 32 24'><polygon points='0,0 32,0 16,24' style='fill: rgb%28138, 138, 138%29'></polygon></svg>") no-repeat right .5rem center;
     background-origin: content-box;
@@ -1581,7 +1610,7 @@ md-radio-group md-radio-button.md-checked .md-ink-ripple {
     cursor: pointer
 }
 
-#page-booking>main .common-form label i {
+#page-booking>main .common-form label span[class^=inline-icon] {
     position: relative;
     top: 1px
 }

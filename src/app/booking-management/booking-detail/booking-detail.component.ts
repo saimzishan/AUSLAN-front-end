@@ -18,9 +18,10 @@ declare var $: JQueryStatic;
 export class BookingDetailComponent implements AfterViewChecked {
 
     bookingModel: Booking = new Booking();
-    startTime: any; endTime: any; date: any;
     appointment_types: BOOKING_NATURE;
     parking_types: PARKING;
+    currentUserIsContact: boolean;
+    prefInterpreter: boolean;
 
     constructor(public spinnerService: SpinnerService) {
     }
