@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import {AuthGuard} from './auth.guard';
 import {SpinnerComponent} from '../spinner/spinner.component';
 import { SpinnerService } from '../spinner/spinner.service';
+import {NotificationComponent} from '../notification/notification.component';
 
 @Component({
   selector: 'app-auth',

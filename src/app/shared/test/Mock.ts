@@ -2,7 +2,7 @@ import { Component,  Injectable, OnInit } from '@angular/core';
 import { ApiService } from '../../api/api.service';
 import { Observable } from 'rxjs/Observable';
 import { Subscriber } from 'rxjs/Subscriber';
-import {User} from '../../shared/model/user.entity';
+import {Booking} from '../../shared/model/user.entity';
 import {GLOBAL} from '../global';
 import {MockBackend, MockConnection} from '@angular/http/testing';
 import {Response, ResponseOptions} from '@angular/http';
@@ -81,3 +81,23 @@ export class MockUserService extends ApiService {
      }
 
  }
+
+
+ @Injectable()
+ export class MockBookingService extends ApiService {
+
+     createBooking(booking: Booking): Observable<Object> {
+       return Observable.of(mock_empty_response).map(
+         o => this.extractData(new Response(new ResponseOptions({
+           status: 200,
+         body: JSON.stringify({data: mock_empty_response}),
+       }))));
+
+     }
+
+
+      fetchBookings(): Observable<Object> {
+         return Observable.of(mock_fetch_response).map(res => {return res; });
+      }
+
+  }
