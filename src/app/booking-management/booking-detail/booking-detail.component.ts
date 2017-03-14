@@ -1,5 +1,4 @@
 import { Component, Input, Output, EventEmitter, AfterViewChecked, OnInit } from '@angular/core';
-import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
 import {Booking} from '../../shared/model/booking.entity';
 import {BookingService} from '../../api/booking.service';
 import { BOOKING_NATURE } from '../../shared/model/booking-nature.enum';
