@@ -2,17 +2,24 @@ import { Component,  Injectable, OnInit } from '@angular/core';
 import { ApiService } from '../../api/api.service';
 import { Observable } from 'rxjs/Observable';
 import { Subscriber } from 'rxjs/Subscriber';
-import {Booking} from '../../shared/model/user.entity';
+import {User} from '../../shared/model/user.entity';
+import {Booking} from '../../shared/model/booking.entity';
 import {GLOBAL} from '../global';
 import {MockBackend, MockConnection} from '@angular/http/testing';
 import {Response, ResponseOptions} from '@angular/http';
 import { NgModule } from '@angular/core';
+import {RouterModule} from '@angular/router';
 
 @Component({
-    template: '<router-outlet></router-outlet>'
+    template: ''
 })
 export class DummyComponent {
 }
+@NgModule({
+        declarations: [DummyComponent],
+        exports:      [DummyComponent]
+    })
+export class MockModule { }
 
 let mock_login_response: Object = {'res': { 'data': { 'jwt': GLOBAL.FAKE_TOKEN}}};
 

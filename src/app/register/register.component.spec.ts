@@ -14,7 +14,7 @@ import { HttpModule, Http, BaseRequestOptions } from '@angular/http';
 import { ROLE } from '../shared/model/role.enum';
 import { SpinnerComponent } from '../spinner/spinner.component';
 import { MockBackend, MockConnection } from '@angular/http/testing';
-import {MockUserService, DummyComponent} from '../shared/test/Mock';
+import {MockUserService, MockModule, DummyComponent} from '../shared/test/Mock';
 import { RouterTestingModule } from '@angular/router/testing';
 
 describe('RegisterComponent', () => {
@@ -24,9 +24,10 @@ describe('RegisterComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [RegisterComponent, NotificationComponent],
-            imports: [FormsModule, CustomFormsModule,
+            imports: [MockModule, FormsModule, CustomFormsModule,
               RouterTestingModule.withRoutes(
-          [{ path: 'register/step2', redirectTo: 'register', pathMatch: 'full' }])],
+          [  {path: 'register', component: DummyComponent},
+            { path: 'register/step2', component: DummyComponent }])],
             providers: [{ provide: UserService, useClass: MockUserService}, { provide: AuthHttp, useClass: MockBackend} ]
         }).compileComponents();
     }));
