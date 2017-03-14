@@ -1,15 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, AfterViewChecked, OnInit } from '@angular/core';
+import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
+import {Booking} from '../../shared/model/booking.entity';
+import {BookingService} from '../../api/booking.service';
+import { BOOKING_NATURE } from '../../shared/model/booking-nature.enum';
+import { PARKING } from '../../shared/model/parking.enum';
+import {SpinnerService} from '../../spinner/spinner.service';
+import { EnumValPipe } from '../../shared/pipe/enum-val.pipe';
+
+declare var $: JQueryStatic;
 
 @Component({
   selector: 'app-booking-detail',
   templateUrl: './booking-detail.component.html',
   styleUrls: ['./booking-detail.component.css']
 })
-export class BookingDetailComponent implements OnInit {
 
-  constructor() { }
+export class BookingDetailComponent implements AfterViewChecked {
 
-  ngOnInit() {
-  }
+    bookingModel: Booking = new Booking();
+    startTime: any; endTime: any; date: any;
+    appointment_types: BOOKING_NATURE;
+    parking_types: PARKING;
+
+    constructor(public spinnerService: SpinnerService) {
+    }
+
+    ngAfterViewChecked() {
+      $(document).foundation();
+    }
 
 }

@@ -12,7 +12,7 @@ import { AuthHttp, AuthConfig } from 'angular2-jwt';
 import { EnumValPipe } from './shared/pipe/enum-val.pipe';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { RouterModule, Router } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CustomFormsModule } from 'ng2-validation';
 import { routing } from './app.routing';
 import {APP_BASE_HREF} from '@angular/common';
@@ -36,6 +36,7 @@ import { UserDetailComponent } from './user-management/user-detail/user-detail.c
 import { BookingHeaderComponent } from './booking-management/booking-header/booking-header.component';
 import { MaterialModule } from '@angular/material';
 import {} from 'foundation-sites';
+import { Md2Module }  from 'md2';
 
 
 @NgModule({
@@ -65,8 +66,10 @@ import {} from 'foundation-sites';
    entryComponents: [UserDetailComponent, BookingDetailComponent],
   imports: [CustomFormsModule, routing,
     BrowserModule, RouterModule,
-    FormsModule, MaterialModule.forRoot(),
-    HttpModule
+    FormsModule,
+    HttpModule,
+    ReactiveFormsModule, Md2Module.forRoot(),
+    MaterialModule
   ],  providers: [AuthGuard, Title, SpinnerService, BookingService, UserService, {provide: APP_BASE_HREF, useValue : '/' }, {
       provide: AuthHttp,
       useFactory: authService,

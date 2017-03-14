@@ -12,11 +12,12 @@ import { RegisterComponent } from './register/register.component';
 import { ResetComponent } from './reset/reset.component';
 import { VerifyComponent } from './verify/verify.component';
 import {BookingComponent} from './booking-management/booking.component';
-
+import {BookingDetailComponent} from './booking-management/booking-detail/booking-detail.component';
 
 const appRoutes: Routes = [
   { path: 'user-management', component: UserManagementComponent, canActivate: [AuthGuard]},
   { path: 'booking-management', component: BookingComponent, canActivate: [AuthGuard]},
+  { path: 'booking-management/create', component: BookingDetailComponent, canActivate: [AuthGuard]},
   { path: 'authenticate', component: AuthComponent },
   { path: 'authenticate/logout', component: AuthComponent },
   { path: '404', component: NotFoundComponent },

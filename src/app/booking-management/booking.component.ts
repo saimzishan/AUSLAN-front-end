@@ -22,11 +22,7 @@ declare var $: JQueryStatic;
   styleUrls: ['./booking.component.css']
 })
 export class BookingComponent implements AfterViewChecked {
-    newBooking: Booking = new Booking();
-    roles: any;
     bookings: Array<Booking> = [];
-    // this is bad
-    selectedLastName = 'I am ';
 
     ngAfterViewChecked() {
       $(document).foundation();
@@ -34,12 +30,7 @@ export class BookingComponent implements AfterViewChecked {
     }
 
     constructor(public spinnerService: SpinnerService, public bookingDataService: BookingService) {
-      this.roles = ROLE;
       this.fetchBookings();
-    }
-
-    onEditBooking(u: Booking) {
-        this.newBooking = u;
     }
 
     fetchBookings() {
