@@ -34,16 +34,22 @@ import { RouterTestingModule } from '@angular/router/testing';
 import {
     RouterModule, ActivatedRoute
 } from '@angular/router';
-import { BookingComponent } from './booking/booking.component';
-import { BookingDetailComponent } from './booking/booking-detail/booking-detail.component';
+import { BookingComponent } from './booking-management/booking.component';
+import { BookingDetailComponent } from './booking-management/booking-detail/booking-detail.component';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { SpinnerService } from './spinner/spinner.service';
 import { HeaderComponent } from './ui/header/header.component';
-
+import { BookingHeaderComponent } from './booking-management/booking-header/booking-header.component';
 import { UserFilterComponent } from './user-management/user-filter/user-filter.component';
 import { UserHeaderComponent } from './user-management/user-header/user-header.component';
 import { UserListComponent } from './user-management/user-list/user-list.component';
+import { MaterialModule } from '@angular/material';
+import { Md2Module }  from 'md2';
 
+import { BOOKING_NATURE } from './shared/model/booking-nature.enum';
+import { PARKING } from './shared/model/parking.enum';
+import { BookingFilterComponent } from './booking-management/booking-filter/booking-filter.component';
+import { BookingListComponent } from './booking-management/booking-list/booking-list.component';
 describe('AppComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -51,15 +57,15 @@ describe('AppComponent', () => {
         AppComponent,
         AuthComponent, UserFilterComponent, UserHeaderComponent, UserListComponent,
         DashboardComponent, NotificationComponent,
-        UserManagementComponent,
+        UserManagementComponent, BookingHeaderComponent, BookingFilterComponent, BookingListComponent,
         EnumValPipe, HeaderComponent,
         NotFoundComponent, RegisterComponent, ResetComponent, VerifyComponent,
         BookingComponent,
         BookingDetailComponent,
         SpinnerComponent
       ],
-      imports: [CustomFormsModule, RouterTestingModule,
-        FormsModule,
+      imports: [CustomFormsModule, RouterTestingModule, Md2Module.forRoot(),
+      MaterialModule, FormsModule,
         HttpModule
       ],  providers: [Title, SpinnerService, UserService, {provide: APP_BASE_HREF, useValue : '/' }, {
           provide: AuthHttp,

@@ -63,7 +63,7 @@ import { Md2Module }  from 'md2';
     UserHeaderComponent,
     UserDetailComponent,
   ], exports: [EnumValPipe],
-   entryComponents: [UserDetailComponent, BookingDetailComponent],
+   entryComponents: [UserDetailComponent],
   imports: [CustomFormsModule, routing,
     BrowserModule, RouterModule,
     FormsModule,

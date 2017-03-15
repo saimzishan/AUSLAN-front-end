@@ -30,7 +30,7 @@ export class BookingService extends ApiService {
     */
     createBooking(booking: Booking): Observable<Object> {
 
-        let headers = new Headers({/* 'Content-Type': 'application/json',*/ 'Accept': 'application/json' });
+        let headers = new Headers({'Accept': 'application/json' });
         let options = new RequestOptions({ headers: headers });
         let obj = { 'booking': booking };
 
@@ -44,7 +44,7 @@ export class BookingService extends ApiService {
     */
     updateBooking(booking: Booking): Observable<Object> {
 
-        let headers = new Headers({/* 'Content-Type': 'application/json',*/ 'Accept': 'application/json' });
+        let headers = new Headers({'Accept': 'application/json' });
         let options = new RequestOptions({ headers: headers });
         let obj = { 'booking': booking };
         return this.http.patch(GLOBAL.BOOKING_API + '/' + booking.id, JSON.stringify(obj), options)
@@ -56,7 +56,7 @@ export class BookingService extends ApiService {
       The Api should be able to fetch all the bookings.
     */
     fetchBookings(): Observable<Object> {
-        let headers = new Headers({/* 'Content-Type': 'application/json',*/ 'Accept': 'application/json' });
+        let headers = new Headers({'Accept': 'application/json' });
         let options = new RequestOptions({ headers: headers });
         return this.http.get(GLOBAL.BOOKING_API, options)
             .map(this.extractData)
@@ -68,7 +68,7 @@ export class BookingService extends ApiService {
       The Api should be get booking by its ID (The Id should be email)
     */
     getBooking(id: number): Observable<Object> {
-        let headers = new Headers({/* 'Content-Type': 'application/json',*/ 'Accept': 'application/json' });
+        let headers = new Headers({'Accept': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
         return this.http
@@ -83,7 +83,7 @@ export class BookingService extends ApiService {
       The Api should be get booking by its ID (The Id should be email)
     */
     deleteBooking(id: number): Observable<Object> {
-        let headers = new Headers({/* 'Content-Type': 'application/json',*/ 'Accept': 'application/json' });
+        let headers = new Headers({'Accept': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
         return this.http

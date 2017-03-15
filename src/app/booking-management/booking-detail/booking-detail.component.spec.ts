@@ -9,9 +9,7 @@ import { BOOKING_NATURE } from '../../shared/model/booking-nature.enum';
 import { PARKING } from '../../shared/model/parking.enum';
 import { EnumValPipe } from '../../shared/pipe/enum-val.pipe';
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
-
 import { MaterialModule } from '@angular/material';
-
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import {DummyComponent, MockBookingService} from '../../shared/test/Mock';
 import { RouterTestingModule } from '@angular/router/testing';

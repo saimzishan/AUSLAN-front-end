@@ -22,11 +22,27 @@ export class BookingDetailComponent implements AfterViewChecked {
     currentUserIsContact: boolean;
     prefInterpreter: boolean;
 
-    constructor(public spinnerService: SpinnerService) {
+    constructor(public bookingService: BookingService, public spinnerService: SpinnerService) {
     }
 
     ngAfterViewChecked() {
       $(document).foundation();
     }
+    /*
+      Calling this method will create a new booking
+    */
+    public onCreateBooking() {
+      this.spinnerService.requestInProcess(true);
+
+      this.bookingService.createBooking(this.bookingModel)
+              .subscribe((res: any) => {
+                  if (res.data.id && 0 < res.data.id) {
+                  }
+              },
+               (err) => {
+                 this.spinnerService.requestInProcess(false);
+                 console.log(err);
+               });
+      }
 
 }

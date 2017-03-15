@@ -18,8 +18,7 @@ export class Booking {
     public attachment: any;
     public raw_venue_address: string;
     public raw_booking_address: string;
+    fromJSON(data: any){
 
-    constructor(values: Object = {}) {
-      Object.assign(this, values);
     }
 }

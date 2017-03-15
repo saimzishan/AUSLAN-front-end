@@ -35,12 +35,8 @@ let mock_response: Object[] = [
 
 let mock_db: User[] = [
     new User({
-        id: 2, email: 'admin1@aus.au', name: 'Joe Doe 2',
-        password: 'secure_password', role: ROLE.Accountant
-    }),
-    new User({
-        id: 1, email: 'admin1@aus.au', name: 'Joe Doe 1',
-        password: 'secure_password', role: ROLE.Interpreter
+        id: 2, email: 'admin1@aus.au', first_name: 'Joe', last_name: 'Joe',
+        mobile: 'xxxx xxx xxx', verified: false, disabled: false
     })
 ];
 
@@ -59,9 +55,9 @@ describe('UserService', () => {
         });
 
         userProvider = Pact.mockService({
-            consumer: 'User-Specs',
-            provider: 'User-Api',
-            port: GLOBAL.MOCK_SERVER_PORT,
+          consumer: 'User-Specs',
+          provider: 'User-Api',
+            port: GLOBAL.MOCK_USER_SERVER_PORT,
             done: done
         });
 
@@ -129,7 +125,7 @@ describe('UserService', () => {
                 .uponReceiving('a request for singe users')
                 .withRequest({
                     method: 'GET',
-                    path: '/api/v1/users/1',
+                    path: '/api/v1/users/2',
                     headers: {
                         'Accept': 'application/json'
                     }
@@ -140,7 +136,7 @@ describe('UserService', () => {
                 }, Pact.Match.somethingLike(mock_response[0]));
 
             userProvider.run(done, function(runComplete) {
-                service.getUser(1)
+                service.getUser(2)
                     .subscribe((res: any) => {
                         let data = res.data;
                         let u = new User(data);
@@ -217,7 +213,7 @@ describe('UserService', () => {
             userProvider
                 .given('user exists in database')
                 .uponReceiving('a request to delete a user')
-                .withRequest('DELETE', '/api/v1/users/1' , {
+                .withRequest('DELETE', '/api/v1/users/2' , {
                     'Accept': 'application/json'
                 })
                 .willRespondWith(204, {
@@ -225,7 +221,7 @@ describe('UserService', () => {
                 });
 
             userProvider.run(done, function(runComplete) {
-                service.deleteUser(1)
+                service.deleteUser(2)
                     .subscribe((res: any) => {
                         expect(res.status).toEqual(204);
                         done();
@@ -241,7 +237,7 @@ describe('UserService', () => {
             userProvider
                 .given('user exists in database')
                 .uponReceiving('a request to resendVerificationCode a user')
-                .withRequest('GET', '/api/v1/users/1/resend_verification_code', {
+                .withRequest('GET', '/api/v1/users/2/resend_verification_code', {
                     'Accept': 'application/json'/*,
                     'Authorization': Pact.Match.somethingLike('Bearer eyJ0eXAiOi' +
                         'JKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjV9.jxJ' +
@@ -252,7 +248,7 @@ describe('UserService', () => {
                 });
 
             userProvider.run(done, function(runComplete) {
-                service.resendVerificationCode(1)
+                service.resendVerificationCode(2)
                     .subscribe((res: any) => {
                         expect(res.status).toEqual(200);
                         done();
@@ -320,7 +316,7 @@ describe('UserService', () => {
             userProvider
                 .given('user exists in database')
                 .uponReceiving('a request to verify a user')
-                .withRequest('POST', '/api/v1/users/1/confirm_verification_code', {
+                .withRequest('POST', '/api/v1/users/2/confirm_verification_code', {
                     'Accept': 'application/json'/*,
                     'Authorization': Pact.Match.somethingLike('Bearer eyJ0eXAiOi' +
                         'JKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjV9.jxJ' +
@@ -331,7 +327,7 @@ describe('UserService', () => {
                 });
 
             userProvider.run(done, function(runComplete) {
-                service.verifyUser(1, '12345')
+                service.verifyUser(2, '12345')
                     .subscribe((res: any) => {
                         expect(res.status).toEqual(200);
                         done();

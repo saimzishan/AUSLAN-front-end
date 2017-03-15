@@ -4,14 +4,16 @@ import { Http, RequestOptions } from '@angular/http';
 import {User} from './model/user.entity';
 
 export class GLOBAL {
-    public static MOCK_SERVER_PORT = 1234;
+  public static MOCK_BOOKING_SERVER_PORT = 1233;
+  public static MOCK_USER_SERVER_PORT = 1234;
     public static LOG_LEVEL = 'INFO';
-    public static API_ENDPOINT = (environment.production) ? 'https://auslan.herokuapp.com/api/v1' :
-        `http://localhost:${GLOBAL.MOCK_SERVER_PORT}/api/v1`;
-    public static USER_API = GLOBAL.API_ENDPOINT + '/users';
-    public static USER_API_DEPRECIATED = 'http://localhost:8080/api/v1/users/';
+    public static USER_API_ENDPOINT = (environment.production) ? 'https://auslan.herokuapp.com/api/v1'
+    : `http://localhost:${GLOBAL.MOCK_USER_SERVER_PORT}/api/v1`;
+    public static BOOKING_API_ENDPOINT = (environment.production) ? 'https://auslan.herokuapp.com/api/v1'
+    : `http://localhost:${GLOBAL.MOCK_BOOKING_SERVER_PORT}/api/v1`;
+    public static USER_API = GLOBAL.USER_API_ENDPOINT + '/users';
 
-    public static BOOKING_API = GLOBAL.API_ENDPOINT + '/bookings';
+    public static BOOKING_API = GLOBAL.BOOKING_API_ENDPOINT + '/bookings';
     public static TITLE = 'Auslan Booking System';
     public static VERSION = ' => 0.1.9'; // This should be broken into MAJOR and MINOR version?
     public static currentUser: User;

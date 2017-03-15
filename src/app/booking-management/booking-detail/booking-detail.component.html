@@ -31,8 +31,8 @@
 					<p>What kind of interperter(s) do you need? Select multiple if relevant</p>
 					<section id="interpreters-kind">
 						<md-checkbox [checked]="true" >AUSLAN</md-checkbox>
-						<md-checkbox type="checkbox" >DEAF INTERPRETER</md-checkbox>
-						<md-checkbox type="checkbox" >DEAF BLIND</md-checkbox>
+						<md-checkbox>DEAF INTERPRETER</md-checkbox>
+						<md-checkbox>DEAF BLIND</md-checkbox>
 					</section>
 				</div>
 
@@ -247,7 +247,7 @@
 						</div>
 					</div>
 				</div>
-
+				<div [hidden]='true'>
 				<div class="separator"></div>
 
 				<h2>Job Documents</h2>
@@ -286,9 +286,9 @@
 						</button>
 					</section>
 				</div>
-
+			</div>
 				<div class="actions">
-					<button>SUBMIT</button>
+					<button (click)="onCreateBooking();">SUBMIT</button>
 				</div>
 			</form>
 		</main>

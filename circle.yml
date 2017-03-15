@@ -5,12 +5,14 @@ machine:
 test:
   pre:
     - rm -rf tmp
-    - bundle exec pact-mock-service restart -p 1234 -l tmp/pact.log --pact-dir tmp/pacts
+    - bundle exec pact-mock-service restart -p 1233 -l tmp/pact-booking.log --pact-dir tmp/pacts
+    - bundle exec pact-mock-service restart -p 1234 -l tmp/pact-user.log --pact-dir tmp/pacts
     - npm install codeclimate-test-reporter -g
   override:
     - npm run lint
     - ng test --code-coverage --watch=false --singleRun=true
   post:
+    - bundle exec pact-mock-service stop -p 1233
     - bundle exec pact-mock-service stop -p 1234
     - mkdir $CIRCLE_ARTIFACTS/coverage
     - mkdir $CIRCLE_ARTIFACTS/pacts

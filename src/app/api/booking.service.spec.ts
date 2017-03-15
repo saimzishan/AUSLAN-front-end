@@ -21,19 +21,7 @@ let Pact = require('pact-consumer-js-dsl');
 
 let mock_response: Object[] = [
     new Object({
-        id: 2, email: 'admin1@aus.au', first_name: 'Joe', last_name: 'Joe',
-        mobile: 'xxxx xxx xxx', verified: false, disabled: false
-    })
-];
-
-let mock_db: Booking[] = [
-    new Booking({
-        id: 2, email: 'admin1@aus.au', name: 'Joe Doe 2',
-        password: 'secure_password', role: ROLE.Accountant
-    }),
-    new Booking({
-        id: 1, email: 'admin1@aus.au', name: 'Joe Doe 1',
-        password: 'secure_password', role: ROLE.Interpreter
+        id: 2
     })
 ];
 
@@ -41,6 +29,11 @@ let mock_db: Booking[] = [
 describe('BookingService', () => {
     let bookingProvider;
     let val = '';
+    let mock_booking = new Booking();
+    mock_booking.id = '2';
+    mock_booking.raw_venue_address = 'venue_address';
+
+    let mock_db: Booking[] = [mock_booking];
     beforeEach((done) => {
         TestBed.configureTestingModule({
             providers: [BookingService, {
@@ -54,10 +47,9 @@ describe('BookingService', () => {
         bookingProvider = Pact.mockService({
             consumer: 'Booking-Specs',
             provider: 'Booking-Api',
-            port: GLOBAL.MOCK_SERVER_PORT,
+            port: GLOBAL.MOCK_BOOKING_SERVER_PORT,
             done: done
         });
-
         done();
     });
 
@@ -133,7 +125,8 @@ describe('BookingService', () => {
                 service.getBooking(1)
                     .subscribe((res: any) => {
                         let data = res.data;
-                        let u = new Booking(data);
+                        let u = new Booking();
+                        u.fromJSON(data);
                         expect(u).toEqual(jasmine.any(Booking));
                         done();
                     }, err => done.fail(err), () => {
@@ -186,7 +179,7 @@ describe('BookingService', () => {
 
             bookingProvider.run(done, function(runComplete) {
                 let u: Booking = mock_db[0];
-                u.first_name = 'updated';
+                u.raw_venue_address = 'updated';
 
                 let status_code = service.updateBooking(u)
                     .subscribe((res: any) => {
