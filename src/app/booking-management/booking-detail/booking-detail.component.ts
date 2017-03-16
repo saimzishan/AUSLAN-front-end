@@ -6,6 +6,7 @@ import { PARKING } from '../../shared/model/parking.enum';
 import {SpinnerService} from '../../spinner/spinner.service';
 import { EnumValPipe } from '../../shared/pipe/enum-val.pipe';
 import {BOOKING_STATUS} from '../../shared/model/booking-status.enum';
+import { GLOBAL } from '../../shared/global';
 
 declare var $: JQueryStatic;
 
@@ -13,14 +14,15 @@ declare var $: JQueryStatic;
   selector: 'app-booking-detail',
   templateUrl: './booking-detail.component.html',
   styleUrls: ['./booking-detail.component.css']
+
 })
 
 export class BookingDetailComponent implements AfterViewChecked {
 
     bookingModel: Booking = new Booking();
-    appointment_types: BOOKING_NATURE;
-    parking_types: PARKING;
-    currentUserIsContact: boolean;
+    appointment_types = BOOKING_NATURE;
+    parking_types = PARKING;
+    currentUserIsContact = 'true';
     prefInterpreter: boolean;
 
     constructor(public bookingService: BookingService, public spinnerService: SpinnerService) {
@@ -28,7 +30,15 @@ export class BookingDetailComponent implements AfterViewChecked {
 
     ngAfterViewChecked() {
       $(document).foundation();
+      this.onSelectionChange();
     }
+
+    public onSelectionChange() {
+      this.bookingModel.contact.name = this.currentUserIsContact === 'true' ? GLOBAL.currentUser.first_name : '';
+      this.bookingModel.contact.email = this.currentUserIsContact === 'true' ? GLOBAL.currentUser.email : '';
+      this.bookingModel.contact.mobile_number = this.currentUserIsContact === 'true' ? GLOBAL.currentUser.mobile : '';
+      this.bookingModel.contact.phone_number = this.currentUserIsContact === 'true' ? GLOBAL.currentUser.mobile : '';
+}
     /*
       Calling this method will create a new booking
     */

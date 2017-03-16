@@ -200,7 +200,7 @@ describe('BookingService', () => {
                 .uponReceiving('a request to update a booking, containing booking object')
                 .withRequest('PATCH', '/api/v1/bookings/2', {
                     'Accept': 'application/json'
-                }, { 'booking': Pact.Match.somethingLike(mock_db[0].toJSON()) }
+                }, { 'booking': mock_db[0].toJSON() }
                 )
                 .willRespondWith(200, {
                     'Content-Type': 'application/json; charset=utf-8'

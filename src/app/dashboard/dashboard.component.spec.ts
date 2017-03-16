@@ -26,8 +26,8 @@ import { VerifyComponent } from '../verify/verify.component';
 import {authService} from '../shared/global';
 import {  HttpModule, Http, RequestOptions } from '@angular/http';
 import { NotificationComponent } from '../notification/notification.component';
-import { BookingComponent } from '../booking/booking.component';
-import { BookingDetailComponent } from '../booking/booking-detail/booking-detail.component';
+import { BookingComponent } from '../booking-management/booking.component';
+import { BookingDetailComponent } from '../booking-management/booking-detail/booking-detail.component';
 import { SpinnerComponent } from '../spinner/spinner.component';
 import { UserFilterComponent } from '../user-management/user-filter/user-filter.component';
 import { UserHeaderComponent } from '../user-management/user-header/user-header.component';
@@ -35,6 +35,7 @@ import { UserListComponent } from '../user-management/user-list/user-list.compon
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import {MockUserService} from '../shared/test/Mock';
 import { RouterTestingModule } from '@angular/router/testing';
+import {UserNameService} from '../shared/user-name.service';
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
@@ -44,7 +45,7 @@ describe('DashboardComponent', () => {
     TestBed.configureTestingModule({
       declarations: [DashboardComponent, UserFilterComponent, UserHeaderComponent, UserListComponent ],
       imports: [FormsModule, RouterTestingModule, CustomFormsModule],
-      providers: [{ provide: UserService, useClass: MockUserService}, { provide: AuthHttp, useClass: MockBackend} ]
+      providers: [UserNameService, { provide: UserService, useClass: MockUserService}, { provide: AuthHttp, useClass: MockBackend} ]
     })
     .compileComponents();
   }));
