@@ -32,7 +32,7 @@ export class BookingService extends ApiService {
 
         let headers = new Headers({'Accept': 'application/json' });
         let options = new RequestOptions({ headers: headers });
-        let obj = { 'booking': booking };
+        let obj = { 'booking': booking.toJSON() };
 
         return this.http.post(GLOBAL.BOOKING_API + '/' , JSON.stringify(obj), options)
             .map(this.extractData)
@@ -46,7 +46,7 @@ export class BookingService extends ApiService {
 
         let headers = new Headers({'Accept': 'application/json' });
         let options = new RequestOptions({ headers: headers });
-        let obj = { 'booking': booking };
+        let obj = { 'booking': booking.toJSON() };
         return this.http.patch(GLOBAL.BOOKING_API + '/' + booking.id, JSON.stringify(obj), options)
             .catch((err) => { return this.handleError(err); });
 

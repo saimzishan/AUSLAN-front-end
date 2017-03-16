@@ -21,7 +21,8 @@ let Pact = require('pact-consumer-js-dsl');
 
 let mock_response: Object[] = [
     new Object({
-        id: 2
+        id: 2,
+        state: 'requested'
     })
 ];
 
@@ -69,6 +70,34 @@ describe('BookingService', () => {
             done();
         })();
     });
+
+    it('should create a Booking', function(done) {
+        inject([BookingService], (service: BookingService) => {
+
+                    bookingProvider
+                        .given('booking does not exists in database')
+                        .uponReceiving('a request to create Booking')
+                        .withRequest('POST', '/api/v1/bookings', {
+                            'Accept': 'application/json'
+                        })
+                        .willRespondWith(201, {
+                            'Content-Type': 'application/json; charset=utf-8'
+                        }, Pact.Match.somethingLike(mock_response));
+
+                    bookingProvider.run(done, function(runComplete) {
+
+                        service.createBooking(mock_booking)
+                            .subscribe((res: any) => {
+                                service.bookings.push(res.data);
+                                expect(res.status).toEqual(201);
+                                done();
+                            }, err => done.fail(err), () => {
+                                runComplete();
+                            });
+                    });
+        })();
+    });
+
     describe('Fetach All booking Api', () => {
 
         it('should return a collection of bookings for fetch all bookings', function(done) {
@@ -171,7 +200,7 @@ describe('BookingService', () => {
                 .uponReceiving('a request to update a booking, containing booking object')
                 .withRequest('PATCH', '/api/v1/bookings/2', {
                     'Accept': 'application/json'
-                }, { 'booking': Pact.Match.somethingLike(mock_db[0]) }
+                }, { 'booking': Pact.Match.somethingLike(mock_db[0].toJSON()) }
                 )
                 .willRespondWith(200, {
                     'Content-Type': 'application/json; charset=utf-8'

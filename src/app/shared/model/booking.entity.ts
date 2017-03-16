@@ -2,10 +2,10 @@ import {Venue} from './venue.entity';
 import {Contact, DEAFContact} from './contact.entity';
 import {BOOKING_NATURE} from './booking-nature.enum';
 import {BOOKING_STATUS} from './booking-status.enum';
-
+import {PARKING} from './parking.enum';
 export class Booking {
+
     public id: string;
-    public number_of_people_attending: number;
     public venue: Venue = new Venue();
     public requested_by: Contact = new Contact();
     public last_updated: Date;
@@ -19,19 +19,55 @@ export class Booking {
     public attachment: any;
     public raw_venue_address: string;
     public raw_booking_address: string;
+
+    constructor() {
+      this.id = '-1';
+      this.venue.expected_attendance = -1;
+      this.venue.addressline_1 = '';
+      this.venue.start_time = new Date();
+      this.venue.end_time = new Date();
+      this.requested_by.name = '';
+      this.contact.name = '';
+      this.contact.phone_number = '';
+      this.contact.mobile_number = '';
+      this.deaf_person.name = '';
+      this.deaf_person.email = '';
+      this.deaf_person.mobile_number = '';
+      this.deaf_person.eaf = -1;
+      this.nature_of_appointment = BOOKING_NATURE.None;
+      this.specific_nature_of_appointment = BOOKING_NATURE.None;
+      this.status = BOOKING_STATUS.None;
+    }
+
     fromJSON(data: any) {
 
+      this.id = data.id;
+      this.venue.expected_attendance = data.number_of_people_attending;
+      this.venue.addressline_1 = data.venue;
+      this.venue.start_time = data.start_time;
+      this.venue.end_time = data.end_time;
+      this.requested_by.name = data.requested_by;
+      this.contact.name = data.contact_name;
+      this.contact.phone_number = data.contact_phone_number;
+      this.contact.mobile_number = data.contact_mobile_number;
+      this.deaf_person.name = data.deaf_persons_name;
+      this.deaf_person.email = data.deaf_persons_email;
+      this.deaf_person.mobile_number = data.deaf_persons_mobile;
+      this.deaf_person.eaf = data.deaf_persons_eaf_no;
+      this.nature_of_appointment = data.nature_of_appointment;
+      this.specific_nature_of_appointment = data.specific_nature_of_appointment;
+      this.status = BOOKING_STATUS.Ready_to_process;
     }
 
     toJSON() {
       return `{"venue":${this.venue.addressline_1},"requested_by":${this.requested_by.name},
-      "nature_of_appointment":${this.nature_of_appointment},
-      "specific_nature_of_appointment":${this.specific_nature_of_appointment},"contact_name":${this.contact.name},
+      "nature_of_appointment":${BOOKING_NATURE[this.nature_of_appointment]},
+      "specific_nature_of_appointment":${BOOKING_NATURE[this.specific_nature_of_appointment]},"contact_name":${this.contact.name},
       "contact_phone_number":${this.contact.phone_number},"contact_mobile_number":${this.contact.mobile_number},
-      "deaf_persons_name":${this.deaf_person.name},"deaf_persons_mobile":${this.deaf_person.name},
+      "deaf_persons_name":${this.deaf_person.name},"deaf_persons_mobile":${this.deaf_person.mobile_number},
       "deaf_persons_email":${this.deaf_person.email},"deaf_persons_eaf_no":${this.deaf_person.eaf},
-      "number_of_people_attending":${this.number_of_people_attending},
+      "number_of_people_attending":${this.venue.expected_attendance},
       "start_time":${this.venue.start_time},"end_time":${this.venue.end_time},
-      "parking_availability":${this.venue.parking_type}}`;
+      "parking_availability":${PARKING[this.venue.parking_type]}}`;
     }
 }

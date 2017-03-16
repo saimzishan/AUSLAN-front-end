@@ -1,4 +1,4 @@
 
 export enum BOOKING_STATUS {
-  Ready_to_process = 0, Invited, Allocated
+  None= 0, Ready_to_process, Invited, Allocated, Requested
 }
