@@ -5,6 +5,7 @@ import { BOOKING_NATURE } from '../../shared/model/booking-nature.enum';
 import { PARKING } from '../../shared/model/parking.enum';
 import {SpinnerService} from '../../spinner/spinner.service';
 import { EnumValPipe } from '../../shared/pipe/enum-val.pipe';
+import {BOOKING_STATUS} from '../../shared/model/booking-status.enum';
 
 declare var $: JQueryStatic;
 
@@ -37,6 +38,8 @@ export class BookingDetailComponent implements AfterViewChecked {
       this.bookingService.createBooking(this.bookingModel)
               .subscribe((res: any) => {
                   if (res.data.id && 0 < res.data.id) {
+                    this.bookingModel.id = res.data.id;
+                    this.bookingModel.status = BOOKING_STATUS.Ready_to_process; // res.data.status;
                   }
               },
                (err) => {
