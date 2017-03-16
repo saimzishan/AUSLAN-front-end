@@ -5,20 +5,20 @@ import {BOOKING_STATUS} from './booking-status.enum';
 import {PARKING} from './parking.enum';
 export class Booking {
 
-    public id: string;
-    public venue: Venue = new Venue();
-    public requested_by: Contact = new Contact();
-    public last_updated: Date;
-    public update_by: string;
-    public contact: Contact = new Contact();
-    public interpreters: Contact [];
-    public deaf_person: DEAFContact = new DEAFContact();
-    public nature_of_appointment: BOOKING_NATURE;
-    public specific_nature_of_appointment: BOOKING_NATURE;
-    public status: BOOKING_STATUS;
-    public attachment: any;
-    public raw_venue_address: string;
-    public raw_booking_address: string;
+    public id:  string;
+    public venue:  Venue = new Venue();
+    public requested_by:  Contact = new Contact();
+    public last_updated:  Date;
+    public update_by:  string;
+    public contact:  Contact = new Contact();
+    public interpreters:  Contact [];
+    public deaf_person:  DEAFContact = new DEAFContact();
+    public nature_of_appointment:  BOOKING_NATURE;
+    public specific_nature_of_appointment:  BOOKING_NATURE;
+    public status:  BOOKING_STATUS;
+    public attachment:  any;
+    public raw_venue_address:  string;
+    public raw_booking_address:  string;
 
     constructor() {
       this.id = '-1';
@@ -39,7 +39,7 @@ export class Booking {
       this.status = BOOKING_STATUS.None;
     }
 
-    fromJSON(data: any) {
+    fromJSON(data:  any) {
 
       this.id = data.id;
       this.venue.expected_attendance = data.number_of_people_attending;
@@ -60,14 +60,14 @@ export class Booking {
     }
 
     toJSON() {
-      return `{"venue":${this.venue.addressline_1},"requested_by":${this.requested_by.name},
-      "nature_of_appointment":${BOOKING_NATURE[this.nature_of_appointment]},
-      "specific_nature_of_appointment":${BOOKING_NATURE[this.specific_nature_of_appointment]},"contact_name":${this.contact.name},
-      "contact_phone_number":${this.contact.phone_number},"contact_mobile_number":${this.contact.mobile_number},
-      "deaf_persons_name":${this.deaf_person.name},"deaf_persons_mobile":${this.deaf_person.mobile_number},
-      "deaf_persons_email":${this.deaf_person.email},"deaf_persons_eaf_no":${this.deaf_person.eaf},
-      "number_of_people_attending":${this.venue.expected_attendance},
-      "start_time":${this.venue.start_time},"end_time":${this.venue.end_time},
-      "parking_availability":${PARKING[this.venue.parking_type]}}`;
+      return new Object({venue: this.venue.addressline_1, requested_by: this.requested_by.name ,
+      nature_of_appointment: BOOKING_NATURE[this.nature_of_appointment] ,
+      specific_nature_of_appointment: BOOKING_NATURE[this.specific_nature_of_appointment] , contact_name: this.contact.name ,
+      contact_phone_number: this.contact.phone_number , contact_mobile_number: this.contact.mobile_number ,
+      deaf_persons_name: this.deaf_person.name , deaf_persons_mobile: this.deaf_person.mobile_number,
+      deaf_persons_email: this.deaf_person.email , deaf_persons_eaf_no: this.deaf_person.eaf ,
+      number_of_people_attending: this.venue.expected_attendance ,
+      start_time: this.venue.start_time , end_time: this.venue.end_time ,
+      parking_availability: PARKING[this.venue.parking_type]});
     }
 }
