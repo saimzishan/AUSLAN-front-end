@@ -56,7 +56,7 @@ export class Booking {
       this.deaf_person.eaf = data.deaf_persons_eaf_no;
       this.nature_of_appointment = data.nature_of_appointment;
       this.specific_nature_of_appointment = data.specific_nature_of_appointment;
-      this.status = BOOKING_STATUS.Ready_to_process;
+      this.status = data.status;
     }
 
     toJSON() {
