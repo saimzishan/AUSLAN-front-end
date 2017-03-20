@@ -38,9 +38,16 @@ export class BookingComponent implements AfterViewChecked {
       this.bookingDataService.fetchBookings()
       .subscribe((res: any) => {
         if ( res.status === 200 ) {
-        this.bookings = res.data.bookings;
+        // this.bookings = res.data.bookings;
+        for (let o in res.data.bookings) {
+          let b = new Booking();
+          b.fromJSON(res.data.bookings[o]);
+          this.bookings.push(b);
+        }
       }
+      $(document).foundation();
       this.spinnerService.requestInProcess(false);
+
       },
        err => {
          this.spinnerService.requestInProcess(false);

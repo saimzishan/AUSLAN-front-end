@@ -45,6 +45,7 @@ import { UserHeaderComponent } from './user-management/user-header/user-header.c
 import { UserListComponent } from './user-management/user-list/user-list.component';
 import { MaterialModule } from '@angular/material';
 import { Md2Module }  from 'md2';
+import {UserNameService} from './shared/user-name.service';
 
 import { BOOKING_NATURE } from './shared/model/booking-nature.enum';
 import { PARKING } from './shared/model/parking.enum';
@@ -67,7 +68,7 @@ describe('AppComponent', () => {
       imports: [CustomFormsModule, RouterTestingModule, Md2Module.forRoot(),
       MaterialModule, FormsModule,
         HttpModule
-      ],  providers: [Title, SpinnerService, UserService, {provide: APP_BASE_HREF, useValue : '/' }, {
+      ],  providers: [UserNameService, Title, SpinnerService, UserService, {provide: APP_BASE_HREF, useValue : '/' }, {
           provide: AuthHttp,
           useFactory: authService,
           deps: [Http, RequestOptions]

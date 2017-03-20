@@ -11,7 +11,6 @@ export class Booking {
     public last_updated:  Date;
     public update_by:  string;
     public contact:  Contact = new Contact();
-    public interpreters:  Contact [];
     public deaf_person:  DEAFContact = new DEAFContact();
     public nature_of_appointment:  BOOKING_NATURE;
     public specific_nature_of_appointment:  BOOKING_NATURE;
@@ -19,6 +18,7 @@ export class Booking {
     public attachment:  any;
     public raw_venue_address:  string;
     public raw_booking_address:  string;
+    public interpreters: Array<Contact> = [];
 
     constructor() {
       this.id = '-1';

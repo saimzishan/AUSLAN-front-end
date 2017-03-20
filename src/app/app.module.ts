@@ -35,6 +35,7 @@ import { UserHeaderComponent } from './user-management/user-header/user-header.c
 import { UserDetailComponent } from './user-management/user-detail/user-detail.component';
 import { BookingHeaderComponent } from './booking-management/booking-header/booking-header.component';
 import { MaterialModule } from '@angular/material';
+import {UserNameService} from './shared/user-name.service';
 import {} from 'foundation-sites';
 import { Md2Module }  from 'md2';
 
@@ -70,7 +71,7 @@ import { Md2Module }  from 'md2';
     HttpModule,
     ReactiveFormsModule, Md2Module.forRoot(),
     MaterialModule
-  ],  providers: [AuthGuard, Title, SpinnerService, BookingService, UserService, {provide: APP_BASE_HREF, useValue : '/' }, {
+  ],  providers: [UserNameService, AuthGuard, Title, SpinnerService, BookingService, UserService, {provide: APP_BASE_HREF, useValue : '/' }, {
       provide: AuthHttp,
       useFactory: authService,
       deps: [Http, RequestOptions]

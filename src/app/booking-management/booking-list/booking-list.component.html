@@ -14,7 +14,7 @@
 								<span class="order asc">Job</span>
 								<input type="text" name="job">
 							</th>
-							<th width="8%">
+							<!-- th width="8%">
 								<span class="order asc">Status</span>
 								<ul class="dropdown menu custom" data-dropdown-menu>
 									<li>
@@ -26,9 +26,9 @@
 										</ul>
 									</li>
 								</ul>
-							</th>
+							</th -->
 							<th width="8%">
-								<span class="order asc">Phase</span>
+								<span class="order asc">Status</span>
 								<ul class="dropdown menu custom" data-dropdown-menu>
 									<li>
 										<a href="#">All</a>
@@ -60,7 +60,7 @@
 								<input type="text" name="interpreter">
 							</th>
 							<th width="11%">
-								<span class="order asc">Boking type</span>
+								<span class="order asc">Booking type</span>
 								<ul class="dropdown menu custom" data-dropdown-menu>
 									<li>
 										<a href="#">All</a>
@@ -72,12 +72,12 @@
 									</li>
 								</ul>
 							</th>
-							<th width="8%">
+							<!-- th width="8%">
 								<span class="order asc">Updated</span>
 							</th>
 							<th width="7%">
 								<span>Actions</span>
-							</th>
+							</th -->
 						</tr>
 					</thead>
       <tbody>
@@ -89,15 +89,18 @@
 								</div>
 							</td>
 							<td>{{booking.id}}</td>
-							<td align="center"><i class="status status-ready-to-process"></i></td>
+							<!-- td align="center"><i class="status status-ready-to-process"></i></td -->
 							<td>{{booking.status}}</td>
 							<td>{{booking.venue.start_time}}-{{booking.venue.end_time}}<br>{{booking.venue.date}}</td>
 							<td>{{booking.venue.city}}</td>
+							<td>{{booking.contact.name}}</td>
+							<td>{{booking.venue.addressline_1}}</td>
 							<td>{{booking.deaf_person.name}}</td>
-							<td>{{booking.venue.suburb}}</td>
-							<td class="truncated"> <span *ngFor="let user of booking.interpreters" > {{user.name}} </span> </td>
+							<!-- td class="truncated">
+								<span *ngFor="let user of booking.interpreters" > {{user?.name}}
+								</span> </td -->
               <td>{{booking.nature_of_appointment}}</td>
-							<td><span class="underline">{{booking.last_updated}} {{booking.update_by}}<br>{{booking.last_updated}}</span></td>
+							<!-- td><span class="underline">{{booking.last_updated}} {{booking.update_by}}<br>{{booking.last_updated}}</span></td>
 							<td>
 								<ul class="dropdown menu custom actions" data-dropdown-menu>
 									<li>
@@ -108,11 +111,11 @@
 										</ul>
 									</li>
 								</ul>
-							</td>
+							</td -->
 						</tr>
 
 
-        
+
       </tbody>
     </table>
   </section>

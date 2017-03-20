@@ -49,15 +49,16 @@ export class BookingDetailComponent implements AfterViewChecked {
 
       this.bookingService.createBooking(this.bookingModel)
               .subscribe((res: any) => {
-                  if (res.data.id && 0 < res.data.id) {
+                  if (res.status === 201 && res.data.id && 0 < res.data.id) {
                     this.bookingModel.id = res.data.id;
                     this.bookingModel.status = BOOKING_STATUS.Ready_to_process; // res.data.status;
                   }
+                  this.spinnerService.requestInProcess(false);
+
               },
                (err) => {
                  this.spinnerService.requestInProcess(false);
                  console.log(err);
                });
       }
-
 }
