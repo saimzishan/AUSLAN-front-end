@@ -30,7 +30,9 @@ export class BookingDetailComponent implements AfterViewChecked {
 
     ngAfterViewChecked() {
       $(document).foundation();
-      this.onSelectionChange();
+      if (GLOBAL.currentUser !== undefined) {
+        this.onSelectionChange();
+        }
     }
 
     public onSelectionChange() {
