@@ -39,9 +39,9 @@ export class BookingComponent implements AfterViewChecked {
       .subscribe((res: any) => {
         if ( res.status === 200 ) {
         // this.bookings = res.data.bookings;
-        for (let o in res.data.bookings) {
+        for (let o of res.data.bookings) {
           let b = new Booking();
-          b.fromJSON(res.data.bookings[o]);
+          b.fromJSON(o);
           this.bookings.push(b);
         }
       }

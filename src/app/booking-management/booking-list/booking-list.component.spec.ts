@@ -10,7 +10,7 @@ describe('BookingListComponent' ,  () => {
   let component:  BookingListComponent;
   let fixture:  ComponentFixture<BookingListComponent>;
 
-  let data = new Object({'id' : 5 , 'venue' : 'Location B' ,
+  let data = new Object({'id' : '5' , 'venue' : 'Location B' ,
   'requested_by' : 'Person A' , 'nature_of_appointment' : 'Engagement' ,
   'specific_nature_of_appointment' : 'Court' , 'contact_name' : 'Booking' ,
   'contact_phone_number' : 'xxxx xxx xxx' ,
@@ -46,8 +46,8 @@ describe('BookingListComponent' ,  () => {
   });
   it('should ui to be filled with data' ,  () => {
     expect(component).toBeTruthy();
-    let bID = fixture.debugElement.query(By.css('input[name=email]')).nativeElement.value;
-    expect(bID).toEqual(5);
+    let bID = fixture.debugElement.query(By.css('.bookingID'))[0];
+    expect(bID.nativeElement.value).toEqual(5);
 
   });
 });

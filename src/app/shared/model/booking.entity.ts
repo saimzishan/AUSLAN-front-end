@@ -40,8 +40,8 @@ export class Booking {
     }
 
     fromJSON(data:  any) {
-
-      this.id = data.id;
+      let ped = '';
+      this.id =  ped + data.id;
       this.venue.expected_attendance = data.number_of_people_attending;
       this.venue.addressline_1 = data.venue;
       this.venue.start_time = data.start_time;
