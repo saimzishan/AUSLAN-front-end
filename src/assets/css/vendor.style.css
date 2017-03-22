@@ -71,72 +71,96 @@
     content: "B"
 }
 
-.icon-attach:before {
+.icon-assign:before {
     content: "C"
 }
 
-.icon-bookings:before {
+.icon-attach:before {
     content: "D"
 }
 
-.icon-check:before {
+.icon-bookings:before {
     content: "E"
 }
 
-.icon-close:before {
+.icon-check:before {
     content: "F"
 }
 
-.icon-edit:before {
+.icon-check-green:before {
     content: "G"
 }
 
-.icon-email:before {
+.icon-check-red:before {
     content: "H"
 }
 
-.icon-glass:before {
+.icon-check-yellow:before {
     content: "I"
 }
 
-.icon-link:before {
+.icon-close:before {
     content: "J"
 }
 
-.icon-lock:before {
+.icon-close-small:before {
     content: "K"
 }
 
-.icon-logout:before {
+.icon-edit:before {
     content: "L"
 }
 
-.icon-messages:before {
+.icon-email:before {
     content: "M"
 }
 
-.icon-reports:before {
+.icon-glass:before {
     content: "N"
 }
 
-.icon-reset-password:before {
+.icon-link:before {
     content: "O"
 }
 
-.icon-service-captioning:before {
+.icon-lock:before {
     content: "P"
 }
 
-.icon-service-interpreting:before {
+.icon-logout:before {
     content: "Q"
 }
 
-.icon-service-vri:before {
+.icon-messages:before {
     content: "R"
 }
 
-.icon-settings:before {
+.icon-reports:before {
     content: "S"
+}
+
+.icon-reset-password:before {
+    content: "T"
+}
+
+.icon-service-captioning:before {
+    content: "U"
+}
+
+.icon-service-interpreting:before {
+    content: "V"
+}
+
+.icon-service-vri:before {
+    content: "W"
+}
+
+.icon-settings:before {
+    content: "X"
+}
+
+.icon-shape:before {
+    content: "Y"
 }
 
 .checkbox {
@@ -165,17 +189,17 @@
     background: #02b86e
 }
 
-md-checkbox[type=checkbox] {
+md-checkbox {
     padding-left: 13px;
     padding-right: 25px;
     margin: 0
 }
 
-md-checkbox[type=checkbox] .md-label {
+md-checkbox .md-label {
     margin-left: 13px
 }
 
-md-checkbox[type=checkbox] .md-icon {
+md-checkbox .md-icon {
     top: 3px;
     width: 13px;
     height: 13px;
@@ -184,11 +208,11 @@ md-checkbox[type=checkbox] .md-icon {
     border-radius: 50%
 }
 
-md-checkbox[type=checkbox] .md-icon::after {
+md-checkbox .md-icon::after {
     display: none
 }
 
-md-checkbox[type=checkbox].md-checked .md-icon {
+md-checkbox.md-checked .md-icon {
     background: #02b86e;
     border: none;
     -webkit-box-shadow: 0 2px 6px 0 rgba(29, 182, 111, 0.47);
@@ -196,8 +220,40 @@ md-checkbox[type=checkbox].md-checked .md-icon {
     box-shadow: 0 2px 6px 0 rgba(29, 182, 111, 0.47)
 }
 
-md-checkbox[type=checkbox].md-checked .md-ink-ripple {
+md-checkbox.md-checked .md-ink-ripple {
     color: rgba(29, 182, 111, 0.47)
+}
+
+md-checkbox .mat-checkbox-frame {
+    border: 1px solid #595966;
+    border-radius: 50%
+}
+
+md-checkbox .mat-checkbox-checked.mat-accent .mat-checkbox-background {
+    background: #02b86e;
+    -webkit-box-shadow: 0 2px 6px 0 rgba(29, 182, 111, 0.47);
+    -moz-box-shadow: 0 2px 6px 0 rgba(29, 182, 111, 0.47);
+    box-shadow: 0 2px 6px 0 rgba(29, 182, 111, 0.47)
+}
+
+.md2-datepicker-panel .md2-datepicker-header {
+    background: #02b86e
+}
+
+.md2-datepicker-panel .md2-datepicker-header .md2-datepicker-header-year {
+    color: #fff
+}
+
+.md2-datepicker-panel .md2-datepicker-header .md2-datepicker-header-date-time {
+    color: #fff
+}
+
+.md2-datepicker-panel .md2-calendar-day.today {
+    color: #02b86e
+}
+
+.md2-datepicker-panel .md2-datepicker-actions .md2-button {
+    color: #02b86e
 }
 
 .dropdown.menu.custom>li {
@@ -327,8 +383,50 @@ md-checkbox[type=checkbox].md-checked .md-ink-ripple {
     border-top-color: #bababc
 }
 
-#filters,
-#popup-filters {
+.truncated-text {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden
+}
+
+.sort {
+    position: relative
+}
+
+.sort.asc::after, .sort.desc::after {
+    content: "";
+    position: absolute;
+    right: 10px;
+    top: 6px;
+    bottom: 0;
+    margin: auto;
+    width: 0;
+    height: 0;
+    border: 5px solid transparent
+}
+
+.sort.asc.asc::after, .sort.desc.asc::after {
+    border-top-color: #595966
+}
+
+.sort.asc.desc::after, .sort.desc.desc::after {
+    top: -5px;
+    border-bottom-color: #595966
+}
+
+.sort.outside {
+    right: -30px
+}
+
+.sort.outside.asc::after {
+    top: 0
+}
+
+.sort.outside.desc::after {
+    top: -15px
+}
+
+#filters, #popup-filters {
     margin-top: 23px;
     padding: 13px 15px 15px 15px;
     border-radius: 5px;
@@ -344,8 +442,7 @@ md-checkbox[type=checkbox].md-checked .md-ink-ripple {
     box-orient: vertical
 }
 
-#filters .search-bar,
-#popup-filters .search-bar {
+#filters .search-bar, #popup-filters .search-bar {
     position: relative;
     margin: 0 3px 0 0;
     width: 162px;
@@ -353,13 +450,11 @@ md-checkbox[type=checkbox].md-checked .md-ink-ripple {
     transition: width .5s ease
 }
 
-#filters .search-bar.active,
-#popup-filters .search-bar.active {
+#filters .search-bar.active, #popup-filters .search-bar.active {
     width: 300px
 }
 
-#filters .search-bar input,
-#popup-filters .search-bar input {
+#filters .search-bar input, #popup-filters .search-bar input {
     font-size: 13px;
     height: 40px;
     width: 100%;
@@ -373,15 +468,13 @@ md-checkbox[type=checkbox].md-checked .md-ink-ripple {
     box-shadow: none
 }
 
-#filters .search-bar input:focus,
-#popup-filters .search-bar input:focus {
+#filters .search-bar input:focus, #popup-filters .search-bar input:focus {
     -webkit-box-shadow: inset 0 1px 2px rgba(10, 10, 10, 0.1);
     -moz-box-shadow: inset 0 1px 2px rgba(10, 10, 10, 0.1);
     box-shadow: inset 0 1px 2px rgba(10, 10, 10, 0.1)
 }
 
-#filters .search-bar button,
-#popup-filters .search-bar button {
+#filters .search-bar button, #popup-filters .search-bar button {
     position: absolute;
     right: 10px;
     top: 0;
@@ -392,16 +485,14 @@ md-checkbox[type=checkbox].md-checked .md-ink-ripple {
     cursor: pointer
 }
 
-#filters .separator,
-#popup-filters .separator {
+#filters .separator, #popup-filters .separator {
     width: 1px;
     height: 30px;
     background: #eaeaea;
     margin: 0 10px
 }
 
-#filters .filters,
-#popup-filters .filters {
+#filters .filters, #popup-filters .filters {
     width: 100%;
     display: -webkit-flex !important;
     display: -ms-flexbox !important;
@@ -415,18 +506,14 @@ md-checkbox[type=checkbox].md-checked .md-ink-ripple {
     align-items: center
 }
 
-#filters .filters .button,
-#filters .filters .dropdown.menu,
-#popup-filters .filters .button,
-#popup-filters .filters .dropdown.menu {
+#filters .filters .button, #filters .filters .dropdown.menu, #popup-filters .filters .button, #popup-filters .filters .dropdown.menu {
     -webkit-box-flex: 1;
     -webkit-flex-grow: 1;
     -ms-flex-positive: 1;
     flex-grow: 1
 }
 
-#filters .filters .button,
-#popup-filters .filters .button {
+#filters .filters .button, #popup-filters .filters .button {
     font-size: 13px;
     color: #02b86e;
     height: 40px;
@@ -449,19 +536,26 @@ md-checkbox[type=checkbox].md-checked .md-ink-ripple {
     justify-content: center
 }
 
-#filters .filters .button.active,
-#popup-filters .filters .button.active {
+#filters .filters .button.active, #filters .filters .button.red, #popup-filters .filters .button.active, #popup-filters .filters .button.red {
     color: #fff;
     background: #02b86e
 }
 
-#filters .filters .dropdown.menu,
-#popup-filters .filters .dropdown.menu {
+#filters .filters .button.active i, #filters .filters .button.red i, #popup-filters .filters .button.active i, #popup-filters .filters .button.red i {
+    color: #fff;
+    margin-right: 5px
+}
+
+#filters .filters .button.red, #popup-filters .filters .button.red {
+    border: 1px solid #fd4264;
+    background: #fd4264
+}
+
+#filters .filters .dropdown.menu, #popup-filters .filters .dropdown.menu {
     height: 40px
 }
 
-#filters .filters .dropdown.menu>li,
-#popup-filters .filters .dropdown.menu>li {
+#filters .filters .dropdown.menu>li, #popup-filters .filters .dropdown.menu>li {
     height: 40px
 }
 
@@ -579,11 +673,7 @@ md-checkbox[type=checkbox].md-checked .md-ink-ripple {
     display: block
 }
 
-.common-form .form-field input:not([type=submit]):not([type=checkbox]):not([type=radio]),
-.common-form .form-field select,
-.common-form .form-field textarea,
-.common-form .form-field md-select,
-.common-form .form-field .custom-field {
+.common-form .form-field input:not([type=submit]):not([type=checkbox]):not([type=radio]), .common-form .form-field select, .common-form .form-field textarea, .common-form .form-field md-select, .common-form .form-field .custom-field {
     font-size: 14px;
     color: #6d6d7b;
     background-color: #f8f8f8;
@@ -598,35 +688,18 @@ md-checkbox[type=checkbox].md-checked .md-ink-ripple {
     box-shadow: none
 }
 
-.common-form .form-field input:not([type=submit]):not([type=checkbox]):not([type=radio]):focus,
-.common-form .form-field select:focus,
-.common-form .form-field textarea:focus,
-.common-form .form-field md-select:focus,
-.common-form .form-field .custom-field:focus {
+.common-form .form-field input:not([type=submit]):not([type=checkbox]):not([type=radio]):focus, .common-form .form-field select:focus, .common-form .form-field textarea:focus, .common-form .form-field md-select:focus, .common-form .form-field .custom-field:focus {
     border: 1px solid #f8f8f8;
     -webkit-box-shadow: inset 0 1px 2px rgba(10, 10, 10, 0.1);
     -moz-box-shadow: inset 0 1px 2px rgba(10, 10, 10, 0.1);
     box-shadow: inset 0 1px 2px rgba(10, 10, 10, 0.1)
 }
 
-.common-form .form-field input:not([type=submit]):not([type=checkbox]):not([type=radio]).inline-icon,
-.common-form .form-field select.inline-icon,
-.common-form .form-field textarea.inline-icon,
-.common-form .form-field md-select.inline-icon,
-.common-form .form-field .custom-field.inline-icon {
+.common-form .form-field input:not([type=submit]):not([type=checkbox]):not([type=radio]).inline-icon, .common-form .form-field select.inline-icon, .common-form .form-field textarea.inline-icon, .common-form .form-field md-select.inline-icon, .common-form .form-field .custom-field.inline-icon {
     padding-left: 54px
 }
 
-.common-form .form-field input:not([type=submit]):not([type=checkbox]):not([type=radio]).valid,
-.common-form .form-field input:not([type=submit]):not([type=checkbox]):not([type=radio]).error,
-.common-form .form-field select.valid,
-.common-form .form-field select.error,
-.common-form .form-field textarea.valid,
-.common-form .form-field textarea.error,
-.common-form .form-field md-select.valid,
-.common-form .form-field md-select.error,
-.common-form .form-field .custom-field.valid,
-.common-form .form-field .custom-field.error {
+.common-form .form-field input:not([type=submit]):not([type=checkbox]):not([type=radio]).valid, .common-form .form-field input:not([type=submit]):not([type=checkbox]):not([type=radio]).error, .common-form .form-field select.valid, .common-form .form-field select.error, .common-form .form-field textarea.valid, .common-form .form-field textarea.error, .common-form .form-field md-select.valid, .common-form .form-field md-select.error, .common-form .form-field .custom-field.valid, .common-form .form-field .custom-field.error {
     padding-right: 54px
 }
 
@@ -639,9 +712,7 @@ md-checkbox[type=checkbox].md-checked .md-ink-ripple {
     box-shadow: none
 }
 
-.common-form .form-field md2-datepicker:hover,
-.common-form .form-field md2-datepicker:focus,
-.common-form .form-field md2-datepicker:active {
+.common-form .form-field md2-datepicker:hover, .common-form .form-field md2-datepicker:focus, .common-form .form-field md2-datepicker:active {
     border: none;
     background: none;
     -webkit-appearance: none;
@@ -675,6 +746,10 @@ md-checkbox[type=checkbox].md-checked .md-ink-ripple {
 
 .common-form .form-field md-select md-select-value.md-select-value {
     border-bottom: none
+}
+
+.common-form .form-field md-select .mat-button-wrapper {
+    background: none
 }
 
 .common-form button {
@@ -715,9 +790,7 @@ md-checkbox[type=checkbox].md-checked .md-ink-ripple {
     border-color: #fd4264
 }
 
-.inline-icon-add-file,
-.inline-icon-datepicker,
-.inline-icon-tip {
+.inline-icon-add-file, .inline-icon-datepicker, .inline-icon-tip {
     display: inline-block;
     background: url("../img/svg-compile/css/svg/sprite.css.svg") no-repeat
 }
@@ -946,8 +1019,7 @@ md-radio-group md-radio-button .md-label {
     margin-left: 25px
 }
 
-md-radio-group md-radio-button .md-off,
-md-radio-group md-radio-button .md-on {
+md-radio-group md-radio-button .md-off, md-radio-group md-radio-button .md-on {
     top: 3px;
     width: 13px;
     height: 13px
@@ -974,6 +1046,26 @@ md-radio-group md-radio-button.md-checked .md-on {
 
 md-radio-group md-radio-button.md-checked .md-ink-ripple {
     color: rgba(29, 182, 111, 0.47)
+}
+
+md-radio-group md-radio-button .mat-radio-outer-circle {
+    border: 1px solid #595966
+}
+
+md-radio-group md-radio-button .mat-radio-checked .mat-radio-outer-circle {
+    border-color: #02b86e;
+    -webkit-box-shadow: 0 2px 6px 0 rgba(29, 182, 111, 0.47);
+    -moz-box-shadow: 0 2px 6px 0 rgba(29, 182, 111, 0.47);
+    box-shadow: 0 2px 6px 0 rgba(29, 182, 111, 0.47)
+}
+
+md-radio-group md-radio-button .mat-radio-checked .mat-radio-inner-circle {
+    border-color: #02b86e;
+    width: 18px;
+    height: 18px;
+    top: 3px;
+    -webkit-transform: scale(1);
+    transform: scale(1)
 }
 
 .separator {
@@ -1035,8 +1127,7 @@ md-radio-group md-radio-button.md-checked .md-ink-ripple {
     transition: background .4s ease
 }
 
-#submenu>section>a:hover,
-#submenu>section>a.active {
+#submenu>section>a:hover, #submenu>section>a.active {
     color: #02b86e;
     background: #fff
 }
@@ -1051,8 +1142,7 @@ table.custom {
     box-shadow: 0 4px 14px 0 #dedede
 }
 
-table.custom th,
-table.custom td {
+table.custom th, table.custom td {
     font-size: 13px;
     background: none;
     padding: 14px 6px
@@ -1151,11 +1241,11 @@ table.custom thead th .dropdown.menu>li>a {
     color: #595966;
     display: block;
     width: 100%;
-    padding: 0 32px 0 12px
+    padding: 0 0 0 6px
 }
 
 table.custom thead th .dropdown.menu>li>a::after {
-    right: 12px;
+    right: 6px;
     border: 4px solid transparent;
     border-top-color: #bababc
 }
@@ -1190,12 +1280,6 @@ table.custom tbody tr td a {
     color: #02b86e
 }
 
-table.custom tbody tr td.truncated {
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden
-}
-
 table.custom tbody tr td:not(:first-child)::before {
     content: "";
     position: absolute;
@@ -1227,8 +1311,7 @@ table.custom tbody tr td .status.status-allocated {
     background: #f5a623
 }
 
-table.custom tbody tr td .attach i,
-table.custom tbody tr td .link i {
+table.custom tbody tr td .attach i, table.custom tbody tr td .link i {
     color: #02b86e;
     top: 2px;
     position: relative
@@ -1277,11 +1360,7 @@ table.custom tbody tr td .dropdown.menu.actions>li.is-dropdown-submenu-parent>.i
     -webkit-tap-highlight-color: transparent
 }
 
-button,
-input,
-optgroup,
-select,
-textarea {
+button, input, optgroup, select, textarea {
     font-family: "PoppinsRegular", sans-serif
 }
 
@@ -1295,9 +1374,7 @@ body {
     background: #fff url(../img/main-bg.png) repeat-x
 }
 
-body a,
-body a:active,
-body a:focus {
+body a, body a:active, body a:focus {
     color: #02b86e
 }
 
@@ -1334,8 +1411,7 @@ body #header>nav a {
     padding: 0 21px
 }
 
-body #header>nav a span,
-body #header>nav a i {
+body #header>nav a span, body #header>nav a i {
     color: #fff
 }
 
@@ -1351,13 +1427,11 @@ body #header>nav a span {
     height: 60px
 }
 
-body #header>nav a.active span,
-body #header>nav a:hover span {
+body #header>nav a.active span, body #header>nav a:hover span {
     border-bottom: 2px solid #fff
 }
 
-body #header>a,
-body #header>button {
+body #header>a, body #header>button {
     color: #fff;
     background: #15a262;
     margin: 0;
@@ -1440,9 +1514,7 @@ body #header .dropdown.menu>li.is-dropdown-submenu-parent .is-dropdown-submenu>l
     border-top: none
 }
 
-.inline-icon-add-file,
-.inline-icon-datepicker,
-.inline-icon-tip {
+.inline-icon-add-file, .inline-icon-datepicker, .inline-icon-tip {
     display: inline-block;
     background: url("../img/svg-compile/css/svg/sprite.css.svg") no-repeat
 }
@@ -1491,17 +1563,17 @@ body #header .dropdown.menu>li.is-dropdown-submenu-parent .is-dropdown-submenu>l
     background: #02b86e
 }
 
-md-checkbox[type=checkbox] {
+md-checkbox {
     padding-left: 13px;
     padding-right: 25px;
     margin: 0
 }
 
-md-checkbox[type=checkbox] .md-label {
+md-checkbox .md-label {
     margin-left: 13px
 }
 
-md-checkbox[type=checkbox] .md-icon {
+md-checkbox .md-icon {
     top: 3px;
     width: 13px;
     height: 13px;
@@ -1510,11 +1582,11 @@ md-checkbox[type=checkbox] .md-icon {
     border-radius: 50%
 }
 
-md-checkbox[type=checkbox] .md-icon::after {
+md-checkbox .md-icon::after {
     display: none
 }
 
-md-checkbox[type=checkbox].md-checked .md-icon {
+md-checkbox.md-checked .md-icon {
     background: #02b86e;
     border: none;
     -webkit-box-shadow: 0 2px 6px 0 rgba(29, 182, 111, 0.47);
@@ -1522,8 +1594,20 @@ md-checkbox[type=checkbox].md-checked .md-icon {
     box-shadow: 0 2px 6px 0 rgba(29, 182, 111, 0.47)
 }
 
-md-checkbox[type=checkbox].md-checked .md-ink-ripple {
+md-checkbox.md-checked .md-ink-ripple {
     color: rgba(29, 182, 111, 0.47)
+}
+
+md-checkbox .mat-checkbox-frame {
+    border: 1px solid #595966;
+    border-radius: 50%
+}
+
+md-checkbox .mat-checkbox-checked.mat-accent .mat-checkbox-background {
+    background: #02b86e;
+    -webkit-box-shadow: 0 2px 6px 0 rgba(29, 182, 111, 0.47);
+    -moz-box-shadow: 0 2px 6px 0 rgba(29, 182, 111, 0.47);
+    box-shadow: 0 2px 6px 0 rgba(29, 182, 111, 0.47)
 }
 
 md-radio-group {
@@ -1541,8 +1625,7 @@ md-radio-group md-radio-button .md-label {
     margin-left: 25px
 }
 
-md-radio-group md-radio-button .md-off,
-md-radio-group md-radio-button .md-on {
+md-radio-group md-radio-button .md-off, md-radio-group md-radio-button .md-on {
     top: 3px;
     width: 13px;
     height: 13px
@@ -1569,6 +1652,26 @@ md-radio-group md-radio-button.md-checked .md-on {
 
 md-radio-group md-radio-button.md-checked .md-ink-ripple {
     color: rgba(29, 182, 111, 0.47)
+}
+
+md-radio-group md-radio-button .mat-radio-outer-circle {
+    border: 1px solid #595966
+}
+
+md-radio-group md-radio-button .mat-radio-checked .mat-radio-outer-circle {
+    border-color: #02b86e;
+    -webkit-box-shadow: 0 2px 6px 0 rgba(29, 182, 111, 0.47);
+    -moz-box-shadow: 0 2px 6px 0 rgba(29, 182, 111, 0.47);
+    box-shadow: 0 2px 6px 0 rgba(29, 182, 111, 0.47)
+}
+
+md-radio-group md-radio-button .mat-radio-checked .mat-radio-inner-circle {
+    border-color: #02b86e;
+    width: 18px;
+    height: 18px;
+    top: 3px;
+    -webkit-transform: scale(1);
+    transform: scale(1)
 }
 
 #page-booking {
@@ -1615,15 +1718,11 @@ md-radio-group md-radio-button.md-checked .md-ink-ripple {
     top: 1px
 }
 
-#page-booking>main .common-form input:not([type=submit]):not([type=checkbox]):not([type=radio]),
-#page-booking>main .common-form select,
-#page-booking>main .common-form textarea,
-#page-booking>main .common-form md-select {
+#page-booking>main .common-form input:not([type=submit]):not([type=checkbox]):not([type=radio]), #page-booking>main .common-form select, #page-booking>main .common-form textarea, #page-booking>main .common-form md-select {
     padding-left: 18px
 }
 
-#page-booking>main .common-form .row,
-#page-booking>main .common-form h2 {
+#page-booking>main .common-form .row, #page-booking>main .common-form h2 {
     width: 620px;
     margin: 0 auto
 }
@@ -1711,10 +1810,10 @@ md-radio-group md-radio-button.md-checked .md-ink-ripple {
     color: #02b86e
 }
 
-#page-booking>main #services button[md-button] span {
+#page-booking>main #services button[md-button] span:not(.mat-button-wrapper) {
     color: #02b86e;
     line-height: 1em;
-    display: inline-block;
+    display: block;
     margin-top: 6px
 }
 
@@ -1746,8 +1845,7 @@ md-radio-group md-radio-button.md-checked .md-ink-ripple {
     flex-grow: 6
 }
 
-#page-booking>main #job-documents>section>section,
-#page-booking>main #job-documents>section>button {
+#page-booking>main #job-documents>section>section, #page-booking>main #job-documents>section>button {
     width: 108px;
     height: 108px;
     border-radius: 4px;
@@ -1831,8 +1929,7 @@ md-radio-group md-radio-button.md-checked .md-ink-ripple {
     -ms-flex-pack: justify
 }
 
-#page-booking>main #booking-preferences>section,
-#page-booking>main #booking-preferences>button {
+#page-booking>main #booking-preferences>section, #page-booking>main #booking-preferences>button {
     width: 221px;
     height: 230px;
     padding: 15px;
@@ -1983,16 +2080,14 @@ md-radio-group md-radio-button.md-checked .md-ink-ripple {
     padding: 60px 0
 }
 
-#page-common>main form.common-form input:not([type=submit]):not([type=checkbox]):not([type=radio]),
-#page-common>main form.common-form select,
-#page-common>main form.common-form textarea,
-#page-common>main form.common-form md-select {
+#page-common>main form.common-form input:not([type=submit]):not([type=checkbox]):not([type=radio]), #page-common>main form.common-form select, #page-common>main form.common-form textarea, #page-common>main form.common-form md-select {
     padding-left: 18px
 }
 
 #desktop-popup {
     width: calc( 100% - 44px);
-    max-width: 100%
+    max-width: 100%;
+    max-height: 96%
 }
 
 #desktop-popup header {
@@ -2053,6 +2148,7 @@ md-radio-group md-radio-button.md-checked .md-ink-ripple {
 }
 
 #desktop-popup .actions {
+    margin: 18px;
     display: -webkit-flex !important;
     display: -ms-flexbox !important;
     display: flex !important;
@@ -2065,12 +2161,505 @@ md-radio-group md-radio-button.md-checked .md-ink-ripple {
     -ms-flex-pack: justify
 }
 
-#desktop-popup h2 {
+#desktop-popup .actions>section {
+    width: 100%;
+    display: -webkit-flex !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    box-orient: vertical
+}
+
+#desktop-popup .actions>section>button {
+    margin-right: 9px
+}
+
+#desktop-popup .actions button {
+    font-size: 13px;
+    line-height: 1em;
+    color: #02b86e;
+    background: none;
+    border: 1px solid #02b86e;
+    border-radius: 4px;
+    padding: 8px 35px;
+    -webkit-transition: background .5s ease;
+    transition: background .5s ease;
+    display: -webkit-flex !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center
+}
+
+#desktop-popup .actions button.active {
+    color: #fff;
+    background: #02b86e
+}
+
+#desktop-popup .actions button.red {
+    color: #fd4264;
+    border-color: #fd4264
+}
+
+#desktop-popup .actions button.active.red {
+    color: #fff;
+    border-color: #f4433f
+}
+
+#desktop-popup main {
+    padding: 0 18px 18px 18px
+}
+
+#desktop-popup main h2 {
+    font-size: 16px;
+    font-weight: bolder;
+    text-align: left;
+    margin: 1em 0 .5em 0
+}
+
+#desktop-popup main h2.outstanding {
+    padding-right: 20px
+}
+
+#desktop-popup main #popup-filters {
+    margin-top: 0
+}
+
+#desktop-popup main #popup-filters button.active {
+    background: #62c5b0;
+    border-color: #62c5b0
+}
+
+#desktop-popup main #popup-filters .icon-glass {
+    color: #bababc;
+    display: inline-block;
+    -webkit-transform: rotate(-90deg);
+    transform: rotate(-90deg)
+}
+
+#desktop-popup main .custom-small-table {
+    font-size: 12px;
+    border-spacing: 0;
+    border: 2px solid #f8f8f8;
+    border-radius: 4px
+}
+
+#desktop-popup main .custom-small-table thead th, #desktop-popup main .custom-small-table tbody td {
+    line-height: 1.2em;
+    position: relative;
+    padding: 4px 3px 4px 6px
+}
+
+#desktop-popup main .custom-small-table thead th:not(:first-child)::before, #desktop-popup main .custom-small-table tbody td:not(:first-child)::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    width: 1px;
+    height: 20px;
+    background: #eaeaea
+}
+
+#desktop-popup main .custom-small-table thead th {
+    background: #fff
+}
+
+#desktop-popup main .custom-small-table thead th:first-child {
+    border-top-left-radius: 4px
+}
+
+#desktop-popup main .custom-small-table thead th:last-child {
+    border-top-right-radius: 4px
+}
+
+#desktop-popup main .custom-small-table tbody tr:nth-child(even) td {
+    background: #fff
+}
+
+#desktop-popup main .custom-small-table tbody tr:nth-child(odd) td {
+    background: #f8f8f8
+}
+
+#desktop-popup main .custom-small-table tbody tr td {
+    background: #f8f8f8
+}
+
+#desktop-popup main .custom-small-table tbody tr td:not(:first-child)::before {
+    height: 37px
+}
+
+#desktop-popup main .custom-small-table tbody tr td .underline {
+    text-decoration: underline;
+    color: #02b86e
+}
+
+#desktop-popup main #job-details .dropdown.menu.custom>li {
+    border: none
+}
+
+#desktop-popup main #job-details .dropdown.menu.custom>li>a {
+    padding: 0
+}
+
+#desktop-popup main #job-details .dropdown.menu.custom>li>a::after {
+    display: none
+}
+
+#desktop-popup main #job-details .dropdown.menu.custom>li li {
     text-align: left
 }
 
-#desktop-popup .job-details {
-    font-size: 12px
+#desktop-popup main .manage-interpreters-wrapper {
+    text-align: center;
+    margin: 24px 18px 54px 18px;
+    padding: 10px 0;
+    overflow: hidden
+}
+
+#desktop-popup main .manage-interpreters-wrapper .manage-interpreters {
+    display: inline-block;
+    position: relative
+}
+
+#desktop-popup main .manage-interpreters-wrapper .manage-interpreters::before, #desktop-popup main .manage-interpreters-wrapper .manage-interpreters::after {
+    content: "";
+    position: absolute;
+    height: 1px;
+    top: calc( 50% + 2px);
+    width: 100%;
+    margin-top: -3px;
+    background: #02b86e
+}
+
+#desktop-popup main .manage-interpreters-wrapper .manage-interpreters::before {
+    left: 100%;
+    margin-left: 5px
+}
+
+#desktop-popup main .manage-interpreters-wrapper .manage-interpreters::after {
+    right: 100%;
+    margin-right: 5px
+}
+
+#desktop-popup main .manage-interpreters-wrapper .manage-interpreters>section {
+    display: -webkit-flex !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    box-orient: vertical
+}
+
+#desktop-popup main .manage-interpreters-wrapper .manage-interpreters>section div {
+    height: 52px;
+    padding: 6px 13px;
+    margin: 0 14px;
+    border-radius: 4px;
+    border: 1px solid #3ab59c;
+    display: -webkit-flex !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    box-orient: vertical;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.2)
+}
+
+#desktop-popup main .manage-interpreters-wrapper .manage-interpreters>section div span {
+    color: #62c5b0;
+    display: inline-block;
+    margin-left: 5px
+}
+
+#desktop-popup main .manage-interpreters-wrapper .manage-interpreters>section div button {
+    font-size: 13px;
+    color: #fff;
+    height: 35px;
+    background: #fd4264;
+    border-radius: 4px;
+    padding: 0 16px;
+    margin-left: 15px
+}
+
+#desktop-popup main #invited-interpreters {
+    border-radius: 4px;
+    margin: 13px 0 18px 0;
+    -webkit-box-shadow: 0 4px 14px 0 rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0 4px 14px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 14px 0 rgba(0, 0, 0, 0.2);
+    display: -webkit-flex !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    box-orient: vertical
+}
+
+#desktop-popup main #invited-interpreters md-checkbox {
+    margin: 0
+}
+
+#desktop-popup main #invited-interpreters md-checkbox .md-icon {
+    width: 16px;
+    height: 16px;
+    top: 1px;
+    border-color: #eaeaea;
+    border-radius: 2px;
+    background: #f8f8f8
+}
+
+#desktop-popup main #invited-interpreters md-checkbox.md-checked .md-icon {
+    background: #02b86e
+}
+
+#desktop-popup main #invited-interpreters>table {
+    width: 60%;
+    border: none;
+    margin: 0;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none
+}
+
+#desktop-popup main #invited-interpreters>table thead th {
+    font-size: 11px;
+    padding: 7px 4px
+}
+
+#desktop-popup main #invited-interpreters>table thead th::before {
+    display: none
+}
+
+#desktop-popup main #invited-interpreters>table thead th:first-child {
+    text-align: center;
+    padding-left: 6px
+}
+
+#desktop-popup main #invited-interpreters>table thead th:last-child {
+    position: relative
+}
+
+#desktop-popup main #invited-interpreters>table thead th:last-child::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 1px;
+    height: 100%;
+    background: #eaeaea
+}
+
+#desktop-popup main #invited-interpreters>table thead th span {
+    display: block;
+    margin-bottom: 5px;
+    position: relative
+}
+
+#desktop-popup main #invited-interpreters>table thead th span.order {
+    cursor: pointer
+}
+
+#desktop-popup main #invited-interpreters>table thead th span.order::after {
+    content: "";
+    position: absolute;
+    right: 3px;
+    height: 4px;
+    border: 4px solid transparent
+}
+
+#desktop-popup main #invited-interpreters>table thead th span.order.asc::after {
+    border-top-color: #595966;
+    top: 6px
+}
+
+#desktop-popup main #invited-interpreters>table thead th span.order.desc::after {
+    border-bottom-color: #595966;
+    top: 2px
+}
+
+#desktop-popup main #invited-interpreters>table tbody tr td {
+    font-size: 12px;
+    padding: 8px 6px;
+    border-top: 1px solid #eaeaea
+}
+
+#desktop-popup main #invited-interpreters>table tbody tr td::before {
+    height: 14px
+}
+
+#desktop-popup main #invited-interpreters>table tbody tr td:first-child {
+    text-align: center
+}
+
+#desktop-popup main #invited-interpreters>table tbody tr td:last-child::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    width: 1px;
+    height: 14px;
+    background: #eaeaea
+}
+
+#desktop-popup main #invited-interpreters>section {
+    text-align: center;
+    width: 40%
+}
+
+#desktop-popup main #invited-interpreters>section #time {
+    font-size: 11px;
+    font-weight: bolder;
+    line-height: 30px;
+    height: 30px
+}
+
+#desktop-popup main #invited-interpreters>section>section {
+    position: relative
+}
+
+#desktop-popup main #invited-interpreters>section>section #time-range {
+    font-size: 11px;
+    font-weight: bolder;
+    height: 34px;
+    background: #f8f8f8;
+    display: -webkit-flex !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    box-orient: vertical;
+    -webkit-box-pack: space-around;
+    -webkit-justify-content: space-around;
+    justify-content: space-around;
+    -ms-flex-pack: distribute
+}
+
+#desktop-popup main #invited-interpreters>section>section #time-range button {
+    font-size: 22px;
+    color: #62c5b0;
+    padding: 0 4px
+}
+
+#desktop-popup main #invited-interpreters>section>section #time-range span {
+    padding: 0 6px
+}
+
+#desktop-popup main #invited-interpreters>section>section .flow {
+    position: relative;
+    border-bottom: 1px solid #eaeaea
+}
+
+#desktop-popup main #invited-interpreters>section>section .flow>div {
+    height: 37px;
+    border-top: 1px solid #eaeaea;
+    display: -webkit-flex !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: space-around;
+    -webkit-justify-content: space-around;
+    justify-content: space-around;
+    -ms-flex-pack: distribute
+}
+
+#desktop-popup main #invited-interpreters>section>section .flow>div:nth-child(even) {
+    background: #fff
+}
+
+#desktop-popup main #invited-interpreters>section>section .flow>div:nth-child(odd) {
+    background: #f8f8f8
+}
+
+#desktop-popup main #invited-interpreters>section>section .flow>div span {
+    display: inline-block;
+    background: #fd4264;
+    width: 100px;
+    height: 27px
+}
+
+#desktop-popup main #invited-interpreters>section>section>div#mover {
+    position: absolute;
+    left: 130px;
+    top: 0;
+    width: 97px;
+    height: 100%;
+    border: 2px dashed #15a262;
+    background: rgba(2, 184, 110, 0.2);
+    box-sizing: border-box
+}
+
+#desktop-popup main #changes-history {
+    line-height: 1.2em;
+    border-radius: 5px;
+    -webkit-box-shadow: 0 4px 14px 0 #eaeaea;
+    -moz-box-shadow: 0 4px 14px 0 #eaeaea;
+    box-shadow: 0 4px 14px 0 #eaeaea
+}
+
+#desktop-popup main #changes-history thead th {
+    padding-top: 8px;
+    padding-bottom: 8px
+}
+
+#desktop-popup main #changes-history thead th:not(:first-child) {
+    border-left: 1px solid #eaeaea
+}
+
+#desktop-popup main #changes-history thead th::before {
+    display: none
+}
+
+#desktop-popup main #changes-history tbody tr td:nth-child(2) {
+    display: -webkit-flex !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    box-orient: vertical;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center
+}
+
+#desktop-popup main #changes-history tbody tr td:nth-child(2) img {
+    display: inline-block;
+    margin-right: 9px
+}
+
+#desktop-popup main #changes-history tbody tr td {
+    border-top: 1px solid #eaeaea
+}
+
+#desktop-popup main #changes-history tbody tr td:last-child div {
+    margin: 2px 0
+}
+
+#desktop-popup main #changes-history tbody tr td:last-child div span {
+    color: #62c5b0
 }
 
 #page-home {
@@ -2112,8 +2701,7 @@ md-radio-group md-radio-button.md-checked .md-ink-ripple {
     align-items: stretch
 }
 
-#page-login>section>aside,
-#page-login>section>main {
+#page-login>section>aside, #page-login>section>main {
     padding: 0 70px;
     display: -webkit-flex !important;
     display: -ms-flexbox !important;
@@ -2167,8 +2755,7 @@ md-radio-group md-radio-button.md-checked .md-ink-ripple {
     margin-right: 5px
 }
 
-#page-login>section>aside .form-field input[type=email],
-#page-login>section>aside .form-field input[type=password] {
+#page-login>section>aside .form-field input[type=email], #page-login>section>aside .form-field input[type=password] {
     border: 1px solid #eaeaea;
     border-bottom: none;
     margin: 0;
@@ -2180,8 +2767,7 @@ md-radio-group md-radio-button.md-checked .md-ink-ripple {
     transition: "box-shadow .5s, border-color .25s ease-in-out"
 }
 
-#page-login>section>aside .form-field input[type=email]:focus,
-#page-login>section>aside .form-field input[type=password]:focus {
+#page-login>section>aside .form-field input[type=email]:focus, #page-login>section>aside .form-field input[type=password]:focus {
     border: 1px solid transparent;
     border-bottom: none;
     -webkit-box-shadow: none;
@@ -2194,8 +2780,7 @@ md-radio-group md-radio-button.md-checked .md-ink-ripple {
     text-decoration: underline
 }
 
-#page-login>section>aside button,
-#page-login>section>aside p+a {
+#page-login>section>aside button, #page-login>section>aside p+a {
     font-size: 14px;
     color: #fff;
     background: #02b86e;
@@ -2211,8 +2796,7 @@ md-radio-group md-radio-button.md-checked .md-ink-ripple {
     box-shadow: 0 10px 10px -6px rgba(29, 182, 112, 0.55)
 }
 
-#page-login>section>aside button:hover,
-#page-login>section>aside p+a:hover {
+#page-login>section>aside button:hover, #page-login>section>aside p+a:hover {
     background: #15a262
 }
 
@@ -2340,8 +2924,7 @@ md-radio-group md-radio-button.md-checked .md-ink-ripple {
     margin: 150px auto 76px
 }
 
-#page-signup>section>a.type::before,
-#page-signup>section>a.type::after {
+#page-signup>section>a.type::before, #page-signup>section>a.type::after {
     content: "";
     position: absolute;
     left: 50%;
@@ -2419,8 +3002,7 @@ md-radio-group md-radio-button.md-checked .md-ink-ripple {
     display: inline-block
 }
 
-#page-signup-organisation>section header h1::before,
-#page-signup-organisation>section header h1::after {
+#page-signup-organisation>section header h1::before, #page-signup-organisation>section header h1::after {
     content: "";
     position: absolute;
     height: 6px;

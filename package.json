@@ -48,6 +48,7 @@
     "@angular/compiler-cli": "^2.4.8",
     "@types/jasmine": "2.5.38",
     "@types/node": "^6.0.62",
+    "angular-ide": "^0.9.18",
     "codelyzer": "~2.0.0-beta.1",
     "http-server": "^0.9.0",
     "jasmine-core": "2.5.2",
