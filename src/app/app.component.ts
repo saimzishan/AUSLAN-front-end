@@ -3,7 +3,6 @@ import { Title } from '@angular/platform-browser';
 import {GLOBAL} from './shared/global';
 import {AuthGuard} from './auth/auth.guard';
 import { SpinnerService } from './spinner/spinner.service';
-import {HeaderComponent} from './ui/header/header.component';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +12,8 @@ import {HeaderComponent} from './ui/header/header.component';
 export class AppComponent  {
   public isRequesting: boolean;
 
-  public constructor(public spinnerService: SpinnerService, public titleService: Title ) {
+  public constructor(public spinnerService: SpinnerService,
+    public titleService: Title ) {
     this.titleService.setTitle(GLOBAL.TITLE + GLOBAL.VERSION);
     this.spinnerService.requestInProcess$.subscribe(
       isDone => {

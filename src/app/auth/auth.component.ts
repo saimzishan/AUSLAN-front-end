@@ -6,6 +6,7 @@ import {AuthGuard} from './auth.guard';
 import {SpinnerComponent} from '../spinner/spinner.component';
 import { SpinnerService } from '../spinner/spinner.service';
 import {NotificationComponent} from '../notification/notification.component';
+import {NotificationServiceBus} from '../notification/notification.service';
 
 @Component({
   selector: 'app-auth',
@@ -14,10 +15,9 @@ import {NotificationComponent} from '../notification/notification.component';
 
 })
 export class AuthComponent implements OnInit {
-  errors: any;
   model: User = new User();
 
-  constructor(public spinnerService: SpinnerService, public service: UserService,
+  constructor(public spinnerService: SpinnerService, public notificationServiceBus: NotificationServiceBus, public service: UserService,
      public routes: ActivatedRoute, public router: Router) {
        this.logout();
   }
@@ -32,7 +32,6 @@ export class AuthComponent implements OnInit {
 
     onSubmit() {
       this.spinnerService.requestInProcess(true);
-      this.errors = '';
       this.service.login(this.model)
       .subscribe((res: any) => {
         this.spinnerService.requestInProcess(false);
@@ -45,9 +44,8 @@ export class AuthComponent implements OnInit {
     },
     err => {
       console.log(err);
-      this.errors = 'Email or Password not found';
       this.spinnerService.requestInProcess(false);
-
+      this.notificationServiceBus.launchNotification(true, 'Email or Password not found' );
     },
     () => {});
     }

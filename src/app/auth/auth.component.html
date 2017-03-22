@@ -28,9 +28,6 @@
 							<div align="center">
 								<a [routerLink]="['/reset']" >Forgot your password?</a><br>
 							<button type="submit" [disabled]="!loginForm.form.valid" name="login_user" class="login button">Log In</button>
-							<div *ngIf="errors">
-								<app-notification [notification]='errors' [isError]="true" ></app-notification>
-							</div>
 						</div>
 						<div class="separator">
 												<div>

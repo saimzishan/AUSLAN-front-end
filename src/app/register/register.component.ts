@@ -5,6 +5,7 @@ import {GLOBAL} from '../shared/global';
 import { ROLE } from '../shared/model/role.enum';
 import {NotificationComponent} from '../notification/notification.component';
 import { ActivatedRoute, Router } from '@angular/router';
+import {NotificationServiceBus} from '../notification/notification.service';
 
 @Component({
     selector: 'app-register',
@@ -12,7 +13,6 @@ import { ActivatedRoute, Router } from '@angular/router';
     styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-    errors: any;
     public model: User = new User();
     public selected = false;
     public selectedRole = 'Interpreter'.toUpperCase();
@@ -20,6 +20,7 @@ export class RegisterComponent implements OnInit {
   Kindly go back to <a [routerLink]="['/authenticate']">Login Page</a> and Login`;
 
     constructor(public userService: UserService,
+        public notificationServiceBus: NotificationServiceBus,
         public routes: ActivatedRoute, public router: Router) {
     }
 
@@ -58,9 +59,9 @@ export class RegisterComponent implements OnInit {
             .subscribe((res: any) => {
                 this.model.id = res.data.id;
 
-            }, err => {
-                console.log(err);
-                this.errors = err;
+            }, errors => {
+                console.log(errors);
+                this.notificationServiceBus.launchNotification(true, errors );
             },
             () => { });
     }

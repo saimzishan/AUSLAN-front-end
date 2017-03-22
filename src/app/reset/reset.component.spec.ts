@@ -28,13 +28,15 @@ import {authService} from '../shared/global';
 import {  HttpModule, Http, RequestOptions } from '@angular/http';
 import { NotificationComponent } from '../notification/notification.component';
 
-import { BookingComponent } from '../booking/booking.component';
-import { BookingDetailComponent } from '../booking/booking-detail/booking-detail.component';
+import { BookingComponent } from '../booking-management/booking.component';
+import { BookingDetailComponent } from '../booking-management/booking-detail/booking-detail.component';
 import { SpinnerComponent } from '../spinner/spinner.component';
 
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import {MockUserService} from '../shared/test/Mock';
 import { RouterTestingModule } from '@angular/router/testing';
+import {NotificationServiceBus} from '../notification/notification.service';
+
 describe('ResetComponent', () => {
   let component: ResetComponent;
   let fixture: ComponentFixture<ResetComponent>;
@@ -43,7 +45,7 @@ describe('ResetComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ResetComponent, NotificationComponent],
       imports: [FormsModule, RouterTestingModule, CustomFormsModule],
-      providers: [{ provide: UserService, useClass: MockUserService}, { provide: AuthHttp, useClass: MockBackend} ]
+      providers: [NotificationServiceBus, { provide: UserService, useClass: MockUserService}, { provide: AuthHttp, useClass: MockBackend} ]
     })
     .compileComponents();
   }));

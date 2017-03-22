@@ -28,6 +28,7 @@ import {Injectable} from '@angular/core';
 import {MockUserService} from '../shared/test/Mock';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import {NotificationComponent} from '../notification/notification.component';
+import {NotificationServiceBus} from '../notification/notification.service';
 
 describe('AuthComponent', () => {
     let component: AuthComponent;
@@ -37,7 +38,8 @@ describe('AuthComponent', () => {
       TestBed.configureTestingModule({
           declarations: [EnumValPipe, NotificationComponent,
           AuthComponent],
-          providers: [SpinnerService, { provide: UserService, useClass: MockUserService}, { provide: AuthHttp, useClass: MockBackend} ],
+          providers: [SpinnerService, NotificationServiceBus,
+           { provide: UserService, useClass: MockUserService}, { provide: AuthHttp, useClass: MockBackend} ],
           imports: [CustomFormsModule, MaterialModule, HttpModule, FormsModule,
             RouterTestingModule.withRoutes(
         [{ path: 'authenticate', component: AuthComponent },

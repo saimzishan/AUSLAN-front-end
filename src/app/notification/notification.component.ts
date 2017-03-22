@@ -1,29 +1,34 @@
 import { Component, OnChanges, Input } from '@angular/core';
-// This component should be replaced with https://github.com/flauc/angular2-notifications
+import { NotificationsService } from 'angular2-notifications';
+import { NotificationServiceBus, NotificationContainer } from './notification.service';
+
 @Component({
   selector: 'app-notification',
   templateUrl: './notification.component.html',
   styleUrls: ['./notification.component.css']
 })
-export class NotificationComponent implements OnChanges {
-  @Input('notification') public notification: string;
-  @Input('isError') public isError: boolean;
-  shouldShow = false;
-  constructor() { }
+export class NotificationComponent {
+  public options = {
+    position: ['top', 'center'],
+    timeOut: 5000,
+    lastOnBottom: true,
+    maximumLength: 100,
+    preventDuplicates: false,
+    animate: 'scale'
+  };
 
-  ngOnChanges() {
-    if (this.notification && this.notification.length > 0) {
-      this.show();
+  constructor(public notificationService: NotificationServiceBus, private _service: NotificationsService) {
+    this.notificationService.launchNotification$.subscribe(
+      notificationContainer => {
+        if (notificationContainer && notificationContainer.message.length > 0) {
+          if (!notificationContainer.isError) {
+            this._service.success('Hurray! ', notificationContainer.message);
+          } else {
+            this._service.error('Oops! ', notificationContainer.message);
+          }
+        }
+      });
   }
-}
 
-  show() {
-    this.shouldShow = true;
-  }
-
-  hide()  {
-    this.shouldShow = false;
-    this.notification = '';
-  }
 
 }

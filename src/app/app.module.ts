@@ -38,7 +38,8 @@ import { MaterialModule } from '@angular/material';
 import {UserNameService} from './shared/user-name.service';
 import {} from 'foundation-sites';
 import { Md2Module }  from 'md2';
-
+import {SimpleNotificationsModule} from 'angular2-notifications';
+import {NotificationServiceBus} from './notification/notification.service';
 
 @NgModule({
   declarations: [
@@ -68,10 +69,12 @@ import { Md2Module }  from 'md2';
   imports: [CustomFormsModule, routing,
     BrowserModule, RouterModule,
     FormsModule,
-    HttpModule,
+    HttpModule, SimpleNotificationsModule.forRoot(),
     ReactiveFormsModule, Md2Module.forRoot(),
     MaterialModule
-  ],  providers: [UserNameService, AuthGuard, Title, SpinnerService, BookingService, UserService, {provide: APP_BASE_HREF, useValue : '/' }, {
+  ],  providers: [UserNameService, AuthGuard, Title,
+    NotificationServiceBus, SpinnerService, BookingService, UserService,
+    {provide: APP_BASE_HREF, useValue : '/' }, {
       provide: AuthHttp,
       useFactory: authService,
       deps: [Http, RequestOptions]

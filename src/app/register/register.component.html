@@ -97,10 +97,6 @@
 
 					<button name="register_user" type="submit" [disabled]="mobile.errors || last_name.errors || first_name.errors || password.errors || email.errors || certainPassword.errors " (click)="addUser(user)" class="button">Register</button>
 				</div>
-				<app-notification [notification]='errors' [isError]="true"></app-notification>
-				<div [hidden]="!this.model.id">
-					<app-notification [notification]='successMessage' [isError]="false"></app-notification>
-				</div>
 			</form>
 		</section>
 	</section>

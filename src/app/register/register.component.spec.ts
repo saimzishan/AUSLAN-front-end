@@ -16,6 +16,7 @@ import { SpinnerComponent } from '../spinner/spinner.component';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import {MockUserService, MockModule, DummyComponent} from '../shared/test/Mock';
 import { RouterTestingModule } from '@angular/router/testing';
+import {NotificationServiceBus} from '../notification/notification.service';
 
 describe('RegisterComponent', () => {
     let component: RegisterComponent;
@@ -28,7 +29,8 @@ describe('RegisterComponent', () => {
               RouterTestingModule.withRoutes(
           [  {path: 'register', component: DummyComponent},
             { path: 'register/step2', component: DummyComponent }])],
-            providers: [{ provide: UserService, useClass: MockUserService}, { provide: AuthHttp, useClass: MockBackend} ]
+            providers: [NotificationServiceBus,
+            { provide: UserService, useClass: MockUserService}, { provide: AuthHttp, useClass: MockBackend} ]
         }).compileComponents();
     }));
 
