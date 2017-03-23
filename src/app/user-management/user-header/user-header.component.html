@@ -1,11 +1,11 @@
 <section id="submenu">
 			<section>
-				<a href="#">Profile Info</a>
+				<a id="lnkSettings" [routerLink]="['user-management','profile']" [ngClass]="{'active', activeLink === 'Profile'}" >Profile Info</a>
 				<a href="#">Preferences</a>
 				<a href="#">Filter</a>
 			</section>
 			<section>
-				<a href="#" class="active">Manage Users</a>
+				<a id="lnkProfile" [routerLink]="['user-management']" [ngClass]="{'active', activeLink === 'ManageUsers'}">Manage Users</a>
 				<a href="#">Billing</a>
 			</section>
 		</section>

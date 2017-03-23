@@ -120,7 +120,7 @@ export class UserDetailComponent {
         if (res.status === 204) {
           this.closeDialog();
           this.onRefresh.emit();
-                    this.notificationServiceBus.launchNotification(false, 'User status has been changed Successfully');
+          this.notificationServiceBus.launchNotification(false, 'User status has been changed Successfully');
         }
       },
       (err) => {

@@ -1,5 +1,5 @@
 <section id="page-manage-users">
-	<app-user-header></app-user-header>
+	<app-user-header [activeLink]='activeLink' ></app-user-header>
 		<app-user-filter [userModel]='newUser' (refreshEmitter)="fetchUsers()" ></app-user-filter>
 		<app-user-list [userList]='users' (onEditUser)="onEditUser($event)" ></app-user-list>
 </section>

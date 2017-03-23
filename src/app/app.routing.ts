@@ -16,6 +16,7 @@ import {BookingDetailComponent} from './booking-management/booking-detail/bookin
 
 const appRoutes: Routes = [
   { path: 'user-management', component: UserManagementComponent, canActivate: [AuthGuard]},
+  { path: 'user-management/profile', component: UserManagementComponent, canActivate: [AuthGuard]},
   { path: 'booking-management', component: BookingComponent, canActivate: [AuthGuard]},
   { path: 'booking-management/create', component: BookingDetailComponent, canActivate: [AuthGuard]},
   { path: 'authenticate', component: AuthComponent },

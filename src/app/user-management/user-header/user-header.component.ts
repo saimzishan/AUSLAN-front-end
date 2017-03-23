@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-user-header',
   templateUrl: './user-header.component.html',
   styleUrls: ['./user-header.component.css']
 })
-export class UserHeaderComponent {}
+export class UserHeaderComponent {
+  @Input() activeLink = '';
+}

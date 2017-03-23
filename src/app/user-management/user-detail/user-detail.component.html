@@ -95,7 +95,7 @@
 		<md-dialog-actions>
 			 <button name="add_user" class="login button"
 			 [disabled]="last_name.errors ||first_name.errors  || email.errors || (isNewUser && (password.errors|| certainPassword.errors)) "
-			 (click)="applyChanges()"> {{ isNewUser ? 'CREATE' : 'EDIT' }} </button>
+			 (click)="applyChanges()"> {{ isNewUser ? 'CREATE' : 'SAVE' }} </button>
 		</md-dialog-actions>
 	</div>
 

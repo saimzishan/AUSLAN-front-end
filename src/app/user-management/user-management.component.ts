@@ -28,6 +28,7 @@ export class UserManagementComponent implements AfterViewChecked {
     roles: any;
     users: Array<User> = [];
     // this is bad
+    activeLink = 'ManageUsers';
     selectedLastName = 'I am ';
 
     ngAfterViewChecked() {

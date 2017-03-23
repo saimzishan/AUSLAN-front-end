@@ -40,6 +40,7 @@ import {} from 'foundation-sites';
 import { Md2Module }  from 'md2';
 import {SimpleNotificationsModule} from 'angular2-notifications';
 import {NotificationServiceBus} from './notification/notification.service';
+import { UserProfileComponent } from './user-management/user-profile/user-profile.component';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import {NotificationServiceBus} from './notification/notification.service';
     UserListComponent,
     UserHeaderComponent,
     UserDetailComponent,
+    UserProfileComponent,
   ], exports: [EnumValPipe],
    entryComponents: [UserDetailComponent],
   imports: [CustomFormsModule, routing,
