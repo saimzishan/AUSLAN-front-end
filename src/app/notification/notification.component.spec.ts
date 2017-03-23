@@ -2,8 +2,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
+import {SimpleNotificationsModule} from 'angular2-notifications';
 
 import { NotificationComponent } from './notification.component';
+import { NotificationsService } from 'angular2-notifications';
+import { NotificationServiceBus, NotificationContainer } from './notification.service';
 
 describe('NotificationComponent', () => {
   let component: NotificationComponent;
@@ -11,7 +14,9 @@ describe('NotificationComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NotificationComponent ]
+      declarations: [ NotificationComponent ],
+        imports: [SimpleNotificationsModule.forRoot()],
+      providers: [ NotificationServiceBus, NotificationsService, NotificationContainer ]
     })
     .compileComponents();
   }));

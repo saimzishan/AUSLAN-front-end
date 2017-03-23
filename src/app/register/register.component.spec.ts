@@ -17,6 +17,7 @@ import { MockBackend, MockConnection } from '@angular/http/testing';
 import {MockUserService, MockModule, DummyComponent} from '../shared/test/Mock';
 import { RouterTestingModule } from '@angular/router/testing';
 import {NotificationServiceBus} from '../notification/notification.service';
+import {SimpleNotificationsModule} from 'angular2-notifications';
 
 describe('RegisterComponent', () => {
     let component: RegisterComponent;
@@ -25,7 +26,7 @@ describe('RegisterComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [RegisterComponent, NotificationComponent],
-            imports: [MockModule, FormsModule, CustomFormsModule,
+            imports: [MockModule, FormsModule, CustomFormsModule, SimpleNotificationsModule.forRoot(),
               RouterTestingModule.withRoutes(
           [  {path: 'register', component: DummyComponent},
             { path: 'register/step2', component: DummyComponent }])],

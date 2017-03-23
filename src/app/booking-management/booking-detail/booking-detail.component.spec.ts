@@ -18,6 +18,7 @@ import { CustomFormsModule } from 'ng2-validation';
 import { FormsModule }   from '@angular/forms';
 import {SpinnerService} from '../../spinner/spinner.service';
 import { BookingDetailComponent } from './booking-detail.component';
+import {NotificationServiceBus} from '../../notification/notification.service';
 
 describe('BookingDetailComponent', () => {
   let component: BookingDetailComponent;
@@ -30,7 +31,7 @@ describe('BookingDetailComponent', () => {
         FormsModule,
         Md2Module.forRoot(),
         MaterialModule
-      ],  providers: [{ provide: BookingService, useClass: MockBookingService },
+      ],  providers: [NotificationServiceBus, { provide: BookingService, useClass: MockBookingService },
           SpinnerService, { provide: AuthHttp, useClass: MockBackend }]
     })
     .compileComponents();

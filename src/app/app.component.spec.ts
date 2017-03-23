@@ -46,11 +46,13 @@ import { UserListComponent } from './user-management/user-list/user-list.compone
 import { MaterialModule } from '@angular/material';
 import { Md2Module }  from 'md2';
 import {UserNameService} from './shared/user-name.service';
-
+import {SimpleNotificationsModule} from 'angular2-notifications';
 import { BOOKING_NATURE } from './shared/model/booking-nature.enum';
 import { PARKING } from './shared/model/parking.enum';
 import { BookingFilterComponent } from './booking-management/booking-filter/booking-filter.component';
 import { BookingListComponent } from './booking-management/booking-list/booking-list.component';
+import {NotificationServiceBus} from './notification/notification.service';
+
 describe('AppComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -66,9 +68,10 @@ describe('AppComponent', () => {
         SpinnerComponent
       ],
       imports: [CustomFormsModule, RouterTestingModule, Md2Module.forRoot(),
-      MaterialModule, FormsModule,
+      MaterialModule, FormsModule, SimpleNotificationsModule.forRoot(),
         HttpModule
-      ],  providers: [UserNameService, Title, SpinnerService, UserService, {provide: APP_BASE_HREF, useValue : '/' }, {
+      ],  providers: [ NotificationServiceBus,
+         UserNameService, Title, SpinnerService, UserService, {provide: APP_BASE_HREF, useValue : '/' }, {
           provide: AuthHttp,
           useFactory: authService,
           deps: [Http, RequestOptions]

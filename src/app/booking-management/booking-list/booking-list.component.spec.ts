@@ -45,9 +45,9 @@ describe('BookingListComponent' ,  () => {
     expect(component).toBeTruthy();
   });
   it('should ui to be filled with data' ,  () => {
-    expect(component).toBeTruthy();
-    let bID = fixture.debugElement.query(By.css('.bookingID'))[0];
-    expect(bID.nativeElement.value).toEqual(5);
+
+    let bID = fixture.debugElement.query(By.css('td.bookingID'));
+    expect(parseInt(bID.nativeElement.innerText)).toEqual(5);
 
   });
 });

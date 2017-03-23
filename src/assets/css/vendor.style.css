@@ -1097,8 +1097,8 @@ md-radio-group md-radio-button .mat-radio-checked .mat-radio-inner-circle {
 }
 
 
-.simple-notification.error{
-    background: #0fd4264;
+div.simple-notification.error{
+    background: #fd4264;
 }
 
 div.simple-notification.success{

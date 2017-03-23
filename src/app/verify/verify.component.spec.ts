@@ -34,6 +34,7 @@ import { BookingDetailComponent } from '../booking-management/booking-detail/boo
 import { SpinnerComponent } from '../spinner/spinner.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MockBackend, MockConnection } from '@angular/http/testing';
+import {SimpleNotificationsModule} from 'angular2-notifications';
 
 describe('VerifyComponent', () => {
     let component: VerifyComponent;
@@ -42,7 +43,7 @@ describe('VerifyComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [VerifyComponent, NotificationComponent],
-            imports: [FormsModule, RouterTestingModule, HttpModule, CustomFormsModule],
+            imports: [FormsModule, RouterTestingModule, HttpModule, CustomFormsModule, SimpleNotificationsModule.forRoot()],
             providers: [{ provide: UserService, useClass: MockUserService},
               NotificationServiceBus, { provide: AuthHttp, useClass: MockBackend} ]
         })

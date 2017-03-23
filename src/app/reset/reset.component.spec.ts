@@ -36,6 +36,7 @@ import { MockBackend, MockConnection } from '@angular/http/testing';
 import {MockUserService} from '../shared/test/Mock';
 import { RouterTestingModule } from '@angular/router/testing';
 import {NotificationServiceBus} from '../notification/notification.service';
+import {SimpleNotificationsModule} from 'angular2-notifications';
 
 describe('ResetComponent', () => {
   let component: ResetComponent;
@@ -44,7 +45,7 @@ describe('ResetComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ResetComponent, NotificationComponent],
-      imports: [FormsModule, RouterTestingModule, CustomFormsModule],
+      imports: [FormsModule, RouterTestingModule, CustomFormsModule, SimpleNotificationsModule.forRoot()],
       providers: [NotificationServiceBus, { provide: UserService, useClass: MockUserService}, { provide: AuthHttp, useClass: MockBackend} ]
     })
     .compileComponents();
