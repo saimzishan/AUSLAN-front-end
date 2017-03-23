@@ -121,7 +121,6 @@ export class UserDetailComponent {
           this.closeDialog();
           this.onRefresh.emit();
                     this.notificationServiceBus.launchNotification(false, 'User status has been changed Successfully');
-          
         }
       },
       (err) => {

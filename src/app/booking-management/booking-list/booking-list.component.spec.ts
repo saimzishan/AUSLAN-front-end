@@ -47,7 +47,7 @@ describe('BookingListComponent' ,  () => {
   it('should ui to be filled with data' ,  () => {
 
     let bID = fixture.debugElement.query(By.css('td.bookingID'));
-    expect(parseInt(bID.nativeElement.innerText)).toEqual(5);
+    expect(parseInt(bID.nativeElement.innerText, 10)).toEqual(5);
 
   });
 });

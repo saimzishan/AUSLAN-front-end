@@ -185,7 +185,8 @@ describe('UserService', () => {
                 .given('user exists in database')
                 .uponReceiving('a request to update a user, containing user object')
                 .withRequest('PATCH', '/api/v1/users/2', {
-                    'Accept': 'application/json'
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
                 }, { 'user': Pact.Match.somethingLike(mock_db[0]) }
                 )
                 .willRespondWith(200, {
