@@ -43,7 +43,6 @@ export class AuthComponent implements OnInit {
       }
     },
     err => {
-      console.log(err);
       this.spinnerService.requestInProcess(false);
       this.notificationServiceBus.launchNotification(true, 'Email or Password not found' );
     },

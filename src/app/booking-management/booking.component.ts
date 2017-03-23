@@ -51,8 +51,6 @@ export class BookingComponent implements AfterViewChecked {
       },
        err => {
          this.spinnerService.requestInProcess(false);
-
-         console.log(err);
        });
     }
 

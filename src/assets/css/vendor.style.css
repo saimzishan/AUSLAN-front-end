@@ -1096,6 +1096,28 @@ md-radio-group md-radio-button .mat-radio-checked .mat-radio-inner-circle {
     box-shadow: 0 2px 14px 0 rgba(29, 182, 111, 0.3)
 }
 
+
+.simple-notification.error{
+    background: #0fd4264;
+}
+
+div.simple-notification.success{
+    background: #02b86e;
+}
+
+.sn-progress-loader.span {
+    background: #17A267;
+}
+
+div.sn-content {
+    color: #ffffff;
+}
+
+div.sn-title {
+    color: #ffffff;
+}
+
+
 #submenu {
     height: 55px;
     display: -webkit-flex !important;

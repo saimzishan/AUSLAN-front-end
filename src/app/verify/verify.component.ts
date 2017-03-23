@@ -48,9 +48,7 @@ export class VerifyComponent implements OnInit {
         }
       },
       err => {
-        console.log(err);
         this.notificationServiceBus.launchNotification(true, 'The verification Code is not right.');
-
       },
       () => { });
   }

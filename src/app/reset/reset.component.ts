@@ -21,12 +21,11 @@ export class ResetComponent implements OnInit {
       .subscribe((res: any) => {
         if (res.status === 200) {
           this.notificationServiceBus.launchNotification(false, 'The email address has been sent to your address');
-
         }
       },
       err => {
         console.log(err);
-        this.notificationServiceBus.launchNotification(false, 'The email address is not registered with us.');
+        this.notificationServiceBus.launchNotification(true, 'The email address is not registered with us.');
       },
       () => { });
   }

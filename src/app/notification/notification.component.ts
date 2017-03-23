@@ -9,10 +9,10 @@ import { NotificationServiceBus, NotificationContainer } from './notification.se
 })
 export class NotificationComponent {
   public options = {
-    position: ['top', 'center'],
-    timeOut: 5000,
+    position: ['bottom', 'right'],
+    timeOut: 3000,
     lastOnBottom: true,
-    maximumLength: 100,
+    maximumLength: 200,
     preventDuplicates: false,
     animate: 'scale'
   };
