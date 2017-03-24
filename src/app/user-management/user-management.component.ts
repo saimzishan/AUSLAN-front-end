@@ -1,4 +1,4 @@
-import { Component, AfterViewChecked, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, AfterViewChecked, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import {UserService} from '../api/user.service';
 import {User} from '../shared/model/user.entity';
 import {ROLE} from '../shared/model/role.enum';
@@ -13,6 +13,10 @@ import 'rxjs/add/observable/throw';
 import {UserFilterComponent} from './user-filter/user-filter.component';
 import {UserListComponent} from './user-list/user-list.component';
 import {SpinnerService} from '../spinner/spinner.service';
+import {ViewChild, ViewChildren} from '@angular/core';
+import {UserProfileComponent} from './user-profile/user-profile.component';
+import { ActivatedRoute } from '@angular/router';
+
 declare var $: JQueryStatic;
 
 @Component({
@@ -23,20 +27,29 @@ declare var $: JQueryStatic;
 
 })
 
-export class UserManagementComponent implements AfterViewChecked {
+export class UserManagementComponent implements AfterViewChecked, OnInit {
     newUser: User = new User();
     roles: any;
     users: Array<User> = [];
     // this is bad
     activeLink = 'ManageUsers';
     selectedLastName = 'I am ';
+    profilePage = false;
 
     ngAfterViewChecked() {
       $(document).foundation();
 
     }
 
-    constructor(public spinnerService: SpinnerService, public userDataService: UserService) {
+    ngOnInit() {
+      this.routes.url.subscribe( v => {
+        this.profilePage = (v.length > 1 && v[1].path === 'profile');
+        this.activeLink = this.profilePage ? 'Profile' : 'ManageUsers';
+      });
+    }
+
+    constructor(public spinnerService: SpinnerService, public routes: ActivatedRoute,
+      public userDataService: UserService) {
       this.roles = ROLE;
       this.fetchUsers();
     }

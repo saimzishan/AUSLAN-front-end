@@ -1,3 +1,5 @@
+<app-user-header [activeLink]='Profile' ></app-user-header>
+
 <main>
   <form class="common-form reduced-top">
     <div class="row small-collapse">
@@ -43,7 +45,7 @@
                       <span>Minimum 6 digits required.</span>!</span>
           </div>
         </div>
-        <div [hidden]='isNewUser || !userModel.verified' class="row small-collapse">
+        <div [hidden]='!userModel.verified' class="row small-collapse">
           <div class="form-field medium-6 columns">
             <label>STATUS</label>
             <md-select name="selStatus" placeholder="Status" [(ngModel)]="selectedStatus">
@@ -65,8 +67,7 @@
   	</div>
     <section class="actions">
       <button name="edit_user" class="login button"
-      [disabled]="last_name.errors ||first_name.errors  || email.errors || (isNewUser && (password.errors|| certainPassword.errors)) "
-      (click)="applyChanges()"> 'SAVE' </button>
+      [disabled]="last_name.errors ||first_name.errors  || email.errors" (click)="editUser()"> 'SAVE' </button>
     </section>
   </form>
 </main>

@@ -4,7 +4,7 @@ import { UserService } from '../../api/user.service';
 import { ROLE } from '../../shared/model/role.enum';
 import { SpinnerService } from '../../spinner/spinner.service';
 import { NotificationServiceBus } from '../../notification/notification.service';
-
+import {GLOBAL} from '../../shared/global';
 
 @Component({
   selector: 'app-user-profile',
@@ -12,10 +12,9 @@ import { NotificationServiceBus } from '../../notification/notification.service'
   styleUrls: ['./user-profile.component.css']
 })
 export class UserProfileComponent {
-  @Input('userModel') userModel: User;
+  userModel: User = GLOBAL.currentUser;
   userStatusArray = [{ name: 'ACTIVE' }, { name: 'DISABLED' }];
   selectedStatus = '';
-
 
   constructor(public userDataService: UserService, public notificationServiceBus: NotificationServiceBus,
     public spinnerService: SpinnerService) {

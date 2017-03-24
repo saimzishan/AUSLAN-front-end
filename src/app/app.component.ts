@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, ElementRef } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import {GLOBAL} from './shared/global';
 import {AuthGuard} from './auth/auth.guard';
@@ -9,18 +9,18 @@ import { SpinnerService } from './spinner/spinner.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent  {
+export class AppComponent  implements OnDestroy {
   public isRequesting: boolean;
+  private sub: any;
 
   public constructor(public spinnerService: SpinnerService,
     public titleService: Title ) {
     this.titleService.setTitle(GLOBAL.TITLE + GLOBAL.VERSION);
-    this.spinnerService.requestInProcess$.subscribe(
+    this.sub = this.spinnerService.requestInProcess$.subscribe(
       isDone => {
         this.isRequesting = isDone;
       });
   }
-
 
   isLoggedIn() {
     return AuthGuard.isLoggedIn();
@@ -28,5 +28,9 @@ export class AppComponent  {
 
   showProgress(val: boolean) {
     this.isRequesting = val;
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 }
