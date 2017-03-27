@@ -30,7 +30,6 @@ export class AuthGuard implements CanActivate {
     }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        let token = sessionStorage.getItem('token');
         if (AuthGuard.isLoggedIn()) {
             // logged in so return true
             return true;

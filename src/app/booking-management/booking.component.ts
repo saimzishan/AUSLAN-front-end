@@ -1,8 +1,6 @@
-import { Component, AfterViewChecked, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, AfterViewChecked } from '@angular/core';
 import {BookingService} from '../api/booking.service';
 import {Booking} from '../shared/model/booking.entity';
-import {ROLE} from '../shared/model/role.enum';
-import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
@@ -10,8 +8,6 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/observable/throw';
-import {BookingFilterComponent} from './booking-filter/booking-filter.component';
-import {BookingListComponent} from './booking-list/booking-list.component';
 import {SpinnerService} from '../spinner/spinner.service';
 declare var $: JQueryStatic;
 

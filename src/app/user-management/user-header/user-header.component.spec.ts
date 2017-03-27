@@ -4,6 +4,8 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { UserHeaderComponent } from './user-header.component';
+import {RouterTestingModule} from '@angular/router/testing/router_testing_module';
+import {LinkHelper} from '../../shared/router/linkhelper';
 
 describe('UserHeaderComponent', () => {
   let component: UserHeaderComponent;
@@ -11,7 +13,9 @@ describe('UserHeaderComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UserHeaderComponent ]
+      declarations: [ UserHeaderComponent ],
+      imports: [RouterTestingModule],
+      providers: [LinkHelper]
     })
     .compileComponents();
   }));

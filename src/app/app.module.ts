@@ -1,6 +1,6 @@
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpModule, BaseRequestOptions } from '@angular/http';
+import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { AuthComponent } from './auth/auth.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -8,10 +8,8 @@ import { UserManagementComponent } from './user-management/user-management.compo
 import { UserService } from './api/user.service';
 import { BookingService } from './api/booking.service';
 import { Http, RequestOptions } from '@angular/http';
-import { AuthHttp, AuthConfig } from 'angular2-jwt';
 import { EnumValPipe } from './shared/pipe/enum-val.pipe';
 import { NotFoundComponent } from './not-found/not-found.component';
-import { RouterModule, Router } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CustomFormsModule } from 'ng2-validation';
 import { routing } from './app.routing';
@@ -36,7 +34,6 @@ import { UserDetailComponent } from './user-management/user-detail/user-detail.c
 import { BookingHeaderComponent } from './booking-management/booking-header/booking-header.component';
 import { MaterialModule } from '@angular/material';
 import {UserNameService} from './shared/user-name.service';
-import {} from 'foundation-sites';
 import { Md2Module }  from 'md2';
 import {SimpleNotificationsModule} from 'angular2-notifications';
 import {NotificationServiceBus} from './notification/notification.service';

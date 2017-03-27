@@ -1,11 +1,9 @@
-import { Component, Input,  OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { User } from '../../shared/model/user.entity';
 import { UserService } from '../../api/user.service';
-import { ROLE } from '../../shared/model/role.enum';
 import { SpinnerService } from '../../spinner/spinner.service';
 import { NotificationServiceBus } from '../../notification/notification.service';
 import {GLOBAL} from '../../shared/global';
-import {LinkHelper, LINK} from '../../shared/router/linkhelper';
 import {UserNameService} from '../../shared/user-name.service';
 
 @Component({

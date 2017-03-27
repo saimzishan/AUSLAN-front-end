@@ -1,8 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
-import {User} from '../shared/model/user.entity';
+import { Component, OnInit } from '@angular/core';
 import {GLOBAL} from '../shared/global';
 import { UserService } from '../api/user.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import {UserNameService} from '../shared/user-name.service';
 import {LinkHelper, LINK} from '../shared/router/linkhelper';
 
@@ -32,7 +31,7 @@ export class DashboardComponent implements OnInit {
                       this.router.navigate(['/verify/' + user.id]);
                   }else {
                     this.router.navigate(['/user-management']);
-                    this.linkHelper.activeLink = LINK.usermanagement
+                    this.linkHelper.activeLink = LINK.usermanagement;
                   }
               }
           },

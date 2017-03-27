@@ -1,8 +1,7 @@
-import { Component, AfterViewChecked, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, AfterViewChecked, ChangeDetectionStrategy } from '@angular/core';
 import {UserService} from '../api/user.service';
 import {User} from '../shared/model/user.entity';
 import {ROLE} from '../shared/model/role.enum';
-import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
@@ -10,11 +9,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/observable/throw';
-import {UserFilterComponent} from './user-filter/user-filter.component';
-import {UserListComponent} from './user-list/user-list.component';
 import {SpinnerService} from '../spinner/spinner.service';
-import {ViewChild, ViewChildren} from '@angular/core';
-import {UserProfileComponent} from './user-profile/user-profile.component';
 
 declare var $: JQueryStatic;
 

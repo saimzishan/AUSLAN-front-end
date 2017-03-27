@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChange, ViewContainerRef } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChange, ViewContainerRef } from '@angular/core';
 import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
 import {UserDetailComponent} from '../user-detail/user-detail.component';
 import {User} from '../../shared/model/user.entity';

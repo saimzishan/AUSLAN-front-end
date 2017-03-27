@@ -1,11 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UserService } from '../api/user.service';
 import {User} from '../shared/model/user.entity';
 import { ActivatedRoute, Router } from '@angular/router';
 import {AuthGuard} from './auth.guard';
-import {SpinnerComponent} from '../spinner/spinner.component';
 import { SpinnerService } from '../spinner/spinner.service';
-import {NotificationComponent} from '../notification/notification.component';
 import {NotificationServiceBus} from '../notification/notification.service';
 
 @Component({

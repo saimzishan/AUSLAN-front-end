@@ -1,6 +1,6 @@
-import { Component, OnChanges, Input } from '@angular/core';
+import { Component} from '@angular/core';
 import { NotificationsService } from 'angular2-notifications';
-import { NotificationServiceBus, NotificationContainer } from './notification.service';
+import { NotificationServiceBus } from './notification.service';
 
 @Component({
   selector: 'app-notification',

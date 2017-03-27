@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import {LinkHelper, LINK} from '../../shared/router/linkhelper';
 
 @Component({

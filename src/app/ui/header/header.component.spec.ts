@@ -10,6 +10,7 @@ import { DummyComponent, RouterStub} from '../../shared/test/Mock';
 import {APP_BASE_HREF} from '@angular/common';
 import { AuthComponent } from '../../auth/auth.component';
 import {UserNameService} from '../../shared/user-name.service';
+import {LinkHelper, LINK} from '../../shared/router/linkhelper';
 
 describe('component: TestComponent', function() {
     beforeEach(() => {
@@ -17,7 +18,7 @@ describe('component: TestComponent', function() {
       TestBed.configureTestingModule({
         declarations: [HeaderComponent],
             imports: [RouterTestingModule],
-            providers: [UserNameService]
+            providers: [LinkHelper, UserNameService]
         }).compileComponents();
     });
     describe('HeaderComponent Create', () => {

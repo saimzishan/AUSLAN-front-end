@@ -4,6 +4,7 @@
   ],
   "rules": {
     "class-name": true,
+    "no-unused-variable": true,
     "comment-format": [
       true,
       "check-space"

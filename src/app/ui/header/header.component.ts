@@ -1,6 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import {GLOBAL} from '../../shared/global';
-import { Router } from '@angular/router';
 import {UserNameService} from '../../shared/user-name.service';
 import {LinkHelper, LINK} from '../../shared/router/linkhelper';
 

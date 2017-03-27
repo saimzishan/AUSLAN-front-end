@@ -1,10 +1,9 @@
-import { Component, Input, Output, EventEmitter, AfterViewChecked, OnInit } from '@angular/core';
+import { Component,  AfterViewChecked } from '@angular/core';
 import { Booking } from '../../shared/model/booking.entity';
 import { BookingService } from '../../api/booking.service';
 import { BOOKING_NATURE } from '../../shared/model/booking-nature.enum';
 import { PARKING } from '../../shared/model/parking.enum';
 import { SpinnerService } from '../../spinner/spinner.service';
-import { EnumValPipe } from '../../shared/pipe/enum-val.pipe';
 import { BOOKING_STATUS } from '../../shared/model/booking-status.enum';
 import { GLOBAL } from '../../shared/global';
 import { NotificationServiceBus } from '../../notification/notification.service';

@@ -1,9 +1,7 @@
 import {AuthGuard} from './auth.guard';
-import {ReflectiveInjector} from '@angular/core';
 import {Router} from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TestBed, async, inject } from '@angular/core/testing';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { User } from '../shared/model/user.entity';
 import { RouterStub } from '../shared/test/Mock';
 

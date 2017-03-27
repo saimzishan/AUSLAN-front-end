@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../api/user.service';
 import {User} from '../shared/model/user.entity';
-import {GLOBAL} from '../shared/global';
 import { ROLE } from '../shared/model/role.enum';
-import {NotificationComponent} from '../notification/notification.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import {NotificationServiceBus} from '../notification/notification.service';
 
@@ -34,7 +32,7 @@ export class RegisterComponent implements OnInit {
 
         this.selected = true;
         this.selectedRole = role.toUpperCase();
-        this.router.navigate(['register/step2']);
+        this.router.navigate(['register', 'step2']);
 
     }
 

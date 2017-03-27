@@ -1,6 +1,6 @@
 'use strict';
 
-import {Component, OnInit, Input, OnDestroy} from '@angular/core';
+import {Component, Input, OnDestroy} from '@angular/core';
 
 @Component({
   selector: 'app-spinner',

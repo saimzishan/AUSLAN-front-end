@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import {Http, Headers, Response, RequestOptions} from '@angular/http';
+import {Headers, RequestOptions} from '@angular/http';
 import {Booking} from '../shared/model/booking.entity';
-import {ROLE} from '../shared/model/role.enum';
-import {GLOBAL, authService} from '../shared/global';
+import {GLOBAL} from '../shared/global';
 import { Observable } from 'rxjs/Observable';
 import { ApiService } from './api.service';
 import 'rxjs/add/operator/catch';
@@ -12,7 +11,6 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/observable/throw';
-import { AuthHttp } from 'angular2-jwt';
 
 @Injectable()
 export class BookingService extends ApiService {

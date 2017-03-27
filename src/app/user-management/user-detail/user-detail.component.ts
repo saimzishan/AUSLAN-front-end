@@ -1,5 +1,5 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { MdDialog, MdDialogConfig, MdDialogRef } from '@angular/material';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { MdDialogRef } from '@angular/material';
 import { User } from '../../shared/model/user.entity';
 import { UserService } from '../../api/user.service';
 import { ROLE } from '../../shared/model/role.enum';

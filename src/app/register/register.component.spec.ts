@@ -26,10 +26,8 @@ describe('RegisterComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [RegisterComponent, NotificationComponent],
-            imports: [MockModule, FormsModule, CustomFormsModule, SimpleNotificationsModule.forRoot(),
-              RouterTestingModule.withRoutes(
-          [  {path: 'register', component: DummyComponent},
-            { path: 'register/step2', component: DummyComponent }])],
+            imports: [FormsModule, CustomFormsModule, SimpleNotificationsModule.forRoot(),
+              RouterTestingModule],
             providers: [NotificationServiceBus,
             { provide: UserService, useClass: MockUserService}, { provide: AuthHttp, useClass: MockBackend} ]
         }).compileComponents();

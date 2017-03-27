@@ -21,8 +21,6 @@ import { ModuleWithProviders }  from '@angular/core';
 import { RegisterComponent } from '../register/register.component';
 import { EnumValPipe } from '../shared/pipe/enum-val.pipe';
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
-import { ResetComponent } from '../reset/reset.component';
-import { VerifyComponent } from '../verify/verify.component';
 import {authService} from '../shared/global';
 import {  HttpModule, Http, RequestOptions } from '@angular/http';
 import { NotificationComponent } from '../notification/notification.component';
@@ -36,6 +34,7 @@ import { MockBackend, MockConnection } from '@angular/http/testing';
 import {MockUserService} from '../shared/test/Mock';
 import { RouterTestingModule } from '@angular/router/testing';
 import {UserNameService} from '../shared/user-name.service';
+import {LinkHelper, LINK} from '../shared/router/linkhelper';
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
@@ -45,7 +44,8 @@ describe('DashboardComponent', () => {
     TestBed.configureTestingModule({
       declarations: [DashboardComponent, UserFilterComponent, UserHeaderComponent, UserListComponent ],
       imports: [FormsModule, RouterTestingModule, CustomFormsModule],
-      providers: [UserNameService, { provide: UserService, useClass: MockUserService}, { provide: AuthHttp, useClass: MockBackend} ]
+      providers: [LinkHelper, UserNameService,
+        { provide: UserService, useClass: MockUserService}, { provide: AuthHttp, useClass: MockBackend} ]
     })
     .compileComponents();
   }));
