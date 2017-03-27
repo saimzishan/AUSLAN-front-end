@@ -1,4 +1,4 @@
-<app-user-header [activeLink]='Profile' ></app-user-header>
+<app-user-header></app-user-header>
 
 <main>
   <form class="common-form reduced-top">
@@ -67,7 +67,7 @@
   	</div>
     <section class="actions">
       <button name="edit_user" class="login button"
-      [disabled]="last_name.errors ||first_name.errors  || email.errors" (click)="editUser()"> 'SAVE' </button>
+      [disabled]="last_name.errors ||first_name.errors  || email.errors" (click)="editUser()"> SAVE </button>
     </section>
   </form>
 </main>

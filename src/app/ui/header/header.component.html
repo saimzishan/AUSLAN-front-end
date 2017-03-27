@@ -2,20 +2,19 @@
 	<a href="/"><i class="icons icons-logo"></i></a>
 
 	<nav>
-		<a id="lnkBooking" [ngClass]="{'active': links['Booking']}" (click)="links['Booking'] = true;" [routerLink]="['/booking-management']"><span><i class="icon-bookings"></i> BOOKINGS</span></a>
+		<a id="lnkBooking" [ngClass]="{'active':linkHelper.activeLink  === linkName.booking}" (click)="linkHelper.activeLink = linkName.booking;" [routerLink]="['/booking-management']"><span><i class="icon-bookings"></i> BOOKINGS</span></a>
 		<a href="#"><span><i class="icon-messages"></i> MESSAGES</span></a>
 		<a href="#"><span><i class="icon-reports"></i> REPORTS</span></a>
 	</nav>
 
-	<!-- button class="button">+ New Booking</button -->
-	<a id="lnkNewBooking" class="button" [routerLink]="['/booking-management','create']">+ New Booking</a>
+	<a id="lnkNewBooking" [ngClass]="{'active':linkHelper.activeLink  === linkName.booking}" (click)="linkHelper.activeLink = linkName.booking;" class="button" [routerLink]="['/booking-management','create']">+ New Booking</a>
 
 	<section>
 		<ul class="dropdown menu" data-dropdown-menu>
 			<li>
-				<a id="lnkProfile" [routerLink]="['user-management','profile']"><img src="assets/img/dummy/anna.png">{{fullName}}</a>
+				<a id="lnkProfile" [ngClass]="{'active':linkHelper.activeLink  === linkName.profile}" (click)="linkHelper.activeLink = linkName.profile;" [routerLink]="['user-management','profile']"><img src="assets/img/dummy/anna.png">{{fullName}}</a>
 				<ul class="menu">
-					<li><a id="lnkSettings" [routerLink]="['user-management']"><i class="icon-settings"></i> Settings</a></li>
+					<li><a id="lnkSettings" [ngClass]="{'active':linkHelper.activeLink  === linkName.usermanagement}" (click)="linkHelper.activeLink = linkName.usermanagement;" [routerLink]="['user-management']"><i class="icon-settings"></i> Settings</a></li>
 					<li><a id="lnkLogout" [routerLink]="['/authenticate','logout']"><i class="icon-logout"></i> Log Out</a></li>
 				</ul>
 			</li>

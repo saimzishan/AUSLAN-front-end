@@ -15,7 +15,6 @@ import {UserListComponent} from './user-list/user-list.component';
 import {SpinnerService} from '../spinner/spinner.service';
 import {ViewChild, ViewChildren} from '@angular/core';
 import {UserProfileComponent} from './user-profile/user-profile.component';
-import { ActivatedRoute } from '@angular/router';
 
 declare var $: JQueryStatic;
 
@@ -27,28 +26,18 @@ declare var $: JQueryStatic;
 
 })
 
-export class UserManagementComponent implements AfterViewChecked, OnInit {
+export class UserManagementComponent implements AfterViewChecked {
     newUser: User = new User();
     roles: any;
     users: Array<User> = [];
     // this is bad
-    activeLink = 'ManageUsers';
-    selectedLastName = 'I am ';
-    profilePage = false;
 
     ngAfterViewChecked() {
       $(document).foundation();
-
     }
 
-    ngOnInit() {
-      this.routes.url.subscribe( v => {
-        this.profilePage = (v.length > 1 && v[1].path === 'profile');
-        this.activeLink = this.profilePage ? 'Profile' : 'ManageUsers';
-      });
-    }
 
-    constructor(public spinnerService: SpinnerService, public routes: ActivatedRoute,
+    constructor(public spinnerService: SpinnerService,
       public userDataService: UserService) {
       this.roles = ROLE;
       this.fetchUsers();

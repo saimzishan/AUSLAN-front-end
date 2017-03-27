@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import {LinkHelper, LINK} from '../../shared/router/linkhelper';
 
 @Component({
   selector: 'app-user-header',
@@ -6,5 +7,6 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./user-header.component.css']
 })
 export class UserHeaderComponent {
-  @Input() activeLink = '';
+  linkName = LINK;
+  constructor(public linkHelper: LinkHelper) {}
 }

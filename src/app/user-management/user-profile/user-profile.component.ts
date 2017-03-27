@@ -5,6 +5,8 @@ import { ROLE } from '../../shared/model/role.enum';
 import { SpinnerService } from '../../spinner/spinner.service';
 import { NotificationServiceBus } from '../../notification/notification.service';
 import {GLOBAL} from '../../shared/global';
+import {LinkHelper, LINK} from '../../shared/router/linkhelper';
+import {UserNameService} from '../../shared/user-name.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -16,7 +18,8 @@ export class UserProfileComponent {
   userStatusArray = [{ name: 'ACTIVE' }, { name: 'DISABLED' }];
   selectedStatus = '';
 
-  constructor(public userDataService: UserService, public notificationServiceBus: NotificationServiceBus,
+  constructor(public userDataService: UserService, public userNameService: UserNameService,
+    public notificationServiceBus: NotificationServiceBus,
     public spinnerService: SpinnerService) {
   }
 
@@ -25,6 +28,7 @@ export class UserProfileComponent {
       .subscribe((res: any) => {
         if (res.status === 204) {
           // UI Notification
+          this.userNameService.setLoggedInUser(this.userModel);
           this.notificationServiceBus.launchNotification(false, 'User details updated Successfully');
         }
       },

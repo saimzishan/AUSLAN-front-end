@@ -41,6 +41,7 @@ import { Md2Module }  from 'md2';
 import {SimpleNotificationsModule} from 'angular2-notifications';
 import {NotificationServiceBus} from './notification/notification.service';
 import { UserProfileComponent } from './user-management/user-profile/user-profile.component';
+import {LinkHelper} from './shared/router/linkhelper';
 
 @NgModule({
   declarations: [
@@ -74,7 +75,7 @@ import { UserProfileComponent } from './user-management/user-profile/user-profil
     HttpModule, SimpleNotificationsModule.forRoot(),
     ReactiveFormsModule, Md2Module.forRoot(),
     MaterialModule
-  ],  providers: [UserNameService, AuthGuard, Title,
+  ],  providers: [UserNameService, AuthGuard, Title, LinkHelper,
     NotificationServiceBus, SpinnerService, BookingService, UserService,
     {provide: APP_BASE_HREF, useValue : '/' }, {
       provide: AuthHttp,
