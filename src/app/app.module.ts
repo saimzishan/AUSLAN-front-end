@@ -42,6 +42,7 @@ import {LinkHelper} from './shared/router/linkhelper';
 import {
   RouterModule,
 } from '@angular/router';
+import { AuthHttp } from 'angular2-jwt';
 
 @NgModule({
   declarations: [
@@ -66,8 +67,8 @@ import {
     UserListComponent,
     UserHeaderComponent,
     UserDetailComponent,
-    UserProfileComponent,
-  ], exports: [EnumValPipe],
+    UserProfileComponent, EnumValPipe
+  ],
    entryComponents: [UserDetailComponent],
   imports: [CustomFormsModule, routing,
     BrowserModule, RouterModule,
