@@ -39,6 +39,9 @@ import {SimpleNotificationsModule} from 'angular2-notifications';
 import {NotificationServiceBus} from './notification/notification.service';
 import { UserProfileComponent } from './user-management/user-profile/user-profile.component';
 import {LinkHelper} from './shared/router/linkhelper';
+import {
+  RouterModule,
+} from '@angular/router';
 
 @NgModule({
   declarations: [
