@@ -10,7 +10,6 @@ import {NotificationServiceBus} from '../notification/notification.service';
     templateUrl: './register.component.html',
     styleUrls: ['./register.component.css']
 })
-
 export class RegisterComponent implements OnInit {
     public model: User = new User();
     public selected = false;

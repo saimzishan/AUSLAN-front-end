@@ -11,7 +11,7 @@ import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/observable/throw';
 import {SpinnerService} from '../spinner/spinner.service';
 
-declare var $: JQueryStatic;
+declare var $: any;
 
 @Component({
     selector: 'app-admin',

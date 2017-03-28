@@ -8,7 +8,7 @@ import { BOOKING_STATUS } from '../../shared/model/booking-status.enum';
 import { GLOBAL } from '../../shared/global';
 import { NotificationServiceBus } from '../../notification/notification.service';
 
-declare var $: JQueryStatic;
+declare var $: any;
 
 @Component({
   selector: 'app-booking-detail',
