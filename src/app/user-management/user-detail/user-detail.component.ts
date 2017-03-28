@@ -105,7 +105,6 @@ export class UserDetailComponent {
   }
 
   updateStatus(e: boolean) {
-    this.spinnerService.requestInProcess(true);
     if (e) {
       this.enableUser();
     }
@@ -114,6 +113,7 @@ export class UserDetailComponent {
 
 
   enableUser() {
+    this.spinnerService.requestInProcess(true);
     this.userModel.disabled = this.selectedStatus === 'DISABLED';
     this.userDataService.updateUser(this.userModel)
       .subscribe((res: any) => {
