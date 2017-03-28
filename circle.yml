@@ -9,7 +9,7 @@ test:
     - bundle exec pact-mock-service start -p 1234 -l tmp/pact-user.log --pact-dir tmp/pacts
     - npm install codeclimate-test-reporter -g
   override:
-    - npm run lint
+    - ng lint
     - ng test --code-coverage --watch=false --singleRun=true --browser Chrome_without_security
   post:
     - bundle exec pact-mock-service stop -p 1233
@@ -23,7 +23,7 @@ test:
 
 deployment:
   prod:
-    branch: master
+    branch: aot-master
     commands:
       - aws s3 sync dist/  s3://auslan-booking-system-ct/ --delete
       - npm run pact
