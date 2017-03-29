@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { NotificationServiceBus } from '../notification/notification.service';
 import { UserService } from '../api/user.service';
 
@@ -7,13 +7,10 @@ import { UserService } from '../api/user.service';
   templateUrl: './reset.component.html',
   styleUrls: ['./reset.component.css']
 })
-export class ResetComponent implements OnInit {
+export class ResetComponent {
   public emailAddress = '';
 
   constructor(public service: UserService, public notificationServiceBus: NotificationServiceBus) { }
-
-  ngOnInit() {
-  }
 
   resetUser() {
     this.service.resetUser(this.emailAddress)

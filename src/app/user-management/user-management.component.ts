@@ -10,6 +10,7 @@ import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/observable/throw';
 import {SpinnerService} from '../spinner/spinner.service';
+import { NotificationServiceBus } from '../notification/notification.service';
 
 declare var $: any;
 
@@ -33,6 +34,7 @@ export class UserManagementComponent implements AfterViewChecked {
 
 
     constructor(public spinnerService: SpinnerService,
+    public notificationServiceBus: NotificationServiceBus,
       public userDataService: UserService) {
       this.roles = ROLE;
       this.fetchUsers();
@@ -40,6 +42,20 @@ export class UserManagementComponent implements AfterViewChecked {
 
     onEditUser(u: User) {
         this.newUser = u;
+    }
+
+    onResetPassword(u: User) {
+      this.userDataService.resetUser(u.email)
+      .subscribe((res: any) => {
+        if (res.status === 200) {
+          this.notificationServiceBus.launchNotification(false, 'The email address has been sent to your address');
+        }
+      },
+      err => {
+        console.log(err);
+        this.notificationServiceBus.launchNotification(true, 'The email address is not registered with us.');
+      },
+      () => { });
     }
 
     fetchUsers() {
