@@ -249,9 +249,9 @@
 						<div class="medium-6 columns">
 							<div class="form-field">
 								<label>DEAF PERSON'S EAF/UR ID NUMBER * <span mdTooltip="Enter deaf person EAF number!"><i class="inline-icon-tip"></i></span></label>
-								<input type="tel" placeholder="Enter deaf person EAF number" [(ngModel)]="bookingModel.deaf_person.eaf" name="deaf_person_eaf" #deaf_person_eaf="ngModel" required>
-								<span *ngIf="deaf_person_eaf.touched && !deaf_person_eaf.errors?.required;" class="inline-icon inline-icon-valid valid"></span>
-								<span *ngIf="deaf_person_eaf.touched && deaf_person_eaf.errors?.required;" class="inline-icon error">
+								<input type="tel" placeholder="Enter deaf person EAF number" [(ngModel)]="bookingModel.deaf_person.eaf" name="deaf_person_eaf" #deaf_person_eaf="ngModel" required digits>
+								<span *ngIf="deaf_person_eaf.touched && !deaf_person_eaf.errors?.required && !deaf_person_eaf.errors?.digits;" class="inline-icon inline-icon-valid valid"></span>
+								<span *ngIf="deaf_person_eaf.touched && (deaf_person_eaf.errors?.required || deaf_person_eaf.errors?.digits);" class="inline-icon error">
 													<span>Minimum 6 digits required.</span>!</span>
 							</div>
 						</div>

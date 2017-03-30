@@ -23,7 +23,7 @@ export class Booking {
 
     constructor() {
       this.id = '-1';
-      this.venue.expected_attendance = -1;
+      this.venue.expected_attendance = 0;
       this.venue.addressline_1 = '';
       this.venue.start_time = new Date();
       this.venue.end_time = new Date();
@@ -34,7 +34,7 @@ export class Booking {
       this.deaf_person.name = '';
       this.deaf_person.email = '';
       this.deaf_person.mobile_number = '';
-      this.deaf_person.eaf = -1;
+      this.deaf_person.eaf = 0;
       this.nature_of_appointment = BOOKING_NATURE.None;
       this.specific_nature_of_appointment = BOOKING_NATURE.None;
       this.status = BOOKING_STATUS.None;
