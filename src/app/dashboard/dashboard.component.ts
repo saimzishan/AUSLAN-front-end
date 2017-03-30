@@ -31,7 +31,8 @@ export class DashboardComponent implements OnInit {
                       this.router.navigate(['/verify/' + user.id]);
                   }else {
                     this.router.navigate(['/user-management']);
-                    LinkHelper.activeLink = LINK[LINK.usermanagement];
+                    LinkHelper.activeLink = LINK.usermanagement;
+                    this.linkHelper = LinkHelper;
                   }
               }
           },

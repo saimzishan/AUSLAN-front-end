@@ -13,49 +13,29 @@ import {UserNameService} from '../../shared/user-name.service';
 })
 export class UserProfileComponent {
   userModel: User = GLOBAL.currentUser;
-  userStatusArray = [{ name: 'ACTIVE' }, { name: 'DISABLED' }];
   selectedStatus = '';
+  userStatusArray = GLOBAL.userStatusArray;
 
   constructor(public userDataService: UserService, public userNameService: UserNameService,
     public notificationServiceBus: NotificationServiceBus,
     public spinnerService: SpinnerService) {
+      this.selectedStatus = this.userModel.disabled === false ? this.userStatusArray[0].name : this.userStatusArray[1].name;
   }
+
 
   editUser() {
-    this.userDataService.updateUser(this.userModel)
-      .subscribe((res: any) => {
-        if (res.status === 204) {
-          // UI Notification
-          this.userNameService.setLoggedInUser(this.userModel);
-          this.notificationServiceBus.launchNotification(false, 'User details updated Successfully');
-        }
-      },
-      (err) => {
-        this.spinnerService.requestInProcess(false);
-        this.notificationServiceBus.launchNotification(true, err);
-      });
-  }
-
-  updateStatus(e: boolean) {
-    this.spinnerService.requestInProcess(true);
-    if (e) {
-      this.enableUser();
-    }
-    this.selectedStatus = '';
-  }
-
-
-  enableUser() {
-    this.userModel.disabled = this.selectedStatus === 'DISABLED';
-    this.userDataService.updateUser(this.userModel)
-      .subscribe((res: any) => {
-        if (res.status === 204) {
-          this.notificationServiceBus.launchNotification(false, 'User status has been changed Successfully');
-        }
-      },
-      (err) => {
-        this.spinnerService.requestInProcess(false);
-        this.notificationServiceBus.launchNotification(true, err);
-      });
+      this.userModel.disabled = this.selectedStatus === 'Disabled';
+      this.selectedStatus = '';
+      this.userDataService.updateUser(this.userModel)
+          .subscribe((res: any) => {
+              if (res.status === 204) {
+                  // UI Notification
+                  this.notificationServiceBus.launchNotification(false, 'User details updated Successfully');
+              }
+          },
+          (err) => {
+              this.spinnerService.requestInProcess(false);
+              this.notificationServiceBus.launchNotification(true, err);
+          });
   }
 }

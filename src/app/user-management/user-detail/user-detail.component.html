@@ -87,7 +87,7 @@
 								<div class="form-field">
 									<label>STATUS</label>
 									<md-select name="selStatus" [(ngModel)]="selectedStatus">
-										<md-option *ngFor="let i of userStatusArray" [value]="i.name">{{i.name}}</md-option>
+										<md-option *ngFor="let i of userStatusArray" [value]="i.name" >{{i.name}}</md-option>
 									</md-select>
 								</div>
 							</div>
@@ -98,15 +98,7 @@
 
 		</main>
 	</md-dialog-content>
-	<div [hidden]='!selectedStatus || selectedStatus.length < 1'>
-		<md-dialog-actions>
-			<strong>Are you sure?</strong>
-			<section>
-				<button (click)="updateStatus(true)">Yes</button>
-				<button (click)="updateStatus(false)" class="red">No</button>
-			</section>
-		</md-dialog-actions>
-	</div>
+
 	<div [hidden]='!showForm'>
 		<md-dialog-actions>
 			<button name="add_user" class="login button" [disabled]="last_name.errors ||first_name.errors  || email.errors || (isNewUser && (password.errors|| certainPassword.errors)) " (click)="applyChanges()"> {{ isNewUser ? 'CREATE' : 'SAVE' }} </button>

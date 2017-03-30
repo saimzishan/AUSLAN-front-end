@@ -9,13 +9,14 @@ import {LinkHelper, LINK} from '../../shared/router/linkhelper';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
-  linkName = LINK;
+  linkName: LINK;
   @Input() fullName = GLOBAL.currentUser ? GLOBAL.currentUser.first_name + ' '  + GLOBAL.currentUser.last_name : '';
   constructor(public userNameService: UserNameService, public linkHelper: LinkHelper) {
       this.userNameService.loggedInUser$.subscribe(
         u => {
           this.fullName = u.first_name + ' ' + u.last_name;
         });
+        this.linkHelper = LinkHelper;
+        this.linkName = LinkHelper.activeLink;
   }
-
 }

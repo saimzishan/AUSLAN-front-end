@@ -56,15 +56,7 @@
         </div>
       </div>
     </div>
-    <div [hidden]='!selectedStatus || selectedStatus.length < 1'>
-  		<md-dialog-actions>
-  			<strong>Are you sure?</strong>
-  			<section>
-  				<button (click)="updateStatus(true)">Yes</button>
-  				<button (click)="updateStatus(false)" class="red">No</button>
-  			</section>
-  		</md-dialog-actions>
-  	</div>
+  
     <section class="actions">
       <button name="edit_user" class="login button"
       [disabled]="last_name.errors ||first_name.errors  || email.errors" (click)="editUser()"> SAVE </button>

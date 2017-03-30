@@ -7,14 +7,14 @@ export enum blockout_availability {}
 
 export class User {
 
-  public email = 'auslan@curvetomorrow.com.au';
+  public email: string;
   public password: string;
   public confirm_password: string;
   public role: ROLE;
-  public first_name = 'Auslan';
-  public last_name = 'User';
+  public first_name: string;
+  public last_name: string;
   public id: number;
-  public mobile = 'xxxx xxx xxx';
+  public mobile: string;
   public token = '';
   public verified = false;
   public disabled = true;

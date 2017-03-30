@@ -37,7 +37,7 @@
 							<div class="form-field">
 								<label>FIRST NAME *	</label>
 
-								<input type="text" class="inline-icon inline-icon-user-circle valid" placeholder="" [(ngModel)]="model.first_name" name="first_name"
+								<input type="text" class="inline-icon inline-icon-user-circle valid" placeholder="Enter your first name" [(ngModel)]="model.first_name" name="first_name"
 									#first_name="ngModel" [rangeLength]="[3, 20]" required>
 									<span *ngIf="first_name.touched && !first_name.errors?.required && !first_name.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
 									<span *ngIf="first_name.touched && (first_name.errors?.required || first_name.errors?.rangeLength);" class="inline-icon error">
@@ -48,7 +48,7 @@
 								<div class="form-field">
 									<label>LAST NAME *</label>
 
-									<input type="text" class="inline-icon inline-icon-user-circle valid" placeholder="" [(ngModel)]="model.last_name" name="last_name"
+									<input type="text" class="inline-icon inline-icon-user-circle valid" placeholder="Enter your last name" [(ngModel)]="model.last_name" name="last_name"
 										#last_name="ngModel" [rangeLength]="[3, 30]" required>
 										<span *ngIf="last_name.touched && !last_name.errors?.required && !last_name.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
 										<span *ngIf="last_name.touched && (last_name.errors?.required || last_name.errors?.rangeLength);" class="inline-icon error">
@@ -94,7 +94,7 @@
 							<div class="medium-6 columns">
 								<div class="form-field">
 									<label class="icon-mobile">MOBILE * </label>
-									<input type="tel" placeholder="" [(ngModel)]="model.mobile" name="mobile" #mobile="ngModel" required>
+									<input type="tel" placeholder="Enter your mobile" [(ngModel)]="model.mobile" name="mobile" #mobile="ngModel" required>
 									<span *ngIf="mobile.touched && !mobile.errors?.required;" class="inline-icon inline-icon-valid valid"></span>
 									<span *ngIf="mobile.touched && mobile.errors?.required;" class="inline-icon error">
 											<span>Minimum 6 digits required.</span>!</span>
