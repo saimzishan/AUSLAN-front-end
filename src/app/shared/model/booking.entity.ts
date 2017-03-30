@@ -19,6 +19,7 @@ export class Booking {
     public raw_venue_address:  string;
     public raw_booking_address:  string;
     public interpreters: Array<Contact> = [];
+    public interpreters_required = 0;
 
     constructor() {
       this.id = '-1';
