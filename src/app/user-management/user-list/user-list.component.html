@@ -61,7 +61,7 @@
 
 							<td>{{user.first_name}}</td>
 							<td>{{user.last_name}}</td>
-							<td class="truncated-text">{{ user.type }}</td>
+							<td class="truncated-text">{{ user.type | spacer}}</td>
 							<td>Auslan</td>
 							<td class="truncated-text">
 								<a href="mailto:{{user.email}}">{{user.email}}</a>

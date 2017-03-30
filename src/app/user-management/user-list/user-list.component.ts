@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import {User} from '../../shared/model/user.entity';
+import { SpacerPipe } from '../../shared/pipe/spacer.pipe';
 
 @Component({
   selector: 'app-user-list',
