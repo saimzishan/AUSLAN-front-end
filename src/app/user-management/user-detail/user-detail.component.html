@@ -57,7 +57,8 @@
 					</div>
 
 					<div [hidden]='!isNewUser' class="row small-collapse">
-						<div class="medium-6 columns">
+						<div class="row-wrapper">
+							<div class="medium-6 columns">
 							<div class="form-field">
 								<label>
 								    PASSWORD *</label>
@@ -66,10 +67,10 @@
 								<span *ngIf="password.touched &&  (!password.errors?.required && password.errors?.rangeLength);" class="inline-icon inline-icon-valid valid"></span>
 								<span *ngIf="password.touched && (password.errors?.required || password.errors?.rangeLength);" class="inline-icon error">
 									<span>Minimum 6 characters required.</span>!</span>
+								</div>
 							</div>
-						</div>
-						<div class="medium-6 columns">
-							<div class="form-field">
+							<div class="medium-6 columns">
+								<div class="form-field">
 								<label class="icon-lock">
 								   CONFIRM PASSWORD *</label>
 								<input id="certainPassword" name="certainPassword" type="password" placeholder="Confirm password" [(ngModel)]="userModel.confirm_password" name="certainPassword" #certainPassword="ngModel" [equalTo]="password" required>
@@ -79,6 +80,7 @@
 							</div>
 						</div>
 					</div>
+				</div>
 
 						<div [hidden]='isNewUser || !userModel.verified' class="row small-collapse">
 							<div class="medium-6 columns">
