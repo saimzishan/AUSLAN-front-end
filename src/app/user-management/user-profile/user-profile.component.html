@@ -45,20 +45,22 @@
                       <span>Minimum 6 digits required.</span>!</span>
           </div>
         </div>
-        <div [hidden]='!userModel.verified' class="row small-collapse">
-          <div class="form-field medium-6 columns">
+        <div class="medium-6 columns">
+            <div class="form-field"></div>
+        </div>
+        <div [hidden]='!userModel.verified' class="medium-6 columns">
+          <div class="form-field">
             <label>STATUS</label>
             <md-select name="selStatus" [(ngModel)]="selectedStatus">
               <md-option *ngFor="let i of userStatusArray" [value]="i.name" >{{i.name}}</md-option>
             </md-select>
           </div>
-          <div class="medium-6 columns"></div>
         </div>
       </div>
     </div>
 
     <section class="actions">
-      <button name="edit_user" 
+      <button name="edit_user"
       [disabled]="last_name.errors ||first_name.errors  || email.errors" (click)="editUser()"> SAVE </button>
     </section>
   </form>
