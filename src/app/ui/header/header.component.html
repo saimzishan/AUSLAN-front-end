@@ -1,15 +1,15 @@
 <header id="header">
 	<a href="/"><i class="icons icons-logo"></i></a>
 
-	<nav>
+	<nav *ngIf="userIsActive">
 		<a id="lnkBooking" [ngClass]="{'active':linkHelper.activeLink  === linkName.booking}" (click)="linkHelper.activeLink = linkName.booking;" [routerLink]="['/booking-management']"><span><i class="icon-bookings"></i> BOOKINGS</span></a>
 		<a href="#"><span><i class="icon-messages"></i> MESSAGES</span></a>
 		<a href="#"><span><i class="icon-reports"></i> REPORTS</span></a>
 	</nav>
 
-	<a id="lnkNewBooking" [ngClass]="{'active':linkHelper.activeLink  === linkName.booking}" (click)="linkHelper.activeLink = linkName.booking;" class="button" [routerLink]="['/booking-management','create']">+ New Booking</a>
+	<a *ngIf="userIsActive" id="lnkNewBooking" [ngClass]="{'active':linkHelper.activeLink  === linkName.booking}" (click)="linkHelper.activeLink = linkName.booking;" class="button" [routerLink]="['/booking-management','create']">+ New Booking</a>
 
-	<section>
+	<section *ngIf="userIsActive">
 		<ul class="dropdown menu" data-dropdown-menu>
 			<li>
 				<a id="lnkProfile" [ngClass]="{'active':linkHelper.activeLink  === linkName.profile}" (click)="linkHelper.activeLink = linkName.profile;" [routerLink]="['user-management','profile']"><img src="assets/img/dummy/anna.png">{{fullName}}</a>

@@ -10,11 +10,14 @@ import {LinkHelper, LINK} from '../../shared/router/linkhelper';
 })
 export class HeaderComponent {
   linkName: LINK;
+  userIsActive = false;
   @Input() fullName = GLOBAL.currentUser ? GLOBAL.currentUser.first_name + ' '  + GLOBAL.currentUser.last_name : '';
   constructor(public userNameService: UserNameService, public linkHelper: LinkHelper) {
       this.userNameService.loggedInUser$.subscribe(
         u => {
           this.fullName = u.first_name + ' ' + u.last_name;
+          this.userIsActive = GLOBAL.currentUser.verified && (GLOBAL.currentUser.disabled === false);
+
         });
         this.linkHelper = LinkHelper;
         this.linkName = LinkHelper.activeLink;

@@ -16,8 +16,9 @@
 						<div class="form-field">
 
 							<label>VERIFICATION CODE * </label> <input type="password" placeholder="" [(ngModel)]='verificationCode' name="verification_code" #verification_code="ngModel" [rangeLength]="[4, 8]" required>
-							<span *ngIf="verification_code.touched && (!verification_code.errors?.required && !verification_code.errors?.rangeLength);"
-											class="inline-icon inline-icon-valid valid"></span> <span *ngIf="(verification_code.dirty || verification_code.touched) && (verification_code.errors?.required || verification_code.errors.errors?.rangeLength);" class="inline-icon error"> <span>This field is
+							<span *ngIf="verification_code.touched && (!verification_code.errors?.required && !verification_code.errors?.rangeLength);" class="inline-icon inline-icon-valid valid"></span>
+							<span *ngIf="(verification_code.dirty || verification_code.touched) && (verification_code.errors?.required || verification_code.errors.errors?.rangeLength);"
+											class="inline-icon error"> <span>This field is
 								required.</span>!
 								</span>
 						</div>
@@ -25,12 +26,20 @@
 					</div>
 
 				</div>
+				<div class="row">
 
-				<button name="verify_user" class="login button" [disabled]="verification_code.errors" (click)="verifyUser()">
+
+					<div class="medium-6 columns">
+						<div class="form-field">
+							<button name="verify_user" class="login button" [disabled]="verification_code.errors" (click)="verifyUser()">
 					Verify User</button>
-				<button name="resend_code" class="login button" [disabled]="(userID < 1)" (click)="resendVerificationCode()">Resend Verification
+							<button name="resend_code" class="login button" [disabled]="(userID < 1)" (click)="resendVerificationCode()">Resend Verification
 					Code</button>
+						</div>
 
+					</div>
+
+				</div>
 			</div>
 		</div>
 	</form>

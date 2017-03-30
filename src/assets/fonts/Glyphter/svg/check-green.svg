@@ -1,1 +1,19 @@
-<svg width="17" height="17" viewBox="0 0 17 17" xmlns="http://www.w3.org/2000/svg"><title>63971E2E-A0AA-475B-ACCE-6CFA652990CC</title><g fill="none" fill-rule="evenodd"><circle fill="#1DB670" cx="8.5" cy="8.5" r="8.5"/><path d="M13.09 5.366a1.25 1.25 0 0 0-1.768 0l-4.42 4.42-1.768-1.768a1.25 1.25 0 1 0-1.768 1.768l2.652 2.651a1.25 1.25 0 0 0 1.768 0l5.303-5.303a1.25 1.25 0 0 0 0-1.768z" fill="#FFF"/></g></svg>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="17px" height="17px" viewBox="0 0 17 17" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 42 (36781) - http://www.bohemiancoding.com/sketch -->
+    <title>Green</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="4_red" transform="translate(-91.000000, -9.000000)">
+            <g id="Green">
+                <g transform="translate(91.000000, 9.000000)">
+                    <g>
+                        <circle id="Oval" fill="#1DB670" cx="8.5" cy="8.5" r="8.5"></circle>
+                        <path d="M13.0898035,5.36589191 C12.6016351,4.87803603 11.8100022,4.87803603 11.3218338,5.36589191 L6.90206576,9.7859725 L5.13409604,8.01800277 C4.64592762,7.52983436 3.85460725,7.52983436 3.36612631,8.01800277 C2.8779579,8.50617118 2.8779579,9.29780408 3.36612631,9.78628502 L6.01761211,12.4374583 C6.50578052,12.9256267 7.29772595,12.9256267 7.78589436,12.4374583 L13.089491,7.13386164 C13.577972,6.64569323 13.578597,5.85437286 13.0898035,5.36589191 L13.0898035,5.36589191 Z" id="Shape" fill="#FFFFFF"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
