@@ -71,7 +71,7 @@
 					<div [hidden]='isNewUser || !userModel.verified' class="row small-collapse">
 						<div class="form-field medium-6 columns">
 							<label>STATUS</label>
-							<md-select name="selStatus" placeholder="Status" [(ngModel)]="selectedStatus">
+							<md-select name="selStatus" [(ngModel)]="selectedStatus">
 								<md-option *ngFor="let i of userStatusArray" [value]="i.name" >{{i.name}}</md-option>
 							</md-select>
 						</div>

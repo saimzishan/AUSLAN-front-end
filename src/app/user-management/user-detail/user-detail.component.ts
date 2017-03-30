@@ -11,7 +11,7 @@ import { NotificationServiceBus } from '../../notification/notification.service'
   templateUrl: './user-detail.component.html',
   styleUrls: ['./user-detail.component.css']
 })
-export class UserDetailComponent {
+export class UserDetailComponent  {
   @Input('userModel') userModel: User;
   @Output() onRefresh = new EventEmitter();
   isNewUser = true;
@@ -60,11 +60,11 @@ export class UserDetailComponent {
     }
     this.showForm = false;
     this.isNewUser = true;
-    this.userModel = new User();
+    this.userModel = null;
     this.dialogRef.close();
     this.spinnerService.requestInProcess(false);
-
-  }
+    this.onRefresh.emit();
+    }
 
   applyChanges() {
     this.spinnerService.requestInProcess(true);
@@ -76,7 +76,6 @@ export class UserDetailComponent {
       .subscribe((res: any) => {
         if (res.data.id && 0 < res.data.id) {
           this.closeDialog();
-          this.onRefresh.emit();
           this.notificationServiceBus.launchNotification(false, 'User Created Successfully');
         }
       },
@@ -94,7 +93,6 @@ export class UserDetailComponent {
         if (res.status === 204) {
           // UI Notification
           this.closeDialog();
-          this.onRefresh.emit();
           this.notificationServiceBus.launchNotification(false, 'User details updated Successfully');
         }
       },
@@ -119,7 +117,6 @@ export class UserDetailComponent {
       .subscribe((res: any) => {
         if (res.status === 204) {
           this.closeDialog();
-          this.onRefresh.emit();
           this.notificationServiceBus.launchNotification(false, 'User status has been changed Successfully');
         }
       },

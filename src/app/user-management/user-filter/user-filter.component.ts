@@ -31,7 +31,9 @@ export class UserFilterComponent implements OnChanges {
                 let from = JSON.stringify(changes[propName].previousValue);
                 console.log(`${propName} changed from ${from} to ${to}`);
                 this.isNewUser = false;
-                this.showDialogBox();
+                if (null !== this.userModel) {
+                    this.showDialogBox();
+                }
             }
         }
     }
@@ -44,9 +46,10 @@ export class UserFilterComponent implements OnChanges {
 
     public showDialogBox() {
 
-        let config = new MdDialogConfig();
+      let config: MdDialogConfig = {
+          disableClose: true
+        };
         config.viewContainerRef = this.viewContainerRef;
-
         this.dialogRef = this.dialog.open(UserDetailComponent, config);
         this.dialogRef.componentInstance.userModel = this.userModel;
         this.dialogRef.componentInstance.isNewUser = this.isNewUser;
@@ -59,7 +62,7 @@ export class UserFilterComponent implements OnChanges {
 
         this.dialogRef.afterClosed().subscribe(result => {
           this.isNewUser = true;
-          this.userModel = new User();
+          this.userModel = null;
 
         });
     }

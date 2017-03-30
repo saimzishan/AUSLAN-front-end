@@ -11,6 +11,7 @@ import {NotificationServiceBus} from '../notification/notification.service';
     styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
+
     public model: User = new User();
     public selected = false;
     public selectedRole = 'Interpreter'.toUpperCase();
@@ -25,7 +26,6 @@ export class RegisterComponent implements OnInit {
     ngOnInit() {
         this.routes.url.subscribe(v => {
             this.selected = (v.length > 1 && v[1].path === 'step2');
-
         });
     }
     roleSelected(role) {

@@ -23,13 +23,13 @@ declare var $: any;
 })
 
 export class UserManagementComponent implements AfterViewChecked {
-    newUser: User = new User();
+    newUser: User = null;
     roles: any;
     users: Array<User> = [];
     // this is bad
 
     ngAfterViewChecked() {
-      $(document).foundation();
+        $(document).foundation();
     }
 
 
@@ -59,6 +59,7 @@ export class UserManagementComponent implements AfterViewChecked {
     }
 
     fetchUsers() {
+      this.newUser = null;
       this.spinnerService.requestInProcess(true);
       this.userDataService.fetchUsers()
       .subscribe((res: any) => {
