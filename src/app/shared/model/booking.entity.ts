@@ -25,8 +25,8 @@ export class Booking {
       this.id = '-1';
       this.venue.expected_attendance = 0;
       this.venue.addressline_1 = '';
-      this.venue.start_time = new Date();
-      this.venue.end_time = new Date();
+      this.venue.start_time = new Date().getTime();
+      this.venue.end_time = new Date().getTime();
       this.requested_by.name = '';
       this.contact.name = '';
       this.contact.phone_number = '';
@@ -45,8 +45,8 @@ export class Booking {
       this.id =  ped + data.id;
       this.venue.expected_attendance = data.number_of_people_attending;
       this.venue.addressline_1 = data.venue;
-      this.venue.start_time = data.start_time;
-      this.venue.end_time = data.end_time;
+      this.venue.start_time = Date.parse(data.start_time) || Date.parse('Wed, 09 Aug 1995 01:20:00 GMT');
+      this.venue.end_time = Date.parse(data.end_time) || Date.parse('Wed, 09 Aug 1995 02:30:00 GMT');
       this.requested_by.name = data.requested_by;
       this.contact.name = data.contact_name;
       this.contact.phone_number = data.contact_phone_number;
@@ -68,7 +68,7 @@ export class Booking {
       deaf_persons_name: this.deaf_person.name , deaf_persons_mobile: this.deaf_person.mobile_number,
       deaf_persons_email: this.deaf_person.email , deaf_persons_eaf_no: this.deaf_person.eaf ,
       number_of_people_attending: this.venue.expected_attendance ,
-      start_time: this.venue.start_time , end_time: this.venue.end_time ,
+      start_time: this.venue.start_time.toString() , end_time: this.venue.end_time.toString() ,
       parking_availability: PARKING[this.venue.parking_type]});
     }
 }

@@ -4,6 +4,7 @@ import {User} from '../shared/model/user.entity';
 import { ROLE } from '../shared/model/role.enum';
 import { ActivatedRoute, Router } from '@angular/router';
 import {NotificationServiceBus} from '../notification/notification.service';
+import {NotificationComponent} from '../notification/notification.component';
 
 @Component({
     selector: 'app-register',
@@ -16,7 +17,7 @@ export class RegisterComponent implements OnInit {
     public selected = false;
     public selectedRole = 'Interpreter'.toUpperCase();
     public successMessage = `Congrats Your user has been created.
-  Kindly go back to <a [routerLink]="['/authenticate']">Login Page</a> and Login`;
+  Kindly go back to Login Page and Login`;
 
     constructor(public userService: UserService,
         public notificationServiceBus: NotificationServiceBus,
@@ -56,11 +57,11 @@ export class RegisterComponent implements OnInit {
         this.userService.createUser(this.model)
             .subscribe((res: any) => {
                 this.model.id = res.data.id;
+                this.notificationServiceBus.launchNotification(false, this.successMessage );
 
             }, errors => {
-                console.log(errors);
-                this.notificationServiceBus.launchNotification(true, errors );
-            },
-            () => { });
+                let e = errors.json();
+                this.notificationServiceBus.launchNotification(true, errors.statusText + ' ' + e.errors.password[0] );
+            });
     }
 }
