@@ -52,6 +52,7 @@ import { PARKING } from './shared/model/parking.enum';
 import { BookingFilterComponent } from './booking-management/booking-filter/booking-filter.component';
 import { BookingListComponent } from './booking-management/booking-list/booking-list.component';
 import {NotificationServiceBus} from './notification/notification.service';
+import { SpacerPipe } from './shared/pipe/spacer.pipe';
 
 describe('AppComponent', () => {
   beforeEach(() => {
@@ -61,7 +62,7 @@ describe('AppComponent', () => {
         AuthComponent, UserFilterComponent, UserHeaderComponent, UserListComponent,
         DashboardComponent, NotificationComponent,
         UserManagementComponent, BookingHeaderComponent, BookingFilterComponent, BookingListComponent,
-        EnumValPipe, HeaderComponent,
+        EnumValPipe, HeaderComponent, SpacerPipe,
         NotFoundComponent, RegisterComponent, ResetComponent, VerifyComponent,
         BookingComponent,
         BookingDetailComponent,

@@ -35,6 +35,7 @@ import {MockUserService} from '../shared/test/Mock';
 import { RouterTestingModule } from '@angular/router/testing';
 import {UserNameService} from '../shared/user-name.service';
 import {LinkHelper, LINK} from '../shared/router/linkhelper';
+import { SpacerPipe } from '../shared/pipe/spacer.pipe';
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
@@ -42,7 +43,7 @@ describe('DashboardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [DashboardComponent, UserFilterComponent, UserHeaderComponent, UserListComponent ],
+      declarations: [DashboardComponent, SpacerPipe, UserFilterComponent, UserHeaderComponent, UserListComponent ],
       imports: [FormsModule, RouterTestingModule, CustomFormsModule],
       providers: [LinkHelper, UserNameService,
         { provide: UserService, useClass: MockUserService}, { provide: AuthHttp, useClass: MockBackend} ]

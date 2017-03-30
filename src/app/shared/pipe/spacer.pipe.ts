@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class SpacerPipe implements PipeTransform {
 
   transform(value: any, args?: any): any {
-    		return value.replace(/([A-Z])/g, ' $1');
+    		return value.replace(/([A-Z])/g, ' $1').trim();
   }
 
 }
