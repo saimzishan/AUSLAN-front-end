@@ -2,7 +2,7 @@ import { environment } from '../../environments/environment';
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
 import { Http, RequestOptions } from '@angular/http';
 import {User} from './model/user.entity';
-
+/* Change this class to use Using Application Providers import { Data } from "../../providers/data/data" */
 export class GLOBAL {
   public static MOCK_BOOKING_SERVER_PORT = 1233;
   public static MOCK_USER_SERVER_PORT = 1234;

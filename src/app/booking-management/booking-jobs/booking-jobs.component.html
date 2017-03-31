@@ -1,0 +1,249 @@
+
+	<section id="page-common">
+		<section id="static-flow">
+			<section id="submenu">
+				<nav>
+					<a href="#" class="active">Booking info</a>
+					<a href="#">Invoice details</a>
+					<a href="#">Payroll details</a>
+				</nav>
+				<div>
+          <button (click)="unableToServiceBooking()" class="button pink">Unable to Service</button>
+          <button (click)="cancelBooking()" class="button pink">Cancel Booking</button>
+					<button (click)="duplicateBooking()" class="button inverse">Duplicate</button>
+					<div class="sep"></div>
+					<button (click)="saveChanges()" [disabled]="!invitePressed" class="button inverse not-changed">Save</button>
+				</div>
+			</section>
+
+			<section id="steps">
+				<nav>
+					<a href="javascript:void(0);" [ngClass]="{'active' : selectedBookingModel.state === 'requested'}">Requested</a>
+					<a href="javascript:void(0);" [ngClass]="{'active' : selectedBookingModel.state === 'in_progress'}">In Progress</a>
+					<a href="javascript:void(0);" [ngClass]="{'active' : selectedBookingModel.state === 'allocated'}">Allocated</a>
+					<a href="javascript:void(0);" [ngClass]="{'active' : selectedBookingModel.state === 'completed'}">Completed</a>
+					<a href="javascript:void(0);" [ngClass]="{'active' : selectedBookingModel.state === 'finished'}">Finished</a>
+				</nav>
+			</section>
+		</section>
+
+		<section id="job-booking">
+			<main>
+				<h2>Job Details</h2>
+				<table id="job-details" class="custom-small-table">
+					<thead>
+						<tr>
+							<th width="5%">Job</th>
+							<th width="14%">Date</th>
+							<th width="7%">Org</th>
+							<th width="6%">Client</th>
+							<th width="11%">Venue</th>
+							<th width="7%">Suburb</th>
+							<th width="5%">Type</th>
+							<th width="7%">Language</th>
+							<th width="7%">#People</th>
+							<th width="12%">Special Instructions</th>
+							<th width="4%">Attached</th>
+							<th width="7%">Date Added</th>
+							<th width="8%">Updated</th>
+						</tr>
+					</thead>
+					<tbody>
+					<tr>
+						<td>{{selectedBookingModel.id}}</td>
+            <td>{{selectedBookingModel.venue.start_time | date:'shortTime'}} - {{selectedBookingModel.venue.end_time | date:'shortTime'}}<br>
+              {{selectedBookingModel.venue.start_time | date:'EEE d MMM yy'}}</td>
+              <td>{{selectedBookingModel.venue.city}}</td>
+              <td>{{selectedBookingModel.contact.name}}</td>
+              <td>{{selectedBookingModel.venue.addressline_1}}</td>
+              <td>{{selectedBookingModel.nature_of_appointment}}</td>
+						<td></td>
+						<td>Auslan</td>
+            <td>{{selectedBookingModel.venue.expected_attendance}}</td>
+						<td></td>
+						<!-- td align="center">
+							<ul class="dropdown menu custom" data-dropdown-menu>
+								<li>
+									<a href="#" class="icon-attach"></a>
+									<ul class="menu">
+										<li><a href="#"><i class="icon-attach"></i> Attachments.xls</a></li>
+									</ul>
+								</li>
+							</ul>
+						</td>
+						<td>61 days (27 Jan)</td>
+						<td><span class="underline">02-06 TS<br>7:15 A</span></td -->
+					</tr>
+					</tbody>
+				</table>
+
+				<!-- div class="manage-interpreters-wrapper">
+					<section class="manage-interpreters">
+						<section>
+							<div>
+								<b>Interpreter 1:</b> <span>Tim Johnson</span>
+								<button>Unassign</button>
+							</div>
+							<div>
+								<b>Interpreter 2:</b> <span>Josef Gray</span>
+								<button>Unassign</button>
+							</div>
+						</section>
+					</section>
+				</div>
+
+				<div class="manage-interpreters-wrapper">
+					<section class="manage-interpreters">
+						<section>
+							<div>
+								<b>Interpreter 1:</b> <span>To be filled</span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<b>Interpreter 2:</b> <span>To be filled</span>
+							</div>
+						</section>
+					</section>
+				</div>
+
+				<div align="center">
+					<button class="button inverse higher">PROCESS TO INVOICE</button>
+				</div -->
+
+				<h2>Invite Interpreters <button class="sort desc outside"></button></h2>
+				<section id="invite-interpreters">
+					<section id="filters">
+						<section class="search-bar">
+							<input type="text" name="search" placeholder="Search...">
+							<button><i class="icon-glass"></i></button>
+						</section>
+
+						<section class="filters">
+							<button class="button">Select Top 10</button>
+							<button class="button">Select All Available</button>
+							<button class="button">Filter Only Available</button>
+
+							<div class="separator"></div>
+
+							<button class="button active" (click)="inviteInterpreters()" ><i class="icon-shape"></i> Invite</button>
+							<button class="button red"><i class="icon-assign"></i> Assign</button>
+						</section>
+					</section>
+				</section>
+
+				<section id="invited-interpreters">
+					<table class="custom custom-small-table">
+						<thead>
+						<tr>
+							<th width="5%"><md-checkbox></md-checkbox></th>
+							<th width="7%">
+								<span class="order asc">#</span>
+							</th>
+							<th width="12%">
+								<span class="order asc">Status</span>
+								<ul class="dropdown menu custom" data-dropdown-menu>
+									<li>
+										<a href="#">All</a>
+										<ul class="menu smaller">
+											<li><a href="#"><i></i> Option 1</a></li>
+											<li><a href="#"><i></i> Option 2</a></li>
+											<li><a href="#"><i></i> Option 3</a></li>
+										</ul>
+									</li>
+								</ul>
+							</th>
+							<th width="17%">
+								<span class="order asc">First Name</span>
+								<input type="text" name="">
+							</th>
+							<th width="17%">
+								<span class="order asc">Last Name</span>
+								<input type="text" name="">
+							</th>
+							<th width="9%">
+								<span class="order asc">Role</span>
+								<ul class="dropdown menu custom" data-dropdown-menu>
+									<li>
+										<a href="#">All</a>
+										<ul class="menu smaller">
+											<li><a href="#"><i></i> Option 1</a></li>
+											<li><a href="#"><i></i> Option 2</a></li>
+											<li><a href="#"><i></i> Option 3</a></li>
+										</ul>
+									</li>
+								</ul>
+							</th>
+							<th width="9%">
+								<span class="order asc">Lvl</span>
+								<ul class="dropdown menu custom" data-dropdown-menu>
+									<li>
+										<a href="#">All</a>
+										<ul class="menu smaller">
+											<li><a href="#"><i></i> Option 1</a></li>
+											<li><a href="#"><i></i> Option 2</a></li>
+											<li><a href="#"><i></i> Option 3</a></li>
+										</ul>
+									</li>
+								</ul>
+							</th>
+							<th width="15%">
+								<span class="order asc">Suburb</span>
+								<input type="text" name="">
+							</th>
+							<th width="9%">
+								<span class="order asc">KM</span>
+							</th>
+						</tr>
+						</thead>
+						<tbody>
+              <tr *ngFor="let user of interpreterList">
+							<td><md-checkbox (change)="onChange($event,user)" ></md-checkbox></td>
+							<td>{{user.id}}</td>
+							<td align="center"><i [ngClass]="{'icon-check-green' : !isInvited(user.email), 'icon-check-yellow' : isInvited(user.email)}"></i></td>
+							<td><i class="icon-check-yellow"></i> {{user.first_name}}</td>
+							<td>{{user.last_name}}</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						</tbody>
+					</table>
+					<section>
+						<section id="time">11 September 9:15 AM - 11:15 AM</section>
+						<section>
+							<section id="time-range">
+								<button type="button">&lt;</button>
+								<section>
+									<span>6 am</span>
+									<span>7 am</span>
+									<span>8 am</span>
+									<span>9 am</span>
+									<span>11 am</span>
+									<span>12 am</span>
+									<span>1 pm</span>
+								</section>
+								<button type="button">&gt;</button>
+							</section>
+							<section class="flow">
+								<div><span></span></div>
+								<div><span style="margin-left: 2%"></span></div>
+								<div><span style="margin-left: 15%"></span></div>
+								<div><span style="margin-left: 3%"></span></div>
+								<div><span style="margin-left: 22%"></span></div>
+							</section>
+							<div id="mover"></div>
+						</section>
+					</section>
+				</section>
+
+				<h2>History</h2>
+				<table id="changes-history" class="custom-small-table">
+					<thead>
+						<th width="20%" class="sort asc">Date and Time</th>
+						<th width="30%" class="sort desc">Action</th>
+						<th>Change</th>
+					</thead>
+					<tbody>
+
+					</tbody>
+				</table>
+			</main>
+    </section>
+  </section>

@@ -81,11 +81,10 @@
 						</tr>
 					</thead>
       <tbody>
-        <tr *ngFor="let booking of bookingList">
+        <tr *ngFor="let booking of bookingList" (click)="setClickedRow(booking)" >
           <td>
 								<div class="checkbox">
 									<input type="checkbox" name="" value="1" id="job-2">
-									<label for="job-2"></label>
 								</div>
 							</td>
 							<td class="bookingID" >{{booking.id}}</td>

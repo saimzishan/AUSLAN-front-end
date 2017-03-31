@@ -44,6 +44,7 @@ import {
 } from '@angular/router';
 import { AuthHttp } from 'angular2-jwt';
 import { SpacerPipe } from './shared/pipe/spacer.pipe';
+import { BookingJobsComponent } from './booking-management/booking-jobs/booking-jobs.component';
 
 @NgModule({
   declarations: [
@@ -68,7 +69,7 @@ import { SpacerPipe } from './shared/pipe/spacer.pipe';
     UserListComponent,
     UserHeaderComponent,
     UserDetailComponent,
-    UserProfileComponent, EnumValPipe, SpacerPipe
+    UserProfileComponent, EnumValPipe, SpacerPipe, BookingJobsComponent
   ],
    entryComponents: [UserDetailComponent],
   imports: [CustomFormsModule, routing,

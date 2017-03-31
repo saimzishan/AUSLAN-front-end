@@ -51,6 +51,18 @@ export class BookingService extends ApiService {
     }
 
     /*
+      The Api should be able to update transitioning of already requested bookings.
+    */
+    updateBookingByTransitioning(booking_id: string, next_state: string): Observable<Object> {
+
+        let headers = new Headers({'Accept': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+        let obj = { 'booking': {'next_state': next_state} };
+        return this.http.patch(GLOBAL.BOOKING_API + '/' + booking_id, JSON.stringify(obj), options)
+            .catch((err) => { return this.handleError(err); });
+
+    }
+    /*
       The Api should be able to fetch all the bookings.
     */
     fetchBookings(): Observable<Object> {
