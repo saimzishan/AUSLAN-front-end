@@ -22,7 +22,7 @@ export class Booking {
     public interpreters_required = 0;
 
     constructor() {
-      this.id = '-1';
+      this.id = '0';
       this.venue.expected_attendance = 0;
       this.venue.addressline_1 = '';
       this.venue.start_time = new Date().getTime();

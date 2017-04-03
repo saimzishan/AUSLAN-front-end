@@ -2,8 +2,9 @@
 import { async ,  ComponentFixture ,  TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import {Booking} from '../../shared/model/booking.entity';
-
+import { RouterTestingModule } from '@angular/router/testing';
 import { BookingListComponent } from './booking-list.component';
+import { Router } from '@angular/router';
 
 describe('BookingListComponent' ,  () => {
   let component:  BookingListComponent;
@@ -19,13 +20,14 @@ describe('BookingListComponent' ,  () => {
   'deaf_persons_mobile' : '00000000000' ,
   'deaf_persons_email' : 'person@b.com' ,
   'deaf_persons_eaf_no' : '5555' , 'parking_availability' : 'None' ,
-  'number_of_people_attending' : -1 , 'start_time' : '20/03/2017 02:27' ,
+  'number_of_people_attending' : -0 , 'start_time' : '20/03/2017 02:27' ,
   'end_time' : '20/03/2017 02:27'});
 
   let mock_booking_list: Array<Booking> = [];
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations :  [ BookingListComponent ]
+      declarations :  [ BookingListComponent ],
+      imports: [RouterTestingModule]
     })
     .compileComponents();
     let b = new Booking();

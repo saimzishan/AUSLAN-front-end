@@ -43,9 +43,9 @@
 							<th width="7%">Language</th>
 							<th width="7%">#People</th>
 							<th width="12%">Special Instructions</th>
-							<th width="4%">Attached</th>
+							<!-- th width="4%">Attached</th>
 							<th width="7%">Date Added</th>
-							<th width="8%">Updated</th>
+							<th width="8%">Updated</th -->
 						</tr>
 					</thead>
 					<tbody>
@@ -55,8 +55,9 @@
               {{selectedBookingModel.venue.start_time | date:'EEE d MMM yy'}}</td>
               <td>{{selectedBookingModel.venue.city}}</td>
               <td>{{selectedBookingModel.contact.name}}</td>
-              <td>{{selectedBookingModel.venue.addressline_1}}</td>
-              <td>{{selectedBookingModel.specific_nature_of_appointment}}</td>
+							<td>{{selectedBookingModel.venue.addressline_1}}</td>
+							<td>{{selectedBookingModel.venue.suburb}}</td>
+              <td>{{selectedBookingModel.nature_of_appointment}}</td>
 						<td></td>
 						<td>Auslan</td>
             <td>{{selectedBookingModel.venue.expected_attendance}}</td>

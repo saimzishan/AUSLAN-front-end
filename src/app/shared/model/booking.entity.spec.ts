@@ -24,8 +24,8 @@ describe('BookingService', () => {
       mock_booking.fromJSON(mock_request);
       expect(mock_booking.venue.expected_attendance).toEqual('1');
       expect(mock_booking.venue.addressline_1).toEqual('Fed Square');
-      expect(mock_booking.venue.start_time).toEqual('2017-04-02T07:50:19.212+00:00');
-      expect(mock_booking.venue.end_time).toEqual('2017-04-02T08:50:19.212+00:00');
+      expect(mock_booking.venue.start_time).toEqual(1491119419212);
+      expect(mock_booking.venue.end_time).toEqual(1491123019212);
       expect(mock_booking.requested_by.name).toEqual('Georgious');
       expect(mock_booking.contact.name).toEqual('Hadrian French');
       expect(mock_booking.contact.phone_number).toEqual('03 2342 2343');

@@ -9,7 +9,7 @@ import { NotificationServiceBus } from '../notification/notification.service';
   styleUrls: ['./verify.component.css']
 })
 export class VerifyComponent implements OnInit {
-  public userID = -1;
+  public userID = -0;
   public verificationCode = '';
   constructor(public service: UserService,
     public notificationServiceBus: NotificationServiceBus, public router: Router, public routes: ActivatedRoute) { }

@@ -19,7 +19,7 @@ export class BookingListComponent {
 
   setClickedRow(booking: Booking) {
     let navigationExtras: NavigationExtras = {
-            queryParams: {bookingModel: JSON.stringify(booking)}
+            queryParams: {bookingModel: JSON.stringify(booking.toJSON)}
         };
     this.router.navigate(['/booking-management/' + booking.id , 'jobs'], navigationExtras );
   }

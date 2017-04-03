@@ -18,7 +18,7 @@ declare var $: any; // not liking it
 
 export class BookingJobsComponent implements AfterViewChecked {
   selectedBookingModel: Booking;
-invitePressed = false;
+  invitePressed = false;
   interpreterList: User[] = [];
   selectedInterpreterIDs: number[] = [];
   constructor(public spinnerService: SpinnerService,
@@ -47,7 +47,7 @@ invitePressed = false;
     },
      err => {
        this.spinnerService.requestInProcess(false);
-       let e = err.json();
+       let e = err.json() || 'There is some error on server side';
        this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);     });
   }
 
@@ -62,7 +62,7 @@ invitePressed = false;
     },
      err => {
        this.spinnerService.requestInProcess(false);
-       let e = err.json();
+       let e = err.json() || 'There is some error on server side';
        this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);     });
   }
 
@@ -84,13 +84,14 @@ invitePressed = false;
     this.userDataService.fetchUsers()
     .subscribe((res: any) => {
       if ( res.status === 200 ) {
-      this.interpreterList = res.data.users.filter( u => u.type === 'Interpreter');
+        let count = 0;
+      this.interpreterList = res.data.users.filter( u => count++ < 10 && u.type === 'Interpreter');
     }
     this.spinnerService.requestInProcess(false);
     },
      err => {
        this.spinnerService.requestInProcess(false);
-       let e = err.json();
+       let e = err.json() || 'There is some error on server side';
        this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);     });
   }
 
