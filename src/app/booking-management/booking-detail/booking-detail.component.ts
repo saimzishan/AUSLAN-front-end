@@ -52,7 +52,7 @@ export class BookingDetailComponent implements AfterViewChecked {
       .subscribe((res: any) => {
         if (res.status === 201 && res.data.id && 0 < res.data.id) {
           this.bookingModel.id = res.data.id;
-          this.bookingModel.status = BOOKING_STATUS.Ready_to_process; // res.data.status;
+          this.bookingModel.state = BOOKING_STATUS.Ready_to_process; // res.data.status;
           this.notificationServiceBus.launchNotification(false, 'The Booking has been created.');
 
         }

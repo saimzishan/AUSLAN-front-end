@@ -30,6 +30,7 @@ export class UserProfileComponent {
           .subscribe((res: any) => {
               if (res.status === 204) {
                   // UI Notification
+                  this.userNameService.setLoggedInUser(this.userModel);
                   this.notificationServiceBus.launchNotification(false, 'User details updated Successfully');
               }
           },

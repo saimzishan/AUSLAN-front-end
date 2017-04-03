@@ -17,7 +17,7 @@
 
 							<label>VERIFICATION CODE * </label> <input type="password" placeholder="" [(ngModel)]='verificationCode' name="verification_code" #verification_code="ngModel" [rangeLength]="[4, 8]" required>
 							<span *ngIf="verification_code.touched && (!verification_code.errors?.required && !verification_code.errors?.rangeLength);" class="inline-icon inline-icon-valid valid"></span>
-							<span *ngIf="(verification_code.dirty || verification_code.touched) && (verification_code.errors?.required || verification_code.errors.errors?.rangeLength);"
+							<span *ngIf="(verification_code.dirty || verification_code.touched) && (verification_code.errors?.required || verification_code.errors?.rangeLength);"
 											class="inline-icon error"> <span>This field is
 								required.</span>!
 								</span>

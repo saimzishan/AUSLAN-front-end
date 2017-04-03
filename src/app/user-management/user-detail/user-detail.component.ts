@@ -46,7 +46,7 @@ export class UserDetailComponent {
             }
         }
         this.showForm = true;
-        this.userModel.role = ROLE[val];
+        this.userModel.role = ROLE[val.split(' ').join('')];
     }
 
     isRoleSelected(val: string) {
@@ -83,10 +83,8 @@ export class UserDetailComponent {
             },
             (err) => {
                 this.spinnerService.requestInProcess(false);
-                this.notificationServiceBus.launchNotification(true, err);
-
-                console.log(err);
-            });
+                let e = err.json();
+                this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);     });
     }
 
     editUser() {
@@ -102,8 +100,8 @@ export class UserDetailComponent {
             },
             (err) => {
                 this.spinnerService.requestInProcess(false);
-                this.notificationServiceBus.launchNotification(true, err);
-            });
+                let e = err.json();
+                this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);     });
     }
 
 }

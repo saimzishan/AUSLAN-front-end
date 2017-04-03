@@ -17,8 +17,8 @@ describe('BR001 => Create, read, update and delete a User \
                         let el = page.getElementByModel('model.email');
                         let ps = page.getElementByModel('model.password');
 
-                        page.setValue(el, 'default_admin@curvetomorrow.com.au');
-                        page.setValue(ps, 'pass_pass');
+                        page.setValue(el, 'nauman+support@curvetomorrow.com.au');
+                        page.setValue(ps, 'Abcd#1234');
 
                     });
                     it('then I am on my home (dashboard) screen', () => {

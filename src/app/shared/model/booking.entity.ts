@@ -14,7 +14,7 @@ export class Booking {
     public deaf_person:  DEAFContact = new DEAFContact();
     public nature_of_appointment:  BOOKING_NATURE;
     public specific_nature_of_appointment:  BOOKING_NATURE;
-    public status:  BOOKING_STATUS;
+    public state:  BOOKING_STATUS;
     public attachment:  any;
     public raw_venue_address:  string;
     public raw_booking_address:  string;
@@ -37,7 +37,7 @@ export class Booking {
       this.deaf_person.eaf = 0;
       this.nature_of_appointment = BOOKING_NATURE.None;
       this.specific_nature_of_appointment = BOOKING_NATURE.None;
-      this.status = BOOKING_STATUS.None;
+      this.state = BOOKING_STATUS.None;
     }
 
     fromJSON(data:  any) {
@@ -56,11 +56,12 @@ export class Booking {
       this.deaf_person.eaf = data.deaf_persons_eaf_no;
       this.nature_of_appointment = data.nature_of_appointment;
       this.specific_nature_of_appointment = data.specific_nature_of_appointment;
-      this.status = data.status;
+      this.state = data.state;
     }
 
     toJSON() {
-      return new Object({venue: this.venue.addressline_1, requested_by: this.requested_by.name ,
+      return new Object({ id: this.id, state: BOOKING_STATUS[this.state],
+         venue: this.venue.addressline_1, requested_by: this.requested_by.name ,
       nature_of_appointment: BOOKING_NATURE[this.nature_of_appointment] ,
       specific_nature_of_appointment: BOOKING_NATURE[this.specific_nature_of_appointment] , contact_name: this.contact.name ,
       contact_phone_number: this.contact.phone_number , contact_mobile_number: this.contact.mobile_number ,
