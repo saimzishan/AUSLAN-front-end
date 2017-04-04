@@ -25,7 +25,8 @@ export class BookingJobsComponent implements AfterViewChecked {
   public notificationServiceBus: NotificationServiceBus,
     public userDataService: UserService, public bookingService: BookingService, private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
-      let jsonData = JSON.parse(params['bookingModel']);
+      let param = params['bookingModel'];
+      let jsonData = JSON.parse(param);
       this.selectedBookingModel = new Booking();
       this.selectedBookingModel.fromJSON(jsonData);
     });

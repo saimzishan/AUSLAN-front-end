@@ -40,7 +40,7 @@
 							<th width="11%">Venue</th>
 							<th width="7%">Suburb</th>
 							<th width="5%">Type</th>
-							<th width="7%">Language</th>
+							<!-- th width="7%">Language</th -->
 							<th width="7%">#People</th>
 							<th width="12%">Special Instructions</th>
 							<!-- th width="4%">Attached</th>
@@ -53,13 +53,11 @@
 						<td>{{selectedBookingModel.id}}</td>
             <td>{{selectedBookingModel.venue.start_time | date:'shortTime'}} - {{selectedBookingModel.venue.end_time | date:'shortTime'}}<br>
               {{selectedBookingModel.venue.start_time | date:'EEE d MMM yy'}}</td>
-              <td>{{selectedBookingModel.venue.city}}</td>
+              <td>Auslan</td>
               <td>{{selectedBookingModel.contact.name}}</td>
 							<td>{{selectedBookingModel.venue.addressline_1}}</td>
 							<td>{{selectedBookingModel.venue.suburb}}</td>
               <td>{{selectedBookingModel.nature_of_appointment}}</td>
-						<td></td>
-						<td>Auslan</td>
             <td>{{selectedBookingModel.venue.expected_attendance}}</td>
 						<td></td>
 						<!-- td align="center">

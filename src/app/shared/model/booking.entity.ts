@@ -60,15 +60,26 @@ export class Booking {
     }
 
     toJSON() {
-      return new Object({ id: this.id, state: BOOKING_STATUS[this.state],
+      let _state = typeof this.state === 'string' ?
+       this.state : BOOKING_STATUS[this.state];
+      let _nature_of_appointment = typeof this.nature_of_appointment === 'string' ?
+      this.nature_of_appointment : BOOKING_NATURE[this.nature_of_appointment];
+      let _specific_nature_of_appointment =
+      typeof this.specific_nature_of_appointment === 'string' ?
+       this.specific_nature_of_appointment : BOOKING_NATURE[this.specific_nature_of_appointment];
+      let _parking_type =
+      typeof this.venue.parking_type === 'string' ? this.venue.parking_type : PARKING[this.venue.parking_type];
+      let _expected_attendance = this.venue.expected_attendance < 0 ? 0 : this.venue.expected_attendance;
+
+      return new Object({ id: this.id, state: _state,
          venue: this.venue.addressline_1, requested_by: this.requested_by.name ,
-      nature_of_appointment: BOOKING_NATURE[this.nature_of_appointment] ,
-      specific_nature_of_appointment: BOOKING_NATURE[this.specific_nature_of_appointment] , contact_name: this.contact.name ,
+      nature_of_appointment: _nature_of_appointment ,
+      specific_nature_of_appointment: _specific_nature_of_appointment , contact_name: this.contact.name ,
       contact_phone_number: this.contact.phone_number , contact_mobile_number: this.contact.mobile_number ,
       deaf_persons_name: this.deaf_person.name , deaf_persons_mobile: this.deaf_person.mobile_number,
       deaf_persons_email: this.deaf_person.email , deaf_persons_eaf_no: this.deaf_person.eaf ,
-      number_of_people_attending: this.venue.expected_attendance ,
+      number_of_people_attending: _expected_attendance ,
       start_time: this.venue.start_time.toString() , end_time: this.venue.end_time.toString() ,
-      parking_availability: PARKING[this.venue.parking_type]});
+      parking_availability: _parking_type});
     }
 }
