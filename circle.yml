@@ -24,11 +24,6 @@ deployment:
   prod:
     branch: aot-master
     commands:
-      - aws s3 sync dist/  s3://auslan-booking-system-ct/ --delete
-      - npm run pact
-
-  stagging:
-    branch: dev-master
-    commands:
+      - ng build --prod
       - aws s3 sync dist/  s3://auslan-booking-system-ct/ --delete
       - npm run pact
