@@ -20,7 +20,6 @@ test:
     - mv coverage/* $CIRCLE_ARTIFACTS/coverage
     - mv tmp/pact* $CIRCLE_ARTIFACTS/pacts
     - codeclimate-test-reporter < $CIRCLE_ARTIFACTS/coverage/coverage.lcov
-    - ng build --prod
 
 deployment:
   prod:
