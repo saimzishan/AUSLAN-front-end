@@ -8,6 +8,7 @@ test:
     - bundle exec pact-mock-service start -p 1233 -l tmp/pact-booking.log --pact-dir tmp/pacts
     - bundle exec pact-mock-service start -p 1234 -l tmp/pact-user.log --pact-dir tmp/pacts
     - npm install codeclimate-test-reporter -g
+    - ng build --env=prod
   override:
     - ng lint
     - ng test --code-coverage --watch=false --singleRun=true --browser Chrome_without_security
@@ -19,7 +20,7 @@ test:
     - mv coverage/* $CIRCLE_ARTIFACTS/coverage
     - mv tmp/pact* $CIRCLE_ARTIFACTS/pacts
     - codeclimate-test-reporter < $CIRCLE_ARTIFACTS/coverage/coverage.lcov
-
+    - ng build --prod
 
 deployment:
   prod:
