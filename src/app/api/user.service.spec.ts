@@ -318,11 +318,9 @@ describe('UserService', () => {
                 .given('user exists in database')
                 .uponReceiving('a request to verify a user')
                 .withRequest('POST', '/api/v1/users/2/confirm_verification_code', {
-                    'Accept': 'application/json'/*,
-                    'Authorization': Pact.Match.somethingLike('Bearer eyJ0eXAiOi' +
-                        'JKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjV9.jxJ' +
-                        'FCXmk8SOCtmmHqczBlZZEra1qa8xly7zWZ42EnO4')*/
-                }, { 'code': Pact.Match.somethingLike('12345') })
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }, { 'code': '12345' })
                 .willRespondWith(200, {
                     'Content-Type': 'application/json; charset=utf-8'
                 });
@@ -465,11 +463,12 @@ describe('UserService', () => {
                         .given('user alread exists in database')
                         .uponReceiving('a request to login Interpreter')
                         .withRequest('POST', '/api/v1/users/login', {
-                            'Accept': 'application/json'
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
                         }, { 'auth': u })
                         .willRespondWith(200, {
                             'Content-Type': 'application/json; charset=utf-8'
-                        }, {'jwt': Pact.Match.somethingLike(123)});
+                        }, {'jwt': '123'});
 
                     userProvider.run(done, function(runComplete) {
 
