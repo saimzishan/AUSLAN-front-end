@@ -19,11 +19,12 @@ test:
     - mv coverage/* $CIRCLE_ARTIFACTS/coverage
     - mv tmp/pact* $CIRCLE_ARTIFACTS/pacts
     - codeclimate-test-reporter < $CIRCLE_ARTIFACTS/coverage/coverage.lcov
+    - rm -rf dist
+    - ng build --prod --aot
 
 deployment:
   prod:
     branch: aot-master
     commands:
-      - ng build --prod
       - aws s3 sync dist/  s3://auslan-booking-system-ct/ --delete
       - npm run pact
