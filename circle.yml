@@ -20,7 +20,7 @@ test:
     - mv tmp/pact* $CIRCLE_ARTIFACTS/pacts
     - codeclimate-test-reporter < $CIRCLE_ARTIFACTS/coverage/coverage.lcov
     - rm -rf dist
-    - ng build --prod --aot
+    - ng build --env=prod
 
 deployment:
   prod:
