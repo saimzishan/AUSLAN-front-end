@@ -36,6 +36,7 @@
     "firebase": "^3.6.4",
     "foundation-sites": "^6.3.1",
     "hammerjs": "^2.0.8",
+    "intl": "^1.2.5",
     "jquery": "^3.1.1",
     "karma-es6-shim": "^1.0.0",
     "md2": "0.0.16",
