@@ -19,6 +19,7 @@ import { FormsModule }   from '@angular/forms';
 import {SpinnerService} from '../../spinner/spinner.service';
 import { BookingDetailComponent } from './booking-detail.component';
 import {NotificationServiceBus} from '../../notification/notification.service';
+import { ActivatedRoute, Data } from '@angular/router';
 
 describe('BookingDetailComponent', () => {
   let component: BookingDetailComponent;
@@ -32,7 +33,17 @@ describe('BookingDetailComponent', () => {
         Md2Module.forRoot(),
         MaterialModule
       ],  providers: [NotificationServiceBus, { provide: BookingService, useClass: MockBookingService },
-          SpinnerService, { provide: AuthHttp, useClass: MockBackend }]
+          SpinnerService, { provide: AuthHttp, useClass: MockBackend },
+          {
+                    provide: ActivatedRoute,
+                    useValue: {
+                        queryParams: {
+                            subscribe: (fn: (value: Data) => void) => fn({
+                                bookingModel: '{}'
+                            })
+                        }
+                    }
+                }]
     })
     .compileComponents();
   }));

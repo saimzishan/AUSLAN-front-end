@@ -45,7 +45,7 @@ export class BookingJobsComponent implements AfterViewChecked, OnDestroy {
 
 
   ngOnDestroy() {
-    this.sub.unsubscribe();
+    this.sub && this.sub.unsubscribe();
   }
 
   unableToServiceBooking() {

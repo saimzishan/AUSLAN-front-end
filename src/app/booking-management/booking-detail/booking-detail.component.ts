@@ -40,7 +40,7 @@ export class BookingDetailComponent implements AfterViewChecked, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.sub.unsubscribe();
+    this.sub && this.sub.unsubscribe();
   }
 
   ngAfterViewChecked() {
