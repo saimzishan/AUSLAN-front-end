@@ -16,7 +16,7 @@ export class VerifyComponent implements OnInit, OnDestroy {
     public notificationServiceBus: NotificationServiceBus, public router: Router, public routes: ActivatedRoute) { }
 
   /*
-  Initialize subscriptions 
+  Initialize subscriptions
 */
   ngOnInit() {
     this.sub = this.routes.params.subscribe((p: any) => {
@@ -25,7 +25,7 @@ export class VerifyComponent implements OnInit, OnDestroy {
   }
 
   /*
-    Clean up the memory from subscriptions 
+    Clean up the memory from subscriptions
   */
   ngOnDestroy() {
     this.sub.unsubscribe();

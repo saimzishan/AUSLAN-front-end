@@ -70,8 +70,8 @@ export class UserFilterComponent implements OnChanges, OnDestroy {
 
 
 
-  ngOnDestroy(){
-    this.sub && this.sub.subscribe();
+  ngOnDestroy() {
+    return this.sub && this.sub.subscribe();
   }
 
 }

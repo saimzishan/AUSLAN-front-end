@@ -9,7 +9,6 @@ import { UserService } from '../api/user.service';
 })
 export class ResetComponent {
   public emailAddress = '';
- 
   constructor(public service: UserService, public notificationServiceBus: NotificationServiceBus) { }
 
   resetUser() {

@@ -25,7 +25,7 @@ export class HeaderComponent implements OnDestroy {
   }
 
 
-  ngOnDestroy(){
-    this.sub && this.sub.unsubscribe();
+   ngOnDestroy() {
+    return this.sub && this.sub.unsubscribe();
   }
 }

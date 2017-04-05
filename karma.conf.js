@@ -4,7 +4,7 @@
 module.exports = function(config) {
     config.set({
         basePath: '',
-        frameworks: ['jasmine', 'es6-shim', '@angular/cli'],
+        frameworks: ['jasmine', 'es6-shim', 'intl-shim', '@angular/cli'],
         plugins: [
             require('karma-es6-shim'),
             require('karma-jasmine'),
@@ -14,13 +14,23 @@ module.exports = function(config) {
             require('karma-coverage-istanbul-reporter'),
             require('@angular/cli/plugins/karma'),
             require('pact-consumer-js-dsl'),
+            require('karma-intl-shim'),
             require('karma-chrome-launcher')
         ],
         client: {
             clearContext: false // leave Jasmine Spec Runner output visible in browser
         },
 
-        files: [{
+        files: [
+            {
+                pattern: './node_modules/hammerjs/hammer.js',
+                watched: false
+            },
+            {
+                pattern: './node_modules/Intl/locale-data/jsonp/en-US.js',
+                watched: false
+            },
+            {
                 pattern: './node_modules/jquery/dist/jquery.min.js',
                 watched: false
             },

@@ -31,7 +31,7 @@ export class NotificationComponent implements OnDestroy {
       });
   }
 
-  ngOnDestroy(){
+   ngOnDestroy() {
     this.sub.unsubscribe();
   }
 
