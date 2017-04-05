@@ -1,4 +1,4 @@
-import { Component,  AfterViewChecked } from '@angular/core';
+import { Component, AfterViewChecked, OnDestroy } from '@angular/core';
 import { Booking } from '../../shared/model/booking.entity';
 import { BookingService } from '../../api/booking.service';
 import { BOOKING_NATURE } from '../../shared/model/booking-nature.enum';
@@ -7,6 +7,7 @@ import { SpinnerService } from '../../spinner/spinner.service';
 import { BOOKING_STATUS } from '../../shared/model/booking-status.enum';
 import { GLOBAL } from '../../shared/global';
 import { NotificationServiceBus } from '../../notification/notification.service';
+import { ActivatedRoute } from '@angular/router';
 
 declare var $: any;
 
@@ -17,16 +18,29 @@ declare var $: any;
 
 })
 
-export class BookingDetailComponent implements AfterViewChecked {
+export class BookingDetailComponent implements AfterViewChecked, OnDestroy {
 
-  bookingModel: Booking = new Booking();
+  private sub: any;
+  bookingModel: Booking;
   appointment_types = BOOKING_NATURE;
   parking_types = PARKING;
   currentUserIsContact = 'true';
   prefInterpreter: boolean;
 
-  constructor(public bookingService: BookingService,
+  constructor(public bookingService: BookingService, private route: ActivatedRoute,
     public notificationServiceBus: NotificationServiceBus, public spinnerService: SpinnerService) {
+    this.bookingModel = new Booking();
+
+    /** http://stackoverflow.com/questions/38008334/angular2-rxjs-when-should-i-unsubscribe-from-subscription */
+    this.sub = this.route.queryParams.subscribe(params => {
+      let param = params['bookingModel'];
+      let jsonData = JSON.parse(param);
+      this.bookingModel.fromJSON(jsonData);
+    });
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 
   ngAfterViewChecked() {

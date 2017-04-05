@@ -28,7 +28,7 @@ const appRoutes: Routes = [
   {path: 'register', component: RegisterComponent},
   {path: 'register/step2', component: RegisterComponent},
   {path: 'reset', component: ResetComponent},
-  {path: 'verify/:id', component: VerifyComponent},
+  {path: 'verify/:id', component: VerifyComponent, canActivate: [AuthGuard]},
   {path: 'bookings', component: BookingComponent},
   { path: '**', redirectTo: 'authenticate', pathMatch: 'full'}
 ];

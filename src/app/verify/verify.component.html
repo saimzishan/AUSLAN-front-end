@@ -1,46 +1,51 @@
 <section class="page-white-bg">
 	<form class="common-form" #resetForm="ngForm">
 
-		<div class="row">
+		<div class="row small-collapse">
 			<div class="medium-9 medium-centered columns">
 				<div class="heading">
 					<h1 class="title">VERIFY CODE FORM</h1>
 					<p class="subtitle">Fields with * are required</p>
 				</div>
 			</div>
-			<div class="medium-8 medium-centered columns">
-				<div class="row">
+			<div class="medium-4 medium-centered columns">
 
 
-					<div class="medium-6 columns">
-						<div class="form-field">
+				<div class="form-field">
 
-							<label>VERIFICATION CODE * </label> <input type="password" placeholder="" [(ngModel)]='verificationCode' name="verification_code" #verification_code="ngModel" [rangeLength]="[4, 8]" required>
-							<span *ngIf="verification_code.touched && (!verification_code.errors?.required && !verification_code.errors?.rangeLength);" class="inline-icon inline-icon-valid valid"></span>
-							<span *ngIf="(verification_code.dirty || verification_code.touched) && (verification_code.errors?.required || verification_code.errors?.rangeLength);"
-											class="inline-icon error"> <span>This field is
+					<label>VERIFICATION CODE * </label> <input type="password" placeholder="" [(ngModel)]='verificationCode' name="verification_code"
+					 #verification_code="ngModel" [rangeLength]="[4, 8]" required>
+					<span *ngIf="verification_code.touched && (!verification_code.errors?.required && !verification_code.errors?.rangeLength);"
+					 class="inline-icon inline-icon-valid valid"></span>
+					<span *ngIf="(verification_code.dirty || verification_code.touched) && (verification_code.errors?.required || verification_code.errors?.rangeLength);"
+					 class="inline-icon error"> <span>This field is
 								required.</span>!
-								</span>
-						</div>
-
-					</div>
-
+					</span>
 				</div>
-				<div class="row">
+
+			</div>
 
 
-					<div class="medium-6 columns">
-						<div class="form-field">
-							<button name="verify_user" class="login button" [disabled]="verification_code.errors" (click)="verifyUser()">
+			<div class="medium-8 medium-centered columns">
+				<div class="form-field">
+					<section id="page-common">
+						<section id="static-flow">
+							<section id="submenu">
+								<div>
+									<button name="verify_user" class="login button" [disabled]="verification_code.errors" (click)="verifyUser()">
 					Verify User</button>
-							<button name="resend_code" class="login button" [disabled]="(userID < 1)" (click)="resendVerificationCode()">Resend Verification
+
+									<button name="resend_code" class="login button" [disabled]="(userID < 1)" (click)="resendVerificationCode()">Resend Verification
 					Code</button>
-						</div>
-
-					</div>
-
+								</div>
+							</section>
+						</section>
+					</section>
 				</div>
 			</div>
+
 		</div>
+
+
 	</form>
 </section>

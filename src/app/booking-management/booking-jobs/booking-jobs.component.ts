@@ -84,7 +84,7 @@ export class BookingJobsComponent implements AfterViewChecked, OnDestroy {
     let navigationExtras: NavigationExtras = {
       queryParams: { bookingModel: JSON.stringify(this.selectedBookingModel) }
     };
-    this.router.navigate(['/booking-management/' + this.selectedBookingModel.id, 'jobs'], navigationExtras);
+    this.router.navigate(['/booking-management', 'create'], navigationExtras);
   }
 
   onChange($event, user) {

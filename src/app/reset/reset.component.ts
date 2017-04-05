@@ -9,14 +9,15 @@ import { UserService } from '../api/user.service';
 })
 export class ResetComponent {
   public emailAddress = '';
-
+ 
   constructor(public service: UserService, public notificationServiceBus: NotificationServiceBus) { }
 
   resetUser() {
     this.service.resetUser(this.emailAddress)
       .subscribe((res: any) => {
         if (res.status === 200) {
-          this.notificationServiceBus.launchNotification(false, 'The email address has been sent to your address');
+          let msg = 'The password has been reset for ' + this.emailAddress;
+          this.notificationServiceBus.launchNotification(false, msg);
         }
       },
       err => {

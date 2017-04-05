@@ -27,7 +27,7 @@ export class UserManagementComponent implements AfterViewChecked {
     roles: any;
     users: Array<User> = [];
     // this is bad
-
+    userName = '';
     ngAfterViewChecked() {
         $(document).foundation();
     }
@@ -38,6 +38,7 @@ export class UserManagementComponent implements AfterViewChecked {
       public userDataService: UserService) {
       this.roles = ROLE;
       this.fetchUsers();
+      this.userName = '';
     }
 
     onEditUser(u: User) {
@@ -45,10 +46,12 @@ export class UserManagementComponent implements AfterViewChecked {
     }
 
     onResetPassword(u: User) {
+      this.userName = u.first_name + ' ' + u.last_name;
       this.userDataService.resetUser(u.email)
       .subscribe((res: any) => {
         if (res.status === 200) {
-          this.notificationServiceBus.launchNotification(false, 'The email address has been sent to your address');
+          let msg = 'The password has been reset for ' + this.userName;
+          this.notificationServiceBus.launchNotification(false, msg);
         }
       },
       err => {
