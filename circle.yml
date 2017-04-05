@@ -10,7 +10,7 @@ test:
     - npm install codeclimate-test-reporter -g
   override:
     - ng lint
-    - ng test --code-coverage --watch=false --singleRun=true --browser PhantomJS_without_security
+    - ng test --code-coverage --watch=false --singleRun=true --browser Chrome_without_security
   post:
     - bundle exec pact-mock-service stop -p 1233
     - bundle exec pact-mock-service stop -p 1234

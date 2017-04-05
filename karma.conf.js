@@ -27,6 +27,10 @@ module.exports = function(config) {
                 watched: false
             },
             {
+                pattern: './node_modules/intl/locale-data/jsonp/en-US.js',
+                watched: false
+            },
+            {
                 pattern: './node_modules/Intl/locale-data/jsonp/en-US.js',
                 watched: false
             },

@@ -6,7 +6,7 @@
 [![Issue Count](https://codeclimate.com/repos/5858b42d43c09c72c3000c29/badges/c9005dc4d8c9a34aaa8d/issue_count.svg)](https://codeclimate.com/repos/5858b42d43c09c72c3000c29/feed)
 
 ##LAZYLOADING && ANGULAR_CLI VERSION DEPENDENCY
-The project is migrated to @angular/cli release 1.
+The project is migrated to @angular/cli release 1.git
 #DEPRECIATED
 angular-cli@1.0.0-beta.24 has been used due to following issue https://github.com/angular/angular-cli/issues/3662
  `npm install -g angular-cli@1.0.0-beta.24`
