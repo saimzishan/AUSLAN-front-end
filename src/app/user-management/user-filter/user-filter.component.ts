@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnChanges, SimpleChange, ViewContainerRef } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, OnDestroy, SimpleChange, ViewContainerRef } from '@angular/core';
 import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
 import {UserDetailComponent} from '../user-detail/user-detail.component';
 import {User} from '../../shared/model/user.entity';
@@ -8,10 +8,11 @@ import {User} from '../../shared/model/user.entity';
     templateUrl: './user-filter.component.html',
     styleUrls: ['./user-filter.component.css']
 })
-export class UserFilterComponent implements OnChanges {
+export class UserFilterComponent implements OnChanges, OnDestroy {
     @Input('userModel') userModel: User;
     @Output() refreshEmitter = new EventEmitter();
 
+    private sub: any;
     isNewUser = true;
 
     dialogRef: MdDialogRef<any>;
@@ -60,11 +61,17 @@ export class UserFilterComponent implements OnChanges {
           this.onRefresh();
         });
 
-        this.dialogRef.afterClosed().subscribe(result => {
+        this.sub = this.dialogRef.afterClosed().subscribe(result => {
           this.isNewUser = true;
           this.userModel = null;
 
         });
     }
+
+
+
+  ngOnDestroy(){
+    this.sub.subscribe();
+  }
 
 }

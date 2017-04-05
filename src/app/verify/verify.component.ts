@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UserService } from '../api/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationServiceBus } from '../notification/notification.service';
@@ -8,16 +8,27 @@ import { NotificationServiceBus } from '../notification/notification.service';
   templateUrl: './verify.component.html',
   styleUrls: ['./verify.component.css']
 })
-export class VerifyComponent implements OnInit {
+export class VerifyComponent implements OnInit, OnDestroy {
   public userID = -0;
   public verificationCode = '';
+  private sub: any;
   constructor(public service: UserService,
     public notificationServiceBus: NotificationServiceBus, public router: Router, public routes: ActivatedRoute) { }
 
+  /*
+  Initialize subscriptions 
+*/
   ngOnInit() {
-    this.routes.params.subscribe((p: any) => {
+    this.sub = this.routes.params.subscribe((p: any) => {
       this.userID = p.id;
     });
+  }
+
+  /*
+    Clean up the memory from subscriptions 
+  */
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 
   /*

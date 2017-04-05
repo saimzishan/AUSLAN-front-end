@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UserService } from '../api/user.service';
 import {User} from '../shared/model/user.entity';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -12,8 +12,9 @@ import {NotificationServiceBus} from '../notification/notification.service';
   styleUrls: ['./auth.component.css']
 
 })
-export class AuthComponent implements OnInit {
+export class AuthComponent implements OnInit, OnDestroy {
   model: User = new User();
+  private sub: any;
 
   constructor(public spinnerService: SpinnerService, public notificationServiceBus: NotificationServiceBus, public service: UserService,
      public routes: ActivatedRoute, public router: Router) {
@@ -21,11 +22,15 @@ export class AuthComponent implements OnInit {
   }
 
    ngOnInit() {
-     this.routes.url.subscribe( v => {
+     this.sub = this.routes.url.subscribe( v => {
        if (v.length > 1 && v[1].path === 'logout') {
          this.logout();
        }
      });
+   }
+
+   ngOnDestroy(){
+     this.sub.unsubscribe();
    }
 
     onSubmit() {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UserService } from '../api/user.service';
 import {User} from '../shared/model/user.entity';
 import { ROLE } from '../shared/model/role.enum';
@@ -11,13 +11,14 @@ import {NotificationComponent} from '../notification/notification.component';
     templateUrl: './register.component.html',
     styleUrls: ['./register.component.css']
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, OnDestroy {
 
     public model: User = new User();
     public selected = false;
     public selectedRole = 'Interpreter'.toUpperCase();
     public successMessage = `Congrats Your user has been created.
   Kindly go back to Login Page and Login`;
+    private sub: any;
 
     constructor(public userService: UserService,
         public notificationServiceBus: NotificationServiceBus,
@@ -25,7 +26,7 @@ export class RegisterComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.routes.url.subscribe(v => {
+        this.sub = this.routes.url.subscribe(v => {
             this.selected = (v.length > 1 && v[1].path === 'step2');
         });
     }
@@ -36,6 +37,10 @@ export class RegisterComponent implements OnInit {
         this.router.navigate(['register', 'step2']);
 
     }
+
+   ngOnDestroy(){
+     this.sub.unsubscribe();
+   }
 
     addUser() {
 

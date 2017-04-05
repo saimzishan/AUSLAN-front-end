@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component, OnDestroy} from '@angular/core';
 import { NotificationsService } from 'angular2-notifications';
 import { NotificationServiceBus } from './notification.service';
 
@@ -7,7 +7,8 @@ import { NotificationServiceBus } from './notification.service';
   templateUrl: './notification.component.html',
   styleUrls: ['./notification.component.css']
 })
-export class NotificationComponent {
+export class NotificationComponent implements OnDestroy {
+  private sub: any;
   public options = {
     position: ['bottom', 'right'],
     timeOut: 3000,
@@ -18,7 +19,7 @@ export class NotificationComponent {
   };
 
   constructor(public notificationService: NotificationServiceBus, private _service: NotificationsService) {
-    this.notificationService.launchNotification$.subscribe(
+    this.sub = this.notificationService.launchNotification$.subscribe(
       notificationContainer => {
         if (notificationContainer && notificationContainer.message.length > 0) {
           if (!notificationContainer.isError) {
@@ -30,5 +31,8 @@ export class NotificationComponent {
       });
   }
 
+  ngOnDestroy(){
+    this.sub.subscribe();
+  }
 
 }

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, OnDestroy, Input } from '@angular/core';
 import {GLOBAL} from '../../shared/global';
 import {UserNameService} from '../../shared/user-name.service';
 import {LinkHelper, LINK} from '../../shared/router/linkhelper';
@@ -8,12 +8,13 @@ import {LinkHelper, LINK} from '../../shared/router/linkhelper';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnDestroy {
   linkName: LINK;
+  private sub: any;
   userIsActive = false;
   @Input() fullName = GLOBAL.currentUser ? GLOBAL.currentUser.first_name + ' '  + GLOBAL.currentUser.last_name : '';
   constructor(public userNameService: UserNameService, public linkHelper: LinkHelper) {
-      this.userNameService.loggedInUser$.subscribe(
+      this.sub = this.userNameService.loggedInUser$.subscribe(
         u => {
           this.fullName = u.first_name + ' ' + u.last_name;
           this.userIsActive = GLOBAL.currentUser.verified && (GLOBAL.currentUser.disabled === false);
@@ -21,5 +22,10 @@ export class HeaderComponent {
         });
         this.linkHelper = LinkHelper;
         this.linkName = LinkHelper.activeLink;
+  }
+
+
+  ngOnDestroy(){
+    this.sub.subscribe();
   }
 }
