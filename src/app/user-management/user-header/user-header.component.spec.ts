@@ -4,7 +4,7 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { UserHeaderComponent } from './user-header.component';
-import {RouterTestingModule} from '@angular/router/testing/router_testing_module';
+import { RouterTestingModule } from '@angular/router/testing';
 import {LinkHelper} from '../../shared/router/linkhelper';
 
 describe('UserHeaderComponent', () => {

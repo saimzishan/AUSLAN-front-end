@@ -33,13 +33,15 @@ export class BookingDetailComponent implements AfterViewChecked, OnDestroy {
 
     /** http://stackoverflow.com/questions/38008334/angular2-rxjs-when-should-i-unsubscribe-from-subscription */
     this.sub = this.route.queryParams.subscribe(params => {
-      let param = params['bookingModel'];
-      let jsonData = JSON.parse(param);
-      this.bookingModel.fromJSON(jsonData);
+      let param = params['bookingModel'] || '';
+      if (param.length > 0) {
+        let jsonData = JSON.parse(param);
+        this.bookingModel.fromJSON(jsonData);
+      }
     });
   }
 
-   ngOnDestroy() {
+  ngOnDestroy() {
     return this.sub && this.sub.unsubscribe();
   }
 

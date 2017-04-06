@@ -13,6 +13,7 @@ import { FormsModule } from '@angular/forms';
 import { MaterialModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import {LinkHelper} from '../../shared/router/linkhelper';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 describe('UserProfileComponent', () => {
@@ -26,7 +27,7 @@ describe('UserProfileComponent', () => {
          { provide: UserService, useClass: MockUserService}, { provide: AuthHttp, useClass: MockBackend},
         NotificationServiceBus,
         SpinnerService],
-        imports: [FormsModule, MaterialModule, RouterTestingModule, CustomFormsModule]
+        imports: [FormsModule, MaterialModule, RouterTestingModule, CustomFormsModule, BrowserAnimationsModule]
     })
     .compileComponents();
   }));

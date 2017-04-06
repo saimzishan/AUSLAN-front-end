@@ -20,6 +20,7 @@ import {SpinnerService} from '../../spinner/spinner.service';
 import { BookingDetailComponent } from './booking-detail.component';
 import {NotificationServiceBus} from '../../notification/notification.service';
 import { ActivatedRoute, Data } from '@angular/router';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('BookingDetailComponent', () => {
   let component: BookingDetailComponent;
@@ -29,7 +30,7 @@ describe('BookingDetailComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ BookingDetailComponent, EnumValPipe ],
       imports: [CustomFormsModule,
-        FormsModule,
+        FormsModule, BrowserAnimationsModule,
         Md2Module.forRoot(),
         MaterialModule
       ],  providers: [NotificationServiceBus, { provide: BookingService, useClass: MockBookingService },

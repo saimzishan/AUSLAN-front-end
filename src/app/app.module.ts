@@ -45,6 +45,7 @@ import {
 import { AuthHttp } from 'angular2-jwt';
 import { SpacerPipe } from './shared/pipe/spacer.pipe';
 import { BookingJobsComponent } from './booking-management/booking-jobs/booking-jobs.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -74,7 +75,7 @@ import { BookingJobsComponent } from './booking-management/booking-jobs/booking-
    entryComponents: [UserDetailComponent],
   imports: [CustomFormsModule, routing,
     BrowserModule, RouterModule,
-    FormsModule,
+    FormsModule, BrowserAnimationsModule,
     HttpModule, SimpleNotificationsModule.forRoot(),
     ReactiveFormsModule, Md2Module.forRoot(),
     MaterialModule

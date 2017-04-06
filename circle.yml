@@ -24,7 +24,7 @@ test:
 
 deployment:
   prod:
-    branch: aot-master
+    branch: master
     commands:
       - aws s3 sync dist/  s3://auslan-booking-system-ct/ --delete
       - npm run pact
