@@ -8,6 +8,14 @@ import {LinkHelper, LINK} from '../../shared/router/linkhelper';
 })
 export class UserHeaderComponent {
   linkName = LINK;
-  constructor(public linkHelper: LinkHelper) {
+  constructor() {
+  }
+
+  isActiveLink(linkName) {
+    return LinkHelper.activeLink === linkName;
+  }
+
+  setActiveLink(linkName) {
+    LinkHelper.activeLink = linkName;
   }
 }

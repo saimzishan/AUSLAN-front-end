@@ -18,11 +18,11 @@
 
 			<section id="steps">
 				<nav>
-					<a href="javascript:void(0);" [ngClass]="{'active' : selectedBookingModel.state === 'Requested'}">Requested</a>
-					<a href="javascript:void(0);" [ngClass]="{'active' : selectedBookingModel.state === 'in_progress'}">In Progress</a>
-					<a href="javascript:void(0);" [ngClass]="{'active' : selectedBookingModel.state === 'allocated'}">Allocated</a>
-					<a href="javascript:void(0);" [ngClass]="{'active' : selectedBookingModel.state === 'completed'}">Completed</a>
-					<a href="javascript:void(0);" [ngClass]="{'active' : selectedBookingModel.state === 'finished'}">Finished</a>
+					<a href="javascript:void(0);" [ngClass]="{'active' : isSate('Requested')}">Requested</a>
+					<a href="javascript:void(0);" [ngClass]="{'active' : isSate('in_progress')}">In Progress</a>
+					<a href="javascript:void(0);" [ngClass]="{'active' : isSate('allocated')}">Allocated</a>
+					<a href="javascript:void(0);" [ngClass]="{'active' : isSate('completed')}">Completed</a>
+					<a href="javascript:void(0);" [ngClass]="{'active' : isSate('finished')}">Finished</a>
 				</nav>
 			</section>
 		</section>

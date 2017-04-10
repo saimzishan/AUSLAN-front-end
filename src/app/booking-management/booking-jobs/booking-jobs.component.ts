@@ -48,6 +48,9 @@ export class BookingJobsComponent implements AfterViewChecked, OnDestroy {
     return this.sub && this.sub.unsubscribe();
   }
 
+  isSate(bookingStatus) {
+    return this.selectedBookingModel.state === bookingStatus;
+  }
   unableToServiceBooking() {
     this.spinnerService.requestInProcess(true);
     this.bookingService.updateBookingByTransitioning(this.selectedBookingModel.id, 'unable_to_service')
