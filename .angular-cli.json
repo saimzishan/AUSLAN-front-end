@@ -1,8 +1,8 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "project": {
-    "name": "auslan-booking-system"
-  },
+  "version": "1.0.0-beta.22-1",
+   "name": "auslan-booking-system"  },
   "apps": [
     {
       "root": "src",
@@ -19,12 +19,7 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "../node_modules/foundation-sites/dist/css/foundation-flex.css",
         "styles.css"
-      ],
-      "scripts": [
-        "../node_modules/foundation-sites/vendor/jquery/dist/jquery.min.js",
-        "../node_modules/foundation-sites/dist/js/foundation.min.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {
@@ -40,19 +35,19 @@
     }
   },
   "lint": [
-    {
-      "project": "src/tsconfig.app.json",
-      "exclude": "**/node_modules/**/*"
-    },
-    {
-      "project": "src/tsconfig.spec.json",
-      "exclude": "**/node_modules/**/*"
-    },
-    {
-      "project": "e2e/tsconfig.e2e.json",
-      "exclude": "**/node_modules/**/*"
-    }
-  ],
+  {
+    "project": "src/tsconfig.app.json",
+    "exclude": "**/node_modules/**/*"
+  },
+  {
+    "project": "src/tsconfig.spec.json",
+    "exclude": "**/node_modules/**/*"
+  },
+  {
+    "project": "e2e/tsconfig.e2e.json",
+    "exclude": "**/node_modules/**/*"
+  }
+],
   "test": {
     "karma": {
       "config": "./karma.conf.js"
@@ -62,4 +57,13 @@
     "styleExt": "css",
     "component": {}
   }
+  ,
+  "styles": [
+   "./node_modules/foundation-sites/dist/foundation-flex.css",
+   "styles.scss"
+],
+      "scripts": [
+   "./node_modules/foundation-sites/vendor/jquery/dist/jquery.min.js",
+   "./node_modules/foundation-sites/dist/foundation.min.js"
+]
 }

@@ -60,10 +60,9 @@ export class UserDetailComponent {
                 this.selectedRoles[s] = false;
             }
         }
+        this.dialogRef.close();
         this.showForm = false;
         this.isNewUser = true;
-        this.userModel = null;
-        this.dialogRef.close();
         this.spinnerService.requestInProcess(false);
         this.onRefresh.emit();
     }
