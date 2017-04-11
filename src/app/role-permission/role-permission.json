@@ -1,0 +1,21 @@
+{
+    "default":{
+        "default-route": "user-management"
+    },
+    "booking-officer":{
+        "default-route": "booking-management"
+    },
+    "interpreters": {
+        "not-allowed-routes": [
+            "booking-management"
+        ],
+        "routes-with-data-permissions": {
+            "user-management": {
+                "admin": "read"
+            }
+        }
+    },
+    "admin": {
+        "default-route": "booking-management"
+    }
+}
