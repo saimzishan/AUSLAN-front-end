@@ -47,6 +47,7 @@ import { SpacerPipe } from './shared/pipe/spacer.pipe';
 import { BookingJobsComponent } from './booking-management/booking-jobs/booking-jobs.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+
 @NgModule({
   declarations: [
     AppComponent,

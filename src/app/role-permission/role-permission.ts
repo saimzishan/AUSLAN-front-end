@@ -4,25 +4,57 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class RolePermission {
     permissions;
-    defaultData = `{
+    defaultData = /**
+     * This should be removed , and loaded from json file
+     */`{
     "default":{
-        "default-route": "user-management"
-    },
-    "booking-officer":{
         "default-route": "booking-management"
     },
-    "interpreters": {
-        "not-allowed-routes": [
-            "booking-management"
-        ],
+    "booking-officer":{
         "routes-with-data-permissions": {
             "user-management": {
                 "admin": "read"
             }
         }
     },
+     "accountant":{
+        "routes-with-data-permissions": {
+            "user-management": {
+                "admin": "read",
+                "booking-officer": "read",
+                "interpreter": "read",
+                "organizational-representitive": "read"
+            }
+        }
+    },
+    "interpreter": {
+        "not-allowed-routes": [
+            "user-management"
+        ],
+        "routes-with-data-permissions": {
+            "booking-management": {
+                "admin": "no-access",
+                "booking-officer": "no-access",
+                "accountant": "no-access",
+                "organizational-representitive": "no-access"
+            }
+        }
+    },
+    "organization-representitive": {
+        "not-allowed-routes": [
+            "user-management"
+        ],
+        "routes-with-data-permissions": {
+            "booking-management": {
+                "admin": "no-access",
+                "booking-officer": "no-access",
+                "interpreter": "no-access",
+                "organizational-representitive": "no-access"
+            }
+        }
+    },
     "admin": {
-        "default-route": "user-management"
+       
     }
 }`;
     constructor(private http: Http) { }
@@ -51,5 +83,12 @@ export class RolePermission {
         && this.permissions[role]['routes-with-data-permissions'][path] &&
         this.permissions[role]['routes-with-data-permissions'][path][data_owner] &&
             this.permissions[role]['routes-with-data-permissions'][path][data_owner] === 'read');
+    }
+
+    isDataRestricted(role: any, path: any, data_owner: any) {
+        return Boolean(this.permissions[role] && this.permissions[role]['routes-with-data-permissions']
+        && this.permissions[role]['routes-with-data-permissions'][path] &&
+        this.permissions[role]['routes-with-data-permissions'][path][data_owner] &&
+            this.permissions[role]['routes-with-data-permissions'][path][data_owner] === 'no-access');
     }
 }

@@ -2,7 +2,6 @@ import { TestBed, inject } from '@angular/core/testing';
 import { RolePermission } from './role-permission';
 import { Http, XHRBackend, HttpModule, Response, ResponseOptions } from '@angular/http';
 
-
 describe('RolePermission', () => {
 
     beforeEach(() => {
@@ -24,33 +23,37 @@ describe('RolePermission', () => {
             expect(role_service.permissions).toBeTruthy();
         });
         it('Default Route for an existing default role', () => {
-            expect(role_service.getDefaultRoute('admin')).toEqual('user-management');
+            expect(role_service.getDefaultRoute('admin')).toEqual('booking-management');
         });
         it('Default Route for an existing role', () => {
             expect(role_service.getDefaultRoute('booking-officer')).toEqual('booking-management');
         });
         it('Default Route for an non - existing role', () => {
-            expect(role_service.getDefaultRoute('interpreters')).toEqual('user-management');
+            expect(role_service.getDefaultRoute('interpreter')).toEqual('booking-management');
         });
 
         it('The restricted route should report restricted', () => {
-            expect(role_service.isRestrictedRoute('interpreters', 'booking-management')).toEqual(true);
+            expect(role_service.isRestrictedRoute('interpreter', 'user-management')).toEqual(true);
         });
 
         it('The non restricted route should not report restricted ', () => {
-            expect(role_service.isRestrictedRoute('interpreters', 'user-management')).toEqual(false);
+            expect(role_service.isRestrictedRoute('interpreter', 'booking-management')).toEqual(false);
         });
 
         it('The route with data permission for existing owner should be readonly ', () => {
-            expect(role_service.isDataReadOnly('interpreters', 'user-management', 'admin')).toEqual(true);
+            expect(role_service.isDataReadOnly('booking-officer', 'user-management', 'admin')).toEqual(true);
         });
 
         it('The route with data permission for non-existing owner should report ', () => {
-            expect(role_service.isDataReadOnly('interpreters', 'user-management', 'booking-officer')).toEqual(false);
+            expect(role_service.isDataReadOnly('booking-officer', 'user-management', 'interpreter')).toEqual(false);
         });
 
         it('The route with non existing data permission should be not readonly ', () => {
-            expect(role_service.isDataReadOnly('booking-officer', 'user-management', 'admin')).toEqual(false);
+            expect(role_service.isDataReadOnly('booking-officer', 'booking-management', 'admin')).toEqual(false);
+        });
+
+        it('The restricted route should be report as not accessible ', () => {
+            expect(role_service.isDataRestricted('interpreter', 'user-management', 'admin')).toEqual(false);
         });
     });
 });

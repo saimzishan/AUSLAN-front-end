@@ -18,9 +18,12 @@
     ]
   },
   "files": [
-    "test.ts"
+    "test.ts",
+    "./src/app/role-permission/role-permission.json"
+
   ],
   "include": [
-    "**/*.spec.ts"
+    "**/*.spec.ts",
+    "**/**/*.json"
   ]
 }

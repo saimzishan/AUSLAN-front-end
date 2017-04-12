@@ -1,21 +1,51 @@
 {
     "default":{
-        "default-route": "user-management"
-    },
-    "booking-officer":{
         "default-route": "booking-management"
     },
-    "interpreters": {
-        "not-allowed-routes": [
-            "booking-management"
-        ],
+    "booking-officer":{
         "routes-with-data-permissions": {
             "user-management": {
                 "admin": "read"
             }
         }
     },
+     "accountant":{
+        "routes-with-data-permissions": {
+            "user-management": {
+                "admin": "read",
+                "booking-officer": "read",
+                "interpreter": "read",
+                "organizational-representitive": "read"
+            }
+        }
+    },
+    "interpreter": {
+        "not-allowed-routes": [
+            "user-management"
+        ],
+        "routes-with-data-permissions": {
+            "booking-management": {
+                "admin": "no-access",
+                "booking-officer": "no-access",
+                "accountant": "no-access",
+                "organizational-representitive": "no-access"
+            }
+        }
+    },
+    "organization-representitive": {
+        "not-allowed-routes": [
+            "user-management"
+        ],
+        "routes-with-data-permissions": {
+            "booking-management": {
+                "admin": "no-access",
+                "booking-officer": "no-access",
+                "interpreter": "no-access",
+                "organizational-representitive": "no-access"
+            }
+        }
+    },
     "admin": {
-        "default-route": "booking-management"
+       
     }
 }

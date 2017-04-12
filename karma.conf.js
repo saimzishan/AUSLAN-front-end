@@ -49,8 +49,7 @@ module.exports = function(config) {
             {
                 pattern: './src/test.ts',
                 watched: false
-            },
-            'https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.1/js/foundation.js'
+            }
         ],
         preprocessors: {
             './src/test.ts': ['@angular/cli']
