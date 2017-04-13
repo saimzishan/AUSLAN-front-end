@@ -57,6 +57,19 @@ export class RolePermission {
             }
         }
     },
+    "individual-client": {
+        "not-allowed-routes": [
+            "user-management"
+        ],
+        "routes-with-data-permissions": {
+            "booking-management": {
+                "administrator": "no-access",
+                "booking-officer": "no-access",
+                "interpreter": "no-access",
+                "organizational-representitive": "no-access"
+            }
+        }
+    },
     "administrator": {
        
     }
@@ -100,6 +113,7 @@ export class RolePermission {
 
     isDataReadOnlyForCurrentUser(path: any, data_owner: any, r: Boolean) {
         if (r) { this.refreshUserDetail(); }
+        data_owner = this.hyphen_pipe.transform(data_owner);
         return Boolean(this.permissions[this.curr_role] && this.permissions[this.curr_role]['routes-with-data-permissions']
         && this.permissions[this.curr_role]['routes-with-data-permissions'][path] &&
         this.permissions[this.curr_role]['routes-with-data-permissions'][path][data_owner] &&
@@ -108,6 +122,7 @@ export class RolePermission {
 
     isDataRestrictedForCurrentUser(path: any, data_owner: any, r: Boolean) {
         if (r) { this.refreshUserDetail(); }
+        data_owner = this.hyphen_pipe.transform(data_owner);
         return Boolean(this.permissions[this.curr_role] && this.permissions[this.curr_role]['routes-with-data-permissions']
         && this.permissions[this.curr_role]['routes-with-data-permissions'][path] &&
         this.permissions[this.curr_role]['routes-with-data-permissions'][path][data_owner] &&
@@ -130,7 +145,7 @@ export class RolePermission {
 
     isDataReadOnly(role: any, path: any, data_owner: any) {
                 let r = this.hyphen_pipe.transform(this.permissions[role]);
-
+data_owner = this.hyphen_pipe.transform(data_owner);
         return Boolean(r && r['routes-with-data-permissions']
         && r['routes-with-data-permissions'][path] &&
         r['routes-with-data-permissions'][path][data_owner] &&
@@ -139,7 +154,7 @@ export class RolePermission {
 
     isDataRestricted(role: any, path: any, data_owner: any) {
                 let r = this.hyphen_pipe.transform(this.permissions[role]);
-
+data_owner = this.hyphen_pipe.transform(data_owner);
         return Boolean(r && r['routes-with-data-permissions']
         && r['routes-with-data-permissions'][path] &&
         r['routes-with-data-permissions'][path][data_owner] &&

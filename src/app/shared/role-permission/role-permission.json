@@ -5,17 +5,17 @@
     "booking-officer":{
         "routes-with-data-permissions": {
             "user-management": {
-                "administrator": "read"
+                "administrator": "no-access"
             }
         }
     },
      "accountant":{
         "routes-with-data-permissions": {
             "user-management": {
-                "administrator": "read",
-                "booking-officer": "read",
-                "interpreter": "read",
-                "organizational-representitive": "read"
+                "administrator": "no-access",
+                "booking-officer": "no-access",
+                "interpreter": "no-access",
+                "organizational-representitive": "no-access"
             }
         }
     },
@@ -33,6 +33,19 @@
         }
     },
     "organization-representitive": {
+        "not-allowed-routes": [
+            "user-management"
+        ],
+        "routes-with-data-permissions": {
+            "booking-management": {
+                "administrator": "no-access",
+                "booking-officer": "no-access",
+                "interpreter": "no-access",
+                "organizational-representitive": "no-access"
+            }
+        }
+    },
+    "individual-client": {
         "not-allowed-routes": [
             "user-management"
         ],

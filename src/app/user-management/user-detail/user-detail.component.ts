@@ -23,6 +23,9 @@ export class UserDetailComponent {
     selectedStatus = '';
     constructor(public userDataService: UserService, public notificationServiceBus: NotificationServiceBus,
         public spinnerService: SpinnerService, public dialogRef: MdDialogRef<any>) {
+            if (GLOBAL.currentUser.getRole() === ROLE.Administrator) {
+                this.selRoles.push('Administrator');
+            }
     }
 
     setRole() {
