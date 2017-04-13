@@ -9,6 +9,11 @@ import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/observable/throw';
 import {SpinnerService} from '../spinner/spinner.service';
+import { RolePermission } from '../shared/role-permission/role-permission';
+import { User } from '../shared/model/user.entity';
+import {ROLE} from '../shared/model/role.enum';
+import {GLOBAL} from '../shared/global';
+
 declare var $: any;
 
 
@@ -41,8 +46,8 @@ export class BookingComponent implements AfterViewChecked {
           this.bookings.push(b);
         }
       }
-      $(document).foundation();
       this.spinnerService.requestInProcess(false);
+      $(document).foundation();
 
       },
        err => {

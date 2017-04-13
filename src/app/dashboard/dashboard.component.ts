@@ -4,6 +4,9 @@ import { UserService } from '../api/user.service';
 import { Router } from '@angular/router';
 import {UserNameService} from '../shared/user-name.service';
 import {LinkHelper, LINK} from '../shared/router/linkhelper';
+import { RolePermission } from '../shared/role-permission/role-permission';
+import { User, UserFactory } from '../shared/model/user.entity';
+import {ROLE} from '../shared/model/role.enum';
 
 @Component({
     selector: 'app-dashboard',
@@ -12,7 +15,8 @@ import {LinkHelper, LINK} from '../shared/router/linkhelper';
 })
 export class DashboardComponent implements OnInit {
     constructor(public service: UserService, public linkHelper: LinkHelper,
-      public userNameService: UserNameService, public router: Router) {
+      public userNameService: UserNameService, public router: Router,
+      private rolePermission: RolePermission) {
     }
 
     ngOnInit() {
@@ -20,17 +24,19 @@ export class DashboardComponent implements OnInit {
     }
 
     getUserProfile() {
-      let user = GLOBAL.currentUser;
+      let user  = GLOBAL.currentUser; // how to do conditional casting neatly ?
       this.service.getUserByEmail(user.email)
           .subscribe((res: any) => {
               if (res.status === 200) {
-                  user = res.data;
-                  GLOBAL.currentUser = user;
+                  let data = res.data;
+                  GLOBAL.currentUser = UserFactory.createUser(data);
+                  user = GLOBAL.currentUser;
                   this.userNameService.setLoggedInUser(user);
                   if (!res.data.verified) { // show errors
                       this.router.navigate(['/verify/' + user.id]);
                   }else {
-                    this.router.navigate(['/user-management']);
+                      let route = this.rolePermission.getDefaultRouteForCurrentUser(true);
+                    this.router.navigate( [route] );
                     LinkHelper.activeLink = LINK.usermanagement;
                     this.linkHelper = LinkHelper;
                   }

@@ -2,10 +2,12 @@ import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import {GLOBAL} from '../shared/global';
 import {tokenNotExpired} from 'angular2-jwt/angular2-jwt';
+import { RolePermission } from '../shared/role-permission/role-permission';
+import { User } from '../shared/model/user.entity';
+import {ROLE} from '../shared/model/role.enum';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-
 
     public static isLoggedIn(): boolean {
         let token = sessionStorage.getItem('token');
@@ -31,14 +33,16 @@ export class AuthGuard implements CanActivate {
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         if (AuthGuard.isLoggedIn()) {
-            // logged in so return true
-            return true;
+             let r = GLOBAL.currentUser.getRole();
+            return !this.rolePermission.isRestrictedRoute(ROLE[r], state.url );
         }
 
         // not logged in so redirect to login page with the return url
         this.router.navigate(['/authenticate'], { queryParams: { returnUrl: state.url } });
         return false;
     }
-    constructor(public router: Router) { }
 
+    constructor(public router: Router, private rolePermission: RolePermission) {
+
+    }
 }

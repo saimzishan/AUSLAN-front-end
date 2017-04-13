@@ -11,7 +11,9 @@ import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/observable/throw';
 import {SpinnerService} from '../spinner/spinner.service';
 import { NotificationServiceBus } from '../notification/notification.service';
-
+import {GLOBAL} from '../shared/global';
+import {tokenNotExpired} from 'angular2-jwt/angular2-jwt';
+import { RolePermission } from '../shared/role-permission/role-permission';
 declare var $: any;
 
 @Component({
@@ -35,7 +37,8 @@ export class UserManagementComponent implements AfterViewChecked {
 
     constructor(public spinnerService: SpinnerService,
     public notificationServiceBus: NotificationServiceBus,
-      public userDataService: UserService) {
+      public userDataService: UserService,
+      private rolePermission: RolePermission) {
       this.roles = ROLE;
       this.fetchUsers();
       this.userName = '';
@@ -67,7 +70,11 @@ export class UserManagementComponent implements AfterViewChecked {
       this.userDataService.fetchUsers()
       .subscribe((res: any) => {
         if ( res.status === 200 ) {
-        this.users = res.data.users;
+          let r = GLOBAL.currentUser.getRole();
+          let userList = res.data.users.filter( (u) => {
+            return false === this.rolePermission.isDataRestricted(ROLE[r], 'user-management', u.type);
+          });
+          this.users = userList;
       }
       this.spinnerService.requestInProcess(false);
       },

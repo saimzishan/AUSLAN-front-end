@@ -11,7 +11,9 @@ export class BookingListComponent {
   @Input('bookingList') bookingList: Array<Booking> = [];
   @Output() onEditBooking = new EventEmitter<Booking>();
 
-  constructor(public router: Router) {}
+  constructor(public router: Router) {
+
+  }
 
   onBookingSelect(booking: Booking) {
     this.onEditBooking.emit(booking);

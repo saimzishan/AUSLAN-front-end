@@ -5,7 +5,7 @@
 				<a href="#">Filter</a>
 			</section>
 			<section>
-				<a id="lnkSettings" [routerLink]="['/user-management']" [ngClass]="{'active':  isActiveLink(linkName.usermanagement)}" (click)="setActiveLink( linkName.usermanagement)" >Manage Users</a>
+				<a id="lnkSettings" *ngIf="canShowLink('user-management')"  [routerLink]="['/user-management']" [ngClass]="{'active':  isActiveLink(linkName.usermanagement)}" (click)="setActiveLink( linkName.usermanagement)" >Manage Users</a>
 				<a href="#">Billing</a>
 			</section>
 		</section>

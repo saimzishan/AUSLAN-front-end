@@ -2,19 +2,19 @@
 	<a href="/"><i class="icons icons-logo"></i></a>
 
 	<nav *ngIf="userIsActive">
-		<a id="lnkBooking" [ngClass]="{'active':isActiveLink(linkName.booking)}" (click)="setActiveLink(linkName.booking)" [routerLink]="['/booking-management']"><span><i class="icon-bookings"></i> BOOKINGS</span></a>
+		<a id="lnkBooking" *ngIf="canShowLink('booking-management')" [ngClass]="{'active':isActiveLink(linkName.booking)}" (click)="setActiveLink(linkName.booking)" [routerLink]="['/booking-management']"><span><i class="icon-bookings"></i> BOOKINGS</span></a>
 		<a href="#"><span><i class="icon-messages"></i> MESSAGES</span></a>
 		<a href="#"><span><i class="icon-reports"></i> REPORTS</span></a>
 	</nav>
 
-	<a *ngIf="userIsActive" id="lnkNewBooking" [ngClass]="{'active':isActiveLink(linkName.booking)}" (click)="setActiveLink(linkName.booking)" class="button" [routerLink]="['/booking-management','create']">+ New Booking</a>
+	<a *ngIf="userIsActive && canShowLink('booking-management')" id="lnkNewBooking" [ngClass]="{'active':isActiveLink(linkName.booking)}" (click)="setActiveLink(linkName.booking)" class="button" [routerLink]="['/booking-management','create']">+ New Booking</a>
 
 	<section *ngIf="userIsActive">
 		<ul class="dropdown menu" data-dropdown-menu>
 			<li>
 				<a id="lnkProfile" [ngClass]="{'active':isActiveLink(linkName.profile)}" (click)="setActiveLink(linkName.profile)" [routerLink]="['user-management','profile']"><img src="assets/img/dummy/anna.png">{{fullName}}</a>
 				<ul class="menu">
-					<li><a id="lnkSettings" [ngClass]="{'active':isActiveLink(linkName.usermanagement)}" (click)="setActiveLink(linkName.usermanagement)" [routerLink]="['user-management']"><i class="icon-settings"></i> Settings</a></li>
+					<li><a id="lnkSettings" *ngIf="canShowLink('user-management')" [ngClass]="{'active':isActiveLink(linkName.usermanagement)}" (click)="setActiveLink(linkName.usermanagement)" [routerLink]="['user-management']"><i class="icon-settings"></i> Settings</a></li>
 					<li><a id="lnkLogout" [routerLink]="['/authenticate','logout']"><i class="icon-logout"></i> Log Out</a></li>
 				</ul>
 			</li>

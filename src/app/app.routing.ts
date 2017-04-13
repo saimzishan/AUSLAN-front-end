@@ -24,7 +24,7 @@ const appRoutes: Routes = [
   { path: 'authenticate', component: AuthComponent },
   { path: 'authenticate/logout', component: AuthComponent },
   { path: '404', component: NotFoundComponent },
-  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+  { path: 'dashboard', component: DashboardComponent },
   {path: 'register', component: RegisterComponent},
   {path: 'register/step2', component: RegisterComponent},
   {path: 'reset', component: ResetComponent},

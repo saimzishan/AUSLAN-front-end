@@ -1,10 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UserService } from '../api/user.service';
-import {User} from '../shared/model/user.entity';
+import { User } from '../shared/model/user.entity';
 import { ROLE } from '../shared/model/role.enum';
 import { ActivatedRoute, Router } from '@angular/router';
-import {NotificationServiceBus} from '../notification/notification.service';
-import {NotificationComponent} from '../notification/notification.component';
+import { NotificationServiceBus } from '../notification/notification.service';
+import { NotificationComponent } from '../notification/notification.component';
+import { NavigationExtras } from '@angular/router';
 
 @Component({
     selector: 'app-register',
@@ -19,6 +20,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     public successMessage = `Congrats Your user has been created.
   Kindly go back to Login Page and Login`;
     private sub: any;
+    private sub_param: any;
 
     constructor(public userService: UserService,
         public notificationServiceBus: NotificationServiceBus,
@@ -27,20 +29,27 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.sub = this.routes.url.subscribe(v => {
-            this.selected = (v.length > 1 && v[1].path === 'step2');
+            this.selected = Boolean(v.length > 1 && v[1].path === 'step2');
+        });
+        this.sub_param = this.routes.queryParams.subscribe(params => {
+            let p = params['selectedRole'] || '';
+            this.selectedRole = Boolean(p && p.length > 1) ? p : this.selectedRole;
         });
     }
     roleSelected(role) {
 
         this.selected = true;
         this.selectedRole = role.toUpperCase();
-        this.router.navigate(['register', 'step2']);
+        let navigationExtras: NavigationExtras = {
+            queryParams: { selectedRole: this.selectedRole }
+        };
+        this.router.navigate(['register', 'step2'], navigationExtras);
 
     }
 
-   ngOnDestroy() {
-     this.sub.unsubscribe();
-   }
+    ngOnDestroy() {
+        return this.sub && this.sub.unsubscribe() && this.sub_param && this.sub_param.unsubscribe();
+    }
 
     addUser() {
 
@@ -49,12 +58,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
                 this.model.role = ROLE.Interpreter;
                 break;
 
-            case 'Client'.toUpperCase():
-                this.model.role = ROLE.Client;
+            case 'IndividualClient'.toUpperCase():
+                this.model.role = ROLE.IndividualClient;
                 break;
 
-            case 'Organization'.toUpperCase():
-                this.model.role = ROLE.Organisation;
+            case 'Organisational'.toUpperCase():
+                this.model.role = ROLE.Organisational;
                 break;
 
         }
@@ -62,11 +71,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
         this.userService.createUser(this.model)
             .subscribe((res: any) => {
                 this.model.id = res.data.id;
-                this.notificationServiceBus.launchNotification(false, this.successMessage );
+                this.notificationServiceBus.launchNotification(false, this.successMessage);
 
             }, errors => {
                 let e = errors.json();
-                this.notificationServiceBus.launchNotification(true, errors.statusText + ' ' + e.errors.password[0] );
+                this.notificationServiceBus.launchNotification(true, errors.statusText + ' ' + e.errors.password[0]);
             });
     }
 }

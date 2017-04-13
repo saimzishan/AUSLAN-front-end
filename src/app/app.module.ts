@@ -38,7 +38,7 @@ import { Md2Module }  from 'md2';
 import {SimpleNotificationsModule} from 'angular2-notifications';
 import {NotificationServiceBus} from './notification/notification.service';
 import { UserProfileComponent } from './user-management/user-profile/user-profile.component';
-import {LinkHelper} from './shared/router/linkhelper';
+import {LinkHelper, LinkAuth} from './shared/router/linkhelper';
 import {
   RouterModule,
 } from '@angular/router';
@@ -46,7 +46,8 @@ import { AuthHttp } from 'angular2-jwt';
 import { SpacerPipe } from './shared/pipe/spacer.pipe';
 import { BookingJobsComponent } from './booking-management/booking-jobs/booking-jobs.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { RolePermission } from './shared/role-permission/role-permission';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -75,12 +76,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   ],
    entryComponents: [UserDetailComponent],
   imports: [CustomFormsModule, routing,
-    BrowserModule, RouterModule,
+    BrowserModule, RouterModule, CommonModule,
     FormsModule, BrowserAnimationsModule,
     HttpModule, SimpleNotificationsModule.forRoot(),
     ReactiveFormsModule, Md2Module.forRoot(),
     MaterialModule
-  ],  providers: [UserNameService, AuthGuard, Title, LinkHelper,
+  ],  providers: [LinkAuth, UserNameService, RolePermission, AuthGuard, Title, LinkHelper,
     NotificationServiceBus, SpinnerService, BookingService, UserService,
     {provide: APP_BASE_HREF, useValue : '/' }, {
       provide: AuthHttp,

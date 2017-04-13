@@ -1,7 +1,7 @@
 import { Component, OnDestroy, Input } from '@angular/core';
 import {GLOBAL} from '../../shared/global';
 import {UserNameService} from '../../shared/user-name.service';
-import {LinkHelper, LINK} from '../../shared/router/linkhelper';
+import {LinkHelper, LINK, LinkAuth} from '../../shared/router/linkhelper';
 
 @Component({
   selector: 'app-header',
@@ -13,7 +13,8 @@ export class HeaderComponent implements OnDestroy {
   private sub: any;
   userIsActive = false;
   @Input() fullName = GLOBAL.currentUser ? GLOBAL.currentUser.first_name + ' '  + GLOBAL.currentUser.last_name : '';
-  constructor(public userNameService: UserNameService) {
+
+  constructor(public userNameService: UserNameService, private linkAuth: LinkAuth) {
       this.sub = this.userNameService.loggedInUser$.subscribe(
         u => {
           this.fullName = u.first_name + ' ' + u.last_name;
@@ -21,7 +22,6 @@ export class HeaderComponent implements OnDestroy {
 
         });
   }
-
 
    ngOnDestroy() {
     return this.sub && this.sub.unsubscribe();
@@ -34,4 +34,9 @@ export class HeaderComponent implements OnDestroy {
   setActiveLink(linkName) {
     LinkHelper.activeLink = linkName;
   }
+
+  canShowLink(linkName) {
+    return this.linkAuth.canShowLink(linkName);
+  }
+
 }

@@ -69,10 +69,10 @@
 							<td class="truncated-text">{{user.mobile}}</td>
 							<td [ngClass]="{'active':user.verified}" >{{ user.disabled ? 'Disabled' : !user.verified ? 'Unverified' : 'Active' }}</td>
 
-							<td>
+							<td *ngIf="canEditLink('user-management',user.type)">
 								<ul class="dropdown menu custom actions" data-dropdown-menu>
 									<li>
-										<a href="javascript:void(0)"><i class="icon-actions"></i></a>
+										<a  href="javascript:void(0)"><i class="icon-actions"></i></a>
 										<ul class="menu right-side green">
 											<li><a  (click)="onUserSelect(user)" ><i class="icon-edit"></i> Edit</a></li>
 											<li><a (click)="onResetPassword(user)" ><i class="icon-reset-password"></i> Reset password</a></li>

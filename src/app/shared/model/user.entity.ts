@@ -4,7 +4,24 @@ import {Venue} from './venue.entity';
 export enum interpreter_avalability {}
 export enum blockout_availability {}
 
+export class UserFactory {
 
+    // This is boring, we should rather have templated function to return the object with right class
+    public static createUser(data: any) {
+      let type = data.type;
+        switch (type) {
+          case 'OrganisationalRepresentative': return new  OrganisationalRepresentative (data);
+          case 'Organisational': return new  Organisational (data);
+          case 'Accountant': return new  Accountant (data);
+          case 'IndividualClient': return new  IndividualClient (data);
+          case 'BookingOfficer': return new  BookingOfficer (data);
+          case 'Administrator': return new  Administrator (data);
+          case 'Interpreter': return new  Interpreter (data);
+        }
+    }
+}
+
+// We should use a Builder Pattern here 
 export class User {
 
   public email: string;
@@ -22,6 +39,22 @@ export class User {
 
   protected get user_type() {
     return '';
+  }
+
+  // This should be deleted in favour of right user cast and user_type
+  public getRole() {
+    if (Boolean(!this.role && this.type && this.type.length > 1)) {
+      return ROLE[this.type];
+    }
+    return ROLE.NONE;
+  }
+
+// This should be deleted in favour of right user cast and user_type
+  public getType() {
+    if (Boolean(!this.role && this.type && this.type.length > 1)) {
+      return this.type;
+    }
+    return ROLE[ROLE.NONE];
   }
 
   constructor(values: Object = {}) {
@@ -60,7 +93,7 @@ export class Accountant extends User {
   }
 }
 
-export class Client extends User {
+export class IndividualClient extends User {
 
 public ndis_id: string;
 public ndis_budget_limit: number;
@@ -72,7 +105,7 @@ public eaf_start_date: Date;
 public eaf_end_date: Date;
 
   get user_type() {
-    return 'Client';
+    return 'IndividualClient';
   }
 }
 

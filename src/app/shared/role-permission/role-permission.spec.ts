@@ -17,13 +17,12 @@ describe('RolePermission', () => {
     describe('RolePermission methods', () => {
         let role_service: RolePermission = new RolePermission(null);
         beforeEach(() => {
-            role_service.loadDefaultData();
         });
         it('should have valid permissions', () => {
             expect(role_service.permissions).toBeTruthy();
         });
         it('Default Route for an existing default role', () => {
-            expect(role_service.getDefaultRoute('admin')).toEqual('booking-management');
+            expect(role_service.getDefaultRoute('administrator')).toEqual('booking-management');
         });
         it('Default Route for an existing role', () => {
             expect(role_service.getDefaultRoute('booking-officer')).toEqual('booking-management');
@@ -41,7 +40,7 @@ describe('RolePermission', () => {
         });
 
         it('The route with data permission for existing owner should be readonly ', () => {
-            expect(role_service.isDataReadOnly('booking-officer', 'user-management', 'admin')).toEqual(true);
+            expect(role_service.isDataReadOnly('booking-officer', 'user-management', 'administrator')).toEqual(true);
         });
 
         it('The route with data permission for non-existing owner should report ', () => {
@@ -49,11 +48,11 @@ describe('RolePermission', () => {
         });
 
         it('The route with non existing data permission should be not readonly ', () => {
-            expect(role_service.isDataReadOnly('booking-officer', 'booking-management', 'admin')).toEqual(false);
+            expect(role_service.isDataReadOnly('booking-officer', 'booking-management', 'administrator')).toEqual(false);
         });
 
         it('The restricted route should be report as not accessible ', () => {
-            expect(role_service.isDataRestricted('interpreter', 'user-management', 'admin')).toEqual(false);
+            expect(role_service.isDataRestricted('interpreter', 'user-management', 'administrator')).toEqual(false);
         });
     });
 });

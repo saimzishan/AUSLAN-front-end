@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {LinkHelper, LINK} from '../../shared/router/linkhelper';
+import {LinkHelper, LinkAuth, LINK} from '../../shared/router/linkhelper';
 
 @Component({
   selector: 'app-user-header',
@@ -8,7 +8,7 @@ import {LinkHelper, LINK} from '../../shared/router/linkhelper';
 })
 export class UserHeaderComponent {
   linkName = LINK;
-  constructor() {
+  constructor(private linkAuth: LinkAuth) {
   }
 
   isActiveLink(linkName) {
@@ -17,5 +17,10 @@ export class UserHeaderComponent {
 
   setActiveLink(linkName) {
     LinkHelper.activeLink = linkName;
+  }
+
+
+  canShowLink(linkName) {
+    return this.linkAuth.canShowLink(linkName);
   }
 }
