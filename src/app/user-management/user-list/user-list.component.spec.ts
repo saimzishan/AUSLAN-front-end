@@ -3,7 +3,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { SpacerPipe } from '../../shared/pipe/spacer.pipe';
-
+import {LinkHelper, LinkAuth} from '../../shared/router/linkhelper';
+import {RolePermission} from '../../shared/role-permission/role-permission';
+import {HttpModule} from '@angular/http';
 import { UserListComponent } from './user-list.component';
 
 describe('UserListComponent', () => {
@@ -12,7 +14,9 @@ describe('UserListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UserListComponent, SpacerPipe ]
+      declarations: [ UserListComponent, SpacerPipe ],
+      providers: [RolePermission, LinkAuth],
+      imports: [HttpModule]
     })
     .compileComponents();
   }));

@@ -12,14 +12,15 @@ import {UserNameService} from '../../shared/user-name.service';
   styleUrls: ['./user-profile.component.css']
 })
 export class UserProfileComponent {
-  userModel: User = GLOBAL.currentUser;
+  userModel: User = Boolean(GLOBAL.currentUser) ? GLOBAL.currentUser :  new User();
   selectedStatus = '';
   userStatusArray = GLOBAL.userStatusArray;
 
   constructor(public userDataService: UserService, public userNameService: UserNameService,
     public notificationServiceBus: NotificationServiceBus,
     public spinnerService: SpinnerService) {
-      this.selectedStatus = this.userModel.disabled === false ? this.userStatusArray[0].name : this.userStatusArray[1].name;
+      this.selectedStatus = Boolean( this.userModel && this.userModel.disabled === false) ?
+       this.userStatusArray[0].name : this.userStatusArray[1].name;
   }
 
 

@@ -12,7 +12,7 @@ export class HeaderComponent implements OnDestroy {
   linkName= LINK;
   private sub: any;
   userIsActive = false;
-  @Input() fullName = GLOBAL.currentUser ? GLOBAL.currentUser.first_name + ' '  + GLOBAL.currentUser.last_name : '';
+  @Input() fullName = Boolean(GLOBAL.currentUser) ? GLOBAL.currentUser.first_name + ' '  + GLOBAL.currentUser.last_name : '';
 
   constructor(public userNameService: UserNameService, private linkAuth: LinkAuth) {
       this.sub = this.userNameService.loggedInUser$.subscribe(

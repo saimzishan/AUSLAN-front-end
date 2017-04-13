@@ -25,6 +25,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import 'foundation-sites';
 import {SpinnerService} from '../spinner/spinner.service';
 import { NotificationServiceBus } from '../notification/notification.service';
+import {RolePermission} from '../shared/role-permission/role-permission';
 
 describe('UserManagement', () => {
     let component: UserManagementComponent;
@@ -33,8 +34,8 @@ describe('UserManagement', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [UserManagementComponent],
-            imports: [FormsModule, RouterTestingModule, CustomFormsModule],
-            providers: [NotificationServiceBus,
+            imports: [FormsModule, RouterTestingModule, CustomFormsModule, HttpModule],
+            providers: [NotificationServiceBus, RolePermission,
             { provide: UserService, useClass: MockUserService }, SpinnerService, { provide: AuthHttp, useClass: MockBackend }]
         });
     }));

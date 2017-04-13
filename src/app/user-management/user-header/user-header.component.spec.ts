@@ -2,10 +2,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
-
+import {HttpModule} from '@angular/http';
 import { UserHeaderComponent } from './user-header.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import {LinkHelper} from '../../shared/router/linkhelper';
+import {LinkHelper, LinkAuth} from '../../shared/router/linkhelper';
+import {RolePermission} from '../../shared/role-permission/role-permission';
 
 describe('UserHeaderComponent', () => {
   let component: UserHeaderComponent;
@@ -14,8 +15,8 @@ describe('UserHeaderComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ UserHeaderComponent ],
-      imports: [RouterTestingModule],
-      providers: [LinkHelper]
+      imports: [RouterTestingModule, HttpModule],
+      providers: [LinkHelper, LinkAuth, RolePermission]
     })
     .compileComponents();
   }));

@@ -12,9 +12,9 @@ import { CustomFormsModule } from 'ng2-validation';
 import { FormsModule } from '@angular/forms';
 import { MaterialModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
-import {LinkHelper} from '../../shared/router/linkhelper';
+import {LinkHelper, LinkAuth} from '../../shared/router/linkhelper';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import {RolePermission} from '../../shared/role-permission/role-permission';
 
 describe('UserProfileComponent', () => {
   let component: UserProfileComponent;
@@ -23,7 +23,7 @@ describe('UserProfileComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ UserProfileComponent, UserHeaderComponent ],
-      providers: [UserNameService, LinkHelper,
+      providers: [UserNameService, LinkHelper, LinkAuth, RolePermission,
          { provide: UserService, useClass: MockUserService}, { provide: AuthHttp, useClass: MockBackend},
         NotificationServiceBus,
         SpinnerService],

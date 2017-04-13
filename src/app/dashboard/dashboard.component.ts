@@ -33,7 +33,7 @@ export class DashboardComponent implements OnInit {
                   user = GLOBAL.currentUser;
                   this.userNameService.setLoggedInUser(user);
                   if (!res.data.verified) { // show errors
-                      this.router.navigate(['/verify/' + user.id]);
+                      this.router.navigate(['/verify/' + data.id]);
                   }else {
                       let route = this.rolePermission.getDefaultRouteForCurrentUser(true);
                     this.router.navigate( [route] );

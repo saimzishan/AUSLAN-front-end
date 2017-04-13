@@ -4,6 +4,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { TestBed, async, inject } from '@angular/core/testing';
 import { User } from '../shared/model/user.entity';
 import { RouterStub } from '../shared/test/Mock';
+import { RolePermission } from '../shared/role-permission/role-permission';
+import {  HttpModule, Http, RequestOptions } from '@angular/http';
 
 let sampleTok = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY';
 sampleTok = sampleTok + '3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ';
@@ -11,8 +13,8 @@ sampleTok = sampleTok + '3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA9
 describe('AuthGuardService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
-            providers: [AuthGuard, { provide: Router, useClass: RouterStub }],
-            imports: [RouterTestingModule]
+            providers: [RolePermission, AuthGuard, { provide: Router, useClass: RouterStub }],
+            imports: [RouterTestingModule, HttpModule]
         });
     });
 
