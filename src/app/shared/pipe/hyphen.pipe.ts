@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class HyphenPipe implements PipeTransform {
 
   transform(value: any, args?: any): any {
-        if ( value === undefined ){
+        if ( value === undefined ) {
           return value;
         }
     		let v = value.replace(/([A-Z])/g, ' $1').trim();

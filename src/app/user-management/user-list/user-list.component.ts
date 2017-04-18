@@ -27,7 +27,7 @@ export class UserListComponent {
   }
 
     canEditLink(linkName, data_owner) {
-      return this.linkAuth.canEditLink(linkName,data_owner);
+      return this.linkAuth.canEditLink(linkName, data_owner);
     }
 
 }

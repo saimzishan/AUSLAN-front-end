@@ -10,7 +10,7 @@ describe('RolePermission', () => {
             imports: [HttpModule]
         });
     });
-    /*
+
     it('should have valid  object', inject([RolePermission, Http], (service: RolePermission, http: Http) => {
         expect(service).toBeTruthy();
     }));
@@ -39,10 +39,6 @@ describe('RolePermission', () => {
             expect(role_service.isRestrictedRoute('interpreter', 'booking-management')).toEqual(false);
         });
 
-        it('The route with data permission for existing owner should be readonly ', () => {
-            expect(role_service.isDataReadOnly('booking-officer', 'user-management', 'administrator')).toEqual(true);
-        });
-
         it('The route with data permission for non-existing owner should report ', () => {
             expect(role_service.isDataReadOnly('booking-officer', 'user-management', 'interpreter')).toEqual(false);
         });
@@ -54,5 +50,5 @@ describe('RolePermission', () => {
         it('The restricted route should be report as not accessible ', () => {
             expect(role_service.isDataRestricted('interpreter', 'user-management', 'administrator')).toEqual(false);
         });
-    });*/
+    });
 });

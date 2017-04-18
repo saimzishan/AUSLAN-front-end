@@ -20,6 +20,7 @@ export class Booking {
     public raw_booking_address:  string;
     public interpreters: Array<Contact> = [];
     public interpreters_required = 0;
+    // Is it a limitation on interpreters invitation.
 
     constructor() {
       this.id = '0';

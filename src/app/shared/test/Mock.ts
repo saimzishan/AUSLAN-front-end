@@ -1,11 +1,11 @@
 import { Component,  Injectable } from '@angular/core';
 import { ApiService } from '../../api/api.service';
 import { Observable } from 'rxjs/Observable';
-import {User} from '../../shared/model/user.entity';
 import {Booking} from '../../shared/model/booking.entity';
 import {GLOBAL} from '../global';
 import {Response, ResponseOptions} from '@angular/http';
 import { NgModule } from '@angular/core';
+import {User} from '../model/user.entity';
 
 @Component({
     template: ''
@@ -23,6 +23,11 @@ let mock_login_response: Object = {'res': { 'data': { 'jwt': GLOBAL.FAKE_TOKEN}}
 let mock_User_response: Object = {
       id: 2, email: 'admin1@aus.au', name: 'Joe Doe 2', type: 'Accountant'
   };
+
+let mock_user_detail: User = new User({
+        id: 2, email: 'admin1@aus.au', first_name: 'Joe', last_name: 'Joe',
+        mobile: 'xxxx xxx xxx', verified: false, disabled: false, password: 'xxxxx'
+    });
 
 let mock_empty_response: Object = {};
 
@@ -62,7 +67,7 @@ export class MockUserService extends ApiService {
        return Observable.of(mock_empty_response).map(
          o => this.extractData(new Response(new ResponseOptions({
            status: 200,
-         body: JSON.stringify({data: mock_User_response}),
+         body: JSON.stringify({data: mock_user_detail}),
        }))));
      }
      logout() {

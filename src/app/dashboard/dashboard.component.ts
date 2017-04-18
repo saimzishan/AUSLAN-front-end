@@ -7,6 +7,7 @@ import {LinkHelper, LINK} from '../shared/router/linkhelper';
 import { RolePermission } from '../shared/role-permission/role-permission';
 import { User, UserFactory } from '../shared/model/user.entity';
 import {ROLE} from '../shared/model/role.enum';
+import {AuthGuard} from '../auth/auth.guard';
 
 @Component({
     selector: 'app-dashboard',
@@ -31,6 +32,7 @@ export class DashboardComponent implements OnInit {
                   let data = res.data;
                   GLOBAL.currentUser = UserFactory.createUser(data);
                   user = GLOBAL.currentUser;
+                  AuthGuard.refreshUser(user);
                   this.userNameService.setLoggedInUser(user);
                   if (!res.data.verified) { // show errors
                       this.router.navigate(['/verify/' + data.id]);

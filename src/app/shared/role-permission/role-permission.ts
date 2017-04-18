@@ -11,9 +11,7 @@ export class RolePermission {
     defaultData = /**
      * This should be removed , and loaded from json file
      */`{
-    "default":{
-        "default-route": "booking-management"
-    },
+    "default-route": "booking-management",
     "booking-officer":{
         "routes-with-data-permissions": {
             "user-management": {
@@ -102,7 +100,7 @@ export class RolePermission {
 
         return Boolean(this.permissions[this.curr_role] && this.permissions[this.curr_role]['default-route'] ) ?
         this.permissions[this.curr_role]['default-route']
-        : this.permissions.default['default-route'];
+        : this.permissions['default-route'];
     }
 
     isRestrictedRouteForCurrentUser(path: any, r: Boolean) {
@@ -130,21 +128,21 @@ export class RolePermission {
     }
 
     getDefaultRoute(role: any) {
-        let r = this.hyphen_pipe.transform(this.permissions[role]);
+        let r = this.permissions[this.hyphen_pipe.transform(role)];
         return Boolean(r && r['default-route'] ) ?
         r['default-route']
-        : this.permissions.default['default-route'];
+        : this.permissions['default-route'];
     }
 
     isRestrictedRoute(role: any, path: any) {
-                let r = this.hyphen_pipe.transform(this.permissions[role]);
+                let r = this.permissions[this.hyphen_pipe.transform(role)];
 
         return Boolean(r && r['not-allowed-routes']
             && r['not-allowed-routes'].some(x => x === path));
     }
 
     isDataReadOnly(role: any, path: any, data_owner: any) {
-                let r = this.hyphen_pipe.transform(this.permissions[role]);
+                let r = this.permissions[this.hyphen_pipe.transform(role)];
 data_owner = this.hyphen_pipe.transform(data_owner);
         return Boolean(r && r['routes-with-data-permissions']
         && r['routes-with-data-permissions'][path] &&
@@ -153,7 +151,7 @@ data_owner = this.hyphen_pipe.transform(data_owner);
     }
 
     isDataRestricted(role: any, path: any, data_owner: any) {
-                let r = this.hyphen_pipe.transform(this.permissions[role]);
+                let r = this.permissions[this.hyphen_pipe.transform(role)];
 data_owner = this.hyphen_pipe.transform(data_owner);
         return Boolean(r && r['routes-with-data-permissions']
         && r['routes-with-data-permissions'][path] &&

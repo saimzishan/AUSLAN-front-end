@@ -48,6 +48,7 @@ import { BookingJobsComponent } from './booking-management/booking-jobs/booking-
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RolePermission } from './shared/role-permission/role-permission';
 import { CommonModule } from '@angular/common';
+import { HyphenPipe } from './shared/pipe/hyphen.pipe';
 
 @NgModule({
   declarations: [
@@ -72,7 +73,7 @@ import { CommonModule } from '@angular/common';
     UserListComponent,
     UserHeaderComponent,
     UserDetailComponent,
-    UserProfileComponent, EnumValPipe, SpacerPipe, BookingJobsComponent
+    UserProfileComponent, HyphenPipe, SpacerPipe, BookingJobsComponent
   ],
    entryComponents: [UserDetailComponent],
   imports: [CustomFormsModule, routing,

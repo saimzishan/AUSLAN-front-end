@@ -21,6 +21,8 @@ export class HeaderComponent implements OnDestroy {
           this.userIsActive = GLOBAL.currentUser.verified && (GLOBAL.currentUser.disabled === false);
 
         });
+        this.userIsActive = Boolean(GLOBAL.currentUser && this.fullName && this.fullName.length > 0
+        && this.fullName === GLOBAL.currentUser.first_name + ' '  + GLOBAL.currentUser.last_name);
   }
 
    ngOnDestroy() {

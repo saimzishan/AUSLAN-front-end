@@ -17,11 +17,12 @@ export class UserFactory {
           case 'BookingOfficer': return new  BookingOfficer (data);
           case 'Administrator': return new  Administrator (data);
           case 'Interpreter': return new  Interpreter (data);
+          default: return new User (data);
         }
     }
 }
 
-// We should use a Builder Pattern here 
+// We should use a Builder Pattern here
 export class User {
 
   public email: string;
