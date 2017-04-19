@@ -14,6 +14,7 @@ import {BookingComponent} from './booking-management/booking.component';
 import {BookingDetailComponent} from './booking-management/booking-detail/booking-detail.component';
 import {UserProfileComponent} from './user-management/user-profile/user-profile.component';
 import {BookingJobsComponent} from './booking-management/booking-jobs/booking-jobs.component';
+import { NoAuthGuard } from './auth/no-auth.guard';
 
 const appRoutes: Routes = [
   { path: 'user-management', component: UserManagementComponent, canActivate: [AuthGuard]},
@@ -21,15 +22,15 @@ const appRoutes: Routes = [
   { path: 'booking-management', component: BookingComponent, canActivate: [AuthGuard]},
   { path: 'booking-management/create', component: BookingDetailComponent, canActivate: [AuthGuard]},
   { path: 'booking-management/:id/jobs', component: BookingJobsComponent, canActivate: [AuthGuard]},
-  { path: 'authenticate', component: AuthComponent },
+  { path: 'authenticate', component: AuthComponent , canActivate: [NoAuthGuard] },
   { path: 'authenticate/logout', component: AuthComponent },
   { path: '404', component: NotFoundComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
-  {path: 'register', component: RegisterComponent},
-  {path: 'register/step2', component: RegisterComponent},
-  {path: 'reset', component: ResetComponent},
+  {path: 'register', component: RegisterComponent, canActivate: [NoAuthGuard] },
+  {path: 'register/step2', component: RegisterComponent, canActivate: [NoAuthGuard] },
+  {path: 'reset', component: ResetComponent, canActivate: [NoAuthGuard] },
   {path: 'verify/:id', component: VerifyComponent, canActivate: [AuthGuard]},
-  {path: 'bookings', component: BookingComponent},
+  {path: 'bookings', component: BookingComponent, canActivate: [AuthGuard]},
   { path: '**', redirectTo: 'authenticate', pathMatch: 'full'}
 ];
 

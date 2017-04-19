@@ -49,6 +49,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RolePermission } from './shared/role-permission/role-permission';
 import { CommonModule } from '@angular/common';
 import { HyphenPipe } from './shared/pipe/hyphen.pipe';
+import { NoAuthGuard } from './auth/no-auth.guard';
 
 @NgModule({
   declarations: [
@@ -82,7 +83,7 @@ import { HyphenPipe } from './shared/pipe/hyphen.pipe';
     HttpModule, SimpleNotificationsModule.forRoot(),
     ReactiveFormsModule, Md2Module.forRoot(),
     MaterialModule
-  ],  providers: [LinkAuth, UserNameService, RolePermission, AuthGuard, Title, LinkHelper,
+  ],  providers: [LinkAuth, UserNameService, RolePermission, AuthGuard, NoAuthGuard, Title, LinkHelper,
     NotificationServiceBus, SpinnerService, BookingService, UserService,
     {provide: APP_BASE_HREF, useValue : '/' }, {
       provide: AuthHttp,
