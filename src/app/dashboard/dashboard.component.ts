@@ -34,7 +34,7 @@ export class DashboardComponent implements OnInit {
                   user = GLOBAL.currentUser;
                   AuthGuard.refreshUser(user);
                   this.userNameService.setLoggedInUser(user);
-                  if (!res.data.verified) { // show errors
+                  if (!data.verified) { // show errors
                       this.router.navigate(['/verify/' + data.id]);
                   }else {
                       let route = this.rolePermission.getDefaultRouteForCurrentUser(true);

@@ -67,7 +67,7 @@ export class MockUserService extends ApiService {
        return Observable.of(mock_empty_response).map(
          o => this.extractData(new Response(new ResponseOptions({
            status: 200,
-         body: JSON.stringify({data: mock_user_detail}),
+         body: JSON.stringify(mock_user_detail),
        }))));
      }
      logout() {
