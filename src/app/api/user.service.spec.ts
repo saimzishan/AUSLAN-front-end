@@ -399,7 +399,7 @@ describe('UserService', () => {
         inject([UserService], (service: UserService) => {
                     let u: User = new User({
                         id: 3, email: 'admin1@aus.au', name: 'Joe Doe',
-                        password: 'secure_password', role: ROLE.Client
+                        password: 'secure_password', role: ROLE.IndividualClient
                     });
                     userProvider
                         .given('user does not exists in database')
