@@ -196,7 +196,7 @@
 								<md-checkbox (change)="onChange($event,user)"></md-checkbox>
 							</td>
 							<td>{{user.id}}</td>
-							<td align="center"><i [ngClass]="{'icon-check-green' : isInvited(user.id)}"></i></td>
+							<td align="center"><i [ngClass]="{'icon-check-green' : isInvited(user.id), 'icon-check-yellow' : !isInvited(user.id)}"></i></td>
 							<td><i [ngClass]="{'icon-check-yellow' : isNotConfirmed(user.id)}"></i> {{user.first_name}}</td>
 							<td>{{user.last_name}}</td>
 							<td></td>

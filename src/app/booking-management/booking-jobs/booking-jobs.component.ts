@@ -148,7 +148,7 @@ export class BookingJobsComponent implements AfterViewChecked, OnDestroy, OnInit
   }
 
   inviteInterpreters() {
-    this.invitePressed = true;
+    this.invitePressed = this.selectedInterpreterIDs.length > 0;
   }
 
   sendInvite(interpreters) {
