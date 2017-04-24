@@ -50,6 +50,7 @@ import { RolePermission } from './shared/role-permission/role-permission';
 import { CommonModule } from '@angular/common';
 import { HyphenPipe } from './shared/pipe/hyphen.pipe';
 import { NoAuthGuard } from './auth/no-auth.guard';
+import {Store, provideStore} from '@ngrx/store';
 
 @NgModule({
   declarations: [

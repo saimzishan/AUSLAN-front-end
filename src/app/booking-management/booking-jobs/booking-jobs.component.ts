@@ -18,13 +18,12 @@ declare var $: any; // not liking it
   styleUrls: ['./booking-jobs.component.css']
 })
 
-export class BookingJobsComponent implements AfterViewChecked, OnDestroy {
+export class BookingJobsComponent implements AfterViewChecked, OnDestroy, OnInit {
   selectedBookingModel: Booking;
   invitePressed = false;
   interpreterList: User[] = [];
   selectedInterpreterIDs: number[] = [];
   private sub: any;
-  bookingInterpreterList: BookingInterpreters[] = [];
 
   constructor(public spinnerService: SpinnerService,
     public notificationServiceBus: NotificationServiceBus,
@@ -38,20 +37,18 @@ export class BookingJobsComponent implements AfterViewChecked, OnDestroy {
       this.selectedBookingModel = new Booking();
       this.selectedBookingModel.fromJSON(jsonData);
     });
-    this.preRender();
   }
 
   ngAfterViewChecked() {
     $(document).foundation();
   }
 
-  preRender() {
-    this.fetchAllInterpreters();
+  ngOnInit() {
     this.fetchBookingInterpreters();
   }
 
 
-   ngOnDestroy() {
+  ngOnDestroy() {
     return this.sub && this.sub.unsubscribe();
   }
 
@@ -109,11 +106,10 @@ export class BookingJobsComponent implements AfterViewChecked, OnDestroy {
 
   fetchAllInterpreters() {
     this.spinnerService.requestInProcess(true);
-    this.userDataService.fetchUsers()
+    this.userDataService.fetchUsersOfType('interpreters')
       .subscribe((res: any) => {
         if (res.status === 200) {
-          let count = 0;
-          this.interpreterList = res.data.users.filter(u => count++ < 10 && u.type === 'Interpreter');
+          this.interpreterList = res.data.users;
         }
         this.spinnerService.requestInProcess(false);
       },
@@ -129,8 +125,8 @@ export class BookingJobsComponent implements AfterViewChecked, OnDestroy {
     this.bookingService.getBooking(this.selectedBookingModel.id)
       .subscribe((res: any) => {
         if (res.status === 200) {
-          let count = 0;
-          this.bookingInterpreterList = res.data['interpreters'];
+          this.selectedBookingModel.interpreters = res.data['interpreters'];
+          this.fetchAllInterpreters();
         }
         this.spinnerService.requestInProcess(false);
       },
@@ -142,26 +138,46 @@ export class BookingJobsComponent implements AfterViewChecked, OnDestroy {
   }
 
   isInvited(id: number) {
-    return this.bookingInterpreterList.filter(i => i.id === id);
+    let res = this.selectedBookingModel.interpreters.filter(i => i.id === id);
+    return (res.length > 0);
   }
 
+  isNotConfirmed(id: number) {
+    let res = this.selectedBookingModel.interpreters.filter(i => i.id === id && i.state !== 'accepted');
+    return (res.length > 0);
+  }
 
   inviteInterpreters() {
     this.invitePressed = true;
   }
 
+  sendInvite(interpreters) {
+    this.bookingService.inviteInterpreters(this.selectedBookingModel.id, interpreters)
+      .subscribe((res: any) => {
+        if (res.status === 204) {
+          this.notificationServiceBus.launchNotification(false, 'The interpreters have been invited');
+        }
+        this.spinnerService.requestInProcess(false);
+      },
+      err => {
+        this.spinnerService.requestInProcess(false);
+        let e = err.json() || 'There is some error on server side';
+        this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
+      });
+  }
+
   saveChanges() {
+    this.spinnerService.requestInProcess(true);
+
     let selectedInt = [];
-    for (let id of this.selectedInterpreterIDs) {
-      let o = this.interpreterList.filter(u => u.id === id);
-      if (o) {
-        selectedInt.push(o);
-      }
+    for (let _id of this.selectedInterpreterIDs) {
+      selectedInt.push(new Object({
+        id: _id
+      }));
     }
     this.selectedBookingModel.interpreters = selectedInt;
     this.selectedInterpreterIDs = [];
-    this.notificationServiceBus.launchNotification(false, 'The interpreters have been invited');
     this.invitePressed = false;
-
+    this.sendInvite(selectedInt);
   }
 }

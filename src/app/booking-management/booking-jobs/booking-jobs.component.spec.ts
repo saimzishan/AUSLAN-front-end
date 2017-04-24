@@ -7,7 +7,7 @@ import {ROLE} from '../../shared/model/role.enum';
 import {SpinnerService} from '../../spinner/spinner.service';
 import { NotificationServiceBus } from '../../notification/notification.service';
 import { BookingJobsComponent } from './booking-jobs.component';
-import {MockUserService} from '../../shared/test/Mock';
+import {MockUserService, MockBookingService} from '../../shared/test/Mock';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import {NotificationComponent} from '../../notification/notification.component';
 import {SimpleNotificationsModule} from 'angular2-notifications';
@@ -38,7 +38,7 @@ describe('BookingJobsComponent', () => {
                         }
                     }
                 },
-                { provide: BookingService, useClass: MockUserService },
+                { provide: BookingService, useClass: MockBookingService },
                 { provide: UserService, useClass: MockUserService }, { provide: AuthHttp, useClass: MockBackend }],
             imports: [SimpleNotificationsModule, MaterialModule, FormsModule,
                 RouterTestingModule]

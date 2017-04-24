@@ -38,6 +38,19 @@ export class BookingService extends ApiService {
     }
 
     /*
+      The Api should be used to invite interpreters
+    */
+    inviteInterpreters(bookingID: number, interpreters: Array<Object>): Observable<Object> {
+
+        let headers = new Headers({'Accept': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+        let obj = { 'interpreters': interpreters};
+
+        return this.http.post(GLOBAL.BOOKING_API + '/' + bookingID + '/invite_interpreters' , JSON.stringify(obj), options)
+            .map(this.extractData)
+            .catch((err) => { return this.handleError(err); });
+    }
+    /*
       The Api should be able to update already created bookings.
     */
     updateBooking(booking: Booking): Observable<Object> {

@@ -2,9 +2,9 @@
 
 import { TestBed, async, inject } from '@angular/core/testing';
 import { BookingService } from './booking.service';
-import {GLOBAL} from '../shared/global';
-import {Booking} from '../shared/model/booking.entity';
-import {ROLE} from '../shared/model/role.enum';
+import { GLOBAL } from '../shared/global';
+import { Booking } from '../shared/model/booking.entity';
+import { ROLE } from '../shared/model/role.enum';
 import {
     ResponseOptions,
     Response,
@@ -12,8 +12,8 @@ import {
     BaseRequestOptions,
     RequestMethod
 } from '@angular/http';
-import {} from 'jasmine';
-import {authService} from '../shared/global';
+import { } from 'jasmine';
+import { authService } from '../shared/global';
 import { RequestOptions } from '@angular/http';
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
 declare function require(name: string);
@@ -64,52 +64,76 @@ describe('BookingService', () => {
     });
 
 
-    afterAll(function(done) {
+    afterAll(function (done) {
         bookingProvider.finalize()
-            .then(function() { done(); }, function(err) { done.fail(err); });
+            .then(function () { done(); }, function (err) { done.fail(err); });
     });
 
     it('should have valid http', inject([BookingService], (service) => {
         expect(service.isValidHttp()).toEqual(true);
     }));
 
-    it('should exists', function(done) {
+    it('should exists', function (done) {
         inject([BookingService], (service: BookingService) => {
             expect(service).toBeTruthy();
             done();
         })();
     });
 
-    it('should create a Booking', function(done) {
+    it('should create a Booking', function (done) {
         inject([BookingService], (service: BookingService) => {
 
-                    bookingProvider
-                        .given('booking does not exists in database')
-                        .uponReceiving('a request to create Booking')
-                        .withRequest('POST', '/api/v1/bookings', {
-                            'Accept': 'application/json'
-                        })
-                        .willRespondWith(201, {
-                            'Content-Type': 'application/json; charset=utf-8'
-                        }, Pact.Match.somethingLike(mock_response));
+            bookingProvider
+                .given('booking does not exists in database')
+                .uponReceiving('a request to create Booking')
+                .withRequest('POST', '/api/v1/bookings', {
+                    'Accept': 'application/json'
+                })
+                .willRespondWith(201, {
+                    'Content-Type': 'application/json; charset=utf-8'
+                }, Pact.Match.somethingLike(mock_response));
 
-                    bookingProvider.run(done, function(runComplete) {
+            bookingProvider.run(done, function (runComplete) {
 
-                        service.createBooking(mock_booking)
-                            .subscribe((res: any) => {
-                                service.bookings.push(res.data);
-                                expect(res.status).toEqual(201);
-                                done();
-                            }, err => done.fail(err), () => {
-                                runComplete();
-                            });
+                service.createBooking(mock_booking)
+                    .subscribe((res: any) => {
+                        service.bookings.push(res.data);
+                        expect(res.status).toEqual(201);
+                        done();
+                    }, err => done.fail(err), () => {
+                        runComplete();
                     });
+            });
+        })();
+    });
+
+
+    it('should invite a bulk of interpreters', function (done) {
+        inject([BookingService], (service: BookingService) => {
+            bookingProvider
+                .given('booking does exists in database')
+                .uponReceiving('a request to invite interpreters')
+                .withRequest('POST', '/api/v1/bookings/2/invite_interpreters', {
+                    'Accept': 'application/json'
+                })
+                .willRespondWith(204);
+
+            bookingProvider.run(done, function (runComplete) {
+                let mocK_invite = [{ 'id': 609 }, { 'id': 610 }];
+                service.inviteInterpreters(2, mocK_invite)
+                    .subscribe((res: any) => {
+                        expect(res.status).toEqual(204);
+                        done();
+                    }, err => done.fail(err), () => {
+                        runComplete();
+                    });
+            });
         })();
     });
 
     describe('Fetach All booking Api', () => {
 
-        it('should return a collection of bookings for fetch all bookings', function(done) {
+        it('should return a collection of bookings for fetch all bookings', function (done) {
             inject([BookingService], (service: BookingService) => {
                 let int = bookingProvider
                     .given('there are bookings already added inside the database')
@@ -124,9 +148,9 @@ describe('BookingService', () => {
                     )
                     .willRespondWith(200, {
                         'Content-Type': 'application/json; charset=utf-8'
-                    }, {'bookings': Pact.Match.somethingLike(mock_response_with_interpreters)});
+                    }, { 'bookings': Pact.Match.somethingLike(mock_response_with_interpreters) });
 
-                bookingProvider.run(done, function(runComplete) {
+                bookingProvider.run(done, function (runComplete) {
                     service.fetchBookings()
                         .subscribe((res: any) => {
                             expect(res.status).toEqual(200);
@@ -142,7 +166,7 @@ describe('BookingService', () => {
         });
     });
 
-    it('should get an individual booking by its *id*', function(done) {
+    it('should get an individual booking by its *id*', function (done) {
         inject([BookingService], (service: BookingService) => {
             bookingProvider
                 .given('booking api should return booking by its id')
@@ -159,7 +183,7 @@ describe('BookingService', () => {
                     'Content-Type': 'application/json; charset=utf-8'
                 }, Pact.Match.somethingLike(mock_response_with_interpreters[0]));
 
-            bookingProvider.run(done, function(runComplete) {
+            bookingProvider.run(done, function (runComplete) {
                 service.getBooking(1)
                     .subscribe((res: any) => {
                         let data = res.data;
@@ -175,7 +199,7 @@ describe('BookingService', () => {
         })();
     });
 
-    it('should throw 404 when trying to get booking by its *id*', function(done) {
+    it('should throw 404 when trying to get booking by its *id*', function (done) {
         inject([BookingService], (service: BookingService) => {
             bookingProvider
                 .given('there are no bookings inside the database with that id')
@@ -191,10 +215,10 @@ describe('BookingService', () => {
                     'Content-Type': 'application/json; charset=utf-8'
                 });
 
-            bookingProvider.run(done, function(runComplete) {
+            bookingProvider.run(done, function (runComplete) {
                 service.getBooking(-1)
                     .subscribe((res: any) => {
-                     done.fail(res);
+                        done.fail(res);
                     }, err => { expect(err.status).toEqual(404); done(); }, () => {
                         runComplete();
                     });
@@ -202,7 +226,7 @@ describe('BookingService', () => {
         })();
     });
 
-    it('should update an existing bookings', function(done) {
+    it('should update an existing bookings', function (done) {
         inject([BookingService], (service: BookingService) => {
             bookingProvider
                 .given('booking exists in database')
@@ -216,7 +240,7 @@ describe('BookingService', () => {
                     'Content-Type': 'application/json; charset=utf-8'
                 });
 
-            bookingProvider.run(done, function(runComplete) {
+            bookingProvider.run(done, function (runComplete) {
                 let u: Booking = mock_db[0];
                 u.raw_venue_address = 'updated';
 
@@ -232,19 +256,19 @@ describe('BookingService', () => {
         })();
     });
 
-    it('should delete a booking by its ID', function(done) {
+    it('should delete a booking by its ID', function (done) {
         inject([BookingService], (service: BookingService) => {
             bookingProvider
                 .given('booking exists in database')
                 .uponReceiving('a request to delete a booking')
-                .withRequest('DELETE', '/api/v1/bookings/1' , {
+                .withRequest('DELETE', '/api/v1/bookings/1', {
                     'Accept': 'application/json'
                 })
                 .willRespondWith(204, {
                     'Content-Type': 'application/json; charset=utf-8'
                 });
 
-            bookingProvider.run(done, function(runComplete) {
+            bookingProvider.run(done, function (runComplete) {
                 service.deleteBooking(1)
                     .subscribe((res: any) => {
                         expect(res.status).toEqual(204);

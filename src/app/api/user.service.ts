@@ -98,6 +98,18 @@ export class UserService extends ApiService {
     }
 
     /*
+     The Api should be able to fetch all interpreters.
+    */
+    fetchUsersOfType(userType: string): Observable<Object> {
+        let headers = new Headers({'Accept': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+        return this.http.get(GLOBAL.USER_API_ENDPOINT + '/' + userType , options)
+            .map(this.extractData)
+            .catch((err) => { return this.handleError(err); });
+
+    }
+
+    /*
       The Api should be get user by its ID (The Id should be email)
     */
     getUser(id: number): Observable<Object> {

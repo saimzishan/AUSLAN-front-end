@@ -24,14 +24,19 @@ let mock_User_response: Object = {
       id: 2, email: 'admin1@aus.au', name: 'Joe Doe 2', type: 'Accountant'
   };
 
+let mock_booking_response: Object = {};
+
 let mock_user_detail: User = new User({
         id: 2, email: 'admin1@aus.au', first_name: 'Joe', last_name: 'Joe',
         mobile: 'xxxx xxx xxx', verified: false, disabled: false, password: 'xxxxx'
     });
 
+
 let mock_empty_response: Object = {};
 
 let mock_fetch_response: Object = {'users': [mock_User_response, mock_User_response]};
+
+let mock_fetch_booking_response: Object = {'bookings': [mock_User_response, mock_User_response]};
 
 export class RouterStub {
    constructor() {}
@@ -105,8 +110,14 @@ export class MockUserService extends ApiService {
      }
 
 
+
+      getBooking(id: number): Observable<Object> {
+         return Observable.of(mock_booking_response).map(res => {return res; });
+      }
+
+
       fetchBookings(): Observable<Object> {
-         return Observable.of(mock_fetch_response).map(res => {return res; });
+         return Observable.of(mock_fetch_booking_response).map(res => {return res; });
       }
 
   }
