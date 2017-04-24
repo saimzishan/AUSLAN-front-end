@@ -1,11 +1,11 @@
 import {Venue} from './venue.entity';
-import {Contact, DEAFContact} from './contact.entity';
+import {Contact, BookingInterpreters, DEAFContact} from './contact.entity';
 import {BOOKING_NATURE} from './booking-nature.enum';
 import {BOOKING_STATUS} from './booking-status.enum';
 import {PARKING} from './parking.enum';
 export class Booking {
 
-    public id:  string;
+    public id:  any;
     public venue:  Venue = new Venue();
     public requested_by:  Contact = new Contact();
     public last_updated:  Date;
@@ -18,7 +18,7 @@ export class Booking {
     public attachment:  any;
     public raw_venue_address:  string;
     public raw_booking_address:  string;
-    public interpreters: Array<Contact> = [];
+    public interpreters: Array<BookingInterpreters> = [];
     public interpreters_required = 0;
     // Is it a limitation on interpreters invitation.
 

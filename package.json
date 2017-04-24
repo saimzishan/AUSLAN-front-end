@@ -28,6 +28,8 @@
     "@angular/platform-browser-dynamic": "^4.0.1",
     "@angular/platform-server": "^4.0.1",
     "@angular/router": "~4.0.1",
+    "@ngrx/core": "^1.2.0",
+    "@ngrx/store": "^2.2.2",
     "@types/jquery": "^2.0.41",
     "angular2-jwt": "^0.1.28",
     "angular2-notifications": "^0.4.53",

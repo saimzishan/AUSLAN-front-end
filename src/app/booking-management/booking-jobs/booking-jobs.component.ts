@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, AfterViewChecked, OnDestroy } from '@angular/core';
 import { BookingService } from '../../api/booking.service';
 import { Booking } from '../../shared/model/booking.entity';
+import { BookingInterpreters } from '../../shared/model/contact.entity';
 import { UserService } from '../../api/user.service';
 import { User } from '../../shared/model/user.entity';
 import { ROLE } from '../../shared/model/role.enum';
@@ -23,6 +24,7 @@ export class BookingJobsComponent implements AfterViewChecked, OnDestroy {
   interpreterList: User[] = [];
   selectedInterpreterIDs: number[] = [];
   private sub: any;
+  bookingInterpreterList: BookingInterpreters[] = [];
 
   constructor(public spinnerService: SpinnerService,
     public notificationServiceBus: NotificationServiceBus,
@@ -36,11 +38,16 @@ export class BookingJobsComponent implements AfterViewChecked, OnDestroy {
       this.selectedBookingModel = new Booking();
       this.selectedBookingModel.fromJSON(jsonData);
     });
-    this.fetchAllInterpreters();
+    this.preRender();
   }
 
   ngAfterViewChecked() {
     $(document).foundation();
+  }
+
+  preRender() {
+    this.fetchAllInterpreters();
+    this.fetchBookingInterpreters();
   }
 
 
@@ -51,6 +58,7 @@ export class BookingJobsComponent implements AfterViewChecked, OnDestroy {
   isSate(bookingStatus) {
     return this.selectedBookingModel.state === bookingStatus;
   }
+
   unableToServiceBooking() {
     this.spinnerService.requestInProcess(true);
     this.bookingService.updateBookingByTransitioning(this.selectedBookingModel.id, 'unable_to_service')
@@ -116,8 +124,25 @@ export class BookingJobsComponent implements AfterViewChecked, OnDestroy {
       });
   }
 
-  isInvited(int_email: string) {
-    return this.selectedBookingModel.interpreters.filter(i => i.email === int_email);
+  fetchBookingInterpreters() {
+    this.spinnerService.requestInProcess(true);
+    this.bookingService.getBooking(this.selectedBookingModel.id)
+      .subscribe((res: any) => {
+        if (res.status === 200) {
+          let count = 0;
+          this.bookingInterpreterList = res.data['interpreters'];
+        }
+        this.spinnerService.requestInProcess(false);
+      },
+      err => {
+        this.spinnerService.requestInProcess(false);
+        let e = err.json() || 'There is some error on server side';
+        this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
+      });
+  }
+
+  isInvited(id: number) {
+    return this.bookingInterpreterList.filter(i => i.id === id);
   }
 
 

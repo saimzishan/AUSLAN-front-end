@@ -26,6 +26,15 @@ let mock_response: Object[] = [
     })
 ];
 
+let mock_response_with_interpreters: Object[] = [
+    new Object({
+        id: 2,
+        state: 'requested',
+        'interpreters': [
+        ]
+
+    })
+];
 
 describe('BookingService', () => {
     let bookingProvider;
@@ -115,7 +124,7 @@ describe('BookingService', () => {
                     )
                     .willRespondWith(200, {
                         'Content-Type': 'application/json; charset=utf-8'
-                    }, {'bookings': Pact.Match.somethingLike(mock_response)});
+                    }, {'bookings': Pact.Match.somethingLike(mock_response_with_interpreters)});
 
                 bookingProvider.run(done, function(runComplete) {
                     service.fetchBookings()
@@ -148,7 +157,7 @@ describe('BookingService', () => {
                 )
                 .willRespondWith(200, {
                     'Content-Type': 'application/json; charset=utf-8'
-                }, Pact.Match.somethingLike(mock_response[0]));
+                }, Pact.Match.somethingLike(mock_response_with_interpreters[0]));
 
             bookingProvider.run(done, function(runComplete) {
                 service.getBooking(1)
