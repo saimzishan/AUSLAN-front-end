@@ -21,7 +21,15 @@ describe('BookingListComponent' ,  () => {
   'deaf_persons_email' : 'person@b.com' ,
   'deaf_persons_eaf_no' : '5555' , 'parking_availability' : 'None' ,
   'number_of_people_attending' : -0 , 'start_time' : '20/03/2017 02:27' ,
-  'end_time' : '20/03/2017 02:27'});
+  'end_time' : '20/03/2017 02:27',
+  'address_attributes':
+  {'line_1': 'Curve Tomorrow',
+  'line_2': 'L4 West RCH',
+  'line_3': '50 Flemington Rd',
+  'suburb': 'Parkville',
+  'state' : ' Victoria',
+  'post_code': '3025'}
+  });
 
   let mock_booking_list: Array<Booking> = [];
   beforeEach(async(() => {

@@ -51,6 +51,7 @@ import { CommonModule } from '@angular/common';
 import { HyphenPipe } from './shared/pipe/hyphen.pipe';
 import { NoAuthGuard } from './auth/no-auth.guard';
 import {Store, provideStore} from '@ngrx/store';
+import { PopupComponent } from './shared/popup/popup.component';
 
 @NgModule({
   declarations: [
@@ -75,7 +76,7 @@ import {Store, provideStore} from '@ngrx/store';
     UserListComponent,
     UserHeaderComponent,
     UserDetailComponent,
-    UserProfileComponent, HyphenPipe, SpacerPipe, BookingJobsComponent
+    UserProfileComponent, HyphenPipe, SpacerPipe, BookingJobsComponent, PopupComponent
   ],
    entryComponents: [UserDetailComponent],
   imports: [CustomFormsModule, routing,

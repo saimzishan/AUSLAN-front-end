@@ -17,7 +17,7 @@ export class AuthGuard implements CanActivate {
             // this.logout();
             return false;
         } else {
-            let data =JSON.parse(u);
+            let data = JSON.parse(u);
             GLOBAL.currentUser = Boolean(!GLOBAL.currentUser) ? UserFactory.createUser(data) : GLOBAL.currentUser;
         }
         let user = GLOBAL.currentUser;

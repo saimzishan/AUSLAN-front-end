@@ -14,7 +14,8 @@ describe('BookingService', () => {
     'contact_mobile_number': '0411 222 333', 'deaf_persons_name': 'Clifford', 'deaf_persons_mobile': '0444 555 666',
     'deaf_persons_email': 'clifford@vicdeaf.org.au', 'deaf_persons_eaf_no': '1231 0900',
     'number_of_people_attending': '1', 'start_time': '2017-04-02T07:50:19.212+00:00', 'end_time': '2017-04-02T08:50:19.212+00:00',
-    'parking_availability': 'None'});
+    'parking_availability': 'None', 'address_attributes': {'line_1' : 'Curve Tomorrow', 'line_2': 'L4 West RCH',
+    'line_3': '50 Flemington Rd', 'suburb': 'Parkville', 'state': 'Victoria', 'post_code': '3025'}});
 
     beforeEach(() => {
       mock_booking = new Booking();
@@ -23,7 +24,7 @@ describe('BookingService', () => {
     it('should be able to serialize', () => {
       mock_booking.fromJSON(mock_request);
       expect(mock_booking.venue.expected_attendance).toEqual('1');
-      expect(mock_booking.venue.addressline_1).toEqual('Fed Square');
+      expect(mock_booking.venue.addressline_1).toEqual('Curve Tomorrow');
       expect(mock_booking.venue.start_time).toEqual(1491119419212);
       expect(mock_booking.venue.end_time).toEqual(1491123019212);
       expect(mock_booking.requested_by.name).toEqual('Georgious');
@@ -39,7 +40,7 @@ describe('BookingService', () => {
 
     it('should be able to de-serialize', () => {
       mock_booking.venue.expected_attendance = '1';
-      mock_booking.venue.addressline_1 = 'Fed Square';
+      mock_booking.venue.addressline_1 = 'Curve Tomorrow';
       mock_booking.venue.start_time = '2017-04-02T07:50:19.212+00:00';
       mock_booking.venue.end_time = '2017-04-02T08:50:19.212+00:00';
       mock_booking.requested_by.name = 'Georgious';
@@ -53,7 +54,7 @@ describe('BookingService', () => {
 
       let data = mock_booking.toJSON();
       expect(data.number_of_people_attending).toEqual('1');
-      expect(data.venue).toEqual('Fed Square');
+      expect(data.address_attributes.line_1).toEqual('Curve Tomorrow');
       expect(data.start_time).toEqual('2017-04-02T07:50:19.212+00:00');
       expect(data.end_time).toEqual('2017-04-02T08:50:19.212+00:00');
       expect(data.requested_by).toEqual('Georgious');

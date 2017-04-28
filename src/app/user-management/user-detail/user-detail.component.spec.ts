@@ -15,7 +15,6 @@ import { NgModule } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import {  Http, RequestOptions } from '@angular/http';
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
-import { dispatchEvent } from '@angular/platform-browser/testing/browser_util';
 import {User} from '../../shared/model/user.entity';
 import {ROLE} from '../../shared/model/role.enum';
 import { MockBackend, MockConnection } from '@angular/http/testing';

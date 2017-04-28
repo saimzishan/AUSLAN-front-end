@@ -59,7 +59,7 @@ describe('RegisterComponent', () => {
         });
 
 
-        describe('RegisterComponent for Organization', () => {
+        describe('RegisterComponent for OrganisationalRepresentative', () => {
             beforeEach((done) => {
               fixture.debugElement.query(By.css('button[name=btnOrganization]')).nativeElement.click();
               fixture.debugElement.query(By.css('button[name=register_user]')).nativeElement.click();
@@ -69,7 +69,7 @@ describe('RegisterComponent', () => {
                 fixture.whenStable().then(() => {
                     expect(component.roleSelected).toHaveBeenCalled();
                     expect(component.selected).toEqual(true);
-                    expect(component.selectedRole).toEqual('Organisational'.toUpperCase());
+                    expect(component.selectedRole).toEqual('OrganisationalRepresentative'.toUpperCase());
                     done();
                 });
             });
@@ -77,7 +77,7 @@ describe('RegisterComponent', () => {
                 fixture.whenStable().then(() => {
                     let expected = 1;
                     expect(component.addUser).toHaveBeenCalledTimes(expected);
-                    expect(component.model.role).toEqual(ROLE.Organisational);
+                    expect(component.model.role).toEqual(ROLE.OrganisationalRepresentative);
                     done();
                 });
 

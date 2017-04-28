@@ -33,7 +33,7 @@ describe('BookingJobsComponent', () => {
                     useValue: {
                         queryParams: {
                             subscribe: (fn: (value: Data) => void) => fn({
-                                bookingModel: '{}'
+                                bookingModel: ''
                             })
                         }
                     }

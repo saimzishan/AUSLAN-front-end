@@ -12,6 +12,8 @@ import { CustomFormsModule } from 'ng2-validation';
 import { FormsModule }   from '@angular/forms';
 import {SpinnerService} from '../spinner/spinner.service';
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
+import { RolePermission } from '../shared/role-permission/role-permission';
+import {HttpModule} from '@angular/http';
 
 describe('BookingComponent', () => {
     let component: BookingComponent;
@@ -20,8 +22,8 @@ describe('BookingComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [BookingComponent],
-            imports: [FormsModule, RouterTestingModule, CustomFormsModule],
-            providers: [{ provide: BookingService, useClass: MockBookingService },
+            imports: [FormsModule, HttpModule, RouterTestingModule, CustomFormsModule],
+            providers: [RolePermission, { provide: BookingService, useClass: MockBookingService },
                 SpinnerService, { provide: AuthHttp, useClass: MockBackend }]
         });
     }));

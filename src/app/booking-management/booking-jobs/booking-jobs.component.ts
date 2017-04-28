@@ -19,8 +19,8 @@ declare var $: any; // not liking it
   styleUrls: ['./booking-jobs.component.css']
 })
 
-export class BookingJobsComponent implements AfterViewChecked, OnDestroy, OnInit {
-  selectedBookingModel: Booking;
+export class BookingJobsComponent implements AfterViewChecked, OnDestroy {
+  selectedBookingModel: Booking = new Booking();
   invitePressed = false;
   interpreterList: User[] = [];
   selectedInterpreterIDs: number[] = [];
@@ -33,21 +33,18 @@ export class BookingJobsComponent implements AfterViewChecked, OnDestroy, OnInit
 
     /** http://stackoverflow.com/questions/38008334/angular2-rxjs-when-should-i-unsubscribe-from-subscription */
     this.sub = this.route.queryParams.subscribe(params => {
-      let param = params['bookingModel'];
-      let jsonData = JSON.parse(param);
-      this.selectedBookingModel = new Booking();
-      this.selectedBookingModel.fromJSON(jsonData);
+      let param = params['bookingModel'] || '';
+      if (param.length > 0) {
+        let jsonData = JSON.parse(param);
+        this.selectedBookingModel.fromJSON(jsonData);
+        this.fetchBookingInterpreters();
+      }
     });
   }
 
   ngAfterViewChecked() {
     $(document).foundation();
   }
-
-  ngOnInit() {
-    this.fetchBookingInterpreters();
-  }
-
 
   ngOnDestroy() {
     return this.sub && this.sub.unsubscribe();
