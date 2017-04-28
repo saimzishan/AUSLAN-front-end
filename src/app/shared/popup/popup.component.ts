@@ -1,14 +1,15 @@
-import { Component, Inject, Input, ViewChild, TemplateRef } from '@angular/core';
+import { Component, Inject, OnInit, Input, OnDestroy, ViewChild, TemplateRef } from '@angular/core';
 import { MdDialog, MdDialogRef, MdDialogConfig, MD_DIALOG_DATA } from '@angular/material';
 
 @Component({
   selector: 'app-popup',
   template: ''
 })
-export class PopupComponent {
+export class PopupComponent implements OnDestroy, OnInit {
 
   @Input() title = '';
   @Input() popupMessage = '';
+
   dialogRef: MdDialogRef<PopupDialogComponent>;
   lastCloseResult: Boolean;
   config: MdDialogConfig = {
@@ -26,10 +27,11 @@ export class PopupComponent {
   @ViewChild(TemplateRef) template: TemplateRef<any>;
 
   constructor(public dialog: MdDialog) {
-
+  }
+  ngOnDestroy() {
   }
 
-  openDialog() {
+  ngOnInit() {
     this.dialogRef = this.dialog.open(PopupDialogComponent, this.config);
     this.dialogRef.componentInstance.title = this.title;
     this.dialogRef.componentInstance.popupMessage = this.popupMessage;
@@ -56,6 +58,6 @@ export class PopupDialogComponent {
     public dialogRef: MdDialogRef<PopupDialogComponent>,
     @Inject(MD_DIALOG_DATA) public data: any) { }
   closeDialog() {
-      this.dialogRef.close(this.dialog_action);
+    this.dialogRef.close(this.dialog_action);
   }
 }
