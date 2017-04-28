@@ -62,8 +62,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
                 this.model.role = ROLE.IndividualClient;
                 break;
 
-            case 'Organisational'.toUpperCase():
-                this.model.role = ROLE.Organisational;
+            case 'OrganisationalRepresentative'.toUpperCase():
+                this.model.role = ROLE.OrganisationalRepresentative;
                 break;
 
         }

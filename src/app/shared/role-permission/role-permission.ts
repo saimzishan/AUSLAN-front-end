@@ -1,9 +1,9 @@
 import { Http } from '@angular/http';
 import { Injectable } from '@angular/core';
-import {ROLE} from '../model/role.enum';
-import {GLOBAL} from '../global';
-import {HyphenPipe} from '../pipe/hyphen.pipe';
-import {User} from '../model/user.entity';
+import { ROLE } from '../model/role.enum';
+import { GLOBAL } from '../global';
+import { HyphenPipe } from '../pipe/hyphen.pipe';
+import { User } from '../model/user.entity';
 
 @Injectable()
 export class RolePermission {
@@ -31,7 +31,8 @@ export class RolePermission {
     },
     "interpreter": {
         "not-allowed-routes": [
-            "user-management"
+            "user-management",
+            "booking-job", "create-booking"
         ],
         "routes-with-data-permissions": {
             "booking-management": {
@@ -44,7 +45,8 @@ export class RolePermission {
     },
     "organization-representitive": {
         "not-allowed-routes": [
-            "user-management"
+            "user-management",
+            "booking-job", "create-booking"
         ],
         "routes-with-data-permissions": {
             "booking-management": {
@@ -57,7 +59,8 @@ export class RolePermission {
     },
     "individual-client": {
         "not-allowed-routes": [
-            "user-management"
+            "user-management",
+            "booking-job", "create-booking"
         ],
         "routes-with-data-permissions": {
             "booking-management": {
@@ -95,67 +98,87 @@ export class RolePermission {
         this.permissions = JSON.parse(this.defaultData);
     }
 
-    getDefaultRouteForCurrentUser(r: Boolean) {
-        if (r) { this.refreshUserDetail(); }
+    getDefaultRouteForCurrentUser() {
+        this.refreshUserDetail();
 
-        return Boolean(this.permissions[this.curr_role] && this.permissions[this.curr_role]['default-route'] ) ?
-        this.permissions[this.curr_role]['default-route']
-        : this.permissions['default-route'];
+        return Boolean(this.permissions[this.curr_role] && this.permissions[this.curr_role]['default-route']) ?
+            this.permissions[this.curr_role]['default-route']
+            : this.permissions['default-route'];
     }
 
-    isRestrictedRouteForCurrentUser(path: any, r: Boolean) {
-        if (r) { this.refreshUserDetail(); }
-        return Boolean(this.permissions[this.curr_role] && this.permissions[this.curr_role]['not-allowed-routes']
-            && this.permissions[this.curr_role]['not-allowed-routes'].some(x => x === path));
+    isRestrictedRouteForCurrentUser(path: string): Boolean {
+        this.refreshUserDetail();
+        path = path.startsWith('/') ? path : '/' + path;
+        let p = path.startsWith('/') ? path.split('/') : [path] ;
+        let lastPath = p.length > 0 ? p[p.length - 1] : '';
+        let res: Boolean = Boolean(this.permissions[this.curr_role] && this.permissions[this.curr_role]['not-allowed-routes']);
+        if ( res) { // Some Typescript issue
+             for (let x of this.permissions[this.curr_role]['not-allowed-routes']) {
+                if ( lastPath.startsWith( x ) ) {
+                    return true;
+                }
+            }
+        }
+        return false; // cannot return res, !(
     }
 
-    isDataReadOnlyForCurrentUser(path: any, data_owner: any, r: Boolean) {
-        if (r) { this.refreshUserDetail(); }
+    isDataReadOnlyForCurrentUser(path: any, data_owner: any) {
+        this.refreshUserDetail();
         data_owner = this.hyphen_pipe.transform(data_owner);
         return Boolean(this.permissions[this.curr_role] && this.permissions[this.curr_role]['routes-with-data-permissions']
-        && this.permissions[this.curr_role]['routes-with-data-permissions'][path] &&
-        this.permissions[this.curr_role]['routes-with-data-permissions'][path][data_owner] &&
+            && this.permissions[this.curr_role]['routes-with-data-permissions'][path] &&
+            this.permissions[this.curr_role]['routes-with-data-permissions'][path][data_owner] &&
             this.permissions[this.curr_role]['routes-with-data-permissions'][path][data_owner] === 'read');
     }
 
-    isDataRestrictedForCurrentUser(path: any, data_owner: any, r: Boolean) {
-        if (r) { this.refreshUserDetail(); }
+    isDataRestrictedForCurrentUser(path: any, data_owner: any) {
+        this.refreshUserDetail();
         data_owner = this.hyphen_pipe.transform(data_owner);
         return Boolean(this.permissions[this.curr_role] && this.permissions[this.curr_role]['routes-with-data-permissions']
-        && this.permissions[this.curr_role]['routes-with-data-permissions'][path] &&
-        this.permissions[this.curr_role]['routes-with-data-permissions'][path][data_owner] &&
+            && this.permissions[this.curr_role]['routes-with-data-permissions'][path] &&
+            this.permissions[this.curr_role]['routes-with-data-permissions'][path][data_owner] &&
             this.permissions[this.curr_role]['routes-with-data-permissions'][path][data_owner] === 'no-access');
     }
 
     getDefaultRoute(role: any) {
         let r = this.permissions[this.hyphen_pipe.transform(role)];
-        return Boolean(r && r['default-route'] ) ?
-        r['default-route']
-        : this.permissions['default-route'];
+        return Boolean(r && r['default-route']) ?
+            r['default-route']
+            : this.permissions['default-route'];
     }
 
     isRestrictedRoute(role: any, path: any) {
-                let r = this.permissions[this.hyphen_pipe.transform(role)];
+        let r = this.permissions[this.hyphen_pipe.transform(role)];
 
-        return Boolean(r && r['not-allowed-routes']
-            && r['not-allowed-routes'].some(x => x === path));
+        path = path.startsWith('/') ? path : '/' + path;
+        let p = path.startsWith('/') ? path.split('/') : [path] ;
+        let lastPath = p.length > 0 ? p[p.length - 1] : '';
+        let res: Boolean = Boolean(r && r['not-allowed-routes']);
+        if ( res) { // Some Typescript issue
+             for (let x of r['not-allowed-routes']) {
+                if ( lastPath.startsWith( x ) ) {
+                    return true;
+                }
+            }
+        }
+        return false; // cannot return res, !(
     }
 
     isDataReadOnly(role: any, path: any, data_owner: any) {
-                let r = this.permissions[this.hyphen_pipe.transform(role)];
-data_owner = this.hyphen_pipe.transform(data_owner);
+        let r = this.permissions[this.hyphen_pipe.transform(role)];
+        data_owner = this.hyphen_pipe.transform(data_owner);
         return Boolean(r && r['routes-with-data-permissions']
-        && r['routes-with-data-permissions'][path] &&
-        r['routes-with-data-permissions'][path][data_owner] &&
+            && r['routes-with-data-permissions'][path] &&
+            r['routes-with-data-permissions'][path][data_owner] &&
             r['routes-with-data-permissions'][path][data_owner] === 'read');
     }
 
     isDataRestricted(role: any, path: any, data_owner: any) {
-                let r = this.permissions[this.hyphen_pipe.transform(role)];
-data_owner = this.hyphen_pipe.transform(data_owner);
+        let r = this.permissions[this.hyphen_pipe.transform(role)];
+        data_owner = this.hyphen_pipe.transform(data_owner);
         return Boolean(r && r['routes-with-data-permissions']
-        && r['routes-with-data-permissions'][path] &&
-        r['routes-with-data-permissions'][path][data_owner] &&
+            && r['routes-with-data-permissions'][path] &&
+            r['routes-with-data-permissions'][path][data_owner] &&
             r['routes-with-data-permissions'][path][data_owner] === 'no-access');
     }
 }

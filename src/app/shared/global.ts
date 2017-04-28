@@ -16,12 +16,19 @@ export class GLOBAL {
     public static BOOKING_API = GLOBAL.BOOKING_API_ENDPOINT + '/bookings';
     public static TITLE = 'Auslan Booking System';
     public static VERSION = ' => 0.1.9'; // This should be broken into MAJOR and MINOR version?
-    public static currentUser: User;
+    private static _currentUser: any;
     public static FAKE_TOKEN = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.' +
     'eyJpc3MiOiJPbmxpbmUgSldUIEJ1aWxkZXIiLCJpYXQiOjE0ODgxOTM0MTAsImV4cCI6MzMwNzY2M' +
     'zgyMTAsImF1ZCI6Ind3dy5wYWN0LmNvbSIsInN1YiI6Imthcm1hQHBhY3QuY29tIn0.lVWLJAYQRZcQTMtdDrxTHMwboSOqNQPISLDAKDkPy58';
     public static userStatusArray = [{ name: 'Active' }, { name: 'Disabled' }];
 
+    public static get currentUser(): any {
+        return this._currentUser;
+    }
+
+    public static set currentUser(user: any) {
+        this._currentUser = user;
+    }
 }
 
 export function authService(http: Http, options: RequestOptions) {

@@ -9,6 +9,7 @@ import { SpinnerService } from '../../spinner/spinner.service';
 import { NotificationServiceBus } from '../../notification/notification.service';
 import { ActivatedRoute } from '@angular/router';
 import { Router, NavigationExtras } from '@angular/router';
+import { BOOKING_STATUS } from '../../shared/model/booking-status.enum';
 
 declare var $: any; // not liking it
 
@@ -52,8 +53,8 @@ export class BookingJobsComponent implements AfterViewChecked, OnDestroy, OnInit
     return this.sub && this.sub.unsubscribe();
   }
 
-  isSate(bookingStatus) {
-    return this.selectedBookingModel.state === bookingStatus;
+  isSate(bookingStatus: string) {
+    return BOOKING_STATUS[this.selectedBookingModel.state].toLowerCase() === bookingStatus.toLowerCase();
   }
 
   unableToServiceBooking() {
@@ -92,7 +93,7 @@ export class BookingJobsComponent implements AfterViewChecked, OnDestroy, OnInit
     let navigationExtras: NavigationExtras = {
       queryParams: { bookingModel: JSON.stringify(this.selectedBookingModel) }
     };
-    this.router.navigate(['/booking-management', 'create'], navigationExtras);
+    this.router.navigate(['/booking-management', 'create-booking'], navigationExtras);
   }
 
   onChange($event, user) {
@@ -156,6 +157,7 @@ export class BookingJobsComponent implements AfterViewChecked, OnDestroy, OnInit
       .subscribe((res: any) => {
         if (res.status === 204) {
           this.notificationServiceBus.launchNotification(false, 'The interpreters have been invited');
+          this.selectedBookingModel.state = BOOKING_STATUS.In_progress;
         }
         this.spinnerService.requestInProcess(false);
       },

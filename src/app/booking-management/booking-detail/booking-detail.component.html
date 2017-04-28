@@ -1,259 +1,307 @@
 <section id="page-booking">
-		<h1>NEW BOOKING</h1>
+	<h1>NEW BOOKING</h1>
 
-		<main>
-			<section>
-				<span>Fields with * are required</span>
-			</section>
+	<main>
+		<section>
+			<span>Fields with * are required</span>
+		</section>
 
-			<form method="post" action="" class="common-form compact">
-				<div class="row">
-					<h2>Type of Booking</h2>
-					<p>What kind of services do you need? Select multiple if relevant</p>
-					<section id="services">
-						<button md-button class="active">
+		<form method="post" action="" class="common-form compact">
+			<div class="row">
+				<h2>Type of Booking</h2>
+				<p>What kind of services do you need? Select multiple if relevant</p>
+				<section id="services">
+					<button md-button class="active">
 							<i class="icon-service-interpreting"></i>
 							<span>Interpreting</span>
 						</button>
-						<button [disabled]='true' md-button>
+					<button [disabled]='true' md-button>
 							<i class="icon-service-vri"></i>
 							<span>VRI</span>
 						</button>
-						<button [disabled]='true' md-button>
+					<button [disabled]='true' md-button>
 							<i class="icon-service-captioning"></i>
 							<span>Captioining</span>
 						</button>
-						<button  [disabled]='true' md-button>
+					<button [disabled]='true' md-button>
 							<i class="icon-service-captioning"></i>
 							<span>Notetaking</span>
 						</button>
-					</section>
-					<p>What kind of interperter(s) do you need? Select multiple if relevant</p>
-					<section id="interpreters-kind">
-						<md-checkbox [checked]="true" >AUSLAN</md-checkbox>
-						<md-checkbox>DEAF INTERPRETER</md-checkbox>
-						<md-checkbox>DEAF BLIND</md-checkbox>
-					</section>
+				</section>
+				<p>What kind of interperter(s) do you need? Select multiple if relevant</p>
+				<section id="interpreters-kind">
+					<md-checkbox [checked]="true">AUSLAN</md-checkbox>
+					<md-checkbox>DEAF INTERPRETER</md-checkbox>
+					<md-checkbox>DEAF BLIND</md-checkbox>
+				</section>
+			</div>
+
+			<div class="separator"></div>
+
+			<h2>Booking Details <span mdTooltip="Tooltip!"><i class="inline-icon-tip"></i></span></h2>
+			<div class="row small-collapse">
+				<div class="row-wrapper">
+					<div class=" medium-7 columns">
+						<div class="form-field">
+							<md2-datepicker type='datetime' name='dpEventDate' placeholder="DATE & Time OF APPOINTMENT *" [(ngModel)]="bookingModel.venue.start_time"></md2-datepicker>
+						</div>
+					</div>
+
+					<div class="medium-3 columns">
+						<div class="form-field">
+							<md2-datepicker type='time' name='dpEventEndTime' placeholder="ENDING TIME *" [(ngModel)]="bookingModel.venue.end_time"></md2-datepicker>
+						</div>
+					</div>
 				</div>
 
-				<div class="separator"></div>
-
-				<h2>Booking Details <span mdTooltip="Tooltip!"><i class="inline-icon-tip"></i></span></h2>
-				<div class="row small-collapse">
-					<div class="row-wrapper">
-						<div class=" medium-7 columns">
-							<div class="form-field">
-								<md2-datepicker type='datetime' name='dpEventDate' placeholder="DATE & Time OF APPOINTMENT *" [(ngModel)]="bookingModel.venue.start_time"></md2-datepicker>
-							</div>
-						</div>
-
-						<div class="medium-3 columns">
-							<div class="form-field">
-								<md2-datepicker  type='time' name='dpEventEndTime' placeholder="ENDING TIME *" [(ngModel)]="bookingModel.venue.end_time"></md2-datepicker>
-							</div>
-						</div>
-					</div>
-
-					<div class="medium-12 columns">
-						<div class="form-field">
-							<label>SPECIFIC LOCATION <span mdTooltip="Enter Specific Location"><i class="inline-icon-tip"></i></span></label>
-							<input type="text" placeholder="Enter the Specific Location" [(ngModel)]="bookingModel.raw_venue_address" name="raw_venue_address" #raw_venue_address="ngModel" [rangeLength]="[6, 100]" required>
-							<span *ngIf="raw_venue_address.touched && !raw_venue_address.errors?.required && !raw_venue_address.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
-							<span *ngIf="raw_venue_address.touched && (raw_venue_address.errors?.required || raw_venue_address.errors?.rangeLength);" class="inline-icon error">
+				<div class="medium-12 columns">
+					<div class="form-field">
+						<label>SPECIFIC LOCATION <span mdTooltip="Enter Specific Location"><i class="inline-icon-tip"></i></span></label>
+						<input type="text" placeholder="Enter the Specific Location" [(ngModel)]="bookingModel.venue.title" name="raw_venue_address"
+						 #raw_venue_address="ngModel" [rangeLength]="[6, 100]" required>
+						<span *ngIf="raw_venue_address.touched && !raw_venue_address.errors?.required && !raw_venue_address.errors?.rangeLength;"
+						 class="inline-icon inline-icon-valid valid"></span>
+						<span *ngIf="raw_venue_address.touched && (raw_venue_address.errors?.required || raw_venue_address.errors?.rangeLength);"
+						 class="inline-icon error">
 												<span>Minimum 6 characters required.</span>!</span>
-						</div>
 					</div>
-					<div class="medium-12 columns">
-						<div class="form-field">
-							<label>BOOKING ADDRESS * <span mdTooltip="Enter the Booking Address"><i class="inline-icon-tip"></i></span></label>
-							<input type="text" placeholder="Enter the Booking Address" [(ngModel)]="bookingModel.venue.addressline_1" name="raw_booking_address" #raw_booking_address="ngModel" [rangeLength]="[6, 100]" required>
-							<span *ngIf="raw_booking_address.touched && !raw_booking_address.errors?.required && !raw_booking_address.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
-							<span *ngIf="raw_booking_address.touched && (raw_booking_address.errors?.required || raw_booking_address.errors?.rangeLength);" class="inline-icon error">
-												<span>Minimum 6 characters required.</span>!</span>
-						</div>
-					</div>
-					<div class="row-wrapper">
-						<div class="medium-9 columns">
-							<div class="form-field">
-								<label>BOOKING SUBURB * <span mdTooltip="Enter the Booking Suburb!"><i class="inline-icon-tip"></i></span></label>
-								<input type="text" placeholder="Enter the Booking Suburb" [(ngModel)]="bookingModel.venue.suburb" name="raw_booking_suburb" #raw_booking_suburb="ngModel" [rangeLength]="[4, 30]" required>
-								<span *ngIf="raw_booking_suburb.touched && !raw_booking_suburb.errors?.required && !raw_booking_suburb.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
-								<span *ngIf="raw_booking_suburb.touched && (raw_booking_suburb.errors?.required || raw_booking_suburb.errors?.rangeLength);" class="inline-icon error">
-													<span>Minimum 4 characters required.</span>!</span>
-							</div>
-						</div>
-						<div class="medium-3 columns">
-							<div class="form-field">
-								<label>POST CODE * <span mdTooltip="Enter the Post Code"><i class="inline-icon-tip"></i></span></label>
-								<input type="tel" placeholder="Enter the Post Code" [(ngModel)]="bookingModel.venue.post_code"
-								name="raw_booking_post_code" #raw_booking_post_code="ngModel" [rangeLength]="[4,6]" required digits>
-								<span *ngIf="raw_booking_post_code.touched && !raw_booking_post_code.errors?.required && !raw_booking_post_code.errors?.rangeLength && !raw_booking_post_code.errors?.digits;" class="inline-icon inline-icon-valid valid"></span>
-								<span *ngIf="raw_booking_post_code.touched && (raw_booking_post_code.errors?.required || raw_booking_post_code.errors?.rangeLength || raw_booking_post_code.errors?.digits);" class="inline-icon error">
-													<span>Minimum 4 characters required.</span>!</span>
-							</div>
-						</div>
-						<div class="medium-6 columns">
-							<div class="form-field">
-								<label>NATURE OF APPOINTMENT * <span mdTooltip="Select nature of Appointment"><i class="inline-icon-tip"></i></span></label>
-								<md-select [(ngModel)]="bookingModel.nature_of_appointment" name="nature_of_appointment" aria-label="A">
-									<md-option *ngFor="let item of appointment_types | enumVal" [value]="item.key">{{item.value}}</md-option>
-								</md-select>
-							</div>
-						</div>
-						<div class="medium-6 columns">
-							<div class="form-field">
-								<label>WHAT WILL BE DISCUSSED * <span mdTooltip="Select sepcific nature of Appointment"><i class="inline-icon-tip"></i></span></label>
-								<md-select [(ngModel)]="bookingModel.specific_nature_of_appointment" name="specific_nature_of_appointment" aria-label="A">
-									<md-option *ngFor="let item of appointment_types | enumVal" [value]="item.key">{{item.value}}</md-option>
-								</md-select>
-							</div>
-						</div>
-						<div class="medium-6 columns">
-							<div class="form-field">
-								<label>WHO REQUESTED THIS MEETING * <span mdTooltip="Enter the Request By Name"><i class="inline-icon-tip"></i></span></label>
-								<input type="text" placeholder="Enter the Request By Name" [(ngModel)]="bookingModel.requested_by.name"
-								name="raw_booking_requested_by" #raw_booking_requested_by="ngModel" [rangeLength]="[4,20]" required>
-								<span *ngIf="raw_booking_requested_by.touched && !raw_booking_requested_by.errors?.required && !raw_booking_requested_by.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
-								<span *ngIf="raw_booking_requested_by.touched && (raw_booking_requested_by.errors?.required || raw_booking_requested_by.errors?.rangeLength);" class="inline-icon error">
-													<span>Minimum 4 characters required.</span>!</span>
-							</div>
-						</div>
-						<div class="medium-6 columns">
-							<div class="form-field">
-								<label>NUMBER OF PEOPLE ATTENDING MEETING * <span mdTooltip="Enter the Number of people attending the meeting"><i class="inline-icon-tip"></i></span></label>
-								<input [(ngModel)]="bookingModel.venue.expected_attendance"  name="attendee_count" #attendee_count="ngModel" placeholder="Enter the Number of people attending the meeting" type="tel" digits>
-								<span *ngIf="attendee_count.touched && !attendee_count.errors?.required && !attendee_count.errors?.digits;" class="inline-icon inline-icon-valid valid"></span>
-								<span *ngIf="attendee_count.touched && (attendee_count.errors?.required || attendee_count.errors?.digits);" class="inline-icon error">
-													<span>Minimum 1 digit required.</span>!</span>
+				</div>
+				<div class="row-wrapper">
 
-							</div>
+
+					<div class="medium-4 columns">
+						<div class="form-field">
+							<label>Unit / Street Number * <span mdTooltip="Enter the Unit or Street Number"><i class="inline-icon-tip"></i></span></label>
+							<input type="text" placeholder="Enter the Unit or Street Number" [(ngModel)]="bookingModel.venue.addressline_1" name="raw_booking_address"
+							 #raw_booking_address="ngModel" [rangeLength]="[1, 6]" digit required>
+							<span *ngIf="raw_booking_address.touched && !raw_booking_address.errors?.required && !raw_booking_address.errors?.rangeLength;"
+							 class="inline-icon inline-icon-valid valid"></span>
+							<span *ngIf="raw_booking_address.touched && (raw_booking_address.errors?.required || raw_booking_address.errors?.rangeLength);"
+							 class="inline-icon error">
+												<span>Minimum 1 characters required.</span>!</span>
 						</div>
 					</div>
-					<div class="medium-12 columns">
+					<div class="medium-8 columns">
 						<div class="form-field">
-							<label>NUMBER OF INTERPRETERS NEEDED * <span mdTooltip="Enter the Number of Interpreters needed"><i class="inline-icon-tip"></i></span></label>
-							<input [(ngModel)]="bookingModel.interpreters_required" name="interpreters_count" #interpreters_count="ngModel" placeholder="Enter the Number of Interpreters needed" type="tel" digits>
-							<span *ngIf="interpreters_count.touched && !interpreters_count.errors?.required && !interpreters_count.errors?.digits;" class="inline-icon inline-icon-valid valid"></span>
-							<span *ngIf="interpreters_count.touched && (interpreters_count.errors?.required || interpreters_count.errors?.digits);" class="inline-icon error">
-												<span>Minimum 1 digit required.</span>!</span>
+							<label>Street Name * <span mdTooltip="Enter the Street Name!"><i class="inline-icon-tip"></i></span></label>
+							<input type="text" placeholder="Enter the Street Name" [(ngModel)]="bookingModel.venue.addressline_2" name="raw_booking_street"
+							 #raw_booking_street="ngModel" [rangeLength]="[2, 30]" required>
+							<span *ngIf="raw_booking_street.touched && !raw_booking_street.errors?.required && !raw_booking_street.errors?.rangeLength;"
+							 class="inline-icon inline-icon-valid valid"></span>
+							<span *ngIf="raw_booking_street.touched && (raw_booking_street.errors?.required || raw_booking_street.errors?.rangeLength);"
+							 class="inline-icon error">
+													<span>Minimum 2 characters required.</span>!</span>
 						</div>
 					</div>
-					<div class="medium-12 columns">
+					<div class="medium-5 columns">
 						<div class="form-field">
-							<label>PARKING AVAILABILITY <span mdTooltip="Whats the parking option available!"><i class="inline-icon-tip"></i></span></label>
-							<md-select name="parking_type"  [(ngModel)]="bookingModel.venue.parking_type" aria-label="A">
-								<md-option *ngFor="let item of parking_types | enumVal" [value]="item.key">{{item.value}}</md-option>
+							<label>BOOKING SUBURB * <span mdTooltip="Enter the Booking Suburb!"><i class="inline-icon-tip"></i></span></label>
+							<input type="text" placeholder="Enter the Booking Suburb" [(ngModel)]="bookingModel.venue.suburb" name="raw_booking_suburb"
+							 #raw_booking_suburb="ngModel" [rangeLength]="[4, 30]" required>
+							<span *ngIf="raw_booking_suburb.touched && !raw_booking_suburb.errors?.required && !raw_booking_suburb.errors?.rangeLength;"
+							 class="inline-icon inline-icon-valid valid"></span>
+							<span *ngIf="raw_booking_suburb.touched && (raw_booking_suburb.errors?.required || raw_booking_suburb.errors?.rangeLength);"
+							 class="inline-icon error">
+													<span>Minimum 4 characters required.</span>!</span>
+						</div>
+					</div>
+					<div class="medium-3 columns">
+						<div class="form-field">
+							<label>POST CODE * <span mdTooltip="Enter the Post Code"><i class="inline-icon-tip"></i></span></label>
+							<input type="tel" placeholder="Enter the Post Code" [(ngModel)]="bookingModel.venue.post_code" name="raw_booking_post_code"
+							 #raw_booking_post_code="ngModel" [rangeLength]="[4,6]" required digits>
+							<span *ngIf="raw_booking_post_code.touched && !raw_booking_post_code.errors?.required && !raw_booking_post_code.errors?.rangeLength && !raw_booking_post_code.errors?.digits;"
+							 class="inline-icon inline-icon-valid valid"></span>
+							<span *ngIf="raw_booking_post_code.touched && (raw_booking_post_code.errors?.required || raw_booking_post_code.errors?.rangeLength || raw_booking_post_code.errors?.digits);"
+							 class="inline-icon error">
+													<span>Minimum 4 characters required.</span>!</span>
+						</div>
+					</div>
+					<div class="medium-4 columns">
+						<div class="form-field">
+							<label>BOOKING State * <span mdTooltip="Enter the Booking State!"><i class="inline-icon-tip"></i></span></label>
+							<input type="text" placeholder="Enter the Booking State" [(ngModel)]="bookingModel.venue.state" name="raw_booking_state"
+							 #raw_booking_state="ngModel" [rangeLength]="[4, 30]" required>
+							<span *ngIf="raw_booking_state.touched && !raw_booking_state.errors?.required && !raw_booking_state.errors?.rangeLength;"
+							 class="inline-icon inline-icon-valid valid"></span>
+							<span *ngIf="raw_booking_state.touched && (raw_booking_state.errors?.required || raw_booking_state.errors?.rangeLength);"
+							 class="inline-icon error">
+													<span>Minimum 4 characters required.</span>!</span>
+						</div>
+					</div>
+					<div class="medium-6 columns">
+						<div class="form-field">
+							<label>NATURE OF APPOINTMENT * <span mdTooltip="Select nature of Appointment"><i class="inline-icon-tip"></i></span></label>
+							<md-select [(ngModel)]="bookingModel.nature_of_appointment" name="nature_of_appointment" aria-label="A">
+								<md-option *ngFor="let item of appointment_types | enumVal" [value]="item.key">{{item.value}}</md-option>
 							</md-select>
 						</div>
 					</div>
-					<div class="medium-12 columns">
+					<div class="medium-6 columns">
 						<div class="form-field">
-							<label>NOTES <span mdTooltip="Any Important Notes"><i class="inline-icon-tip"></i></span></label>
-							<textarea placeholder="Important Notes"></textarea>
+							<label>WHAT WILL BE DISCUSSED * <span mdTooltip="Select sepcific nature of Appointment"><i class="inline-icon-tip"></i></span></label>
+							<md-select [(ngModel)]="bookingModel.specific_nature_of_appointment" name="specific_nature_of_appointment" aria-label="A">
+								<md-option *ngFor="let item of appointment_types | enumVal" [value]="item.key">{{item.value}}</md-option>
+							</md-select>
+						</div>
+					</div>
+					<div class="medium-6 columns">
+						<div class="form-field">
+							<label>WHO REQUESTED THIS MEETING * <span mdTooltip="Enter the Request By Name"><i class="inline-icon-tip"></i></span></label>
+							<input type="text" placeholder="Enter the Request By Name" [(ngModel)]="bookingModel.requested_by.name" name="raw_booking_requested_by"
+							 #raw_booking_requested_by="ngModel" [rangeLength]="[4,20]" required>
+							<span *ngIf="raw_booking_requested_by.touched && !raw_booking_requested_by.errors?.required && !raw_booking_requested_by.errors?.rangeLength;"
+							 class="inline-icon inline-icon-valid valid"></span>
+							<span *ngIf="raw_booking_requested_by.touched && (raw_booking_requested_by.errors?.required || raw_booking_requested_by.errors?.rangeLength);"
+							 class="inline-icon error">
+													<span>Minimum 4 characters required.</span>!</span>
+						</div>
+					</div>
+					<div class="medium-6 columns">
+						<div class="form-field">
+							<label>NUMBER OF PEOPLE ATTENDING MEETING * <span mdTooltip="Enter the Number of people attending the meeting"><i class="inline-icon-tip"></i></span></label>
+							<input [(ngModel)]="bookingModel.venue.expected_attendance" name="attendee_count" #attendee_count="ngModel" placeholder="Enter the Number of people attending the meeting"
+							 type="tel" digits>
+							<span *ngIf="attendee_count.touched && !attendee_count.errors?.required && !attendee_count.errors?.digits;" class="inline-icon inline-icon-valid valid"></span>
+							<span *ngIf="attendee_count.touched && (attendee_count.errors?.required || attendee_count.errors?.digits);" class="inline-icon error">
+													<span>Minimum 1 digit required.</span>!</span>
+
 						</div>
 					</div>
 				</div>
-
-				<div class="separator"></div>
-
-				<h2>Contact Details</h2>
-				<div class="row">
-					<div class="medium-12 columns">
-						<div class="form-field">
-							<label>ARE YOU THE CONTACT PERSON FOR THIS BOOKING? * <span mdTooltip="Tooltip!"><i class="inline-icon-tip"></i></span></label>
-							<md-radio-group name="rdcurrentUserIsContact" (change)='onSelectionChange()' [(ngModel)]="currentUserIsContact">
-								<md-radio-button value=true >YES</md-radio-button>
-								<md-radio-button value=false>NO</md-radio-button>
-							</md-radio-group>
-						</div>
+				<div class="medium-12 columns">
+					<div class="form-field">
+						<label>NUMBER OF INTERPRETERS NEEDED * <span mdTooltip="Enter the Number of Interpreters needed"><i class="inline-icon-tip"></i></span></label>
+						<input [(ngModel)]="bookingModel.interpreters_required" name="interpreters_count" #interpreters_count="ngModel" placeholder="Enter the Number of Interpreters needed"
+						 type="tel" digits>
+						<span *ngIf="interpreters_count.touched && !interpreters_count.errors?.required && !interpreters_count.errors?.digits;" class="inline-icon inline-icon-valid valid"></span>
+						<span *ngIf="interpreters_count.touched && (interpreters_count.errors?.required || interpreters_count.errors?.digits);" class="inline-icon error">
+												<span>Minimum 1 digit required.</span>!</span>
 					</div>
-					<div class="row-wrapper">
-						<div class="medium-6 columns">
-							<div class="form-field">
-								<label>CONTACT NAME * <span mdTooltip="Enter Contact Name"><i class="inline-icon-tip"></i></span></label>
-								<input [disabled]='currentUserIsContact' type="text" placeholder="Enter Contact Name" [(ngModel)]="bookingModel.contact.name" name="contact_name" #contact_name="ngModel" [rangeLength]="[4,20]" required>
-								<span *ngIf="contact_name.touched && !contact_name.errors?.required && !contact_name.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
-								<span *ngIf="contact_name.touched && (contact_name.errors?.required || contact_name.errors?.rangeLength);" class="inline-icon error">
+				</div>
+				<div class="medium-12 columns">
+					<div class="form-field">
+						<label>PARKING AVAILABILITY <span mdTooltip="Whats the parking option available!"><i class="inline-icon-tip"></i></span></label>
+						<md-select name="parking_type" [(ngModel)]="bookingModel.venue.parking_type" aria-label="A">
+							<md-option *ngFor="let item of parking_types | enumVal" [value]="item.key">{{item.value}}</md-option>
+						</md-select>
+					</div>
+				</div>
+				<div class="medium-12 columns">
+					<div class="form-field">
+						<label>NOTES <span mdTooltip="Any Important Notes"><i class="inline-icon-tip"></i></span></label>
+						<textarea placeholder="Important Notes"></textarea>
+					</div>
+				</div>
+			</div>
+
+			<div class="separator"></div>
+
+			<h2>Contact Details</h2>
+			<div class="row">
+				<div class="medium-12 columns">
+					<div class="form-field">
+						<label>ARE YOU THE CONTACT PERSON FOR THIS BOOKING? * <span mdTooltip="Tooltip!"><i class="inline-icon-tip"></i></span></label>
+						<md-radio-group name="rdcurrentUserIsContact" (change)='onSelectionChange()' [(ngModel)]="currentUserIsContact">
+							<md-radio-button value=true>YES</md-radio-button>
+							<md-radio-button value=false>NO</md-radio-button>
+						</md-radio-group>
+					</div>
+				</div>
+				<div class="row-wrapper">
+					<div class="medium-6 columns">
+						<div class="form-field">
+							<label>CONTACT NAME * <span mdTooltip="Enter Contact Name"><i class="inline-icon-tip"></i></span></label>
+							<input [disabled]='currentUserIsContact' type="text" placeholder="Enter Contact Name" [(ngModel)]="bookingModel.contact.name"
+							 name="contact_name" #contact_name="ngModel" [rangeLength]="[4,20]" required>
+							<span *ngIf="contact_name.touched && !contact_name.errors?.required && !contact_name.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
+							<span *ngIf="contact_name.touched && (contact_name.errors?.required || contact_name.errors?.rangeLength);" class="inline-icon error">
 													<span>Minimum 4 characters required.</span>!</span>
 
-							</div>
 						</div>
-						<div class="medium-6 columns">
-							<div class="form-field">
-								<label>CONTACT MOBILE <span mdTooltip="Enter Contact Mobile Number!"><i class="inline-icon-tip"></i></span></label>
-								<input  [disabled]='currentUserIsContact' type="tel" placeholder="Enter Contact Mobile Number" [(ngModel)]="bookingModel.contact.mobile_number" name="mobile" #mobile="ngModel" required>
-								<span *ngIf="mobile.touched && !mobile.errors?.required;" class="inline-icon inline-icon-valid valid"></span>
-								<span *ngIf="mobile.touched && mobile.errors?.required;" class="inline-icon error">
+					</div>
+					<div class="medium-6 columns">
+						<div class="form-field">
+							<label>CONTACT MOBILE <span mdTooltip="Enter Contact Mobile Number!"><i class="inline-icon-tip"></i></span></label>
+							<input [disabled]='currentUserIsContact' type="tel" placeholder="Enter Contact Mobile Number" [(ngModel)]="bookingModel.contact.mobile_number"
+							 name="mobile" #mobile="ngModel" required>
+							<span *ngIf="mobile.touched && !mobile.errors?.required;" class="inline-icon inline-icon-valid valid"></span>
+							<span *ngIf="mobile.touched && mobile.errors?.required;" class="inline-icon error">
 													<span>Minimum 6 digits required.</span>!</span>
-							</div>
 						</div>
-						<div class="medium-6 columns">
-							<div class="form-field">
-								<label>CONTACT EMAIL * <span mdTooltip="Enter contact email address"><i class="inline-icon-tip"></i></span></label>
-								<input  [disabled]='currentUserIsContact' type="email" class="inline-icon-user-email" id="email" placeholder="Enter contact email address"
-								[(ngModel)]="bookingModel.contact.email" name="email" #email="ngModel" email required>
-								<span *ngIf="email.touched && !email.errors?.email;" class="inline-icon inline-icon-valid valid"></span>
-								<span *ngIf="(email.dirty || email.touched) && (email.errors?.required || email.errors?.email);" class="inline-icon error">
+					</div>
+					<div class="medium-6 columns">
+						<div class="form-field">
+							<label>CONTACT EMAIL * <span mdTooltip="Enter contact email address"><i class="inline-icon-tip"></i></span></label>
+							<input [disabled]='currentUserIsContact' type="email" class="inline-icon-user-email" id="email" placeholder="Enter contact email address"
+							 [(ngModel)]="bookingModel.contact.email" name="email" #email="ngModel" email required>
+							<span *ngIf="email.touched && !email.errors?.email;" class="inline-icon inline-icon-valid valid"></span>
+							<span *ngIf="(email.dirty || email.touched) && (email.errors?.required || email.errors?.email);" class="inline-icon error">
 									<span>Email is required</span>!</span>
-							</div>
 						</div>
-						<div class="medium-6 columns">
-							<div class="form-field">
-								<label>CONTACT NUMBER * <span mdTooltip="Enter contact Phone Number"><i class="inline-icon-tip"></i></span></label>
-								<input type="tel" placeholde="Enter contact Phone Number" [disabled]='currentUserIsContact' [(ngModel)]="bookingModel.contact.phone_number" name="phone_number" #phone_number="ngModel" required>
-								<span *ngIf="phone_number.touched && !phone_number.errors?.required;" class="inline-icon inline-icon-valid valid"></span>
-								<span *ngIf="phone_number.touched && phone_number.errors?.required;" class="inline-icon error">
-													<span>Minimum 6 digits required.</span>!</span>							</div>
+					</div>
+					<div class="medium-6 columns">
+						<div class="form-field">
+							<label>CONTACT NUMBER * <span mdTooltip="Enter contact Phone Number"><i class="inline-icon-tip"></i></span></label>
+							<input type="tel" placeholde="Enter contact Phone Number" [disabled]='currentUserIsContact' [(ngModel)]="bookingModel.contact.phone_number"
+							 name="phone_number" #phone_number="ngModel" required>
+							<span *ngIf="phone_number.touched && !phone_number.errors?.required;" class="inline-icon inline-icon-valid valid"></span>
+							<span *ngIf="phone_number.touched && phone_number.errors?.required;" class="inline-icon error">
+													<span>Minimum 6 digits required.</span>!</span>
 						</div>
 					</div>
 				</div>
+			</div>
 
-				<div class="separator"></div>
+			<div class="separator"></div>
 
-				<h2>Client Details</h2>
-				<div class="row">
-					<div class="row-wrapper">
-						<div class="medium-6 columns">
-							<div class="form-field">
-								<label>DEAF PERSON'S NAME * <span mdTooltip="Enter deaf person name"><i class="inline-icon-tip"></i></span></label>
-								<input type="text" placeholder="Enter deaf person name" [(ngModel)]="bookingModel.deaf_person.name" name="deaf_person_name" #deaf_person_name="ngModel" [rangeLength]="[4,20]" required>
-								<span *ngIf="deaf_person_name.touched && !deaf_person_name.errors?.required && !deaf_person_name.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
-								<span *ngIf="deaf_person_name.touched && (deaf_person_name.errors?.required || deaf_person_name.errors?.rangeLength);" class="inline-icon error">
+			<h2>Client Details</h2>
+			<div class="row">
+				<div class="row-wrapper">
+					<div class="medium-6 columns">
+						<div class="form-field">
+							<label>DEAF PERSON'S NAME * <span mdTooltip="Enter deaf person name"><i class="inline-icon-tip"></i></span></label>
+							<input type="text" placeholder="Enter deaf person name" [(ngModel)]="bookingModel.deaf_person.name" name="deaf_person_name"
+							 #deaf_person_name="ngModel" [rangeLength]="[4,20]" required>
+							<span *ngIf="deaf_person_name.touched && !deaf_person_name.errors?.required && !deaf_person_name.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
+							<span *ngIf="deaf_person_name.touched && (deaf_person_name.errors?.required || deaf_person_name.errors?.rangeLength);" class="inline-icon error">
 													<span>Minimum 4 characters required.</span>!</span>
-							</div>
 						</div>
-						<div class="medium-6 columns">
-							<div class="form-field">
-								<label>DEAF PERSON'S MOBILE <span mdTooltip="Enter deaf person Mobile Number"><i class="inline-icon-tip"></i></span></label>
-								<input type="tel" placeholder="Enter deaf person Mobile Number" [(ngModel)]="bookingModel.deaf_person.mobile_number"
-								name="deaf_person_mobile" #deaf_person_mobile="ngModel" required>
-								<span *ngIf="deaf_person_mobile.touched && !deaf_person_mobile.errors?.required;" class="inline-icon inline-icon-valid valid"></span>
-								<span *ngIf="deaf_person_mobile.touched && deaf_person_mobile.errors?.required;" class="inline-icon error">
+					</div>
+					<div class="medium-6 columns">
+						<div class="form-field">
+							<label>DEAF PERSON'S MOBILE <span mdTooltip="Enter deaf person Mobile Number"><i class="inline-icon-tip"></i></span></label>
+							<input type="tel" placeholder="Enter deaf person Mobile Number" [(ngModel)]="bookingModel.deaf_person.mobile_number" name="deaf_person_mobile"
+							 #deaf_person_mobile="ngModel" required>
+							<span *ngIf="deaf_person_mobile.touched && !deaf_person_mobile.errors?.required;" class="inline-icon inline-icon-valid valid"></span>
+							<span *ngIf="deaf_person_mobile.touched && deaf_person_mobile.errors?.required;" class="inline-icon error">
 													<span>Minimum 6 digits required.</span>!</span>
-							</div>
 						</div>
-						<div class="medium-6 columns">
-							<div class="form-field">
-								<label>DEAF PERSON'S EMAIL * <span mdTooltip="Enter deaf person name!"><i class="inline-icon-tip"></i></span></label>
-								<input type="email" class="inline-icon-user-email" id="email" placeholder="Enter deaf person email address"
-								[(ngModel)]="bookingModel.deaf_person.email" name="deaf_person_email" #deaf_person_email="ngModel" email required>
-								<span *ngIf="deaf_person_email.touched && !deaf_person_email.errors?.email;" class="inline-icon inline-icon-valid valid"></span>
-								<span *ngIf="(deaf_person_email.dirty || deaf_person_email.touched) && (deaf_person_email.errors?.required || deaf_person_email.errors?.email);" class="inline-icon error">
+					</div>
+					<div class="medium-6 columns">
+						<div class="form-field">
+							<label>DEAF PERSON'S EMAIL * <span mdTooltip="Enter deaf person name!"><i class="inline-icon-tip"></i></span></label>
+							<input type="email" class="inline-icon-user-email" id="email" placeholder="Enter deaf person email address" [(ngModel)]="bookingModel.deaf_person.email"
+							 name="deaf_person_email" #deaf_person_email="ngModel" email required>
+							<span *ngIf="deaf_person_email.touched && !deaf_person_email.errors?.email;" class="inline-icon inline-icon-valid valid"></span>
+							<span *ngIf="(deaf_person_email.dirty || deaf_person_email.touched) && (deaf_person_email.errors?.required || deaf_person_email.errors?.email);"
+							 class="inline-icon error">
 									<span>Email is required</span>!</span>
-							</div>
 						</div>
-						<div class="medium-6 columns">
-							<div class="form-field">
-								<label>DEAF PERSON'S EAF/UR ID NUMBER * <span mdTooltip="Enter deaf person EAF number!"><i class="inline-icon-tip"></i></span></label>
-								<input type="tel" placeholder="Enter deaf person EAF number" [(ngModel)]="bookingModel.deaf_person.eaf" name="deaf_person_eaf" #deaf_person_eaf="ngModel" required digits>
-								<span *ngIf="deaf_person_eaf.touched && !deaf_person_eaf.errors?.required && !deaf_person_eaf.errors?.digits;" class="inline-icon inline-icon-valid valid"></span>
-								<span *ngIf="deaf_person_eaf.touched && (deaf_person_eaf.errors?.required || deaf_person_eaf.errors?.digits);" class="inline-icon error">
+					</div>
+					<div class="medium-6 columns">
+						<div class="form-field">
+							<label>DEAF PERSON'S EAF/UR ID NUMBER * <span mdTooltip="Enter deaf person EAF number!"><i class="inline-icon-tip"></i></span></label>
+							<input type="tel" placeholder="Enter deaf person EAF number" [(ngModel)]="bookingModel.deaf_person.eaf" name="deaf_person_eaf"
+							 #deaf_person_eaf="ngModel" required digits>
+							<span *ngIf="deaf_person_eaf.touched && !deaf_person_eaf.errors?.required && !deaf_person_eaf.errors?.digits;" class="inline-icon inline-icon-valid valid"></span>
+							<span *ngIf="deaf_person_eaf.touched && (deaf_person_eaf.errors?.required || deaf_person_eaf.errors?.digits);" class="inline-icon error">
 													<span>Minimum 6 digits required.</span>!</span>
-							</div>
 						</div>
 					</div>
 				</div>
-				<div [hidden]='true'>
+			</div>
+			<div [hidden]='true'>
 				<div class="separator"></div>
 
 				<h2>Job Documents</h2>
@@ -293,9 +341,9 @@
 					</section>
 				</div>
 			</div>
-				<div class="actions">
-					<button (click)="onCreateBooking();">SAVE</button>
-				</div>
-			</form>
-		</main>
-	</section>
+			<div class="actions">
+				<button (click)="onCreateBooking();">SAVE</button>
+			</div>
+		</form>
+	</main>
+</section>

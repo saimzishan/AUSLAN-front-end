@@ -37,7 +37,7 @@ export class DashboardComponent implements OnInit {
                   if (!data.verified) { // show errors
                       this.router.navigate(['/verify/' + data.id]);
                   }else {
-                      let route = this.rolePermission.getDefaultRouteForCurrentUser(true);
+                      let route = this.rolePermission.getDefaultRouteForCurrentUser();
                     this.router.navigate( [route] );
                     LinkHelper.activeLink = LINK.usermanagement;
                     this.linkHelper = LinkHelper;

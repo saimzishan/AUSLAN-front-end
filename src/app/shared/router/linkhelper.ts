@@ -17,13 +17,13 @@ export class LinkAuth {
   }
 
   canShowLink(path) {
-    let res = Boolean(false === this.rolePermission.isRestrictedRouteForCurrentUser(path, false));
+    let res = Boolean(false === this.rolePermission.isRestrictedRouteForCurrentUser(path));
     return res;
   }
 
   canEditLink(path, data_owner) {
-    let res = Boolean(false === this.rolePermission.isDataRestrictedForCurrentUser(path, data_owner, false)
-      && false === this.rolePermission.isDataReadOnlyForCurrentUser(path, data_owner, false));
+    let res = Boolean(false === this.rolePermission.isDataRestrictedForCurrentUser(path, data_owner)
+      && false === this.rolePermission.isDataReadOnlyForCurrentUser(path, data_owner));
           return res;
 
   }

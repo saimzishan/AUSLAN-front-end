@@ -3,7 +3,7 @@ import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from
 import { GLOBAL } from '../shared/global';
 import { tokenNotExpired } from 'angular2-jwt/angular2-jwt';
 import { RolePermission } from '../shared/role-permission/role-permission';
-import { User } from '../shared/model/user.entity';
+import { User, UserFactory } from '../shared/model/user.entity';
 import { ROLE } from '../shared/model/role.enum';
 
 @Injectable()
@@ -17,7 +17,8 @@ export class AuthGuard implements CanActivate {
             // this.logout();
             return false;
         } else {
-            GLOBAL.currentUser = JSON.parse(u) as User;
+            let data =JSON.parse(u);
+            GLOBAL.currentUser = Boolean(!GLOBAL.currentUser) ? UserFactory.createUser(data) : GLOBAL.currentUser;
         }
         let user = GLOBAL.currentUser;
         let res = Boolean(Boolean(token !== undefined && token.length > 0) &&
@@ -47,10 +48,12 @@ export class AuthGuard implements CanActivate {
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         if (AuthGuard.isLoggedIn()) {
-            if ( GLOBAL.currentUser instanceof User) {
-                let r = GLOBAL.currentUser.getRole();
-                let res = !this.rolePermission.isRestrictedRoute(ROLE[r], state.url);
-                return res;
+            if ( null === GLOBAL.currentUser || GLOBAL.currentUser === undefined ) {
+                // logged in but opened a new tab
+                 this.router.navigate(['/dashboard']);
+            } else if ( GLOBAL.currentUser instanceof User) {
+                let res = this.rolePermission.isRestrictedRouteForCurrentUser(state.url);
+                return !res;
             }
             return true;
         }

@@ -2,6 +2,7 @@ import {PARKING} from './parking.enum';
 
 export class Address {
 
+  public title: string;
   public addressline_1: string;
   public addressline_2: string;
   public addressline_3: string;

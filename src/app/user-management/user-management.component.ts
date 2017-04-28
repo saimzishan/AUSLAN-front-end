@@ -71,7 +71,7 @@ export class UserManagementComponent implements AfterViewChecked {
       .subscribe((res: any) => {
         if ( res.status === 200 ) {
           let userList = res.data.users.filter( (u) => {
-            let result = Boolean(false === this.rolePermission.isDataRestrictedForCurrentUser('user-management', u.type, false));
+            let result = Boolean(false === this.rolePermission.isDataRestrictedForCurrentUser('user-management', u.type));
             return result;
           });
           this.users = userList;
