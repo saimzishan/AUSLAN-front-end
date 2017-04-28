@@ -1,0 +1,19 @@
+<div class="md-dialog">
+	<md-dialog-content>
+		<header>
+			<h1>{{ title }}</h1>
+			<button (click)="closeDialog()"><i class="icon-close"></i></button>
+		</header>
+		<main>
+			<div>
+        <p>{{popupMessage}}</p>
+			</div>
+		</main>
+	</md-dialog-content>
+
+	<div>
+		<md-dialog-actions>
+			<button name="yesBtn" [(ngModel)]="dialog_action" class="button"> YES </button>
+			<button name="noBtn"  [(ngModel)]="dialog_action" class="button"> NO </button>
+		</md-dialog-actions>
+	</div>
