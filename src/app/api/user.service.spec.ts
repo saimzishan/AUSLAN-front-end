@@ -163,6 +163,7 @@ describe('UserService', () => {
                     }
                 })
                 .willRespondWith(404, {
+                                        'status': 404,
                     'Content-Type': 'application/json; charset=utf-8'
                 });
 

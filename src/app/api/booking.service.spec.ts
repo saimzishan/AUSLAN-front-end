@@ -31,7 +31,8 @@ let mock_response_with_interpreters: Object[] = [
         id: 2,
         state: 'requested',
         'interpreters': [
-        ]
+        ],
+        'address_attributes': {  }
 
     })
 ];
@@ -212,6 +213,7 @@ describe('BookingService', () => {
                     }
                 })
                 .willRespondWith(404, {
+                    'status': 404,
                     'Content-Type': 'application/json; charset=utf-8'
                 });
 
