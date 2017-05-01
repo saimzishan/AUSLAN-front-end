@@ -32,7 +32,7 @@ let mock_response_with_interpreters: Object[] = [
         state: 'requested',
         'interpreters': [
         ],
-        'address_attributes': {  }
+        'address_attributes': {}
 
     })
 ];
@@ -88,7 +88,9 @@ describe('BookingService', () => {
                 .given('booking does not exists in database')
                 .uponReceiving('a request to create Booking')
                 .withRequest('POST', '/api/v1/bookings', {
-                    'Accept': 'application/json'
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+
                 })
                 .willRespondWith(201, {
                     'Content-Type': 'application/json; charset=utf-8'
@@ -115,7 +117,9 @@ describe('BookingService', () => {
                 .given('booking does exists in database')
                 .uponReceiving('a request to invite interpreters')
                 .withRequest('POST', '/api/v1/bookings/2/invite_interpreters', {
-                    'Accept': 'application/json'
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+
                 })
                 .willRespondWith(204);
 
@@ -143,7 +147,8 @@ describe('BookingService', () => {
                         method: 'GET',
                         path: '/api/v1/bookings',
                         headers: {
-                            'Accept': 'application/json'
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
                         }
                     }
                     )
@@ -176,7 +181,9 @@ describe('BookingService', () => {
                     method: 'GET',
                     path: '/api/v1/bookings/1',
                     headers: {
-                        'Accept': 'application/json'
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+
                     }
                 }
                 )
@@ -209,7 +216,9 @@ describe('BookingService', () => {
                     method: 'GET',
                     path: '/api/v1/bookings/-1',
                     headers: {
-                        'Accept': 'application/json'
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+
                     }
                 })
                 .willRespondWith(404, {
@@ -264,7 +273,9 @@ describe('BookingService', () => {
                 .given('booking exists in database')
                 .uponReceiving('a request to delete a booking')
                 .withRequest('DELETE', '/api/v1/bookings/1', {
-                    'Accept': 'application/json'
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+
                 })
                 .willRespondWith(204, {
                     'Content-Type': 'application/json; charset=utf-8'

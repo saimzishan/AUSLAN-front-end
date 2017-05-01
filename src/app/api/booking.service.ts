@@ -28,7 +28,8 @@ export class BookingService extends ApiService {
     */
     createBooking(booking: Booking): Observable<Object> {
 
-        let headers = new Headers({'Accept': 'application/json' });
+        let headers = new Headers({'Accept': 'application/json',
+            'Content-Type': 'application/json'});
         let options = new RequestOptions({ headers: headers });
         let obj = { 'booking': booking.toJSON() };
 
@@ -42,7 +43,8 @@ export class BookingService extends ApiService {
     */
     inviteInterpreters(bookingID: number, interpreters: Array<Object>): Observable<Object> {
 
-        let headers = new Headers({'Accept': 'application/json' });
+        let headers = new Headers({'Accept': 'application/json',
+            'Content-Type': 'application/json'});
         let options = new RequestOptions({ headers: headers });
         let obj = { 'interpreters': interpreters};
 
@@ -55,7 +57,8 @@ export class BookingService extends ApiService {
     */
     updateBooking(booking: Booking): Observable<Object> {
 
-        let headers = new Headers({'Accept': 'application/json' });
+        let headers = new Headers({'Accept': 'application/json',
+            'Content-Type': 'application/json'});
         let options = new RequestOptions({ headers: headers });
         let obj = { 'booking': booking.toJSON() };
         return this.http.patch(GLOBAL.BOOKING_API + '/' + booking.id, JSON.stringify(obj), options)
@@ -68,7 +71,8 @@ export class BookingService extends ApiService {
     */
     updateBookingByTransitioning(booking_id: string, next_state: string): Observable<Object> {
 
-        let headers = new Headers({'Accept': 'application/json' });
+        let headers = new Headers({'Accept': 'application/json',
+            'Content-Type': 'application/json'});
         let options = new RequestOptions({ headers: headers });
         let obj = { 'booking': {'next_state': next_state} };
         return this.http.patch(GLOBAL.BOOKING_API + '/' + booking_id, JSON.stringify(obj), options)
@@ -79,7 +83,8 @@ export class BookingService extends ApiService {
       The Api should be able to fetch all the bookings.
     */
     fetchBookings(): Observable<Object> {
-        let headers = new Headers({'Accept': 'application/json' });
+        let headers = new Headers({'Accept': 'application/json',
+            'Content-Type': 'application/json'});
         let options = new RequestOptions({ headers: headers });
         return this.http.get(GLOBAL.BOOKING_API, options)
             .map(this.extractData)
@@ -91,7 +96,8 @@ export class BookingService extends ApiService {
       The Api should be get booking by its ID (The Id should be email)
     */
     getBooking(id: number): Observable<Object> {
-        let headers = new Headers({'Accept': 'application/json' });
+        let headers = new Headers({'Accept': 'application/json',
+            'Content-Type': 'application/json'});
         let options = new RequestOptions({ headers: headers });
 
         return this.http
@@ -106,7 +112,8 @@ export class BookingService extends ApiService {
       The Api should be get booking by its ID (The Id should be email)
     */
     deleteBooking(id: number): Observable<Object> {
-        let headers = new Headers({'Accept': 'application/json' });
+        let headers = new Headers({'Accept': 'application/json',
+            'Content-Type': 'application/json'});
         let options = new RequestOptions({ headers: headers });
 
         return this.http
