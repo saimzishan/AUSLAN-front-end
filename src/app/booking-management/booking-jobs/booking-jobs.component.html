@@ -7,8 +7,8 @@
 				<a href="#">Payroll details</a>
 			</nav>
 			<div>
-				<button (click)="unableToServiceBooking()" class="button pink">Unable to Service</button>
-				<button (click)="cancelBooking()" class="button pink">Cancel Booking</button>
+				<button *ngIf='!isCancelledOrUnableToServe' (click)="showDialogBox(false)" class="button pink">Unable to Service</button>
+				<button *ngIf='!isCancelledOrUnableToServe' (click)="showDialogBox(true)" class="button pink">Cancel Booking</button>
 				<button (click)="duplicateBooking()" class="button inverse">Duplicate</button>
 				<div class="sep"></div>
 				<button (click)="saveChanges()" [disabled]="!invitePressed" class="button inverse">Save</button>
@@ -17,11 +17,15 @@
 
 		<section id="steps">
 			<nav>
-				<a href="javascript:void(0);" [ngClass]="{'active' : isSate('Requested')}">Requested</a>
-				<a href="javascript:void(0);" [ngClass]="{'active' : isSate('In_progress')}">In Progress</a>
-				<a href="javascript:void(0);" [ngClass]="{'active' : isSate('Allocated')}">Allocated</a>
-				<a href="javascript:void(0);" [ngClass]="{'active' : isSate('Completed')}">Completed</a>
-				<a href="javascript:void(0);" [ngClass]="{'active' : isSate('Finished')}">Finished</a>
+				<a href="javascript:void(0);" [ngClass]="{'active' : isState('Requested')}">Requested</a>
+				<a href="javascript:void(0);" [ngClass]="{'active' : isState('In_progress')}">In Progress</a>
+				<a href="javascript:void(0);" [ngClass]="{'active' : isState('Allocated')}">Allocated</a>
+				<a href="javascript:void(0);" [ngClass]="{'active' : isState('Completed')}">Completed</a>
+				<a href="javascript:void(0);" [ngClass]="{'active' : isState('Finished') 
+				|| isState('Unable_to_service') || isState('Cancel_booking')}">
+					{{isState('Cancel_booking') ? 'Cancelled' : 
+					isState('Unable_to_service') ? 'Unable To Serve' : 'Finished' }}
+					</a>
 			</nav>
 		</section>
 	</section>
@@ -103,8 +107,8 @@
 					<button class="button inverse higher">PROCESS TO INVOICE</button>
 				</div -->
 
-			<h2>Invite Interpreters <button class="sort desc outside"></button></h2>
-			<section id="invite-interpreters">
+			<h2  *ngIf='!isCancelledOrUnableToServe' >Invite Interpreters <button class="sort desc outside"></button></h2>
+			<section *ngIf='!isCancelledOrUnableToServe' id="invite-interpreters">
 				<section id="filters">
 					<section class="search-bar">
 						<input type="text" name="search" placeholder="Search...">
@@ -124,7 +128,7 @@
 				</section>
 			</section>
 
-			<section id="invited-interpreters">
+			<section *ngIf='!isCancelledOrUnableToServe'  id="invited-interpreters">
 				<table class="custom custom-small-table">
 					<thead>
 						<tr>

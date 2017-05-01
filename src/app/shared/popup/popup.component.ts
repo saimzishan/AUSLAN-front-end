@@ -10,11 +10,13 @@ export class PopupComponent {
 
   @Input() title = '';
   @Input() popupMessage = '';
+  @Input() okTitle = '';
+  @Input() cancleTitle = '';
 
-  public dialog_action: Boolean = false;
   constructor(
     public dialogRef: MdDialogRef<PopupComponent>) { }
-  closeDialog() {
-    this.dialogRef.close(this.dialog_action);
+
+  closeDialog(val) {
+    this.dialogRef.close(val);
   }
 }

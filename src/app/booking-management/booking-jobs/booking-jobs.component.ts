@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, AfterViewChecked, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, ViewContainerRef, AfterViewChecked, OnDestroy } from '@angular/core';
 import { BookingService } from '../../api/booking.service';
 import { Booking } from '../../shared/model/booking.entity';
 import { BookingInterpreters } from '../../shared/model/contact.entity';
@@ -10,6 +10,8 @@ import { NotificationServiceBus } from '../../notification/notification.service'
 import { ActivatedRoute } from '@angular/router';
 import { Router, NavigationExtras } from '@angular/router';
 import { BOOKING_STATUS } from '../../shared/model/booking-status.enum';
+import { PopupComponent } from '../../shared/popup/popup.component';
+import { MdDialog, MdDialogConfig, MdDialogRef } from '@angular/material';
 
 declare var $: any; // not liking it
 
@@ -22,11 +24,17 @@ declare var $: any; // not liking it
 export class BookingJobsComponent implements AfterViewChecked, OnDestroy {
   selectedBookingModel: Booking = new Booking();
   invitePressed = false;
+  isCancelledOrUnableToServe = false;
+
   interpreterList: User[] = [];
   selectedInterpreterIDs: number[] = [];
   private sub: any;
+  private dialogSub: any;
+  dialogRef: MdDialogRef<any>;
 
-  constructor(public spinnerService: SpinnerService,
+  constructor(
+    public dialog: MdDialog,
+    public viewContainerRef: ViewContainerRef, public spinnerService: SpinnerService,
     public notificationServiceBus: NotificationServiceBus,
     public userDataService: UserService, public bookingService: BookingService,
     private router: Router, private route: ActivatedRoute) {
@@ -37,6 +45,8 @@ export class BookingJobsComponent implements AfterViewChecked, OnDestroy {
       if (param.length > 0) {
         let jsonData = JSON.parse(param);
         this.selectedBookingModel.fromJSON(jsonData);
+        this.isCancelledOrUnableToServe = this.isState('Cancel_booking')
+         || this.isState('Unable_to_service');
         this.fetchBookingInterpreters();
       }
     });
@@ -47,11 +57,41 @@ export class BookingJobsComponent implements AfterViewChecked, OnDestroy {
   }
 
   ngOnDestroy() {
-    return this.sub && this.sub.unsubscribe();
+    return this.sub && this.sub.unsubscribe()
+      && this.dialogSub && this.dialogSub.unsubscribe();
   }
 
-  isSate(bookingStatus: string) {
+  isState(bookingStatus: string) {
     return BOOKING_STATUS[this.selectedBookingModel.state].toLowerCase() === bookingStatus.toLowerCase();
+  }
+
+  public showDialogBox(isCancel: Boolean) {
+    if (this.dialogSub) {
+      this.dialogSub.unsubscribe();
+    }
+
+    let config: MdDialogConfig = {
+      disableClose: true
+    };
+    config.viewContainerRef = this.viewContainerRef;
+    this.dialogRef = this.dialog.open(PopupComponent, config);
+    this.dialogRef.componentInstance.title = isCancel ? 'Cancel Booking' : 'Unable To Serve';
+    this.dialogRef.componentInstance.cancelTitle = isCancel ? `Back to job` : 'Back to job';
+    this.dialogRef.componentInstance.okTitle = isCancel ? `Cancel this job` : 'Unable to service this job';
+    this.dialogRef.componentInstance.popupMessage =
+      isCancel ? `Are you sure you want to cancel the booking?
+          The client will be notified of this. This is a permanent action.`
+        :
+        `Are you sure you want to mark this booking as unable to service?
+          The client will be notified of this. This is a permanent action.`;
+
+    this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
+      if (result && !isCancel) {
+        this.unableToServiceBooking();
+      } else if (result && isCancel) {
+        this.cancelBooking();
+      }
+    });
   }
 
   unableToServiceBooking() {
@@ -59,6 +99,8 @@ export class BookingJobsComponent implements AfterViewChecked, OnDestroy {
     this.bookingService.updateBookingByTransitioning(this.selectedBookingModel.id, 'unable_to_service')
       .subscribe((res: any) => {
         if (res.status === 204) {
+          this.selectedBookingModel.state = BOOKING_STATUS.Unable_to_service;
+          this.isCancelledOrUnableToServe = true;
           this.notificationServiceBus.launchNotification(false, 'The booking has been transitioned to \"Unable to Service\" state');
         }
         this.spinnerService.requestInProcess(false);
@@ -75,6 +117,8 @@ export class BookingJobsComponent implements AfterViewChecked, OnDestroy {
     this.bookingService.updateBookingByTransitioning(this.selectedBookingModel.id, 'cancel_booking')
       .subscribe((res: any) => {
         if (res.status === 204) {
+          this.selectedBookingModel.state = BOOKING_STATUS.Cancel_booking;
+          this.isCancelledOrUnableToServe = true;
           this.notificationServiceBus.launchNotification(false, 'The booking has been transitioned to \"Cancelled\" state');
         }
         this.spinnerService.requestInProcess(false);

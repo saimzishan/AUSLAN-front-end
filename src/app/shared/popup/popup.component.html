@@ -2,7 +2,7 @@
 	<md-dialog-content>
 		<header>
 			<h1>{{ title }}</h1>
-			<button (click)="closeDialog()"><i class="icon-close"></i></button>
+			<button (click)="closeDialog(false)"><i class="icon-close"></i></button>
 		</header>
 		<main>
 			<div>
@@ -13,7 +13,7 @@
 
 	<div>
 		<md-dialog-actions>
-			<button name="yesBtn" [(ngModel)]="dialog_action" class="button"> YES </button>
-			<button name="noBtn"  [(ngModel)]="dialog_action" class="button"> NO </button>
+			<button name="yesBtn" (click)="closeDialog(true)" class="button"> {{okTitle}} </button>
+			<button name="noBtn"  (click)="closeDialog(false)" class="button"> {{cancelTitle}} </button>
 		</md-dialog-actions>
 	</div>

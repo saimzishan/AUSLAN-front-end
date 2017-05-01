@@ -19,6 +19,9 @@ import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRoute, Data } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
+import { CustomFormsModule } from 'ng2-validation';
+import { ViewContainerRef } from '@angular/core';
+import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
 
 describe('BookingJobsComponent', () => {
     let component: BookingJobsComponent;
@@ -27,7 +30,8 @@ describe('BookingJobsComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [BookingJobsComponent],
-            providers: [SpinnerService, NotificationServiceBus,
+            providers: [ MdDialog,
+            ViewContainerRef, SpinnerService, NotificationServiceBus,
                 {
                     provide: ActivatedRoute,
                     useValue: {
@@ -41,10 +45,9 @@ describe('BookingJobsComponent', () => {
                 { provide: BookingService, useClass: MockBookingService },
                 { provide: UserService, useClass: MockUserService }, { provide: AuthHttp, useClass: MockBackend }],
             imports: [SimpleNotificationsModule, MaterialModule, FormsModule,
-                RouterTestingModule]
+                RouterTestingModule, CustomFormsModule]
         }).compileComponents();
     }));
-
     beforeEach(() => {
         fixture = TestBed.createComponent(BookingJobsComponent);
         component = fixture.componentInstance;
