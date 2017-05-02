@@ -30,6 +30,23 @@ export class PageHelper {
     return element(by.name(name));
   }
 
+
+  getElementInside(ele, name: string) {
+    return ele.element(by.name(name));
+  }
+
+  getButtonByTextInsideElement(ele, text: string) {
+    return ele.element(by.buttonText(text));
+  }
+
+  getAllByTagNameInElement(ele, tag: string){
+    return ele.all(by.tagName(tag));
+  }
+
+  getButtonByText(text: string){
+    return element(by.buttonText(text));
+  }
+
   setValue(ele, value: string) {
     ele.sendKeys(value);
   }
