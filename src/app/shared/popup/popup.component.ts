@@ -11,7 +11,7 @@ export class PopupComponent {
   @Input() title = '';
   @Input() popupMessage = '';
   @Input() okTitle = '';
-  @Input() cancleTitle = '';
+  @Input() cancelTitle = '';
 
   constructor(
     public dialogRef: MdDialogRef<PopupComponent>) { }
