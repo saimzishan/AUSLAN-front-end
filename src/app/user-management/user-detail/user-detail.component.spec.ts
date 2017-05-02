@@ -20,17 +20,20 @@ import {ROLE} from '../../shared/model/role.enum';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import {SpinnerService} from '../../spinner/spinner.service';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('UserDetailComponent', () => {
   let component: UserDetailComponent;
   let fixture: ComponentFixture<UserDetailComponent>;
-  /* Commenting the Pop tests for now*//*
-  let dialogRef: MdDialogRef<any>;
+  /* Commenting the Pop tests for now*/
+  /*
+  let dialogRef: MdDialogRef<UserDetailComponent>;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ UserDetailComponent ],
-      imports: [FormsModule, MdDialogModule, CustomFormsModule, MaterialModule],
-      providers: [{ provide: UserService, useClass: MockUserService}, SpinnerService, { provide: AuthHttp, useClass: MockBackend }]
+      imports: [FormsModule, NoopAnimationsModule, CustomFormsModule, MaterialModule],
+      providers: [MdDialog, ViewContainerRef,
+      { provide: UserService, useClass: MockUserService}, SpinnerService, { provide: AuthHttp, useClass: MockBackend }]
     })
     .overrideModule(BrowserDynamicTestingModule, {
         set: {
@@ -40,14 +43,16 @@ describe('UserDetailComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UserDetailComponent);
-    component = fixture.componentInstance;
+
+    dialogRef = this.dialog.open(UserDetailComponent);
+    fixture = dialogRef;
+    component = dialogRef.componentInstance;
     fixture.detectChanges();
 
-    let config = new MdDialogConfig();
-    config.viewContainerRef = this.viewContainerRef;
-    this.dialogRef = this.dialog.open(UserDetailComponent, config);
+  });
 
+  afterEach(() => {
+      dialogRef.close();
   });
 
   it('should create', () => {
@@ -108,7 +113,6 @@ describe('UserDetailComponent', () => {
           });
 
       });
-
   });
 
 

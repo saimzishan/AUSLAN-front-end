@@ -22,8 +22,8 @@
 				<a href="javascript:void(0);" [ngClass]="{'active' : isState('Allocated')}">Allocated</a>
 				<a href="javascript:void(0);" [ngClass]="{'active' : isState('Completed')}">Completed</a>
 				<a href="javascript:void(0);" [ngClass]="{'active' : isState('Finished') 
-				|| isState('Unable_to_service') || isState('Cancel_booking')}">
-					{{isState('Cancel_booking') ? 'Cancelled' : 
+				|| isState('Unable_to_service') || isState('Cancelled')}">
+					{{isState('Cancelled') ? 'Cancelled' : 
 					isState('Unable_to_service') ? 'Unable To Serve' : 'Finished' }}
 					</a>
 			</nav>

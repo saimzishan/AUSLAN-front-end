@@ -45,7 +45,7 @@ export class BookingJobsComponent implements AfterViewChecked, OnDestroy {
       if (param.length > 0) {
         let jsonData = JSON.parse(param);
         this.selectedBookingModel.fromJSON(jsonData);
-        this.isCancelledOrUnableToServe = this.isState('Cancel_booking')
+        this.isCancelledOrUnableToServe = this.isState('Cancelled')
          || this.isState('Unable_to_service');
         this.fetchBookingInterpreters();
       }
@@ -114,10 +114,10 @@ export class BookingJobsComponent implements AfterViewChecked, OnDestroy {
 
   cancelBooking() {
     this.spinnerService.requestInProcess(true);
-    this.bookingService.updateBookingByTransitioning(this.selectedBookingModel.id, 'cancel_booking')
+    this.bookingService.updateBookingByTransitioning(this.selectedBookingModel.id, 'cancelled')
       .subscribe((res: any) => {
         if (res.status === 204) {
-          this.selectedBookingModel.state = BOOKING_STATUS.Cancel_booking;
+          this.selectedBookingModel.state = BOOKING_STATUS.Cancelled;
           this.isCancelledOrUnableToServe = true;
           this.notificationServiceBus.launchNotification(false, 'The booking has been transitioned to \"Cancelled\" state');
         }
