@@ -36,14 +36,20 @@ let mock_response_with_interpreters: Object[] = [
 
     })
 ];
+let mock_request = new Object({'id': '2',
+'venue': 'Fed Square', 'requested_by': 'Georgious', 'nature_of_appointment': 'Translation',
+    'specific_nature_of_appointment': 'Engagement', 'contact_name': 'Hadrian French', 'contact_phone_number': '03 2342 2343',
+    'contact_mobile_number': '0411 222 333', 'deaf_persons_name': 'Clifford', 'deaf_persons_mobile': '0444 555 666',
+    'deaf_persons_email': 'clifford@vicdeaf.org.au', 'deaf_persons_eaf_no': '1231 0900',
+    'number_of_people_attending': '1', 'start_time': '2017-04-02T07:50:19.212+00:00', 'end_time': '2017-04-02T08:50:19.212+00:00',
+    'parking_availability': 'None', 'address_attributes': {'line_1' : 'Curve Tomorrow', 'line_2': 'L4 West RCH',
+    'line_3': '50 Flemington Rd', 'suburb': 'Parkville', 'state': 'Victoria', 'post_code': '3025'}});
 
 describe('BookingService', () => {
     let bookingProvider;
     let val = '';
     let mock_booking = new Booking();
-    mock_booking.id = '2';
-    mock_booking.raw_venue_address = 'venue_address';
-
+    mock_booking.fromJSON(mock_request);
     let mock_db: Booking[] = [mock_booking];
     beforeEach((done) => {
         TestBed.configureTestingModule({
@@ -91,7 +97,8 @@ describe('BookingService', () => {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
 
-                })
+                }, { 'booking': Pact.Match.somethingLike(mock_booking.toJSON()) })
+
                 .willRespondWith(201, {
                     'Content-Type': 'application/json; charset=utf-8'
                 }, Pact.Match.somethingLike(mock_response));
@@ -120,11 +127,11 @@ describe('BookingService', () => {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
 
-                })
-                .willRespondWith(204);
+                }, Pact.Match.somethingLike({'interpreters': [{'id': 2579}]})
+                ).willRespondWith(204);
 
             bookingProvider.run(done, function (runComplete) {
-                let mocK_invite = [{ 'id': 609 }, { 'id': 610 }];
+                let mocK_invite = [{ 'id': 2579 }];
                 service.inviteInterpreters(2, mocK_invite)
                     .subscribe((res: any) => {
                         expect(res.status).toEqual(204);
@@ -218,13 +225,9 @@ describe('BookingService', () => {
                     headers: {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'
-
                     }
                 })
-                .willRespondWith(404, {
-                    'status': 404,
-                    'Content-Type': 'application/json; charset=utf-8'
-                });
+                .willRespondWith(404);
 
             bookingProvider.run(done, function (runComplete) {
                 service.getBooking(-1)
@@ -247,9 +250,7 @@ describe('BookingService', () => {
                     'Content-Type': 'application/json'
                 }, { 'booking': mock_db[0].toJSON() }
                 )
-                .willRespondWith(200, {
-                    'Content-Type': 'application/json; charset=utf-8'
-                });
+                .willRespondWith(204);
 
             bookingProvider.run(done, function (runComplete) {
                 let u: Booking = mock_db[0];
@@ -257,7 +258,7 @@ describe('BookingService', () => {
 
                 let status_code = service.updateBooking(u)
                     .subscribe((res: any) => {
-                        expect(res.status).toEqual(200);
+                        expect(res.status).toEqual(204);
                         done();
                     }, err => done.fail(err), () => {
                         runComplete();
@@ -277,9 +278,7 @@ describe('BookingService', () => {
                     'Content-Type': 'application/json'
 
                 })
-                .willRespondWith(204, {
-                    'Content-Type': 'application/json; charset=utf-8'
-                });
+                .willRespondWith(204);
 
             bookingProvider.run(done, function (runComplete) {
                 service.deleteBooking(1)

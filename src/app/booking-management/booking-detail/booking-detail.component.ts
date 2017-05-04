@@ -75,9 +75,11 @@ export class BookingDetailComponent implements AfterViewChecked, OnDestroy {
         this.spinnerService.requestInProcess(false);
 
       },
-      (err) => {
-        this.spinnerService.requestInProcess(false);
-        this.notificationServiceBus.launchNotification(true, err);
-      });
+      errors => {
+                this.spinnerService.requestInProcess(false);
+                let e = errors.json();
+                this.notificationServiceBus.launchNotification(true,
+                'Error occured on server side. ' + errors.statusText + ' ' + JSON.stringify(e.errors));
+            });
   }
 }

@@ -52,6 +52,7 @@ import { HyphenPipe } from './shared/pipe/hyphen.pipe';
 import { NoAuthGuard } from './auth/no-auth.guard';
 import {Store, provideStore} from '@ngrx/store';
 import { PopupComponent } from './shared/popup/popup.component';
+import { JobDetailComponent } from './booking-management/booking-jobs/job-detail/job-detail.component';
 
 @NgModule({
   declarations: [
@@ -76,7 +77,7 @@ import { PopupComponent } from './shared/popup/popup.component';
     UserListComponent,
     UserHeaderComponent,
     UserDetailComponent,
-    UserProfileComponent, HyphenPipe, SpacerPipe, BookingJobsComponent, PopupComponent
+    UserProfileComponent, HyphenPipe, SpacerPipe, BookingJobsComponent, PopupComponent, JobDetailComponent
   ],
    entryComponents: [UserDetailComponent, PopupComponent],
   imports: [CustomFormsModule, routing,

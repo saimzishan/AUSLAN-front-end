@@ -23,7 +23,8 @@ let Pact = require('pact-consumer-js-dsl');
 
 let mock_response: Object[] = [
     new Object({
-        id: Pact.Match.somethingLike(2) , email: Pact.Match.somethingLike('admin1@aus.au'), first_name: 'Joe', last_name: 'Joe',
+        id: Pact.Match.somethingLike(2) ,
+        email: Pact.Match.somethingLike('admin1@aus.au'), first_name: 'Joe', last_name: 'Joe',
         mobile: 'xxxx xxx xxx', verified: false, disabled: false
     })
 ];
@@ -162,10 +163,7 @@ describe('UserService', () => {
 
                     }
                 })
-                .willRespondWith(404, {
-                    'status': 404,
-                    'Content-Type': 'application/json; charset=utf-8'
-                });
+                .willRespondWith(404);
 
             userProvider.run(done, function (runComplete) {
                 service.getUser(-1)
@@ -190,9 +188,7 @@ describe('UserService', () => {
                     'Content-Type': 'application/json'
                 }, { 'user': Pact.Match.somethingLike(mock_db[0]) }
                 )
-                .willRespondWith(200, {
-                    'Content-Type': 'application/json; charset=utf-8'
-                });
+                .willRespondWith(204);
 
             userProvider.run(done, function (runComplete) {
                 let u: User = mock_db[0];
@@ -200,7 +196,7 @@ describe('UserService', () => {
 
                 let status_code = service.updateUser(u)
                     .subscribe((res: any) => {
-                        expect(res.status).toEqual(200);
+                        expect(res.status).toEqual(204);
                         done();
                     }, err => done.fail(err), () => {
                         runComplete();
@@ -220,9 +216,7 @@ describe('UserService', () => {
                     'Content-Type': 'application/json'
 
                 })
-                .willRespondWith(204, {
-                    'Content-Type': 'application/json; charset=utf-8'
-                });
+                .willRespondWith(204);
 
             userProvider.run(done, function (runComplete) {
                 service.deleteUser(2)
@@ -300,10 +294,6 @@ describe('UserService', () => {
                 .withRequest('GET', '/api/v1/users/email/' + (mock_db[0].email.toString()), {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
-                    /*,
-                                        'Authorization': Pact.Match.somethingLike('Bearer eyJ0eXAiOi' +
-                                            'JKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjV9.jxJ' +
-                                            'FCXmk8SOCtmmHqczBlZZEra1qa8xly7zWZ42EnO4')*/
                 })
                 .willRespondWith(200, {
                     'Content-Type': 'application/json; charset=utf-8'
@@ -349,7 +339,7 @@ describe('UserService', () => {
     it('should create an OrganisationalRepresentative', function (done) {
         inject([UserService], (service: UserService) => {
             let u: User = new User({
-                id: 3, email: 'admin1@aus.au', name: 'Joe Doe',
+                id: 3, email: 'admin1@aus.au', first_name: 'Joe1', last_name: 'Doe1',
                 password: 'secure_password', role: ROLE.OrganisationalRepresentative
             });
             userProvider
@@ -359,10 +349,13 @@ describe('UserService', () => {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
 
-                })
+                }, {'user': Pact.Match.somethingLike(u)})
                 .willRespondWith(201, {
                     'Content-Type': 'application/json; charset=utf-8'
-                }, Pact.Match.somethingLike(123));
+                }, Pact.Match.somethingLike({
+  'id': 2731,
+'type': 'OrganisationalRepresentative'
+}));
 
             userProvider.run(done, function (runComplete) {
 
@@ -390,10 +383,14 @@ describe('UserService', () => {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
 
-                })
+                }, {'user': Pact.Match.somethingLike(u)})
                 .willRespondWith(201, {
                     'Content-Type': 'application/json; charset=utf-8'
-                }, Pact.Match.somethingLike(123));
+                }, Pact.Match.somethingLike({
+  'id': 2731,
+  'type': 'Accountant'
+}));
+
 
             userProvider.run(done, function (runComplete) {
 
@@ -421,10 +418,13 @@ describe('UserService', () => {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
 
-                })
+                }, {'user': Pact.Match.somethingLike(u)})
                 .willRespondWith(201, {
                     'Content-Type': 'application/json; charset=utf-8'
-                }, Pact.Match.somethingLike(123));
+                }, Pact.Match.somethingLike({
+  'id': 2731,
+  'type': 'IndividualClient'
+}));
 
             userProvider.run(done, function (runComplete) {
 
@@ -452,10 +452,13 @@ describe('UserService', () => {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
 
-                })
+                }, {'user': Pact.Match.somethingLike(u)})
                 .willRespondWith(201, {
                     'Content-Type': 'application/json; charset=utf-8'
-                }, Pact.Match.somethingLike(123));
+                }, Pact.Match.somethingLike({
+  'id': 2731,
+  'type': 'Interpreter'
+}));
 
             userProvider.run(done, function (runComplete) {
 
@@ -542,10 +545,13 @@ describe('UserService', () => {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
 
-                })
+                }, {'user': Pact.Match.somethingLike(u)})
                 .willRespondWith(201, {
                     'Content-Type': 'application/json; charset=utf-8'
-                }, Pact.Match.somethingLike(123));
+                }, Pact.Match.somethingLike({
+  'id': 2731,
+  'type': 'BookingOfficer'
+}));
 
             userProvider.run(done, function (runComplete) {
 
