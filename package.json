@@ -13,7 +13,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "posttest": "node_modules/.bin/remap-istanbul -i coverage/coverage-final.json -o coverage -t html",
-    "pact": "curl -v -XPUT \\-H \"Content-Type: application/json\" -d@$CIRCLE_ARTIFACTS/pacts/booking-specs-booking-api.json  https://auslan-pact-broker.herokuapp.com/pacts/provider/Booking-Api/consumer/Booking-Specs/version/1.0.0  --user admin:auslanPACT && curl -v -XPUT \\-H \"Content-Type: application/json\"   -d@$CIRCLE_ARTIFACTS/pacts/user-specs-user-api.json https://auslan-pact-broker.herokuapp.com/pacts/provider/User-Api/consumer/User-Specs/version/2.0.0 --user admin:auslanPACT"
+    "pact": "curl -v -XPUT \\-H \"Content-Type: application/json\" -d@tmp/pacts/booking-specs-booking-api.json  https://auslan-pact-broker.herokuapp.com/pacts/provider/Booking-Api/consumer/Booking-Specs/version/1.0.0  --user admin:auslanPACT && curl -v -XPUT \\-H \"Content-Type: application/json\"   -d@tmp/pacts/user-specs-user-api.json https://auslan-pact-broker.herokuapp.com/pacts/provider/User-Api/consumer/User-Specs/version/2.0.0 --user admin:auslanPACT"
   },
   "private": true,
   "dependencies": {
