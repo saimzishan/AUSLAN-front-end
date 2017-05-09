@@ -21,6 +21,7 @@ import { MockBackend, MockConnection } from '@angular/http/testing';
 import {SpinnerService} from '../../spinner/spinner.service';
 import {BrowserDynamicTestingModule} from '@angular/platform-browser-dynamic/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { SpacerPipe } from '../../shared/pipe/spacer.pipe';
 
 describe('UserDetailComponent', () => {
   let component: UserDetailComponent;
@@ -32,7 +33,7 @@ describe('UserDetailComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ UserDetailComponent ],
       imports: [FormsModule, NoopAnimationsModule, CustomFormsModule, MaterialModule],
-      providers: [MdDialog, ViewContainerRef,
+      providers: [SpacerPipe, MdDialog, ViewContainerRef,
       { provide: UserService, useClass: MockUserService}, SpinnerService, { provide: AuthHttp, useClass: MockBackend }]
     })
     .overrideModule(BrowserDynamicTestingModule, {
