@@ -39,6 +39,22 @@ export class PageHelper {
     return ele.element(by.buttonText(text));
   }
 
+  getAllByCSSandText(css: string, text: string){
+    return element.all(by.cssContainingText(css, text));
+  }
+
+  getElementByCSSandText(css: string, text: string){
+    return element(by.cssContainingText(css, text));
+  }
+
+  getParent(ele){
+    return ele.element(by.xpath('..'));
+  }
+
+  getElementInsideByCSS(ele, css: string){
+    return ele.element(by.css(css));
+  }
+
   getAllByTagNameInElement(ele, tag: string){
     return ele.all(by.tagName(tag));
   }
