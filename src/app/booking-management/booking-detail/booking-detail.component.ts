@@ -7,7 +7,8 @@ import { SpinnerService } from '../../spinner/spinner.service';
 import { BOOKING_STATUS } from '../../shared/model/booking-status.enum';
 import { GLOBAL } from '../../shared/global';
 import { NotificationServiceBus } from '../../notification/notification.service';
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { RolePermission } from '../../shared/role-permission/role-permission';
 
 declare var $: any;
 
@@ -27,7 +28,8 @@ export class BookingDetailComponent implements AfterViewChecked, OnDestroy {
   currentUserIsContact = 'true';
   prefInterpreter: boolean;
 
-  constructor(public bookingService: BookingService, private route: ActivatedRoute,
+  constructor(public bookingService: BookingService, private router: Router,
+  private route: ActivatedRoute, private rolePermission: RolePermission,
     public notificationServiceBus: NotificationServiceBus, public spinnerService: SpinnerService) {
     this.bookingModel = new Booking();
 
@@ -53,7 +55,8 @@ export class BookingDetailComponent implements AfterViewChecked, OnDestroy {
   }
 
   public onSelectionChange() {
-    this.bookingModel.contact.name = this.currentUserIsContact === 'true' ? GLOBAL.currentUser.first_name : '';
+    this.bookingModel.contact.first_name = this.currentUserIsContact === 'true' ? GLOBAL.currentUser.first_name : '';
+    this.bookingModel.contact.last_name = this.currentUserIsContact === 'true' ? GLOBAL.currentUser.last_name : '';
     this.bookingModel.contact.email = this.currentUserIsContact === 'true' ? GLOBAL.currentUser.email : '';
     this.bookingModel.contact.mobile_number = this.currentUserIsContact === 'true' ? GLOBAL.currentUser.mobile : '';
     this.bookingModel.contact.phone_number = this.currentUserIsContact === 'true' ? GLOBAL.currentUser.mobile : '';
@@ -68,12 +71,12 @@ export class BookingDetailComponent implements AfterViewChecked, OnDestroy {
       .subscribe((res: any) => {
         if (res.status === 201 && res.data.id && 0 < res.data.id) {
           this.bookingModel.id = res.data.id;
-          this.bookingModel.state = BOOKING_STATUS.Ready_to_process; // res.data.status;
+          this.bookingModel.state = BOOKING_STATUS.Requested; // res.data.status;
           this.notificationServiceBus.launchNotification(false, 'The Booking has been created.');
-
+          let route = this.rolePermission.getDefaultRouteForCurrentUser();
+          this.router.navigate( [route] );
         }
         this.spinnerService.requestInProcess(false);
-
       },
       errors => {
                 this.spinnerService.requestInProcess(false);

@@ -75,7 +75,7 @@ export class BookingJobsComponent implements AfterViewChecked, OnDestroy {
     };
     config.viewContainerRef = this.viewContainerRef;
     this.dialogRef = this.dialog.open(PopupComponent, config);
-    this.dialogRef.componentInstance.title = isCancel ? 'Cancel Booking' : 'Unable To Serve';
+    this.dialogRef.componentInstance.title = isCancel ? 'Cancel Booking' : 'Unable To Service';
     this.dialogRef.componentInstance.cancelTitle = isCancel ? `Back to job` : 'Back to job';
     this.dialogRef.componentInstance.okTitle = isCancel ? `Cancel this job` : 'Unable to service this job';
     this.dialogRef.componentInstance.popupMessage =
@@ -138,11 +138,13 @@ export class BookingJobsComponent implements AfterViewChecked, OnDestroy {
   }
 
   onChange($event, user) {
-    let index = this.selectedInterpreterIDs.indexOf(user.id, 0);
+    let index = this.selectedInterpreterIDs.indexOf(user.id);
     if (index < 0) {
       this.selectedInterpreterIDs.push(user.id);
     } else {
-      delete this.selectedInterpreterIDs[user.id];
+      // delete this.selectedInterpreterIDs[user.id];
+         this.selectedInterpreterIDs.splice(index, 1);
+
     }
   }
 

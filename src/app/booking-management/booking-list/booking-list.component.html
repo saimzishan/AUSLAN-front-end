@@ -81,7 +81,7 @@
 						</tr>
 					</thead>
       <tbody>
-        <tr *ngFor="let booking of bookingList" (click)="setClickedRow(booking)" >
+        <tr [ngClass]="{'active': isSelectedBooking(booking.id)}" *ngFor="let booking of bookingList" (click)="setClickedRow(booking)" >
           <td>
 								<div class="checkbox">
 									<input type="checkbox" name="" value="1" id="job-2">
