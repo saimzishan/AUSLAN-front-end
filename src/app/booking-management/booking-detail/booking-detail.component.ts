@@ -85,4 +85,9 @@ export class BookingDetailComponent implements AfterViewChecked, OnDestroy {
                 'Error occured on server side. ' + errors.statusText + ' ' + JSON.stringify(e.errors));
             });
   }
+
+  onCancelBooking() {
+    let route = this.rolePermission.getDefaultRouteForCurrentUser();
+    this.router.navigate( [route] );
+  }
 }
