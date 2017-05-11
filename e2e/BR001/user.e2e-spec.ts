@@ -1,5 +1,5 @@
 import { PageHelper } from '../app.po';
-import { User } from '../app.user'
+import { User } from '../app.user';
 import { Administrator } from '../app.admin';
 import { Organisation } from '../app.org';
 import { Client } from '../app.client';
@@ -44,11 +44,11 @@ describe('BR001 => Create, read, update and delete a User \
         //                                     'pass_pass2', 'PAPAPAPA', 'JONEJONE', '0917257725');
         // var invalid_org = new Organisation('default_admin_2_' + Math.round(Math.random() * 1000) + 'curvetomorrow.com.au',
         //                                     'pass_pass2', 'PAPAPAPA', 'JONEJONE', '0917257725');
-            var valid_admin, invalid_admin,
+            let valid_admin, invalid_admin,
                 valid_client, invalid_client,
                 valid_bookofficer, invalid_bookofficer,
                 valid_interpreter, invalid_interpreter,
-                valid_org, invalid_org = new User('','','','','');
+                valid_org, invalid_org = new User('', ' ' , ' ' , ' ' , ' ');
         beforeEach(() => {
             // console.log(page.currentPath());
             // nauman_admin = new Administrator('nauman+support@curvetomorrow.com.au', 'Abcd#1234');
@@ -1410,15 +1410,15 @@ describe('BR001 => Create, read, update and delete a User \
                         // var selectedRow;
                         let list_of_ORs = page.getAllByCSSandText('.truncated-text', 'Interpreter');
                         list_of_ORs.count().then((count) => {
-                            console.log('The number of OR is: '+ count);
-                        })
-                        list_of_ORs.then(function (list_of_ORs) {
-                            for (var i = 0; i < list_of_ORs.length; i++) {
+                            console.log('The number of OR is: ' + count);
+                        });
+                        list_of_ORs.then(function () {
+                            for ( let i = 0; i < list_of_ORs.length; i++) {
                                 let parentRow = page.getParent(list_of_ORs[i]);
-                                console.log("-----");
+                                console.log('-----');
                                 // let active = page.getElementInsideByCSS(parentRow, '.active');
                                 if (page.getElementInsideByCSS(parentRow, '.active').isPresent()) {
-                                    console.log("got 1");
+                                    console.log('got 1');
                                     let active = page.getElementInsideByCSS(parentRow, '.active');
                                     let activeText = page.getText(active);
                                     if (expect(page.getText(active)).toEqual('Active')) {
@@ -1526,7 +1526,7 @@ describe('BR001 => Create, read, update and delete a User \
                         let role = page.getButtonByTextInsideElement(dlg, 'Interpreter');
                         role.click();
                         browser.driver.sleep(2000);
-                    })
+                    });
                     it('And I add an invalid Client', () => {
                         let dlg = page.getElementByCss('.md-dialog');
                         let fn = page.getElementInside(dlg, 'first_name');
