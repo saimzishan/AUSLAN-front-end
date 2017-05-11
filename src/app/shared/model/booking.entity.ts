@@ -54,8 +54,8 @@ export class Booking {
       this.venue.suburb = data.address_attributes.suburb;
       this.venue.state = data.address_attributes.state;
       this.venue.post_code = data.address_attributes.post_code;
-      this.venue.start_time = Date.parse(data.start_time) || Date.parse('Wed, 09 Aug 1995 01:20:00 GMT');
-      this.venue.end_time = Date.parse(data.end_time) || Date.parse('Wed, 09 Aug 1995 02:30:00 GMT');
+      this.venue.start_time = Date.parse(data.start_time) ;
+      this.venue.end_time = Date.parse(data.end_time);
       this.requested_by.first_name = data.requested_by;
       this.contact.first_name = data.contact_first_name;
       this.contact.last_name = data.contact_last_name;

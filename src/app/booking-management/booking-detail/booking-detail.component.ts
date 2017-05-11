@@ -9,6 +9,8 @@ import { GLOBAL } from '../../shared/global';
 import { NotificationServiceBus } from '../../notification/notification.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { RolePermission } from '../../shared/role-permission/role-permission';
+import { DatePipe } from '@angular/common';
+import {NgForm} from '@angular/forms';
 
 declare var $: any;
 
@@ -30,7 +32,8 @@ export class BookingDetailComponent implements AfterViewChecked, OnDestroy {
 
   constructor(public bookingService: BookingService, private router: Router,
   private route: ActivatedRoute, private rolePermission: RolePermission,
-    public notificationServiceBus: NotificationServiceBus, public spinnerService: SpinnerService) {
+    public notificationServiceBus: NotificationServiceBus, public spinnerService: SpinnerService,
+    private datePipe: DatePipe) {
     this.bookingModel = new Booking();
 
     /** http://stackoverflow.com/questions/38008334/angular2-rxjs-when-should-i-unsubscribe-from-subscription */
@@ -39,6 +42,11 @@ export class BookingDetailComponent implements AfterViewChecked, OnDestroy {
       if (param.length > 0) {
         let jsonData = JSON.parse(param);
         this.bookingModel.fromJSON(jsonData);
+        this.bookingModel.venue.start_time_iso =
+        this.datePipe.transform(this.bookingModel.venue.start_time, 'yyyy-dd-MMThh:mm:ss');
+        this.bookingModel.venue.end_time_iso =
+        this.datePipe.transform(this.bookingModel.venue.end_time, 'hh:mm:ss');
+
       }
     });
   }
