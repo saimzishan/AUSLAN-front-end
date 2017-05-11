@@ -48,15 +48,17 @@ export class Booking {
       this.id =  data.id;
       this.venue.expected_attendance = data.number_of_people_attending;
       this.venue.title = data.venue;
-      this.venue.unit_num = data.address_attributes.unit_num;
+      this.venue.unit_num = data.address_attributes.unit_number;
+      this.venue.street_num = data.address_attributes.street_number;
       this.venue.street_name = data.address_attributes.street_name;
-      this.venue.street_num = data.address_attributes.street_num;
       this.venue.suburb = data.address_attributes.suburb;
       this.venue.state = data.address_attributes.state;
       this.venue.post_code = data.address_attributes.post_code;
       this.venue.start_time = Date.parse(data.start_time) ;
       this.venue.end_time = Date.parse(data.end_time);
-      this.requested_by.first_name = data.requested_by;
+      this.venue.interpreter_attendance = data.number_of_interpreters_required;
+      this.requested_by.first_name = data.requested_by_first_name;
+      this.requested_by.last_name = data.requested_by_last_name;
       this.contact.first_name = data.contact_first_name;
       this.contact.last_name = data.contact_last_name;
       this.contact.phone_number = data.contact_phone_number;
@@ -87,6 +89,7 @@ export class Booking {
       return new Object({ id: this.id, state: _state,
          venue: this.venue.title, requested_by_first_name: this.requested_by.first_name ,
          requested_by_last_name: this.requested_by.last_name ,
+         number_of_interpreters_required : this.venue.interpreter_attendance,
       nature_of_appointment: _nature_of_appointment ,
       specific_nature_of_appointment: _specific_nature_of_appointment ,
       contact_first_name: this.contact.first_name , contact_last_name: this.contact.last_name ,
@@ -97,8 +100,8 @@ export class Booking {
       number_of_people_attending: _expected_attendance ,
       start_time: this.venue.start_time.toString() , end_time: this.venue.end_time.toString() ,
       parking_availability: _parking_type,
-      address_attributes: { unit_num :
-      this.venue.unit_num, street_num :
+      address_attributes: { unit_number :
+      this.venue.unit_num, street_number :
       this.venue.street_num , street_name :
       this.venue.street_name , suburb :
       this.venue.suburb , state :

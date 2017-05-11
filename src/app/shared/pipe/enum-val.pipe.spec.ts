@@ -29,13 +29,6 @@ describe('EnumValPipe', () => {
     expect(keys[r.None].key).toEqual([r.None].toString());
   });
 
-  it('transforms BOOKING_NATURE enum into dict, as far as its base 10 >= 0', () => {
-    let r = BOOKING_NATURE;
-    let keys = pipe.transform(r);
-
-    expect(keys[r.Engagement].key).toEqual([r.Engagement].toString());
-    expect(r[r.Engagement]).toEqual(keys[r.Engagement].value);
-  });
 
   it('transforms enum into dict, as far as its base 10 >= 0', () => {
     let r = BOOKING_STATUS;

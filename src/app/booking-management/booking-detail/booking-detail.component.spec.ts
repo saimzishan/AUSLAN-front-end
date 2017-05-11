@@ -22,6 +22,8 @@ import {NotificationServiceBus} from '../../notification/notification.service';
 import { ActivatedRoute, Data } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RolePermission } from '../../shared/role-permission/role-permission';
+import { DatePipe } from '@angular/common';
+import {NgForm} from '@angular/forms';
 
 describe('BookingDetailComponent', () => {
   let component: BookingDetailComponent;
@@ -34,7 +36,7 @@ describe('BookingDetailComponent', () => {
         FormsModule, BrowserAnimationsModule, RouterTestingModule,
         Md2Module.forRoot(),
         MaterialModule
-      ],  providers: [RolePermission, NotificationServiceBus, { provide: BookingService, useClass: MockBookingService },
+      ],  providers: [DatePipe, RolePermission, NotificationServiceBus, { provide: BookingService, useClass: MockBookingService },
           SpinnerService, { provide: AuthHttp, useClass: MockBackend },
           {
                     provide: ActivatedRoute,

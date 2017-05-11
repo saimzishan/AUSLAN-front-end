@@ -47,6 +47,6 @@ export class BA {
       ['Centrelink', 'Child protection', 'Crisis/Emergency', 'Home Visit', 'Housing', 'Other'];
     BA.DISSCUSSION_ITEM[BOOKING_NATURE.Media] =
       ['Centrelink', 'Child protection', 'Crisis/Emergency', 'Home Visit', 'Housing', 'Other'];
-    BA.DISSCUSSION_ITEM[BOOKING_NATURE.Other] = []
+    BA.DISSCUSSION_ITEM[BOOKING_NATURE.Other] = [''];
   }
 }
