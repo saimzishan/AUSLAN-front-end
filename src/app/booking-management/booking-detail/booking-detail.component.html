@@ -71,7 +71,7 @@
 					<div class="medium-4 columns">
 						<div class="form-field">
 							<label>Unit / Street Number * <span mdTooltip="Enter the Unit or Street Number"><i class="inline-icon-tip"></i></span></label>
-							<input type="text" placeholder="Enter the Unit or Street Number" [(ngModel)]="bookingModel.venue.addressline_1" name="raw_booking_address"
+							<input type="text" placeholder="Enter the Unit or Street Number" [(ngModel)]="bookingModel.venue.unit_num" name="raw_booking_address"
 							 #raw_booking_address="ngModel" [rangeLength]="[1, 6]" digit required>
 							<span *ngIf="raw_booking_address.touched && !raw_booking_address.errors?.required && !raw_booking_address.errors?.rangeLength;"
 							 class="inline-icon inline-icon-valid valid"></span>
@@ -83,7 +83,7 @@
 					<div class="medium-8 columns">
 						<div class="form-field">
 							<label>Street Name * <span mdTooltip="Enter the Street Name!"><i class="inline-icon-tip"></i></span></label>
-							<input type="text" placeholder="Enter the Street Name" [(ngModel)]="bookingModel.venue.addressline_2" name="raw_booking_street"
+							<input type="text" placeholder="Enter the Street Name" [(ngModel)]="bookingModel.venue.street_num" name="raw_booking_street"
 							 #raw_booking_street="ngModel" [rangeLength]="[2, 30]" required>
 							<span *ngIf="raw_booking_street.touched && !raw_booking_street.errors?.required && !raw_booking_street.errors?.rangeLength;"
 							 class="inline-icon inline-icon-valid valid"></span>
@@ -152,7 +152,7 @@
 					<div class="medium-6 columns">
 						<div class="form-field">
 							<label>WHO REQUESTED THIS MEETING * <span mdTooltip="Enter the Request By Name"><i class="inline-icon-tip"></i></span></label>
-							<input type="text" placeholder="Enter the Request By Name" [(ngModel)]="bookingModel.requested_by.name" name="raw_booking_requested_by"
+							<input type="text" placeholder="Enter the Request By Name" [(ngModel)]="bookingModel.requested_by.first_name" name="raw_booking_requested_by"
 							 #raw_booking_requested_by="ngModel" [rangeLength]="[4,20]" required>
 							<span *ngIf="raw_booking_requested_by.touched && !raw_booking_requested_by.errors?.required && !raw_booking_requested_by.errors?.rangeLength;"
 							 class="inline-icon inline-icon-valid valid"></span>
@@ -214,7 +214,7 @@
 					<div class="medium-6 columns">
 						<div class="form-field">
 							<label>CONTACT NAME * <span mdTooltip="Enter Contact Name"><i class="inline-icon-tip"></i></span></label>
-							<input [disabled]='currentUserIsContact' type="text" placeholder="Enter Contact Name" [(ngModel)]="bookingModel.contact.name"
+							<input [disabled]='currentUserIsContact' type="text" placeholder="Enter Contact Name" [(ngModel)]="bookingModel.contact.first_name"
 							 name="contact_name" #contact_name="ngModel" [rangeLength]="[4,20]" required>
 							<span *ngIf="contact_name.touched && !contact_name.errors?.required && !contact_name.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
 							<span *ngIf="contact_name.touched && (contact_name.errors?.required || contact_name.errors?.rangeLength);" class="inline-icon error">
@@ -263,7 +263,7 @@
 					<div class="medium-6 columns">
 						<div class="form-field">
 							<label>DEAF PERSON'S NAME * <span mdTooltip="Enter deaf person name"><i class="inline-icon-tip"></i></span></label>
-							<input type="text" placeholder="Enter deaf person name" [(ngModel)]="bookingModel.deaf_person.name" name="deaf_person_name"
+							<input type="text" placeholder="Enter deaf person name" [(ngModel)]="bookingModel.deaf_person.first_name" name="deaf_person_name"
 							 #deaf_person_name="ngModel" [rangeLength]="[4,20]" required>
 							<span *ngIf="deaf_person_name.touched && !deaf_person_name.errors?.required && !deaf_person_name.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
 							<span *ngIf="deaf_person_name.touched && (deaf_person_name.errors?.required || deaf_person_name.errors?.rangeLength);" class="inline-icon error">
