@@ -15,9 +15,8 @@ test:
     - bundle exec pact-mock-service stop -p 1233
     - bundle exec pact-mock-service stop -p 1234
     - mkdir $CIRCLE_ARTIFACTS/coverage
-    - mkdir $CIRCLE_ARTIFACTS/tmp
     - mv coverage/* $CIRCLE_ARTIFACTS/coverage
-    - cp -rf tmp/ $CIRCLE_ARTIFACTS/tmp/
+    - cp -rf tmp/ $CIRCLE_ARTIFACTS/
     - codeclimate-test-reporter < $CIRCLE_ARTIFACTS/coverage/coverage.lcov
     - rm -rf dist
     - ng build --aot --env=stage
