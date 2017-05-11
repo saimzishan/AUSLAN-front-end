@@ -52,6 +52,8 @@ import { HyphenPipe } from './shared/pipe/hyphen.pipe';
 import { NoAuthGuard } from './auth/no-auth.guard';
 import {Store, provideStore} from '@ngrx/store';
 import { PopupComponent } from './shared/popup/popup.component';
+import { JobDetailComponent } from './booking-management/booking-jobs/job-detail/job-detail.component';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -76,7 +78,7 @@ import { PopupComponent } from './shared/popup/popup.component';
     UserListComponent,
     UserHeaderComponent,
     UserDetailComponent,
-    UserProfileComponent, HyphenPipe, SpacerPipe, BookingJobsComponent, PopupComponent
+    UserProfileComponent, HyphenPipe, SpacerPipe, BookingJobsComponent, PopupComponent, JobDetailComponent
   ],
    entryComponents: [UserDetailComponent, PopupComponent],
   imports: [CustomFormsModule, routing,
@@ -85,7 +87,7 @@ import { PopupComponent } from './shared/popup/popup.component';
     HttpModule, SimpleNotificationsModule.forRoot(),
     ReactiveFormsModule, Md2Module.forRoot(),
     MaterialModule.forRoot()
-  ],  providers: [LinkAuth, UserNameService, RolePermission, AuthGuard, NoAuthGuard, Title, LinkHelper,
+  ],  providers: [DatePipe, LinkAuth, UserNameService, RolePermission, AuthGuard, NoAuthGuard, Title, LinkHelper,
     NotificationServiceBus, SpinnerService, BookingService, UserService,
     {provide: APP_BASE_HREF, useValue : '/' }, {
       provide: AuthHttp,

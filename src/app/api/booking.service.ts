@@ -107,7 +107,6 @@ export class BookingService extends ApiService {
     }
 
 
-
     /*
       The Api should be get booking by its ID (The Id should be email)
     */

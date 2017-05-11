@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnChanges, OnDestroy, SimpleChange, ViewContainerRef } from '@angular/core';
-import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
-import {UserDetailComponent} from '../user-detail/user-detail.component';
-import {User} from '../../shared/model/user.entity';
+import { MdDialog, MdDialogConfig, MdDialogRef } from '@angular/material';
+import { UserDetailComponent } from '../user-detail/user-detail.component';
+import { User } from '../../shared/model/user.entity';
 
 @Component({
     selector: 'app-user-filter',
@@ -13,6 +13,7 @@ export class UserFilterComponent implements OnChanges, OnDestroy {
     @Output() refreshEmitter = new EventEmitter();
 
     private sub: any;
+    private onRef: any;
     isNewUser = true;
 
     dialogRef: MdDialogRef<any>;
@@ -22,7 +23,7 @@ export class UserFilterComponent implements OnChanges, OnDestroy {
         public viewContainerRef: ViewContainerRef) { }
 
     onRefresh() {
-      this.refreshEmitter.emit();
+        this.refreshEmitter.emit();
     }
 
     ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
@@ -40,15 +41,15 @@ export class UserFilterComponent implements OnChanges, OnDestroy {
     }
 
     newUser() {
-      this.isNewUser = true;
-      this.userModel = new User();
-      this.showDialogBox();
+        this.isNewUser = true;
+        this.userModel = new User();
+        this.showDialogBox();
     }
 
     public showDialogBox() {
 
-      let config: MdDialogConfig = {
-          disableClose: true
+        let config: MdDialogConfig = {
+            disableClose: true
         };
         config.viewContainerRef = this.viewContainerRef;
         this.dialogRef = this.dialog.open(UserDetailComponent, config);
@@ -57,21 +58,20 @@ export class UserFilterComponent implements OnChanges, OnDestroy {
         this.dialogRef.componentInstance.showForm = !this.isNewUser;
         this.dialogRef.componentInstance.setRole();
 
-        this.dialogRef.componentInstance.onRefresh.subscribe( res => {
-          this.onRefresh();
+        this.onRef = this.dialogRef.componentInstance.onRefresh.subscribe(res => {
+            this.onRefresh();
         });
 
         this.sub = this.dialogRef.afterClosed().subscribe(result => {
-          this.isNewUser = true;
-          this.userModel = null;
+            this.isNewUser = true;
+            this.userModel = null;
 
         });
     }
 
-
-
-  ngOnDestroy() {
-    return this.sub && this.sub.unsubscribe();
-  }
+    ngOnDestroy() {
+        return this.sub && this.sub.unsubscribe()
+            && this.onRef && this.onRef.unsubscribe();
+    }
 
 }

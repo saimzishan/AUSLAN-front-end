@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import {Booking} from '../../shared/model/booking.entity';
 import {Router, NavigationExtras} from '@angular/router';
 import { BOOKING_STATUS } from '../../shared/model/booking-status.enum';
-
+import {GLOBAL} from '../../shared/global';
 @Component({
   selector: 'app-booking-list',
   templateUrl: './booking-list.component.html',
@@ -25,11 +25,16 @@ export class BookingListComponent {
     : BOOKING_STATUS[BOOKING_STATUS.None].toLowerCase();
   }
 
+  isSelectedBooking(bookingID) {
+    return bookingID === GLOBAL.selBookingID;
+  }
+
   setClickedRow(booking: Booking) {
     let navigationExtras: NavigationExtras = {
             queryParams: {bookingModel: JSON.stringify(booking)}
         };
     this.router.navigate(['/booking-management/' + booking.id , 'booking-job'], navigationExtras );
+    GLOBAL.selBookingID = booking.id;
   }
 
 }

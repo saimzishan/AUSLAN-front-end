@@ -6,7 +6,7 @@
 			<span>Fields with * are required</span>
 		</section>
 
-		<form method="post" action="" class="common-form compact">
+		<form #booking_form="ngForm" method="post" action="" class="common-form compact">
 			<div class="row">
 				<h2>Type of Booking</h2>
 				<p>What kind of services do you need? Select multiple if relevant</p>
@@ -41,15 +41,18 @@
 			<h2>Booking Details <span mdTooltip="Tooltip!"><i class="inline-icon-tip"></i></span></h2>
 			<div class="row small-collapse">
 				<div class="row-wrapper">
-					<div class=" medium-7 columns">
+					<div class=" medium-6 columns">
 						<div class="form-field">
-							<md2-datepicker type='datetime' name='dpEventDate' placeholder="DATE & Time OF APPOINTMENT *" [(ngModel)]="bookingModel.venue.start_time"></md2-datepicker>
+							<input type='datetime-local' name='dpEventDate' placeholder="DATE & Time OF APPOINTMENT *" 
+							[(ngModel)]="bookingModel.venue.start_time_iso" required #dpEventDate="ngModel"
+							/>
 						</div>
 					</div>
 
-					<div class="medium-3 columns">
+					<div class="medium-4 columns">
 						<div class="form-field">
-							<md2-datepicker type='time' name='dpEventEndTime' placeholder="ENDING TIME *" [(ngModel)]="bookingModel.venue.end_time"></md2-datepicker>
+							<input type='time' name='dpEventEndTime' placeholder="ENDING TIME *" #dpEventEndTime="ngModel"
+							[(ngModel)]="bookingModel.venue.end_time_iso" required />
 						</div>
 					</div>
 				</div>
@@ -58,17 +61,13 @@
 					<div class="form-field">
 						<label>SPECIFIC LOCATION <span mdTooltip="Enter Specific Location"><i class="inline-icon-tip"></i></span></label>
 						<input type="text" placeholder="Enter the Specific Location" [(ngModel)]="bookingModel.venue.title" name="raw_venue_address"
-						 #raw_venue_address="ngModel" [rangeLength]="[6, 100]" required>
-						<span *ngIf="raw_venue_address.touched && !raw_venue_address.errors?.required && !raw_venue_address.errors?.rangeLength;"
-						 class="inline-icon inline-icon-valid valid"></span>
-						<span *ngIf="raw_venue_address.touched && (raw_venue_address.errors?.required || raw_venue_address.errors?.rangeLength);"
-						 class="inline-icon error">
-												<span>Minimum 6 characters required.</span>!</span>
+						 #raw_venue_address="ngModel" [rangeLength]="[2, 100]">
+						<span *ngIf="raw_venue_address.touched && !raw_venue_address.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
+						<span *ngIf="raw_venue_address.touched && (raw_venue_address.errors?.rangeLength);" class="inline-icon error">
+												<span>Minimum 2 characters required.</span>!</span>
 					</div>
 				</div>
 				<div class="row-wrapper">
-
-
 					<div class="medium-4 columns">
 						<div class="form-field">
 							<label>Unit / Street Number * <span mdTooltip="Enter the Unit or Street Number"><i class="inline-icon-tip"></i></span></label>
@@ -120,19 +119,24 @@
 					<div class="medium-4 columns">
 						<div class="form-field">
 							<label>BOOKING State * <span mdTooltip="Enter the Booking State!"><i class="inline-icon-tip"></i></span></label>
-							<input type="text" placeholder="Enter the Booking State" [(ngModel)]="bookingModel.venue.state" name="raw_booking_state"
-							 #raw_booking_state="ngModel" [rangeLength]="[4, 30]" required>
+							<select placeholder="Enter the Booking State" aria-label="A" [(ngModel)]="bookingModel.venue.state" name="raw_booking_state"
+							 #raw_booking_state="ngModel" [rangeLength]="[2, 3]" required>
+		
+								            <option *ngFor="let sta of ['ACT','NSW','QLD', 'TAS', 'VIC','WA']" [value]="sta">{{sta}}</option>
+
+							</select>
 							<span *ngIf="raw_booking_state.touched && !raw_booking_state.errors?.required && !raw_booking_state.errors?.rangeLength;"
 							 class="inline-icon inline-icon-valid valid"></span>
 							<span *ngIf="raw_booking_state.touched && (raw_booking_state.errors?.required || raw_booking_state.errors?.rangeLength);"
 							 class="inline-icon error">
-													<span>Minimum 4 characters required.</span>!</span>
+													<span>Only 2 or 3 characters required.</span>!</span>
+
 						</div>
 					</div>
 					<div class="medium-6 columns">
 						<div class="form-field">
 							<label>NATURE OF APPOINTMENT * <span mdTooltip="Select nature of Appointment"><i class="inline-icon-tip"></i></span></label>
-							<md-select [(ngModel)]="bookingModel.nature_of_appointment" name="nature_of_appointment" aria-label="A">
+							<md-select [(ngModel)]="bookingModel.nature_of_appointment" #nature_of_appointment="ngModel" name="nature_of_appointment" aria-label="A">
 								<md-option *ngFor="let item of appointment_types | enumVal" [value]="item.key">{{item.value}}</md-option>
 							</md-select>
 						</div>
@@ -140,7 +144,7 @@
 					<div class="medium-6 columns">
 						<div class="form-field">
 							<label>WHAT WILL BE DISCUSSED * <span mdTooltip="Select sepcific nature of Appointment"><i class="inline-icon-tip"></i></span></label>
-							<md-select [(ngModel)]="bookingModel.specific_nature_of_appointment" name="specific_nature_of_appointment" aria-label="A">
+							<md-select [(ngModel)]="bookingModel.specific_nature_of_appointment" #specific_nature_of_appointment="ngModel"  name="specific_nature_of_appointment" aria-label="A">
 								<md-option *ngFor="let item of appointment_types | enumVal" [value]="item.key">{{item.value}}</md-option>
 							</md-select>
 						</div>
@@ -182,9 +186,7 @@
 				<div class="medium-12 columns">
 					<div class="form-field">
 						<label>PARKING AVAILABILITY <span mdTooltip="Whats the parking option available!"><i class="inline-icon-tip"></i></span></label>
-						<md-select name="parking_type" [(ngModel)]="bookingModel.venue.parking_type" aria-label="A">
-							<md-option *ngFor="let item of parking_types | enumVal" [value]="item.key">{{item.value}}</md-option>
-						</md-select>
+						<input name="parking_type" [(ngModel)]="bookingModel.venue.parking_type" />
 					</div>
 				</div>
 				<div class="medium-12 columns">
@@ -341,9 +343,12 @@
 					</section>
 				</div>
 			</div>
+			
 			<div class="actions">
-				<button (click)="onCreateBooking();">SAVE</button>
+						<button  [disabled]="!booking_form.valid" (click)="onCreateBooking();">SAVE</button>
+	<button (click)="onCancelBooking();">CANCEL</button>
 			</div>
 		</form>
+			
 	</main>
 </section>

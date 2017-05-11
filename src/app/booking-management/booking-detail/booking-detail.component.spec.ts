@@ -21,6 +21,7 @@ import { BookingDetailComponent } from './booking-detail.component';
 import {NotificationServiceBus} from '../../notification/notification.service';
 import { ActivatedRoute, Data } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RolePermission } from '../../shared/role-permission/role-permission';
 
 describe('BookingDetailComponent', () => {
   let component: BookingDetailComponent;
@@ -30,10 +31,10 @@ describe('BookingDetailComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ BookingDetailComponent, EnumValPipe ],
       imports: [CustomFormsModule,
-        FormsModule, BrowserAnimationsModule,
+        FormsModule, BrowserAnimationsModule, RouterTestingModule,
         Md2Module.forRoot(),
         MaterialModule
-      ],  providers: [NotificationServiceBus, { provide: BookingService, useClass: MockBookingService },
+      ],  providers: [RolePermission, NotificationServiceBus, { provide: BookingService, useClass: MockBookingService },
           SpinnerService, { provide: AuthHttp, useClass: MockBackend },
           {
                     provide: ActivatedRoute,

@@ -6,6 +6,7 @@ import { ROLE } from '../../shared/model/role.enum';
 import { SpinnerService } from '../../spinner/spinner.service';
 import { NotificationServiceBus } from '../../notification/notification.service';
 import {GLOBAL} from '../../shared/global';
+import { SpacerPipe } from '../../shared/pipe/spacer.pipe';
 
 @Component({
     selector: 'app-user-detail',
@@ -16,15 +17,20 @@ export class UserDetailComponent {
     @Input('userModel') userModel: User;
     @Output() onRefresh = new EventEmitter();
     isNewUser = true;
-    selRoles = ['Booking Officer', 'Client', 'Organisation', 'Interpreter'];
+    selRoles = [];
+    _selRoles = [ROLE.BookingOfficer, ROLE.IndividualClient , ROLE.Organisational, ROLE.Interpreter];
     selectedRoles = {};
     showForm = false;
     userStatusArray = GLOBAL.userStatusArray;
     selectedStatus = '';
-    constructor(public userDataService: UserService, public notificationServiceBus: NotificationServiceBus,
+    constructor(public userDataService: UserService, private spacerPipe: SpacerPipe,
+    public notificationServiceBus: NotificationServiceBus,
         public spinnerService: SpinnerService, public dialogRef: MdDialogRef<any>) {
             if (GLOBAL.currentUser.getRole() === ROLE.Administrator) {
-                this.selRoles.push('Administrator');
+                this._selRoles.push(ROLE.Administrator);
+            }
+            for (let r of this._selRoles) {
+                this.selRoles.push(this.spacerPipe.transform(ROLE[r]));
             }
     }
 

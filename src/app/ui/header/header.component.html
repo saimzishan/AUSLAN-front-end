@@ -1,10 +1,8 @@
 <header id="header">
-	<a href="/"><i class="icons icons-logo"></i></a>
+	<a href="javascript:void(0)"><i class="icons icons-logo"></i></a>
 
 	<nav *ngIf="userIsActive">
 		<a id="lnkBooking" *ngIf="canShowLink('booking-management')" [ngClass]="{'active':isActiveLink(linkName.booking)}" (click)="setActiveLink(linkName.booking)" [routerLink]="['/booking-management']"><span><i class="icon-bookings"></i> BOOKINGS</span></a>
-		<a href="#"><span><i class="icon-messages"></i> MESSAGES</span></a>
-		<a href="#"><span><i class="icon-reports"></i> REPORTS</span></a>
 	</nav>
 
 	<a *ngIf="userIsActive && canShowLink('create-booking')" id="lnkNewBooking" [ngClass]="{'active':isActiveLink(linkName.booking)}" (click)="setActiveLink(linkName.booking)" class="button" [routerLink]="['/booking-management','create-booking']">+ New Booking</a>

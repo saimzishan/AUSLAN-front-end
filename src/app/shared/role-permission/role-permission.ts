@@ -46,7 +46,7 @@ export class RolePermission {
     "organization-representitive": {
         "not-allowed-routes": [
             "user-management",
-            "booking-job", "create-booking"
+            "booking-job"
         ],
         "routes-with-data-permissions": {
             "booking-management": {
@@ -60,7 +60,7 @@ export class RolePermission {
     "individual-client": {
         "not-allowed-routes": [
             "user-management",
-            "booking-job", "create-booking"
+            "booking-job"
         ],
         "routes-with-data-permissions": {
             "booking-management": {

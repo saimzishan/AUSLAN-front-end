@@ -3,7 +3,8 @@ import {Venue} from './venue.entity';
 export class Contact {
 
   public email: string;
-  public name: string;
+  public first_name: string;
+  public last_name: string;
   public phone_number: string;
   public mobile_number: string;
   public address: Venue;

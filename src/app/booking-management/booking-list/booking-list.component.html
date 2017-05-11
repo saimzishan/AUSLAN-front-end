@@ -81,7 +81,7 @@
 						</tr>
 					</thead>
       <tbody>
-        <tr *ngFor="let booking of bookingList" (click)="setClickedRow(booking)" >
+        <tr [ngClass]="{'active': isSelectedBooking(booking.id)}" *ngFor="let booking of bookingList" (click)="setClickedRow(booking)" >
           <td>
 								<div class="checkbox">
 									<input type="checkbox" name="" value="1" id="job-2">
@@ -94,7 +94,7 @@
 								{{booking.venue.start_time | date:'EEE d MMM yy'}}</td>
 							<td>{{booking.venue.city}}</td>
 							<td>{{booking.contact.name}}</td>
-							<td>{{booking.venue.addressline_1}}</td>
+							<td>{{booking.venue.suburb}}</td>
 							<td>{{booking.deaf_person.name}}</td>
 							<!-- td class="truncated">
 								<span *ngFor="let user of booking.interpreters" > {{user?.name}}

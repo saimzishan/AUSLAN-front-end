@@ -29,6 +29,9 @@ export class GLOBAL {
     public static set currentUser(user: any) {
         this._currentUser = user;
     }
+
+    // UI Params
+    public static selBookingID = '';
 }
 
 export function authService(http: Http, options: RequestOptions) {

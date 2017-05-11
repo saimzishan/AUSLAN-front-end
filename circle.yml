@@ -10,14 +10,14 @@ test:
     - npm install codeclimate-test-reporter -g
   override:
     - ng lint
-    - ng test --code-coverage --watch=false --singleRun=true --browser PhantomJS_without_security
+    - ng test --code-coverage --watch=false --singleRun=true --browser Chrome_without_security
   post:
     - bundle exec pact-mock-service stop -p 1233
     - bundle exec pact-mock-service stop -p 1234
     - mkdir $CIRCLE_ARTIFACTS/coverage
-    - mkdir $CIRCLE_ARTIFACTS/pacts
+    - mkdir $CIRCLE_ARTIFACTS/tmp
     - mv coverage/* $CIRCLE_ARTIFACTS/coverage
-    - mv tmp/pact* $CIRCLE_ARTIFACTS/pacts
+    - cp -rf tmp/ $CIRCLE_ARTIFACTS/tmp/
     - codeclimate-test-reporter < $CIRCLE_ARTIFACTS/coverage/coverage.lcov
     - rm -rf dist
     - ng build --aot --env=stage
