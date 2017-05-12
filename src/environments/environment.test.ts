@@ -1,6 +1,5 @@
 export const environment = {
-  stage: true,
+  stage: false,
   production: false,
-  test: false
-
+  test: true
 };

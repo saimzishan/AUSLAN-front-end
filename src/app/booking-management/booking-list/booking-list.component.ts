@@ -13,8 +13,7 @@ export class BookingListComponent {
   @Output() onEditBooking = new EventEmitter<Booking>();
 
   constructor(public router: Router) {
-
-  }
+ }
 
   onBookingSelect(booking: Booking) {
     this.onEditBooking.emit(booking);

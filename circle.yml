@@ -16,6 +16,7 @@ test:
     - bundle exec pact-mock-service stop -p 1234
     - mkdir $CIRCLE_ARTIFACTS/coverage
     - mv coverage/* $CIRCLE_ARTIFACTS/coverage
+    - npm run pact
     - cp -rf tmp/ $CIRCLE_ARTIFACTS/
     - codeclimate-test-reporter < $CIRCLE_ARTIFACTS/coverage/coverage.lcov
     - rm -rf dist
@@ -24,4 +25,3 @@ test:
 deployment:
     commands:
       - aws s3 sync dist/  s3://auslan-booking-system-ct/ --delete
-      - npm run pact
