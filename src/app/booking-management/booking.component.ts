@@ -13,6 +13,7 @@ import { RolePermission } from '../shared/role-permission/role-permission';
 import { User } from '../shared/model/user.entity';
 import { ROLE } from '../shared/model/role.enum';
 import { GLOBAL } from '../shared/global';
+import { MobileFooterComponent } from '../ui/mobile-footer/mobile-footer.component';
 
 declare var $: any;
 

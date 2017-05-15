@@ -53,6 +53,7 @@ import { BookingFilterComponent } from './booking-management/booking-filter/book
 import { BookingListComponent } from './booking-management/booking-list/booking-list.component';
 import {NotificationServiceBus} from './notification/notification.service';
 import { SpacerPipe } from './shared/pipe/spacer.pipe';
+import { PrettyIDPipe } from './shared/pipe/pretty-id.pipe';
 
 describe('AppComponent', () => {
   beforeEach(() => {
@@ -64,7 +65,7 @@ describe('AppComponent', () => {
         UserManagementComponent, BookingHeaderComponent, BookingFilterComponent, BookingListComponent,
         EnumValPipe, HeaderComponent, SpacerPipe,
         NotFoundComponent, RegisterComponent, ResetComponent, VerifyComponent,
-        BookingComponent,
+        BookingComponent, PrettyIDPipe,
         BookingDetailComponent,
         SpinnerComponent
       ],

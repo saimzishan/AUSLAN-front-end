@@ -10,108 +10,97 @@
 									<label for="job-1"></label>
 								</div>
 							</th>
-							<th width="6%">
+							<th width="5%">
 								<span class="order asc">Job</span>
 								<input type="text" name="job">
 							</th>
-							<!-- th width="8%">
+                            <th width="5%">
 								<span class="order asc">Status</span>
+                                <ul class="dropdown menu custom" data-dropdown-menu>
+                                    <li>
+                                        <a href="javascript:void(0)">All</a>
+                                        <ul class="menu smaller">
+                                            <li><a href="javascript:void(0)"><i></i> Option 1</a></li>
+                                            <li><a href="javascript:void(0)"><i></i> Option 2</a></li>
+                                            <li><a href="javascript:void(0)"><i></i> Option 3</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+							</th>
+							<th>
+								<span class="order asc">State</span>
 								<ul class="dropdown menu custom" data-dropdown-menu>
 									<li>
-										<a href="#">All</a>
+										<a href="javascript:void(0)">All</a>
 										<ul class="menu smaller">
-											<li><a href="#"><i></i> Option 1</a></li>
-											<li><a href="#"><i></i> Option 2</a></li>
-											<li><a href="#"><i></i> Option 3</a></li>
-										</ul>
-									</li>
-								</ul>
-							</th -->
-							<th width="8%">
-								<span class="order asc">Status</span>
-								<ul class="dropdown menu custom" data-dropdown-menu>
-									<li>
-										<a href="#">All</a>
-										<ul class="menu smaller">
-											<li><a href="#"><i></i> Option 1</a></li>
-											<li><a href="#"><i></i> Option 2</a></li>
-											<li><a href="#"><i></i> Option 3</a></li>
+											<li><a href="javascript:void(0)"><i></i> Option 1</a></li>
+											<li><a href="javascript:void(0)"><i></i> Option 2</a></li>
+											<li><a href="javascript:void(0)"><i></i> Option 3</a></li>
 										</ul>
 									</li>
 								</ul>
 							</th>
-							<th width="11%">
+							<th>
 								<span class="order desc">Date</span>
 							</th>
-							<th width="10%">
+							<th>
 								<span class="order desc">Org</span>
 								<input type="text" name="org">
 							</th>
-							<th width="9%">
+							<th>
 								<span class="order asc">Client</span>
-								<input type="text" name="client">
+                                <input type="text" name="client">
 							</th>
-							<th width="10%">
-								<span class="order asc">Suburb</span>
-								<input type="text" name="suburb">
-							</th>
-							<th width="9%">
-								<span class="order asc">Interpreter</span>
-								<input type="text" name="interpreter">
-							</th>
-							<th width="11%">
-								<span class="order asc">Booking type</span>
-								<ul class="dropdown menu custom" data-dropdown-menu>
-									<li>
-										<a href="#">All</a>
-										<ul class="menu smaller">
-											<li><a href="#"><i></i> Option 1</a></li>
-											<li><a href="#"><i></i> Option 2</a></li>
-											<li><a href="#"><i></i> Option 3</a></li>
-										</ul>
-									</li>
-								</ul>
-							</th>
-							<!-- th width="8%">
-								<span class="order asc">Updated</span>
-							</th>
-							<th width="7%">
-								<span>Actions</span>
-							</th -->
+                            <th>
+                                <span class="order asc">Suburb</span>
+                                <input type="text" name="suburb">
+                            </th>
+                            <th>
+                                <span class="order asc">Interpreter</span>
+                                <input type="text" name="interpreter">
+                            </th>
+                            <th>
+                                <span class="order asc">Booking Type</span>
+                                <ul class="dropdown menu custom" data-dropdown-menu>
+                                    <li>
+                                        <a href="javascript:void(0)">All</a>
+                                        <ul class="menu smaller">
+                                            <li><a href="javascript:void(0)"><i></i> Option 1</a></li>
+                                            <li><a href="javascript:void(0)"><i></i> Option 2</a></li>
+                                            <li><a href="javascript:void(0)"><i></i> Option 3</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </th>
+					
 						</tr>
 					</thead>
       <tbody>
         <tr [ngClass]="{'active': isSelectedBooking(booking.id)}" *ngFor="let booking of bookingList" (click)="setClickedRow(booking)" >
-          <td>
+							<td>
 								<div class="checkbox">
 									<input type="checkbox" name="" value="1" id="job-2">
+									<label for="job-2"></label>
 								</div>
 							</td>
-							<td class="bookingID" >{{booking.id}}</td>
-							<!-- td align="center"><i class="status status-ready-to-process"></i></td -->
+<td class="bookingID" >{{booking.id | PrettyID}}</td>
+							<td class="text-center"><i class="status status-ready-to-process"></i></td>
 							<td>{{stateToString(booking.state)}}</td>
-							<td>{{booking.venue.start_time | date:'shortTime'}} - {{booking.venue.end_time | date:'shortTime'}}<br>
-								{{booking.venue.start_time | date:'EEE d MMM yy'}}</td>
-							<td>{{booking.venue.city}}</td>
-							<td>{{booking.contact.name}}</td>
-							<td>{{booking.venue.suburb}}</td>
-							<td>{{booking.deaf_person.name}}</td>
-							<!-- td class="truncated">
-								<span *ngFor="let user of booking.interpreters" > {{user?.name}}
-								</span> </td -->
-              <td>{{booking.nature_of_appointment}}</td>
-							<!-- td><span class="underline">{{booking.last_updated}} {{booking.update_by}}<br>{{booking.last_updated}}</span></td>
 							<td>
-								<ul class="dropdown menu custom actions" data-dropdown-menu>
-									<li>
-										<a href="javascript:void(0)"><i class="icon-actions"></i></a>
-										<ul class="menu right-side green">
-											<li><a href="#"><i class="icon-edit"></i> Edit</a></li>
-											<li><a href="#"><i class="icon-reset-password"></i> Reset password</a></li>
-										</ul>
-									</li>
-								</ul>
-							</td -->
+                                <div class="job-date">
+                                    <span>{{booking.venue.start_time | date:'shortTime'}} - {{booking.venue.end_time | date:'shortTime'}}<br>{{booking.venue.start_time | date:'EEE d MMM yy'}}</span>
+                                    <i class="icon-requested"></i>
+                                </div>
+                            </td>
+							<td>{{booking.venue.city}}</td>
+							<td>{{booking.contact.first_name}}</td>
+						<td>{{booking.venue.suburb}}</td>
+							<td class="text-center truncated">
+								<span *ngFor="let user of booking.interpreters" > {{user?.first_name  + ' ' + user?.last_name}}
+									<br />
+								</span> </td>
+							<td><a href="javascript:void(0)" class="attach"><i class="icon-attach"></i></a> {{booking.raw_nature_of_appointment}}</td>
+							
 						</tr>
 
 

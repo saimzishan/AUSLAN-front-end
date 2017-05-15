@@ -3,6 +3,8 @@ import {Booking} from '../../shared/model/booking.entity';
 import {Router, NavigationExtras} from '@angular/router';
 import { BOOKING_STATUS } from '../../shared/model/booking-status.enum';
 import {GLOBAL} from '../../shared/global';
+import { PrettyIDPipe } from '../../shared/pipe/pretty-id.pipe';
+
 @Component({
   selector: 'app-booking-list',
   templateUrl: './booking-list.component.html',

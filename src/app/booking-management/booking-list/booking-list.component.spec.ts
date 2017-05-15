@@ -5,6 +5,7 @@ import {Booking} from '../../shared/model/booking.entity';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BookingListComponent } from './booking-list.component';
 import { Router } from '@angular/router';
+import { PrettyIDPipe } from '../../shared/pipe/pretty-id.pipe';
 
 describe('BookingListComponent' ,  () => {
   let component:  BookingListComponent;
@@ -34,7 +35,7 @@ describe('BookingListComponent' ,  () => {
   let mock_booking_list: Array<Booking> = [];
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations :  [ BookingListComponent ],
+      declarations :  [ BookingListComponent, PrettyIDPipe ],
       imports: [RouterTestingModule]
     })
     .compileComponents();

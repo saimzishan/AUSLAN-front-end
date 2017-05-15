@@ -54,6 +54,8 @@ import {Store, provideStore} from '@ngrx/store';
 import { PopupComponent } from './shared/popup/popup.component';
 import { JobDetailComponent } from './booking-management/booking-jobs/job-detail/job-detail.component';
 import { DatePipe } from '@angular/common';
+import { PrettyIDPipe } from './shared/pipe/pretty-id.pipe';
+import { MobileFooterModule } from './ui/mobile-footer/mobile-footer.module';
 
 @NgModule({
   declarations: [
@@ -78,11 +80,11 @@ import { DatePipe } from '@angular/common';
     UserListComponent,
     UserHeaderComponent,
     UserDetailComponent,
-    UserProfileComponent, HyphenPipe, SpacerPipe, BookingJobsComponent, PopupComponent, JobDetailComponent
+    UserProfileComponent, HyphenPipe, PrettyIDPipe, SpacerPipe, BookingJobsComponent, PopupComponent, JobDetailComponent
   ],
    entryComponents: [UserDetailComponent, PopupComponent],
   imports: [CustomFormsModule, routing,
-    BrowserModule, RouterModule, CommonModule,
+    BrowserModule, RouterModule, CommonModule, MobileFooterModule,
     FormsModule, BrowserAnimationsModule,
     HttpModule, SimpleNotificationsModule.forRoot(),
     ReactiveFormsModule, Md2Module.forRoot(),
