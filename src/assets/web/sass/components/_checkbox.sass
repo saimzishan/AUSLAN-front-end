@@ -1,0 +1,59 @@
+$color-checkbox-bg      : #f8f8f8
+$color-checkbox-border  : #e4e4e4
+
+.checkbox
+	line-height: 16px
+	height: 16px
+
+	input
+		position: absolute
+		left: -10000px
+		opacity: 0
+
+	input + label
+		display: inline-block
+		width: 16px
+		height: 16px
+		border-radius: 3px
+		border: 1px solid $color-checkbox-border
+		background: $color-checkbox-bg
+		+do-transition(background .5s ease)
+
+	input:checked + label
+		background: $color-green
+
+md-checkbox
+	padding-left: 13px
+	padding-right: 25px
+	margin: 0
+
+	.md-label
+		margin-left: 13px
+
+	.md-icon
+		top: 3px
+		width: 13px
+		height: 13px
+		background: $color-white
+		border: 1px solid $color-text
+		border-radius: 50%
+
+		&::after
+			display: none
+
+	&.md-checked
+		.md-icon
+			background: $color-green
+			border: none
+			+add-shadow( 0 2px 6px 0 rgba( 29, 182, 111, 47 / 100 ) )
+
+		.md-ink-ripple
+			color: rgba( 29, 182, 111, 47 / 100 )
+
+.mat-checkbox-frame
+	border: 1px solid $color-text
+	border-radius: 50%
+
+.mat-checkbox-checked.mat-accent .mat-checkbox-background
+	background: $color-green
+	+add-shadow( 0 2px 6px 0 rgba( 29, 182, 111, 47 / 100 ) )

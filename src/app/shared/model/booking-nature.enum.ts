@@ -1,6 +1,6 @@
 export enum BOOKING_NATURE {
 
-  HumanServices = <any>'Human Services',
+  Human = <any>'Human Services',
   Social = <any>'Social / Private',
   Counselling = <any>'Counselling',
   Court = <any>'Court',
@@ -20,8 +20,8 @@ export enum BOOKING_NATURE {
 export class BA {
   static DISSCUSSION_ITEM = {};
 
-  constructor() {
-    BA.DISSCUSSION_ITEM[BOOKING_NATURE.HumanServices] =
+  public static loadItems() {
+    BA.DISSCUSSION_ITEM[BOOKING_NATURE.Human] =
       ['Centrelink', 'Child protection', 'Crisis/Emergency', 'Home Visit', 'Housing', 'Other'];
     BA.DISSCUSSION_ITEM[BOOKING_NATURE.Social] =
       ['Centrelink', 'Child protection', 'Crisis/Emergency', 'Home Visit', 'Housing', 'Other'];

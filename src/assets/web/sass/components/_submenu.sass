@@ -1,0 +1,58 @@
+#submenu
+	height: 55px
+	+display-flex
+	+flex-direction(row)
+	+flex-justify(space-between)
+	+align-flex-item(center)
+
+	> nav
+		> a
+			font-size: 13px
+			line-height: 48px
+			color: $color-dark-gray
+			margin: 0 7px 0 19px
+			padding-top: 4px
+			display: inline-block
+			border-bottom: 3px solid transparent
+
+			&.active
+				color: $color-white
+				border-bottom-color: $color-dark-border
+
+	> div
+		margin-right: 15px
+		+display-flex
+		+flex-direction(row)
+		+flex-justify(space-between)
+		+align-flex-item(center)
+
+		.button
+			height: 29px
+			margin: 0 5px
+			padding: 0 33px
+
+			&.not-changed
+				opacity: .5
+
+		.sep
+			width: 1px
+			height: 22px
+			background: $color-border
+			margin: 0 13px
+			opacity: .2
+
+	> section
+		> a
+			color: $color-white
+			display: inline-block
+			border: 1px solid $color-white
+			border-radius: 4px
+			line-height: 33px
+			height: 33px
+			padding: 0 32px
+			margin: 0 4px
+			+do-transition(background .4s ease)
+
+			&:hover, &.active
+				color: $color-green
+				background: $color-white

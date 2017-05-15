@@ -12,8 +12,9 @@ export class Booking {
     public update_by:  string;
     public contact:  Contact = new Contact();
     public deaf_person:  DEAFContact = new DEAFContact();
+    public raw_nature_of_appointment:  string;
     public nature_of_appointment:  BOOKING_NATURE;
-    public specific_nature_of_appointment:  BOOKING_NATURE;
+    public specific_nature_of_appointment:  string;
     public state:  BOOKING_STATUS;
     public attachment:  any;
     public interpreters: Array<BookingInterpreters> = [];
@@ -40,7 +41,8 @@ export class Booking {
       this.deaf_person.mobile_number = '';
       this.deaf_person.eaf = 0;
       this.nature_of_appointment = BOOKING_NATURE.None;
-      this.specific_nature_of_appointment = BOOKING_NATURE.None;
+      this.raw_nature_of_appointment = '';
+      this.specific_nature_of_appointment = '';
       this.state = BOOKING_STATUS.None;
     }
 
@@ -68,7 +70,8 @@ export class Booking {
       this.deaf_person.email = data.deaf_persons_email;
       this.deaf_person.mobile_number = data.deaf_persons_mobile;
       this.deaf_person.eaf = data.deaf_persons_eaf_no;
-      this.nature_of_appointment = data.nature_of_appointment;
+      this.raw_nature_of_appointment = data.nature_of_appointment;
+      this.nature_of_appointment = <BOOKING_NATURE> BOOKING_NATURE[this.raw_nature_of_appointment];
       this.specific_nature_of_appointment = data.specific_nature_of_appointment;
       let state: string = data.state;
       this.state = BOOKING_STATUS[state];
@@ -77,11 +80,8 @@ export class Booking {
     toJSON() {
       let _state = typeof this.state === 'string' ?
        this.state : BOOKING_STATUS[this.state];
-      let _nature_of_appointment = typeof this.nature_of_appointment === 'string' ?
-      this.nature_of_appointment : BOOKING_NATURE[this.nature_of_appointment];
-      let _specific_nature_of_appointment =
-      typeof this.specific_nature_of_appointment === 'string' ?
-       this.specific_nature_of_appointment : BOOKING_NATURE[this.specific_nature_of_appointment];
+      let _nature_of_appointment = this.raw_nature_of_appointment;
+      let _specific_nature_of_appointment = this.specific_nature_of_appointment ;
       let _parking_type =
       typeof this.venue.parking_type === 'string' ? this.venue.parking_type : PARKING[this.venue.parking_type];
       let _expected_attendance = this.venue.expected_attendance < 0 ? 0 : this.venue.expected_attendance;

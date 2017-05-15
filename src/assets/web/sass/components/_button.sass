@@ -1,0 +1,70 @@
+.button
+	font-size: 13px
+	color: $color-green
+	height: 40px
+	background: none
+	border: 1px solid $color-green
+	border-radius: 4px
+	margin: 0
+	padding: 0 15px
+	+do-transition(background .5s ease)
+	+display-flex
+	+align-flex-item(center)
+	+flex-justify(center)
+
+	&:hover
+		color: $color-white
+		background: $color-green
+
+	&.inverse
+		color: $color-white
+		background: $color-green
+
+		&:hover
+			color: $color-green
+			background: $color-white
+
+	&.pink
+		color: $color-white
+		background: $color-pink
+		border: 1px solid $color-pink
+
+		&:hover
+			color: $color-pink
+			background: $color-white
+
+	&.higher
+		height: 52px
+
+	&.green
+		font-size: 13px
+		color: $color-white
+		display: block
+		width: calc( 100% - 19px )
+		background: $color-green
+
+		i
+			font-size: 22px
+			line-height: 1em
+
+	&.button-accept, &.button-help, &.button-decline
+		&:hover
+			background: $color-white !important
+
+	&.button-accept
+		border: 1px solid $color-message-success
+
+		i
+			color: $color-message-success
+
+	&.button-help
+		border: 1px solid $color-message-invited
+
+		i
+			color: $color-message-invited
+
+	&.button-decline
+		border: 1px solid $color-message-declined
+
+		i
+			color: $color-message-declined

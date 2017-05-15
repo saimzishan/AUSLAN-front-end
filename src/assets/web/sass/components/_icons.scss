@@ -1,0 +1,26 @@
+%svg-common {
+	display: inline-block;
+	background: url("../img/svg-compile/css/svg/sprite.css.svg") no-repeat;
+}
+
+.inline-icon-add-file {
+	@extend %svg-common;
+	background-position: 0 0;
+	width: 32px;
+	height: 32px;
+}
+
+.inline-icon-datepicker {
+	@extend %svg-common;
+	background-position: 100% 0;
+	width: 18px;
+	height: 16px;
+}
+
+.inline-icon-tip {
+	@extend %svg-common;
+	background-position: 86.48648648648648% 84.21052631578948%;
+	width: 13px;
+	height: 13px;
+}
+

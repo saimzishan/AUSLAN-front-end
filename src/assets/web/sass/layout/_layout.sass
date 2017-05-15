@@ -1,0 +1,231 @@
+@import ../components/attachment
+@import ../components/button
+@import ../components/checkbox
+@import ../components/datepicker
+@import ../components/dropdown
+@import ../components/elements
+@import ../components/filters
+@import ../components/form
+@import ../components/icons
+@import ../components/inline-icons
+@import ../components/notifications
+@import ../components/popup
+@import ../components/radio
+@import ../components/separator
+@import ../components/submenu
+@import ../components/table
+
+/* Previous css fix */
+.dropdown.menu > li.is-dropdown-submenu-parent > a
+	border: none
+	background: none
+
+/* Common layout styles */
+
+*
+	font-family: $fontPoppinsRegular
+	color: $color-text
+	box-sizing: border-box
+	outline: none
+	-webkit-tap-highlight-color: rgba( 0, 0, 0, 0 )
+	-webkit-tap-highlight-color: transparent
+
+button, input, optgroup, select, textarea
+	font-family: $fontPoppinsRegular
+
+body
+	font-size: 14px
+	line-height: 1.4em
+	padding: 0
+	margin: 0
+	height: auto !important
+	background: $color-white url(../img/main-bg.png) repeat-x
+
+	a, a:active, a:focus
+		color: $color-green
+
+	a:hover
+		color: $color-dark-green
+
+	h1
+		font: bold 18px/1.2em $fontPoppinsRegular
+		margin: 2em 0 1em 0
+
+	#header
+		height: 60px
+		background: $color-green
+		padding: 0 0 0 21px
+		+display-flex
+		+flex-direction(row)
+		+align-flex-item(center)
+		+flex-justify(space-between)
+
+		.icons
+			display: inline-block
+
+		.icons-logo
+			width: 72px
+			height: 46px
+			background: url(../img/icons/logo.png)
+
+		> nav
+			a
+				padding: 0 21px
+
+				span, i
+					color: $color-white
+
+				i
+					position: relative
+					top: 2px
+					margin-right: 10px
+
+				span
+					display: inline-block
+					line-height: 60px
+					height: 60px
+
+				&.active, &:hover
+					span
+						border-bottom: 2px solid $color-white
+
+		> a, > button
+			color: $color-white
+			background: $color-dark-green
+			margin: 0
+			border-radius: 4px
+
+		.dropdown.menu
+			min-width: 200px
+			position: relative
+			z-index: 300
+
+			> li.is-dropdown-submenu-parent
+				height: 60px
+				background: $color-dark-green
+				+display-flex
+				+flex-justify(center)
+				+align-flex-item(center)
+
+				> a
+					color: $color-white
+					padding: 0 42px 0 19px
+					+display-flex
+					+flex-justify(center)
+					+align-flex-item(center)
+
+					img
+						display: inline-block
+						margin-right: 10px
+
+					&::after
+						right: 12px
+						border: 4px solid transparent
+						border-top-color: $color-white
+
+				.is-dropdown-submenu
+					border: none
+					background: $color-green
+
+					&::before
+						content: ""
+						position: absolute
+						right: 10px
+						top: -16px
+						border: 8px solid transparent
+						border-bottom-color: $color-green
+
+					> li
+						a
+							line-height: 1.6em
+							color: $color-white
+							border-top: 1px solid $color-border
+							display: block
+							margin-left: 17px
+							padding-left: 0
+
+							i
+								color: $color-white
+
+						&:first-child a
+							border-top: none
+
+	#header-mobile, #footer-mobile
+		position: fixed
+		left: 0
+		width: 100%
+		z-index: 10
+
+	#header-mobile
+		top: 0
+		height: 43px
+		background: $color-green
+
+		button
+			font-size: 22px
+			color: $color-white
+			position: absolute
+			top: 25%
+
+			&:first-child
+				left: 11px
+
+			&:last-child
+				right: 11px
+
+		h1
+			font-family: $fontPoppinsRegular
+			font-size: 18px
+			line-height: 43px
+			text-align: center
+			color: $color-white
+			width: 100%
+			margin: 0
+
+	#footer-mobile
+		bottom: 0
+		height: 47px
+		background: $color-white
+		+add-shadow( 0 -2px 8px 0 rgba( 0, 0, 0, 10/100 ) )
+		+display-flex
+		+flex-direction(row)
+		+align-flex-item(center)
+		+align-content(stretch)
+
+		a
+			color: $color-text
+			text-align: center
+			+display-flex
+			+flex-direction(column)
+			+flex-grow(1)
+
+			&.active
+				i, span
+					opacity: 1
+					color: $color-black
+
+			i
+				font-size: 20px
+				position: relative
+				top: 5px
+
+			i, span
+				opacity: .5
+
+			span
+				font-size: 9px
+				display: inline-block
+				margin-top: 2px
+
+@media only screen and (max-width : 999px)
+	body
+		padding: 43px 0 0 0
+		background: $color-white
+
+		#header
+			display: none !important
+
+@media only screen and (min-width : 1000px)
+	body
+		#header-mobile, #footer-mobile
+			display: none !important

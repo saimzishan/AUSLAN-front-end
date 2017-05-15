@@ -1,0 +1,36 @@
+.truncated-text
+	text-overflow: ellipsis
+	white-space: nowrap
+	overflow: hidden
+
+
+.sort
+	position: relative
+
+	&.asc, &.desc
+		&::after
+			content: ""
+			position: absolute
+			right: 10px
+			top: 6px
+			bottom: 0
+			margin: auto
+			width: 0
+			height: 0
+			border: 5px solid transparent
+
+		&.asc::after
+			border-top-color: $color-text
+
+		&.desc::after
+			top: -5px
+			border-bottom-color: $color-text
+
+	&.outside
+		right: -30px
+
+		&.asc::after
+			top: 0
+
+		&.desc::after
+			top: -15px

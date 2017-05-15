@@ -1,0 +1,96 @@
+$color-sec-1        : #5dc6b0
+$color-sec-2        : #4fb6a1
+$color-sec-3        : #3ead97
+$color-link         : #32b79c
+$color-link-hover   : #e6e6e6
+
+#page-signup
+	position: absolute
+	width: 100%
+	height: 100%
+	background: $color-white
+	+display-flex
+	+flex-direction(row)
+	+align-flex-item(stretch)
+	+align-content(stretch)
+
+	> section
+		text-align: center
+		position: relative
+		+display-flex
+		+flex-direction(column)
+		+flex-justify(center)
+		+flex-grow(1)
+
+		&:nth-child(1)
+			background: $color-sec-1
+
+		&:nth-child(2)
+			background: $color-sec-2
+
+		&:nth-child(3)
+			background: $color-sec-3
+
+		h1
+			font-size: 32px
+			font-weight: bold
+			color: $color-white
+			letter-spacing: .47px
+			text-shadow: 0 4px 14px rgba( 32, 122, 104, 60/100 )
+			display: block
+			margin: 0
+			position: absolute
+			top: 65px
+			left: 0
+			right: 0
+
+		> a.type
+			display: block
+			position: relative
+			margin: 150px auto 76px
+
+			&::before, &::after
+				content: ""
+				position: absolute
+				left: 50%
+				top: 50%
+				display: block
+				border-radius: 50%
+				transform: translateX(-50%) translateY(-50%)
+				background: $color-white
+
+			&::before
+				width: 236px
+				height: 236px
+				opacity: .1
+				transition: all .4s
+
+			&::after
+				width: 280px
+				height: 280px
+				opacity: .05
+				transition: all .2s
+
+			&:hover
+				&::before
+					width: 251px
+					height: 251px
+
+				&::after
+					width: 295px
+					height: 295px
+
+		> button
+			font-size: 17px
+			color: $color-link
+			letter-spacing: 0
+			line-height: 16px
+			width: 202px
+			border-radius: 4px
+			background: $color-white
+			margin: 0 auto 1rem
+			padding: .85em 1em
+			+do-transition(background .5s ease)
+
+			&:hover
+				background: $color-link-hover

@@ -1,0 +1,43 @@
+=inline-separator
+	position: relative
+	display: inline-block
+
+	&::before, &::after
+		content: ""
+		position: absolute
+		height: 6px
+		top: 50%
+		width: 100%
+		margin-top: -3px
+		background: url(../img/separator.png) repeat-x
+
+	&::before
+		left: 100%
+		margin-left: 25px
+
+	&::after
+		right: 100%
+		margin-right: 25px
+
+.separator
+	text-align: center
+	background: url(../img/separator.png) center center repeat-x
+	margin: 1em 0
+	min-height: 1em
+
+	div
+		display: inline-block
+		background: $color-white
+
+		span
+			font-size: 13px
+			line-height: 30px
+			text-align: center
+			display: inline-block
+			min-width: 30px
+			height: 30px
+			background: $color-white
+			border-radius: 50%
+			margin: 0 1em
+			opacity: .5
+			+add-shadow( 0 2px 14px 0 rgba( 29,182,111, 30 / 100 ) )

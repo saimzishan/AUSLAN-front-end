@@ -1,7 +1,7 @@
 import { Component, AfterViewChecked, OnDestroy } from '@angular/core';
 import { Booking } from '../../shared/model/booking.entity';
 import { BookingService } from '../../api/booking.service';
-import { BOOKING_NATURE } from '../../shared/model/booking-nature.enum';
+import { BA, BOOKING_NATURE } from '../../shared/model/booking-nature.enum';
 import { PARKING } from '../../shared/model/parking.enum';
 import { SpinnerService } from '../../spinner/spinner.service';
 import { BOOKING_STATUS } from '../../shared/model/booking-status.enum';
@@ -25,7 +25,10 @@ export class BookingDetailComponent implements AfterViewChecked, OnDestroy {
 
   private sub: any;
   bookingModel: Booking;
-  appointment_types = BOOKING_NATURE;
+  appointment_types = Object.keys(BOOKING_NATURE).filter(value => value === BOOKING_NATURE[value]
+  || BOOKING_NATURE[value].startsWith(value)).map(v => BOOKING_NATURE[v]) as string[];
+
+  specific_appointment_types =  [];
   parking_types = PARKING;
   currentUserIsContact = 'true';
   prefInterpreter: boolean;
@@ -34,6 +37,8 @@ export class BookingDetailComponent implements AfterViewChecked, OnDestroy {
   private route: ActivatedRoute, private rolePermission: RolePermission,
     public notificationServiceBus: NotificationServiceBus, public spinnerService: SpinnerService,
     private datePipe: DatePipe) {
+          BA.loadItems();
+
     this.bookingModel = new Booking();
 
     /** http://stackoverflow.com/questions/38008334/angular2-rxjs-when-should-i-unsubscribe-from-subscription */
@@ -51,6 +56,11 @@ export class BookingDetailComponent implements AfterViewChecked, OnDestroy {
     });
   }
 
+  natureOfApptChange($event) {
+    console.log(($event));
+    let val: BOOKING_NATURE = <BOOKING_NATURE> BOOKING_NATURE[this.bookingModel.raw_nature_of_appointment];
+    this.specific_appointment_types = BA.DISSCUSSION_ITEM[BOOKING_NATURE[val]];
+  }
   ngOnDestroy() {
     return this.sub && this.sub.unsubscribe();
   }

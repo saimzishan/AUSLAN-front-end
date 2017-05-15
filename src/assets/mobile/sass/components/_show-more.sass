@@ -1,0 +1,35 @@
+.show-more
+    text-align: center
+    overflow: hidden
+    margin-right: 19px
+
+    button
+        font-size: 12px
+        color: $color-text
+        height: 34px
+        padding: 0 14px
+        background: $color-bg
+        position: relative
+        display: inline-block
+        border-radius: 4px
+
+        &:hover, &:focus, &:active
+            background: $color-bg
+            padding: 0 14px
+
+        &::before, &::after
+            content: ""
+            position: absolute
+            height: 1px
+            top: 50%
+            width: 1000%
+            margin-top: -1px
+            background: $color-border
+
+        &::before
+            left: 100%
+            margin-left: 25px
+
+        &::after
+            right: 100%
+            margin-right: 25px

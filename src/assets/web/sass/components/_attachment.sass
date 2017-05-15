@@ -1,0 +1,28 @@
+.attachments
+    padding: 0 0 7px 0
+    margin: 0 19px 0 0
+    +display-flex
+    +flex-direction(row)
+    +flex-wrap(wrap)
+    +flex-justify(space-between)
+
+    li
+        text-align: center
+        list-style: none
+        padding: 0
+        margin: 1em 0 0 0
+        width: 30%
+
+        > a
+            padding: 24px 22px
+            border-radius: 4px
+            background: $color-gray
+            margin: 0 0 .5em 0
+            display: block
+
+        span
+            font-size: 12px
+            white-space: nowrap
+            text-overflow: ellipsis
+            overflow: hidden
+            display: block
