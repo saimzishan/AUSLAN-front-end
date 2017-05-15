@@ -75,6 +75,13 @@ export class Booking {
       this.specific_nature_of_appointment = data.specific_nature_of_appointment;
       let state: string = data.state;
       this.state = BOOKING_STATUS[state];
+      if ( Boolean(data.interpreters) ) {
+      for (let i of data.interpreters) {
+        let int: BookingInterpreters = {id: i.id, state: i.state,
+          email: i.email,  mobile_number: i.mobile, phone_number: '', address: null,  first_name: i.first_name, last_name: i.last_name};
+        this.interpreters.push(int);
+      }
+      }
     }
 
     toJSON() {
