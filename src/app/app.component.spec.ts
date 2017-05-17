@@ -54,6 +54,7 @@ import { BookingListComponent } from './booking-management/booking-list/booking-
 import {NotificationServiceBus} from './notification/notification.service';
 import { SpacerPipe } from './shared/pipe/spacer.pipe';
 import { PrettyIDPipe } from './shared/pipe/pretty-id.pipe';
+import { MobileFooterModule } from './ui/mobile-footer/mobile-footer.module';
 
 describe('AppComponent', () => {
   beforeEach(() => {
@@ -70,7 +71,7 @@ describe('AppComponent', () => {
         SpinnerComponent
       ],
       imports: [CustomFormsModule, RouterTestingModule, Md2Module.forRoot(),
-      MaterialModule, FormsModule, SimpleNotificationsModule.forRoot(),
+      MaterialModule, FormsModule, SimpleNotificationsModule.forRoot(), MobileFooterModule,
         HttpModule
       ],  providers: [ NotificationServiceBus,
          UserNameService, Title, SpinnerService, UserService, {provide: APP_BASE_HREF, useValue : '/' }, {

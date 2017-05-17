@@ -29,10 +29,15 @@ let mock_response: Object[] = [
     })
 ];
 
+let count = 2;
 let mock_db: User[] = [
     new User({
-        id: 2, email: 'admin1@aus.au', first_name: 'Joe', last_name: 'Joe',
-        mobile: 'xxxx xxx xxx', verified: false, disabled: false
+        id: 2, email: 'admin' + count++ + '@aus.au', first_name: 'Joe', last_name: 'Joe',
+        mobile: 'xxxx xxx xxx', verified: false, disabled: false, role: ROLE.NONE
+    }),
+    new User({
+        id: 2, email: 'admin' + count++ + '@aus.au', first_name: 'Joe', last_name: 'Joe',
+        mobile: 'xxxx xxx xxx', verified: false, disabled: false, token: GLOBAL.FAKE_TOKEN
     })
 ];
 
@@ -97,7 +102,7 @@ describe('UserService', () => {
                     )
                     .willRespondWith(200, {
                         'Content-Type': 'application/json; charset=utf-8'
-                    }, { 'users': mock_response });
+                    }, { 'users': Pact.Match.somethingLike(mock_response) });
 
                 userProvider.run(done, function (runComplete) {
                     service.fetchUsers()
@@ -287,11 +292,12 @@ describe('UserService', () => {
     });
 
     it('should getUserByEmail a user by its ID', function (done) {
+        let u = mock_db[1];
         inject([UserService], (service: UserService) => {
             userProvider
                 .given('user exists in database')
                 .uponReceiving('a request to getUserByEmail a user')
-                .withRequest('GET', '/api/v1/users/email/' + (mock_db[0].email.toString()), {
+                .withRequest('GET', '/api/v1/users/email/' + (u.email.toString()), {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 })
@@ -300,7 +306,7 @@ describe('UserService', () => {
                 }, Pact.Match.somethingLike(mock_db[0]));
 
             userProvider.run(done, function (runComplete) {
-                service.getUserByEmail(mock_db[0].email)
+                service.getUserByEmail(u.email)
                     .subscribe((res: any) => {
                         expect(res.status).toEqual(200);
                         done();
@@ -338,10 +344,8 @@ describe('UserService', () => {
 
     it('should create an OrganisationalRepresentative', function (done) {
         inject([UserService], (service: UserService) => {
-            let u: User = new User({
-                id: 3, email: 'admin1@aus.au', first_name: 'Joe1', last_name: 'Doe1',
-                password: 'secure_password', role: ROLE.OrganisationalRepresentative
-            });
+            let u: User = mock_db[0];
+            u.role = ROLE.OrganisationalRepresentative;
             userProvider
                 .given('user does not exists in database')
                 .uponReceiving('a request to create OrganisationalRepresentative')
@@ -372,10 +376,8 @@ describe('UserService', () => {
 
     it('should create an Accountant', function (done) {
         inject([UserService], (service: UserService) => {
-            let u: User = new User({
-                id: 3, email: 'admin1@aus.au', name: 'Joe Doe',
-                password: 'secure_password', role: ROLE.Accountant
-            });
+            let u: User = mock_db[0];
+            u.role = ROLE.Accountant;
             userProvider
                 .given('user does not exists in database')
                 .uponReceiving('a request to create Accountant')
@@ -407,10 +409,8 @@ describe('UserService', () => {
 
     it('should create an Client', function (done) {
         inject([UserService], (service: UserService) => {
-            let u: User = new User({
-                id: 3, email: 'admin1@aus.au', name: 'Joe Doe',
-                password: 'secure_password', role: ROLE.IndividualClient
-            });
+            let u: User = mock_db[0];
+            u.role = ROLE.IndividualClient;
             userProvider
                 .given('user does not exists in database')
                 .uponReceiving('a request to create Client')
@@ -441,10 +441,8 @@ describe('UserService', () => {
 
     it('should create an Interpreter', function (done) {
         inject([UserService], (service: UserService) => {
-            let u: User = new User({
-                id: 3, email: 'admin1@aus.au', name: 'Joe Doe',
-                password: 'secure_password', role: ROLE.Interpreter
-            });
+            let u: User = mock_db[0];
+            u.role = ROLE.Interpreter;
             userProvider
                 .given('user does not exists in database')
                 .uponReceiving('a request to create Interpreter')
@@ -476,7 +474,8 @@ describe('UserService', () => {
     it('should logs in a registered user', function (done) {
         inject([UserService], (service: UserService) => {
             let u: User = new User({
-                id: 3, email: 'admin1@aus.au', name: 'Joe Doe',
+                id: 3, email: 'admin1@aus.au', first_name: 'Joe',
+                last_name: 'Doe',
                 password: 'secure_password', role: ROLE.Interpreter
             });
             userProvider
@@ -485,7 +484,7 @@ describe('UserService', () => {
                 .withRequest('POST', '/api/v1/users/login', {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
-                }, { 'auth': u })
+                }, { 'auth': Pact.Match.somethingLike(u) })
                 .willRespondWith(200, {
                     'Content-Type': 'application/json; charset=utf-8'
                 }, { 'jwt': '123' });
@@ -536,10 +535,8 @@ describe('UserService', () => {
 
     it('should create an BookingOfficer', function (done) {
         inject([UserService], (service: UserService) => {
-            let u: User = new User({
-                id: 3, email: 'admin1@aus.au', name: 'Joe Doe',
-                password: 'secure_password', role: ROLE.BookingOfficer
-            });
+             let u: User = mock_db[0];
+            u.role = ROLE.BookingOfficer;
             userProvider
                 .given('user does not exists in database')
                 .uponReceiving('a request to create BookingOfficer')
