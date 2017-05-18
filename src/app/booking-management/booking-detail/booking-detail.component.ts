@@ -48,9 +48,9 @@ export class BookingDetailComponent implements AfterViewChecked, OnDestroy {
         let jsonData = JSON.parse(param);
         this.bookingModel.fromJSON(jsonData);
         this.bookingModel.venue.start_time_iso =
-        this.datePipe.transform(this.bookingModel.venue.start_time, 'yyyy-dd-MMThh:mm:ss');
+        this.datePipe.transform(this.bookingModel.venue.start_time_iso, 'yyyy-MM-ddThh:mm:ss');
         this.bookingModel.venue.end_time_iso =
-        this.datePipe.transform(this.bookingModel.venue.end_time, 'hh:mm:ss');
+        this.datePipe.transform(this.bookingModel.venue.end_time_iso, 'hh:mm:ss');
 
       }
     });

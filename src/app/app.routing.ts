@@ -21,6 +21,7 @@ const appRoutes: Routes = [
   { path: 'user-management', component: UserManagementComponent, canActivate: [AuthGuard]},
   { path: 'user-management/profile', component: UserProfileComponent, canActivate: [AuthGuard]},
   { path: 'booking-management', component: BookingComponent, canActivate: [AuthGuard]},
+  { path: 'booking-management/:id/create-booking', component: BookingDetailComponent, canActivate: [AuthGuard]},
   { path: 'booking-management/create-booking', component: BookingDetailComponent, canActivate: [AuthGuard]},
   { path: 'booking-management/:id/booking-job', component: BookingJobsComponent, canActivate: [AuthGuard]},
   { path: 'booking-management/:id/job-detail', component: JobDetailComponent},
