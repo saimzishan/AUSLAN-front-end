@@ -476,7 +476,7 @@ describe('UserService', () => {
             let u: User = new User({
                 id: 3, email: 'admin1@aus.au', first_name: 'Joe',
                 last_name: 'Doe',
-                password: 'secure_password', role: ROLE.Interpreter
+                password: 'Secure_password@123', role: ROLE.Interpreter
             });
             userProvider
                 .given('user alread exists in database')
