@@ -27,8 +27,6 @@ export class Booking {
     this.venue.unit_num = '';
     this.venue.street_name = '';
     this.venue.street_num = '';
-    this.venue.start_time = new Date().getTime();
-    this.venue.end_time = new Date().getTime();
     this.requested_by.first_name = '';
     this.requested_by.last_name = '';
     this.contact.first_name = '';
@@ -56,10 +54,8 @@ export class Booking {
     this.venue.suburb = data.address_attributes.suburb;
     this.venue.state = data.address_attributes.state;
     this.venue.post_code = data.address_attributes.post_code;
-    this.venue.start_time = Date.parse(data.start_time);
-    this.venue.end_time = Date.parse(data.end_time);
-    this.venue.start_time_iso = this.venue.start_time.toString();
-    this.venue.end_time_iso = this.venue.end_time.toString();
+    this.venue.start_time_iso = new Date(data.start_time).toISOString();
+    this.venue.end_time_iso = new Date(data.end_time).toISOString();
     this.interpreters_required = data.number_of_interpreters_required;
     this.requested_by.first_name = data.requested_by_first_name;
     this.requested_by.last_name = data.requested_by_last_name;
@@ -99,9 +95,9 @@ export class Booking {
 
     let _start_time: Date = new Date(this.venue.start_time_iso);
 
-    let d = _start_time;
+    let d: Date = new Date(this.venue.start_time_iso);
     let parts: string[] = this.venue.end_time_iso.match(/(\d+)\:(\d+)/);
-    let hours = /am/i.test(parts[3]) ? parseInt(parts[1], 10) : parseInt(parts[1], 10) + 12;
+    let hours = /am/i.test(parts[3]) ? parseInt(parts[1], 10) : parseInt(parts[1], 10);
     let minutes = parseInt(parts[2], 10);
     d.setHours(hours);
     d.setMinutes(minutes);
