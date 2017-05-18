@@ -40,14 +40,10 @@ export class BookingJobsComponent implements AfterViewChecked, OnDestroy {
     private router: Router, private route: ActivatedRoute) {
 
     /** http://stackoverflow.com/questions/38008334/angular2-rxjs-when-should-i-unsubscribe-from-subscription */
-    this.sub = this.route.queryParams.subscribe(params => {
-      let param = params['bookingModel'] || '';
-      if (param.length > 0) {
-        let jsonData = JSON.parse(param);
-        this.selectedBookingModel.fromJSON(jsonData);
-        this.isCancelledOrUnableToServe = this.isState('Cancelled')
-         || this.isState('Unable_to_service');
-        this.fetchBookingInterpreters();
+    this.sub = this.route.params.subscribe(params => {
+      let param_id = params['id'] || '';
+      if ( Boolean(param_id) && parseInt(param_id, 10) > 0 ) {
+        this.fetchBookingInterpreters(param_id);
       }
     });
   }
@@ -164,13 +160,16 @@ export class BookingJobsComponent implements AfterViewChecked, OnDestroy {
       });
   }
 
-  fetchBookingInterpreters() {
+  fetchBookingInterpreters(param_id) {
     this.spinnerService.requestInProcess(true);
-    this.bookingService.getBooking(this.selectedBookingModel.id)
+    this.bookingService.getBooking(param_id)
       .subscribe((res: any) => {
         if (res.status === 200) {
-          this.selectedBookingModel.interpreters = res.data['interpreters'];
+          let data = res.data;
+          this.selectedBookingModel.fromJSON(data);
           this.fetchAllInterpreters();
+          this.isCancelledOrUnableToServe = this.isState('Cancelled')
+           || this.isState('Unable_to_service');
         }
         this.spinnerService.requestInProcess(false);
       },

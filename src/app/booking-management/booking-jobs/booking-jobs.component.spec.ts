@@ -24,37 +24,33 @@ import { ViewContainerRef } from '@angular/core';
 import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
 
 describe('BookingJobsComponent', () => {
-    let component: BookingJobsComponent;
-    let fixture: ComponentFixture<BookingJobsComponent>;
+  let component: BookingJobsComponent;
+  let fixture: ComponentFixture<BookingJobsComponent>;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [BookingJobsComponent],
-            providers: [ MdDialog,
-            ViewContainerRef, SpinnerService, NotificationServiceBus,
-                {
-                    provide: ActivatedRoute,
-                    useValue: {
-                        queryParams: {
-                            subscribe: (fn: (value: Data) => void) => fn({
-                                bookingModel: ''
-                            })
-                        }
-                    }
-                },
-                { provide: BookingService, useClass: MockBookingService },
-                { provide: UserService, useClass: MockUserService }, { provide: AuthHttp, useClass: MockBackend }],
-            imports: [SimpleNotificationsModule, MaterialModule, FormsModule,
-                RouterTestingModule, CustomFormsModule]
-        }).compileComponents();
-    }));
-    beforeEach(() => {
-        fixture = TestBed.createComponent(BookingJobsComponent);
-        component = fixture.componentInstance;
-        fixture.detectChanges();
-    });
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [BookingJobsComponent],
+      providers: [MdDialog,
+        ViewContainerRef, SpinnerService, NotificationServiceBus,
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: Observable.of({ id: 1 })
+          }
+        },
+        { provide: BookingService, useClass: MockBookingService },
+        { provide: UserService, useClass: MockUserService }, { provide: AuthHttp, useClass: MockBackend }],
+      imports: [SimpleNotificationsModule, MaterialModule, FormsModule,
+        RouterTestingModule, CustomFormsModule]
+    }).compileComponents();
+  }));
+  beforeEach(() => {
+    fixture = TestBed.createComponent(BookingJobsComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
-    it('should create', () => {
-        expect(component).toBeTruthy();
-    });
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

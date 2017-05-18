@@ -54,7 +54,10 @@
 				<tbody>
 					<tr>
 						<td>{{selectedBookingModel.id}}</td>
-						<td>{{selectedBookingModel.venue.start_time | date:'shortTime'}} - {{selectedBookingModel.venue.end_time | date:'shortTime'}}<br>							{{selectedBookingModel.venue.start_time | date:'EEE d MMM yy'}}</td>
+						
+						<td><span>{{selectedBookingModel.venue.start_time | date:'shortTime'}} - {{selectedBookingModel.venue.end_time | date:'shortTime'}}<br>
+													{{selectedBookingModel.venue.start_time | date:'EEE d MMM yy'}}
+													</span></td>
 						<td>Auslan</td>
 						<td>{{selectedBookingModel.contact.first_name}}</td>
 						<td>{{selectedBookingModel.venue.title}}</td>
