@@ -56,6 +56,10 @@ import { JobDetailComponent } from './booking-management/booking-jobs/job-detail
 import { DatePipe } from '@angular/common';
 import { PrettyIDPipe } from './shared/pipe/pretty-id.pipe';
 import { MobileFooterModule } from './ui/mobile-footer/mobile-footer.module';
+import { OrgRepComponent } from './ui/org-rep/org-rep.component';
+import { IndClientComponent } from './ui/ind-client/ind-client.component';
+import { InterpreterComponent } from './ui/interpreter/interpreter.component';
+import { BillingAccountComponent } from './ui/billing-account/billing-account.component';
 
 @NgModule({
   declarations: [
@@ -80,7 +84,7 @@ import { MobileFooterModule } from './ui/mobile-footer/mobile-footer.module';
     UserListComponent,
     UserHeaderComponent,
     UserDetailComponent,
-    UserProfileComponent, HyphenPipe, PrettyIDPipe, SpacerPipe, BookingJobsComponent, PopupComponent, JobDetailComponent
+    UserProfileComponent, HyphenPipe, PrettyIDPipe, SpacerPipe, BookingJobsComponent, PopupComponent, JobDetailComponent, OrgRepComponent, IndClientComponent, InterpreterComponent, BillingAccountComponent
   ],
    entryComponents: [UserDetailComponent, PopupComponent],
   imports: [CustomFormsModule, routing,
