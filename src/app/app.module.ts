@@ -84,7 +84,9 @@ import { BillingAccountComponent } from './ui/billing-account/billing-account.co
     UserListComponent,
     UserHeaderComponent,
     UserDetailComponent,
-    UserProfileComponent, HyphenPipe, PrettyIDPipe, SpacerPipe, BookingJobsComponent, PopupComponent, JobDetailComponent, OrgRepComponent, IndClientComponent, InterpreterComponent, BillingAccountComponent
+    UserProfileComponent, HyphenPipe, PrettyIDPipe, SpacerPipe,
+    BookingJobsComponent, PopupComponent, JobDetailComponent, OrgRepComponent, IndClientComponent,
+    InterpreterComponent, BillingAccountComponent
   ],
    entryComponents: [UserDetailComponent, PopupComponent],
   imports: [CustomFormsModule, routing,

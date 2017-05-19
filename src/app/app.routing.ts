@@ -16,8 +16,11 @@ import {UserProfileComponent} from './user-management/user-profile/user-profile.
 import {BookingJobsComponent} from './booking-management/booking-jobs/booking-jobs.component';
 import { NoAuthGuard } from './auth/no-auth.guard';
 import {JobDetailComponent} from './booking-management/booking-jobs/job-detail/job-detail.component';
+import {OrgRepComponent} from './ui/org-rep/org-rep.component';
 
 const appRoutes: Routes = [
+  { path: 'demo', component: OrgRepComponent
+  },
   { path: 'user-management', component: UserManagementComponent, canActivate: [AuthGuard]},
   { path: 'user-management/profile', component: UserProfileComponent, canActivate: [AuthGuard]},
   { path: 'booking-management', component: BookingComponent, canActivate: [AuthGuard]},

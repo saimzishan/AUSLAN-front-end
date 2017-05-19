@@ -7,5 +7,5 @@ import { OrganisationalRepresentative } from '../../shared/model/user.entity';
   styleUrls: ['./org-rep.component.css']
 })
 export class OrgRepComponent {
-  @Input() userModel: OrganisationalRepresentative;
+  @Input() userModel: OrganisationalRepresentative = new OrganisationalRepresentative();
 }
