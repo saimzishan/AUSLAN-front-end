@@ -30,17 +30,28 @@ let mock_response: Object[] = [
 ];
 
 let count = 2;
+
 let mock_db: User[] = [
     new User({
         id: 2, email: 'admin' + count++ + '@aus.au', first_name: 'Joe', last_name: 'Joe',
-        mobile: 'xxxx xxx xxx', verified: false, disabled: false, role: ROLE.NONE
+        mobile: 'xxxx xxx xxx', password: 'Secure_password@123', verified: false, disabled: false, role: ROLE.NONE
     }),
     new User({
         id: 2, email: 'admin' + count++ + '@aus.au', first_name: 'Joe', last_name: 'Joe',
-        mobile: 'xxxx xxx xxx', verified: false, disabled: false, token: GLOBAL.FAKE_TOKEN
+        mobile: 'xxxx xxx xxx', password: 'Secure_password@123', verified: false, disabled: false, token: GLOBAL.FAKE_TOKEN
     })
 ];
 
+let mock_db_reset_password: User =
+    new User({
+        id: 2, email: 'admin1@aus.au', first_name: 'Joe', last_name: 'Joe',
+        mobile: 'xxxx xxx xxx', verified: false, disabled: false, role: ROLE.NONE
+    });
+
+    let mock_db_get_user_by_email = {
+            id: 2, email: 'admin1@aus.au', first_name: 'Joe', last_name: 'Joe',
+            mobile: 'xxxx xxx xxx', verified: false, disabled: false, type: 'BookingOfficer'
+        };
 
 describe('UserService', () => {
     let userProvider;
@@ -270,7 +281,7 @@ describe('UserService', () => {
             userProvider
                 .given('user exists in database')
                 .uponReceiving('a request to resetUser a user')
-                .withRequest('GET', '/api/v1/users/reset_password/' + (mock_db[0].email.toString()), {
+                .withRequest('GET', '/api/v1/users/reset_password/' + (mock_db_reset_password.email.toString()), {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
 
@@ -280,7 +291,7 @@ describe('UserService', () => {
                 });
 
             userProvider.run(done, function (runComplete) {
-                service.resetUser(mock_db[0].email)
+                service.resetUser(mock_db_reset_password.email)
                     .subscribe((res: any) => {
                         expect(res.status).toEqual(200);
                         done();
@@ -292,21 +303,20 @@ describe('UserService', () => {
     });
 
     it('should getUserByEmail a user by its ID', function (done) {
-        let u = mock_db[1];
         inject([UserService], (service: UserService) => {
             userProvider
                 .given('user exists in database')
                 .uponReceiving('a request to getUserByEmail a user')
-                .withRequest('GET', '/api/v1/users/email/' + (u.email.toString()), {
+                .withRequest('GET', '/api/v1/users/email/' + (mock_db_get_user_by_email.email), {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 })
                 .willRespondWith(200, {
                     'Content-Type': 'application/json; charset=utf-8'
-                }, Pact.Match.somethingLike(mock_db[0]));
+                }, Pact.Match.somethingLike(mock_db_get_user_by_email));
 
             userProvider.run(done, function (runComplete) {
-                service.getUserByEmail(u.email)
+                service.getUserByEmail(mock_db_get_user_by_email.email)
                     .subscribe((res: any) => {
                         expect(res.status).toEqual(200);
                         done();
@@ -485,15 +495,15 @@ describe('UserService', () => {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 }, { 'auth': Pact.Match.somethingLike(u) })
-                .willRespondWith(200, {
+                .willRespondWith(201, {
                     'Content-Type': 'application/json; charset=utf-8'
-                }, { 'jwt': '123' });
+                }, Pact.Match.somethingLike({ 'jwt': '123' }));
 
             userProvider.run(done, function (runComplete) {
 
                 service.login(u)
                     .subscribe((res: any) => {
-                        expect(res.status).toEqual(200);
+                        expect(res.status).toEqual(201);
                         done();
                     }, err => done.fail(err), () => {
                         runComplete();

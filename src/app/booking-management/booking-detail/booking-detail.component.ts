@@ -31,6 +31,7 @@ export class BookingDetailComponent implements AfterViewChecked, OnDestroy {
   specific_appointment_types =  [];
   parking_types = PARKING;
   currentUserIsContact = 'true';
+  currentUserIsClient = 'true';
   prefInterpreter: boolean;
 
   constructor(public bookingService: BookingService, private router: Router,
@@ -69,7 +70,16 @@ export class BookingDetailComponent implements AfterViewChecked, OnDestroy {
     $(document).foundation();
     if (GLOBAL.currentUser !== undefined) {
       this.onSelectionChange();
+      this.onClientSelectionChange();
     }
+  }
+
+  public onClientSelectionChange() {
+    this.bookingModel.deaf_person.first_name = this.currentUserIsClient === 'true' ? GLOBAL.currentUser.first_name : '';
+    this.bookingModel.deaf_person.last_name = this.currentUserIsClient === 'true' ? GLOBAL.currentUser.last_name : '';
+    this.bookingModel.deaf_person.email = this.currentUserIsClient === 'true' ? GLOBAL.currentUser.email : '';
+    this.bookingModel.deaf_person.mobile_number = this.currentUserIsClient === 'true' ? GLOBAL.currentUser.mobile : '';
+    this.bookingModel.deaf_person.phone_number = this.currentUserIsClient === 'true' ? GLOBAL.currentUser.mobile : '';
   }
 
   public onSelectionChange() {
