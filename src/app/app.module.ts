@@ -88,7 +88,7 @@ import { MobileFooterModule } from './ui/mobile-footer/mobile-footer.module';
     FormsModule, BrowserAnimationsModule,
     HttpModule, SimpleNotificationsModule.forRoot(),
     ReactiveFormsModule, Md2Module.forRoot(),
-    MaterialModule.forRoot()
+    MaterialModule
   ],  providers: [DatePipe, LinkAuth, UserNameService, RolePermission, AuthGuard, NoAuthGuard, Title, LinkHelper,
     NotificationServiceBus, SpinnerService, BookingService, UserService,
     {provide: APP_BASE_HREF, useValue : '/' }, {
