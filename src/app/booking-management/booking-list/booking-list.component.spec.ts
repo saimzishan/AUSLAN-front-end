@@ -21,8 +21,8 @@ describe('BookingListComponent' ,  () => {
   'deaf_persons_mobile' : '00000000000' ,
   'deaf_persons_email' : 'person@b.com' ,
   'deaf_persons_eaf_no' : '5555' , 'parking_availability' : 'None' ,
-  'number_of_people_attending' : -0 , 'start_time' : '20/03/2017 02:27' ,
-  'end_time' : '20/03/2017 02:27',
+  'number_of_people_attending' : -0 , 'start_time' : '2017-03-16T19:20+01:00' ,
+  'end_time' : '2017-03-16T19:22+01:00',
   'address_attributes':
   {'line_1': 'Curve Tomorrow',
   'line_2': 'L4 West RCH',
@@ -56,7 +56,8 @@ describe('BookingListComponent' ,  () => {
   });
   it('should ui to be filled with data' ,  () => {
 
-    let bID = fixture.debugElement.query(By.css('td.bookingID'));
+    let cssBookingInfo = By.css('td.bookingID');
+    let bID = fixture.debugElement.query(cssBookingInfo);
     expect(parseInt(bID.nativeElement.innerText, 10)).toEqual(5);
 
   });

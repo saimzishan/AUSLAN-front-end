@@ -254,7 +254,7 @@ describe('BookingService', () => {
 
             bookingProvider.run(done, function (runComplete) {
                 let u: Booking = mock_db[0];
-                u.raw_venue_address = 'updated';
+                u.venue.street_num = 'updated';
 
                 let status_code = service.updateBooking(u)
                     .subscribe((res: any) => {

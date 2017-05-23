@@ -32,10 +32,10 @@ describe('BookingService', () => {
       expect(mock_booking.venue.expected_attendance).toEqual('1');
       expect(mock_booking.venue.unit_num).toEqual('12');
       expect(mock_booking.venue.street_num).toEqual('50');
-      expect(mock_booking.venue.interpreter_attendance).toEqual('2');
+      expect(mock_booking.interpreters_required).toEqual('2');
       expect(mock_booking.venue.street_name).toEqual('Flemington Rd');
-      expect(mock_booking.venue.start_time).toEqual(1491119419212);
-      expect(mock_booking.venue.end_time).toEqual(1491123019212);
+      expect(mock_booking.venue.start_time_iso).toEqual('2017-04-02T07:50:19.212Z');
+      expect(mock_booking.venue.end_time_iso).toEqual('2017-04-02T08:50:19.212Z');
       expect(mock_booking.requested_by.first_name).toEqual('Georgious');
       expect(mock_booking.requested_by.last_name).toEqual('George');
       expect(mock_booking.contact.first_name).toEqual('Hadrian');
@@ -54,8 +54,8 @@ describe('BookingService', () => {
       mock_booking.venue.expected_attendance = '1';
       mock_booking.venue.unit_num = '12';
       mock_booking.venue.street_num = '50';
-      mock_booking.venue.start_time = '2017-04-02T07:50:19.212+00:00';
-      mock_booking.venue.end_time = '2017-04-02T08:50:19.212+00:00';
+      mock_booking.venue.start_time_iso = '2017-04-02T07:50:19.212Z';
+      mock_booking.venue.end_time_iso = '2017-04-02T08:50:19.212Z';
       mock_booking.requested_by.first_name = 'Georgious';
       mock_booking.requested_by.last_name = 'George';
       mock_booking.contact.first_name = 'Hadrian';
@@ -67,7 +67,7 @@ describe('BookingService', () => {
       mock_booking.deaf_person.eaf = '1231 0900';
       mock_booking.deaf_person.email = 'clifford@vicdeaf.org.au';
       mock_booking.deaf_person.mobile_number = '0444 555 666';
-      mock_booking.venue.interpreter_attendance = '2';
+      mock_booking.interpreters_required = '2';
       mock_booking.venue.street_name = 'Flemington Rd';
 
       let data = mock_booking.toJSON();
@@ -76,8 +76,8 @@ describe('BookingService', () => {
       expect(data.address_attributes.unit_number).toEqual('12');
       expect(data.address_attributes.street_number).toEqual('50');
       expect(data.address_attributes.street_name).toEqual('Flemington Rd');
-      expect(data.start_time).toEqual('2017-04-02T07:50:19.212+00:00');
-      expect(data.end_time).toEqual('2017-04-02T08:50:19.212+00:00');
+      expect(data.start_time).toEqual('2017-04-02T07:50:19.212Z');
+      expect(data.end_time).toEqual('2017-04-01T22:50:19.212Z');
       expect(data.requested_by_first_name).toEqual('Georgious');
       expect(data.requested_by_last_name).toEqual('George');
       expect(data.contact_first_name).toEqual('Hadrian');
