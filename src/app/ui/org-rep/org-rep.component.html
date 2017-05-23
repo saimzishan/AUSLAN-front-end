@@ -1,0 +1,26 @@
+    <div class="row small-collapse">
+      <div class="row-wrapper">
+        <div class="medium-6 columns">
+          <div class="form-field">
+            <label>Business Hours Phone *	</label>
+
+            <input type="tel" class="valid" placeholder="Enter Business Hour Phone"
+            [(ngModel)]="userModel.business_hours_phone" name="business_hours_phone" #business_hours_phone="ngModel" [rangeLength]="[3, 20]" digit required>
+            <span *ngIf="business_hours_phone.touched && !business_hours_phone.errors?.required && !business_hours_phone.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
+            <span *ngIf="business_hours_phone.touched && (business_hours_phone.errors?.required || business_hours_phone.errors?.rangeLength);" class="inline-icon error">
+                      <span>Minimum 3 characters required.</span>!</span>
+          </div>
+        </div>
+          <div class="medium-6 columns">
+              <div class="form-field">
+                  <label>ABN *	</label>
+
+                  <input type="tel" class="valid" placeholder="Enter ABN"
+                         [(ngModel)]="userModel.abn" name="business_abn" #business_abn="ngModel" [rangeLength]="[-1, 11]" digit required>
+                  <span *ngIf="business_abn.touched && !business_abn.errors?.required && !business_abn.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
+                  <span *ngIf="business_abn.touched && (business_abn.errors?.required || business_abn.errors?.rangeLength);" class="inline-icon error">
+                      <span>11 Digits are characters required.</span>!</span>
+              </div>
+          </div>
+      </div>
+    </div>

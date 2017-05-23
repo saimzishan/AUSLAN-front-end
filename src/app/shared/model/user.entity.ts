@@ -63,13 +63,6 @@ export class User {
   }
 }
 
-export class OrganisationalRepresentative extends User {
-  public business_hours_phone = '';
-
-  get user_type() {
-    return 'OrganisationalRepresentative';
-  }
-}
 
 export class Organisational extends User {
   public abn: number;
@@ -82,6 +75,14 @@ export class Organisational extends User {
 
   get user_type() {
     return 'Organisational';
+  }
+}
+
+export class OrganisationalRepresentative extends Organisational {
+  public business_hours_phone = '';
+
+  get user_type() {
+    return 'OrganisationalRepresentative';
   }
 }
 

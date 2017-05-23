@@ -72,7 +72,7 @@
                                     </li>
                                 </ul>
                             </th>
-					
+
 						</tr>
 					</thead>
       <tbody>
@@ -88,7 +88,7 @@
 							<td>{{stateToString(booking.state)}}</td>
 							<td>
                                 <div class="job-date">
-                                    <span>{{booking.venue.start_time | date:'shortTime'}} - {{booking.venue.end_time | date:'shortTime'}}<br>{{booking.venue.start_time | date:'EEE d MMM yy'}}</span>
+                                    <span>{{booking.venue.start_time_iso | date:'shortTime'}} - {{booking.venue.end_time_iso | date:'shortTime'}}<br>{{booking.venue.start_time_iso | date:'EEE d MMM yy'}}</span>
                                     <i class="icon-requested"></i>
                                 </div>
                             </td>
@@ -100,7 +100,7 @@
 									<br />
 								</span> </td>
 							<td><a href="javascript:void(0)" class="attach"><i class="icon-attach"></i></a> {{booking.raw_nature_of_appointment}}</td>
-							
+
 						</tr>
 
 

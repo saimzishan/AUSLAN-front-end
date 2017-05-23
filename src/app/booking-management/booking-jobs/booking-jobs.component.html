@@ -21,9 +21,9 @@
 				<a href="javascript:void(0);" [ngClass]="{'active' : isState('In_progress')}">In Progress</a>
 				<a href="javascript:void(0);" [ngClass]="{'active' : isState('Allocated')}">Allocated</a>
 				<a href="javascript:void(0);" [ngClass]="{'active' : isState('Completed')}">Completed</a>
-				<a href="javascript:void(0);" [ngClass]="{'active' : isState('Finished') 
+				<a href="javascript:void(0);" [ngClass]="{'active' : isState('Finished')
 				|| isState('Unable_to_service') || isState('Cancelled')}">
-					{{isState('Cancelled') ? 'Cancelled' : 
+					{{isState('Cancelled') ? 'Cancelled' :
 					isState('Unable_to_service') ? 'Unable To Serve' : 'Finished' }}
 					</a>
 			</nav>
@@ -54,7 +54,10 @@
 				<tbody>
 					<tr>
 						<td>{{selectedBookingModel.id}}</td>
-						<td>{{selectedBookingModel.venue.start_time | date:'shortTime'}} - {{selectedBookingModel.venue.end_time | date:'shortTime'}}<br>							{{selectedBookingModel.venue.start_time | date:'EEE d MMM yy'}}</td>
+
+						<td><span>{{selectedBookingModel.venue.start_time_iso | date:'shortTime'}} - {{selectedBookingModel.venue.end_time_iso | date:'shortTime'}}<br>
+													{{selectedBookingModel.venue.start_time_iso | date:'EEE d MMM yy'}}
+													</span></td>
 						<td>Auslan</td>
 						<td>{{selectedBookingModel.contact.first_name}}</td>
 						<td>{{selectedBookingModel.venue.title}}</td>

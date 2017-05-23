@@ -47,6 +47,7 @@ export class BookingComponent implements AfterViewChecked {
               this.bookings.push(b);
             }
           }
+          this.bookings.sort( ( x, y ) => parseInt(x.id, 10) - parseInt(y.id, 10));
 
         }
         this.spinnerService.requestInProcess(false);
