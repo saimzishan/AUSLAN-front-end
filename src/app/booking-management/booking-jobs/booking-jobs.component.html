@@ -53,7 +53,7 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td>{{selectedBookingModel.id}}</td>
+						<td>{{selectedBookingModel.id | PrettyID}}</td>
 
 						<td><span>{{selectedBookingModel.venue.start_time_iso | date:'shortTime'}} - {{selectedBookingModel.venue.end_time_iso | date:'shortTime'}}<br>
 													{{selectedBookingModel.venue.start_time_iso | date:'EEE d MMM yy'}}

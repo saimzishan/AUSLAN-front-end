@@ -37,9 +37,11 @@ export class AuthComponent implements OnInit, OnDestroy {
            });
    }
 
-   ngOnDestroy() {
-     return this.sub.unsubscribe() && this.querySub.unsubscribe();
-   }
+
+    ngOnDestroy() {
+        return this.sub && this.sub.unsubscribe()
+            && this.querySub && this.querySub.unsubscribe();
+    }
 
     onSubmit() {
       this.spinnerService.requestInProcess(true);

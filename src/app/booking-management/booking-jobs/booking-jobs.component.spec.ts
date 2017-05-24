@@ -22,6 +22,7 @@ import { Observable } from 'rxjs/Observable';
 import { CustomFormsModule } from 'ng2-validation';
 import { ViewContainerRef } from '@angular/core';
 import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
+import { PrettyIDPipe } from '../../shared/pipe/pretty-id.pipe';
 
 describe('BookingJobsComponent', () => {
   let component: BookingJobsComponent;
@@ -29,7 +30,7 @@ describe('BookingJobsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [BookingJobsComponent],
+      declarations: [BookingJobsComponent, PrettyIDPipe],
       providers: [MdDialog,
         ViewContainerRef, SpinnerService, NotificationServiceBus,
         {

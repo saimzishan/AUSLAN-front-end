@@ -19,6 +19,7 @@ export class Booking {
   public attachment: any;
   public interpreters: Array<BookingInterpreters> = [];
   public interpreters_required = 0;
+  public notes = '';
   // Is it a limitation on interpreters invitation.
 
   constructor() {
