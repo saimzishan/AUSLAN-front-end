@@ -36,7 +36,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-         this.querySub.unsubscribe();
+        return this.querySub
+            && this.querySub.unsubscribe();
     }
     getUserProfile() {
       let user  = GLOBAL.currentUser; // how to do conditional casting neatly ?
