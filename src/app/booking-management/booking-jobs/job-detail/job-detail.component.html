@@ -4,6 +4,16 @@
 
 <section id="page-common">
     <section id="static-flow">
+        <section id="submenu">
+            <nav>
+                <a href="javascript:void(0);" class="active">Booking info</a>
+            </nav>
+            <div>
+                <button (click)="jobAction(false)" class="button pink">Decline</button>
+                <div class="sep"></div>
+                <button (click)="jobAction(true)" class="button inverse">Accept</button>
+            </div>
+        </section>
         <section id="steps">
             <nav>
                 <a href="javascript:void(0);" [ngClass]="{'active' : isState('Requested')}">Requested</a>
@@ -52,7 +62,8 @@
                     <td data-title="Language">Auslan</td>
                     <td data-title="Client">{{selectedBookingModel.contact.first_name}}</td>
                     <td data-title="VENUE">{{selectedBookingModel.venue.title}}</td>
-                    <td data-title="SUBURB">{{selectedBookingModel.venue.suburb}}</td>
+                    <td data-title="SUBURB">
+                        <a target="_blank" href="{{'https://www.google.com.au/maps/place/' +selectedBookingModel.venue.suburb}}">{{selectedBookingModel.venue.suburb}}</a></td>
                     <td data-title="TYPE OF JOB">{{selectedBookingModel.nature_of_appointment}}</td>
                     <td data-title="People">{{selectedBookingModel.venue.expected_attendance}}</td>
                     <td data-title="SPECIAL INSTRUCTIONS" class="new-line">{{selectedBookingModel.notes}}</td>
@@ -87,9 +98,9 @@
                     <span>DO YOU WANT TO DO THIS JOB?</span>
                 </div>
                 <div class="manage-job-buttons">
-                    <button class="button button-accept" ng-click="showPopup()"><i class="icon-check-mobile"></i></button>
-                    <button class="button button-help" ng-click="showPopup()"><i class="icon-help"></i></button>
-                    <button class="button button-decline" ng-click="showPopup()"><i class="icon-decline"></i></button>
+                    <button class="button button-accept" (click)="jobAction(true)"><i class="icon-check-mobile"></i></button>
+                    <button class="button button-help" (click)="jobAction(false)"><i class="icon-help"></i></button>
+                    <button class="button button-decline" (click)="jobAction(false)"><i class="icon-decline"></i></button>
                 </div>
             </section>
 
