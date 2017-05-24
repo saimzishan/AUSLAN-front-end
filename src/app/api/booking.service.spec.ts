@@ -36,20 +36,21 @@ let mock_response_with_interpreters: Object[] = [
 
     })
 ];
-let mock_request = new Object({'id': '2',
-'venue': 'Fed Square', 'requested_by': 'Georgious', 'nature_of_appointment': 'Translation',
+
+let mock_request_with_interpreters = new Object({'interpreters': [], 'id' : '2', 'venue' : 'Fed Square',
+    'requested_by': 'Georgious', 'nature_of_appointment': 'Translation',
     'specific_nature_of_appointment': 'Engagement', 'contact_name': 'Hadrian French', 'contact_phone_number': '03 2342 2343',
     'contact_mobile_number': '0411 222 333', 'deaf_persons_name': 'Clifford', 'deaf_persons_mobile': '0444 555 666',
     'deaf_persons_email': 'clifford@vicdeaf.org.au', 'deaf_persons_eaf_no': '1231 0900',
     'number_of_people_attending': '1', 'start_time': '2017-04-02T07:50:19.212+00:00', 'end_time': '2017-04-02T08:50:19.212+00:00',
-    'parking_availability': 'None', 'address_attributes': {'line_1' : 'Curve Tomorrow', 'line_2': 'L4 West RCH',
-    'line_3': '50 Flemington Rd', 'suburb': 'Parkville', 'state': 'Victoria', 'post_code': '3025'}});
+    'parking_availability': 'None', 'address_attributes': {'unit_number' : '12', 'street_number': '50',
+        'street_name': 'Flemington Rd', 'suburb': 'Parkville', 'state': 'Victoria', 'post_code': '3025'}});
 
 describe('BookingService', () => {
     let bookingProvider;
     let val = '';
     let mock_booking = new Booking();
-    mock_booking.fromJSON(mock_request);
+    mock_booking.fromJSON(mock_request_with_interpreters);
     let mock_db: Booking[] = [mock_booking];
     beforeEach((done) => {
         TestBed.configureTestingModule({
@@ -199,7 +200,7 @@ describe('BookingService', () => {
                 )
                 .willRespondWith(200, {
                     'Content-Type': 'application/json; charset=utf-8'
-                }, Pact.Match.somethingLike(mock_response_with_interpreters[0]));
+                }, Pact.Match.somethingLike(mock_request_with_interpreters));
 
             bookingProvider.run(done, function (runComplete) {
                 service.getBooking(1)
@@ -251,7 +252,7 @@ describe('BookingService', () => {
                 .withRequest('PATCH', '/api/v1/bookings/2', {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
-                }, { 'booking': mock_db[0].toJSON() }
+                }, Pact.Match.somethingLike({ 'booking': mock_db[0].toJSON() })
                 )
                 .willRespondWith(204);
 
