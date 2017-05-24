@@ -120,6 +120,9 @@ describe('BookingService', () => {
 
     it('should invite a bulk of interpreters', function (done) {
         inject([BookingService], (service: BookingService) => {
+            let invite_url = GLOBAL.BOOKING_JOB_INVITE + 2 + '/job-detail';
+            let obj = { 'invite_url': invite_url , 'interpreters' : [{'id': 2579}] };
+
             bookingProvider
                 .given('booking does exists in database')
                 .uponReceiving('a request to invite interpreters')
@@ -127,7 +130,7 @@ describe('BookingService', () => {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
 
-                }, Pact.Match.somethingLike({'interpreters': [{'id': 2579}]})
+                }, Pact.Match.somethingLike(obj)
                 ).willRespondWith(204);
 
             bookingProvider.run(done, function (runComplete) {
@@ -143,7 +146,7 @@ describe('BookingService', () => {
         })();
     });
 
-    describe('Fetach All booking Api', () => {
+    describe('Fetch All booking Api', () => {
 
         it('should return a collection of bookings for fetch all bookings', function (done) {
             inject([BookingService], (service: BookingService) => {

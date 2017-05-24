@@ -12,6 +12,7 @@ export class GLOBAL {
     public static BOOKING_API_ENDPOINT = (environment.production) ? 'https://auslan-staging.herokuapp.com/api/v1'
     : (environment.stage) ? 'https://auslan.herokuapp.com/api/v1' :  `http://localhost:${GLOBAL.MOCK_BOOKING_SERVER_PORT}/api/v1`;
     public static USER_API = GLOBAL.USER_API_ENDPOINT + '/users';
+    public static BOOKING_JOB_INVITE = GLOBAL.BOOKING_API_ENDPOINT + '/booking-management/';
 
     public static BOOKING_API = GLOBAL.BOOKING_API_ENDPOINT + '/bookings';
     public static TITLE = 'Auslan Booking System';
