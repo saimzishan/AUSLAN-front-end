@@ -39,6 +39,7 @@ import { RolePermission } from '../shared/role-permission/role-permission';
 import { HttpModule, Http, RequestOptions } from '@angular/http';
 import { VerifyComponent } from '../verify/verify.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Data } from '@angular/router';
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
@@ -53,7 +54,17 @@ describe('DashboardComponent', () => {
       declarations: [DashboardComponent, SpacerPipe, UserFilterComponent, UserHeaderComponent, VerifyComponent, UserListComponent],
       imports: [FormsModule, CustomFormsModule, HttpModule, RouterModule],
       providers: [RolePermission, LinkHelper, UserNameService, { provide: Router, useValue: routerStub },
-        { provide: UserService, useClass: MockUserService }, { provide: AuthHttp, useClass: MockBackend }]
+        { provide: UserService, useClass: MockUserService }, { provide: AuthHttp, useClass: MockBackend },
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            queryParams: {
+              subscribe: (fn: (value: Data) => void) => fn({
+                redirectedUrl: ''
+              })
+            }
+          }
+        }]
     })
       .compileComponents();
   }));
