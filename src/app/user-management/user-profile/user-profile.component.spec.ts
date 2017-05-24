@@ -15,6 +15,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import {LinkHelper, LinkAuth} from '../../shared/router/linkhelper';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {RolePermission} from '../../shared/role-permission/role-permission';
+import {HttpModule} from '@angular/http';
 
 describe('UserProfileComponent', () => {
   let component: UserProfileComponent;
@@ -27,7 +28,7 @@ describe('UserProfileComponent', () => {
          { provide: UserService, useClass: MockUserService}, { provide: AuthHttp, useClass: MockBackend},
         NotificationServiceBus,
         SpinnerService],
-        imports: [FormsModule, MaterialModule, RouterTestingModule, CustomFormsModule, BrowserAnimationsModule]
+        imports: [HttpModule, FormsModule, MaterialModule, RouterTestingModule, CustomFormsModule, BrowserAnimationsModule]
     })
     .compileComponents();
   }));
