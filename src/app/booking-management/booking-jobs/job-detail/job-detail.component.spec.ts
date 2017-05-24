@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MobileFooterModule } from '../../../ui/mobile-footer/mobile-footer.module';
 
 import { JobDetailComponent } from './job-detail.component';
 import {ActivatedRoute} from '@angular/router';
@@ -32,7 +33,7 @@ describe('JobDetailComponent', () => {
         },
         { provide: BookingService, useClass: MockBookingService },
          { provide: AuthHttp, useClass: MockBackend }],
-      imports: [SimpleNotificationsModule, MaterialModule, FormsModule,
+      imports: [SimpleNotificationsModule, MaterialModule, FormsModule, MobileFooterModule,
         RouterTestingModule, CustomFormsModule]
     }).compileComponents();
   }));

@@ -7,6 +7,7 @@ import { Router, NavigationExtras } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { PrettyIDPipe } from '../../../shared/pipe/pretty-id.pipe';
 import { BOOKING_STATUS } from '../../../shared/model/booking-status.enum';
+import { MobileFooterModule } from '../../../ui/mobile-footer/mobile-footer.module';
 
 declare var $: any;
 
