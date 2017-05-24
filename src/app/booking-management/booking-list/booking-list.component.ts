@@ -35,4 +35,8 @@ export class BookingListComponent {
     GLOBAL.selBookingID = booking.id;
   }
 
+    isCurrentUser(id) {
+      return GLOBAL.currentUser.id === id;
+}
+
 }
