@@ -1,111 +1,131 @@
 <main>
-			<h1>AUSLAN &amp; VRI JOB TYPES</h1>
-			<section class="job-types">
-				<table class="custom">
-					<thead>
-						<tr>
-							<th width="3%">
-								<div class="checkbox">
-									<input type="checkbox" name="" value="1" id="job-1">
-									<label for="job-1"></label>
-								</div>
-							</th>
-							<th width="5%">
-								<span class="order asc">Job</span>
-								<input type="text" name="job">
-							</th>
-                            <th width="5%">
-								<span class="order asc">Status</span>
-                                <ul class="dropdown menu custom" data-dropdown-menu>
-                                    <li>
-                                        <a href="javascript:void(0)">All</a>
-                                        <ul class="menu smaller">
-                                            <li><a href="javascript:void(0)"><i></i> Option 1</a></li>
-                                            <li><a href="javascript:void(0)"><i></i> Option 2</a></li>
-                                            <li><a href="javascript:void(0)"><i></i> Option 3</a></li>
-                                        </ul>
-                                    </li>
+    <h1>AUSLAN &amp; VRI JOB TYPES</h1>
+    <section class="jobs">
+        <table id="jobs-responsive" class="custom">
+            <thead>
+            <tr>
+                <th width="3%">
+                    <div class="checkbox">
+                        <input type="checkbox" name="" value="1" id="job-1">
+                        <label for="job-1"></label>
+                    </div>
+                </th>
+                <th width="5%">
+                    <span class="order asc">Job</span>
+                    <input type="text" name="job">
+                </th>
+                <th width="5%">
+                    <span class="order asc">Status</span>
+                    <ul class="dropdown menu custom" data-dropdown-menu>
+                        <li>
+                            <a href="javascript:void(0)">All</a>
+                            <ul class="menu smaller">
+                                <li><a href="javascript:void(0)"><i></i> Option 1</a></li>
+                                <li><a href="javascript:void(0)"><i></i> Option 2</a></li>
+                                <li><a href="javascript:void(0)"><i></i> Option 3</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </th>
+                <th>
+                    <span class="order asc">State</span>
+                    <ul class="dropdown menu custom" data-dropdown-menu>
+                        <li>
+                            <a href="javascript:void(0)">All</a>
+                            <ul class="menu smaller">
+                                <li><a href="javascript:void(0)"><i></i> Option 1</a></li>
+                                <li><a href="javascript:void(0)"><i></i> Option 2</a></li>
+                                <li><a href="javascript:void(0)"><i></i> Option 3</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </th>
+                <th>
+                    <span class="order desc">Date</span>
+                </th>
+                <th>
+                    <span class="order desc">Org</span>
+                    <input type="text" name="org">
+                </th>
+                <th>
+                    <span class="order asc">Client</span>
+                    <input type="text" name="client">
+                </th>
+                <th>
+                    <span class="order asc">Suburb</span>
+                    <input type="text" name="suburb">
+                </th>
+                <th>
+                    <span class="order asc">Interpreter</span>
+                    <input type="text" name="interpreter">
+                </th>
+                <th>
+                    <span class="order asc">Booking Type</span>
+                    <ul class="dropdown menu custom" data-dropdown-menu>
+                        <li>
+                            <a href="javascript:void(0)">All</a>
+                            <ul class="menu smaller">
+                                <li><a href="javascript:void(0)"><i></i> Option 1</a></li>
+                                <li><a href="javascript:void(0)"><i></i> Option 2</a></li>
+                                <li><a href="javascript:void(0)"><i></i> Option 3</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr [ngClass]="{'active': isSelectedBooking(booking.id)}" *ngFor="let booking of bookingList"
+                (click)="setClickedRow(booking)">
+                <td>
+                    <div class="checkbox">
+                        <input type="checkbox" name="" value="1" id="job-2">
+                        <label for="job-2"></label>
+                    </div>
+                </td>
+                <td class="bookingID">
+                    <div class="actions-container">
+		<span>	{{booking.id | PrettyID}}
+</span>
+                        <ul class="dropdown menu custom actions hidden-desktop" data-dropdown-menu>
+                            <li>
+                                <a href="javascript:void(0)"><i class="icon-more-icon"></i></a>
+                                <ul class="menu right-side green">
+                                    <li><a href="#"><i class="icon-check-mobile"></i> Accept</a></li>
+                                    <li><a href="#"><i class="icon-help"></i> Tentative</a></li>
+                                    <li><a href="#"><i class="icon-decline"></i> Decline</a></li>
                                 </ul>
-							</th>
-							<th>
-								<span class="order asc">State</span>
-								<ul class="dropdown menu custom" data-dropdown-menu>
-									<li>
-										<a href="javascript:void(0)">All</a>
-										<ul class="menu smaller">
-											<li><a href="javascript:void(0)"><i></i> Option 1</a></li>
-											<li><a href="javascript:void(0)"><i></i> Option 2</a></li>
-											<li><a href="javascript:void(0)"><i></i> Option 3</a></li>
-										</ul>
-									</li>
-								</ul>
-							</th>
-							<th>
-								<span class="order desc">Date</span>
-							</th>
-							<th>
-								<span class="order desc">Org</span>
-								<input type="text" name="org">
-							</th>
-							<th>
-								<span class="order asc">Client</span>
-                                <input type="text" name="client">
-							</th>
-                            <th>
-                                <span class="order asc">Suburb</span>
-                                <input type="text" name="suburb">
-                            </th>
-                            <th>
-                                <span class="order asc">Interpreter</span>
-                                <input type="text" name="interpreter">
-                            </th>
-                            <th>
-                                <span class="order asc">Booking Type</span>
-                                <ul class="dropdown menu custom" data-dropdown-menu>
-                                    <li>
-                                        <a href="javascript:void(0)">All</a>
-                                        <ul class="menu smaller">
-                                            <li><a href="javascript:void(0)"><i></i> Option 1</a></li>
-                                            <li><a href="javascript:void(0)"><i></i> Option 2</a></li>
-                                            <li><a href="javascript:void(0)"><i></i> Option 3</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </th>
+                            </li>
+                        </ul>
+                    </div>
 
-						</tr>
-					</thead>
-      <tbody>
-        <tr [ngClass]="{'active': isSelectedBooking(booking.id)}" *ngFor="let booking of bookingList" (click)="setClickedRow(booking)" >
-							<td>
-								<div class="checkbox">
-									<input type="checkbox" name="" value="1" id="job-2">
-									<label for="job-2"></label>
-								</div>
-							</td>
-<td class="bookingID" >{{booking.id | PrettyID}}</td>
-							<td class="text-center"><i class="status status-ready-to-process"></i></td>
-							<td>{{stateToString(booking.state)}}</td>
-							<td>
-                                <div class="job-date">
-                                    <span>{{booking.venue.start_time_iso | date:'shortTime'}} - {{booking.venue.end_time_iso | date:'shortTime'}}<br>{{booking.venue.start_time_iso | date:'EEE d MMM yy'}}</span>
-                                    <i class="icon-requested"></i>
-                                </div>
-                            </td>
-							<td>{{booking.venue.city}}</td>
-							<td>{{booking.contact.first_name}}</td>
-						<td>{{booking.venue.suburb}}</td>
-							<td class="text-center truncated">
-								<span *ngFor="let user of booking.interpreters" > {{user?.first_name  + ' ' + user?.last_name}}
-									<br />
-								</span> </td>
-							<td><a href="javascript:void(0)" class="attach"><i class="icon-attach"></i></a> {{booking.raw_nature_of_appointment}}</td>
+                </td>
+                <td class="text-center"><i class="status status-ready-to-process"></i></td>
+                <td>{{stateToString(booking.state)}}</td>
+                <td>
+                    <div class="job-date">
+                                    <span><i class="icon-time hidden-desktop"></i>
+										{{booking.venue.start_time_iso | date:'shortTime'}} -
+										{{booking.venue.end_time_iso | date:'shortTime'}}<br>{{booking.venue.start_time_iso | date:'EEE d MMM yy'}}</span>
+                        <i class="icon-requested"></i>
+                    </div>
+                </td>
+                <td>{{booking.venue.city}}</td>
+                <td>{{booking.contact.first_name}}</td>
+                <td>{{booking.venue.suburb}}</td>
+                <td class="text-center truncated">
+								<span *ngFor="let user of booking.interpreters"> {{user?.first_name  + ' ' + user?.last_name}}
+									<br/>
+								</span></td>
+                <td><a href="javascript:void(0)" class="attach"><i class="icon-attach"></i></a>
+                    {{booking.raw_nature_of_appointment}}
+                </td>
 
-						</tr>
+            </tr>
 
 
-
-      </tbody>
-    </table>
-  </section>
+            </tbody>
+        </table>
+    </section>
 </main>

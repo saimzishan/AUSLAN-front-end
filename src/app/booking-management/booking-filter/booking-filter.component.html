@@ -1,15 +1,37 @@
 <section id="filters">
   <section class="search-bar">
     <input type="text" name="search" id="search" placeholder="Search...">
-    <button><i class="icon-settings"></i></button>
+    <button><i class="icon-glass"></i></button>
   </section>
 
-  <section class="filters">
-    <button class="button">Unallocated</button>
-    <button class="button">Court<br>Melbourne</button>
-    <button class="button">Unallocated<br>Next week</button>
-    <button class="button">New<br>bookings</button>
-    <button class="button">Filter 5</button>
+  <section class="filters-mobile hidden-desktop">
+    <ul class="dropdown menu custom white" data-dropdown-menu>
+      <li>
+        <a href="#">Date</a>
+        <ul class="menu right-side">
+          <li><a href="javascript:void(0)">Allocated</a></li>
+          <li><a href="javascript:void(0)">Invited</a></li>
+          <li><a href="javascript:void(0)">Service Completed</a></li>
+        </ul>
+      </li>
+    </ul>
+
+    <ul class="dropdown menu custom white" data-dropdown-menu>
+      <li>
+        <a href="javascript:void(0)">Job</a>
+        <ul class="menu right-side">
+          <li><a href="javascript:void(0)"><i></i> Use as template</a></li>
+          <li><a href="javascript:void(0)"><i></i> Add attachments</a></li>
+          <li><a href="javascript:void(0)"><i></i> Cancel</a></li>
+        </ul>
+      </li>
+    </ul>
+  </section>
+
+  <section class="filters hidden-mobile">
+    <button class="button">Allocated</button>
+    <button class="button">Invited</button>
+    <button class="button">Service<br>Completed</button>
 
     <div class="separator"></div>
 
@@ -17,9 +39,9 @@
       <li>
         <a href="javascript:void(0)">All Job Types</a>
         <ul class="menu">
-          <li><a href="javascript:void(0)">All</a></li>
-          <li><a href="javascript:void(0)">AUSLAN</a></li>
-          <li><a href="javascript:void(0)">VRI</a></li>
+          <li><a href="javascript:void(0)">Allocated</a></li>
+          <li><a href="javascript:void(0)">Invited</a></li>
+          <li><a href="javascript:void(0)">Service Completed</a></li>
         </ul>
       </li>
     </ul>

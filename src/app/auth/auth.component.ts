@@ -15,7 +15,8 @@ import {NotificationServiceBus} from '../notification/notification.service';
 export class AuthComponent implements OnInit, OnDestroy {
   model: User = new User();
   private sub: any;
-
+  private querySub: any;
+  private returnUrl = '';
   constructor(public spinnerService: SpinnerService, public notificationServiceBus: NotificationServiceBus, public service: UserService,
      public routes: ActivatedRoute, public router: Router) {
        this.logout();
@@ -27,10 +28,17 @@ export class AuthComponent implements OnInit, OnDestroy {
          this.logout();
        }
      });
+
+       this.querySub = this.routes
+           .queryParams
+           .subscribe(params => {
+               // Defaults to 0 if no query param provided.
+               this.returnUrl = params['returnUrl'] || '';
+           });
    }
 
    ngOnDestroy() {
-     this.sub.unsubscribe();
+     return this.sub.unsubscribe() && this.querySub.unsubscribe();
    }
 
     onSubmit() {
@@ -42,7 +50,7 @@ export class AuthComponent implements OnInit, OnDestroy {
         if ( res.data.jwt) {
         this.model.token = res.data.jwt;
         AuthGuard.login(this.model);
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/dashboard'], { queryParams: { redirectedUrl : this.returnUrl } });
       }
     },
     err => {
