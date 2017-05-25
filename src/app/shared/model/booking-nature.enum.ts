@@ -24,29 +24,131 @@ export class BA {
     BA.DISSCUSSION_ITEM[BOOKING_NATURE.Human] =
       ['Centrelink', 'Child protection', 'Crisis/Emergency', 'Home Visit', 'Housing', 'Other'];
     BA.DISSCUSSION_ITEM[BOOKING_NATURE.Social] =
-      ['Centrelink', 'Child protection', 'Crisis/Emergency', 'Home Visit', 'Housing', 'Other'];
+      ['Accountant', 'Baptism', 'Body Corporate Meeting', 'Church Service', 'Family Celebration',
+        'Financial Advisor',
+        'Funeral – Full Mass',
+    'Funeral – non religious',
+    'Funeral – Service',
+    'Health and Lifestyle',
+    'School Play',
+    'Sports Club',
+    'Wedding', 'Other'];
     BA.DISSCUSSION_ITEM[BOOKING_NATURE.Counselling] =
-      ['Centrelink', 'Child protection', 'Crisis/Emergency', 'Home Visit', 'Housing', 'Other'];
+      ['Family',
+        'Financial',
+        'Individual',
+        'Marriage', 'Other'];
     BA.DISSCUSSION_ITEM[BOOKING_NATURE.Court] =
-      ['Centrelink', 'Child protection', 'Crisis/Emergency', 'Home Visit', 'Housing', 'Other'];
+      ['Children and Family Court - Mention',
+        'Children and Family Court – Contested Hearing/DHS',
+        'Children and Family Court – Intervention Order',
+        'Children and Family Court – Mediation',
+        'Coroners - Inquest',
+        'Coroners – Directions',
+        'County/Supreme – Directions',
+        'County/Supreme – Trial',
+        'DHS Order',
+        'Magistrates - Contested Hearing',
+        'Magistrates - Criminal',
+        'Magistrates - Intervention Order',
+        'Magistrates - Mention',
+        'Mental Health Court', 'Other'];
     BA.DISSCUSSION_ITEM[BOOKING_NATURE.Education] =
-      ['Centrelink', 'Child protection', 'Crisis/Emergency', 'Home Visit', 'Housing', 'Other'];
+      ['Childcare',
+        'Early Intervention',
+        'Kindergarten',
+        'Primary School – Graduation',
+        'Primary School – Other',
+        'Primary School – Parent Meeting/Information Session',
+        'Primary School – Staff Meeting',
+        'Secondary School - Graduation',
+        'Secondary School – Other',
+        'Secondary School – Parent Meeting/Information Session',
+        'Secondary School – Staff Meeting',
+        'TAFE - Graduation',
+        'TAFE – Practical',
+        'TAFE – Theoretical',
+        'University - Graduation',
+        'University – Deaf Lecturer',
+        'University – Lecture',
+        'University – Meeting',
+        'University – Practical/Tutorial', 'Other'];
     BA.DISSCUSSION_ITEM[BOOKING_NATURE.Employment] =
-      ['Centrelink', 'Child protection', 'Crisis/Emergency', 'Home Visit', 'Housing', 'Other'];
+      ['Job Interview – Complex/Deaf Professional',
+        'Job Interview – Entry Level',
+        'Meeting - Board',
+        'Meeting – 1:1',
+        'Meeting – Coaching/Mentoring',
+        'Meeting – Human Resources',
+        'Meeting – Large Group (5 or more)',
+        'Meeting at employment service / with employment consultant',
+        'Training Session', 'Other'];
     BA.DISSCUSSION_ITEM[BOOKING_NATURE.Legal] =
-      ['Centrelink', 'Child protection', 'Crisis/Emergency', 'Home Visit', 'Housing', 'Other'];
+      ['Anti-discrimination',
+        'Forensic Assessment',
+        'Guardianship',
+        'Mediation',
+        'Meeting – Solicitor/Lawyer',
+        'Prison Visit',
+        'Tribunal',
+        'Work Cover', 'Other'];
     BA.DISSCUSSION_ITEM[BOOKING_NATURE.Medical] =
-      ['Centrelink', 'Child protection', 'Crisis/Emergency', 'Home Visit', 'Housing', 'Other'];
+      ['Audiology',
+        'Complimentary Medicine (Please specify in Notes)',
+        'Dental',
+        'Dietician',
+        'Emergency',
+        'Family Planning',
+        'GP',
+        'Home Visit',
+        'Hospital Clinics (Please specify in Notes)',
+        'In-patient (Please specify in Notes)',
+        'Medical Imaging',
+        'Men’s Health',
+        'Oncology',
+        'Optometrist',
+        'Paediatric',
+        'Palliative Care',
+        'Physical Therapy (Please specify in Notes)',
+        'Rehabilitation (Please specify in Notes)',
+        'Sexual Health',
+        'Specialist (Please specify in Notes)',
+        'Speech Therapy',
+        'Women’s Health', 'Other'];
     BA.DISSCUSSION_ITEM[BOOKING_NATURE.Mental] =
-      ['Centrelink', 'Child protection', 'Crisis/Emergency', 'Home Visit', 'Housing', 'Other'];
+      ['Assessment',
+        'Forensic Assessment',
+        'Home Visit',
+        'Medication Appointment',
+        'Mental Health Review Board',
+        'Ongoing Appointment (Please specify length in Notes)',
+        'Psychiatry',
+        'Psychology', 'Other'];
     BA.DISSCUSSION_ITEM[BOOKING_NATURE.Police] =
-      ['Centrelink', 'Child protection', 'Crisis/Emergency', 'Home Visit', 'Housing', 'Other'];
+      ['Arrest',
+        'Interview – accused',
+        'Interview – victim',
+        'Statement – accused',
+        'Statement – victim',
+        'Warrant', 'Other'];
     BA.DISSCUSSION_ITEM[BOOKING_NATURE.Conference] =
-      ['Centrelink', 'Child protection', 'Crisis/Emergency', 'Home Visit', 'Housing', 'Other'];
+      ['Community consultation',
+        'Conference (please specify in Notes)',
+        'Creative arts / festival',
+        'Expo',
+        'Information Session',
+        'Rally/Protest', 'Other'];
     BA.DISSCUSSION_ITEM[BOOKING_NATURE.Theatre] =
-      ['Centrelink', 'Child protection', 'Crisis/Emergency', 'Home Visit', 'Housing', 'Other'];
+      ['Adults Only',
+        'Comedy',
+        'Community',
+        'School',
+        'Stage show', 'Other'];
     BA.DISSCUSSION_ITEM[BOOKING_NATURE.Media] =
-      ['Centrelink', 'Child protection', 'Crisis/Emergency', 'Home Visit', 'Housing', 'Other'];
-    BA.DISSCUSSION_ITEM[BOOKING_NATURE.Other] = [''];
+      ['Interview – Other',
+        'Interview – Radio',
+        'Interview – Television',
+        'Media Conference', 'Other'];
+    BA.DISSCUSSION_ITEM[BOOKING_NATURE.Other] = ['Please specify in Notes'];
   }
 }
