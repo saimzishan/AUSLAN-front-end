@@ -18,6 +18,7 @@ import { CustomFormsModule } from 'ng2-validation';
 import { PrettyIDPipe } from '../../../shared/pipe/pretty-id.pipe';
 import { ViewContainerRef } from '@angular/core';
 import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
+
 describe('JobDetailComponent', () => {
   let component: JobDetailComponent;
   let fixture: ComponentFixture<JobDetailComponent>;
@@ -35,7 +36,7 @@ describe('JobDetailComponent', () => {
         },
         { provide: BookingService, useClass: MockBookingService },
         { provide: AuthHttp, useClass: MockBackend }],
-      imports: [SimpleNotificationsModule, MaterialModule, FormsModule,
+      imports: [SimpleNotificationsModule, MaterialModule, MobileFooterModule, FormsModule,
         RouterTestingModule, CustomFormsModule]
     }).compileComponents();
   }));

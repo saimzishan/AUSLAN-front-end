@@ -25,6 +25,7 @@ import { RolePermission } from '../../shared/role-permission/role-permission';
 import { DatePipe } from '@angular/common';
 import {NgForm} from '@angular/forms';
 import {HttpModule} from '@angular/http';
+import { FileSelectDirective, FileDropDirective, FileUploader } from 'ng2-file-upload';
 
 describe('BookingDetailComponent', () => {
   let component: BookingDetailComponent;
@@ -32,7 +33,9 @@ describe('BookingDetailComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BookingDetailComponent, EnumValPipe ],
+      declarations: [ BookingDetailComponent, EnumValPipe,
+          FileSelectDirective, FileDropDirective,
+      ],
       imports: [CustomFormsModule,
         FormsModule, BrowserAnimationsModule, RouterTestingModule, HttpModule,
         Md2Module.forRoot(),
