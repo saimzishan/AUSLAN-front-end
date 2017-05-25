@@ -12,6 +12,7 @@ import { Router, NavigationExtras } from '@angular/router';
 import { BOOKING_STATUS } from '../../shared/model/booking-status.enum';
 import { PopupComponent } from '../../shared/popup/popup.component';
 import { MdDialog, MdDialogConfig, MdDialogRef } from '@angular/material';
+import { PrettyIDPipe } from '../../shared/pipe/pretty-id.pipe';
 
 declare var $: any; // not liking it
 

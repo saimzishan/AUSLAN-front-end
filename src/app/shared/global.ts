@@ -7,6 +7,13 @@ export class GLOBAL {
   public static MOCK_BOOKING_SERVER_PORT = 1233;
   public static MOCK_USER_SERVER_PORT = 1234;
   public static RAILS_LOCAL_SERVER_PORT = 3000;
+    public static LOG_LEVEL = 'INFO';
+    public static USER_API_ENDPOINT = (environment.production) ? 'https://auslan-staging.herokuapp.com/api/v1'
+    : (environment.stage) ? 'https://auslan.herokuapp.com/api/v1' : `http://localhost:${GLOBAL.MOCK_USER_SERVER_PORT}/api/v1`;
+    public static BOOKING_API_ENDPOINT = (environment.production) ? 'https://auslan-staging.herokuapp.com/api/v1'
+    : (environment.stage) ? 'https://auslan.herokuapp.com/api/v1' :  `http://localhost:${GLOBAL.MOCK_BOOKING_SERVER_PORT}/api/v1`;
+    public static USER_API = GLOBAL.USER_API_ENDPOINT + '/users';
+    public static BOOKING_JOB_INVITE = window.location.host + '/booking-management/';
 
   public static LOG_LEVEL = 'INFO';
   public static USER_API_ENDPOINT = (environment.production) ? 'https://auslan-staging.herokuapp.com/api/v1'

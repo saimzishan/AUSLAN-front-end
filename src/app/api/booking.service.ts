@@ -46,7 +46,8 @@ export class BookingService extends ApiService {
         let headers = new Headers({'Accept': 'application/json',
             'Content-Type': 'application/json'});
         let options = new RequestOptions({ headers: headers });
-        let obj = { 'interpreters': interpreters};
+        let invite_url = GLOBAL.BOOKING_JOB_INVITE + bookingID + '/job-detail';
+        let obj = { 'invite_url': invite_url , 'interpreters' : interpreters};
 
         return this.http.post(GLOBAL.BOOKING_API + '/' + bookingID + '/invite_interpreters' , JSON.stringify(obj), options)
             .map(this.extractData)

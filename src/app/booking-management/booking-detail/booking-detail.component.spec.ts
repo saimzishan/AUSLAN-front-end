@@ -24,6 +24,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RolePermission } from '../../shared/role-permission/role-permission';
 import { DatePipe } from '@angular/common';
 import {NgForm} from '@angular/forms';
+import {HttpModule} from '@angular/http';
 
 describe('BookingDetailComponent', () => {
   let component: BookingDetailComponent;
@@ -33,7 +34,7 @@ describe('BookingDetailComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ BookingDetailComponent, EnumValPipe ],
       imports: [CustomFormsModule,
-        FormsModule, BrowserAnimationsModule, RouterTestingModule,
+        FormsModule, BrowserAnimationsModule, RouterTestingModule, HttpModule,
         Md2Module.forRoot(),
         MaterialModule
       ],  providers: [DatePipe, RolePermission, NotificationServiceBus, { provide: BookingService, useClass: MockBookingService },
