@@ -9,9 +9,9 @@
                 <a href="javascript:void(0);" class="active">Booking info</a>
             </nav>
             <div>
-                <button (click)="jobAction(false)" class="button pink">Decline</button>
+                <button (click)="showDialogBox(false)" class="button pink">Decline</button>
                 <div class="sep"></div>
-                <button (click)="jobAction(true)" class="button inverse">Accept</button>
+                <button (click)="showDialogBox(true)" class="button inverse">Accept</button>
             </div>
         </section>
         <section id="steps">
@@ -98,9 +98,9 @@
                     <span>DO YOU WANT TO DO THIS JOB?</span>
                 </div>
                 <div class="manage-job-buttons">
-                    <button class="button button-accept" (click)="jobAction(true)"><i class="icon-check-mobile"></i></button>
-                    <button class="button button-help" (click)="jobAction(false)"><i class="icon-help"></i></button>
-                    <button class="button button-decline" (click)="jobAction(false)"><i class="icon-decline"></i></button>
+                    <button class="button button-accept" (click)="showDialogBox(true)"><i class="icon-check-mobile"></i></button>
+                    <button class="button button-help"><i class="icon-help"></i></button>
+                    <button class="button button-decline" (click)="showDialogBox(false)"><i class="icon-decline"></i></button>
                 </div>
             </section>
 

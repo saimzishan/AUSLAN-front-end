@@ -8,6 +8,8 @@ import {ActivatedRoute} from '@angular/router';
 import {PrettyIDPipe} from '../../../shared/pipe/pretty-id.pipe';
 import {BOOKING_STATUS} from '../../../shared/model/booking-status.enum';
 import {MobileFooterModule} from '../../../ui/mobile-footer/mobile-footer.module';
+import { MdDialog, MdDialogConfig, MdDialogRef } from '@angular/material';
+import {PopupComponent} from '../../../shared/popup/popup.component';
 
 declare var $: any;
 
@@ -21,7 +23,12 @@ export class JobDetailComponent implements AfterViewChecked, OnDestroy {
     selectedBookingModel: Booking = new Booking();
     private sub: any;
 
-    constructor(public spinnerService: SpinnerService,
+    private dialogSub: any;
+    dialogRef: MdDialogRef<any>;
+
+    constructor(
+        public dialog: MdDialog,
+        public viewContainerRef: ViewContainerRef, public spinnerService: SpinnerService,
                 public notificationServiceBus: NotificationServiceBus,
                 public bookingService: BookingService,
                 private router: Router, private route: ActivatedRoute) {
@@ -34,8 +41,35 @@ export class JobDetailComponent implements AfterViewChecked, OnDestroy {
         });
     }
 
-    jobAction(action: Boolean) {
-        console.log(action);
+
+    public showDialogBox(isCancel: Boolean) {
+        if (this.dialogSub) {
+            this.dialogSub.unsubscribe();
+        }
+
+        let config: MdDialogConfig = {
+            disableClose: true
+        };
+        config.viewContainerRef = this.viewContainerRef;
+        this.dialogRef = this.dialog.open(PopupComponent, config);
+        this.dialogRef.componentInstance.title = isCancel ? 'Decline Booking' : 'Accept Booking';
+        this.dialogRef.componentInstance.cancelTitle =  'Back to job';
+        this.dialogRef.componentInstance.okTitle = isCancel ? `Decline` : 'Accept';
+        this.dialogRef.componentInstance.popupMessage =
+            isCancel ? `Are you sure you want to decline the invitation?
+          The client will be notified of this. This is a permanent action.`
+                :
+                `Are you sure you want to accept the invitation?
+          The client will be notified of this. This is a permanent action.`;
+
+        this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
+            if (result && !isCancel) {
+                // Accept the Booking
+
+            } else if (result && isCancel) {
+// Decline the Booking
+            }
+        });
     }
 
     isState(bookingStatus: string) {
@@ -68,6 +102,7 @@ export class JobDetailComponent implements AfterViewChecked, OnDestroy {
     }
 
     ngOnDestroy() {
-        return this.sub && this.sub.unsubscribe();
+        return this.sub && this.sub.unsubscribe()
+            && this.dialogSub && this.dialogSub.unsubscribe();
     }
 }
