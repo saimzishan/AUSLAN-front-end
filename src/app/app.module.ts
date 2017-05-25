@@ -60,7 +60,7 @@ import { OrgRepComponent } from './ui/org-rep/org-rep.component';
 import { IndClientComponent } from './ui/ind-client/ind-client.component';
 import { InterpreterComponent } from './ui/interpreter/interpreter.component';
 import { BillingAccountComponent } from './ui/billing-account/billing-account.component';
-import { FileSelectDirective, FileDropDirective, FileUploader } from 'ng2-file-upload';
+import {FileuploaderModule} from './shared/fileuploader/fileuploader.module';
 
 @NgModule({
   declarations: [
@@ -85,13 +85,12 @@ import { FileSelectDirective, FileDropDirective, FileUploader } from 'ng2-file-u
     UserListComponent,
     UserHeaderComponent,
     UserDetailComponent,
-    FileSelectDirective, FileDropDirective,
     UserProfileComponent, HyphenPipe, PrettyIDPipe, SpacerPipe,
     BookingJobsComponent, PopupComponent, JobDetailComponent, OrgRepComponent, IndClientComponent,
     InterpreterComponent, BillingAccountComponent
   ],
    entryComponents: [UserDetailComponent, PopupComponent],
-  imports: [CustomFormsModule, routing,
+  imports: [CustomFormsModule, routing, FileuploaderModule,
     BrowserModule, RouterModule, CommonModule, MobileFooterModule,
     FormsModule, BrowserAnimationsModule,
     HttpModule, SimpleNotificationsModule.forRoot(),
