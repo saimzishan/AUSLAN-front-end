@@ -56,11 +56,9 @@ export class JobDetailComponent implements AfterViewChecked, OnDestroy {
         this.dialogRef.componentInstance.cancelTitle =  'Back to job';
         this.dialogRef.componentInstance.okTitle = isCancel ? `Decline` : 'Accept';
         this.dialogRef.componentInstance.popupMessage =
-            isCancel ? `Are you sure you want to decline the invitation?
-          The client will be notified of this. This is a permanent action.`
+            isCancel ? `Do you want to decline the invitation?`
                 :
-                `Are you sure you want to accept the invitation?
-          The client will be notified of this. This is a permanent action.`;
+                `Do you want to accept the invitation?`;
 
         this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
             if (result && !isCancel) {
