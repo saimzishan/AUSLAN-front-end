@@ -1,4 +1,4 @@
-import { Component, AfterViewChecked, OnDestroy } from '@angular/core';
+import {Component, AfterViewChecked, OnDestroy, Directive} from '@angular/core';
 import { Booking } from '../../shared/model/booking.entity';
 import { BookingService } from '../../api/booking.service';
 import { BA, BOOKING_NATURE } from '../../shared/model/booking-nature.enum';
@@ -11,7 +11,11 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { RolePermission } from '../../shared/role-permission/role-permission';
 import { DatePipe } from '@angular/common';
 import {NgForm} from '@angular/forms';
+import { FileUploader } from 'ng2-file-upload';
 
+import { NgClass, NgStyle} from '@angular/common';
+
+const URL = 'https://evening-anchorage-3159.herokuapp.com/api/';
 declare var $: any;
 
 @Component({
@@ -20,10 +24,11 @@ declare var $: any;
   styleUrls: ['./booking-detail.component.css']
 
 })
-
 export class BookingDetailComponent implements AfterViewChecked, OnDestroy {
 
   private sub: any;
+  public uploader: FileUploader = new FileUploader({url: URL});
+  public hasBaseDropZoneOver = false;
   bookingModel: Booking;
   appointment_types = Object.keys(BOOKING_NATURE).filter(value => value === BOOKING_NATURE[value]
   || BOOKING_NATURE[value].startsWith(value)).map(v => BOOKING_NATURE[v]) as string[];
@@ -55,6 +60,10 @@ export class BookingDetailComponent implements AfterViewChecked, OnDestroy {
 
       }
     });
+  }
+
+  public fileOverBase(e: any) {
+    this.hasBaseDropZoneOver = e;
   }
 
   natureOfApptChange($event) {

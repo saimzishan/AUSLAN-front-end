@@ -301,25 +301,38 @@
 					</div>
 				</div>
 			</div>
-			<div [hidden]='true'>
+
 				<div class="separator"></div>
 
 				<h2>Job Documents</h2>
 				<div class="row">
 					<section id="job-documents">
 						<section>
+							<section *ngFor="let item of uploader.queue">
+								<img  alt="">
+								<span>{{ item?.file?.name }}</span>
+							</section>
 							<button md-button>
 								<i class="inline-icon-add-file"></i>
+
 								ADD FILE
-								<input type="file" name="document" multiple>
+								<input type="file" ng2FileSelect [uploader]="uploader" name="document"  multiple  />
 							</button>
+							<div ng2FileDrop
+								 [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
+								 (fileOver)="fileOverBase($event)"
+								 [uploader]="uploader"
+								 class="well my-drop-zone">
+								DROP FILE
+							</div>
+
 						</section>
 					</section>
 				</div>
 
 				<div class="separator"></div>
 
-				<h2>Booking Preferences</h2>
+				<div [hidden]='true'>	<h2>Booking Preferences</h2>
 				<div class="row ext">
 					<div class="form-field">
 						<label>Do you have prefered interpreters?</label>
