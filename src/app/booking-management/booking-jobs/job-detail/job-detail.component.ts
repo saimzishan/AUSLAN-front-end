@@ -70,8 +70,13 @@ export class JobDetailComponent implements AfterViewChecked, OnDestroy {
         });
     }
 
-    isState(bookingStatus: string) {
+    isActiveState(bookingStatus: string) {
         return BOOKING_STATUS[this.selectedBookingModel.state].toLowerCase() === bookingStatus.toLowerCase();
+    }
+
+    isPassedState(bookingStatus: string) {
+        return parseInt(this.selectedBookingModel.state.toString(), 10) >
+            parseInt(BOOKING_STATUS[bookingStatus].toString(), 10);
     }
 
     getStateString() {

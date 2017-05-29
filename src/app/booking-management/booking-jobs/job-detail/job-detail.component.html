@@ -1,6 +1,8 @@
 <header id="header-mobile">
+    <button [routerLink]="['/booking-management']" class="icon-back"></button>
     <h1>JOB #{{selectedBookingModel.id | PrettyID}}</h1>
 </header>
+
 
 <section id="page-common">
     <section id="static-flow">
@@ -16,14 +18,17 @@
         </section>
         <section id="steps">
             <nav>
-                <a href="javascript:void(0);" [ngClass]="{'active' : isState('Requested')}">Requested</a>
-                <a href="javascript:void(0);" [ngClass]="{'active' : isState('In_progress')}">In Progress</a>
-                <a href="javascript:void(0);" [ngClass]="{'active' : isState('Allocated')}">Allocated</a>
-                <a href="javascript:void(0);" [ngClass]="{'active' : isState('Completed')}">Completed</a>
-                <a href="javascript:void(0);" [ngClass]="{'active' : isState('Finished')
-				|| isState('Unable_to_service') || isState('Cancelled')}">
-                    {{isState('Cancelled') ? 'Cancelled' :
-                    isState('Unable_to_service') ? 'Unable To Serve' : 'Finished' }}
+                <a href="javascript:void(0);" [ngClass]="{'active' : isActiveState('Requested'),
+                'passed' : isPassedState('Requested')}">Requested</a>
+                <a href="javascript:void(0);" [ngClass]="{'active' : isActiveState('In_progress'),
+                'passed' : isPassedState('In_progress')}">In Progress</a>
+                <a href="javascript:void(0);" [ngClass]="{'active' : isActiveState('Allocated'),
+                'passed' : isPassedState('Allocated')}">Allocated</a>
+                <a href="javascript:void(0);" [ngClass]="{'active' : isActiveState('Completed'),
+                'passed' : isPassedState('Completed')}">Completed</a>
+                <a href="javascript:void(0);" [ngClass]="{'active' :  isActiveState('Unable_to_service') || isActiveState('Cancelled')}">
+                    {{isActiveState('Cancelled') ? 'Cancelled' :
+                    isActiveState('Unable_to_service') ? 'Unable To Serve' : 'Finished' }}
                 </a>
             </nav>
         </section>
@@ -42,7 +47,8 @@
                 <thead>
                 <tr>
                     <th width="5%">Job</th>
-                    <th width="14%">Date</th>
+                    <th width="7%">Time</th>
+                    <th width="7%">Date</th>
                     <th width="7%">Org</th>
                     <th width="6%">Client</th>
                     <th width="11%">Venue</th>
@@ -56,10 +62,10 @@
                 <tr>
                     <td data-title="JOB NUMBER">{{selectedBookingModel.id | PrettyID}}</td>
 
-                    <td data-title="DATE"><span>{{selectedBookingModel.venue.start_time_iso | date:'shortTime'}} - {{selectedBookingModel.venue.end_time_iso | date:'shortTime'}}<br>
-													{{selectedBookingModel.venue.start_time_iso | date:'EEE d MMM yy'}}
+                    <td data-title="TIME"><span>{{selectedBookingModel.venue.start_time_iso | date:'shortTime'}} - {{selectedBookingModel.venue.end_time_iso | date:'shortTime'}}</span></td>
+                    <td data-title="DATE"><span>{{selectedBookingModel.venue.start_time_iso | date:'EEE d MMM yy'}}
 													</span></td>
-                    <td data-title="Language">Auslan</td>
+                    <td data-title="Language">AUSLAN</td>
                     <td data-title="Client">{{selectedBookingModel.contact.first_name}}</td>
                     <td data-title="VENUE">{{selectedBookingModel.venue.title}}</td>
                     <td data-title="SUBURB">
@@ -84,13 +90,14 @@
             </table>
 
             <section class="columns">
-                <div class="row" *ngFor="let interpreter of selectedBookingModel.interpreters; let i=index">
-                    <span>{{i + 1}} INTERPRETER</span>
-                    <span class="with-avatar">
-                            <img src="assets/img/dummy/oval.png" alt=""> {{interpreter.first_name}} {{interpreter.last_name}}
-                        </span>
-                </div>
-                <div class="row">
+                <table id="job-details-responsive1"  class="custom-small-table">
+                    <tbody>
+                    <tr *ngFor="let interpreter of selectedBookingModel.interpreters; let i=index">
+                        <td data-title="{{i + 1}} INTERPRETER">
+
+                           {{interpreter.first_name}} {{interpreter.last_name}}
+                        </td></tr></tbody></table>
+                <div *ngIf="(selectedBookingModel.notes) && selectedBookingModel.notes.length > 0;" class="row">
                     <span>DESCRIPTION</span>
                 </div>
                 <p>{{selectedBookingModel.notes}}</p>
@@ -130,5 +137,3 @@
         </main>
     </section>
 </section>
-<app-mobile-footer>
-    </app-mobile-footer>
