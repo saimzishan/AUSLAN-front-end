@@ -25,6 +25,7 @@ declare var $: any;
 })
 export class BookingComponent implements AfterViewChecked {
   bookings: Array<Booking> = [];
+  activeFilter = '';
 
   ngAfterViewChecked() {
     $(document).foundation();
@@ -33,6 +34,16 @@ export class BookingComponent implements AfterViewChecked {
   constructor(public spinnerService: SpinnerService, public bookingDataService: BookingService,
     private rolePermission: RolePermission) {
     this.fetchBookings();
+  }
+
+
+
+  setActiveFilter(activeFilter: string) {
+    this.activeFilter = activeFilter;
+  }
+
+  isActiveFilter(activeFilter: string) {
+    return this.activeFilter === activeFilter;
   }
 
   fetchBookings() {

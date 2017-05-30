@@ -89,14 +89,15 @@
                 </tbody>
             </table>
 
-            <section class="columns">
-                <table id="job-details-responsive1"  class="custom-small-table">
-                    <tbody>
-                    <tr *ngFor="let interpreter of selectedBookingModel.interpreters; let i=index">
-                        <td data-title="{{i + 1}} INTERPRETER">
+            <section class="columns small-padding">
+                <div class="row with-border"  *ngFor="let interpreter of selectedBookingModel.interpreters; let i=index">
+                        <div> {{i + 1}} INTERPRETER
+                        </div> <span class="with-avatar">
+                            <img src="assets/img/dummy/oval.png" alt="">
+                    {{interpreter.first_name}} {{interpreter.last_name}}
+                    </span>
 
-                           {{interpreter.first_name}} {{interpreter.last_name}}
-                        </td></tr></tbody></table>
+                </div>
                 <div *ngIf="(selectedBookingModel.notes) && selectedBookingModel.notes.length > 0;" class="row">
                     <span>DESCRIPTION</span>
                 </div>
@@ -118,7 +119,7 @@
                         <div *ngFor="let interpreter of selectedBookingModel.interpreters; let i=index">
                             <b>Interpreter {{i + 1}}:</b> <span>{{interpreter.first_name}} {{interpreter.last_name}}</span>
                             <button>{{interpreter.state}}</button>
-                        </div>
+                                                       </div>
                     </section>
                 </section>
             </div>

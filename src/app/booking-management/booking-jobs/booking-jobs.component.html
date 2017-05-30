@@ -15,15 +15,18 @@
 
 		<section id="steps">
 			<nav>
-				<a href="javascript:void(0);" [ngClass]="{'active' : isState('Requested')}">Requested</a>
-				<a href="javascript:void(0);" [ngClass]="{'active' : isState('In_progress')}">In Progress</a>
-				<a href="javascript:void(0);" [ngClass]="{'active' : isState('Allocated')}">Allocated</a>
-				<a href="javascript:void(0);" [ngClass]="{'active' : isState('Completed')}">Completed</a>
-				<a href="javascript:void(0);" [ngClass]="{'active' : isState('Finished')
-				|| isState('Unable_to_service') || isState('Cancelled')}">
-					{{isState('Cancelled') ? 'Cancelled' :
-					isState('Unable_to_service') ? 'Unable To Serve' : 'Finished' }}
-					</a>
+				<a href="javascript:void(0);" [ngClass]="{'active' : isActiveState('Requested'),
+                'passed' : isPassedState('Requested')}">Requested</a>
+				<a href="javascript:void(0);" [ngClass]="{'active' : isActiveState('In_progress'),
+                'passed' : isPassedState('In_progress')}">In Progress</a>
+				<a href="javascript:void(0);" [ngClass]="{'active' : isActiveState('Allocated'),
+                'passed' : isPassedState('Allocated')}">Allocated</a>
+				<a href="javascript:void(0);" [ngClass]="{'active' : isActiveState('Completed'),
+                'passed' : isPassedState('Completed')}">Completed</a>
+				<a href="javascript:void(0);" [ngClass]="{'active' :  isActiveState('Unable_to_service') || isActiveState('Cancelled')}">
+					{{isActiveState('Cancelled') ? 'Cancelled' :
+					isActiveState('Unable_to_service') ? 'Unable To Serve' : 'Finished' }}
+				</a>
 			</nav>
 		</section>
 	</section>

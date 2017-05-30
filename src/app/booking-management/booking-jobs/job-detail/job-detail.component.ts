@@ -41,7 +41,6 @@ export class JobDetailComponent implements AfterViewChecked, OnDestroy {
         });
     }
 
-
     public showDialogBox(isCancel: Boolean) {
         if (this.dialogSub) {
             this.dialogSub.unsubscribe();
@@ -65,7 +64,7 @@ export class JobDetailComponent implements AfterViewChecked, OnDestroy {
                 // Accept the Booking
 
             } else if (result && isCancel) {
-// Decline the Booking
+                // Decline the Booking
             }
         });
     }
