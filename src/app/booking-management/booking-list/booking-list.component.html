@@ -1,5 +1,5 @@
 <main>
-    <h1>AUSLAN &amp; VRI JOB TYPES</h1>
+    
     <section class="jobs">
         <table id="jobs-responsive" class="custom">
             <thead>
@@ -65,14 +65,16 @@
                         <li>
                             <a href="javascript:void(0)">All</a>
                             <ul class="menu smaller">
-                                <li><a href="javascript:void(0)"><i></i> Option 1</a></li>
-                                <li><a href="javascript:void(0)"><i></i> Option 2</a></li>
-                                <li><a href="javascript:void(0)"><i></i> Option 3</a></li>
+                                <!-- li><a href="javascript:void(0)"><i></i> Option 1</a></li -->
                             </ul>
                         </li>
                     </ul>
+                </th><th>
+                <span class="order asc">Updated</span>
+            </th>
+                <th>
+                    <span>Actions</span>
                 </th>
-
             </tr>
             </thead>
             <tbody>
@@ -92,9 +94,9 @@
                             <li>
                                 <a href="javascript:void(0)"><i class="icon-more-icon"></i></a>
                                 <ul class="menu right-side green">
-                                    <li><a href="#"><i class="icon-check-mobile"></i> Accept</a></li>
-                                    <li><a href="#"><i class="icon-help"></i> Tentative</a></li>
-                                    <li><a href="#"><i class="icon-decline"></i> Decline</a></li>
+                                    <li><a [routerLink]="['/booking-management/' + booking.id + '/job-detail']"><i class="icon-check-mobile"></i> Accept</a></li>
+                                    <li><a [routerLink]="['/booking-management/' + booking.id + '/job-detail']"><i class="icon-help"></i> Tentative</a></li>
+                                    <li><a [routerLink]="['/booking-management/' + booking.id + '/job-detail']"><i class="icon-decline"></i> Decline</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -125,6 +127,20 @@
 								</span></td>
                 <td><a href="javascript:void(0)" class="attach"><i class="icon-attach"></i></a>
                     {{booking.raw_nature_of_appointment}}
+                </td>
+                <td><span class="underline">02-06 TS<br>7:15 A</span></td>
+
+                <td>
+                    <ul class="dropdown menu custom actions" data-dropdown-menu>
+                        <li>
+                            <a href="javascript:void(0)"><i class="icon-more-icon"></i></a>
+                            <ul class="menu right-side green">
+                                <li><a [routerLink]="['/booking-management/' + booking.id + '/job-detail']" ><i class="icon-check-mobile"></i> Accept</a></li>
+                                <li><a [routerLink]="['/booking-management/' + booking.id + '/job-detail']"><i class="icon-help"></i> Tentative</a></li>
+                                <li><a [routerLink]="['/booking-management/' + booking.id + '/job-detail']"><i class="icon-decline"></i> Decline</a></li>
+                            </ul>
+                        </li>
+                    </ul>
                 </td>
 
             </tr>

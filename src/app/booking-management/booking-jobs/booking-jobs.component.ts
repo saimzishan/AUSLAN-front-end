@@ -58,8 +58,13 @@ export class BookingJobsComponent implements AfterViewChecked, OnDestroy {
       && this.dialogSub && this.dialogSub.unsubscribe();
   }
 
-  isState(bookingStatus: string) {
+  isActiveState(bookingStatus: string) {
     return BOOKING_STATUS[this.selectedBookingModel.state].toLowerCase() === bookingStatus.toLowerCase();
+  }
+
+  isPassedState(bookingStatus: string) {
+    return parseInt(this.selectedBookingModel.state.toString(), 10) >
+        parseInt(BOOKING_STATUS[bookingStatus].toString(), 10);
   }
 
   public showDialogBox(isCancel: Boolean) {
@@ -169,8 +174,8 @@ export class BookingJobsComponent implements AfterViewChecked, OnDestroy {
           let data = res.data;
           this.selectedBookingModel.fromJSON(data);
           this.fetchAllInterpreters();
-          this.isCancelledOrUnableToServe = this.isState('Cancelled')
-           || this.isState('Unable_to_service');
+          this.isCancelledOrUnableToServe = this.isActiveState('Cancelled')
+           || this.isActiveState('Unable_to_service');
         }
         this.spinnerService.requestInProcess(false);
       },

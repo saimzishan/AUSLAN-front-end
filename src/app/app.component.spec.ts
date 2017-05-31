@@ -55,6 +55,7 @@ import {NotificationServiceBus} from './notification/notification.service';
 import { SpacerPipe } from './shared/pipe/spacer.pipe';
 import { PrettyIDPipe } from './shared/pipe/pretty-id.pipe';
 import { MobileFooterModule } from './ui/mobile-footer/mobile-footer.module';
+import { FileuploaderModule } from './shared/fileuploader/fileuploader.module';
 
 describe('AppComponent', () => {
   beforeEach(() => {
@@ -69,8 +70,9 @@ describe('AppComponent', () => {
         BookingComponent, PrettyIDPipe,
         BookingDetailComponent,
         SpinnerComponent
+
       ],
-      imports: [CustomFormsModule, RouterTestingModule, Md2Module.forRoot(),
+      imports: [CustomFormsModule, FileuploaderModule, RouterTestingModule, Md2Module.forRoot(),
       MaterialModule, FormsModule, SimpleNotificationsModule.forRoot(), MobileFooterModule,
         HttpModule
       ],  providers: [ NotificationServiceBus,

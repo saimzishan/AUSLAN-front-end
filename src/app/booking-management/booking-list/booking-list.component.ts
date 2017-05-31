@@ -30,6 +30,7 @@ export class BookingListComponent {
     return bookingID === GLOBAL.selBookingID;
   }
 
+
   setClickedRow(booking: Booking) {
     this.router.navigate(['/booking-management/' + booking.id , 'booking-job'] );
     GLOBAL.selBookingID = booking.id;

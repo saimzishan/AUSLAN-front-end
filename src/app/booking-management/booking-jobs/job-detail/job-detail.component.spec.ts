@@ -16,6 +16,8 @@ import {FormsModule} from '@angular/forms';
 import {RouterTestingModule} from '@angular/router/testing';
 import { CustomFormsModule } from 'ng2-validation';
 import { PrettyIDPipe } from '../../../shared/pipe/pretty-id.pipe';
+import { ViewContainerRef } from '@angular/core';
+import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
 
 describe('JobDetailComponent', () => {
   let component: JobDetailComponent;
@@ -23,8 +25,9 @@ describe('JobDetailComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ JobDetailComponent, PrettyIDPipe ],
-      providers: [ SpinnerService, NotificationServiceBus,
+      declarations: [ JobDetailComponent, PrettyIDPipe],
+      providers: [MdDialog,
+        ViewContainerRef, SpinnerService, NotificationServiceBus,
         {
           provide: ActivatedRoute,
           useValue: {
@@ -32,12 +35,11 @@ describe('JobDetailComponent', () => {
           }
         },
         { provide: BookingService, useClass: MockBookingService },
-         { provide: AuthHttp, useClass: MockBackend }],
-      imports: [SimpleNotificationsModule, MaterialModule, FormsModule, MobileFooterModule,
+        { provide: AuthHttp, useClass: MockBackend }],
+      imports: [SimpleNotificationsModule, MaterialModule, MobileFooterModule, FormsModule,
         RouterTestingModule, CustomFormsModule]
     }).compileComponents();
   }));
-
   beforeEach(() => {
     fixture = TestBed.createComponent(JobDetailComponent);
     component = fixture.componentInstance;
