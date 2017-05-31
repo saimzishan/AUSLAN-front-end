@@ -61,6 +61,7 @@ import { IndClientComponent } from './ui/ind-client/ind-client.component';
 import { InterpreterComponent } from './ui/interpreter/interpreter.component';
 import { BillingAccountComponent } from './ui/billing-account/billing-account.component';
 import {FileuploaderModule} from './shared/fileuploader/fileuploader.module';
+import { SkillMatrixComponent } from './user-management/skill-matrix/skill-matrix.component';
 
 @NgModule({
   declarations: [
@@ -87,7 +88,7 @@ import {FileuploaderModule} from './shared/fileuploader/fileuploader.module';
     UserDetailComponent,
     UserProfileComponent, HyphenPipe, PrettyIDPipe, SpacerPipe,
     BookingJobsComponent, PopupComponent, JobDetailComponent, OrgRepComponent, IndClientComponent,
-    InterpreterComponent, BillingAccountComponent
+    InterpreterComponent, BillingAccountComponent, SkillMatrixComponent
   ],
    entryComponents: [UserDetailComponent, PopupComponent],
   imports: [CustomFormsModule, routing, FileuploaderModule,
