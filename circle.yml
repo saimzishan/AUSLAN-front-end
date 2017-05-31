@@ -6,7 +6,7 @@ test:
     - npm install codeclimate-test-reporter -g
   override:
     - ng lint
-    - ng run circle-test
+    - npm run circle-test
   post:
     - bundle exec pact-mock-service stop -p 1233
     - bundle exec pact-mock-service stop -p 1234
