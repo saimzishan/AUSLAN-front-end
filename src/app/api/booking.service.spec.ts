@@ -21,15 +21,15 @@ let Pact = require('pact-consumer-js-dsl');
 
 let mock_response: Object[] = [
     new Object({
-        id: 2,
-        state: 'requested'
+        id: 1,
+        state: 'Requested'
     })
 ];
 
 let mock_response_with_interpreters: Object[] = [
     new Object({
-        id: 2,
-        state: 'requested',
+        id: 1,
+        state: 'Requested',
         'interpreters': [
         ],
         'address_attributes': {}
@@ -103,7 +103,7 @@ describe('BookingService', () => {
 
                 .willRespondWith(201, {
                     'Content-Type': 'application/json; charset=utf-8'
-                }, Pact.Match.somethingLike(mock_response));
+                }, Pact.Match.somethingLike(mock_response[0]));
 
             bookingProvider.run(done, function (runComplete) {
 
@@ -188,7 +188,7 @@ describe('BookingService', () => {
         inject([BookingService], (service: BookingService) => {
             bookingProvider
                 .given('booking api should return booking by its id')
-                .uponReceiving('a request for singe bookings')
+                .uponReceiving('a request for single bookings')
                 .withRequest({
                     method: 'GET',
                     path: '/api/v1/bookings/1',
@@ -201,7 +201,7 @@ describe('BookingService', () => {
                 )
                 .willRespondWith(200, {
                     'Content-Type': 'application/json; charset=utf-8'
-                }, Pact.Match.somethingLike(mock_request_with_interpreters));
+                }, Pact.Match.somethingLike(mock_response_with_interpreters));
 
             bookingProvider.run(done, function (runComplete) {
                 service.getBooking(1)

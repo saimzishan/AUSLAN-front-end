@@ -10,6 +10,7 @@
     "start": "gem install bundler && bundle install && ng serve",
     "build": "ng build --aot --env=stage",
     "test": "ng test",
+    "circle-test": "ng test --code-coverage --watch=false --singleRun=true --browser Chrome_without_security",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "posttest": "node_modules/.bin/remap-istanbul -i coverage/coverage-final.json -o coverage -t html",
