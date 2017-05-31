@@ -1,0 +1,44 @@
+
+  <main>
+    <aside>
+      <strong>NAVIGATION</strong>
+      <nav>
+        <ng-container  *ngFor="let item of appointment_types | enumVal ">
+          <a class="active" (click)="natureOfApptChange(item.value)">{{item.value}}
+          </a></ng-container>
+      </nav>
+    </aside>
+    <section>
+      <h1>SKILL MATRIX {{userDisplayName}}</h1>
+      <table>
+        <thead>
+        <tr>
+          <th>Area of Knowledge</th>
+          <th width="16%"><md-checkbox></md-checkbox></th>
+          <th width="16%"><md-checkbox></md-checkbox></th>
+          <th width="16%"><md-checkbox></md-checkbox></th>
+          <th width="16%"><md-checkbox></md-checkbox></th>
+        </tr>
+        </thead>
+      </table>
+      <table>
+        <tbody>
+        <tr>
+          <td>&nbsp;</td>
+          <td width="16%"><b>1</b></td>
+          <td width="16%"><b>2</b></td>
+          <td width="16%"><b>3</b></td>
+          <td width="16%"><b>n/a</b></td>
+        </tr>
+        <tr *ngFor="let item of specific_appointment_types | enumVal ">
+          <td>&nbsp;{{item.value}}</td>
+          <td><md-checkbox></md-checkbox></td>
+          <td><md-checkbox></md-checkbox></td>
+          <td><md-checkbox></md-checkbox></td>
+          <td><md-checkbox></md-checkbox></td>
+        </tr>
+
+        </tbody>
+      </table>
+    </section>
+  </main>
