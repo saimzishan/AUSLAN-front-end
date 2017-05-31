@@ -88,7 +88,7 @@ module.exports = function(config) {
         colors: true,
         logLevel: config.LOG_INFO,
         autoWatch: true,
-        browsers: [/*'PhantomJS_without_security',*/ 'Chrome_without_security' ], //Removing Chrome because of CI error
+        browsers: ['PhantomJS_without_security',/*'Chrome_without_security'*/ ], //Removing Chrome because of CI error
         customLaunchers: {
             PhantomJS_without_security: {
                 base: 'PhantomJS',
