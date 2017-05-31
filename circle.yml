@@ -1,7 +1,3 @@
-machine:
-  node:
-    version: 7.0.0
-
 test:
   pre:
     - rm -rf tmp
@@ -10,7 +6,7 @@ test:
     - npm install codeclimate-test-reporter -g
   override:
     - ng lint
-    - ng test --code-coverage --watch=false --singleRun=true --browser Chrome_without_security
+    - ng run circle-test
   post:
     - bundle exec pact-mock-service stop -p 1233
     - bundle exec pact-mock-service stop -p 1234
