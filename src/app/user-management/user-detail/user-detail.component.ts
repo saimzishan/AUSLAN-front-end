@@ -6,7 +6,7 @@ import { ROLE } from '../../shared/model/role.enum';
 import { SpinnerService } from '../../spinner/spinner.service';
 import { NotificationServiceBus } from '../../notification/notification.service';
 import {GLOBAL} from '../../shared/global';
-import { SpacerPipe } from '../../shared/pipe/spacer.pipe';
+import {SpacerPipe} from '../../shared/pipe/spacer.pipe';
 
 @Component({
     selector: 'app-user-detail',
@@ -23,7 +23,8 @@ export class UserDetailComponent {
     showForm = false;
     userStatusArray = GLOBAL.userStatusArray;
     selectedStatus = '';
-    constructor(public userDataService: UserService, private spacerPipe: SpacerPipe,
+    public spacerPipe: SpacerPipe = new SpacerPipe();
+    constructor(public userDataService: UserService,
     public notificationServiceBus: NotificationServiceBus,
         public spinnerService: SpinnerService, public dialogRef: MdDialogRef<any>) {
             if (GLOBAL.currentUser.getRole() === ROLE.Administrator) {

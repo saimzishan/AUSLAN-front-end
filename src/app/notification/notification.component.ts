@@ -11,7 +11,7 @@ export class NotificationComponent implements OnDestroy {
   private sub: any;
   public options = {
     position: ['bottom', 'right'],
-    timeOut: 3000,
+    timeOut: 1200,
     lastOnBottom: true,
     maximumLength: 200,
     preventDuplicates: false,

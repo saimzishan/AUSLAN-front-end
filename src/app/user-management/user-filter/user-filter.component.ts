@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter, OnChanges, OnDestroy, SimpleCha
 import { MdDialog, MdDialogConfig, MdDialogRef } from '@angular/material';
 import { UserDetailComponent } from '../user-detail/user-detail.component';
 import { User } from '../../shared/model/user.entity';
+import {SpacerPipe} from '../../shared/pipe/spacer.pipe';
 
 @Component({
     selector: 'app-user-filter',
