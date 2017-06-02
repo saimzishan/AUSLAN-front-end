@@ -34,7 +34,7 @@
 	<section id="job-booking">
 		<main>
 			<h2>Job Details</h2>
-			<table id="job-details" class="custom-small-table">
+			<table id="job-details-responsive" class="custom-small-table">
 				<thead>
 					<tr>
 						<th width="5%">Job</th>
@@ -110,6 +110,24 @@
 				<div align="center">
 					<button class="button inverse higher">PROCESS TO INVOICE</button>
 				</div -->
+				<ng-container *ngIf="anyInterpreterAccepted()">
+
+				<div class="manage-interpreters-wrapper">
+						<section class="manage-interpreters">
+								<section>
+									<div *ngFor="let interpreter of selectedBookingModel.interpreters; let i=index">
+										<ng-container *ngIf="interpreter.state === 'accept'">
+
+															<b>Interpreter {{i + 1}} :</b> <span>{{interpreter.first_name}} {{interpreter.last_name}}</span>
+															<button>Unassing</button>
+
+										</ng-container>
+									</div>
+
+								</section>
+						</section>
+				</div>
+			</ng-container>
 
 			<h2  *ngIf='!isCancelledOrUnableToServe' >Invite Interpreters <button class="sort desc outside"></button></h2>
 			<section *ngIf='!isCancelledOrUnableToServe' id="invite-interpreters">

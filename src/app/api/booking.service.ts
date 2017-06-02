@@ -37,7 +37,21 @@ export class BookingService extends ApiService {
             .map(this.extractData)
             .catch((err) => { return this.handleError(err); });
     }
+    /*
+      The Api should be used interpreter accept or reject or tentative
+    */
+    interpreterAction(bookingID: number, interpreter_ID: number , state: string): Observable<Object> {
 
+        let headers = new Headers({'Accept': 'application/json',
+            'Content-Type': 'application/json'});
+        let options = new RequestOptions({ headers: headers });
+        let obj = {'interpreter_id' : interpreter_ID, 'action' : state};
+        console.log(GLOBAL.BOOKING_API + '/' + bookingID + '/invitation_replied');
+
+        return this.http.post(GLOBAL.BOOKING_API + '/' + bookingID + '/invitation_replied' , JSON.stringify(obj), options)
+            .map(this.extractData)
+            .catch((err) => { return this.handleError(err); });
+    }
     /*
       The Api should be used to invite interpreters
     */

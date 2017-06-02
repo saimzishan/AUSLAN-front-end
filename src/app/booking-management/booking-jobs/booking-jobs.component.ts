@@ -43,7 +43,7 @@ export class BookingJobsComponent implements AfterViewChecked, OnDestroy {
     /** http://stackoverflow.com/questions/38008334/angular2-rxjs-when-should-i-unsubscribe-from-subscription */
     this.sub = this.route.params.subscribe(params => {
       let param_id = params['id'] || '';
-      if ( Boolean(param_id) && parseInt(param_id, 10) > 0 ) {
+      if (Boolean(param_id) && parseInt(param_id, 10) > 0) {
         this.fetchBookingInterpreters(param_id);
       }
     });
@@ -51,6 +51,10 @@ export class BookingJobsComponent implements AfterViewChecked, OnDestroy {
 
   ngAfterViewChecked() {
     $(document).foundation();
+  }
+
+  anyInterpreterAccepted() {
+    return this.selectedBookingModel.interpreters.filter(i => i.state === 'accept').length > 0;
   }
 
   ngOnDestroy() {
@@ -64,7 +68,7 @@ export class BookingJobsComponent implements AfterViewChecked, OnDestroy {
 
   isPassedState(bookingStatus: string) {
     return parseInt(this.selectedBookingModel.state.toString(), 10) >
-        parseInt(BOOKING_STATUS[bookingStatus].toString(), 10);
+      parseInt(BOOKING_STATUS[bookingStatus].toString(), 10);
   }
 
   public showDialogBox(isCancel: Boolean) {
@@ -145,7 +149,7 @@ export class BookingJobsComponent implements AfterViewChecked, OnDestroy {
       this.selectedInterpreterIDs.push(user.id);
     } else {
       // delete this.selectedInterpreterIDs[user.id];
-         this.selectedInterpreterIDs.splice(index, 1);
+      this.selectedInterpreterIDs.splice(index, 1);
 
     }
   }
@@ -175,7 +179,7 @@ export class BookingJobsComponent implements AfterViewChecked, OnDestroy {
           this.selectedBookingModel.fromJSON(data);
           this.fetchAllInterpreters();
           this.isCancelledOrUnableToServe = this.isActiveState('Cancelled')
-           || this.isActiveState('Unable_to_service');
+            || this.isActiveState('Unable_to_service');
         }
         this.spinnerService.requestInProcess(false);
       },
