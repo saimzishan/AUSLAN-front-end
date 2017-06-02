@@ -28,7 +28,7 @@ export class JobDetailComponent implements AfterViewChecked, OnDestroy {
   disableReject = false;
   private dialogSub: any;
   dialogRef: MdDialogRef<any>;
-
+  stateStr= '';
   constructor(
     public dialog: MdDialog,
     public viewContainerRef: ViewContainerRef, public spinnerService: SpinnerService,
@@ -97,10 +97,10 @@ export class JobDetailComponent implements AfterViewChecked, OnDestroy {
   }
   // BOOKING_STATUS comparison is a mess, need to fix later
   getStateString() {
-    let stateStr =
-      parseInt(BOOKING_STATUS[this.selectedBookingModel.state], 10) ===
+    this.stateStr =
+      parseInt(this.selectedBookingModel.state.toString(), 10) ===
         parseInt(BOOKING_STATUS.In_progress.toString(), 10) ? ' - ' + this.currentStatus : '';
-    return BOOKING_STATUS[this.selectedBookingModel.state].toUpperCase() + stateStr;
+    this.stateStr = BOOKING_STATUS[this.selectedBookingModel.state].toUpperCase() + this.stateStr;
 
   }
 
@@ -113,6 +113,7 @@ export class JobDetailComponent implements AfterViewChecked, OnDestroy {
           this.selectedBookingModel.fromJSON(data);
           this.selectedBookingModel.interpreters.filter(i => i.id === GLOBAL.currentUser.id).map(
             i => this.currentStatus = i.state || 'Invited');
+            this.getStateString();
         }
         this.spinnerService.requestInProcess(false);
       },
