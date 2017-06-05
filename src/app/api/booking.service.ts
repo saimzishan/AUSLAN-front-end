@@ -46,7 +46,6 @@ export class BookingService extends ApiService {
             'Content-Type': 'application/json'});
         let options = new RequestOptions({ headers: headers });
         let obj = {'interpreter_id' : interpreter_ID, 'action' : state};
-        console.log(GLOBAL.BOOKING_API + '/' + bookingID + '/invitation_replied');
 
         return this.http.post(GLOBAL.BOOKING_API + '/' + bookingID + '/invitation_replied' , JSON.stringify(obj), options)
             .map(this.extractData)
