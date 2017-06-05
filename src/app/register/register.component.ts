@@ -62,8 +62,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
                 this.model.role = ROLE.IndividualClient;
                 break;
 
-            case 'OrganisationalRepresentative'.toUpperCase():
-                this.model.role = ROLE.OrganisationalRepresentative;
+            case 'Organisational'.toUpperCase():
+                this.model.role = ROLE.Organisational;
                 break;
 
         }
@@ -71,11 +71,14 @@ export class RegisterComponent implements OnInit, OnDestroy {
         this.userService.createUser(this.model)
             .subscribe((res: any) => {
                 this.model.id = res.data.id;
+                this.router.navigate(['/']);
                 this.notificationServiceBus.launchNotification(false, this.successMessage);
+
 
             }, errors => {
                 let e = errors.json();
-                this.notificationServiceBus.launchNotification(true, errors.statusText + ' ' + e.errors.password[0]);
+                this.notificationServiceBus.launchNotification(true, errors.statusText + ' '
+                    + JSON.stringify(e.errors).replace(/]|[[]/g, '').replace(/({|})/g, ''));
             });
     }
 }

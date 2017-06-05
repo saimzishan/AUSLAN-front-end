@@ -4,6 +4,7 @@ import {Router, NavigationExtras} from '@angular/router';
 import { BOOKING_STATUS } from '../../shared/model/booking-status.enum';
 import {GLOBAL} from '../../shared/global';
 import { PrettyIDPipe } from '../../shared/pipe/pretty-id.pipe';
+import {Interpreter} from '../../shared/model/user.entity';
 
 @Component({
   selector: 'app-booking-list',
@@ -13,6 +14,7 @@ import { PrettyIDPipe } from '../../shared/pipe/pretty-id.pipe';
 export class BookingListComponent {
   @Input('bookingList') bookingList: Array<Booking> = [];
   @Output() onEditBooking = new EventEmitter<Booking>();
+    stateStr= '';
 
   constructor(public router: Router) {
  }
@@ -22,7 +24,7 @@ export class BookingListComponent {
   }
 
   stateToString (booking_state) {
-    return Boolean(booking_state) ? BOOKING_STATUS[booking_state].toLowerCase()
+    return Boolean(booking_state) ? BOOKING_STATUS[booking_state].replace(/_/g, ' ')
     : BOOKING_STATUS[BOOKING_STATUS.None].toLowerCase();
   }
 
@@ -30,9 +32,10 @@ export class BookingListComponent {
     return bookingID === GLOBAL.selBookingID;
   }
 
-
   setClickedRow(booking: Booking) {
-    this.router.navigate(['/booking-management/' + booking.id , 'booking-job'] );
+    let route =  false === GLOBAL.currentUser instanceof Interpreter
+        ? 'booking-job' : 'job-detail';
+    this.router.navigate(['/booking-management/' + booking.id , route]);
     GLOBAL.selBookingID = booking.id;
   }
 
@@ -40,4 +43,8 @@ export class BookingListComponent {
       return GLOBAL.currentUser.id === id;
 }
 
+    isCurrentUserInvitedInterpreter(interpreters) {
+      // Array.includes is not there in IE
+        return interpreters.filter( i => i.id === GLOBAL.currentUser.id).length > 0;
+    }
 }

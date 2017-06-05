@@ -43,6 +43,7 @@
                 <th>
                     <span class="order desc">Date</span>
                 </th>
+
                 <th>
                     <span class="order desc">Org</span>
                     <input type="text" name="org">
@@ -104,27 +105,32 @@
 
                 </td>
                 <td class="text-center"><i class="status status-ready-to-process"></i></td>
-                <td>{{stateToString(booking.state)}}</td>
+                <td style="text-transform: capitalize">{{stateToString(booking.state)}}</td>
                 <td>
                     <div class="job-date">
                                     <span><i class="icon-time hidden-desktop"></i>
 										{{booking.venue.start_time_iso | date:'shortTime'}} -
 										{{booking.venue.end_time_iso | date:'shortTime'}}<br class="hidden-mobile">{{booking.venue.start_time_iso | date:'EEE d MMM yy'}}</span>
-                        <i class="icon-requested"></i>
+                        <i *ngIf="isCurrentUserInvitedInterpreter(booking.interpreters)" class= "icon-requested"></i>
                     </div>
                 </td>
-                <td>{{booking.venue.city}}</td>
+                <td>Melbourne University</td>
                 <td>{{booking.contact.first_name}}</td>
                 <td>{{booking.venue.suburb}}</td>
                 <td class="text-center truncated">
-								<span *ngFor="let user of booking.interpreters">
+                    <ng-container *ngIf="booking.interpreters.length > 0;">
+                        <span *ngFor="let user of booking.interpreters">
                                     <b *ngIf="isCurrentUser(user.id); else sim_user_Block">
                                         {{user?.first_name  + ' ' + user?.last_name}}
                                     </b>
                                     <ng-template #sim_user_Block>{{user?.first_name  + ' ' + user?.last_name}}</ng-template>
 
 									<br/>
-								</span></td>
+								</span>
+                    </ng-container>
+
+                    <span  *ngIf="booking.interpreters.length <1 ;">To be filled</span>
+                </td>
                 <td><a href="javascript:void(0)" class="attach"><i class="icon-attach"></i></a>
                     {{booking.raw_nature_of_appointment}}
                 </td>
