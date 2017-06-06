@@ -122,7 +122,7 @@ describe('BookingService', () => {
 
     it('should invite a bulk of interpreters', function (done) {
         inject([BookingService], (service: BookingService) => {
-            let invite_url = GLOBAL.BOOKING_JOB_INVITE + 2 + '/job-detail';
+            let invite_url = 'http://' + GLOBAL.BOOKING_JOB_INVITE + 2 + '/job-detail';
             let obj = { 'invite_url': invite_url , 'interpreters' : [{'id': 2579}] };
 
             bookingProvider
