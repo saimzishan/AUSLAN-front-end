@@ -1,6 +1,6 @@
 dependencies:
   pre:
-    - pip install awscli
+    - sudo pip install awscli
 test:
   pre:
     - ng lint
