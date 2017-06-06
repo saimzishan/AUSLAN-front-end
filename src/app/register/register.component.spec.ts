@@ -69,7 +69,7 @@ describe('RegisterComponent', () => {
                 fixture.whenStable().then(() => {
                     expect(component.roleSelected).toHaveBeenCalled();
                     expect(component.selected).toEqual(true);
-                    expect(component.selectedRole).toEqual('OrganisationalRepresentative'.toUpperCase());
+                    expect(component.selectedRole).toEqual('Organisational'.toUpperCase());
                     done();
                 });
             });
@@ -77,7 +77,7 @@ describe('RegisterComponent', () => {
                 fixture.whenStable().then(() => {
                     let expected = 1;
                     expect(component.addUser).toHaveBeenCalledTimes(expected);
-                    expect(component.model.role).toEqual(ROLE.OrganisationalRepresentative);
+                    expect(component.model.role).toEqual(ROLE.Organisational);
                     done();
                 });
 
