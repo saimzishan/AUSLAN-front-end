@@ -326,20 +326,21 @@
             <img src="assets/img/dummy/xls.svg" alt="">
             <span>{{ item?.file?.name }}</span>
           </section>
-          <button md-button>
-            <i class="inline-icon-add-file"></i>
 
-            ADD FILE
-            <input type="file" ng2FileSelect [uploader]="uploader" name="document"  multiple  />
-          </button>
-          <section ng2FileDrop
-                   [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
-                   (fileOver)="fileOverBase($event)"
-                   [uploader]="uploader"
-                   class="well my-drop-zone">
-            DROP FILE
-          </section>
-
+          <div>
+            <button md-button>
+              <i class="inline-icon-add-file"></i>
+              ADD FILE
+              <input type="file" ng2FileSelect  [uploader]="uploader" name="uploader" />
+            </button>
+            <section class="well my-drop-zone" ng2FileDrop
+                     [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
+                     (fileOver)="fileOverBase($event)"
+                     [uploader]="uploader"
+                     class="well my-drop-zone">
+              <span>DROP FILE</span>
+            </section>
+          </div>
         </section>
       </section>
     </div>
