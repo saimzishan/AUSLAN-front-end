@@ -1,21 +1,21 @@
 dependencies:
     pre:
         - sudo pip install awscli --ignore-installed six
+        - npm install codeclimate-test-reporter -g
 test:
   pre:
     - ng lint
     - rm -rf tmp
     - bundle exec pact-mock-service start -p 1233 -l tmp/booking/pact-booking.log --pact-dir tmp/booking/pacts
     - bundle exec pact-mock-service start -p 1234 -l tmp/user/pact-user.log --pact-dir tmp/user/pacts
-    - npm install codeclimate-test-reporter -g
   override:
     - npm run circle-test
+    - npm run pact
   post:
     - bundle exec pact-mock-service stop -p 1233
     - bundle exec pact-mock-service stop -p 1234
     - mkdir $CIRCLE_ARTIFACTS/coverage
     - mv coverage/* $CIRCLE_ARTIFACTS/coverage
-    - npm run pact
     - cp -rf tmp/ $CIRCLE_ARTIFACTS/
     - codeclimate-test-reporter < $CIRCLE_ARTIFACTS/coverage/coverage.lcov
     - rm -rf dist
