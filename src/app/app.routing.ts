@@ -19,12 +19,14 @@ import {JobDetailComponent} from './booking-management/booking-jobs/job-detail/j
 import {OrgRepComponent} from './ui/org-rep/org-rep.component';
 import {SkillMatrixComponent} from './user-management/skill-matrix/skill-matrix.component';
 import { InterpreterComponent } from './ui/interpreter/interpreter.component';
+import {UserPasswordComponent} from './user-management/user-password/user-password.component';
 
 const appRoutes: Routes = [
   { path: 'demo', component: OrgRepComponent },
   { path: 'demo-interpreter', component: InterpreterComponent },
   { path: 'user-management', component: UserManagementComponent, canActivate: [AuthGuard]},
   { path: 'user-management/profile', component: UserProfileComponent, canActivate: [AuthGuard]},
+  { path: 'user-management/secure_pass', component: UserPasswordComponent, canActivate: [AuthGuard]},
   { path: 'user-management/skills', component: SkillMatrixComponent},
   { path: 'booking-management', component: BookingComponent, canActivate: [AuthGuard]},
   { path: 'booking-management/:id/create-booking', component: BookingDetailComponent, canActivate: [AuthGuard]},

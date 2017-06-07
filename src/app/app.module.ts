@@ -62,6 +62,7 @@ import {FileuploaderModule} from './shared/fileuploader/fileuploader.module';
 import { SkillMatrixComponent } from './user-management/skill-matrix/skill-matrix.component';
 import { AddressComponent } from './ui/address/address.component';
 import { AccountantComponent } from './ui/accountant/accountant.component';
+import { UserPasswordComponent } from './user-management/user-password/user-password.component';
 
 @NgModule({
   declarations: [
@@ -88,7 +89,7 @@ import { AccountantComponent } from './ui/accountant/accountant.component';
     UserDetailComponent,
     UserProfileComponent, HyphenPipe, PrettyIDPipe, SpacerPipe,
     BookingJobsComponent, PopupComponent, JobDetailComponent, OrgRepComponent, IndClientComponent,
-    InterpreterComponent, BillingAccountComponent, SkillMatrixComponent, AddressComponent, AccountantComponent
+    InterpreterComponent, BillingAccountComponent, SkillMatrixComponent, AddressComponent, AccountantComponent, UserPasswordComponent
   ],
   entryComponents: [UserDetailComponent, PopupComponent],
   imports: [CustomFormsModule, routing, FileuploaderModule,
