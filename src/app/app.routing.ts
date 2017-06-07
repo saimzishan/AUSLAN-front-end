@@ -18,10 +18,11 @@ import { NoAuthGuard } from './auth/no-auth.guard';
 import {JobDetailComponent} from './booking-management/booking-jobs/job-detail/job-detail.component';
 import {OrgRepComponent} from './ui/org-rep/org-rep.component';
 import {SkillMatrixComponent} from './user-management/skill-matrix/skill-matrix.component';
+import { InterpreterComponent } from './ui/interpreter/interpreter.component';
 
 const appRoutes: Routes = [
-  { path: 'demo', component: OrgRepComponent
-  },
+  { path: 'demo', component: OrgRepComponent },
+  { path: 'demo-interpreter', component: InterpreterComponent },
   { path: 'user-management', component: UserManagementComponent, canActivate: [AuthGuard]},
   { path: 'user-management/profile', component: UserProfileComponent, canActivate: [AuthGuard]},
   { path: 'user-management/skills', component: SkillMatrixComponent},

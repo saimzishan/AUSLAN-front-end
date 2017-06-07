@@ -1,26 +1,59 @@
-    <div class="row small-collapse">
-      <div class="row-wrapper">
-        <div class="medium-6 columns">
-          <div class="form-field">
-            <label>Business Hours Phone *	</label>
-
-            <input type="tel" class="valid" placeholder="Enter Business Hour Phone"
-            [(ngModel)]="userModel.business_hours_phone" name="business_hours_phone" #business_hours_phone="ngModel" [rangeLength]="[3, 20]" digit required>
-            <span *ngIf="business_hours_phone.touched && !business_hours_phone.errors?.required && !business_hours_phone.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
-            <span *ngIf="business_hours_phone.touched && (business_hours_phone.errors?.required || business_hours_phone.errors?.rangeLength);" class="inline-icon error">
-                      <span>Minimum 3 characters required.</span>!</span>
-          </div>
-        </div>
-          <div class="medium-6 columns">
-              <div class="form-field">
-                  <label>ABN *	</label>
-
-                  <input type="tel" class="valid" placeholder="Enter ABN"
-                         [(ngModel)]="userModel.abn" name="business_abn" #business_abn="ngModel" [rangeLength]="[-1, 11]" digit required>
-                  <span *ngIf="business_abn.touched && !business_abn.errors?.required && !business_abn.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
-                  <span *ngIf="business_abn.touched && (business_abn.errors?.required || business_abn.errors?.rangeLength);" class="inline-icon error">
-                      <span>11 Digits are characters required.</span>!</span>
-              </div>
-          </div>
+<div class="row small-collapse">
+  <div class="row-wrapper">
+    <div class="medium-6 columns">
+      <div class="form-field">
+        <label>ABN *	</label>
+        <input type="tel" class="valid" placeholder="Enter ABN"
+                [(ngModel)]="userModel.abn" name="business_abn" #business_abn="ngModel"
+                [rangeLength]="[-1, 11]" digit required>
+        <span *ngIf="business_abn.touched && !business_abn.errors?.required && !business_abn.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
+        <span *ngIf="business_abn.touched && (business_abn.errors?.required || business_abn.errors?.rangeLength);" class="inline-icon error">
+          <span>11 Digits are characters required.</span>!</span>
       </div>
     </div>
+    <div class="medium-6 columns">
+      <div class="form-field">
+        <label>Organisation's Name	</label>
+        <input type="text" class="valid" placeholder="Enter the name of the Organisation"
+                [(ngModel)]="userModel.name" name="business_name" #business_name="ngModel" required>
+        <span *ngIf="business_name.touched && !business_name.errors?.required" class="inline-icon inline-icon-valid valid"></span>
+        <span *ngIf="business_name.touched && business_name.errors?.required" class="inline-icon error">
+          <span>Organisation name is required</span>!
+        </span>
+      </div>
+    </div>
+    <div class="medium-6 columns">
+      <div class="form-field">
+        <label>Organisation's Group Email</label>
+        <input type="email" class="valid" placeholder="Enter the group email of the Organisation"
+                [(ngModel)]="userModel.group_email" name="business_group_email" #business_group_email="ngModel" required>
+        <span *ngIf="business_group_email.touched && !business_group_email.errors?.required" class="inline-icon inline-icon-valid valid"></span>
+        <span *ngIf="business_group_email.touched && business_group_email.errors?.required" class="inline-icon error">
+          <span>Organisation group email is required</span>!
+        </span>
+      </div>
+    </div>
+    <div class="medium-6 columns">
+      <div class="form-field">
+        <label>Organisation's branch office</label>
+        <input type="text" class="valid" placeholder="Enter the branch office of the Organisation"
+                [(ngModel)]="userModel.branch_office" name="business_branch_office" #business_branch_office="ngModel" required>
+        <span *ngIf="business_branch_office.touched && !business_branch_office.errors?.required" class="inline-icon inline-icon-valid valid"></span>
+        <span *ngIf="business_branch_office.touched && business_branch_office.errors?.required" class="inline-icon error">
+          <span>Organisation branch office is required</span>!
+        </span>
+      </div>
+    </div>
+    <div class="medium-6 columns">
+      <div class="form-field">
+        <label>Organisation's preferred contact method</label>
+        <input type="text" class="valid" placeholder="Enter the preferred contact method"
+                [(ngModel)]="userModel.preferred_contact_method" name="business_preferred_contact_method" #business_preferred_contact_method="ngModel" required>
+        <span *ngIf="business_preferred_contact_method.touched && !business_preferred_contact_method.errors?.required" class="inline-icon inline-icon-valid valid"></span>
+        <span *ngIf="business_preferred_contact_method.touched && business_preferred_contact_method.errors?.required" class="inline-icon error">
+          <span>Organisation preferred contact method is required</span>!
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

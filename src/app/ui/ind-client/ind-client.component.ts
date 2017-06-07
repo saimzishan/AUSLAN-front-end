@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { IndividualClient } from '../../shared/model/user.entity';
 
 @Component({
   selector: 'app-ind-client',
@@ -6,10 +7,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./ind-client.component.css']
 })
 export class IndClientComponent implements OnInit {
+  @Input() userModel: IndividualClient;
 
   constructor() { }
 
   ngOnInit() {
   }
-
 }
