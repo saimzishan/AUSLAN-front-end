@@ -32,7 +32,8 @@ let mock_response_with_interpreters: Object[] = [
         state: 'Requested',
         'interpreters': [
         ],
-        'address_attributes': {}
+        'address_attributes': {'unit_number' : '12', 'street_number': '50',
+            'street_name': 'Flemington Rd', 'suburb': 'Parkville', 'state': 'Victoria', 'post_code': '3025'}
 
     })
 ];
@@ -89,19 +90,17 @@ describe('BookingService', () => {
         })();
     });
 
-
+    // Format is /bookings/:booking_id/interpreter/:interpreter_id/accept
   it('interpreters should accept invite', done => {
     inject([BookingService], (service: BookingService) => {
-      let obj = { 'interpreter_id': '2', 'action': 'accept' };
       bookingProvider
         .given('booking does exists in database')
         .uponReceiving('a request to invite interpreters')
-        .withRequest('POST', '/api/v1/bookings/2/invitation_replied', {
+        .withRequest('POST', '/api/v1/bookings/2/interpreter/2/accept', {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
 
-        }, Pact.Match.somethingLike(obj)
-        ).willRespondWith(204);
+        }).willRespondWith(204);
 
       bookingProvider.run(done, function(runComplete) {
         service.interpreterAction(2, 2, 'accept')
@@ -114,6 +113,30 @@ describe('BookingService', () => {
       });
     })();
   });
+
+  it('interpreters should reject invite', done => {
+    inject([BookingService], (service: BookingService) => {
+      bookingProvider
+        .given('booking does exists in database')
+        .uponReceiving('a request to invite interpreters')
+        .withRequest('POST', '/api/v1/bookings/2/interpreter/2/reject', {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+
+        }).willRespondWith(204);
+
+      bookingProvider.run(done, function(runComplete) {
+        service.interpreterAction(2, 2, 'reject')
+          .subscribe( (res: any) => {
+            expect(res.status).toEqual(204);
+            done();
+          }, err => done.fail(err), () => {
+            runComplete();
+          });
+      });
+    })();
+  });
+
     it('should create a Booking', function (done) {
         inject([BookingService], (service: BookingService) => {
 
