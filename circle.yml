@@ -1,5 +1,5 @@
 dependencies:
-    override:
+    pre:
         - sudo pip install awscli --ignore-installed six
 test:
   pre:
