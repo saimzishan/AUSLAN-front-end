@@ -89,6 +89,31 @@ describe('BookingService', () => {
         })();
     });
 
+
+  it('interpreters should accept invite', done => {
+    inject([BookingService], (service: BookingService) => {
+      let obj = { 'interpreter_id': '2', 'action': 'accept' };
+      bookingProvider
+        .given('booking does exists in database')
+        .uponReceiving('a request to invite interpreters')
+        .withRequest('POST', '/api/v1/bookings/2/invitation_replied', {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+
+        }, Pact.Match.somethingLike(obj)
+        ).willRespondWith(204);
+
+      bookingProvider.run(done, function(runComplete) {
+        service.interpreterAction(2, 2, 'accept')
+          .subscribe( (res: any) => {
+            expect(res.status).toEqual(204);
+            done();
+          }, err => done.fail(err), () => {
+            runComplete();
+          });
+      });
+    })();
+  });
     it('should create a Booking', function (done) {
         inject([BookingService], (service: BookingService) => {
 
