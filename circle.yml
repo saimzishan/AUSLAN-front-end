@@ -1,6 +1,6 @@
 dependencies:
     override:
-        - sudo pip install awscli
+        - sudo pip install awscli --ignore-installed six
 test:
   pre:
     - ng lint
