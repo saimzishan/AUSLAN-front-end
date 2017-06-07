@@ -1,4 +1,6 @@
 dependencies:
+    override:
+        - sudo pip install awscli
 test:
   pre:
     - ng lint
@@ -18,3 +20,7 @@ test:
     - codeclimate-test-reporter < $CIRCLE_ARTIFACTS/coverage/coverage.lcov
     - rm -rf dist
     - ng build --aot --env=stage
+
+deployment:
+    commands:
+      - aws s3 sync dist/  s3://auslan-booking-system-ct/ --delete
