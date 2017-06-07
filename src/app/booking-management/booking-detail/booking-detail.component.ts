@@ -16,7 +16,6 @@ import { FileUploader } from 'ng2-file-upload';
 import { NgClass, NgStyle} from '@angular/common';
 
 const URL = 'https://evening-anchorage-3159.herokuapp.com/api/';
-declare var $: any;
 
 @Component({
   selector: 'app-booking-detail',
@@ -76,7 +75,6 @@ export class BookingDetailComponent implements AfterViewChecked, OnDestroy {
   }
 
   ngAfterViewChecked() {
-    $(document).foundation();
     if (GLOBAL.currentUser !== undefined) {
       this.onSelectionChange();
       this.onClientSelectionChange();

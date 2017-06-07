@@ -14,7 +14,6 @@ import { PopupComponent } from '../../shared/popup/popup.component';
 import { MdDialog, MdDialogConfig, MdDialogRef } from '@angular/material';
 import { PrettyIDPipe } from '../../shared/pipe/pretty-id.pipe';
 
-declare var $: any; // not liking it
 
 @Component({
   selector: 'app-booking-jobs',
@@ -22,7 +21,7 @@ declare var $: any; // not liking it
   styleUrls: ['./booking-jobs.component.css']
 })
 
-export class BookingJobsComponent implements AfterViewChecked, OnDestroy {
+export class BookingJobsComponent implements  OnDestroy {
   selectedBookingModel: Booking = new Booking();
   invitePressed = false;
   isCancelledOrUnableToServe = false;
@@ -49,9 +48,6 @@ export class BookingJobsComponent implements AfterViewChecked, OnDestroy {
     });
   }
 
-  ngAfterViewChecked() {
-    $(document).foundation();
-  }
 
   anyInterpreterAccepted() {
     return this.selectedBookingModel.interpreters.filter(i => i.state === 'accept').length > 0;

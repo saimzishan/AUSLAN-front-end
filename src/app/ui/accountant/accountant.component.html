@@ -4,11 +4,11 @@
       <div class="form-field">
         <label>Account number</label>
         <input type="text" class="valid" placeholder="Please enter your Account number"
-                [(ngModel)]="userModel.account_number" name="account_number"
-                #naati_id="ngModel" [rangeLength]="[3, 20]" digit>
-        <span *ngIf="account_number.touched && !account_number.errors?.rangeLength;"
+                [(ngModel)]="userModel.account_number" name="user_account_number"
+                #user_account_number="ngModel" [rangeLength]="[3, 20]" digit>
+        <span *ngIf="user_account_number.touched && !user_account_number.errors?.rangeLength;"
               class="inline-icon inline-icon-valid valid"></span>
-        <span *ngIf="account_number.touched && account_number.errors?.rangeLength;"
+        <span *ngIf="user_account_number.touched && user_account_number.errors?.rangeLength;"
               class="inline-icon error">
           <span>Minimum 3 characters required.</span>!
         </span>

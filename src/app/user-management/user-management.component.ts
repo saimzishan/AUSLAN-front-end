@@ -14,7 +14,6 @@ import { NotificationServiceBus } from '../notification/notification.service';
 import {GLOBAL} from '../shared/global';
 import {tokenNotExpired} from 'angular2-jwt/angular2-jwt';
 import { RolePermission } from '../shared/role-permission/role-permission';
-declare var $: any;
 
 @Component({
     selector: 'app-admin',
@@ -24,15 +23,12 @@ declare var $: any;
 
 })
 
-export class UserManagementComponent implements AfterViewChecked {
+export class UserManagementComponent  {
     newUser: User = null;
     roles: any;
     users: Array<User> = [];
     // this is bad
     userName = '';
-    ngAfterViewChecked() {
-        $(document).foundation();
-    }
 
 
     constructor(public spinnerService: SpinnerService,

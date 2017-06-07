@@ -12,7 +12,6 @@ import { MdDialog, MdDialogConfig, MdDialogRef } from '@angular/material';
 import {PopupComponent} from '../../../shared/popup/popup.component';
 import {GLOBAL} from '../../../shared/global';
 
-declare var $: any;
 
 @Component({
   selector: 'app-job-detail',
@@ -20,7 +19,7 @@ declare var $: any;
   styleUrls: ['./job-detail.component.css']
 })
 
-export class JobDetailComponent implements AfterViewChecked, OnDestroy {
+export class JobDetailComponent implements  OnDestroy {
   selectedBookingModel: Booking = new Booking();
   private sub: any;
   private currentStatus = 'Invited';
@@ -124,9 +123,6 @@ export class JobDetailComponent implements AfterViewChecked, OnDestroy {
       });
   }
 
-  ngAfterViewChecked() {
-    $(document).foundation();
-  }
 
   ngOnDestroy() {
     return this.sub && this.sub.unsubscribe()

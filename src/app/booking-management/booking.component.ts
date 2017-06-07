@@ -15,7 +15,6 @@ import { ROLE } from '../shared/model/role.enum';
 import { GLOBAL } from '../shared/global';
 import { MobileFooterComponent } from '../ui/mobile-footer/mobile-footer.component';
 
-declare var $: any;
 
 
 @Component({
@@ -23,13 +22,10 @@ declare var $: any;
   templateUrl: './booking.component.html',
   styleUrls: ['./booking.component.css']
 })
-export class BookingComponent implements AfterViewChecked {
+export class BookingComponent {
   bookings: Array<Booking> = [];
   activeFilter = '';
 
-  ngAfterViewChecked() {
-    $(document).foundation();
-  }
 
   constructor(public spinnerService: SpinnerService, public bookingDataService: BookingService,
     private rolePermission: RolePermission) {
@@ -63,8 +59,6 @@ export class BookingComponent implements AfterViewChecked {
 
         }
         this.spinnerService.requestInProcess(false);
-        $(document).foundation();
-
       },
       err => {
         this.spinnerService.requestInProcess(false);
