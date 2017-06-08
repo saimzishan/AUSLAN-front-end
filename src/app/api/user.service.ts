@@ -222,4 +222,18 @@ export class UserService extends ApiService {
 
     }
 
+    /*
+     The Api should reset the current password
+     */
+    updatePassword(userID: number, current_password: string, new_password: string) : Observable<Object> {
+        let headers = new Headers({'Accept': 'application/json',
+            'Content-Type': 'application/json'});
+        let options = new RequestOptions({ headers: headers });
+        let obj = { 'current_password': current_password , 'new_password': new_password };
+
+        return this.http
+            .put(GLOBAL.USER_API + '/' + userID + '/update_password' ,
+                JSON.stringify(obj) , options) // Better add verify in path
+            .catch((err) => { return Observable.throw(err); });
+    }
 }

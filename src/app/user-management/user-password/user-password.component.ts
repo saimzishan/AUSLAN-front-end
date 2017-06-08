@@ -12,7 +12,6 @@ import { GLOBAL } from '../../shared/global';
 })
 export class UserPasswordComponent {
 
-  userModel: User = Boolean(GLOBAL.currentUser) ? GLOBAL.currentUser :  new User();
   curr_password = '';
   new_password = '';
   confirm_password = '';
@@ -24,8 +23,7 @@ export class UserPasswordComponent {
 
 
   editUser() {
-    this.userModel.password = this.new_password;
-    this.userDataService.updateUser(this.userModel)
+    this.userDataService.updatePassword(GLOBAL.currentUser.id, this.curr_password, this.new_password)
         .subscribe((res: any) => {
               if (res.status === 204) {
                 // UI Notification

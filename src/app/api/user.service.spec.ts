@@ -352,6 +352,31 @@ describe('UserService', () => {
         })();
     });
 
+    it('should change a user password', function (done) {
+        inject([UserService], (service: UserService) => {
+            userProvider
+                .given('user exists in database')
+                .uponReceiving('a request to reset a user')
+                .withRequest('POST', '/api/v1/users/2/update_password', {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }, Pact.Match.somethingLike({'current_password': 'Pass@1234' , 'new_password': 'Pass@12345' }))
+                .willRespondWith(204, {
+                    'Content-Type': 'application/json; charset=utf-8'
+                });
+
+            userProvider.run(done, function (runComplete) {
+                service.updatePassword(2, 'Pass@1234', 'Pass@12345')
+                    .subscribe((res: any) => {
+                        expect(res.status).toEqual(204);
+                        done();
+                    }, err => done.fail(err), () => {
+                        runComplete();
+                    });
+            });
+        })();
+    });
+
     it('should create an OrganisationalRepresentative', function (done) {
         inject([UserService], (service: UserService) => {
             let u: User = mock_db[0];
