@@ -2,8 +2,6 @@
 			<section>
 				<a id="lnkProfile" [routerLink]="['/user-management','profile']" [ngClass]="{'active':  isActiveLink(linkName.profile)}" (click)="setActiveLink( linkName.profile)" >Profile Info</a>
 			
-			</section>
-	<section>
 		<a id="lnkProfilePass" [routerLink]="['/user-management','secure_pass']" [ngClass]="{'active':  isActiveLink(linkName.change_pass)}" (click)="setActiveLink( linkName.change_pass)" >Change Password</a>
 
 	</section>
