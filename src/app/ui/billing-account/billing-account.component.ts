@@ -6,7 +6,8 @@ import {Accountant, OrganisationalRepresentative} from '../../shared/model/user.
   styleUrls: ['./billing-account.component.css']
 })
 export class BillingAccountComponent {
-@Input() userModel: any;
+  @Input() userModel: any;
+  @Input() primaryContact: any;
 
 address_title = 'Billing Address';
   @Input() billingAddressIsDifferent= true;

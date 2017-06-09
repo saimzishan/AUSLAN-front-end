@@ -101,7 +101,7 @@
 </div>
 
 <br>
-<app-billing-account [billingAddress]="userModel.organisation_billing_account.organisation_billing_address" [billingAddressIsDifferent]="!billingAddressIsDifferent"
+<app-billing-account [primaryContact]="userModel.organisation_primary_contact" [billingAddress]="userModel.organisation_billing_account.organisation_billing_address" [billingAddressIsDifferent]="!billingAddressIsDifferent"
                      [userModel]="userModel"></app-billing-account>
 
 

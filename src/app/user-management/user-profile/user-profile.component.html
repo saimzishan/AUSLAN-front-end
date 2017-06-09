@@ -58,10 +58,9 @@
         </div>
       </div>
     </div>
-    <app-interpreter *ngIf="userModel.type === 'Interpreter'" [userModel]="userModel"></app-interpreter>
+    <!-- app-interpreter *ngIf="userModel.type === 'Interpreter'" [userModel]="userModel"></app-interpreter -->
     <app-ind-client *ngIf="userModel.type === 'IndividualClient'" [userModel]="userModel"></app-ind-client>
     <app-org-rep *ngIf="userModel.type === 'Organisational' || userModel.type === 'OrganisationalRepresentative'" [userModel]="userModel"></app-org-rep>
-    <app-accountant *ngIf="userModel.type === 'Accountant'" [userModel]="userModel"></app-accountant>
 
     <section class="actions">
       <button name="edit_user"

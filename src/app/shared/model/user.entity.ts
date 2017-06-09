@@ -67,9 +67,9 @@ export class User {
 
 export class Organisational extends User {
   public abn: number;
-  public organisation_primary_contact: Contact;
-  public organisation_address: Address;
-  public organisation_billing_account: Accountant;
+  public organisation_primary_contact: Contact = new Contact();
+  public organisation_address: Address = new Address();
+  public organisation_billing_account: Accountant = new Accountant();
   public name: string;
   public group_email: string;
   public branch_office: string;
@@ -79,6 +79,7 @@ export class Organisational extends User {
   public email_confirmation: boolean;
   public reffered_by: string;
   public customer_ref: string;
+
 
 
   get user_type() {
@@ -96,7 +97,8 @@ export class OrganisationalRepresentative extends Organisational {
 
 export class Accountant extends User {
   public account_number: number;
-  public organisation_billing_address: Address;
+  public organisation_billing_address: Address = new Address();
+
   get user_type() {
     return 'Accountant';
   }
@@ -113,9 +115,9 @@ export class IndividualClient extends User {
   public eaf_start_date: Date;
   public eaf_end_date: Date;
 
-  public individual_client_primary_contact: Contact;
-  public individual_client_address: Address;
-  public individual_client_billing_account: Accountant;
+  public individual_client_primary_contact: Contact  = new Contact();
+  public individual_client_address: Address = new Address();
+  public individual_client_billing_account: Accountant = new Accountant();
   public email_receipt: boolean;
   public email_confirmation: boolean;
   public reffered_by: string;
@@ -144,8 +146,8 @@ export class Interpreter extends User {
   public business_hours_phone: string;
   public after_hours_phone: string;
   public date_of_birth: Date;
-  public home_address: Address;
-  public postal_address: Address;
+  public home_address: Address = new Address();
+  public postal_address: Address = new Address();
   public long_term_availability: interpreter_avalability;
   public override_availabilty: blockout_availability;
 

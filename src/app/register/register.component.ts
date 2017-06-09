@@ -43,8 +43,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
         switch (this.selectedRole) {
             case 'Interpreter'.toUpperCase():
                 let int = new Interpreter();
-                int.home_address = new Address();
-                int.postal_address = new Address();
                 this.model = int;
                 this.model.role = ROLE.Interpreter;
 
@@ -52,10 +50,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
             case 'IndividualClient'.toUpperCase():
                 let ic = new  IndividualClient;
-                ic.individual_client_address = new Address();
-                ic.individual_client_billing_account = new Accountant();
-                ic.individual_client_billing_account.organisation_billing_address = new Address();
-                ic.individual_client_primary_contact = new Contact();
                 this.model = ic;
                 this.model.role = ROLE.IndividualClient;
 
@@ -63,10 +57,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
             case 'Organisational'.toUpperCase():
                  let org = new OrganisationalRepresentative();
-                 org.organisation_address = new Address();
-                 org.organisation_billing_account = new Accountant();
-                 org.organisation_billing_account.organisation_billing_address = new Address();
-                 org.organisation_primary_contact = new Contact();
                 this.model = org;
                 this.model.role = ROLE.Organisational;
 
