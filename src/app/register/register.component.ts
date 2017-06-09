@@ -1,11 +1,15 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { UserService } from '../api/user.service';
-import { User } from '../shared/model/user.entity';
+import {
+    Accountant, IndividualClient, Interpreter, Organisational, OrganisationalRepresentative,
+    User
+} from '../shared/model/user.entity';
 import { ROLE } from '../shared/model/role.enum';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationServiceBus } from '../notification/notification.service';
 import { NotificationComponent } from '../notification/notification.component';
 import { NavigationExtras } from '@angular/router';
+import {Address} from '../shared/model/venue.entity';
 
 @Component({
     selector: 'app-register',
@@ -14,7 +18,7 @@ import { NavigationExtras } from '@angular/router';
 })
 export class RegisterComponent implements OnInit, OnDestroy {
 
-    public model: User = new User();
+    public model: any;
     public selected = false;
     public selectedRole = 'Interpreter'.toUpperCase();
     public successMessage = `Congrats Your user has been created.
@@ -35,6 +39,35 @@ export class RegisterComponent implements OnInit, OnDestroy {
             let p = params['selectedRole'] || '';
             this.selectedRole = Boolean(p && p.length > 1) ? p : this.selectedRole;
         });
+        switch (this.selectedRole) {
+            case 'Interpreter'.toUpperCase():
+                let int = new Interpreter();
+                int.home_address = new Address();
+                int.postal_address = new Address();
+                this.model = int;
+                this.model.role = ROLE.Interpreter;
+
+                break;
+
+            case 'IndividualClient'.toUpperCase():
+                let ic = new  IndividualClient;
+                this.model = ic;
+                this.model.role = ROLE.IndividualClient;
+
+                break;
+
+            case 'Organisational'.toUpperCase():
+                 let org = new OrganisationalRepresentative();
+                 org.organisation_address = new Address();
+                 org.organisation_billing_account = new Accountant();
+                 org.organisation_billing_account.organisation_billing_address = new Address();
+                 org.organisation_primary_contact = new User();
+                this.model = org;
+                this.model.role = ROLE.Organisational;
+
+                break;
+
+        }
     }
     roleSelected(role) {
 
@@ -52,21 +85,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
     }
 
     addUser() {
-
-        switch (this.selectedRole) {
-            case 'Interpreter'.toUpperCase():
-                this.model.role = ROLE.Interpreter;
-                break;
-
-            case 'IndividualClient'.toUpperCase():
-                this.model.role = ROLE.IndividualClient;
-                break;
-
-            case 'Organisational'.toUpperCase():
-                this.model.role = ROLE.Organisational;
-                break;
-
-        }
 
         this.userService.createUser(this.model)
             .subscribe((res: any) => {

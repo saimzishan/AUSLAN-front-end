@@ -8,13 +8,7 @@ import { AddressComponent } from '../address/address.component';
   templateUrl: './accountant.component.html',
   styleUrls: ['./accountant.component.css']
 })
-export class AccountantComponent implements OnInit {
+export class AccountantComponent  {
 
   @Input() userModel: Accountant;
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
 }

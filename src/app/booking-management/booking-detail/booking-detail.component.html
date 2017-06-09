@@ -64,70 +64,8 @@
           </span>
         </div>
       </div>
+      <app-address [address]="bookingModel.venue"></app-address>
       <div class="row-wrapper">
-        <div class="medium-3 columns">
-          <div class="form-field">
-            <label>Unit Number * <span mdTooltip="Enter the Unit or Street Number"><i class="inline-icon-tip"></i></span></label>
-            <input type="text" placeholder="Enter the Unit Number" [(ngModel)]="bookingModel.venue.unit_num" name="raw_booking_address" #raw_booking_address="ngModel" [rangeLength]="[1, 6]" digit>
-            <span *ngIf="raw_booking_address.touched && !raw_booking_address.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
-            <span *ngIf="raw_booking_address.touched && (raw_booking_address.errors?.rangeLength);" class="inline-icon error">
-              <span>Minimum 1 characters required.</span>!</span>
-          </div>
-        </div>
-        <div class="medium-3 columns">
-          <div class="form-field">
-            <label>Street Number * <span mdTooltip="Enter the Unit or Street Number"><i class="inline-icon-tip"></i></span></label>
-            <input type="text" placeholder="Enter the Street Number" [(ngModel)]="bookingModel.venue.street_num" name="raw_booking_address_st" #raw_booking_address_st="ngModel" [rangeLength]="[1, 6]" digit required>
-            <span *ngIf="raw_booking_address_st.touched && !raw_booking_address_st.errors?.required && !raw_booking_address_st.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
-            <span *ngIf="raw_booking_address_st.touched && (raw_booking_address_st.errors?.required || raw_booking_address_st.errors?.rangeLength);" class="inline-icon error">
-              <span>Minimum 1 characters required.</span>!
-            </span>
-          </div>
-        </div>
-
-        <div class="medium-6 columns">
-          <div class="form-field">
-            <label>Street Name * <span mdTooltip="Enter the Street Name!"><i class="inline-icon-tip"></i></span></label>
-            <input type="text" placeholder="Enter the Street Name" [(ngModel)]="bookingModel.venue.street_name" name="raw_booking_street" #raw_booking_street="ngModel" [rangeLength]="[2, 30]" required>
-            <span *ngIf="raw_booking_street.touched && !raw_booking_street.errors?.required && !raw_booking_street.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
-            <span *ngIf="raw_booking_street.touched && (raw_booking_street.errors?.required || raw_booking_street.errors?.rangeLength);" class="inline-icon error">
-              <span>Minimum 2 characters required.</span>!
-            </span>
-          </div>
-        </div>
-        <div class="medium-5 columns">
-          <div class="form-field">
-            <label>BOOKING SUBURB * <span mdTooltip="Enter the Booking Suburb!"><i class="inline-icon-tip"></i></span></label>
-            <input type="text" placeholder="Enter the Booking Suburb" [(ngModel)]="bookingModel.venue.suburb" name="raw_booking_suburb" #raw_booking_suburb="ngModel" [rangeLength]="[4, 30]" required>
-            <span *ngIf="raw_booking_suburb.touched && !raw_booking_suburb.errors?.required && !raw_booking_suburb.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
-            <span *ngIf="raw_booking_suburb.touched && (raw_booking_suburb.errors?.required || raw_booking_suburb.errors?.rangeLength);" class="inline-icon error">
-              <span>Minimum 4 characters required.</span>!
-            </span>
-          </div>
-        </div>
-        <div class="medium-3 columns">
-          <div class="form-field">
-            <label>POST CODE * <span mdTooltip="Enter the Post Code"><i class="inline-icon-tip"></i></span></label>
-            <input type="tel" placeholder="Enter the Post Code" [(ngModel)]="bookingModel.venue.post_code" name="raw_booking_post_code" #raw_booking_post_code="ngModel" [rangeLength]="[4,6]" required digits>
-            <span *ngIf="raw_booking_post_code.touched && !raw_booking_post_code.errors?.required && !raw_booking_post_code.errors?.rangeLength && !raw_booking_post_code.errors?.digits;" class="inline-icon inline-icon-valid valid"></span>
-            <span *ngIf="raw_booking_post_code.touched && (raw_booking_post_code.errors?.required || raw_booking_post_code.errors?.rangeLength || raw_booking_post_code.errors?.digits);" class="inline-icon error">
-              <span>Minimum 4 characters required.</span>!
-            </span>
-          </div>
-        </div>
-        <div class="medium-4 columns">
-          <div class="form-field">
-            <label>BOOKING State * <span mdTooltip="Enter the Booking State!"><i class="inline-icon-tip"></i></span></label>
-            <select placeholder="Enter the Booking State" aria-label="A" [(ngModel)]="bookingModel.venue.state" name="raw_booking_state" #raw_booking_state="ngModel" [rangeLength]="[2, 3]" required>
-              <option *ngFor="let sta of ['ACT','NSW','QLD', 'TAS', 'VIC','WA']" [value]="sta">{{sta}}</option>
-            </select>
-            <span *ngIf="raw_booking_state.touched && !raw_booking_state.errors?.required && !raw_booking_state.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
-            <span *ngIf="raw_booking_state.touched && (raw_booking_state.errors?.required || raw_booking_state.errors?.rangeLength);" class="inline-icon error">
-              <span>Only 2 or 3 characters required.</span>!
-            </span>
-
-          </div>
-        </div>
         <div class="medium-6 columns">
           <div class="form-field">
             <label>NATURE OF APPOINTMENT * <span mdTooltip="Select nature of Appointment"><i class="inline-icon-tip"></i></span></label>

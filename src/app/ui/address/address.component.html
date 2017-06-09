@@ -1,18 +1,19 @@
+
+<header>
+  <h4>{{prefix}}</h4>
+</header>
 <div class="row-wrapper">
   <div class="medium-3 columns">
     <div class="form-field">
-      <label>Unit Number * <span mdTooltip="Enter the Unit Number"><i class="inline-icon-tip"></i></span></label>
-      <input type="text" placeholder="Enter the Unit Number" [(ngModel)]="address.unit_num" name="address_unit_num" #address_unit_num="ngModel" [rangeLength]="[1, 6]" digit>
-      <span *ngIf="address_unit_num.touched && !address_unit_num.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
-      <span *ngIf="address_unit_num.touched && (address_unit_num.errors?.rangeLength);" class="inline-icon error">
-        <span>Minimum 1 characters required.</span>!
-      </span>
+      <label>Unit Number <span mdTooltip="Enter the Unit Number"><i class="inline-icon-tip"></i></span></label>
+      <input type="text" placeholder="Enter the Unit Number" [(ngModel)]="address.unit_number" name="address_unit_num" #address_unit_num="ngModel" [rangeLength]="[1, 6]" digit>
+
     </div>
   </div>
   <div class="medium-3 columns">
     <div class="form-field">
       <label>Street Number * <span mdTooltip="Enter the Street Number"><i class="inline-icon-tip"></i></span></label>
-      <input type="text" placeholder="Enter the Street Number" [(ngModel)]="address.street_num" name="address_street_number" #address_street_number="ngModel" [rangeLength]="[1, 6]" digit required>
+      <input type="text" placeholder="Enter the Street Number" [(ngModel)]="address.street_number" name="address_street_number" #address_street_number="ngModel" [rangeLength]="[1, 6]" digit required>
       <span *ngIf="address_street_number.touched && !address_street_number.errors?.required && !address_street_number.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
       <span *ngIf="address_street_number.touched && (address_street_number.errors?.required ||address_street_number.errors?.rangeLength);" class="inline-icon error">
         <span>Minimum 1 characters required.</span>!

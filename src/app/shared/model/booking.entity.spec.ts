@@ -30,8 +30,8 @@ describe('BookingService', () => {
     it('should be able to serialize', () => {
       mock_booking.fromJSON(mock_request);
       expect(mock_booking.venue.expected_attendance).toEqual('1');
-      expect(mock_booking.venue.unit_num).toEqual('12');
-      expect(mock_booking.venue.street_num).toEqual('50');
+      expect(mock_booking.venue.unit_number).toEqual('12');
+      expect(mock_booking.venue.street_number).toEqual('50');
       expect(mock_booking.interpreters_required).toEqual('2');
       expect(mock_booking.venue.street_name).toEqual('Flemington Rd');
       expect(mock_booking.venue.start_time_iso).toEqual('2017-04-02T07:50:19.212Z');
@@ -52,8 +52,8 @@ describe('BookingService', () => {
 
     it('should be able to de-serialize', () => {
       mock_booking.venue.expected_attendance = '1';
-      mock_booking.venue.unit_num = '12';
-      mock_booking.venue.street_num = '50';
+      mock_booking.venue.unit_number = '12';
+      mock_booking.venue.street_number = '50';
       mock_booking.venue.start_time_iso = '2017-04-02T07:50:19.212Z';
       mock_booking.venue.end_time_iso = '2017-04-02T08:50:19.212Z';
       mock_booking.requested_by.first_name = 'Georgious';

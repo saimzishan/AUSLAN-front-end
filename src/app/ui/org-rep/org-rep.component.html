@@ -1,3 +1,7 @@
+
+<header>
+  <h4>Organization Details</h4>
+</header>
 <div class="row small-collapse">
   <div class="row-wrapper">
     <div class="medium-6 columns">
@@ -5,7 +9,7 @@
         <label>ABN *	</label>
         <input type="tel" class="valid" placeholder="Enter ABN"
                 [(ngModel)]="userModel.abn" name="business_abn" #business_abn="ngModel"
-                [rangeLength]="[-1, 11]" digit required>
+                [rangeLength]="[11, 11]" digit required>
         <span *ngIf="business_abn.touched && !business_abn.errors?.required && !business_abn.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
         <span *ngIf="business_abn.touched && (business_abn.errors?.required || business_abn.errors?.rangeLength);" class="inline-icon error">
           <span>11 Digits are characters required.</span>!</span>
@@ -13,7 +17,7 @@
     </div>
     <div class="medium-6 columns">
       <div class="form-field">
-        <label>Organisation's Name	</label>
+        <label>Organisation's Name * </label>
         <input type="text" class="valid" placeholder="Enter the name of the Organisation"
                 [(ngModel)]="userModel.name" name="business_name" #business_name="ngModel" required>
         <span *ngIf="business_name.touched && !business_name.errors?.required" class="inline-icon inline-icon-valid valid"></span>
@@ -22,7 +26,7 @@
         </span>
       </div>
     </div>
-    <div class="medium-6 columns">
+    <!-- div class="medium-6 columns">
       <div class="form-field">
         <label>Organisation's Group Email</label>
         <input type="email" class="valid" placeholder="Enter the group email of the Organisation"
@@ -32,28 +36,94 @@
           <span>Organisation group email is required</span>!
         </span>
       </div>
-    </div>
+    </div -->
     <div class="medium-6 columns">
       <div class="form-field">
         <label>Organisation's branch office</label>
-        <input type="text" class="valid" placeholder="Enter the branch office of the Organisation"
-                [(ngModel)]="userModel.branch_office" name="business_branch_office" #business_branch_office="ngModel" required>
-        <span *ngIf="business_branch_office.touched && !business_branch_office.errors?.required" class="inline-icon inline-icon-valid valid"></span>
-        <span *ngIf="business_branch_office.touched && business_branch_office.errors?.required" class="inline-icon error">
-          <span>Organisation branch office is required</span>!
-        </span>
+        <input type="text" placeholder="Enter the branch office of the Organisation"
+                [(ngModel)]="userModel.branch_office" name="business_branch_office" #business_branch_office="ngModel">
+
+      </div>
+    </div>
+
+    <div class="medium-6 columns">
+      <div class="form-field">
+        <label>Organisation's preferred contact method</label>
+        <select [(ngModel)]="userModel.preferred_contact_method">
+          <option value="0">Email</option>
+          <option value="1">Phone</option>
+        </select>
+      </div>
+    </div>  </div>
+</div>
+    <div class="row small-collapse">
+      <div class="row-wrapper">
+    <div class="medium-6 columns">
+      <div class="form-field">
+        <label>Would you like the system to send email on receipt of a request?</label>
+        <md-checkbox type="checkbox"
+                     [(ngModel)]="userModel.email_receipt" name="email_receipt" #email_receipt="ngModel">Yes</md-checkbox>
+
       </div>
     </div>
     <div class="medium-6 columns">
       <div class="form-field">
-        <label>Organisation's preferred contact method</label>
-        <input type="text" class="valid" placeholder="Enter the preferred contact method"
-                [(ngModel)]="userModel.preferred_contact_method" name="business_preferred_contact_method" #business_preferred_contact_method="ngModel" required>
-        <span *ngIf="business_preferred_contact_method.touched && !business_preferred_contact_method.errors?.required" class="inline-icon inline-icon-valid valid"></span>
-        <span *ngIf="business_preferred_contact_method.touched && business_preferred_contact_method.errors?.required" class="inline-icon error">
-          <span>Organisation preferred contact method is required</span>!
-        </span>
+        <label>When an interpreter is allocated would you prefer to receive your confirmation via Email?</label>
+        <md-checkbox type="checkbox"
+                     [(ngModel)]="userModel.email_confirmation" name="email_confirmation" #email_confirmation="ngModel">Yes</md-checkbox>
       </div>
     </div>
   </div>
 </div>
+<br>
+
+<app-address [prefix]="address_title" [address]="userModel.organisation_address"></app-address>
+
+<div class="row small-collapse">
+  <div class="row-wrapper">
+<div class="medium-6 columns">
+  <div class="form-field">
+    <label>Billing Address is same as Organization Address?</label>
+    <md-checkbox type="checkbox"
+                 [(ngModel)]="billingAddressIsDifferent" name="billingAddressIsDifferent_confirmation" #billingAddressIsDifferent_confirmation="ngModel">Yes</md-checkbox>
+  </div>
+</div>
+  </div>
+</div>
+
+<br>
+<app-billing-account [billingAddressIsDifferent]="!billingAddressIsDifferent" [userModel]="userModel"></app-billing-account>
+
+
+<div class="row small-collapse">
+  <div class="row-wrapper">
+    <div class="medium-6 columns">
+      <div class="form-field">
+        <label>HOW DID YOU FIND OUT ABOUT US?</label>
+        <select [(ngModel)]="userModel.reffered_by">
+          <option value="0">A deaf person told me</option>
+          <option value="1">An interpreter told me</option>
+          <option value="2">Internet search engine</option>
+          <option value="3">Google</option>
+          <option value="4">Yellow pages</option>
+          <option value="5">Word of mouth</option>
+          <option value="6">Other</option>
+        </select>
+      </div>
+    </div>
+    <div class="medium-12 columns">
+      <div class="form-field">
+        <label>IF OTHER THEN PLEASE DESCRIBE HERE</label>
+        <textarea [(ngModel)]="userModel.reffered_by" cols="30" rows="10" class="inline-icon inline-icon-txt"></textarea>
+      </div>
+    </div>
+    <div class="medium-12 columns">
+      <div class="form-field">
+        <label>CUSTOMER REF</label>
+        <textarea [(ngModel)]="userModel.customer_ref" cols="30" rows="10" class="inline-icon inline-icon-txt"></textarea>
+      </div>
+    </div>
+  </div>
+</div>
+
+<br>

@@ -3,8 +3,8 @@ import {PARKING} from './parking.enum';
 export class Address {
 
   public title: string;
-  public street_num: string;
-  public unit_num: string;
+  public street_number: string;
+  public unit_number: string;
   public street_name: string;
   public suburb: string;
   public state: string;

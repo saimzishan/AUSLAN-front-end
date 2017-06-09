@@ -7,5 +7,6 @@ import { Address } from '../../shared/model/venue.entity';
   styleUrls: ['./address.component.css']
 })
 export class AddressComponent {
-  @Input() address: Address = new Address();
+  @Input() address: Address;
+  @Input() prefix = '';
 }

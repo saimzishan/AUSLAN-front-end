@@ -25,9 +25,9 @@ export class Booking {
   constructor() {
     this.id = '0';
     this.venue.expected_attendance = 0;
-    this.venue.unit_num = '';
+    this.venue.unit_number = '';
     this.venue.street_name = '';
-    this.venue.street_num = '';
+    this.venue.street_number = '';
     this.requested_by.first_name = '';
     this.requested_by.last_name = '';
     this.contact.first_name = '';
@@ -49,8 +49,8 @@ export class Booking {
     this.id = data.id;
     this.venue.expected_attendance = data.number_of_people_attending;
     this.venue.title = data.venue;
-    this.venue.unit_num = data.address_attributes.unit_number;
-    this.venue.street_num = data.address_attributes.street_number;
+    this.venue.unit_number = data.address_attributes.unit_number;
+    this.venue.street_number = data.address_attributes.street_number;
     this.venue.street_name = data.address_attributes.street_name;
     this.venue.suburb = data.address_attributes.suburb;
     this.venue.state = data.address_attributes.state;
@@ -122,8 +122,8 @@ export class Booking {
       _end_time.toISOString(),
       parking_availability: _parking_type,
       address_attributes: {
-        unit_number: this.venue.unit_num,
-        street_number: this.venue.street_num,
+        unit_number: this.venue.unit_number,
+        street_number: this.venue.street_number,
         street_name: this.venue.street_name,
         suburb: this.venue.suburb, state:
         this.venue.state, post_code:

@@ -66,12 +66,19 @@ export class User {
 
 export class Organisational extends User {
   public abn: number;
-  public primary_contact: User;
+  public organisation_primary_contact: User;
   public name: string;
   public group_email: string;
   public branch_office: string;
   public preferred_contact_method: string;
   public phone: string;
+  public email_receipt: boolean;
+  public email_confirmation: boolean;
+  public organisation_address: Address;
+  public organisation_billing_account: Accountant;
+  public reffered_by: string;
+  public customer_ref: string;
+
 
   get user_type() {
     return 'Organisational';
@@ -87,9 +94,8 @@ export class OrganisationalRepresentative extends Organisational {
 }
 
 export class Accountant extends User {
-  public primary_contact: User;
   public account_number: number;
-  public billing_address: Address;
+  public organisation_billing_address: Address;
   get user_type() {
     return 'Accountant';
   }

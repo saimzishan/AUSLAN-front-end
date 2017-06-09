@@ -307,7 +307,7 @@ describe('BookingService', () => {
 
             bookingProvider.run(done, function (runComplete) {
                 let u: Booking = mock_db[0];
-                u.venue.street_num = 'updated';
+                u.venue.street_number = 'updated';
 
                 let status_code = service.updateBooking(u)
                     .subscribe((res: any) => {

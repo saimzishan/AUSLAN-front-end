@@ -1,15 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component, Input } from '@angular/core';
+import {Accountant, OrganisationalRepresentative} from '../../shared/model/user.entity';
 @Component({
   selector: 'app-billing-account',
   templateUrl: './billing-account.component.html',
   styleUrls: ['./billing-account.component.css']
 })
-export class BillingAccountComponent implements OnInit {
+export class BillingAccountComponent {
+@Input() userModel: OrganisationalRepresentative;
 
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+address_title = 'Billing Address';
+  @Input() billingAddressIsDifferent= true;
 }

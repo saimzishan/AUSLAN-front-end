@@ -103,11 +103,23 @@
 											<span>Minimum 6 digits required.</span>!</span>
 								</div>
 							</div>
+						<div class="medium-6 columns">
+							<div class="form-field">
+								<label class="icon-mobile">PHONE * </label>
+								<input type="tel" placeholder="Enter your phone" [(ngModel)]="model.phone" name="phone" #phone="ngModel" required>
+								<span *ngIf="phone.touched && !phone.errors?.required;" class="inline-icon inline-icon-valid valid"></span>
+								<span *ngIf="phone.touched && phone.errors?.required;" class="inline-icon error">
+											<span>Minimum 6 digits required.</span>!</span>
+							</div>
+						</div>
 					</div>
 				</div>
 				<br>
-				<div align="center">
+				<app-org-rep [userModel]="model" *ngIf="selectedRole === 'ORGANISATIONAL'"></app-org-rep>
+				<app-interpreter [userModel]="model" *ngIf="selectedRole === 'INTERPRETER'"></app-interpreter>
+				<br>
 
+				<div align="center">
 					<button class="login button" name="register_user" type="submit" [disabled]="mobile.errors || last_name.errors || first_name.errors || password.errors || email.errors || certainPassword.errors "
 						(click)="addUser()" class="button">Register</button>
 				</div>
