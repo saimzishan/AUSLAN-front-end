@@ -1,5 +1,6 @@
 import { ROLE } from './role.enum';
 import { Address, Venue } from './venue.entity';
+import {Contact} from './contact.entity';
 
 export enum interpreter_avalability {}
 export enum blockout_availability {}
@@ -66,7 +67,9 @@ export class User {
 
 export class Organisational extends User {
   public abn: number;
-  public organisation_primary_contact: User;
+  public organisation_primary_contact: Contact;
+  public organisation_address: Address;
+  public organisation_billing_account: Accountant;
   public name: string;
   public group_email: string;
   public branch_office: string;
@@ -74,8 +77,6 @@ export class Organisational extends User {
   public phone: string;
   public email_receipt: boolean;
   public email_confirmation: boolean;
-  public organisation_address: Address;
-  public organisation_billing_account: Accountant;
   public reffered_by: string;
   public customer_ref: string;
 
@@ -111,6 +112,13 @@ export class IndividualClient extends User {
   public eaf_budget_limit: number;
   public eaf_start_date: Date;
   public eaf_end_date: Date;
+
+  public individual_client_primary_contact: Contact;
+  public individual_client_address: Address;
+  public individual_client_billing_account: Accountant;
+  public email_receipt: boolean;
+  public email_confirmation: boolean;
+  public reffered_by: string;
 
   get user_type() {
     return 'IndividualClient';

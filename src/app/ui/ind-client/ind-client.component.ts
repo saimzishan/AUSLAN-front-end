@@ -6,11 +6,8 @@ import { IndividualClient } from '../../shared/model/user.entity';
   templateUrl: './ind-client.component.html',
   styleUrls: ['./ind-client.component.css']
 })
-export class IndClientComponent implements OnInit {
+export class IndClientComponent {
   @Input() userModel: IndividualClient;
-
-  constructor() { }
-
-  ngOnInit() {
-  }
+  address_title = 'Individual Client Address';
+  billingAddressIsDifferent = true;
 }

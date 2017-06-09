@@ -234,7 +234,7 @@
         <div class="medium-6 columns">
           <div class="form-field">
             <label>DEAF PERSON'S EMAIL * <span mdTooltip="Enter deaf person name!"><i class="inline-icon-tip"></i></span></label>
-            <input type="email" class="inline-icon-user-email" id="email" placeholder="Enter deaf person email address" [(ngModel)]="bookingModel.deaf_person.email" name="deaf_person_email" #deaf_person_email="ngModel" email required>
+            <input type="email" class="inline-icon-user-email" id="deaf_person_email" placeholder="Enter deaf person email address" [(ngModel)]="bookingModel.deaf_person.email" name="deaf_person_email" #deaf_person_email="ngModel" email required>
             <span *ngIf="deaf_person_email.touched && !deaf_person_email.errors?.email;" class="inline-icon inline-icon-valid valid"></span>
             <span *ngIf="(deaf_person_email.dirty || deaf_person_email.touched) && (deaf_person_email.errors?.required || deaf_person_email.errors?.email);" class="inline-icon error">
               <span>Email is required</span>!

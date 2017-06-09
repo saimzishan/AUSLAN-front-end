@@ -117,6 +117,7 @@
 				<br>
 				<app-org-rep [userModel]="model" *ngIf="selectedRole === 'ORGANISATIONAL'"></app-org-rep>
 				<app-interpreter [userModel]="model" *ngIf="selectedRole === 'INTERPRETER'"></app-interpreter>
+				<app-ind-client [userModel]="model" *ngIf="selectedRole === 'INDIVIDUALCLIENT'"></app-ind-client>
 				<br>
 
 				<div align="center">
