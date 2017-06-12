@@ -147,9 +147,11 @@ export class Interpreter extends User {
   public after_hours_phone: string;
   public date_of_birth: Date;
   public home_address: Address = new Address();
-  public postal_address: Address = new Address();
   public long_term_availability: interpreter_avalability;
   public override_availabilty: blockout_availability;
+  public skill_level= '';
+  public highest_level_edu = '';
+  public location_pref = '';
 
   get user_type() {
     return 'Interpreter';

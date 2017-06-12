@@ -8,11 +8,7 @@ import { AddressComponent } from '../address/address.component';
   templateUrl: './interpreter.component.html',
   styleUrls: ['./interpreter.component.css']
 })
-export class InterpreterComponent implements OnInit {
+export class InterpreterComponent  {
   @Input() userModel: Interpreter;
 
-  ngOnInit() {
-    this.userModel.home_address = new Address();
-    this.userModel.postal_address = new Address();
-  }
 }

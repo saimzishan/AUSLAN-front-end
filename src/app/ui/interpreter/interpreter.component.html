@@ -14,7 +14,7 @@
         </span>
       </div>
     </div>
-    <div class="medium-6 columns">
+    <!-- div class="medium-6 columns">
       <div class="form-field">
         <label>NAATI validity start date</label>
         <input type="datetime-local" class="valid" placeholder="Please enter NAATI validity start date"
@@ -59,7 +59,7 @@
           <span>Minimum 3 characters required.</span>!
         </span>
       </div>
-    </div>
+    </div -->
     <div class="medium-6 columns">
       <div class="form-field">
         <label>Date of Birth</label>
@@ -74,8 +74,56 @@
         </span>
       </div>
     </div>
+    <div class="medium-4 columns">
+      <div class="form-field">
+        <label>SKILL Level *</label>
+        <select placeholder="Enter the Skill level" aria-label="A" [(ngModel)]="userModel.skill_level" name="skill_level" #skill_level="ngModel" required>
+
+          <option *ngFor="let skill_name of ['Auslan Paraprofessional','Auslan Professional','ASL Certified', 'BSL Certified', 'Deaf Interpreter Accredited','Deaf Interpreter Non-Accredited', 'Notetaker']" [value]="skill_name">{{skill_name}}</option>
+
+        </select>
+        <span *ngIf="skill_level.touched && !skill_level.errors?.required && !skill_level.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
+        <span *ngIf="skill_level.touched && (skill_level.errors?.required || skill_level.errors?.rangeLength);" class="inline-icon error">
+
+        <span>This field is required.</span>!
+      </span>
+      </div>
+    </div>
+    <div class="medium-4 columns">
+      <div class="form-field">
+        <label>Work Preference *</label>
+        <select placeholder="Enter the Skill level" aria-label="A" [(ngModel)]="userModel.location_pref" name="location_pref"
+                #location_pref="ngModel" required>
+
+          <option *ngFor="let loc_name of ['Tasmania', 'Victoria']" [value]="loc_name">{{loc_name}}</option>
+
+        </select>
+        <span *ngIf="location_pref.touched && !location_pref.errors?.required && !location_pref.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
+        <span *ngIf="location_pref.touched && (location_pref.errors?.required || location_pref.errors?.rangeLength);" class="inline-icon error">
+
+        <span>This field is required.</span>!
+      </span>
+      </div>
+    </div>
+    <div class="medium-4 columns">
+      <div class="form-field">
+        <label>Highest Level of Education *</label>
+        <select placeholder="Enter the Skill level" aria-label="A" [(ngModel)]="userModel.highest_level_edu" name="highest_level_edu"
+                #highest_level_edu="ngModel" required>
+
+          <option *ngFor="let loc_name of ['Diploma of Auslan', 'Diploma of Interpreting Auslan/English',
+          'Advanced Diploma', 'Bachelor Degree',  'Graduate Diploma', 'Masters Degree',
+          'Doctoral Degree', 'None of the above']" [value]="loc_name">{{loc_name}}</option>
+
+        </select>
+        <span *ngIf="highest_level_edu.touched && !highest_level_edu.errors?.required && !highest_level_edu.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
+        <span *ngIf="highest_level_edu.touched && (highest_level_edu.errors?.required || highest_level_edu.errors?.rangeLength);" class="inline-icon error">
+
+        <span>This field is required.</span>!
+      </span>
+      </div>
+    </div>
   </div>
 </div>
 
 <app-address [address]="userModel.home_address"></app-address>
-<app-address [address]="userModel.postal_address"></app-address>
