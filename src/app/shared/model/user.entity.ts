@@ -79,6 +79,7 @@ export class Organisational extends User {
   public email_confirmation: boolean;
   public reffered_by: string;
   public customer_ref: string;
+  public special_instructions = '';
 
 
 
@@ -114,6 +115,7 @@ export class IndividualClient extends User {
   public eaf_budget_limit: number;
   public eaf_start_date: Date;
   public eaf_end_date: Date;
+  public special_instructions = '';
 
   public individual_client_primary_contact: Contact  = new Contact();
   public individual_client_address: Address = new Address();
