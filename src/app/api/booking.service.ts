@@ -46,7 +46,7 @@ export class BookingService extends ApiService {
             'Content-Type': 'application/json'});
         let options = new RequestOptions({ headers: headers });
 
-        return this.http.post(GLOBAL.BOOKING_API + '/' + bookingID + '/interpreter/' +  interpreter_ID + '/' + state, options)
+        return this.http.put(GLOBAL.BOOKING_API + '/' + bookingID + '/interpreter/' +  interpreter_ID + '/' + state, options)
             .map(this.extractData)
             .catch((err) => { return this.handleError(err); });
     }
@@ -59,6 +59,7 @@ export class BookingService extends ApiService {
             'Content-Type': 'application/json'});
         let options = new RequestOptions({ headers: headers });
         let invite_url = GLOBAL.BOOKING_JOB_INVITE + bookingID + '/job-detail';
+        invite_url = invite_url.startsWith('http') === false ? 'http://' + invite_url : invite_url;
         let obj = { 'invite_url': invite_url , 'interpreters' : interpreters};
 
         return this.http.post(GLOBAL.BOOKING_API + '/' + bookingID + '/invite_interpreters' , JSON.stringify(obj), options)

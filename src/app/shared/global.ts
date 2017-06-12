@@ -8,7 +8,7 @@ export class GLOBAL {
   public static MOCK_USER_SERVER_PORT = 1234;
   public static RAILS_LOCAL_SERVER_PORT = 3000;
 
-    public static BOOKING_JOB_INVITE = window.location.host + '/booking-management/';
+    public static BOOKING_JOB_INVITE = window.location.protocol + '//' + window.location.host + '/booking-management/';
 
   public static LOG_LEVEL = 'INFO';
   public static USER_API_ENDPOINT = (environment.production) ? 'https://auslan-staging.herokuapp.com/api/v1'

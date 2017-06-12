@@ -29,6 +29,7 @@ export class BookingDetailComponent implements AfterViewChecked, OnDestroy {
   public uploader: FileUploader = new FileUploader({url: URL});
   public hasBaseDropZoneOver = false;
   bookingModel: Booking;
+  rdStandardInvoice: false;
   appointment_types = Object.keys(BOOKING_NATURE).filter(value => value === BOOKING_NATURE[value]
   || BOOKING_NATURE[value].startsWith(value)).map(v => BOOKING_NATURE[v]) as string[];
 

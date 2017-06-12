@@ -1,4 +1,4 @@
-import { Venue } from './venue.entity';
+import {Address, Venue} from './venue.entity';
 import { Contact, BookingInterpreters, DEAFContact } from './contact.entity';
 import { BOOKING_NATURE } from './booking-nature.enum';
 import { BOOKING_STATUS } from './booking-status.enum';
@@ -20,6 +20,8 @@ export class Booking {
   public interpreters: Array<BookingInterpreters> = [];
   public interpreters_required = 0;
   public notes = '';
+  public ext_ref_num = '';
+  public billing_address = new Address();
   // Is it a limitation on interpreters invitation.
 
   constructor() {

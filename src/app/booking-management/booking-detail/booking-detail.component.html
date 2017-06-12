@@ -256,6 +256,38 @@
 
     <div class="separator"></div>
 
+    <h2>Invoice Details</h2>
+    <div class="row">
+      <div class="medium-12 columns">
+        <div class="form-field">
+          <label>Do you want to use standard invoice details? * <span mdTooltip="Tooltip!"><i class="inline-icon-tip"></i></span></label>
+          <md-radio-group name="rdStandardInvoice"  [(ngModel)]="rdStandardInvoice">
+            <md-radio-button value=true>YES</md-radio-button>
+            <md-radio-button value=false>NO</md-radio-button>
+          </md-radio-group>
+        </div>
+      </div>
+      <div class="row-wrapper">
+        <div class="medium-12 columns">
+          <div class="form-field">
+            <label>External Reference Number * <span mdTooltip="Enter External Reference Number!"><i class="inline-icon-tip"></i></span></label>
+            <input type="tel" placeholder="Enter External Reference Number" [(ngModel)]="bookingModel.ext_ref_num" name="ext_ref_num" #ext_ref_num="ngModel" required digits>
+            <span *ngIf="ext_ref_num.touched && !ext_ref_num.errors?.required && !ext_ref_num.errors?.digits;" class="inline-icon inline-icon-valid valid"></span>
+            <span *ngIf="ext_ref_num.touched && (ext_ref_num.errors?.required || ext_ref_num.errors?.digits);" class="inline-icon error">
+              <span>This field is required.</span>!
+            </span>
+          </div>
+        </div>
+        <div class="medium-12 columns">
+          <div class="form-field">
+            <app-address [address]="bookingModel.billing_address"></app-address>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
     <h2>Job Documents</h2>
     <div class="row">
       <section id="job-documents">
