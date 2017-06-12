@@ -225,7 +225,7 @@ export class UserService extends ApiService {
     /*
      The Api should reset the current password
      */
-    updatePassword(userID: number, current_password: string, new_password: string) : Observable<Object> {
+    updatePassword(userID: number, current_password: string, new_password: string): Observable<Object> {
         let headers = new Headers({'Accept': 'application/json',
             'Content-Type': 'application/json'});
         let options = new RequestOptions({ headers: headers });

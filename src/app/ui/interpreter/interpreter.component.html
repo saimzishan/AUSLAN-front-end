@@ -95,7 +95,7 @@
         <select placeholder="Enter the Skill level" aria-label="A" [(ngModel)]="userModel.location_pref" name="location_pref"
                 #location_pref="ngModel" required>
 
-          <option *ngFor="let loc_name of ['Tasmania', 'Victoria']" [value]="loc_name">{{loc_name}}</option>
+          <option *ngFor="let loc_name of  ['ACT','NSW','QLD', 'TAS', 'VIC','WA', 'NT']" [value]="loc_name">{{loc_name}}</option>
 
         </select>
         <span *ngIf="location_pref.touched && !location_pref.errors?.required && !location_pref.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
@@ -118,6 +118,22 @@
         </select>
         <span *ngIf="highest_level_edu.touched && !highest_level_edu.errors?.required && !highest_level_edu.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
         <span *ngIf="highest_level_edu.touched && (highest_level_edu.errors?.required || highest_level_edu.errors?.rangeLength);" class="inline-icon error">
+
+        <span>This field is required.</span>!
+      </span>
+      </div>
+    </div>
+    <div class="medium-4 columns">
+      <div class="form-field">
+        <label>Communication Preference *</label>
+        <select placeholder="Enter the communication preference" aria-label="A" [(ngModel)]="userModel.comm_pref" name="comm_pref"
+                #comm_pref="ngModel" required>
+
+          <option *ngFor="let comm_pref_name of ['SMS', 'SMS and Email']" [value]="comm_pref_name">{{comm_pref_name}}</option>
+
+        </select>
+        <span *ngIf="comm_pref.touched && !comm_pref.errors?.required && !comm_pref.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
+        <span *ngIf="comm_pref.touched && (comm_pref.errors?.required || comm_pref.errors?.rangeLength);" class="inline-icon error">
 
         <span>This field is required.</span>!
       </span>

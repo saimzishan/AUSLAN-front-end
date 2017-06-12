@@ -152,6 +152,7 @@ export class Interpreter extends User {
   public skill_level= '';
   public highest_level_edu = '';
   public location_pref = '';
+  public comm_pref = '';
 
   get user_type() {
     return 'Interpreter';
