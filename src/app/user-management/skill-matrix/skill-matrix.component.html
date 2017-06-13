@@ -20,8 +20,9 @@
       <strong>NAVIGATION</strong>
       <nav>
         <ng-container  *ngFor="let item of appointment_types | enumVal ">
+          <ng-container *ngIf="item.value !== 'Other' && item.value !== 'None'">
           <a class="active" (click)="natureOfApptChange(item.value)">{{item.value}}
-          </a></ng-container>
+          </a></ng-container></ng-container>
       </nav>
     </aside>
     <section>
@@ -47,11 +48,13 @@
           <td width="16%"><b>n/a</b></td>
         </tr>
         <tr *ngFor="let item of specific_appointment_types | enumVal ">
+          <ng-container *ngIf="item.value !== 'Other' && item.value !== 'None'">
           <td>&nbsp;{{item.value}}</td>
           <td><md-checkbox></md-checkbox></td>
           <td><md-checkbox></md-checkbox></td>
           <td><md-checkbox></md-checkbox></td>
           <td><md-checkbox></md-checkbox></td>
+          </ng-container>
         </tr>
 
         </tbody>
