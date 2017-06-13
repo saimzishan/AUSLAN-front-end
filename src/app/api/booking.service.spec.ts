@@ -96,8 +96,8 @@ describe('BookingService', () => {
       bookingProvider
         .given('booking does exists in database')
         .uponReceiving('a request to invite interpreters')
-        .withRequest('POST', '/api/v1/bookings/2/interpreter/2/accept', {
-          'Accept': 'application/json',
+        .withRequest('PUT', '/api/v1/bookings/2/interpreter/2/accept', {
+          'Accept': 'application/json, text/plain, */*',
           'Content-Type': 'application/json'
 
         }).willRespondWith(204);
@@ -119,8 +119,8 @@ describe('BookingService', () => {
       bookingProvider
         .given('booking does exists in database')
         .uponReceiving('a request to invite interpreters')
-        .withRequest('POST', '/api/v1/bookings/2/interpreter/2/reject', {
-          'Accept': 'application/json',
+        .withRequest('PUT', '/api/v1/bookings/2/interpreter/2/reject', {
+            'Accept': 'application/json, text/plain, */*',
           'Content-Type': 'application/json'
 
         }).willRespondWith(204);
@@ -249,7 +249,7 @@ describe('BookingService', () => {
                 )
                 .willRespondWith(200, {
                     'Content-Type': 'application/json; charset=utf-8'
-                }, Pact.Match.somethingLike(mock_response_with_interpreters));
+                }, Pact.Match.somethingLike(mock_response_with_interpreters[0]));
 
             bookingProvider.run(done, function (runComplete) {
                 service.getBooking(1)

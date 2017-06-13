@@ -51,7 +51,7 @@ export class Booking {
     this.id = data.id;
     this.venue.expected_attendance = data.number_of_people_attending;
     this.venue.title = data.venue;
-    this.venue.unit_number = data.address_attributes.unit_number;
+    this.venue.unit_number = data.address_attributes.unit_number || '';
     this.venue.street_number = data.address_attributes.street_number;
     this.venue.street_name = data.address_attributes.street_name;
     this.venue.suburb = data.address_attributes.suburb;

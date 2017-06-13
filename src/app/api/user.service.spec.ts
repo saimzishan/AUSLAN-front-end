@@ -356,8 +356,8 @@ describe('UserService', () => {
         inject([UserService], (service: UserService) => {
             userProvider
                 .given('user exists in database')
-                .uponReceiving('a request to reset a user')
-                .withRequest('POST', '/api/v1/users/2/update_password', {
+                .uponReceiving('a request to change a user')
+                .withRequest('PUT', '/api/v1/users/2/update_password', {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 }, Pact.Match.somethingLike({'current_password': 'Pass@1234' , 'new_password': 'Pass@12345' }))
