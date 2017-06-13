@@ -20,12 +20,10 @@ import {Contact} from '../shared/model/contact.entity';
 export class RegisterComponent implements OnInit, OnDestroy {
 
     public model: any;
-    public selected = false;
-    public selectedRole = '';
     public successMessage = `Congrats Your user has been created.
   Kindly go back to Login Page and Login`;
-    private sub: any;
     private sub_param: any;
+    public selectedRole = '';
 
     constructor(public userService: UserService,
                 public notificationServiceBus: NotificationServiceBus,
@@ -33,8 +31,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.sub = this.routes.url.subscribe(v => {
-            this.selected = Boolean(v.length > 1 && v[1].path === 'step2');
 
             this.sub_param = this.routes.queryParams.subscribe(params => {
                 let p = params['selectedRole'] || '';
@@ -63,23 +59,13 @@ export class RegisterComponent implements OnInit, OnDestroy {
                         break;
 
                 }
-            });
         });
     }
 
-    roleSelected(role) {
 
-        this.selected = true;
-        this.selectedRole = role.toUpperCase();
-        let navigationExtras: NavigationExtras = {
-            queryParams: {selectedRole: this.selectedRole}
-        };
-        this.router.navigate(['register', 'step2'], navigationExtras);
-
-    }
 
     ngOnDestroy() {
-        return this.sub && this.sub.unsubscribe() && this.sub_param && this.sub_param.unsubscribe();
+        return this.sub_param && this.sub_param.unsubscribe();
     }
 
     addUser() {

@@ -62,6 +62,7 @@ import {AddressComponent} from './ui/address/address.component';
 import {IndClientComponent} from './ui/ind-client/ind-client.component';
 import {BillingAccountComponent} from './ui/billing-account/billing-account.component';
 import {AccountantComponent} from './ui/accountant/accountant.component';
+import {PreComponent} from './register/pre/pre.component';
 
 describe('AppComponent', () => {
   beforeEach(() => {
@@ -76,7 +77,7 @@ describe('AppComponent', () => {
         BookingComponent, PrettyIDPipe,
         BookingDetailComponent,
         SpinnerComponent, OrgRepComponent, InterpreterComponent, AddressComponent,
-          IndClientComponent, BillingAccountComponent, AccountantComponent
+          IndClientComponent, BillingAccountComponent, AccountantComponent, PreComponent
 
       ],
       imports: [CustomFormsModule, FileuploaderModule, RouterTestingModule, Md2Module.forRoot(),

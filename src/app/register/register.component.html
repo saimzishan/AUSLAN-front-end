@@ -1,28 +1,6 @@
-<div [hidden]="selected">
-	<section id="page-signup">
-		<section>
-			<a (click)="roleSelected('Interpreter')" class="type">
-				<img src="assets/img/signup-interpreter.svg" alt="">
-			</a>
-			<button name="btnInterpreter" (click)="roleSelected('Interpreter')" class="button">Interpreter</button>
-		</section>
-		<section>
-			<h1>SIGN UP AS</h1>
-			<a (click)="roleSelected('Client')" class="type">
-				<img src="assets/img/signup-client.svg" alt="">
-			</a>
-			<button name="btnClient" (click)="roleSelected('IndividualClient')" class="button">Client</button>
-		</section>
-		<section>
-			<a (click)="roleSelected('Organization')" class="type">
-				<img src="assets/img/signup-organisation.svg" alt="">
-			</a>
-			<button name="btnOrganization" (click)="roleSelected('Organisational')" class="button">Organisational</button>
-		</section>
-	</section>
-</div>
 
-<div [hidden]="!selected">
+
+<div>
 	<header id="header">
 	<a href="/"><i class="icons icons-logo"></i></a>
 </header>

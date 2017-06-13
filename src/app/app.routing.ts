@@ -20,6 +20,7 @@ import {OrgRepComponent} from './ui/org-rep/org-rep.component';
 import {SkillMatrixComponent} from './user-management/skill-matrix/skill-matrix.component';
 import { InterpreterComponent } from './ui/interpreter/interpreter.component';
 import {UserPasswordComponent} from './user-management/user-password/user-password.component';
+import {PreComponent} from './register/pre/pre.component';
 
 const appRoutes: Routes = [
   { path: 'demo', component: OrgRepComponent },
@@ -37,8 +38,8 @@ const appRoutes: Routes = [
   { path: 'authenticate/logout', component: AuthComponent },
   { path: '404', component: NotFoundComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+  {path: 'register/pre', component: PreComponent, canActivate: [NoAuthGuard] },
   {path: 'register', component: RegisterComponent, canActivate: [NoAuthGuard] },
-  {path: 'register/step2', component: RegisterComponent, canActivate: [NoAuthGuard] },
   {path: 'reset', component: ResetComponent, canActivate: [NoAuthGuard] },
   {path: 'verify/:id', component: VerifyComponent, canActivate: [AuthGuard]},
   {path: 'bookings', component: BookingComponent, canActivate: [AuthGuard]},

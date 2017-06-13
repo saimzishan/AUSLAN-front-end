@@ -63,6 +63,7 @@ import { SkillMatrixComponent } from './user-management/skill-matrix/skill-matri
 import { AddressComponent } from './ui/address/address.component';
 import { AccountantComponent } from './ui/accountant/accountant.component';
 import { UserPasswordComponent } from './user-management/user-password/user-password.component';
+import { PreComponent } from './register/pre/pre.component';
 
 @NgModule({
   declarations: [
@@ -89,7 +90,8 @@ import { UserPasswordComponent } from './user-management/user-password/user-pass
     UserDetailComponent,
     UserProfileComponent, HyphenPipe, PrettyIDPipe, SpacerPipe,
     BookingJobsComponent, PopupComponent, JobDetailComponent, OrgRepComponent, IndClientComponent,
-    InterpreterComponent, BillingAccountComponent, SkillMatrixComponent, AddressComponent, AccountantComponent, UserPasswordComponent
+    InterpreterComponent, BillingAccountComponent,
+    SkillMatrixComponent, AddressComponent, AccountantComponent, UserPasswordComponent, PreComponent
   ],
   entryComponents: [UserDetailComponent, PopupComponent],
   imports: [CustomFormsModule, routing, FileuploaderModule,

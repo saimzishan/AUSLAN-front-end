@@ -1,21 +1,21 @@
 /* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
-import { RegisterComponent } from './register.component';
-import { NotificationComponent } from '../notification/notification.component';
-import { RequestOptions } from '@angular/http';
-import { AuthHttp, AuthConfig } from 'angular2-jwt';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {By} from '@angular/platform-browser';
+import {DebugElement} from '@angular/core';
+import {RegisterComponent} from './register.component';
+import {NotificationComponent} from '../notification/notification.component';
+import {RequestOptions} from '@angular/http';
+import {AuthHttp, AuthConfig} from 'angular2-jwt';
 import {UserService} from '../api/user.service';
-import { Observable } from 'rxjs/Observable';
-import { FormsModule }   from '@angular/forms';
-import { CustomFormsModule } from 'ng2-validation';
-import { HttpModule, Http, BaseRequestOptions } from '@angular/http';
-import { ROLE } from '../shared/model/role.enum';
-import { SpinnerComponent } from '../spinner/spinner.component';
-import { MockBackend, MockConnection } from '@angular/http/testing';
+import {Observable} from 'rxjs/Observable';
+import {FormsModule}   from '@angular/forms';
+import {CustomFormsModule} from 'ng2-validation';
+import {HttpModule, Http, BaseRequestOptions} from '@angular/http';
+import {ROLE} from '../shared/model/role.enum';
+import {SpinnerComponent} from '../spinner/spinner.component';
+import {MockBackend, MockConnection} from '@angular/http/testing';
 import {MockUserService, MockModule, DummyComponent} from '../shared/test/Mock';
-import { RouterTestingModule } from '@angular/router/testing';
+import {RouterTestingModule} from '@angular/router/testing';
 import {NotificationServiceBus} from '../notification/notification.service';
 import {SimpleNotificationsModule} from 'angular2-notifications';
 
@@ -26,6 +26,7 @@ import {IndClientComponent} from '../ui/ind-client/ind-client.component';
 import {BillingAccountComponent} from '../ui/billing-account/billing-account.component';
 import {AccountantComponent} from '../ui/accountant/accountant.component';
 import {MaterialModule} from '@angular/material';
+import {IndividualClient, Interpreter, OrganisationalRepresentative, User} from '../shared/model/user.entity';
 
 
 describe('RegisterComponent', () => {
@@ -39,9 +40,9 @@ describe('RegisterComponent', () => {
                 IndClientComponent, BillingAccountComponent, AccountantComponent],
             imports: [FormsModule, MaterialModule,
                 CustomFormsModule, SimpleNotificationsModule.forRoot(),
-              RouterTestingModule],
+                RouterTestingModule],
             providers: [NotificationServiceBus,
-            { provide: UserService, useClass: MockUserService}, { provide: AuthHttp, useClass: MockBackend} ]
+                {provide: UserService, useClass: MockUserService}, {provide: AuthHttp, useClass: MockBackend}]
         }).compileComponents();
     }));
 
@@ -49,7 +50,7 @@ describe('RegisterComponent', () => {
         beforeEach((done) => {
             fixture = TestBed.createComponent(RegisterComponent);
             component = fixture.componentInstance;
-            spyOn(component, 'roleSelected').and.callThrough();
+            component.model = new User();
             spyOn(component, 'addUser').and.callThrough();
 
             fixture.debugElement.query(By.css('input[name=first_name]')).nativeElement.value = 'dummy';
@@ -72,20 +73,11 @@ describe('RegisterComponent', () => {
 
 
         describe('RegisterComponent for OrganisationalRepresentative', () => {
-            beforeEach((done) => {
-              done();
-            });
-            it('The role Organization should be selected when btnOrganization is clicked', (done) => {
-                fixture.debugElement.query(By.css('button[name=btnOrganization]')).nativeElement.click();
-
-                fixture.whenStable().then(() => {
-                    expect(component.roleSelected).toHaveBeenCalled();
-                    expect(component.selected).toEqual(true);
-                    expect(component.selectedRole).toEqual('Organisational'.toUpperCase());
-                    done();
-                });
-            });
             it('should call adduser when OrganisationalRepresentative is selected', (done) => {
+                component.selectedRole = 'ORGANISATIONAL';
+                let org = new OrganisationalRepresentative();
+                component.model = org;
+                component.model.role = ROLE.Organisational;
                 fixture.debugElement.query(By.css('button[name=register_user]')).nativeElement.click();
 
                 fixture.whenStable().then(() => {
@@ -100,20 +92,11 @@ describe('RegisterComponent', () => {
 
 
         describe('RegisterComponent for Client', () => {
-            beforeEach((done) => {
-              done();
-            });
-            it('The role client should be selected when btnClient is clicked', (done) => {
-                fixture.debugElement.query(By.css('button[name=btnClient]')).nativeElement.click();
-
-                fixture.whenStable().then(() => {
-                    expect(component.roleSelected).toHaveBeenCalled();
-                    expect(component.selected).toEqual(true);
-                    expect(component.selectedRole).toEqual('IndividualClient'.toUpperCase());
-                    done();
-                });
-            });
             it('should call adduser when IndividualClient is selected', (done) => {
+                component.selectedRole = 'INDIVIDUALCLIENT';
+                let ic = new IndividualClient;
+                component.model = ic;
+                component.model.role = ROLE.IndividualClient;
                 fixture.debugElement.query(By.css('button[name=register_user]')).nativeElement.click();
 
                 fixture.whenStable().then(() => {
@@ -127,21 +110,11 @@ describe('RegisterComponent', () => {
         });
 
         describe('RegisterComponent for interpreter', () => {
-            beforeEach((done) => {
-              done();
-            });
-            it('The role interpreter should be selected when btnInterpreter is clicked', (done) => {
-                fixture.debugElement.query(By.css('button[name=btnInterpreter]')).nativeElement.click();
-
-                fixture.whenStable().then(() => {
-                    expect(component.roleSelected).toHaveBeenCalled();
-                    expect(component.selected).toEqual(true);
-                    expect(component.selectedRole).toEqual('Interpreter'.toUpperCase());
-                    done();
-                });
-
-            });
             it('should call adduser when Interpreter is selected', (done) => {
+                component.selectedRole = 'INTERPRETER';
+                let int = new Interpreter();
+                component.model = int;
+                component.model.role = ROLE.Interpreter;
                 fixture.debugElement.query(By.css('button[name=register_user]')).nativeElement.click();
 
                 fixture.whenStable().then(() => {
