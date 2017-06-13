@@ -17,7 +17,8 @@ export class SkillMatrixComponent {
     BA.loadItems();
   }
 
-  natureOfApptChange($event) {
+  natureOfApptChange(value) {
+    this.raw_nature_of_appointment = value;
     let val: BOOKING_NATURE = <BOOKING_NATURE> BOOKING_NATURE[this.raw_nature_of_appointment];
     this.specific_appointment_types = BA.DISSCUSSION_ITEM[BOOKING_NATURE[val]];
   }
