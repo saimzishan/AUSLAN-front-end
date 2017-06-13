@@ -1,0 +1,24 @@
+<div>
+  <section id="page-signup">
+    <section>
+      <a name="lnkInterpreter" [routerLink]="['/register']" [queryParams]="{selectedRole:'INTERPRETER'}" class="type">
+        <img src="assets/img/signup-interpreter.svg" alt="">
+      </a>
+      <button>
+      <a name="btnInterpreter" [routerLink]="['/register']" [queryParams]="{selectedRole:'INTERPRETER'}"  class="button">Interpreter</a>
+      </button></section>
+    <section>
+      <h1>SIGN UP AS</h1>
+      <a name="lnkClient" [routerLink]="['/register']" [queryParams]="{selectedRole:'INDIVIDUALCLIENT'}" class="type">
+        <img src="assets/img/signup-client.svg" alt="">
+      </a>
+      <button><a name="btnClient" [routerLink]="['/register']" [queryParams]="{selectedRole:'INDIVIDUALCLIENT'}"  class="button">Client</a>
+      </button></section>
+    <section>
+      <a name="lnkOrganization" [routerLink]="['/register']" [queryParams]="{selectedRole:'INDIVIDUALCLIENT'}" class="type">
+        <img src="assets/img/signup-organisation.svg" alt="">
+      </a><button>
+      <a name="btnOrganization" [routerLink]="['/register']" [queryParams]="{selectedRole:'ORGANISATIONAL'}" class="button">Organisation</a>
+      </button></section>
+  </section>
+</div>
