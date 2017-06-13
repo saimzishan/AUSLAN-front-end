@@ -1,18 +1,10 @@
 <section id="page-skill-matrix">
+  <app-user-header></app-user-header>
   <section id="submenu">
-    <section>
-      <a href="#">Profile Info</a>
-      <a href="#">Preferences</a>
-      <a href="#">Filter</a>
-    </section>
-    <section>
-      <a href="#" class="active">Manage Users</a>
-      <a href="#">Billing</a>
-    </section>
     <div>
-      <button class="button pink">Cancel</button>
+      <button class="button pink" (click)="apply(false)" >Cancel</button>
       <div class="sep"></div>
-      <button class="button inverse not-changed">Save</button>
+      <button (click)="apply(true)" [ngClass]="[doSave ? 'button' : 'button inverse not-changed']">Save</button>
     </div>
   </section>
   <main>
@@ -21,7 +13,7 @@
       <nav>
         <ng-container  *ngFor="let item of appointment_types | enumVal ">
           <ng-container *ngIf="item.value !== 'Other' && item.value !== 'None'">
-          <a class="active" (click)="natureOfApptChange(item.value)">{{item.value}}
+          <a [ngClass]="{'active': item.value === raw_nature_of_appointment}"  (click)="natureOfApptChange(item.value)">{{item.value}}
           </a></ng-container></ng-container>
       </nav>
     </aside>
@@ -31,10 +23,12 @@
         <thead>
         <tr>
           <th>Area of Knowledge</th>
-          <th width="16%"><md-checkbox></md-checkbox></th>
-          <th width="16%"><md-checkbox></md-checkbox></th>
-          <th width="16%"><md-checkbox></md-checkbox></th>
-          <th width="16%"><md-checkbox></md-checkbox></th>
+          <md-radio-group class="lvl_skills" [(ngModel)]="currentLevel">
+            <th width="16%" *ngFor="let lvl of levels" ><md-radio-button class="lvl_skills" [value]="lvl">
+               {{lvl}}
+            </md-radio-button></th>
+          </md-radio-group>
+
         </tr>
         </thead>
       </table>
@@ -50,10 +44,8 @@
         <tr *ngFor="let item of specific_appointment_types | enumVal ">
           <ng-container *ngIf="item.value !== 'Other' && item.value !== 'None'">
           <td>&nbsp;{{item.value}}</td>
-          <td><md-checkbox></md-checkbox></td>
-          <td><md-checkbox></md-checkbox></td>
-          <td><md-checkbox></md-checkbox></td>
-          <td><md-checkbox></md-checkbox></td>
+          <td *ngFor="let lvl of levels"><md-checkbox  (change)="skillChanged($event)" [checked]="currentLevel === lvl" [value]="lvl">
+          </md-checkbox></td>
           </ng-container>
         </tr>
 

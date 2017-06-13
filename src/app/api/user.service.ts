@@ -236,4 +236,20 @@ export class UserService extends ApiService {
                 JSON.stringify(obj) , options) // Better add verify in path
             .catch((err) => { return Observable.throw(err); });
     }
+
+    /*
+     The Api should add skill for interpreter
+     */
+    updateInterpreterSkill(interpreter_id: number, categroy: string, skill: string, level: number) {
+        let headers = new Headers({'Accept': 'application/json',
+            'Content-Type': 'application/json'});
+        let options = new RequestOptions({ headers: headers });
+        let obj = {'assignment':
+            [{'category':
+            categroy, 'name':
+            skill, 'level':
+            level}]};
+        return this.http.patch(GLOBAL.USER_API_ENDPOINT + '/interpreters/' + interpreter_id, JSON.stringify(obj), options)
+            .catch((err) => { return this.handleError(err); });
+    }
 }

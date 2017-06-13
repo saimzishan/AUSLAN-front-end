@@ -352,6 +352,35 @@ describe('UserService', () => {
         })();
     });
 
+    it('should add an assignment to an existing interpreter', function (done) {
+        inject([UserService], (service: UserService) => {
+            userProvider
+                .given('interpreter exists in database')
+                .uponReceiving('add an assignment')
+                .withRequest('PATCH', '/api/v1/interpreters/2/update_assignment', {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }, Pact.Match.somethingLike({'assignment':
+                    [{'category':
+                        'Medical', 'name':
+                        'Audiology', 'level':
+                        2}]}))
+                .willRespondWith(204, {
+                    'Content-Type': 'application/json; charset=utf-8'
+                });
+
+            userProvider.run(done, function (runComplete) {
+                service.updateInterpreterSkill(2, 'Medical', 'Medical', 2)
+                    .subscribe((res: any) => {
+                        expect(res.status).toEqual(204);
+                        done();
+                    }, err => done.fail(err), () => {
+                        runComplete();
+                    });
+            });
+        })();
+    });
+
     it('should change a user password', function (done) {
         inject([UserService], (service: UserService) => {
             userProvider
