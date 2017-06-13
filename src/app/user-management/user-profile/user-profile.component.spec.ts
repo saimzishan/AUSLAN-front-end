@@ -16,6 +16,12 @@ import {LinkHelper, LinkAuth} from '../../shared/router/linkhelper';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {RolePermission} from '../../shared/role-permission/role-permission';
 import {HttpModule} from '@angular/http';
+import {InterpreterComponent} from '../../ui/interpreter/interpreter.component';
+import {AccountantComponent} from '../../ui/accountant/accountant.component';
+import {BillingAccountComponent} from '../../ui/billing-account/billing-account.component';
+import {AddressComponent} from '../../ui/address/address.component';
+import {OrgRepComponent} from '../../ui/org-rep/org-rep.component';
+import {IndClientComponent} from '../../ui/ind-client/ind-client.component';
 
 describe('UserProfileComponent', () => {
   let component: UserProfileComponent;
@@ -23,7 +29,9 @@ describe('UserProfileComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UserProfileComponent, UserHeaderComponent ],
+      declarations: [ UserProfileComponent, UserHeaderComponent, InterpreterComponent,
+        OrgRepComponent, InterpreterComponent, AddressComponent,
+        IndClientComponent, BillingAccountComponent, AccountantComponent],
       providers: [UserNameService, LinkHelper, LinkAuth, RolePermission,
          { provide: UserService, useClass: MockUserService}, { provide: AuthHttp, useClass: MockBackend},
         NotificationServiceBus,

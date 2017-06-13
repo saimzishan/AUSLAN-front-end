@@ -19,14 +19,26 @@ import { RouterTestingModule } from '@angular/router/testing';
 import {NotificationServiceBus} from '../notification/notification.service';
 import {SimpleNotificationsModule} from 'angular2-notifications';
 
+import {OrgRepComponent} from '../ui/org-rep/org-rep.component';
+import {InterpreterComponent} from '../ui/interpreter/interpreter.component';
+import {AddressComponent} from '../ui/address/address.component';
+import {IndClientComponent} from '../ui/ind-client/ind-client.component';
+import {BillingAccountComponent} from '../ui/billing-account/billing-account.component';
+import {AccountantComponent} from '../ui/accountant/accountant.component';
+import {MaterialModule} from '@angular/material';
+
+
 describe('RegisterComponent', () => {
     let component: RegisterComponent;
     let fixture: ComponentFixture<RegisterComponent>;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [RegisterComponent, NotificationComponent],
-            imports: [FormsModule, CustomFormsModule, SimpleNotificationsModule.forRoot(),
+            declarations: [RegisterComponent, NotificationComponent,
+                OrgRepComponent, InterpreterComponent, AddressComponent,
+                IndClientComponent, BillingAccountComponent, AccountantComponent],
+            imports: [FormsModule, MaterialModule,
+                CustomFormsModule, SimpleNotificationsModule.forRoot(),
               RouterTestingModule],
             providers: [NotificationServiceBus,
             { provide: UserService, useClass: MockUserService}, { provide: AuthHttp, useClass: MockBackend} ]
@@ -61,11 +73,11 @@ describe('RegisterComponent', () => {
 
         describe('RegisterComponent for OrganisationalRepresentative', () => {
             beforeEach((done) => {
-              fixture.debugElement.query(By.css('button[name=btnOrganization]')).nativeElement.click();
-              fixture.debugElement.query(By.css('button[name=register_user]')).nativeElement.click();
               done();
             });
             it('The role Organization should be selected when btnOrganization is clicked', (done) => {
+                fixture.debugElement.query(By.css('button[name=btnOrganization]')).nativeElement.click();
+
                 fixture.whenStable().then(() => {
                     expect(component.roleSelected).toHaveBeenCalled();
                     expect(component.selected).toEqual(true);
@@ -73,10 +85,11 @@ describe('RegisterComponent', () => {
                     done();
                 });
             });
-            it('should call adduser when Interpreter is selected', (done) => {
+            it('should call adduser when OrganisationalRepresentative is selected', (done) => {
+                fixture.debugElement.query(By.css('button[name=register_user]')).nativeElement.click();
+
                 fixture.whenStable().then(() => {
-                    let expected = 1;
-                    expect(component.addUser).toHaveBeenCalledTimes(expected);
+                    expect(component.addUser).toHaveBeenCalled();
                     expect(component.model.role).toEqual(ROLE.Organisational);
                     done();
                 });
@@ -88,11 +101,10 @@ describe('RegisterComponent', () => {
 
         describe('RegisterComponent for Client', () => {
             beforeEach((done) => {
-              fixture.debugElement.query(By.css('button[name=btnClient]')).nativeElement.click();
-              fixture.debugElement.query(By.css('button[name=register_user]')).nativeElement.click();
               done();
             });
             it('The role client should be selected when btnClient is clicked', (done) => {
+                fixture.debugElement.query(By.css('button[name=btnClient]')).nativeElement.click();
 
                 fixture.whenStable().then(() => {
                     expect(component.roleSelected).toHaveBeenCalled();
@@ -101,10 +113,11 @@ describe('RegisterComponent', () => {
                     done();
                 });
             });
-            it('should call adduser when Interpreter is selected', (done) => {
+            it('should call adduser when IndividualClient is selected', (done) => {
+                fixture.debugElement.query(By.css('button[name=register_user]')).nativeElement.click();
+
                 fixture.whenStable().then(() => {
-                    let expected = 1;
-                    expect(component.addUser).toHaveBeenCalledTimes(expected);
+                    expect(component.addUser).toHaveBeenCalled();
                     expect(component.model.role).toEqual(ROLE.IndividualClient);
                     done();
                 });
@@ -115,11 +128,11 @@ describe('RegisterComponent', () => {
 
         describe('RegisterComponent for interpreter', () => {
             beforeEach((done) => {
-              fixture.debugElement.query(By.css('button[name=btnInterpreter]')).nativeElement.click();
-              fixture.debugElement.query(By.css('button[name=register_user]')).nativeElement.click();
               done();
             });
             it('The role interpreter should be selected when btnInterpreter is clicked', (done) => {
+                fixture.debugElement.query(By.css('button[name=btnInterpreter]')).nativeElement.click();
+
                 fixture.whenStable().then(() => {
                     expect(component.roleSelected).toHaveBeenCalled();
                     expect(component.selected).toEqual(true);
@@ -129,9 +142,10 @@ describe('RegisterComponent', () => {
 
             });
             it('should call adduser when Interpreter is selected', (done) => {
+                fixture.debugElement.query(By.css('button[name=register_user]')).nativeElement.click();
+
                 fixture.whenStable().then(() => {
-                    let expected = 1;
-                    expect(component.addUser).toHaveBeenCalledTimes(expected);
+                    expect(component.addUser).toHaveBeenCalled();
                     expect(component.model.role).toEqual(ROLE.Interpreter);
                     done();
                 });

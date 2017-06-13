@@ -5,6 +5,9 @@ import {FormsModule} from '@angular/forms';
 import {CustomFormsModule} from 'ng2-validation';
 import {Md2Module} from 'md2';
 import {MaterialModule} from '@angular/material';
+import {AddressComponent} from '../address/address.component';
+import {OrganisationalRepresentative} from '../../shared/model/user.entity';
+import {BillingAccountComponent} from '../billing-account/billing-account.component';
 
 describe('OrgRepComponent', () => {
   let component: OrgRepComponent;
@@ -12,7 +15,7 @@ describe('OrgRepComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ OrgRepComponent ],
+      declarations: [ OrgRepComponent, AddressComponent, BillingAccountComponent ],
         imports: [CustomFormsModule,
             FormsModule, Md2Module.forRoot(),
             MaterialModule
@@ -25,6 +28,7 @@ describe('OrgRepComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(OrgRepComponent);
     component = fixture.componentInstance;
+    component.userModel = new OrganisationalRepresentative();
     fixture.detectChanges();
   });
 

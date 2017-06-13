@@ -56,6 +56,12 @@ import { SpacerPipe } from './shared/pipe/spacer.pipe';
 import { PrettyIDPipe } from './shared/pipe/pretty-id.pipe';
 import { MobileFooterModule } from './ui/mobile-footer/mobile-footer.module';
 import { FileuploaderModule } from './shared/fileuploader/fileuploader.module';
+import {OrgRepComponent} from './ui/org-rep/org-rep.component';
+import {InterpreterComponent} from './ui/interpreter/interpreter.component';
+import {AddressComponent} from './ui/address/address.component';
+import {IndClientComponent} from './ui/ind-client/ind-client.component';
+import {BillingAccountComponent} from './ui/billing-account/billing-account.component';
+import {AccountantComponent} from './ui/accountant/accountant.component';
 
 describe('AppComponent', () => {
   beforeEach(() => {
@@ -69,7 +75,8 @@ describe('AppComponent', () => {
         NotFoundComponent, RegisterComponent, ResetComponent, VerifyComponent,
         BookingComponent, PrettyIDPipe,
         BookingDetailComponent,
-        SpinnerComponent
+        SpinnerComponent, OrgRepComponent, InterpreterComponent, AddressComponent,
+          IndClientComponent, BillingAccountComponent, AccountantComponent
 
       ],
       imports: [CustomFormsModule, FileuploaderModule, RouterTestingModule, Md2Module.forRoot(),
