@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32px" height="31px" viewBox="0 0 32 31" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 44.1 (41455) - http://www.bohemiancoding.com/sketch -->
+    <title>Shape</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Blockuts/1" transform="translate(-11.000000, -15.000000)" fill-rule="nonzero" fill="#FF4B71">
+            <g id="text" transform="translate(11.000000, 12.000000)">
+                <g id="Days" transform="translate(0.000000, 3.000000)">
+                    <path d="M29.334,2 L25,2 L25,0 L23,0 L23,2 L17,2 L17,0 L15,0 L15,2 L9,2 L9,0 L7,0 L7,2 L2.667,2 C1.194,2 0,3.193 0,4.666 L0,28.333 C0,29.806 1.194,31 2.667,31 L29.334,31 C30.807,31 32,29.806 32,28.333 L32,4.666 C32,3.193 30.807,2 29.334,2 Z M30,28.333 C30,28.701 29.701,29 29.334,29 L2.667,29 C2.299,29 2,28.701 2,28.333 L2,4.666 C2,4.299 2.299,4 2.667,4 L7,4 L7,6 L9,6 L9,4 L15,4 L15,6 L17,6 L17,4 L23,4 L23,6 L25,6 L25,4 L29.334,4 C29.701,4 30,4.299 30,4.666 L30,28.333 Z" id="Shape"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

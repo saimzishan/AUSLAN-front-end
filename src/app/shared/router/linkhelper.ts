@@ -3,7 +3,7 @@ import { GLOBAL } from '../global';
 import { RolePermission } from '../role-permission/role-permission';
 
 export enum LINK {
-  'profile', 'usermanagement', 'booking', 'None', 'change_pass'
+  'profile', 'usermanagement', 'booking', 'None', 'change_pass', 'change_skills'
 }
 
 @Injectable()

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Headers, RequestOptions} from '@angular/http';
-import {User} from '../shared/model/user.entity';
+import {IndividualClient, Interpreter, OrganisationalRepresentative, User} from '../shared/model/user.entity';
 import {ROLE} from '../shared/model/role.enum';
 import {GLOBAL} from '../shared/global';
 import { Observable } from 'rxjs/Observable';
@@ -66,7 +66,10 @@ export class UserService extends ApiService {
         let headers = new Headers({'Accept': 'application/json',
             'Content-Type': 'application/json'});
         let options = new RequestOptions({ headers: headers });
-        let obj = { 'user': user };
+        let obj = { 'user':
+            user instanceof OrganisationalRepresentative ? (<OrganisationalRepresentative>user).toJSON() :
+                    user instanceof IndividualClient ? (<IndividualClient>user).toJSON() :
+                        user };
 
         return this.http.post(GLOBAL.USER_API_ENDPOINT + this.getRoute(user), JSON.stringify(obj), options)
             .map(this.extractData)
@@ -81,7 +84,11 @@ export class UserService extends ApiService {
         let headers = new Headers({'Accept': 'application/json',
             'Content-Type': 'application/json'});
         let options = new RequestOptions({ headers: headers });
-        let obj = { 'user': user };
+        let obj = { 'user':
+            user instanceof OrganisationalRepresentative ? (<OrganisationalRepresentative>user).toJSON() :
+                    user instanceof IndividualClient ? (<IndividualClient>user).toJSON() :
+                        user };
+
         return this.http.patch(GLOBAL.USER_API + '/' + user.id, JSON.stringify(obj), options)
             .catch((err) => { return this.handleError(err); });
 
