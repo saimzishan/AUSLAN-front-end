@@ -3,6 +3,7 @@ import { Contact, BookingInterpreters, DEAFContact } from './contact.entity';
 import { BOOKING_NATURE } from './booking-nature.enum';
 import { BOOKING_STATUS } from './booking-status.enum';
 import { PARKING } from './parking.enum';
+import {OrganisationalRepresentative} from './user.entity';
 export class Booking {
 
   public id: any;
@@ -10,7 +11,6 @@ export class Booking {
   public requested_by: Contact = new Contact();
   public last_updated: Date;
   public update_by: string;
-  public contact: Contact = new Contact();
   public deaf_person: DEAFContact = new DEAFContact();
   public raw_nature_of_appointment: string;
   public nature_of_appointment: BOOKING_NATURE;
@@ -20,8 +20,8 @@ export class Booking {
   public interpreters: Array<BookingInterpreters> = [];
   public interpreters_required = 0;
   public notes = '';
-  public ext_ref_num = '';
-  public billing_address = new Address();
+  public client: OrganisationalRepresentative;
+
   // Is it a limitation on interpreters invitation.
 
   constructor() {
@@ -32,10 +32,12 @@ export class Booking {
     this.venue.street_number = '';
     this.requested_by.first_name = '';
     this.requested_by.last_name = '';
-    this.contact.first_name = '';
-    this.contact.last_name = '';
-    this.contact.phone_number = '';
-    this.contact.mobile_number = '';
+    this.client.organisation_primary_contact.first_name = '';
+    this.client.organisation_primary_contact.last_name = '';
+    this.client.organisation_primary_contact.phone_number = '';
+    this.client.organisation_primary_contact.mobile_number = '';
+    this.client.organisation_billing_account.external_reference = '';
+
     this.deaf_person.first_name = '';
     this.deaf_person.last_name = '';
     this.deaf_person.email = '';
@@ -62,10 +64,12 @@ export class Booking {
     this.interpreters_required = data.number_of_interpreters_required;
     this.requested_by.first_name = data.requested_by_first_name;
     this.requested_by.last_name = data.requested_by_last_name;
-    this.contact.first_name = data.contact_first_name;
-    this.contact.last_name = data.contact_last_name;
-    this.contact.phone_number = data.contact_phone_number;
-    this.contact.mobile_number = data.contact_mobile_number;
+    this.client.organisation_primary_contact.first_name = data.contact_first_name;
+    this.client.organisation_primary_contact.last_name = data.contact_last_name;
+    this.client.organisation_primary_contact.phone_number =  data.contact_phone_number;
+    this.client.organisation_primary_contact.mobile_number =  data.contact_mobile_number;
+    this.client.organisation_billing_account.external_reference = '';
+
     this.deaf_person.first_name = data.deaf_persons_first_name;
     this.deaf_person.last_name = data.deaf_persons_last_name;
     this.deaf_person.email = data.deaf_persons_email;
@@ -114,8 +118,10 @@ export class Booking {
       number_of_interpreters_required: this.interpreters_required,
       nature_of_appointment: _nature_of_appointment,
       specific_nature_of_appointment: _specific_nature_of_appointment,
-      contact_first_name: this.contact.first_name, contact_last_name: this.contact.last_name,
-      contact_phone_number: this.contact.phone_number, contact_mobile_number: this.contact.mobile_number,
+      contact_first_name: this.client.organisation_primary_contact.first_name,
+      contact_last_name: this.client.organisation_primary_contact.last_name,
+      contact_phone_number: this.client.organisation_primary_contact.phone_number,
+      contact_mobile_number: this.client.organisation_primary_contact.mobile_number,
       deaf_persons_first_name: this.deaf_person.first_name,
       deaf_persons_last_name: this.deaf_person.last_name, deaf_persons_mobile: this.deaf_person.mobile_number,
       deaf_persons_email: this.deaf_person.email, deaf_persons_eaf_no: this.deaf_person.eaf,

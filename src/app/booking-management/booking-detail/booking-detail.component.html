@@ -146,7 +146,7 @@
           <div class="form-field">
             <label>CONTACT FIRST NAME * <span mdTooltip="Enter Contact First Name"><i class="inline-icon-tip"></i></span></label>
             <input [disabled]='currentUserIsContact' type="text" placeholder="Enter Contact First Name"
-                                                                 [(ngModel)]="bookingModel.contact.first_name" name="contact_first_name" #contact_first_name="ngModel" [rangeLength]="[2,20]" required>
+                   [(ngModel)]="bookingModel.client.organisation_primary_contact.first_name" name="contact_first_name" #contact_first_name="ngModel" [rangeLength]="[2,20]" required>
             <span *ngIf="contact_first_name.touched && !contact_first_name.errors?.required && !contact_first_name.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
             <span *ngIf="contact_first_name.touched && (contact_first_name.errors?.required || contact_first_name.errors?.rangeLength);" class="inline-icon error">
               <span>Minimum 4 characters required.</span>!</span>
@@ -157,7 +157,7 @@
           <div class="form-field">
             <label>CONTACT LAST NAME <span mdTooltip="Enter Contact Last Name"><i class="inline-icon-tip"></i></span></label>
             <input [disabled]='currentUserIsContact' type="text" placeholder="Enter Contact Last Name"
-                                                                 [(ngModel)]="bookingModel.contact.last_name" name="contact_last_name" #contact_last_name="ngModel" [rangeLength]="[2,20]" required>
+                   [(ngModel)]="bookingModel.client.organisation_primary_contact.last_name" name="contact_last_name" #contact_last_name="ngModel" [rangeLength]="[2,20]" required>
             <span *ngIf="contact_last_name.touched && !contact_last_name.errors?.required && !contact_last_name.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
             <span *ngIf="contact_last_name.touched && (contact_last_name.errors?.required || contact_last_name.errors?.rangeLength);" class="inline-icon error">
               <span>Minimum 4 characters required.</span>!
@@ -167,7 +167,7 @@
         <div class="medium-6 columns">
           <div class="form-field">
             <label>CONTACT EMAIL * <span mdTooltip="Enter contact email address"><i class="inline-icon-tip"></i></span></label>
-            <input [disabled]='currentUserIsContact' type="email" class="inline-icon-user-email" id="email" placeholder="Enter contact email address" [(ngModel)]="bookingModel.contact.email" name="email" #email="ngModel" email required>
+            <input [disabled]='currentUserIsContact' type="email" class="inline-icon-user-email" id="email" placeholder="Enter contact email address" [(ngModel)]="bookingModel.client.organisation_primary_contact.email" name="email" #email="ngModel" email required>
             <span *ngIf="email.touched && !email.errors?.email;" class="inline-icon inline-icon-valid valid"></span>
             <span *ngIf="(email.dirty || email.touched) && (email.errors?.required || email.errors?.email);" class="inline-icon error">
               <span>Email is required</span>!</span>
@@ -176,7 +176,7 @@
         <div class="medium-6 columns">
           <div class="form-field">
             <label>CONTACT MOBILE <span mdTooltip="Enter Contact Mobile Number!"><i class="inline-icon-tip"></i></span></label>
-            <input [disabled]='currentUserIsContact' type="tel" placeholder="Enter Contact Mobile Number" [(ngModel)]="bookingModel.contact.mobile_number" name="mobile" #mobile="ngModel" required>
+            <input [disabled]='currentUserIsContact' type="tel" placeholder="Enter Contact Mobile Number" [(ngModel)]="bookingModel.client.organisation_primary_contact.mobile_number" name="mobile" #mobile="ngModel" required>
             <span *ngIf="mobile.touched && !mobile.errors?.required;" class="inline-icon inline-icon-valid valid"></span>
             <span *ngIf="mobile.touched && mobile.errors?.required;" class="inline-icon error">
               <span>Minimum 6 digits required.</span>!
@@ -271,7 +271,8 @@
         <div class="medium-12 columns">
           <div class="form-field">
             <label>External Reference Number * <span mdTooltip="Enter External Reference Number!"><i class="inline-icon-tip"></i></span></label>
-            <input type="tel" placeholder="Enter External Reference Number" [(ngModel)]="bookingModel.ext_ref_num" name="ext_ref_num" #ext_ref_num="ngModel" required digits>
+            <input type="tel" placeholder="Enter External Reference Number"
+                   [(ngModel)]="bookingModel.client.organisation_billing_account.external_reference" name="ext_ref_num" #ext_ref_num="ngModel" required digits>
             <span *ngIf="ext_ref_num.touched && !ext_ref_num.errors?.required && !ext_ref_num.errors?.digits;" class="inline-icon inline-icon-valid valid"></span>
             <span *ngIf="ext_ref_num.touched && (ext_ref_num.errors?.required || ext_ref_num.errors?.digits);" class="inline-icon error">
               <span>This field is required.</span>!
@@ -280,7 +281,7 @@
         </div>
         <div class="medium-12 columns">
           <div class="form-field">
-            <app-address [address]="bookingModel.billing_address"></app-address>
+            <app-address [address]="bookingModel.client.organisation_billing_account.organisation_billing_address"></app-address>
           </div>
         </div>
       </div>

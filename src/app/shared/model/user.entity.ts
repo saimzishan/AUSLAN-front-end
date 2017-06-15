@@ -126,7 +126,8 @@ export class OrganisationalRepresentative extends Organisational {
                   'primary_contact_last_name' : this.organisation_primary_contact.last_name ,
                   'email_address' : this.organisation_primary_contact.email ,
                   'account_number' : 'ABCD-1234' , 'preferred_billing_method_email' : this.email_confirmation ,
-                  'external_reference' : '' , 'address_attributes' : this.organisation_billing_account.organisation_billing_address}}};
+                  'external_reference' :  this.organisation_billing_account.external_reference ,
+                  'address_attributes' : this.organisation_billing_account.organisation_billing_address}}};
     return o;
   }
 
@@ -172,13 +173,14 @@ export class OrganisationalRepresentative extends Organisational {
     this.organisation_primary_contact.email = obj.organisation.billing_account.email_address || '';
     this.email_confirmation = obj.organisation.billing_account.preferred_billing_method_email;
     this.organisation_billing_account.organisation_billing_address = obj.organisation.billing_account.address_attributes;
+    this.organisation_billing_account.external_reference = obj.organisation.billing_account.external_reference;
   }
 }
 
 export class Accountant extends User {
   public account_number:  number;
   public organisation_billing_address:  Address = new Address();
-
+  public external_reference: string;
   get user_type() {
     return 'Accountant';
   }
