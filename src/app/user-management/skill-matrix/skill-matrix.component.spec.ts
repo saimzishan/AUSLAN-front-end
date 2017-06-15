@@ -4,6 +4,11 @@ import { SkillMatrixComponent } from './skill-matrix.component';
 import {EnumValPipe} from '../../shared/pipe/enum-val.pipe';
 import {CustomFormsModule} from 'ng2-validation';
 import {MaterialModule} from '@angular/material';
+import {UserHeaderComponent} from '../user-header/user-header.component';
+import {FormsModule} from '@angular/forms';
+import {RouterTestingModule} from '@angular/router/testing';
+import {LinkAuth, LinkHelper} from '../../shared/router/linkhelper';
+import {RolePermission} from '../../shared/role-permission/role-permission';
 
 describe('SkillMatrixComponent', () => {
   let component: SkillMatrixComponent;
@@ -11,10 +16,11 @@ describe('SkillMatrixComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SkillMatrixComponent, EnumValPipe ]
+      declarations: [ SkillMatrixComponent, UserHeaderComponent, EnumValPipe ]
       ,
-      imports: [CustomFormsModule, MaterialModule
-      ]
+      imports: [CustomFormsModule, MaterialModule, FormsModule, RouterTestingModule
+      ],
+      providers: [LinkAuth, LinkHelper, RolePermission]
     })
     .compileComponents();
   }));

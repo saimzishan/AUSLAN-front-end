@@ -71,10 +71,10 @@ export class Organisational extends User {
   public organisation_primary_contact: Contact = new Contact();
   public organisation_address: Address = new Address();
   public organisation_billing_account: Accountant = new Accountant();
-  public name: string;
-  public group_email: string;
-  public branch_office: string;
-  public preferred_contact_method: string;
+  public name = '';
+  public group_email = '';
+  public branch_office = '';
+  public preferred_contact_method = '';
   public phone: string;
   public email_receipt: boolean;
   public email_confirmation: boolean;
@@ -127,9 +127,9 @@ export class OrganisationalRepresentative extends Organisational {
     this.preferred_contact_method = obj.organisation_attributes.preferred_contact_method;
     this.preferred_contact_method = obj.organisation_attributes.preferred_contact_method;
     this.organisation_address = obj.organisation_attributes.address_attributes;
-    this.organisation_primary_contact.first_name = obj.organisation_attributes.billing_account_attributes.primary_contact_first_name;
-    this.organisation_primary_contact.last_name = obj.organisation_attributes.billing_account_attributes.primary_contact_last_name;
-    this.organisation_primary_contact.email = obj.organisation_attributes.billing_account_attributes.email_address;
+    this.organisation_primary_contact.first_name = obj.organisation_attributes.billing_account_attributes.primary_contact_first_name || '';
+    this.organisation_primary_contact.last_name = obj.organisation_attributes.billing_account_attributes.primary_contact_last_name || '';
+    this.organisation_primary_contact.email = obj.organisation_attributes.billing_account_attributes.email_address || '';
     this.email_confirmation = obj.organisation_attributes.billing_account_attributes.preferred_billing_method_email;
     this.organisation_billing_account = obj.organisation_attributes.billing_account_attributes.address_attributes;
   }
