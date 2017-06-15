@@ -36,6 +36,7 @@ export class Booking {
     this.client.organisation_primary_contact.last_name = '';
     this.client.organisation_primary_contact.phone_number = '';
     this.client.organisation_primary_contact.mobile_number = '';
+    this.client.organisation_primary_contact.email = '';
     this.client.organisation_billing_account.external_reference = '';
 
     this.deaf_person.first_name = '';
