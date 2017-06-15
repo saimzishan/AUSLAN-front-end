@@ -91,11 +91,16 @@ export class BookingDetailComponent implements AfterViewChecked, OnDestroy {
   }
 
   public onSelectionChange() {
-    this.bookingModel.contact.first_name = this.currentUserIsContact === 'true' ? GLOBAL.currentUser.first_name : '';
-    this.bookingModel.contact.last_name = this.currentUserIsContact === 'true' ? GLOBAL.currentUser.last_name : '';
-    this.bookingModel.contact.email = this.currentUserIsContact === 'true' ? GLOBAL.currentUser.email : '';
-    this.bookingModel.contact.mobile_number = this.currentUserIsContact === 'true' ? GLOBAL.currentUser.mobile : '';
-    this.bookingModel.contact.phone_number = this.currentUserIsContact === 'true' ? GLOBAL.currentUser.mobile : '';
+    this.bookingModel.client.organisation_primary_contact.first_name =
+        this.currentUserIsContact === 'true' ? GLOBAL.currentUser.first_name : '';
+    this.bookingModel.client.organisation_primary_contact.last_name =
+        this.currentUserIsContact === 'true' ? GLOBAL.currentUser.last_name : '';
+    this.bookingModel.client.organisation_primary_contact.email =
+        this.currentUserIsContact === 'true' ? GLOBAL.currentUser.email : '';
+    this.bookingModel.client.organisation_primary_contact.mobile_number =
+        this.currentUserIsContact === 'true' ? GLOBAL.currentUser.mobile : '';
+    this.bookingModel.client.organisation_primary_contact.phone_number =
+        this.currentUserIsContact === 'true' ? GLOBAL.currentUser.mobile : '';
   }
   /*
     Calling this method will create a new booking
