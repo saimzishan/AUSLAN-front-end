@@ -7,10 +7,10 @@ describe('SpacerPipe', () => {
     expect(pipe).toBeTruthy();
   });
 
-  it('transforms OrganisationalRepresentative to Organisational Representative', () => {
-    let r = 'OrganisationalRepresentative';
+  it('transforms OrganisationalRepresentative to Organisation Representative', () => {
+    let r = 'OrganisationRepresentative';
     let newVal = pipe.transform(r);
-    expect(newVal).toEqual('Organisational Representative');
+    expect(newVal).toEqual('Organisation Representative');
   });
 
 });

@@ -45,16 +45,16 @@ export class RegisterComponent implements OnInit, OnDestroy {
                         break;
 
                     case 'IndividualClient'.toUpperCase():
-                        let ic = new IndividualClient;
+                        let ic = new IndividualClient({});
                         this.model = ic;
                         this.model.role = ROLE.IndividualClient;
 
                         break;
 
-                    case 'Organisational'.toUpperCase():
-                        let org = new OrganisationalRepresentative();
+                    case 'Organisation'.toUpperCase():
+                        let org = new OrganisationalRepresentative({});
                         this.model = org;
-                        this.model.role = ROLE.Organisational;
+                        this.model.role = ROLE.Organisation;
 
                         break;
 

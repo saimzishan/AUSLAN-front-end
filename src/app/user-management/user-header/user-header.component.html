@@ -1,5 +1,5 @@
-<section id="submenu">
-			<section>
+<div>
+	<section>
 				<a id="lnkProfile" [routerLink]="['/user-management','profile']" [ngClass]="{'active':  isActiveLink(linkName.profile)}" (click)="setActiveLink( linkName.profile)" >Profile Info</a>
 
 				<a id="lnkProfilePass" [routerLink]="['/user-management','secure_pass']" [ngClass]="{'active':  isActiveLink(linkName.change_pass)}" (click)="setActiveLink( linkName.change_pass)" >Change Password</a>
@@ -10,4 +10,4 @@
 				<a id="lnkProfileSkill" [routerLink]="['/user-management','skills']" [ngClass]="{'active':  isActiveLink(linkName.change_skills)}" (click)="setActiveLink( linkName.change_skills)" >Skill Management</a>
 
 			</section>
-		</section>
+</div>

@@ -29,7 +29,7 @@ export class UserService extends ApiService {
         let route = '';
 
         switch (+u.role) {
-            case ROLE.Organisational:
+            case ROLE.Organisation:
             case ROLE.OrganisationalRepresentative:
                 route = '/organisational_representatives';
                 break;

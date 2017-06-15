@@ -10,6 +10,6 @@ export class BillingAccountComponent {
   @Input() primaryContact: Contact;
 
 address_title = 'Billing Address';
-  @Input() billingAddressIsDifferent= true;
+  @Input() billingAddressIsSame= true;
   @Input() billingAddress: Address;
 }

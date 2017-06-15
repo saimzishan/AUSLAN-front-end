@@ -43,7 +43,7 @@ export class RolePermission {
             }
         }
     },
-    "organization-representitive": {
+    "organisational-representative": {
         "not-allowed-routes": [
             "user-management",
             "booking-job"
@@ -52,8 +52,7 @@ export class RolePermission {
             "booking-management": {
                 "administrator": "no-access",
                 "booking-officer": "no-access",
-                "interpreter": "no-access",
-                "organizational-representitive": "no-access"
+                "interpreter": "no-access"
             }
         }
     },

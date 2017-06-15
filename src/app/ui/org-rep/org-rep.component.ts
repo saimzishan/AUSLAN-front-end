@@ -10,6 +10,4 @@ import { AddressComponent } from '../address/address.component';
 export class OrgRepComponent {
   @Input() userModel: OrganisationalRepresentative;
   address_title = 'Organisation Address';
-  billingAddressIsDifferent = true;
-
 }

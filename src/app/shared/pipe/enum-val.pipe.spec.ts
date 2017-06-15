@@ -19,8 +19,8 @@ describe('EnumValPipe', () => {
     let r = ROLE;
     let keys = pipe.transform(r);
 
-    expect(keys[r.Organisational].key).toEqual([r.Organisational].toString());
-    expect(r[r.Organisational]).toEqual(keys[r.Organisational].value);
+    expect(keys[r.Organisation].key).toEqual([r.Organisation].toString());
+    expect(r[r.Organisation]).toEqual(keys[r.Organisation].value);
   });
 
   it('transforms PARKING enum into dict, as far as its base 10 >= 0', () => {

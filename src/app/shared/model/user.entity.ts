@@ -11,11 +11,15 @@ export class UserFactory {
   public static createUser(data:  any) {
     let type = data.type;
     switch (type) {
-      case 'OrganisationalRepresentative': return new  OrganisationalRepresentative ()
-          .fromJSON(data);
+      case 'OrganisationalRepresentative':
+        let or = new  OrganisationalRepresentative(data);
+        or.fromJSON(data);
+        return or;
       case 'Accountant': return new  Accountant (data);
-      case 'IndividualClient': return new  IndividualClient ()
-          .fromJSON(data);
+      case 'IndividualClient':
+        let ic = new  IndividualClient (data);
+        ic.fromJSON(data);
+        return ic;
       case 'BookingOfficer': return new  BookingOfficer (data);
       case 'Administrator': return new  Administrator (data);
       case 'Interpreter': return new  Interpreter (data);
@@ -69,7 +73,7 @@ export class User {
 export class Organisational extends User {
   public abn: number;
   public organisation_primary_contact: Contact = new Contact();
-  public organisation_address: Address = new Address();
+  public address_attributes: Address = new Address();
   public organisation_billing_account: Accountant = new Accountant();
   public name = '';
   public group_email = '';
@@ -79,11 +83,20 @@ export class Organisational extends User {
   public email_receipt: boolean;
   public email_confirmation: boolean;
   public reffered_by: string;
+  public reffered_other: string;
   public customer_ref: string;
   public special_instructions = '';
+  public billingAddressIsSame = true;
+
+  constructor(data) {
+    super(data);
+    this.organisation_billing_account.organisation_billing_address =
+        this.billingAddressIsSame ? this.address_attributes :
+            this.organisation_billing_account.organisation_billing_address;
+  }
 
   get user_type() {
-    return 'Organisational';
+    return 'Organisation';
   }
 }
 
@@ -96,42 +109,69 @@ export class OrganisationalRepresentative extends Organisational {
 
 
   toJSON() {
-    let o = {'user' :
-        {'first_name'  :  this.first_name , 'last_name' : this.last_name , 'email' : this.email ,
-          'password' : this.password , 'business_hours_phone' : this.business_hours_phone , 'mobile' : this.mobile ,
+    let o = {'first_name'  :  this.first_name , 'last_name' : this.last_name ,
+      'type': this.type, 'email' : this.email ,
+          'password' : this.password , 'business_hours_phone' : this.phone , 'mobile' : this.mobile ,
+          'send_email_on_receipt_of_request': this.email_receipt,
+          'email_confirmation_on_interpreter_allocation': this.email_confirmation,
+          'special_instructions' : this.special_instructions,
+          'discovery_of_auslan': this.reffered_by || this.reffered_other,
+          'customer_reference': this.customer_ref,
           'organisation_attributes' :
               {'abn' : this.abn , 'name' : this.name , 'group_email' : this.group_email ,
                 'branch_office' : this.branch_office , 'phone_number' : this.phone ,
                 'preferred_contact_method' : this.preferred_contact_method ,
-                'address_attributes' : this.organisation_address ,
+                'address_attributes' : this.address_attributes ,
                 'billing_account_attributes' : {'primary_contact_first_name' : this.organisation_primary_contact.first_name ,
                   'primary_contact_last_name' : this.organisation_primary_contact.last_name ,
                   'email_address' : this.organisation_primary_contact.email ,
                   'account_number' : 'ABCD-1234' , 'preferred_billing_method_email' : this.email_confirmation ,
-                  'external_reference' : '' , 'address_attributes' : this.organisation_billing_account}}}};
+                  'external_reference' : '' , 'address_attributes' : this.organisation_billing_account.organisation_billing_address}}};
     return o;
   }
 
+  /*
+  * {"id":2,"type":"OrganisationalRepresentative","email":"nauman+orgrep@curvetomorrow.com.au",
+  * "first_name":"Nauman","last_name":"OrgRep","mobile":null,"verified":true,"disabled":false,
+  * "photo_url":"/avatars/thumbnail/missing.png","business_hours_phone":"0490398821",
+  * "send_email_on_receipt_of_request":true,"email_confirmation_on_interpreter_allocation":true,
+  * "special_instructions":"No instructions","discovery_of_auslan":"Internet search engine",
+  * "customer_reference":"AZZ-34",
+  * "organisation":{"id":1,"abn":"05123456789","name":"Curve","group_email":"",
+  * "branch_office":"Melbourne","phone_number":"0490398821",
+  * "preferred_contact_method":"0","address_attributes":
+  * {"id":1,"unit_number":"123","street_number":"62","street_name":"62, DIANNE",
+  * "suburb":"CRAIGIEBURN","state":"VIC","post_code":"3064"},
+  * "billing_account":{"id":1,"account_number":"ABCD-1234",
+  * "primary_contact_first_name":"Thijs","primary_contact_last_name":"Song",
+  * "preferred_billing_method_email":true,
+  * "external_reference":"",
+  * "address_attributes":{"id":2,"unit_number":"123","street_number":"62","street_name":"62, DIANNE",
+  * "suburb":"CRAIGIEBURN","state":"VIC","post_code":"3064"}}}}
+  * */
   fromJSON(obj) {
-    this.first_name = obj.first_name;
-    this.last_name = obj.last_name;
-    this.email = obj.email;
-    this.password = obj.password;
+    this.email_receipt = obj.send_email_on_receipt_of_request;
+    this.email_confirmation = obj.email_confirmation_on_interpreter_allocation;
     this.business_hours_phone = obj.business_hours_phone;
-    this.mobile = obj.mobile;
-    this.abn = obj.organisation_attributes.abn;
-    this.name = obj.organisation_attributes.name;
-    this.group_email = obj.organisation_attributes.group_email;
-    this.branch_office = obj.organisation_attributes.branch_office;
-    this.phone = obj.organisation_attributes.phone_number;
-    this.preferred_contact_method = obj.organisation_attributes.preferred_contact_method;
-    this.preferred_contact_method = obj.organisation_attributes.preferred_contact_method;
-    this.organisation_address = obj.organisation_attributes.address_attributes;
-    this.organisation_primary_contact.first_name = obj.organisation_attributes.billing_account_attributes.primary_contact_first_name || '';
-    this.organisation_primary_contact.last_name = obj.organisation_attributes.billing_account_attributes.primary_contact_last_name || '';
-    this.organisation_primary_contact.email = obj.organisation_attributes.billing_account_attributes.email_address || '';
-    this.email_confirmation = obj.organisation_attributes.billing_account_attributes.preferred_billing_method_email;
-    this.organisation_billing_account = obj.organisation_attributes.billing_account_attributes.address_attributes;
+    obj.organisation = obj.organisation || obj.organisation_attributes;
+    obj.organisation.billing_account = obj.organisation.billing_account ||
+        obj.organisation.billing_account_attributes;
+
+    this.abn = obj.organisation.abn;
+    this.name = obj.organisation.name;
+    this.group_email = obj.organisation.group_email;
+    this.special_instructions = obj.special_instructions;
+    this.branch_office = obj.branch_office;
+    this.reffered_by = obj.discovery_of_auslan;
+    this.customer_ref = obj.customer_reference;
+    this.phone = obj.organisation.phone_number;
+    this.preferred_contact_method = obj.organisation.preferred_contact_method;
+    this.address_attributes = obj.organisation.address_attributes;
+    this.organisation_primary_contact.first_name = obj.organisation.billing_account.primary_contact_first_name || '';
+    this.organisation_primary_contact.last_name = obj.organisation.billing_account.primary_contact_last_name || '';
+    this.organisation_primary_contact.email = obj.organisation.billing_account.email_address || '';
+    this.email_confirmation = obj.organisation.billing_account.preferred_billing_method_email;
+    this.organisation_billing_account.organisation_billing_address = obj.organisation.billing_account.address_attributes;
   }
 }
 
@@ -162,6 +202,14 @@ export class IndividualClient extends User {
   public email_receipt: boolean;
   public email_confirmation: boolean;
   public reffered_by: string;
+  public billingAddressIsSame = true;
+
+constructor(data) {
+    super(data);
+    this.individual_client_billing_account.organisation_billing_address =
+        this.billingAddressIsSame ? this.address_attributes :
+            this.individual_client_billing_account.organisation_billing_address;
+  }
 
   get user_type() {
     return 'IndividualClient';

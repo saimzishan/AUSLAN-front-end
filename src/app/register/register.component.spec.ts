@@ -74,15 +74,15 @@ describe('RegisterComponent', () => {
 
         describe('RegisterComponent for OrganisationalRepresentative', () => {
             it('should call adduser when OrganisationalRepresentative is selected', (done) => {
-                component.selectedRole = 'ORGANISATIONAL';
+                component.selectedRole = 'ORGANISATION';
                 let org = new OrganisationalRepresentative();
                 component.model = org;
-                component.model.role = ROLE.Organisational;
+                component.model.role = ROLE.Organisation;
                 fixture.debugElement.query(By.css('button[name=register_user]')).nativeElement.click();
 
                 fixture.whenStable().then(() => {
                     expect(component.addUser).toHaveBeenCalled();
-                    expect(component.model.role).toEqual(ROLE.Organisational);
+                    expect(component.model.role).toEqual(ROLE.Organisation);
                     done();
                 });
 

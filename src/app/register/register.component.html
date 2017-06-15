@@ -40,7 +40,7 @@
 								<div class="form-field">
 									<label class="icon-lock">
 							    PASSWORD *</label>
-									<input id="pass" type="password" placeholder="Enter your password" [(ngModel)]="model.password" name="password" #password="ngModel"
+									<input id="pass1" type="password" placeholder="Enter your password" [(ngModel)]="model.password" name="password" #password="ngModel"
 										required>
 
 										<span *ngIf="password.touched &&  (!password.errors?.required && password.errors?.rangeLength);" class="inline-icon inline-icon-valid valid"></span>
@@ -72,15 +72,6 @@
 										<span>Email is required</span>!</span>
 								</div>
 							</div>
-							<div class="medium-6 columns">
-								<div class="form-field">
-									<label class="icon-mobile">MOBILE * </label>
-									<input type="tel" placeholder="Enter your mobile" [(ngModel)]="model.mobile" name="mobile" #mobile="ngModel" required>
-									<span *ngIf="mobile.touched && !mobile.errors?.required;" class="inline-icon inline-icon-valid valid"></span>
-									<span *ngIf="mobile.touched && mobile.errors?.required;" class="inline-icon error">
-											<span>Minimum 6 digits required.</span>!</span>
-								</div>
-							</div>
 						<div class="medium-6 columns">
 							<div class="form-field">
 								<label class="icon-mobile">PHONE * </label>
@@ -90,10 +81,18 @@
 											<span>Minimum 6 digits required.</span>!</span>
 							</div>
 						</div>
+							<div class="medium-6 columns">
+								<div class="form-field">
+									<label class="icon-mobile">MOBILE </label>
+									<input type="tel" placeholder="Enter your mobile" [(ngModel)]="model.mobile" name="mobile" #mobile="ngModel">
+
+								</div>
+							</div>
+
 					</div>
 				</div>
 				<br>
-				<app-org-rep [userModel]="model" *ngIf="selectedRole === 'ORGANISATIONAL'"></app-org-rep>
+				<app-org-rep [userModel]="model" *ngIf="selectedRole === 'ORGANISATION'"></app-org-rep>
 				<app-interpreter [userModel]="model" *ngIf="selectedRole === 'INTERPRETER'"></app-interpreter>
 				<app-ind-client [userModel]="model" *ngIf="selectedRole === 'INDIVIDUALCLIENT'"></app-ind-client>
 				<br>

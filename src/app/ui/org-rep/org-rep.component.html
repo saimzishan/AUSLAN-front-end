@@ -86,7 +86,7 @@
 
 <br>
 
-<app-address [prefix]="address_title" [address]="userModel.organisation_address"></app-address>
+<app-address [prefix]="address_title" [address]="userModel.address_attributes"></app-address>
 
 <div class="row small-collapse">
     <div class="row-wrapper">
@@ -94,7 +94,7 @@
             <div class="form-field">
                 <label>Billing Address is same as Organization Address?</label>
                 <md-checkbox type="checkbox"
-                             [(ngModel)]="billingAddressIsDifferent" name="billingAddressIsDifferent_confirmation"
+                             [(ngModel)]="userModel.billingAddressIsSame" name="billingAddressIsDifferent_confirmation"
                              #billingAddressIsDifferent_confirmation="ngModel">Yes
                 </md-checkbox>
             </div>
@@ -103,7 +103,8 @@
 </div>
 
 <br>
-<app-billing-account [primaryContact]="userModel.organisation_primary_contact" [billingAddress]="userModel.organisation_billing_account.organisation_billing_address" [billingAddressIsDifferent]="!billingAddressIsDifferent"
+<app-billing-account [primaryContact]="userModel.organisation_primary_contact"
+                     [billingAddress]="userModel.organisation_billing_account.organisation_billing_address" [billingAddressIsSame]="userModel.billingAddressIsSame"
                      ></app-billing-account>
 
 
@@ -113,20 +114,20 @@
             <div class="form-field">
                 <label>HOW DID YOU FIND OUT ABOUT US?</label>
                 <select [(ngModel)]="userModel.reffered_by">
-                    <option value="0">A deaf person told me</option>
-                    <option value="1">An interpreter told me</option>
-                    <option value="2">Internet search engine</option>
-                    <option value="3">Google</option>
-                    <option value="4">Yellow pages</option>
-                    <option value="5">Word of mouth</option>
-                    <option value="6">Other</option>
+                    <option>A deaf person told me</option>
+                    <option>An interpreter told me</option>
+                    <option>Internet search engine</option>
+                    <option>Google</option>
+                    <option>Yellow pages</option>
+                    <option>Word of mouth</option>
+                    <option>Other</option>
                 </select>
             </div>
         </div>
         <div class="medium-12 columns">
             <div class="form-field">
                 <label>IF OTHER THEN PLEASE DESCRIBE HERE</label>
-                <textarea [(ngModel)]="userModel.reffered_by" cols="30" rows="10"
+                <textarea [(ngModel)]="userModel.reffered_other" cols="30" rows="10"
                           class="inline-icon inline-icon-txt"></textarea>
             </div>
         </div>
@@ -134,8 +135,7 @@
         <div class="medium-12 columns">
             <div class="form-field">
                 <label>CUSTOMER REF</label>
-                <textarea [(ngModel)]="userModel.customer_ref" cols="30" rows="10"
-                          class="inline-icon inline-icon-txt"></textarea>
+                <input [(ngModel)]="userModel.customer_ref">
             </div>
         </div>
         <div class="medium-12 columns">

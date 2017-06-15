@@ -18,7 +18,7 @@ export class UserDetailComponent {
     @Output() onRefresh = new EventEmitter();
     isNewUser = true;
     selRoles = [];
-    _selRoles = [ROLE.BookingOfficer, ROLE.IndividualClient , ROLE.Organisational, ROLE.Interpreter];
+    _selRoles = [ROLE.BookingOfficer, ROLE.IndividualClient , ROLE.Organisation, ROLE.Interpreter];
     selectedRoles = {};
     showForm = false;
     userStatusArray = GLOBAL.userStatusArray;

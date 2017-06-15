@@ -1,10 +1,11 @@
 <section id="page-skill-matrix">
-  <app-user-header></app-user-header>
+
   <section id="submenu">
+    <div app-user-header></div>
     <div>
-      <button class="button pink" (click)="apply(false)" >Cancel</button>
+      <button class="button pink">Cancel</button>
       <div class="sep"></div>
-      <button (click)="apply(true)" [ngClass]="[doSave ? 'button' : 'button inverse not-changed']">Save</button>
+      <button class="button inverse not-changed">Save</button>
     </div>
   </section>
   <main>
@@ -23,12 +24,13 @@
         <thead>
         <tr>
           <th>Area of Knowledge</th>
-          <md-radio-group class="lvl_skills" [(ngModel)]="currentLevel">
-            <th width="16%" *ngFor="let lvl of levels" ><md-radio-button class="lvl_skills" [value]="lvl">
+          <th colspan="4">
+            <md-radio-group class="lvl_skills" [(ngModel)]="currentLevel">
+            <md-radio-button *ngFor="let lvl of levels" class="lvl_skills" [value]="lvl">
                {{lvl}}
-            </md-radio-button></th>
+            </md-radio-button>
           </md-radio-group>
-
+          </th>
         </tr>
         </thead>
       </table>

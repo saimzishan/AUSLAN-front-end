@@ -9,6 +9,7 @@ import {FormsModule} from '@angular/forms';
 import {RouterTestingModule} from '@angular/router/testing';
 import {LinkAuth, LinkHelper} from '../../shared/router/linkhelper';
 import {RolePermission} from '../../shared/role-permission/role-permission';
+import {HttpModule} from '@angular/http';
 
 describe('SkillMatrixComponent', () => {
   let component: SkillMatrixComponent;
@@ -18,7 +19,8 @@ describe('SkillMatrixComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ SkillMatrixComponent, UserHeaderComponent, EnumValPipe ]
       ,
-      imports: [CustomFormsModule, MaterialModule, FormsModule, RouterTestingModule
+      imports: [CustomFormsModule, MaterialModule, HttpModule,
+        FormsModule, RouterTestingModule
       ],
       providers: [LinkAuth, LinkHelper, RolePermission]
     })
