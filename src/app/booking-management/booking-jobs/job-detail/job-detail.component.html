@@ -66,7 +66,7 @@
             <td data-title="DATE"><span>{{selectedBookingModel.venue.start_time_iso | date:'EEE d MMM yy'}}
 													</span></td>
             <td data-title="Language">AUSLAN</td>
-            <td data-title="Client">{{selectedBookingModel.contact.first_name}}</td>
+            <td data-title="Client">{{selectedBookingModel.client.organisation_primary_contact.first_name}}</td>
             <td data-title="VENUE">{{selectedBookingModel.venue.title}}</td>
             <td data-title="SUBURB">
               <a target="_blank" href="{{'https://www.google.com.au/maps/place/' +selectedBookingModel.venue.suburb}}">{{selectedBookingModel.venue.suburb}}</a></td>
