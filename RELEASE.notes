@@ -3,5 +3,8 @@ SPRINT 8
 
 - The API Side needs a separate card for “skill_level”:“highest_level_edu”:“location_pref”:“comm_pref”
 - The UI needs to refactor code for job-detail anad booking-job, almost the same ui
-- the app-user-header needs to be placed at some central place.
+- the app-user-header needs to be placed at some central place in UI
+- The other reffered by is not there in api side
+- I hate, all the toJSON and fromJSON, i really hope we can fix that in future.
+- The date in API should be standardize, its ugly to convert from formats to formats. We should rather store offset.
 
