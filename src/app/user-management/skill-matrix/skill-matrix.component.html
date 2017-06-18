@@ -6,7 +6,7 @@
     <div>
       <button (click)="apply(false)" class="button pink">Cancel</button>
       <div class="sep"></div>
-      <button (click)="apply(true)" class="button inverse not-changed">Save</button>
+      <button (click)="apply(true)" [ngClass]="{ 'button pink' : doSave ,  'button inverse not-changed' : !doSave }">Save</button>
     </div>
   </section>
   <main>
@@ -47,8 +47,10 @@
         <tr *ngFor="let item of specific_appointment_types | enumVal ">
           <ng-container *ngIf="item.value !== 'Other' && item.value !== 'None'">
           <td>&nbsp;{{item.value}}</td>
-          <td *ngFor="let lvl of levels"><md-checkbox  (change)="skillChanged($event)" [checked]="currentLevel === lvl" [value]="lvl">
-          </md-checkbox></td>
+          <td *ngFor="let lvl of levels">
+            <md-checkbox   (change)="skillChanged($event, lvl, item.value)" [checked]="currentLevel === lvl || isChecked(lvl, item.value)" [value]="lvl">
+          </md-checkbox>
+          </td>
           </ng-container>
         </tr>
 
