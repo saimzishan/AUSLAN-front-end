@@ -30,4 +30,8 @@ export class UserListComponent {
       return this.linkAuth.canEditLink(linkName, data_owner);
     }
 
+  isUserInterpreter(user) {
+    return (<User>user).type === 'Interpreter';
+  }
+
 }

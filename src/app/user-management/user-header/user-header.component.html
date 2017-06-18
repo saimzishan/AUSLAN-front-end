@@ -7,6 +7,5 @@
 	</section>
 			<section>
 				<a id="lnkSettings" *ngIf="canShowLink('user-management')"  [routerLink]="['/user-management']" [ngClass]="{'active':  isActiveLink(linkName.usermanagement)}" (click)="setActiveLink( linkName.usermanagement)" >Manage Users</a>
-				<a id="lnkProfileSkill" [routerLink]="['/user-management','skills']" [ngClass]="{'active':  isActiveLink(linkName.change_skills)}" (click)="setActiveLink( linkName.change_skills)" >Skill Management</a>
 
 			</section>
