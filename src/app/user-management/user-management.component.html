@@ -1,7 +1,10 @@
 <section id="page-manage-users">
 
 	<section id="submenu">
-		<app-user-header></app-user-header>
-	</section>		<app-user-filter [userModel]='newUser' (refreshEmitter)="fetchUsers()" ></app-user-filter>
+		<app-user-header id="main-submenu-links">
+		</app-user-header>
+	</section>
+
+	<app-user-filter [userModel]='newUser' (refreshEmitter)="fetchUsers()" ></app-user-filter>
 		<app-user-list [userList]='users' (onEditUser)="onEditUser($event)" (onResetPass)="onResetPassword($event)" ></app-user-list>
 </section>

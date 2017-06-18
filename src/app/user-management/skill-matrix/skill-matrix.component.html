@@ -1,11 +1,12 @@
 <section id="page-skill-matrix">
 
   <section id="submenu">
-    <app-user-header></app-user-header>
+    <app-user-header id="main-submenu-links">
+    </app-user-header>
     <div>
-      <button class="button pink">Cancel</button>
+      <button (click)="apply(false)" class="button pink">Cancel</button>
       <div class="sep"></div>
-      <button class="button inverse not-changed">Save</button>
+      <button (click)="apply(true)" class="button inverse not-changed">Save</button>
     </div>
   </section>
   <main>
