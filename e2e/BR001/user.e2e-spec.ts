@@ -2091,7 +2091,7 @@ describe('BR001 => Create, read, update and delete a User \
         });
 
         // Add new ORG REP
-        describe('Scenario: Administrator should be able to add a new Organisational Representative', () => {
+        describe('Scenario: Administrator should be able to add a new Organisation Representative', () => {
             describe('Given I exist as an administrator', () => {
                 describe('And I sign in with valid credentials', () => {
                     beforeEach(() => {
@@ -2155,7 +2155,7 @@ describe('BR001 => Create, read, update and delete a User \
                         role.click();
                         browser.driver.sleep(2000);
                     })
-                    it('And I add a valid Organisational Representative', () => {
+                    it('And I add a valid Organisation Representative', () => {
                         let dlg = page.getElementByCss('.md-dialog');
                         let fn = page.getElementInside(dlg, 'first_name');
                         let ln = page.getElementInside(dlg, 'last_name');
@@ -2205,7 +2205,7 @@ describe('BR001 => Create, read, update and delete a User \
                     it('Then I am on the \'User Management\' list page', () => {
                         expect(page.currentPath()).toContain('user-management');
                     });
-                    it('And the valid Organisational Representative should be in the list', () => {
+                    it('And the valid Organisation Representative should be in the list', () => {
                         let tr = $$('table.custom tr');
                         tr.count().then((d) => {
                             // console.log(d-1);
@@ -2222,7 +2222,7 @@ describe('BR001 => Create, read, update and delete a User \
         });
 
         // Update ORG REP
-        describe('Administrator should be able to update an Organisational Representative', () => {
+        describe('Administrator should be able to update an Organisation Representative', () => {
             describe('Given I exist as an administrator', () => {
                 describe('And I sign in with valid credentials', () => {
                     beforeEach(() => {
@@ -2265,13 +2265,13 @@ describe('BR001 => Create, read, update and delete a User \
                         expect(page.currentPath()).toContain('user-management');
                     });
                 });
-                describe('When I click on edit for an existing Organisational Representative', () => {
+                describe('When I click on edit for an existing Organisation Representative', () => {
                     it(' I hover over action button and click on edit', () => {
                         // find the list of OR
                         // get the first one
                         // get the parent of that element
                         // find the button of that row
-                        let list_of_ORs = page.getAllByCSSandText('.truncated-text', 'Organisational Representative');
+                        let list_of_ORs = page.getAllByCSSandText('.truncated-text', 'Organisation Representative');
                         let first_OR = list_of_ORs.get(0);
                         let userRow = page.getParent(first_OR);
                         let action_button = page.getElementInsideByCSS(userRow, '.icon-actions');
@@ -2310,7 +2310,7 @@ describe('BR001 => Create, read, update and delete a User \
                     it('Then I am on the \'User Management\' list page', () => {
                         expect(page.currentPath()).toContain('user-management');
                     });
-                    it('And the updated Organisational Representative should be in the list', () => {
+                    it('And the updated Organisation Representative should be in the list', () => {
                         // let tr = $$('table.custom tr');
                         // tr.count().then((d) => {
                         //     expect(d - 1).toBe(cnt);
@@ -2327,7 +2327,7 @@ describe('BR001 => Create, read, update and delete a User \
 
 
         // Delete / Disable ORG REP
-        describe('Administrator should be able to delete/disable an Organisational Representative', () => {
+        describe('Administrator should be able to delete/disable an Organisation Representative', () => {
             describe('Given I exist as an administrator', () => {
                 describe('And I sign in with valid credentials', () => {
                     beforeEach(() => {
@@ -2370,14 +2370,14 @@ describe('BR001 => Create, read, update and delete a User \
                         expect(page.currentPath()).toContain('user-management');
                     });
                 });
-                describe('When I click on edit for an existing Organisational Representative', () => {
+                describe('When I click on edit for an existing Organisation Representative', () => {
                     it(' I hover over action button and click on edit', () => {
                         // find the list of OR
                         // get the first one
                         // get the parent of that element
                         // find the button of that row
                         // var selectedRow;
-                        let list_of_ORs = page.getAllByCSSandText('.truncated-text', 'Organisational Representative');
+                        let list_of_ORs = page.getAllByCSSandText('.truncated-text', 'Organisation Representative');
                         list_of_ORs.count().then((count) => {
                             console.log('The number of OR is: '+ count);
                         })
@@ -2439,7 +2439,7 @@ describe('BR001 => Create, read, update and delete a User \
                     it('Then I am on the \'User Management\' list page', () => {
                         expect(page.currentPath()).toContain('user-management');
                     });
-                    it('And the updated Organisational Representative should be in the list', () => {
+                    it('And the updated Organisation Representative should be in the list', () => {
                         // let tr = $$('table.custom tr');
                         // tr.count().then((d) => {
                         //     expect(d - 1).toBe(cnt);
@@ -2455,7 +2455,7 @@ describe('BR001 => Create, read, update and delete a User \
 
 
         // Add invalid ORG REP
-        describe('Scenario: Administrator should not be able to add a new Organisational Representative' +
+        describe('Scenario: Administrator should not be able to add a new Organisation Representative' +
             ' with invalid information and should receive a visible warning', () => {
             describe('Given I exist as an administrator', () => {
                 describe('And I sign in with valid credentials', () => {
@@ -2508,13 +2508,13 @@ describe('BR001 => Create, read, update and delete a User \
                         newUserBtn.click();
                         browser.driver.sleep(2000);
                     });
-                    it(' And i click on the Organisational Representative role', () => {
+                    it(' And i click on the Organisation Representative role', () => {
                         let dlg = page.getElementByCss('.md-dialog');
                         let role = page.getButtonByTextInsideElement(dlg, 'Organisation');
                         role.click();
                         browser.driver.sleep(2000);
                     })
-                    it('And I add an invalid Organisational Representative', () => {
+                    it('And I add an invalid Organisation Representative', () => {
                         let dlg = page.getElementByCss('.md-dialog');
                         let fn = page.getElementInside(dlg, 'first_name');
                         let ln = page.getElementInside(dlg, 'last_name');
@@ -2564,7 +2564,7 @@ describe('BR001 => Create, read, update and delete a User \
                     it('Then I am on the \'User Management\' list page', () => {
                         expect(page.currentPath()).toContain('user-management');
                     });
-                    it('And the valid Organisational Representative should be in the list', () => {
+                    it('And the valid Organisation Representative should be in the list', () => {
                         let tr = $$('table.custom tr');
                         tr.count().then((d) => {
                             expect(d - 1).toBeGreaterThan(cnt);

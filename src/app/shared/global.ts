@@ -40,6 +40,17 @@ export class GLOBAL {
 
   // UI Params
   public static selBookingID = '';
+
+    static fixDateFormat(d: Date) {
+
+        let dateStr = d.toString();
+        dateStr = dateStr.substr(6, 4) +
+            '-' + dateStr.substr(3, 2) +
+            '-' + dateStr.substr(0, 2);
+
+        return new Date(dateStr);
+
+    }
 }
 
 export function authService(http: Http, options: RequestOptions) {

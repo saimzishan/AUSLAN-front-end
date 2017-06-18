@@ -298,7 +298,7 @@ export class Interpreter extends User {
   public highest_level_edu = '';
   public location_pref = '';
   public comm_pref = '';
-
+  public assignments_attributes = [];
   get user_type() {
     return 'Interpreter';
   }

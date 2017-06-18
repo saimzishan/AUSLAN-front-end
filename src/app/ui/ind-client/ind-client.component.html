@@ -25,7 +25,9 @@
     <div class="medium-6 columns">
       <div class="form-field">
         <label>NDIS Validity Start Date</label>
-        <input type='date' name='dpEventDateStart' [(ngModel)]="userModel.ndis_validity_start_date"  #dpEventDateStart="ngModel" />
+        <input type='date' name='dpEventDateStart'
+               [ngModel]="userModel.ndis_validity_start_date | date:'yyyy-MM-dd'" (ngModelChange)="userModel.ndis_validity_start_date = $event"
+               #dpEventDateStart="ngModel" />
 
 
       </div>
@@ -33,7 +35,9 @@
     <div class="medium-6 columns">
       <div class="form-field">
         <label>NDIS Validity End Date</label>
-        <input type='date' name='dpEventDateEnd' [(ngModel)]="userModel.ndis_validity_end_date"  #dpEventDateEnd="ngModel" />
+        <input type='date' name='dpEventDateEnd'
+               [ngModel]="userModel.ndis_validity_end_date | date:'yyyy-MM-dd'" (ngModelChange)="userModel.ndis_validity_end_date = $event"
+               #dpEventDateEnd="ngModel" />
 
       </div>
     </div>
@@ -71,7 +75,7 @@
       <div class="form-field">
         <label>Billing Address is same as Organization Address?</label>
         <md-checkbox type="checkbox"
-                     [(ngModel)]="billingAddressIsDifferent" name="billingAddressIsDifferent_confirmation"
+                     [(ngModel)]="userModel.billingAddressIsSame" name="billingAddressIsDifferent_confirmation"
                      #billingAddressIsDifferent_confirmation="ngModel">Yes
         </md-checkbox>
       </div>
@@ -80,7 +84,8 @@
 </div>
 
 <br>
-<app-billing-account [primaryContact]="userModel.individual_client_primary_contact" [billingAddress]="userModel.individual_client_billing_account.organisation_billing_address" [billingAddressIsSame]="!billingAddressIsDifferent"
+<app-billing-account [primaryContact]="userModel.individual_client_primary_contact" [billingAddress]="userModel.individual_client_billing_account.organisation_billing_address"
+                     [billingAddressIsSame]="userModel.billingAddressIsSame"
                      ></app-billing-account>
 
 
