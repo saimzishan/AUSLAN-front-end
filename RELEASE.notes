@@ -1,0 +1,7 @@
+SPRINT 8
+==========
+
+- The API Side needs a separate card for “skill_level”:“highest_level_edu”:“location_pref”:“comm_pref”
+- The UI needs to refactor code for job-detail anad booking-job, almost the same ui
+- the app-user-header needs to be placed at some central place.
+
