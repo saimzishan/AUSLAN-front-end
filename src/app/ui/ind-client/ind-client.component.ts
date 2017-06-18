@@ -19,6 +19,7 @@ export class IndClientComponent   implements  OnInit {
     this.userModel.eaf_start_date = GLOBAL.fixDateFormat(this.userModel.eaf_start_date);
     this.userModel.eaf_end_date = GLOBAL.fixDateFormat(this.userModel.eaf_end_date);
     */
+    delete this.userModel.password;
 
   }
 

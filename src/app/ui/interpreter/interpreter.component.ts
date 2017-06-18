@@ -13,10 +13,6 @@ export class InterpreterComponent  implements  OnInit {
   @Input() userModel: Interpreter;
   ngOnInit() {
 
-    this.userModel.date_of_birth = GLOBAL.fixDateFormat(this.userModel.date_of_birth);
-    this.userModel.naati_validity_end_date = GLOBAL.fixDateFormat(this.userModel.naati_validity_end_date);
-    this.userModel.naati_validity_start_date = GLOBAL.fixDateFormat(this.userModel.naati_validity_start_date);
-
     delete this.userModel.assignments_attributes;
     delete this.userModel.password;
   }

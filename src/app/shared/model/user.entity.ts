@@ -208,6 +208,7 @@ export class IndividualClient extends User {
   public email_confirmation: boolean;
   public reffered_by: string;
   public billingAddressIsSame = true;
+  public reffered_other: string;
 
 constructor(data) {
     super(data);
@@ -220,10 +221,27 @@ constructor(data) {
     return 'IndividualClient';
   }
 
+  /*
+  * {"id":4,"type":"IndividualClient","email":"nauman+ind@curvetomorrow.com.au",
+  * "first_name":"Nauman","last_name":"IndClient","mobile":"xxxx xxx xxx","verified":true,
+  * "disabled":false,"photo_url":"/avatars/thumbnail/missing.png",
+  * "send_email_on_receipt_of_request":true,"email_confirmation_on_interpreter_allocation":true,
+  * "special_instructions":null,"discovery_of_auslan":null,
+  * "address_attributes":{"id":4,"unit_number":"22","street_number":"62","street_name":"DIANNE AVE",
+  * "suburb":"CRAIGIEBURN","state":"VIC","post_code":"3064"},
+  * "billing_account_attributes":{"id":2,"account_number":"ABCD-1234",
+  * "primary_contact_first_name":"Thijs","primary_contact_last_name":"Song",
+  * "preferred_billing_method_email":true,"external_reference":"Curve and Sanj",
+  * "address_attributes":{"id":5,"unit_number":"22","street_number":"62",
+  * "street_name":"DIANNE AVE","suburb":"CRAIGIEBURN","state":"VIC","post_code":"3064"}}}
+  * */
   toJSON() {
-    let o = {'user':
-        {'first_name': this.first_name, 'last_name': this.last_name , 'email': this.email, 'password': this.password,
-          'mobile': this.mobile, 'ndis_id': this.ndis_id, 'ndis_budget_limit': this.ndis_budget_limit,
+    let o = {'first_name': this.first_name, 'last_name': this.last_name , 'email': this.email, 'password': this.password,
+      'type': this.type, 'send_email_on_receipt_of_request': this.email_receipt,
+      'email_confirmation_on_interpreter_allocation': this.email_confirmation,
+      'special_instructions' : this.special_instructions,
+      'discovery_of_auslan': this.reffered_by || this.reffered_other,
+      'mobile': this.mobile, 'ndis_id': this.ndis_id, 'ndis_budget_limit': this.ndis_budget_limit,
           'ndis_validity_start_date': this.ndis_validity_start_date, 'ndis_validity_end_date': this.ndis_validity_end_date,
           'eaf_id': this.eaf_id, 'eaf_budget_limit': this.eaf_budget_limit, 'eaf_start_date': this.eaf_start_date,
           'eaf_end_date': this.eaf_end_date,
@@ -232,8 +250,8 @@ constructor(data) {
             'primary_contact_last_name': this.individual_client_primary_contact.last_name ,
             'email_address': this.individual_client_primary_contact.email ,
             'account_number': 'ABCD-1234', 'preferred_billing_method_email': this.email_confirmation ,
-            'external_reference': 'Curve and Sanj',
-            'address_attributes': this.individual_client_billing_account.organisation_billing_address}}};
+            'external_reference': 'Curve and Sanji',
+            'address_attributes': this.individual_client_billing_account.organisation_billing_address}};
     return o;
   }
 
@@ -252,7 +270,10 @@ constructor(data) {
     this.eaf_budget_limit = obj.eaf_budget_limit;
     this.eaf_start_date = obj.eaf_start_date;
     this.eaf_end_date = obj.eaf_end_date;
-
+    this.special_instructions = obj.special_instructions;
+    this.reffered_by = obj.discovery_of_auslan;
+    this.email_receipt = obj.send_email_on_receipt_of_request;
+    this.email_confirmation = obj.email_confirmation_on_interpreter_allocation;
     this.address_attributes = obj.address_attributes;
     this.individual_client_primary_contact.first_name = obj.billing_account_attributes.primary_contact_first_name;
     this.individual_client_primary_contact.last_name = obj.billing_account_attributes.primary_contact_last_name;
@@ -294,10 +315,10 @@ export class Interpreter extends User {
   public address_attributes: Address = new Address();
   public long_term_availability: interpreter_avalability;
   public override_availabilty: blockout_availability;
-  public skill_level= '';
-  public highest_level_edu = '';
-  public location_pref = '';
-  public comm_pref = '';
+  public skill_level= 'ASL Certified';
+  public highest_level_edu = 'Diploma of Interpreting Auslan/English';
+  public location_pref = 'VIC';
+  public comm_pref = 'SMS and Email';
   public assignments_attributes = [];
   get user_type() {
     return 'Interpreter';
