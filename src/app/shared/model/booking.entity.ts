@@ -20,7 +20,7 @@ export class Booking {
   public interpreters: Array<BookingInterpreters> = [];
   public interpreters_required = 0;
   public notes = '';
-  public client: OrganisationalRepresentative;
+  public client: OrganisationalRepresentative = new OrganisationalRepresentative({});
 
   // Is it a limitation on interpreters invitation.
 
