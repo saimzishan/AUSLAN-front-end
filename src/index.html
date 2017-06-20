@@ -40,12 +40,17 @@
 
    <script>
     $(document).ready(
-      ()=>{
-          $(function(){$("#filters button").click(function()
-        {$(this).toggleClass("active")}),$("#search").focus(function(){$(this).parent().addClass("active")}).blur(function(){$(this).parent().removeClass("active")})});
-
-      }
-    );
+        function () {
+        console.log('in ready');
+    function storageChange (event) {
+            if(event.key === 'token') {
+                if(!event.newValue) {
+                    window.location.href = '/'
+				}
+            }
+        }
+    window.addEventListener('storage', storageChange, false)
+        } );
    </script>
 </body>
 </html>
