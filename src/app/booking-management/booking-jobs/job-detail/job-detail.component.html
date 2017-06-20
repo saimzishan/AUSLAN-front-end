@@ -114,7 +114,7 @@
         </div>
         <div class="manage-job-buttons">
           <button [disabled]="disableAccept" class="button button-accept" (click)="showDialogBox(false)"><i class="icon-check-mobile"></i></button>
-          <button class="button button-help"><i class="icon-help"></i></button>
+          <button [disabled]="disableAccept" class="button button-help"><i class="icon-help"></i></button>
           <button [disabled]="disableReject" class="button button-decline" (click)="showDialogBox(true)"><i class="icon-decline"></i></button>
         </div>
       </section>

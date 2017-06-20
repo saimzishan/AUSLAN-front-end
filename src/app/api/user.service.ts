@@ -239,7 +239,7 @@ export class UserService extends ApiService {
         let obj = { 'current_password': current_password , 'new_password': new_password };
 
         return this.http
-            .put(GLOBAL.USER_API + '/' + userID + '/update_password' ,
+            .patch(GLOBAL.USER_API + '/' + userID + '/update_password' ,
                 JSON.stringify(obj) , options) // Better add verify in path
             .catch((err) => { return Observable.throw(err); });
     }

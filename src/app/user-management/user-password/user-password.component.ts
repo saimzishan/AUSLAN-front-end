@@ -12,7 +12,7 @@ import { GLOBAL } from '../../shared/global';
 })
 export class UserPasswordComponent {
 
-  curr_password = '';
+  curr_password = '*******';
   new_password = '';
   confirm_password = '';
   constructor(public userDataService: UserService,
@@ -23,14 +23,20 @@ export class UserPasswordComponent {
 
 
   editUser() {
-    this.userDataService.updatePassword(GLOBAL.currentUser.id, this.curr_password, this.new_password)
+      this.spinnerService.requestInProcess(true);
+
+      this.userDataService.updatePassword(GLOBAL.currentUser.id, this.curr_password, this.new_password)
         .subscribe((res: any) => {
-              if (res.status === 204) {
+              if (res.status === 200) {
                 // UI Notification
-                this.notificationServiceBus.launchNotification(false, 'User password updated Successfully');
+                  this.spinnerService.requestInProcess(false);
+
+                  this.notificationServiceBus.launchNotification(false, 'User password updated Successfully');
               }
         }, errors => {
-          let e = errors.json();
+            this.spinnerService.requestInProcess(false);
+
+            let e = errors.json();
           this.notificationServiceBus.launchNotification(true, errors.statusText + ' '
               + JSON.stringify(e.errors).replace(/]|[[]/g, '').replace(/({|})/g, ''));
         });
