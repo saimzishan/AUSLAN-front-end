@@ -57,16 +57,26 @@ export class SkillMatrixComponent implements OnInit {
     }
 
 
-    skillChanged(event, level: string, raw_specific_booking_type: string) {
+    skillChanged(level: string, raw_specific_booking_type: string) {
 
         let assignment = this.userModel.assignments_attributes.filter(a => a.assignment_type_category_name
         === this.raw_nature_of_appointment
         && a.assignment_type_name === raw_specific_booking_type);
         if (Boolean(assignment) && assignment.length > 0) {
-            let prev = assignment[0].level;
             assignment[0].level = level === 'n/a' ? 0 : parseInt(level, 10);
-            this.doSave = assignment[0].level !== prev;
+            this.doSave = true;
+        }
+    }
 
+    aokChanged(level: string) {
+
+        let assignments = this.userModel.assignments_attributes.filter(a => a.assignment_type_category_name
+        === this.raw_nature_of_appointment);
+        if (Boolean(assignments) && assignments.length > 0) {
+            for (let ass of assignments) {
+                ass.level = level === 'n/a' ? 0 : parseInt(level, 10);
+                this.doSave = true;
+            }
         }
     }
 

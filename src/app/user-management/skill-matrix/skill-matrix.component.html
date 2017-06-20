@@ -20,14 +20,16 @@
       </nav>
     </aside>
     <section>
-      <h1>SKILL MATRIX {{userDisplayName}}</h1>
+      <h1>SKILL MATRIX {{this.userModel.first_name}} {{this.userModel.last_name}}</h1>
       <table>
         <thead>
         <tr>
           <th>Area of Knowledge</th>
           <th colspan="4">
-            <md-radio-group class="lvl_skills" [(ngModel)]="currentLevel">
-            <md-radio-button *ngFor="let lvl of levels" class="lvl_skills" [value]="lvl">
+            <md-radio-group class="lvl_skills" >
+            <md-radio-button  *ngFor="let lvl of levels" class="lvl_skills"
+                              (change)="aokChanged(lvl)"
+                              [value]="lvl">
                {{lvl}}
             </md-radio-button>
           </md-radio-group>
@@ -48,7 +50,7 @@
           <ng-container *ngIf="item.value !== 'Other' && item.value !== 'None'">
           <td>&nbsp;{{item.value}}</td>
           <td *ngFor="let lvl of levels">
-            <md-checkbox   (change)="skillChanged($event, lvl, item.value)" [checked]="currentLevel === lvl || isChecked(lvl, item.value)" [value]="lvl">
+            <md-checkbox   (change)="skillChanged(lvl, item.value)" [checked]="isChecked(lvl, item.value)" [value]="lvl">
           </md-checkbox>
           </td>
           </ng-container>
