@@ -261,7 +261,8 @@
       <div class="medium-12 columns">
         <div class="form-field">
           <label>Do you want to use standard invoice details? * <span mdTooltip="Tooltip!"><i class="inline-icon-tip"></i></span></label>
-          <md-radio-group name="rdStandardInvoice"  [(ngModel)]="rdStandardInvoice">
+          <md-radio-group name="rdStandardInvoice"
+                          [(ngModel)]="standardInvoice">
             <md-radio-button value=true>YES</md-radio-button>
             <md-radio-button value=false>NO</md-radio-button>
           </md-radio-group>
@@ -281,7 +282,10 @@
         </div>
         <div class="medium-12 columns">
           <div class="form-field">
-            <app-billing-account [billingAddressIsSame]="rdStandardInvoice" [billingAddress]="bookingModel.client.organisation_billing_account.organisation_billing_address" [primaryContact]="bookingModel.client.organisation_billing_account" ></app-billing-account>
+            <app-billing-account
+                    [billingAddressIsSame]="rdStandardInvoice"
+                    [billingAddress]="bookingModel.client.organisation_billing_account.organisation_billing_address"
+                    [primaryContact]="bookingModel.client.organisation_billing_account" ></app-billing-account>
           </div>
         </div>
       </div>
