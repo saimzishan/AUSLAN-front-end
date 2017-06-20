@@ -64,6 +64,7 @@ import { AddressComponent } from './ui/address/address.component';
 import { AccountantComponent } from './ui/accountant/accountant.component';
 import { UserPasswordComponent } from './user-management/user-password/user-password.component';
 import { PreComponent } from './register/pre/pre.component';
+import { TrimValueAccessorModule } from 'ng-trim-value-accessor';
 
 @NgModule({
   declarations: [
@@ -99,7 +100,7 @@ import { PreComponent } from './register/pre/pre.component';
     FormsModule, BrowserAnimationsModule,
     HttpModule, SimpleNotificationsModule.forRoot(),
     ReactiveFormsModule, Md2Module.forRoot(),
-    MaterialModule
+    MaterialModule, TrimValueAccessorModule
   ],  providers: [DatePipe, LinkAuth, UserNameService, RolePermission, AuthGuard, NoAuthGuard, Title, LinkHelper,
     NotificationServiceBus, SpinnerService, BookingService, UserService,
     { provide: APP_BASE_HREF, useValue : '/' },
