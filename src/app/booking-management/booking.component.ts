@@ -49,7 +49,7 @@ export class BookingComponent {
         if (res.status === 200) {
           for (let o of res.data.bookings) {
             if (Boolean(!this.rolePermission.isDataRestrictedForCurrentUser('booking-management', o.created_by.type))
-            || o.interpreters.filter( int => int.id === GLOBAL.currentUser.id).length > 0) {
+            || o.interpreters_attributes.filter( int => int.id === GLOBAL.currentUser.id).length > 0) {
               let b = new Booking();
               b.fromJSON(o);
               this.bookings.push(b);

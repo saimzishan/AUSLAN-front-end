@@ -1,4 +1,4 @@
-import {Component, AfterViewChecked, OnDestroy, OnChanges, Directive, SimpleChanges} from '@angular/core';
+import {Component, AfterViewChecked, OnDestroy, OnChanges, Directive, SimpleChanges, OnInit} from '@angular/core';
 import { Booking } from '../../shared/model/booking.entity';
 import { BookingService } from '../../api/booking.service';
 import { BA, BOOKING_NATURE } from '../../shared/model/booking-nature.enum';
@@ -24,7 +24,7 @@ const URL = 'https://evening-anchorage-3159.herokuapp.com/api/';
   styleUrls: ['./booking-detail.component.css']
 
 })
-export class BookingDetailComponent implements AfterViewChecked, OnDestroy, OnChanges {
+export class BookingDetailComponent implements OnInit, OnDestroy, OnChanges {
 
   private sub: any;
   public uploader: FileUploader = new FileUploader({url: URL});
@@ -85,7 +85,7 @@ export class BookingDetailComponent implements AfterViewChecked, OnDestroy, OnCh
     return this.sub && this.sub.unsubscribe();
   }
 
-  ngAfterViewChecked() {
+  ngOnInit() {
     if (GLOBAL.currentUser !== undefined) {
       this.onSelectionChange();
       this.onClientSelectionChange();
@@ -101,15 +101,15 @@ export class BookingDetailComponent implements AfterViewChecked, OnDestroy, OnCh
   }
 
   public onSelectionChange() {
-    this.bookingModel.client.organisation_primary_contact.first_name =
+    this.bookingModel.primaryContact.first_name =
         this.currentUserIsContact === 'true' ? GLOBAL.currentUser.first_name : '';
-    this.bookingModel.client.organisation_primary_contact.last_name =
+    this.bookingModel.primaryContact.last_name =
         this.currentUserIsContact === 'true' ? GLOBAL.currentUser.last_name : '';
-    this.bookingModel.client.organisation_primary_contact.email =
+    this.bookingModel.primaryContact.email =
         this.currentUserIsContact === 'true' ? GLOBAL.currentUser.email : '';
-    this.bookingModel.client.organisation_primary_contact.mobile_number =
+    this.bookingModel.primaryContact.mobile_number =
         this.currentUserIsContact === 'true' ? GLOBAL.currentUser.mobile : '';
-    this.bookingModel.client.organisation_primary_contact.phone_number =
+    this.bookingModel.primaryContact.phone_number =
         this.currentUserIsContact === 'true' ? GLOBAL.currentUser.mobile : '';
   }
   /*
@@ -117,12 +117,11 @@ export class BookingDetailComponent implements AfterViewChecked, OnDestroy, OnCh
   */
   public onCreateBooking() {
     this.spinnerService.requestInProcess(true);
-
+    this.bookingModel.state = BOOKING_STATUS.Requested; // res.data.status;
     this.bookingService.createBooking(this.bookingModel)
       .subscribe((res: any) => {
         if (res.status === 201 && res.data.id && 0 < res.data.id) {
           this.bookingModel.id = res.data.id;
-          this.bookingModel.state = BOOKING_STATUS.Requested; // res.data.status;
           this.notificationServiceBus.launchNotification(false, 'The Booking has been created.');
           let route = this.rolePermission.getDefaultRouteForCurrentUser();
           this.router.navigate( [route] );

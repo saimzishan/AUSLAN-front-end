@@ -20,6 +20,7 @@ export class Booking {
     public interpreters: Array<BookingInterpreters> = [];
     public interpreters_required = 0;
     public notes = '';
+    public primaryContact = new Contact();
     public client: OrganisationalRepresentative = new OrganisationalRepresentative({});
 
     // Is it a limitation on interpreters invitation.
@@ -65,10 +66,10 @@ export class Booking {
         this.interpreters_required = data.number_of_interpreters_required;
         this.requested_by.first_name = data.requested_by_first_name;
         this.requested_by.last_name = data.requested_by_last_name;
-        this.client.organisation_primary_contact.first_name = data.contact_first_name;
-        this.client.organisation_primary_contact.last_name = data.contact_last_name;
-        this.client.organisation_primary_contact.phone_number = data.contact_phone_number;
-        this.client.organisation_primary_contact.mobile_number = data.contact_mobile_number;
+        this.primaryContact.first_name = data.contact_first_name;
+        this.primaryContact.last_name = data.contact_last_name;
+        this.primaryContact.phone_number = data.contact_phone_number;
+        this.primaryContact.mobile_number = data.contact_mobile_number;
         this.client.organisation_billing_account.external_reference = '';
 
         this.deaf_person.first_name = data.deaf_persons_first_name;
@@ -81,8 +82,26 @@ export class Booking {
         this.specific_nature_of_appointment = data.specific_nature_of_appointment;
         let state: string = data.state;
         this.state = BOOKING_STATUS[state];
-        if (Boolean(data.interpreters)) {
-            for (let i of data.interpreters) {
+
+        if (Boolean(data.billing_account_attributes)) {
+            this.client.organisation_primary_contact.first_name =
+                data.billing_account_attributes.primary_contact_first_name
+
+            this.client.organisation_primary_contact.last_name =
+                data.billing_account_attributes.primary_contact_last_name
+
+            this.client.organisation_primary_contact.email =
+                data.billing_account_attributes.email_address
+
+            this.client.organisation_billing_account.external_reference =
+                data.billing_account_attributes.external_reference
+
+            this.client.organisation_billing_account.organisation_billing_address =
+                data.billing_account_attributes.address_attributes
+        }
+
+        if (Boolean(data.interpreters_attributes)) {
+            for (let i of data.interpreters_attributes) {
                 let int: BookingInterpreters = {
                     id: i.id,
                     state: i.state,
@@ -125,10 +144,10 @@ export class Booking {
             number_of_interpreters_required: this.interpreters_required,
             nature_of_appointment: _nature_of_appointment,
             specific_nature_of_appointment: _specific_nature_of_appointment,
-            contact_first_name: this.client.organisation_primary_contact.first_name,
-            contact_last_name: this.client.organisation_primary_contact.last_name,
-            contact_phone_number: this.client.organisation_primary_contact.phone_number,
-            contact_mobile_number: this.client.organisation_primary_contact.mobile_number,
+            contact_first_name: this.primaryContact.first_name,
+            contact_last_name: this.primaryContact.last_name,
+            contact_phone_number: this.primaryContact.phone_number,
+            contact_mobile_number: this.primaryContact.mobile_number,
             deaf_persons_first_name: this.deaf_person.first_name,
             deaf_persons_last_name: this.deaf_person.last_name, deaf_persons_mobile: this.deaf_person.mobile_number,
             deaf_persons_email: this.deaf_person.email, deaf_persons_eaf_no: this.deaf_person.eaf,
