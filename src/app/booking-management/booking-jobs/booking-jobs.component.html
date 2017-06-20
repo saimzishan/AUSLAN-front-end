@@ -116,7 +116,7 @@
 						<section class="manage-interpreters">
 								<section>
 									<div *ngFor="let interpreter of selectedBookingModel.interpreters; let i=index">
-										<ng-container *ngIf="interpreter.state === 'accept'">
+										<ng-container *ngIf="interpreter.state === 'Accepted'">
 
 															<b>Interpreter {{i + 1}} :</b> <span>{{interpreter.first_name}} {{interpreter.last_name}}</span>
 															<button>Unassing</button>
@@ -222,7 +222,8 @@
 								<md-checkbox (change)="onChange($event,user)"></md-checkbox>
 							</td>
 							<td>{{user.id}}</td>
-							<td align="center"><i [ngClass]="{'icon-check-green' : isInvited(user.id), 'icon-check-yellow' : !isInvited(user.id)}"></i></td>
+							<td align="center"><i [ngClass]="{'icon-check-green' :
+							isInvited(user.id), 'icon-check-yellow' : !isInvited(user.id)}"></i></td>
 							<td><i [ngClass]="{'icon-check-yellow' : isNotConfirmed(user.id)}"></i> {{user.first_name}}</td>
 							<td>{{user.last_name}}</td>
 							<td></td>

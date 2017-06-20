@@ -44,7 +44,7 @@ export class JobDetailComponent implements  OnDestroy {
   }
 
   anyInterpreterAccepted() {
-    return this.selectedBookingModel.interpreters.filter(i => i.state === 'accept').length > 0;
+    return this.selectedBookingModel.interpreters.filter(i => i.state === 'Accepted').length > 0;
   }
 
   public showDialogBox(isCancel: Boolean) {

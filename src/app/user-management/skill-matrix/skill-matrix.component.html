@@ -6,7 +6,8 @@
     <div>
       <button (click)="apply(false)" class="button pink">Cancel</button>
       <div class="sep"></div>
-      <button (click)="apply(true)" [ngClass]="{ 'button pink' : doSave ,  'button inverse not-changed' : !doSave }">Save</button>
+      <button (click)="apply(true)" [disabled]="!doSave"
+              class='button inverse' >Save</button>
     </div>
   </section>
   <main>

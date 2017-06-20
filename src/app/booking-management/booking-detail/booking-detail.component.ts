@@ -58,7 +58,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy, OnChanges {
         this.datePipe.transform(this.bookingModel.venue.start_time_iso, 'yyyy-MM-ddThh:mm:ss');
         this.bookingModel.venue.end_time_iso =
         this.datePipe.transform(this.bookingModel.venue.end_time_iso, 'hh:mm:ss');
-
       }
     });
   }
@@ -116,8 +115,10 @@ export class BookingDetailComponent implements OnInit, OnDestroy, OnChanges {
     Calling this method will create a new booking
   */
   public onCreateBooking() {
+
     this.spinnerService.requestInProcess(true);
     this.bookingModel.state = BOOKING_STATUS.Requested; // res.data.status;
+    this.bookingModel.clean(this.bookingModel.toJSON());
     this.bookingService.createBooking(this.bookingModel)
       .subscribe((res: any) => {
         if (res.status === 201 && res.data.id && 0 < res.data.id) {

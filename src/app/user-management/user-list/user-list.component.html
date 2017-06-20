@@ -77,7 +77,7 @@
 											<li><a  (click)="onUserSelect(user)" ><i class="icon-edit"></i> Edit</a></li>
 											<li *ngIf="isUserInterpreter(user)" >
 												<a id="lnkProfileSkill"
-				[routerLink]="['/user-management', user.id,'skills']" ><i class="icon-skill-matrix"></i> Skill Matrix</a></li>
+				[routerLink]="['/user-management/' + user.id +'/skills']" ><i class="icon-skill-matrix"></i> Skill Matrix</a></li>
 											<li><a (click)="onResetPassword(user)" ><i class="icon-reset-password"></i> Reset password</a></li>
 										</ul>
 									</li>

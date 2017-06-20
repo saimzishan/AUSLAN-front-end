@@ -16,7 +16,6 @@ export class SkillMatrixComponent implements OnInit {
     userDisplayName: string;
     appointment_types = Object.keys(BOOKING_NATURE).filter(value => value === BOOKING_NATURE[value]
     || BOOKING_NATURE[value].startsWith(value)).map(v => BOOKING_NATURE[v]) as string[];
-    currentLevel = '';
     levels = ['1', '2', '3', 'n/a'];
     specific_appointment_types = [];
     doSave = false;
@@ -97,11 +96,13 @@ export class SkillMatrixComponent implements OnInit {
         this.raw_nature_of_appointment = value;
         let val: BOOKING_NATURE = <BOOKING_NATURE> BOOKING_NATURE[this.raw_nature_of_appointment];
         this.specific_appointment_types = BA.DISSCUSSION_ITEM[BOOKING_NATURE[val]];
-        this.currentLevel = '';
-        this.doSave = false;
     }
 
     apply(val: boolean) {
+        if (!val) {
+            location.reload();
+        }
+
         this.userService.updateUser(this.userModel)
             .subscribe((res: any) => {
                     if (res.status === 204) {

@@ -51,6 +51,27 @@ export class Booking {
         this.state = BOOKING_STATUS.None;
     }
 
+    clean(theObject) {
+        let result = null;
+        if (theObject instanceof Array) {
+            for (let i = 0; i < theObject.length; i++) {
+                this.clean(theObject[i]);
+            }
+        } else {
+            for (let prop in theObject) {
+                if (theObject.hasOwnProperty(prop)) {
+                    console.log(prop + ': ' + theObject[prop]);
+                    if (prop === 'id') {
+                        delete theObject[prop];
+                    }
+                    if (theObject[prop] instanceof Object || theObject[prop] instanceof Array) {
+                        this.clean(theObject[prop]);
+                    }
+                }
+            }
+        }
+    }
+
     fromJSON(data: any) {
         this.id = data.id;
         this.venue.expected_attendance = data.number_of_people_attending;

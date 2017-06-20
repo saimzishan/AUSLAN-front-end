@@ -57,7 +57,7 @@ export class BookingJobsComponent implements  OnDestroy {
   }
 
   anyInterpreterAccepted() {
-    return this.selectedBookingModel.interpreters.filter(i => i.state === 'accept').length > 0;
+    return this.selectedBookingModel.interpreters.filter(i => i.state === 'Accepted').length > 0;
   }
 
   ngOnDestroy() {
@@ -199,7 +199,7 @@ export class BookingJobsComponent implements  OnDestroy {
   }
 
   isNotConfirmed(id: number) {
-    let res = this.selectedBookingModel.interpreters.filter(i => i.id === id && i.state !== 'accepted');
+    let res = this.selectedBookingModel.interpreters.filter(i => i.id === id && i.state !== 'Accepted');
     return (res.length > 0);
   }
 

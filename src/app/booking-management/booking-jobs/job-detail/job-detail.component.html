@@ -93,7 +93,7 @@
         <ng-container *ngIf="anyInterpreterAccepted()">
 
         <div class="row with-border" *ngFor="let interpreter of selectedBookingModel.interpreters; let i=index">
-          <ng-container *ngIf="interpreter.state === 'accept'">
+          <ng-container *ngIf="interpreter.state === 'Accepted'">
             <div> {{i + 1}} INTERPRETER
             </div>
             <span class="with-avatar">
@@ -124,7 +124,7 @@
         <section class="manage-interpreters">
           <section>
             <div *ngFor="let interpreter of selectedBookingModel.interpreters; let i=index">
-              <ng-container *ngIf="interpreter.state === 'accept'">
+              <ng-container *ngIf="interpreter.state === 'Accepted'">
 
                 <b>Interpreter {{i + 1}}:</b> <span>{{interpreter.first_name}} {{interpreter.last_name}}</span>
               </ng-container>
