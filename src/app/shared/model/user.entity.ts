@@ -118,8 +118,9 @@ export class OrganisationalRepresentative extends Organisational {
           'send_email_on_receipt_of_request': this.email_receipt,
           'email_confirmation_on_interpreter_allocation': this.email_confirmation,
           'special_instructions' : this.special_instructions,
-          'discovery_of_auslan': this.reffered_by || this.reffered_other,
-          'customer_reference': this.customer_ref,
+      'discovery_of_auslan': this.reffered_by === 'Other' ?
+          'O:' + this.reffered_other : this.reffered_by,
+      'customer_reference': this.customer_ref,
           'organisation_attributes' :
               {'abn' : this.abn , 'name' : this.name , 'group_email' : this.group_email ,
                 'branch_office' : this.branch_office , 'phone_number' : this.phone ,
@@ -166,7 +167,10 @@ export class OrganisationalRepresentative extends Organisational {
     this.group_email = obj.organisation.group_email;
     this.special_instructions = obj.special_instructions;
     this.branch_office = obj.branch_office;
-    this.reffered_by = obj.discovery_of_auslan;
+    this.reffered_by = Boolean( obj.discovery_of_auslan ) && obj.discovery_of_auslan.startsWith('O:') ?
+        'Other' : '';
+    this.reffered_other = this.reffered_by === 'Other'  ?
+        obj.discovery_of_auslan.replaceAll('O:') : '';
     this.customer_ref = obj.customer_reference;
     this.phone = obj.organisation.phone_number;
     this.preferred_contact_method = obj.organisation.preferred_contact_method;
@@ -240,7 +244,8 @@ constructor(data) {
       'type': this.type, 'send_email_on_receipt_of_request': this.email_receipt,
       'email_confirmation_on_interpreter_allocation': this.email_confirmation,
       'special_instructions' : this.special_instructions,
-      'discovery_of_auslan': this.reffered_by || this.reffered_other,
+      'discovery_of_auslan': this.reffered_by === 'Other' ?
+          'O:' + this.reffered_other : this.reffered_by,
       'mobile': this.mobile, 'ndis_id': this.ndis_id, 'ndis_budget_limit': this.ndis_budget_limit,
           'ndis_validity_start_date': this.ndis_validity_start_date, 'ndis_validity_end_date': this.ndis_validity_end_date,
           'eaf_id': this.eaf_id, 'eaf_budget_limit': this.eaf_budget_limit, 'eaf_start_date': this.eaf_start_date,
@@ -271,7 +276,10 @@ constructor(data) {
     this.eaf_start_date = obj.eaf_start_date;
     this.eaf_end_date = obj.eaf_end_date;
     this.special_instructions = obj.special_instructions;
-    this.reffered_by = obj.discovery_of_auslan;
+    this.reffered_by = Boolean( obj.discovery_of_auslan ) && obj.discovery_of_auslan.startsWith('O:') ?
+        'Other' : '';
+    this.reffered_other = this.reffered_by === 'Other' ?
+        obj.discovery_of_auslan.replaceAll('O:') : '';
     this.email_receipt = obj.send_email_on_receipt_of_request;
     this.email_confirmation = obj.email_confirmation_on_interpreter_allocation;
     this.address_attributes = obj.address_attributes;

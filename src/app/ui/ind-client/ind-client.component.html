@@ -7,7 +7,7 @@
     <div class="medium-6 columns">
       <div class="form-field">
         <label>NDIS Id</label>
-        <input type="tel" class="valid" placeholder=""
+        <input type="text" class="valid" placeholder=""
                 [(ngModel)]="userModel.ndis_id" name="ndis_id"
                 #ndis_id="ngModel"  digit>
 
@@ -108,8 +108,9 @@
     <div class="medium-12 columns">
       <div class="form-field">
         <label>IF OTHER THEN PLEASE DESCRIBE HERE</label>
-        <textarea [(ngModel)]="userModel.reffered_other" cols="30" rows="10"
+        <textarea [disabled]="userModel.reffered_by !== 'Other'" [(ngModel)]="userModel.reffered_other" cols="30" rows="10"
                   class="inline-icon inline-icon-txt"></textarea>
+
       </div>
     </div>
     <div class="medium-12 columns">
