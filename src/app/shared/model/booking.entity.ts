@@ -106,19 +106,19 @@ export class Booking {
 
         if (Boolean(data.billing_account_attributes)) {
             this.client.organisation_primary_contact.first_name =
-                data.billing_account_attributes.primary_contact_first_name
+                data.billing_account_attributes.primary_contact_first_name;
 
             this.client.organisation_primary_contact.last_name =
-                data.billing_account_attributes.primary_contact_last_name
+                data.billing_account_attributes.primary_contact_last_name;
 
             this.client.organisation_primary_contact.email =
-                data.billing_account_attributes.email_address
+                data.billing_account_attributes.email_address;
 
             this.client.organisation_billing_account.external_reference =
-                data.billing_account_attributes.external_reference
+                data.billing_account_attributes.external_reference;
 
             this.client.organisation_billing_account.organisation_billing_address =
-                data.billing_account_attributes.address_attributes
+                data.billing_account_attributes.address_attributes;
         }
 
         if (Boolean(data.interpreters_attributes)) {

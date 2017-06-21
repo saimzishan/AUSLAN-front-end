@@ -13,7 +13,6 @@ import {  Http, RequestOptions } from '@angular/http';
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
 import { UserManagementComponent } from './user-management.component';
 import { NotificationComponent } from '../notification/notification.component';
-import { dispatchEvent } from '@angular/platform-browser/testing/browser_util';
 import {User} from '../shared/model/user.entity';
 import {ROLE} from '../shared/model/role.enum';
 import { UserHeaderComponent } from './user-header/user-header.component';

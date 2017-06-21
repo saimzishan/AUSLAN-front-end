@@ -106,8 +106,7 @@ describe('UserService', () => {
                         method: 'GET',
                         path: '/api/v1/users',
                         headers: {
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json'
+                            'Accept': 'application/json'
                         }
                     }
                     )
@@ -140,8 +139,7 @@ describe('UserService', () => {
                     method: 'GET',
                     path: '/api/v1/users/2',
                     headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
+                        'Accept': 'application/json'
 
                     }
                 }
@@ -174,9 +172,7 @@ describe('UserService', () => {
                     method: 'GET',
                     path: '/api/v1/users/-1',
                     headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-
+                        'Accept': 'application/json'
                     }
                 })
                 .willRespondWith(404);
@@ -252,12 +248,7 @@ describe('UserService', () => {
                 .given('user exists in database')
                 .uponReceiving('a request to resendVerificationCode a user')
                 .withRequest('GET', '/api/v1/users/2/resend_verification_code', {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    /*,
-                                        'Authorization': Pact.Match.somethingLike('Bearer eyJ0eXAiOi' +
-                                            'JKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjV9.jxJ' +
-                                            'FCXmk8SOCtmmHqczBlZZEra1qa8xly7zWZ42EnO4')*/
+                    'Accept': 'application/json'
                 })
                 .willRespondWith(200, {
                     'Content-Type': 'application/json; charset=utf-8'
@@ -282,8 +273,7 @@ describe('UserService', () => {
                 .given('user exists in database')
                 .uponReceiving('a request to resetUser a user')
                 .withRequest('GET', '/api/v1/users/reset_password/' + (mock_db_reset_password.email.toString()), {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
+                    'Accept': 'application/json'
 
                 })
                 .willRespondWith(200, {
@@ -308,8 +298,7 @@ describe('UserService', () => {
                 .given('user exists in database')
                 .uponReceiving('a request to getUserByEmail a user')
                 .withRequest('GET', '/api/v1/users/email/' + (mock_db_get_user_by_email.email), {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
+                    'Accept': 'application/json'
                 })
                 .willRespondWith(200, {
                     'Content-Type': 'application/json; charset=utf-8'
@@ -344,35 +333,6 @@ describe('UserService', () => {
                 service.verifyUser(2, '12345')
                     .subscribe((res: any) => {
                         expect(res.status).toEqual(200);
-                        done();
-                    }, err => done.fail(err), () => {
-                        runComplete();
-                    });
-            });
-        })();
-    });
-
-    it('should add an assignment to an existing interpreter', function (done) {
-        inject([UserService], (service: UserService) => {
-            userProvider
-                .given('interpreter exists in database')
-                .uponReceiving('add an assignment')
-                .withRequest('PATCH', '/api/v1/interpreters/2/update_assignment', {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                }, Pact.Match.somethingLike({'assignment':
-                    [{'category':
-                        'Medical', 'name':
-                        'Audiology', 'level':
-                        2}]}))
-                .willRespondWith(204, {
-                    'Content-Type': 'application/json; charset=utf-8'
-                });
-
-            userProvider.run(done, function (runComplete) {
-                service.updateInterpreterSkill(2, 'Medical', 'Medical', 2)
-                    .subscribe((res: any) => {
-                        expect(res.status).toEqual(204);
                         done();
                     }, err => done.fail(err), () => {
                         runComplete();

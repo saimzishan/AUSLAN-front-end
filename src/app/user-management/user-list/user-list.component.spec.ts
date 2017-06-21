@@ -7,6 +7,9 @@ import {LinkHelper, LinkAuth} from '../../shared/router/linkhelper';
 import {RolePermission} from '../../shared/role-permission/role-permission';
 import {HttpModule} from '@angular/http';
 import { UserListComponent } from './user-list.component';
+import {FormsModule} from '@angular/forms';
+import {CustomFormsModule} from 'ng2-validation';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('UserListComponent', () => {
   let component: UserListComponent;
@@ -16,7 +19,7 @@ describe('UserListComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ UserListComponent, SpacerPipe ],
       providers: [RolePermission, LinkAuth],
-      imports: [HttpModule]
+      imports: [HttpModule, RouterTestingModule, FormsModule, CustomFormsModule]
     })
     .compileComponents();
   }));

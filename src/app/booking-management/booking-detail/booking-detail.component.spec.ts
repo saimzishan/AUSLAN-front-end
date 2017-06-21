@@ -27,6 +27,7 @@ import {NgForm} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 import {FileuploaderModule} from '../../shared/fileuploader/fileuploader.module';
 import {AddressComponent} from '../../ui/address/address.component';
+import {BillingAccountComponent} from '../../ui/billing-account/billing-account.component';
 
 describe('BookingDetailComponent', () => {
   let component: BookingDetailComponent;
@@ -34,13 +35,15 @@ describe('BookingDetailComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BookingDetailComponent, EnumValPipe, AddressComponent
+      declarations: [ BookingDetailComponent, EnumValPipe, AddressComponent,
+          BillingAccountComponent
       ],
       imports: [CustomFormsModule, FileuploaderModule,
         FormsModule, BrowserAnimationsModule, RouterTestingModule, HttpModule,
         Md2Module.forRoot(),
         MaterialModule
-      ],  providers: [DatePipe, RolePermission, NotificationServiceBus, { provide: BookingService, useClass: MockBookingService },
+      ],  providers: [DatePipe, RolePermission,
+            NotificationServiceBus, { provide: BookingService, useClass: MockBookingService },
           SpinnerService, { provide: AuthHttp, useClass: MockBackend },
           {
                     provide: ActivatedRoute,

@@ -98,8 +98,7 @@ export class UserService extends ApiService {
       The Api should be able to fetch all the users.
     */
     fetchUsers(): Observable<Object> {
-        let headers = new Headers({'Accept': 'application/json',
-            'Content-Type': 'application/json'});
+        let headers = new Headers({'Accept': 'application/json'});
         let options = new RequestOptions({ headers: headers });
         return this.http.get(GLOBAL.USER_API, options)
             .map(this.extractData)
@@ -124,8 +123,7 @@ export class UserService extends ApiService {
       The Api should be get user by its ID (The Id should be email)
     */
     getUser(id: number): Observable<Object> {
-        let headers = new Headers({'Accept': 'application/json',
-            'Content-Type': 'application/json'});
+        let headers = new Headers({'Accept': 'application/json'});
         let options = new RequestOptions({ headers: headers });
 
         return this.http
@@ -154,8 +152,7 @@ export class UserService extends ApiService {
       The Api should be to verify user
     */
     resendVerificationCode(userID: number): Observable<Object> {
-        let headers = new Headers({'Accept': 'application/json',
-            'Content-Type': 'application/json'});
+        let headers = new Headers({'Accept': 'application/json'});
         let options = new RequestOptions({ headers: headers });
 
         return this.http
@@ -167,8 +164,7 @@ export class UserService extends ApiService {
       The Api should be to reset user password
     */
     resetUser( emailAddress: string): Observable<Object> {
-        let headers = new Headers({'Accept': 'application/json',
-            'Content-Type': 'application/json'});
+        let headers = new Headers({'Accept': 'application/json'});
         let options = new RequestOptions({ headers: headers });
 
         return this.http
@@ -179,8 +175,7 @@ export class UserService extends ApiService {
       The Api should be get user by its ID (The Id should be email)
     */
     getUserByEmail(email: string): Observable<Object> {
-        let headers = new Headers({'Accept': 'application/json',
-            'Content-Type': 'application/json'});
+        let headers = new Headers({'Accept': 'application/json'});
         let options = new RequestOptions({ headers: headers });
 
         return this.http
@@ -242,21 +237,5 @@ export class UserService extends ApiService {
             .patch(GLOBAL.USER_API + '/' + userID + '/update_password' ,
                 JSON.stringify(obj) , options) // Better add verify in path
             .catch((err) => { return Observable.throw(err); });
-    }
-
-    /*
-     The Api should add skill for interpreter
-     */
-    updateInterpreterSkill(interpreter_id: number, categroy: string, skill: string, level: number) {
-        let headers = new Headers({'Accept': 'application/json',
-            'Content-Type': 'application/json'});
-        let options = new RequestOptions({ headers: headers });
-        let obj = {'assignment':
-            [{'category':
-            categroy, 'name':
-            skill, 'level':
-            level}]};
-        return this.http.patch(GLOBAL.USER_API_ENDPOINT + '/interpreters/' + interpreter_id, JSON.stringify(obj), options)
-            .catch((err) => { return this.handleError(err); });
     }
 }

@@ -305,7 +305,9 @@ export class Administrator extends User {
 }
 
 /*
-* {"user":{"address_attributes":{"unit_number":"22","street_number":"62","street_name":"DIANNE AVE","suburb":"CRAIGIEBURN","post_code":"3064","state":"VIC"},
+* {"user":{"address_attributes":
+* {"unit_number":"22","street_number":"62","street_name":"DIANNE AVE",
+* "suburb":"CRAIGIEBURN","post_code":"3064","state":"VIC"},
 * "skill_level":"Deaf Interpreter Accredited","highest_level_edu":"Diploma of Interpreting Auslan/English",
 * "location_pref":"QLD","comm_pref":"SMS and Email","role":6,"first_name":"Nauman","last_name":"Interpreter",
 * "password":"Abcd#1234","confirm_password":"Abcd#1234","email":"nauman+int@curvetomorrow.com.au","phone":"0490398821",

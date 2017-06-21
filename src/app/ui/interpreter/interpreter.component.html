@@ -5,13 +5,8 @@
         <label>NAATI Id</label>
         <input type="text" placeholder="Please enter your NAATI Id"
                 [(ngModel)]="userModel.naati_id" name="naati_id"
-                #naati_id="ngModel" [rangeLength]="[2, 20]" digit>
-        <span *ngIf="naati_id.touched && !naati_id.errors?.rangeLength;"
-              class="inline-icon inline-icon-valid valid"></span>
-        <span *ngIf="naati_id.touched && naati_id.errors?.rangeLength;"
-              class="inline-icon error">
-          <span>Minimum 2 characters required.</span>!
-        </span>
+                #naati_id="ngModel" >
+
       </div>
     </div>
      <div class="medium-6 columns">

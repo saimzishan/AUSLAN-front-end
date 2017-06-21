@@ -14,7 +14,7 @@ import {NgForm} from '@angular/forms';
 import { FileUploader } from 'ng2-file-upload';
 
 import { NgClass, NgStyle} from '@angular/common';
-import {Address} from "../../shared/model/venue.entity";
+import {Address} from '../../shared/model/venue.entity';
 
 const URL = 'https://evening-anchorage-3159.herokuapp.com/api/';
 

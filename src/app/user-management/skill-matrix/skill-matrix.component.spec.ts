@@ -10,6 +10,14 @@ import {RouterTestingModule} from '@angular/router/testing';
 import {LinkAuth, LinkHelper} from '../../shared/router/linkhelper';
 import {RolePermission} from '../../shared/role-permission/role-permission';
 import {HttpModule} from '@angular/http';
+import {SpinnerService} from '../../spinner/spinner.service';
+import {NotificationServiceBus} from '../../notification/notification.service';
+import {UserService} from '../../api/user.service';
+import {MockUserService} from '../../shared/test/Mock';
+import {AuthHttp} from 'angular2-jwt';
+import {MockBackend} from '@angular/http/testing';
+import {Interpreter} from '../../shared/model/user.entity';
+
 
 describe('SkillMatrixComponent', () => {
   let component: SkillMatrixComponent;
@@ -22,7 +30,11 @@ describe('SkillMatrixComponent', () => {
       imports: [CustomFormsModule, MaterialModule, HttpModule,
         FormsModule, RouterTestingModule
       ],
-      providers: [LinkAuth, LinkHelper, RolePermission]
+      providers: [LinkAuth, LinkHelper, RolePermission,
+        { provide: UserService, useClass: MockUserService},
+        { provide: AuthHttp, useClass: MockBackend},
+        NotificationServiceBus,
+        SpinnerService]
     })
     .compileComponents();
   }));
@@ -30,6 +42,7 @@ describe('SkillMatrixComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(SkillMatrixComponent);
     component = fixture.componentInstance;
+    component.userModel = new Interpreter();
     fixture.detectChanges();
   });
 

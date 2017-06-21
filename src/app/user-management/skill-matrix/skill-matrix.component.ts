@@ -13,7 +13,6 @@ import {Interpreter} from '../../shared/model/user.entity';
 })
 export class SkillMatrixComponent implements OnInit {
     raw_nature_of_appointment: string;
-    userDisplayName: string;
     appointment_types = Object.keys(BOOKING_NATURE).filter(value => value === BOOKING_NATURE[value]
     || BOOKING_NATURE[value].startsWith(value)).map(v => BOOKING_NATURE[v]) as string[];
     levels = ['1', '2', '3', 'n/a'];

@@ -6,7 +6,7 @@ import {BOOKING_STATUS} from './booking-status.enum';
 import {Booking} from './booking.entity';
 import {PARKING} from './parking.enum';
 
-describe('BookingService', () => {
+describe('Booking Entity', () => {
 
     let mock_booking;
     let mock_request = new Object({'venue': 'Fed Square',
@@ -38,10 +38,10 @@ describe('BookingService', () => {
       expect(mock_booking.venue.end_time_iso).toEqual('2017-04-02T08:50:19.212Z');
       expect(mock_booking.requested_by.first_name).toEqual('Georgious');
       expect(mock_booking.requested_by.last_name).toEqual('George');
-      expect(mock_booking.contact.first_name).toEqual('Hadrian');
-      expect(mock_booking.contact.last_name).toEqual('French');
-      expect(mock_booking.contact.phone_number).toEqual('03 2342 2343');
-      expect(mock_booking.contact.mobile_number).toEqual('0411 222 333');
+      expect(mock_booking.primaryContact.first_name).toEqual('Hadrian');
+      expect(mock_booking.primaryContact.last_name).toEqual('French');
+      expect(mock_booking.primaryContact.phone_number).toEqual('03 2342 2343');
+      expect(mock_booking.primaryContact.mobile_number).toEqual('0411 222 333');
       expect(mock_booking.deaf_person.first_name).toEqual('Clifford');
       expect(mock_booking.deaf_person.last_name).toEqual('Yan');
       expect(mock_booking.deaf_person.eaf).toEqual('1231 0900');
@@ -58,10 +58,10 @@ describe('BookingService', () => {
       mock_booking.venue.end_time_iso = '2017-04-02T08:50:19.212Z';
       mock_booking.requested_by.first_name = 'Georgious';
       mock_booking.requested_by.last_name = 'George';
-      mock_booking.contact.first_name = 'Hadrian';
-      mock_booking.contact.last_name = 'French';
-      mock_booking.contact.phone_number = '03 2342 2343';
-      mock_booking.contact.mobile_number = '0411 222 333';
+      mock_booking.primaryContact.first_name = 'Hadrian';
+      mock_booking.primaryContact.last_name = 'French';
+      mock_booking.primaryContact.phone_number = '03 2342 2343';
+      mock_booking.primaryContact.mobile_number = '0411 222 333';
       mock_booking.deaf_person.first_name = 'Clifford';
       mock_booking.deaf_person.last_name = 'Yan';
       mock_booking.deaf_person.eaf = '1231 0900';

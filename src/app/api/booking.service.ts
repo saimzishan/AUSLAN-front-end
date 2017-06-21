@@ -97,8 +97,7 @@ export class BookingService extends ApiService {
       The Api should be able to fetch all the bookings.
     */
     fetchBookings(): Observable<Object> {
-        let headers = new Headers({'Accept': 'application/json',
-            'Content-Type': 'application/json'});
+        let headers = new Headers({'Accept': 'application/json'});
         let options = new RequestOptions({ headers: headers });
         return this.http.get(GLOBAL.BOOKING_API, options)
             .map(this.extractData)
@@ -110,8 +109,7 @@ export class BookingService extends ApiService {
       The Api should be get booking by its ID (The Id should be email)
     */
     getBooking(id: number): Observable<Object> {
-        let headers = new Headers({'Accept': 'application/json',
-            'Content-Type': 'application/json'});
+        let headers = new Headers({'Accept': 'application/json'});
         let options = new RequestOptions({ headers: headers });
 
         return this.http
