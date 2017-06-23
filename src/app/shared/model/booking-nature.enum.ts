@@ -1,18 +1,18 @@
 export enum BOOKING_NATURE {
 
-  Human = <any>'Human Services',
-  Social = <any>'Social/Private',
+  Conference = <any>'Conference/Public Forum',
   Counselling = <any>'Counselling',
   Court = <any>'Court',
   Education = <any>'Education',
   Employment = <any>'Employment',
+  Human = <any>'Human Services',
   Legal = <any>'Legal/Tribunal',
+  Media = <any>'Media',
   Medical = <any>'Medical',
   Mental = <any>'Mental Health',
   Police = <any>'Police',
-  Conference = <any>'Conference/Public Forum',
+  Social = <any>'Social/Private',
   Theatre = <any>'Theatre',
-  Media = <any>'Media',
   Other = <any>'Other',
   None = <any>'None'
 }
@@ -22,7 +22,7 @@ export class BA {
 
   public static loadItems() {
     BA.DISSCUSSION_ITEM[BOOKING_NATURE.Human] =
-      ['Centrelink', 'Child protection', 'Crisis/Emergency', 'Home Visit', 'Housing', 'Other'];
+      ['Centrelink', 'Child protection', 'Crisis/Emergency', 'Home Visit', 'Housing', 'Other'].sort();
     BA.DISSCUSSION_ITEM[BOOKING_NATURE.Social] =
       ['Accountant', 'Baptism', 'Body Corporate Meeting', 'Church Service', 'Family Celebration',
         'Financial Advisor',
@@ -32,12 +32,12 @@ export class BA {
     'Health and Lifestyle',
     'School Play',
     'Sports Club',
-    'Wedding', 'Other'];
+    'Wedding', 'Other'].sort();
     BA.DISSCUSSION_ITEM[BOOKING_NATURE.Counselling] =
       ['Family',
         'Financial',
         'Individual',
-        'Marriage', 'Other'];
+        'Marriage', 'Other'].sort();
     BA.DISSCUSSION_ITEM[BOOKING_NATURE.Court] =
       ['Children and Family Court - Mention',
         'Children and Family Court – Contested Hearing/DHS',
@@ -52,7 +52,7 @@ export class BA {
         'Magistrates - Criminal',
         'Magistrates - Intervention Order',
         'Magistrates - Mention',
-        'Mental Health Court', 'Other'];
+        'Mental Health Court', 'Other'].sort();
     BA.DISSCUSSION_ITEM[BOOKING_NATURE.Education] =
       ['Childcare',
         'Early Intervention',
@@ -72,7 +72,7 @@ export class BA {
         'University – Deaf Lecturer',
         'University – Lecture',
         'University – Meeting',
-        'University – Practical/Tutorial', 'Other'];
+        'University – Practical/Tutorial', 'Other'].sort();
     BA.DISSCUSSION_ITEM[BOOKING_NATURE.Employment] =
       ['Job Interview – Complex/Deaf Professional',
         'Job Interview – Entry Level',
@@ -82,7 +82,7 @@ export class BA {
         'Meeting – Human Resources',
         'Meeting – Large Group (5 or more)',
         'Meeting at employment service / with employment consultant',
-        'Training Session', 'Other'];
+        'Training Session', 'Other'].sort();
     BA.DISSCUSSION_ITEM[BOOKING_NATURE.Legal] =
       ['Anti-discrimination',
         'Forensic Assessment',
@@ -91,7 +91,7 @@ export class BA {
         'Meeting – Solicitor/Lawyer',
         'Prison Visit',
         'Tribunal',
-        'Work Cover', 'Other'];
+        'Work Cover', 'Other'].sort();
     BA.DISSCUSSION_ITEM[BOOKING_NATURE.Medical] =
       ['Audiology',
         'Complimentary Medicine (Please specify in Notes)',
@@ -123,32 +123,32 @@ export class BA {
         'Mental Health Review Board',
         'Ongoing Appointment (Please specify length in Notes)',
         'Psychiatry',
-        'Psychology', 'Other'];
+        'Psychology', 'Other'].sort();
     BA.DISSCUSSION_ITEM[BOOKING_NATURE.Police] =
       ['Arrest',
         'Interview – accused',
         'Interview – victim',
         'Statement – accused',
         'Statement – victim',
-        'Warrant', 'Other'];
+        'Warrant', 'Other'].sort();
     BA.DISSCUSSION_ITEM[BOOKING_NATURE.Conference] =
       ['Community consultation',
         'Conference (please specify in Notes)',
         'Creative arts / festival',
         'Expo',
         'Information Session',
-        'Rally/Protest', 'Other'];
+        'Rally/Protest', 'Other'].sort();
     BA.DISSCUSSION_ITEM[BOOKING_NATURE.Theatre] =
       ['Adults Only',
         'Comedy',
         'Community',
         'School',
-        'Stage show', 'Other'];
+        'Stage show', 'Other'].sort();
     BA.DISSCUSSION_ITEM[BOOKING_NATURE.Media] =
       ['Interview – Other',
         'Interview – Radio',
         'Interview – Television',
-        'Media Conference', 'Other'];
+        'Media Conference', 'Other'].sort();
     BA.DISSCUSSION_ITEM[BOOKING_NATURE.Other] = ['Please specify in Notes'];
   }
 }
