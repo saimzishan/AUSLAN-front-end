@@ -1,5 +1,5 @@
 <header>
-    <h4>Organization Details</h4>
+    <h4>ORGANISATION DETAILS</h4>
 </header>
 <div class="row small-collapse">
     <div class="row-wrapper">
@@ -18,7 +18,7 @@
         </div>
         <div class="medium-6 columns">
             <div class="form-field">
-                <label>Organisation's Name * </label>
+                <label>ORGANISATION'S NAME * </label>
                 <input type="text" class="valid" placeholder="Enter the name of the Organisation"
                        [(ngModel)]="userModel.name" name="business_name" #business_name="ngModel" required>
                 <span *ngIf="business_name.touched && !business_name.errors?.required"
@@ -41,7 +41,7 @@
         </div -->
         <div class="medium-6 columns">
             <div class="form-field">
-                <label>Organisation's branch office</label>
+                <label>ORGANISATION'S BRANCH OFFICE</label>
                 <input type="text" placeholder="Enter the branch office of the Organisation"
                        [(ngModel)]="userModel.branch_office" name="business_branch_office"
                        #business_branch_office="ngModel">
@@ -52,7 +52,7 @@
 
         <div class="medium-6 columns">
             <div class="form-field">
-                <label>Organisation's preferred contact method</label>
+                <label>ORGANISATION'S PREFFERED CONTACT METHOD</label>
                 <select [(ngModel)]="userModel.preferred_contact_method">
                     <option value="0">Email</option>
                     <option value="1">Phone</option>
@@ -92,7 +92,7 @@
     <div class="row-wrapper">
         <div class="medium-6 columns">
             <div class="form-field">
-                <label>Billing Address is same as Organization Address?</label>
+                <label>Is your billing address the same as your organisation's address?</label>
                 <md-checkbox type="checkbox"
                              [(ngModel)]="userModel.billingAddressIsSame" name="billingAddressIsDifferent_confirmation"
                              #billingAddressIsDifferent_confirmation="ngModel">Yes
@@ -113,7 +113,7 @@
     <div class="row-wrapper">
         <div class="medium-6 columns">
             <div class="form-field">
-                <label>HOW DID YOU FIND OUT ABOUT US?</label>
+                <label>How did you find out about Auslan Connections?</label>
                 <select [(ngModel)]="userModel.reffered_by">
                     <option>A deaf person told me</option>
                     <option>An interpreter told me</option>
@@ -141,7 +141,7 @@
         </div>
         <div class="medium-12 columns">
             <div class="form-field">
-                <label>Special Instruction</label>
+                <label>SPECIAL INSTRUCTION</label>
                 <textarea type="text" class="inline-icon inline-icon-txt"
                           cols="30" rows="10"
                           [(ngModel)]="userModel.special_instructions" name="special_instructions"

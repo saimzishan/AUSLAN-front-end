@@ -65,6 +65,7 @@ import { AccountantComponent } from './ui/accountant/accountant.component';
 import { UserPasswordComponent } from './user-management/user-password/user-password.component';
 import { PreComponent } from './register/pre/pre.component';
 import { TrimValueAccessorModule } from 'ng-trim-value-accessor';
+import {FileUploadModule} from 'ng2-file-upload';
 
 @NgModule({
   declarations: [
@@ -95,7 +96,7 @@ import { TrimValueAccessorModule } from 'ng-trim-value-accessor';
     SkillMatrixComponent, AddressComponent, AccountantComponent, UserPasswordComponent, PreComponent
   ],
   entryComponents: [UserDetailComponent, PopupComponent],
-  imports: [CustomFormsModule, routing, FileuploaderModule,
+  imports: [CustomFormsModule, routing, FileUploadModule,
     BrowserModule, RouterModule, CommonModule, MobileFooterModule,
     FormsModule, BrowserAnimationsModule,
     HttpModule, SimpleNotificationsModule.forRoot(),

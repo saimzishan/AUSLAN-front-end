@@ -9,7 +9,7 @@ import {Address} from '../../shared/model/venue.entity';
 export class BillingAccountComponent {
   @Input() primaryContact: Contact;
 
-address_title = 'Billing Address';
+address_title = 'BILLING ADDRESS';
   @Input() billingAddressIsSame= true;
   @Input() billingAddress: Address;
 }

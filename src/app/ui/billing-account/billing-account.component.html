@@ -1,13 +1,12 @@
 
 <header>
-  <h4>Billing Details</h4>
+  <h4>BILLING DETAILS</h4>
 </header>
-<div class="separator"></div>
 <div class="row small-collapse">
   <div class="row-wrapper">
     <div class="medium-6 columns">
       <div class="form-field">
-        <label>BILLING CONTACT FIRST NAME *	</label>
+        <label>CONTACT FIRST NAME *	</label>
 
         <input type="text" class="inline-icon valid" placeholder="Enter your first name" [(ngModel)]="primaryContact.first_name" name="first_name"
                #first_name="ngModel" [rangeLength]="[3, 20]" required>
@@ -18,7 +17,7 @@
     </div>
     <div class="medium-6 columns">
       <div class="form-field">
-        <label>BILLING CONTACT LAST NAME *</label>
+        <label>CONTACT LAST NAME *</label>
 
         <input type="text" class="inline-icon valid" placeholder="Enter your last name" [(ngModel)]="primaryContact.last_name" name="last_name"
                #last_name="ngModel" [rangeLength]="[3, 30]" required>
@@ -30,7 +29,7 @@
     <div class="medium-6 columns">
       <div class="form-field">
         <label class="icon-email">
-          BILLING CONTACT EMAIL * </label>
+          CONTACT EMAIL * </label>
         <input type="email" id="email" placeholder="Enter your email" [(ngModel)]="primaryContact.email" name="email" #email="ngModel" email
                required>
         <span *ngIf="email.touched && !email.errors?.email;" class="inline-icon inline-icon-valid valid"></span>

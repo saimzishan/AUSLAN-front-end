@@ -116,10 +116,11 @@
 						<section class="manage-interpreters">
 								<section>
 									<div *ngFor="let interpreter of selectedBookingModel.interpreters; let i=index">
-										<ng-container *ngIf="interpreter.state === 'Accepted'">
+										<ng-container>
 
-															<b>Interpreter {{i + 1}} :</b> <span>{{interpreter.first_name}} {{interpreter.last_name}}</span>
-															<button>Unassing</button>
+															<b>Interpreter {{i + 1}} :</b> <span *ngIf="interpreter.state === 'Accepted'">{{interpreter.first_name}} {{interpreter.last_name}}</span>
+											<span *ngIf="interpreter.state === 'Invited'">To be filled</span>
+															<button *ngIf="interpreter.state === 'Accepted'">Unassing</button>
 
 										</ng-container>
 									</div>

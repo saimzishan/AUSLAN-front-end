@@ -66,23 +66,27 @@ export class JobDetailComponent implements  OnDestroy {
         `Do you want to accept the invitation?`;
 
     this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
-      this.spinnerService.requestInProcess(true);
 
-      this.currentStatus =
-        (result && !isCancel) ? 'accept' : (result && isCancel) ? 'reject' : 'tentative';
-      this.bookingService.interpreterAction(this.selectedBookingModel.id,
-        GLOBAL.currentUser.id, this.currentStatus)
-        .subscribe((res: any) => {
+      if(result) {
+        this.spinnerService.requestInProcess(true);
 
-          this.disableAccept = true;
-          this.disableReject = true;
-          this.spinnerService.requestInProcess(false);
-        },
-        err => {
-          this.spinnerService.requestInProcess(false);
-          let e = err.json() || 'There is some error on server side';
-          this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
-        });
+
+        this.currentStatus =
+            (result && !isCancel) ? 'accept' : (result && isCancel) ? 'reject' : 'tentative';
+        this.bookingService.interpreterAction(this.selectedBookingModel.id,
+            GLOBAL.currentUser.id, this.currentStatus)
+            .subscribe((res: any) => {
+
+                  this.disableAccept = true;
+                  this.disableReject = true;
+                  this.spinnerService.requestInProcess(false);
+                },
+                err => {
+                  this.spinnerService.requestInProcess(false);
+                  let e = err.json() || 'There is some error on server side';
+                  this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
+                });
+      }
     });
   }
 
