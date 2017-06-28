@@ -10,7 +10,7 @@ import {GLOBAL} from '../../shared/global';
 export class IndClientComponent   implements  OnInit {
 
   @Input() userModel: IndividualClient;
-  address_title = 'Individual Client Address';
+  address_title = 'INDIVIDUAL CLIENT ADDRESS';
   ngOnInit() {
     /*
     this.userModel.ndis_validity_start_date = GLOBAL.fixDateFormat(this.userModel.ndis_validity_start_date);

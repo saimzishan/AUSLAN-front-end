@@ -147,7 +147,7 @@ export class Booking {
             typeof this.venue.parking_type === 'string' ? this.venue.parking_type : PARKING[this.venue.parking_type];
         let _expected_attendance = this.venue.expected_attendance < 0 ? 0 : this.venue.expected_attendance;
 
-        let _start_time: Date = new Date(this.venue.start_time_iso);
+        /*let _start_time: Date = new Date(this.venue.start_time_iso);
 
         let d: Date = new Date(this.venue.start_time_iso);
         let parts: string[] = this.venue.end_time_iso.match(/(\d+)\:(\d+)/);
@@ -156,7 +156,7 @@ export class Booking {
         d.setHours(hours);
         d.setMinutes(minutes);
         let _end_time: Date = d;
-
+        */
 
         return new Object({
             id: this.id, state: _state,
@@ -173,7 +173,7 @@ export class Booking {
             deaf_persons_last_name: this.deaf_person.last_name, deaf_persons_mobile: this.deaf_person.mobile_number,
             deaf_persons_email: this.deaf_person.email, deaf_persons_eaf_no: this.deaf_person.eaf,
             number_of_people_attending: _expected_attendance,
-            start_time: _start_time.toISOString(), end_time: _end_time.toISOString(),
+            start_time: this.venue.start_time_iso, end_time: this.venue.end_time_iso,
             billing_account_attributes: {
                 primary_contact_first_name: this.client.organisation_primary_contact.first_name,
                 primary_contact_last_name: this.client.organisation_primary_contact.last_name,

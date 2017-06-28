@@ -36,7 +36,7 @@
                         </li>
                     </ul>
                 </th>
-                <th width="13%">
+                <th width="20%">
                     <span class="order desc">Date</span>
                 </th>
 
@@ -66,10 +66,10 @@
                             </ul>
                         </li>
                     </ul>
-                </th><th>
+                </th><!-- th>
                 <span class="order asc">Updated</span>
-            </th>
-                <th width="7%">
+            </th -->
+                <th *ngIf="isCurrentUserAllowed()" width="7%">
                     <span>Actions</span>
                 </th>
             </tr>
@@ -133,9 +133,9 @@
                 <td><a href="javascript:void(0)" class="attach"><i class="icon-attach"></i></a>
                     {{booking.raw_nature_of_appointment}}
                 </td>
-                <td><span class="underline">02-06 TS<br>7:15 A</span></td>
+                <!-- td><span class="underline">02-06 TS<br>7:15 A</span></td -->
 
-                <td>
+                <td *ngIf="isCurrentUserAllowed()">
                     <ul class="dropdown menu custom actions" data-dropdown-menu>
                         <li>
                             <a href="javascript:void(0)"><i class="icon-more-icon"></i></a>

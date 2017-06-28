@@ -4,7 +4,7 @@ import {Router, NavigationExtras} from '@angular/router';
 import { BOOKING_STATUS } from '../../shared/model/booking-status.enum';
 import {GLOBAL} from '../../shared/global';
 import { PrettyIDPipe } from '../../shared/pipe/pretty-id.pipe';
-import {Interpreter} from '../../shared/model/user.entity';
+import {Interpreter, OrganisationalRepresentative} from '../../shared/model/user.entity';
 
 @Component({
   selector: 'app-booking-list',
@@ -43,6 +43,9 @@ export class BookingListComponent {
       return GLOBAL.currentUser.id === id;
 }
 
+    isCurrentUserAllowed() {
+        return false === GLOBAL.currentUser instanceof OrganisationalRepresentative;
+    }
     isCurrentUserInvitedInterpreter(interpreters) {
       // Array.includes is not there in IE
         return interpreters.filter( i => i.id === GLOBAL.currentUser.id).length > 0;

@@ -65,13 +65,17 @@
 								<div class="form-field">
 									<label class="icon-email">
 						      EMAIL * </label>
-									<input type="email" id="email" placeholder="Enter your email" [(ngModel)]="model.email" name="email" #email="ngModel" email
+									<input type="email" id="email"
+										   placeholder="Enter your email"
+										   [(ngModel)]="model.email"
+										   name="email" #email="ngModel" email
 										required>
 										<span *ngIf="email.touched && !email.errors?.email;" class="inline-icon inline-icon-valid valid"></span>
 										<span *ngIf="(email.dirty || email.touched) && (email.errors?.required || email.errors?.email);" class="inline-icon error">
 										<span>Email is required</span>!</span>
 								</div>
 							</div>
+						<ng-container *ngIf="selectedRole !== 'INTERPRETER'">
 						<div class="medium-6 columns">
 							<div class="form-field">
 								<label class="icon-mobile">PHONE * </label>
@@ -81,13 +85,36 @@
 											<span>Minimum 6 digits required.</span>!</span>
 							</div>
 						</div>
-							<div class="medium-6 columns">
+							<div  class="medium-6 columns">
 								<div class="form-field">
 									<label class="icon-mobile">MOBILE </label>
-									<input type="tel" placeholder="Enter your mobile" [(ngModel)]="model.mobile" name="mobile" #mobile="ngModel">
+									<input type="tel" placeholder="Enter your mobile"
+										   [(ngModel)]="model.mobile" name="mobile" #mobile="ngModel">
 
 								</div>
 							</div>
+						</ng-container>
+						<ng-container *ngIf="selectedRole === 'INTERPRETER'">
+							<div  class="medium-6 columns">
+								<div class="form-field">
+									<label class="icon-mobile">MOBILE *</label>
+									<input type="tel" placeholder="Enter your mobile"
+										   [(ngModel)]="model.mobile" name="mobile1" #mobile1="ngModel"
+										   required>
+
+									<span *ngIf="mobile1.touched && !mobile1.errors?.required;" class="inline-icon inline-icon-valid valid"></span>
+									<span *ngIf="mobile1.touched && mobile1.errors?.required;" class="inline-icon error">
+											<span>Minimum 6 digits required.</span>!</span>
+								</div>
+							</div>
+							<div class="medium-6 columns">
+								<div class="form-field">
+									<label class="icon-mobile">PHONE </label>
+									<input type="tel" placeholder="Enter your phone" [(ngModel)]="model.phone" name="phone1" #phone1="ngModel">
+								</div>
+							</div>
+
+						</ng-container>
 
 					</div>
 				</div>
@@ -98,7 +125,9 @@
 				<br>
 
 				<div align="center">
-					<button class="login button" name="register_user" type="submit" [disabled]="mobile.errors || last_name.errors || first_name.errors || password.errors || email.errors || certainPassword.errors "
+					<button class="login button" name="register_user" type="submit"
+							[disabled]="last_name.errors || first_name.errors || password.errors || email.errors
+							 || certainPassword.errors "
 						(click)="addUser()" class="button">Register</button>
 				</div>
 

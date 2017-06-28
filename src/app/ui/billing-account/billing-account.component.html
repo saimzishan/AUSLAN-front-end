@@ -37,6 +37,18 @@
 										<span>Email is required</span>!</span>
       </div>
     </div>
+    <div class="medium-6 columns">
+      <div class="form-field">
+        <label class="icon-email">
+          CONTACT NUMBER * </label>
+        <input type="tel" id="phone" placeholder="Enter your contact number"
+               [(ngModel)]="primaryContact.phone_number" name="phone" #phone="ngModel" digits=""
+               required>
+        <span *ngIf="phone.touched && !phone.errors?.email;" class="inline-icon inline-icon-valid valid"></span>
+        <span *ngIf="(phone.dirty || phone.touched) && (phone.errors?.required || phone.errors?.email);" class="inline-icon error">
+										<span>Contact Number is required</span>!</span>
+      </div>
+    </div>
   </div>
 </div>
 <br>

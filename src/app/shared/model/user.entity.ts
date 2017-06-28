@@ -104,7 +104,7 @@ export class Organisational extends User {
 }
 
 export class OrganisationalRepresentative extends Organisational {
-  public business_hours_phone = this.phone;
+  // public business_hours_phone = this.phone;
 
   get user_type() {
     return 'OrganisationalRepresentative';
@@ -118,7 +118,7 @@ export class OrganisationalRepresentative extends Organisational {
           'send_email_on_receipt_of_request': this.email_receipt,
           'email_confirmation_on_interpreter_allocation': this.email_confirmation,
           'special_instructions' : this.special_instructions,
-      'discovery_of_auslan': this.reffered_by === 'Other' ?
+      'discovery_of_auslan': this.reffered_by === 'OTHER' ?
           'O:' + this.reffered_other : this.reffered_by,
       'customer_reference': this.customer_ref,
           'organisation_attributes' :
@@ -157,7 +157,7 @@ export class OrganisationalRepresentative extends Organisational {
   fromJSON(obj) {
     this.email_receipt = obj.send_email_on_receipt_of_request;
     this.email_confirmation = obj.email_confirmation_on_interpreter_allocation;
-    this.business_hours_phone = obj.business_hours_phone;
+    this.phone = obj.business_hours_phone;
     obj.organisation = obj.organisation || obj.organisation_attributes;
     obj.organisation.billing_account = obj.organisation.billing_account ||
         obj.organisation.billing_account_attributes;
@@ -169,7 +169,7 @@ export class OrganisationalRepresentative extends Organisational {
     this.branch_office = obj.branch_office;
     this.reffered_by = Boolean( obj.discovery_of_auslan ) && obj.discovery_of_auslan.startsWith('O:') ?
         'Other' : '';
-    this.reffered_other = this.reffered_by === 'Other'  ?
+    this.reffered_other = this.reffered_by === 'OTHER'  ?
         obj.discovery_of_auslan.replaceAll('O:') : '';
     this.customer_ref = obj.customer_reference;
     this.phone = obj.organisation.phone_number;
@@ -244,7 +244,7 @@ constructor(data) {
       'type': this.type, 'send_email_on_receipt_of_request': this.email_receipt,
       'email_confirmation_on_interpreter_allocation': this.email_confirmation,
       'special_instructions' : this.special_instructions,
-      'discovery_of_auslan': this.reffered_by === 'Other' ?
+      'discovery_of_auslan': this.reffered_by === 'OTHER' ?
           'O:' + this.reffered_other : this.reffered_by,
       'mobile': this.mobile, 'ndis_id': this.ndis_id, 'ndis_budget_limit': this.ndis_budget_limit,
           'ndis_validity_start_date': this.ndis_validity_start_date, 'ndis_validity_end_date': this.ndis_validity_end_date,
@@ -278,7 +278,7 @@ constructor(data) {
     this.special_instructions = obj.special_instructions;
     this.reffered_by = Boolean( obj.discovery_of_auslan ) && obj.discovery_of_auslan.startsWith('O:') ?
         'Other' : '';
-    this.reffered_other = this.reffered_by === 'Other' ?
+    this.reffered_other = this.reffered_by === 'OTHER' ?
         obj.discovery_of_auslan.replaceAll('O:') : '';
     this.email_receipt = obj.send_email_on_receipt_of_request;
     this.email_confirmation = obj.email_confirmation_on_interpreter_allocation;
@@ -317,18 +317,18 @@ export class Administrator extends User {
  */
 export class Interpreter extends User {
   public naati_id: string;
-  public naati_validity_start_date: Date;
-  public naati_validity_end_date: Date;
+  public naati_validity_start_date: string;
+  public naati_validity_end_date: string;
   public business_hours_phone: string;
   public after_hours_phone: string;
-  public date_of_birth: Date;
+  public date_of_birth: string;
   public address_attributes: Address = new Address();
   public long_term_availability: interpreter_avalability;
   public override_availabilty: blockout_availability;
   public skill_level= 'ASL Certified';
   public highest_level_edu = 'Diploma of Interpreting Auslan/English';
   public location_pref = 'VIC';
-  public comm_pref = 'SMS and Email';
+  public comm_pref = 'SMS AND EMAIL';
   public assignments_attributes = [];
   get user_type() {
     return 'Interpreter';

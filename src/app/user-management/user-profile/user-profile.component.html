@@ -39,7 +39,7 @@
               <span>Email is required</span>!</span>
           </div>
         </div>
-        <div class="medium-6 columns">
+        <div *ngIf="userModel.type === 'Interpreter'" class="medium-6 columns">
           <div class="form-field">
             <label>MOBILE * </label>
             <input type="tel" placeholder="" [(ngModel)]="userModel.mobile" name="mobile" #mobile="ngModel" required>
@@ -48,9 +48,16 @@
                       <span>Minimum 6 digits required.</span>!</span>
           </div>
         </div>
-        <div class="medium-6 columns">
-            <div class="form-field"></div>
+        <div *ngIf="userModel.type !== 'Interpreter'" class="medium-6 columns">
+          <div class="form-field">
+            <label>PHONE * </label>
+            <input type="tel" placeholder="" [(ngModel)]="userModel.phone" name="mobile" #mobile="ngModel" required>
+            <span *ngIf="mobile.touched && !mobile.errors?.required;" class="inline-icon inline-icon-valid valid"></span>
+            <span *ngIf="mobile.touched && mobile.errors?.required;" class="inline-icon error">
+                      <span>Minimum 6 digits required.</span>!</span>
+          </div>
         </div>
+
         <div [hidden]='!userModel.verified' class="medium-6 columns">
           <div class="form-field">
             <label>STATUS</label>

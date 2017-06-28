@@ -11,9 +11,18 @@
                 <a href="javascript:void(0);" class="active">Booking info</a>
             </nav>
             <div>
-                <button [disabled]="disableAccept" (click)="showDialogBox(true)" class="button pink">Decline</button>
+                <button [disabled]="disableAccept" (click)="showDialogBox(true)"
+                        class="button pink">Decline</button>
                 <div class="sep"></div>
-                <button [disabled]="disableReject" (click)="showDialogBox(false)" class="button inverse">Accept</button>
+                <button [disabled]="disableReject" (click)="showDialogBox(false)"
+                        class="button inverse">Accept</button>
+            </div>
+            <div>
+                <button *ngIf='!isCancelledOrUnableToServe' (click)="showDialogBox(false)" class="button pink">Unable to Service</button>
+                <button *ngIf='!isCancelledOrUnableToServe' (click)="showDialogBox(true)" class="button pink">Cancel Booking</button>
+                <button (click)="duplicateBooking()" class="button inverse">Duplicate</button>
+                <div class="sep"></div>
+                <button (click)="saveChanges()" [disabled]="!invitePressed" class="button inverse">Save</button>
             </div>
         </section>
         <section id="steps">
@@ -99,7 +108,7 @@
 
                         <div *ngIf="interpreter.state === 'Accepted'" class="row with-border">
 
-                                <div> {{i + 1}} INTERPRETER
+                                <div> INTERPRETER {{i + 1}}
                                 </div>
                                 <span class="with-avatar">
                             <img src="assets/img/dummy/oval.png" alt="">
@@ -107,12 +116,11 @@
                     </span>
 
                         </div>
-                        <!-- div *ngIf="interpreter.state !== 'Accepted'" class="row with-border">
-                            <div> {{i + 1}} INTERPRETER
-                            </div>
+                        <div *ngIf="interpreter.state !== 'Accepted'" class="row with-border">
+                            <div> INTERPRETER {{i + 1}}                            </div>
                             <span>To be filled</span>
 
-                        </div -->
+                        </div>
                     </ng-container>
                 </ng-container>
 
@@ -142,7 +150,7 @@
 
                                     <b>Interpreter {{i + 1}} :</b> <span *ngIf="interpreter.state === 'Accepted'">{{interpreter.first_name}} {{interpreter.last_name}}</span>
                                     <span *ngIf="interpreter.state === 'Invited'">To be filled</span>
-                                    <button *ngIf="interpreter.state === 'Accepted'">Unassing</button>
+                                    <button *ngIf="!isCurrentUserInterpreter() && interpreter.state === 'Accepted'">Unassign</button>
 
                                 </ng-container>
 

@@ -15,10 +15,10 @@ export class Address {
 export class Venue extends Address {
   expected_attendance = 0;
   interpreter_attendance = 0;
-  start_time: number;
-  end_time: number;
+  // start_time: number;
+  // end_time: number;
   start_time_iso: string;
   end_time_iso: string;
-  start_date: number;
+  // start_date: number;
   parking_type: PARKING;
 }
