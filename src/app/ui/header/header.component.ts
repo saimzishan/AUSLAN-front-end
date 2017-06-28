@@ -25,6 +25,10 @@ export class HeaderComponent implements OnDestroy {
         && this.fullName === GLOBAL.currentUser.first_name + ' '  + GLOBAL.currentUser.last_name);
   }
 
+  getPicturePath() {
+    return GLOBAL.currentUser.photo_url;
+  }
+
    ngOnDestroy() {
     return this.sub && this.sub.unsubscribe();
   }

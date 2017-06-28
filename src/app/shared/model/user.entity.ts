@@ -46,7 +46,8 @@ export class User {
   public verified = false;
   public disabled = true;
   public type= '';
-
+  public avatar = '';
+  public photo_url = '';
   protected get user_type() {
     return '';
   }

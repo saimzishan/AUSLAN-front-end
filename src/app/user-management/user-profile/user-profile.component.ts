@@ -50,6 +50,7 @@ export class UserProfileComponent implements OnInit {
             .subscribe((res: any) => {
                     if (res.status === 204) {
                         // UI Notification
+                        this.userModel.photo_url = res.data.photo_url || '';
                         this.userNameService.setLoggedInUser(this.userModel);
                         this.notificationServiceBus.launchNotification(false, 'User details updated Successfully');
                     }
@@ -61,5 +62,22 @@ export class UserProfileComponent implements OnInit {
                     this.notificationServiceBus.launchNotification(true, errors.statusText + ' '
                         + JSON.stringify(e.errors).replace(/]|[[]/g, '').replace(/({|})/g, ''));
                 });
+    }
+
+    handleFileSelect(evt) {
+        let files = evt.target.files;
+        let file = files[0];
+
+        if (files && file) {
+            let reader = new FileReader();
+
+            reader.onload = this._handleReaderLoaded.bind(this);
+
+            reader.readAsDataURL(file);
+        }
+    }
+
+    _handleReaderLoaded(readerEvt) {
+        this.userModel.avatar = readerEvt.target.result;
     }
 }

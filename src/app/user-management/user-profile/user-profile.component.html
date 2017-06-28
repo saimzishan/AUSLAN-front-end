@@ -66,6 +66,13 @@
             </select>
           </div>
         </div>
+        <div class="medium-6 columns">
+          <div class="form-field">
+            <label>Change Picture:</label>
+            <input type="file" id="filePicker" (change)="handleFileSelect($event)">
+
+          </div>
+        </div>
       </div>
     </div>
     <app-interpreter *ngIf="userModel.type === 'Interpreter'" [userModel]="userModel"></app-interpreter>
