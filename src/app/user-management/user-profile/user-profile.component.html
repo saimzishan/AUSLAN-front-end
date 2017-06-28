@@ -4,7 +4,7 @@
 </section>
 <div id="page-common">
 <main>
-  <form class="common-form reduced-top">
+  <form #user_profile_form="ngForm"  class="common-form reduced-top">
     <div class="row small-collapse">
       <div class="row-wrapper">
         <div class="medium-6 columns">
@@ -61,9 +61,9 @@
         <div [hidden]='!userModel.verified' class="medium-6 columns">
           <div class="form-field">
             <label>STATUS</label>
-            <md-select name="selStatus" [(ngModel)]="selectedStatus">
-              <md-option *ngFor="let i of userStatusArray" [value]="i.name" >{{i.name}}</md-option>
-            </md-select>
+            <select name="selStatus" [(ngModel)]="selectedStatus">
+              <option *ngFor="let i of userStatusArray" [value]="i.name" >{{i.name}}</option>
+            </select>
           </div>
         </div>
       </div>
@@ -73,8 +73,7 @@
     <app-org-rep *ngIf="userModel.type === 'Organisation' || userModel.type === 'OrganisationalRepresentative'" [userModel]="userModel"></app-org-rep>
 
     <section class="actions">
-      <button name="edit_user"
-      [disabled]="last_name.errors ||first_name.errors  || email.errors" (click)="editUser()"> SAVE </button>
+      <button name="edit_user" (click)="editUser(user_profile_form)"> SAVE </button>
     </section>
   </form>
 </main>

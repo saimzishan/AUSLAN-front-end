@@ -11,6 +11,7 @@ import {NotificationComponent} from '../notification/notification.component';
 import {NavigationExtras} from '@angular/router';
 import {Address} from '../shared/model/venue.entity';
 import {Contact} from '../shared/model/contact.entity';
+import {FormGroup} from '@angular/forms';
 
 @Component({
     selector: 'app-register',
@@ -68,7 +69,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
         return this.sub_param && this.sub_param.unsubscribe();
     }
 
-    addUser() {
+    addUser(form: FormGroup) {
+        if ( form.invalid ) {
+            this.notificationServiceBus.
+            launchNotification(true, 'Kindly fill all the required (*) fields');
+            return;
+        }
 
         this.userService.createUser(this.model)
             .subscribe((res: any) => {

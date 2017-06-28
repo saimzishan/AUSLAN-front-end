@@ -6,7 +6,7 @@
     <span>Fields with * are required</span>
   </section>
 
-  <form #booking_form="ngForm" method="post" action="" class="common-form compact">
+  <form #booking_form="ngForm"  class="common-form compact">
     <div class="row">
       <h2>Type of Booking</h2>
       <p>What kind of services do you need? Select multiple if relevant</p>
@@ -43,29 +43,32 @@
       <div class="row-wrapper">
         <div class=" medium-7 columns">
           <div class="form-field">
-            <label>START DATE & TIME</label>
+            <label>START DATE & TIME *</label>
 
-            <input type='datetime-local' name='dpEventDate' placeholder="DATE & Time OF APPOINTMENT *"
+            <input type='datetime-local'
+                   name='dpEventDate' placeholder="DATE & Time OF APPOINTMENT *"
                    [(ngModel)]="bookingModel.venue.start_time_iso" required #dpEventDate="ngModel" />
           </div>
         </div>
 
         <div class="medium-5 columns">
           <div class="form-field">
-            <label>END DATE & TIME</label>
+            <label>END DATE & TIME *</label>
 
-            <input type='datetime-local' name='dpEventEndTime' placeholder="ENDING DATE & TIME *" #dpEventEndTime="ngModel" [(ngModel)]="bookingModel.venue.end_time_iso" required />
+            <input type='datetime-local' name='dpEventEndTime'
+                   placeholder="ENDING TIME *" #dpEventEndTime="ngModel"
+                   [(ngModel)]="bookingModel.venue.end_time_iso"
+                   required />
           </div>
         </div>
       </div>
 
       <div class="medium-12 columns">
         <div class="form-field">
-          <label>SPECIFIC LOCATION
-            <span mdTooltip="Enter Specific Location"><i class="inline-icon-tip"></i></span></label>
+          <label>SPECIFIC LOCATION <span mdTooltip="Enter Specific Location"><i class="inline-icon-tip"></i></span></label>
           <input type="text" placeholder="Enter the Specific Location"
-                 [(ngModel)]="bookingModel.venue.title" name="raw_venue_address"
-                 #raw_venue_address="ngModel" >
+                 [(ngModel)]="bookingModel.venue.title"
+                 name="raw_venue_address" #raw_venue_address="ngModel">
 
         </div>
       </div>
@@ -74,7 +77,10 @@
         <div class="medium-6 columns">
           <div class="form-field">
             <label>NATURE OF APPOINTMENT * <span mdTooltip="Select nature of Appointment"><i class="inline-icon-tip"></i></span></label>
-            <select (change)="natureOfApptChange($event)" [(ngModel)]="bookingModel.raw_nature_of_appointment" #nature_of_appointment="ngModel" name="nature_of_appointment" aria-label="A">
+            <select (change)="natureOfApptChange($event)"
+                    [(ngModel)]="bookingModel.raw_nature_of_appointment"
+                    #nature_of_appointment="ngModel" name="nature_of_appointment"
+                    aria-label="A" required>
               <option *ngFor="let item of appointment_types | enumVal " [value]="item.value">{{item.value.toUpperCase()}}</option>
             </select>
           </div>
@@ -82,7 +88,8 @@
         <div class="medium-6 columns">
           <div class="form-field">
             <label>WHAT WILL BE DISCUSSED * <span mdTooltip="Select sepcific nature of Appointment"><i class="inline-icon-tip"></i></span></label>
-            <select [(ngModel)]="bookingModel.specific_nature_of_appointment" #specific_nature_of_appointment="ngModel" name="specific_nature_of_appointment" aria-label="A">
+            <select [(ngModel)]="bookingModel.specific_nature_of_appointment"
+                    #specific_nature_of_appointment="ngModel" required name="specific_nature_of_appointment" aria-label="A">
               <option *ngFor="let item of specific_appointment_types | enumVal" [value]="item.value">{{item.value.toUpperCase()}}</option>
             </select>
           </div>
@@ -359,7 +366,7 @@
     </div>
 
     <div class="actions">
-      <button [disabled]="!booking_form.valid" (click)="onCreateBooking();">SAVE</button>
+      <button (click)="onCreateBooking(booking_form);">SAVE</button>
       <button (click)="onCancelBooking();">CANCEL</button>
     </div>
   </form>

@@ -43,6 +43,9 @@ describe('SkillMatrixComponent', () => {
     fixture = TestBed.createComponent(SkillMatrixComponent);
     component = fixture.componentInstance;
     component.userModel = new Interpreter();
+    component.userModel.first_name = 'A';
+    component.userModel.last_name = 'B';
+
     fixture.detectChanges();
   });
 

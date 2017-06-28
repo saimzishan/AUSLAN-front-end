@@ -58,7 +58,7 @@ describe('RegisterComponent', () => {
             fixture.debugElement.query(By.css('input[name=password]')).nativeElement.value = 'dummy@admin.com';
             fixture.debugElement.query(By.css('input[name=certainPassword]')).nativeElement.value = 'dummy@admin.com';
             fixture.debugElement.query(By.css('input[name=email]')).nativeElement.value = 'dummy@admin.com';
-            fixture.debugElement.query(By.css('input[name=mobile]')).nativeElement.value = 'xxxxxxxxxx';
+            // fixture.debugElement.query(By.css('input[name=mobile]')).nativeElement.value = 'xxxxxxxxxx';
 
             fixture.detectChanges();
 

@@ -17,13 +17,6 @@
                 <button [disabled]="disableReject" (click)="showDialogBox(false)"
                         class="button inverse">Accept</button>
             </div>
-            <div>
-                <button *ngIf='!isCancelledOrUnableToServe' (click)="showDialogBox(false)" class="button pink">Unable to Service</button>
-                <button *ngIf='!isCancelledOrUnableToServe' (click)="showDialogBox(true)" class="button pink">Cancel Booking</button>
-                <button (click)="duplicateBooking()" class="button inverse">Duplicate</button>
-                <div class="sep"></div>
-                <button (click)="saveChanges()" [disabled]="!invitePressed" class="button inverse">Save</button>
-            </div>
         </section>
         <section id="steps">
             <nav>

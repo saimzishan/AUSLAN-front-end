@@ -10,7 +10,7 @@ import { NotificationServiceBus } from '../../notification/notification.service'
 import { Router, ActivatedRoute } from '@angular/router';
 import { RolePermission } from '../../shared/role-permission/role-permission';
 import { DatePipe } from '@angular/common';
-import {NgForm} from '@angular/forms';
+import {FormGroup, NgForm} from '@angular/forms';
 import { FileUploader } from 'ng2-file-upload';
 
 import {Address} from '../../shared/model/venue.entity';
@@ -113,7 +113,15 @@ export class BookingDetailComponent implements OnInit, OnDestroy, OnChanges {
   /*
     Calling this method will create a new booking
   */
-  public onCreateBooking() {
+  public onCreateBooking(form: FormGroup) {
+    if ( form.invalid ) {
+      this.notificationServiceBus.
+      launchNotification(true, 'Kindly fill all the required (*) fields');
+      return;
+    }
+
+
+
 
     this.spinnerService.requestInProcess(true);
     this.bookingModel.state = BOOKING_STATUS.Requested; // res.data.status;

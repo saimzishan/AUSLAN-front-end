@@ -4,6 +4,7 @@ import { UserService } from '../../api/user.service';
 import { SpinnerService } from '../../spinner/spinner.service';
 import { NotificationServiceBus } from '../../notification/notification.service';
 import { GLOBAL } from '../../shared/global';
+import {FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-user-password',
@@ -22,7 +23,13 @@ export class UserPasswordComponent {
   }
 
 
-  editUser() {
+  editUser(form: FormGroup) {
+      if ( form.invalid ) {
+          this.notificationServiceBus.
+          launchNotification(true, 'Kindly fill all the required (*) fields');
+          return;
+      }
+
       this.spinnerService.requestInProcess(true);
 
       this.userDataService.updatePassword(GLOBAL.currentUser.id, this.curr_password, this.new_password)

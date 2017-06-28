@@ -109,7 +109,8 @@ export class BookingJobsComponent implements OnDestroy {
                     if (res.status === 204) {
                         this.selectedBookingModel.state = BOOKING_STATUS.Unable_to_service;
                         this.isCancelledOrUnableToServe = true;
-                        this.notificationServiceBus.launchNotification(false, 'The booking has been transitioned to \"Unable to Service\" state');
+                        this.notificationServiceBus.
+                        launchNotification(false, 'The booking has been transitioned to \"Unable to Service\" state');
                     }
                     this.spinnerService.requestInProcess(false);
                 },

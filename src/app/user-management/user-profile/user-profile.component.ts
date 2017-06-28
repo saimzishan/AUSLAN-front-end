@@ -5,6 +5,7 @@ import {SpinnerService} from '../../spinner/spinner.service';
 import {NotificationServiceBus} from '../../notification/notification.service';
 import {GLOBAL} from '../../shared/global';
 import {UserNameService} from '../../shared/user-name.service';
+import {FormGroup} from '@angular/forms';
 
 @Component({
     selector: 'app-user-profile',
@@ -36,7 +37,13 @@ export class UserProfileComponent implements OnInit {
             this.userStatusArray[0].name : this.userStatusArray[1].name;
     }
 
-    editUser() {
+    editUser(form: FormGroup) {
+        if ( form.invalid ) {
+            this.notificationServiceBus.
+            launchNotification(true, 'Kindly fill all the required (*) fields');
+            return;
+        }
+
         this.userModel.disabled = this.selectedStatus === 'Disabled';
         this.selectedStatus = '';
         this.userDataService.updateUser(this.userModel)
@@ -47,9 +54,12 @@ export class UserProfileComponent implements OnInit {
                         this.notificationServiceBus.launchNotification(false, 'User details updated Successfully');
                     }
                 },
-                (err) => {
+                (errors) => {
                     this.spinnerService.requestInProcess(false);
-                    this.notificationServiceBus.launchNotification(true, err);
+
+                    let e = errors.json();
+                    this.notificationServiceBus.launchNotification(true, errors.statusText + ' '
+                        + JSON.stringify(e.errors).replace(/]|[[]/g, '').replace(/({|})/g, ''));
                 });
     }
 }

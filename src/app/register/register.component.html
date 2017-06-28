@@ -11,7 +11,7 @@
 				<p>Fields with * are required</p>
 			</header>
 
-			<form #registerForm="ngForm" class="common-form reduced-bottom" novalidate action="#">
+			<form #registerForm="ngForm" class="common-form reduced-bottom" >
 				<div class="row small-collapse">
 					<div class="row-wrapper">
 						<div class="medium-6 columns">
@@ -126,9 +126,7 @@
 
 				<div align="center">
 					<button class="login button" name="register_user" type="submit"
-							[disabled]="last_name.errors || first_name.errors || password.errors || email.errors
-							 || certainPassword.errors "
-						(click)="addUser()" class="button">Register</button>
+						(click)="addUser(registerForm)" class="button">Register</button>
 				</div>
 
 			</form>
