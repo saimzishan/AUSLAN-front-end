@@ -66,6 +66,7 @@ import { UserPasswordComponent } from './user-management/user-password/user-pass
 import { PreComponent } from './register/pre/pre.component';
 import { TrimValueAccessorModule } from 'ng-trim-value-accessor';
 import {FileUploadModule} from 'ng2-file-upload';
+import {HashLocationStrategy, Location, LocationStrategy} from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -109,8 +110,10 @@ import {FileUploadModule} from 'ng2-file-upload';
       provide: AuthHttp,
       useFactory: authService,
       deps: [Http, RequestOptions]
-    }],
+    }, Location, {provide: LocationStrategy, useClass: HashLocationStrategy}],
   bootstrap: [AppComponent],
 })
 export class AppModule {
+  location: Location;
+  constructor(location: Location) { this.location = location; }
 }
