@@ -106,6 +106,7 @@ export class JobDetailComponent implements OnDestroy {
             parseInt(this.selectedBookingModel.state.toString(), 10) ===
             parseInt(BOOKING_STATUS.In_progress.toString(), 10) ? ' - ' + this.currentStatus : '';
         this.stateStr = BOOKING_STATUS[this.selectedBookingModel.state].toUpperCase() + this.stateStr;
+        this.stateStr = this.stateStr.trim();
 
     }
 
@@ -126,10 +127,9 @@ export class JobDetailComponent implements OnDestroy {
                         );
                         this.selectedBookingModel.interpreters.filter(i => i.id === GLOBAL.currentUser.id)
                             .map(i => this.currentStatus = i.state || 'Invited');
-                        this.disableAccept = this.disableReject = this.currentStatus === 'Accepted';
                         this.disableAccept = this.disableReject =
                             this.selectedBookingModel.state ===
-                            BOOKING_STATUS.Allocated;
+                            BOOKING_STATUS.Allocated ? true : this.currentStatus === 'Accepted';
                         this.getStateString();
                     }
                     this.spinnerService.requestInProcess(false);
