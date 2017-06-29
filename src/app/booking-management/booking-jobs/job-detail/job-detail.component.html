@@ -11,11 +11,13 @@
                 <a href="javascript:void(0);" class="active">Booking info</a>
             </nav>
             <div *ngIf="isCurrentUserInterpreter()">
-                <button [disabled]="disableAccept" (click)="showDialogBox(true)"
-                        class="button pink">Decline</button>
+                <button [disabled]="disableReject" (click)="showDialogBox(true)"
+                        class="button pink">Decline
+                </button>
                 <div class="sep"></div>
-                <button [disabled]="disableReject" (click)="showDialogBox(false)"
-                        class="button inverse">Accept</button>
+                <button [disabled]="disableAccept" (click)="showDialogBox(false)"
+                        class="button inverse">Accept
+                </button>
             </div>
         </section>
         <section id="steps">
@@ -109,9 +111,9 @@
                         <div *ngIf="interpreter.state === 'Accepted'"
                              class="row with-border">
 
-                                <div> INTERPRETER {{i + 1}}
-                                </div>
-                                <span class="with-avatar">
+                            <div> INTERPRETER {{i + 1}}
+                            </div>
+                            <span class="with-avatar">
                             <img src="assets/img/dummy/oval.png" alt="">
                     {{interpreter.first_name}} {{interpreter.last_name}}
                     </span>
@@ -119,7 +121,7 @@
                         </div>
                         <div *ngIf="interpreter.state !== 'Accepted'"
                              class="row with-border">
-                            <div> INTERPRETER {{i + 1}}                            </div>
+                            <div> INTERPRETER {{i + 1}}</div>
                             <span>To be filled</span>
 
                         </div>
@@ -166,9 +168,12 @@
                             <div *ngFor="let interpreter of selectedBookingModel.interpreters; let i=index">
                                 <ng-container>
 
-                                    <b>Interpreter {{i + 1}} :</b> <span *ngIf="interpreter.state === 'Accepted'">{{interpreter.first_name}} {{interpreter.last_name}}</span>
-                                    <span *ngIf="interpreter.state === 'Invited'">To be filled</span>
-                                    <button *ngIf="!isCurrentUserInterpreter() && interpreter.state === 'Accepted'">Unassign</button>
+                                    <b>Interpreter {{i + 1}} :</b>
+                                    <span *ngIf="interpreter.state === 'Accepted'">{{interpreter.first_name}} {{interpreter.last_name}}</span>
+                                    <span *ngIf="interpreter.state !== 'Accepted'">To be filled</span>
+                                    <button *ngIf="!isCurrentUserInterpreter() && interpreter.state === 'Accepted'">
+                                        Unassign
+                                    </button>
 
                                 </ng-container>
 

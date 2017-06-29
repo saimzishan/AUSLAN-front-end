@@ -35,11 +35,10 @@
                     <md-checkbox>DEAF BLIND</md-checkbox>
                 </section>
             </div>
-            <br>
-            <header>
-                <h4>BOOKING DETAILS</h4>
-            </header>
-            <br>
+            <div class="separator"></div>
+
+            <h4 class="text-center">BOOKING DETAILS</h4>
+
             <div class="row small-collapse">
                 <div class="row-wrapper">
                     <div class=" medium-7 columns">
@@ -168,10 +167,9 @@
             </div>
 
             <br>
-            <header>
-                <h4>CONTACT DETAILS</h4>
-            </header>
-            <br>
+            <div class="separator"></div>
+
+            <h4 class="text-center">CONTACT DETAILS</h4>
 
             <div class="row">
                 <div class="medium-12 columns">
@@ -250,11 +248,10 @@
                 </div>
             </div>
 
-            <br>
-            <header>
-                <h4>CLIENT DETAILS</h4>
-            </header>
-            <br>
+            <div class="separator"></div>
+
+            <h4 class="text-center">CLIENT DETAILS</h4>
+
 
             <div class="row">
                 <div class="medium-12 columns">
@@ -349,11 +346,9 @@
                 </div>
             </div>
 
-            <br>
-            <header>
-                <h4>INVOICE DETAILS</h4>
-            </header>
-            <br>
+            <div class="separator"></div>
+
+            <h4 class="text-center">INVOICE DETAILS</h4>
             <div class="row">
                 <div class="medium-12 columns">
                     <div class="form-field">
@@ -394,11 +389,9 @@
             </div>
 
 
-            <br>
-            <header>
-                <h4>JOB DOCUMENTS</h4>
-            </header>
-            <br>
+            <div class="separator"></div>
+
+            <h4 class="text-center">JOB DOCUMENTS</h4>
             <div class="row">
                 <section class="file-uploader">
                     <button md-button>
@@ -419,8 +412,7 @@
                 </section>
             </div>
 
-            <div class="separator"></div>
-
+            <br>
             <div class="row">
                 <section id="job-documents">
                     <section>
@@ -428,24 +420,6 @@
                             <i class="icon-attachment"></i>
                             <span>{{ item?.file?.name }}</span>
                         </section>
-
-
-
-                        <div class="file-uploader light">
-                                <button md-button>
-                                    <i class="icon-add-file"></i>
-                                    <b>CHOOSE FILES TO UPLOAD</b>
-                                    <span>or drag &amp; drop them here</span>
-                                    <input type="file" ng2FileSelect [uploader]="uploader" name="uploader"/>
-                                </button>
-                                <section ng2FileDrop
-                                         [uploader]="uploader"
-                                         class="well my-drop-zone">
-                                    <span></span>
-                                </section>
-                            </div>
-
-
                     </section>
                 </section>
             </div>
@@ -453,12 +427,9 @@
 
 
             <div [hidden]='true'>
+                <div class="separator"></div>
 
-                <br>
-                <header>
-                    <h4>BOOKING PREFERENCES</h4>
-                </header>
-                <br>
+                <h4 class="text-center">BOOKING PREFERENCES</h4>
                 <div class="row ext">
                     <div class="form-field">
                         <label>Do you have prefered interpreters?</label>

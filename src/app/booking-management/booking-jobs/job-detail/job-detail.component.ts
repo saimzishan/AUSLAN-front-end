@@ -127,9 +127,16 @@ export class JobDetailComponent implements OnDestroy {
                         );
                         this.selectedBookingModel.interpreters.filter(i => i.id === GLOBAL.currentUser.id)
                             .map(i => this.currentStatus = i.state || 'Invited');
-                        this.disableAccept = this.disableReject =
+                        this.disableAccept =
                             this.selectedBookingModel.state ===
-                            BOOKING_STATUS.Allocated ? true : this.currentStatus === 'Accepted';
+                            BOOKING_STATUS.Allocated ? true :
+                                this.currentStatus === 'Rejected' ? false :
+                                    this.currentStatus === 'Accepted';
+
+                        this.disableReject =
+                            this.selectedBookingModel.state ===
+                            BOOKING_STATUS.Allocated ? true : this.currentStatus === 'Rejected';
+
                         this.getStateString();
                     }
                     this.spinnerService.requestInProcess(false);

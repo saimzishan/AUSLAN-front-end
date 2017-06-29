@@ -64,7 +64,6 @@ import { AddressComponent } from './ui/address/address.component';
 import { AccountantComponent } from './ui/accountant/accountant.component';
 import { UserPasswordComponent } from './user-management/user-password/user-password.component';
 import { PreComponent } from './register/pre/pre.component';
-import { TrimValueAccessorModule } from 'ng-trim-value-accessor';
 import {FileUploadModule} from 'ng2-file-upload';
 import {HashLocationStrategy, Location, LocationStrategy} from '@angular/common';
 
