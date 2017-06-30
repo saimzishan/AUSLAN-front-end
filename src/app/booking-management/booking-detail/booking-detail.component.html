@@ -400,7 +400,8 @@
                         <i class="icon-add-file"></i>
                         <b>CHOOSE FILES TO UPLOAD</b>
                         <span>or drag &amp; drop them here</span>
-                        <input type="file" ng2FileSelect [uploader]="uploader" name="uploader"/>
+                        <input type="file" ng2FileSelect [uploader]="uploader" multiple
+                               name="uploader"/>
                     </button>
                     <section ng2FileDrop
                              [ngClass]="{
@@ -455,7 +456,7 @@
             </div>
 
             <div class="actions">
-                <button (click)="onCreateBooking(booking_form);">SAVE</button>
+                <button (click)="onCreateBooking(booking_form, uploader);">SAVE</button>
                 <button (click)="onCancelBooking();">CANCEL</button>
             </div>
         </form>

@@ -22,7 +22,7 @@ export class Booking {
     public notes = '';
     public primaryContact = new Contact();
     public client: OrganisationalRepresentative = new OrganisationalRepresentative({});
-
+    public documents_attributes = [];
     // Is it a limitation on interpreters invitation.
 
     constructor() {

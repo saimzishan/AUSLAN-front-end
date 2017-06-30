@@ -1,5 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {Administrator, IndividualClient, Interpreter, OrganisationalRepresentative, User} from '../../shared/model/user.entity';
+import {
+    Administrator, BookingOfficer, IndividualClient, Interpreter, OrganisationalRepresentative,
+    User
+} from '../../shared/model/user.entity';
 import {UserService} from '../../api/user.service';
 import {SpinnerService} from '../../spinner/spinner.service';
 import {NotificationServiceBus} from '../../notification/notification.service';
@@ -31,7 +34,10 @@ export class UserProfileComponent implements OnInit {
                 Boolean(GLOBAL.currentUser) && GLOBAL.currentUser instanceof Interpreter ?
                     (<Interpreter>GLOBAL.currentUser) :
                     Boolean(GLOBAL.currentUser) && GLOBAL.currentUser instanceof Administrator ?
-                        (<Administrator>GLOBAL.currentUser) : new User();
+                        (<Administrator>GLOBAL.currentUser) :
+                        Boolean(GLOBAL.currentUser) && GLOBAL.currentUser instanceof BookingOfficer ?
+                            (<BookingOfficer>GLOBAL.currentUser) :
+                            GLOBAL.currentUser;
 
         this.selectedStatus = Boolean(this.userModel && this.userModel.disabled === false) ?
             this.userStatusArray[0].name : this.userStatusArray[1].name;

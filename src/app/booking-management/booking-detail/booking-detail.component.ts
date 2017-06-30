@@ -67,7 +67,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy, OnChanges {
           <Address> this.bookingModel.venue;
 
     }
-
   }
 
   public fileOverBase(e: any) {
@@ -113,14 +112,17 @@ export class BookingDetailComponent implements OnInit, OnDestroy, OnChanges {
   /*
     Calling this method will create a new booking
   */
-  public onCreateBooking(form: FormGroup) {
+  public onCreateBooking(form: FormGroup, uploader: FileUploader) {
     if ( form.invalid ) {
       this.notificationServiceBus.
       launchNotification(true, 'Kindly fill all the required (*) fields');
       return;
     }
 
-
+    for ( let item of uploader.queue)
+    {
+      this.handleFileSelect(item);
+    }
 
 
     this.spinnerService.requestInProcess(true);
@@ -147,5 +149,22 @@ export class BookingDetailComponent implements OnInit, OnDestroy, OnChanges {
   onCancelBooking() {
     let route = this.rolePermission.getDefaultRouteForCurrentUser();
     this.router.navigate( [route] );
+  }
+
+  handleFileSelect(evt) {
+    let files = evt.target.files;
+    let file = files[0];
+
+    if (files && file) {
+      let reader = new FileReader();
+
+      reader.onload = this._handleReaderLoaded.bind(this);
+
+      reader.readAsDataURL(file);
+    }
+  }
+
+  _handleReaderLoaded(readerEvt) {
+    this.bookingModel.documents_attributes.push({document : readerEvt.target.result});
   }
 }
