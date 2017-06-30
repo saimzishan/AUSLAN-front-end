@@ -184,7 +184,7 @@ export class BookingJobsComponent implements OnDestroy {
                         this.isCancelledOrUnableToServe = this.isActiveState('Cancelled')
                             || this.isActiveState('Unable_to_service');
                     }
-                    this.spinnerService.requestInProcess(false);
+                    // this.spinnerService.requestInProcess(false);
                 },
                 err => {
                     this.spinnerService.requestInProcess(false);

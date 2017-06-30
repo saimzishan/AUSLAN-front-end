@@ -1,64 +1,78 @@
 <section id="page-skill-matrix">
 
-  <section id="submenu">
-    <app-user-header id="main-submenu-links">
-    </app-user-header>
-    <div>
-      <button (click)="apply(false)" class="button pink">Cancel</button>
-      <div class="sep"></div>
-      <button (click)="apply(true)" [disabled]="!doSave"
-              class='button inverse' >Save</button>
-    </div>
-  </section>
-  <main>
-    <aside>
-      <strong>NAVIGATION</strong>
-      <nav>
-        <ng-container  *ngFor="let item of appointment_types | enumVal ">
-          <ng-container *ngIf="item.value !== 'Other' && item.value !== 'None'">
-          <a [ngClass]="{'active': item.value === raw_nature_of_appointment}"  (click)="natureOfApptChange(item.value)">{{item.value}}
-          </a></ng-container></ng-container>
-      </nav>
-    </aside>
-    <section>
-      <h1>SKILL MATRIX {{this.userModel.first_name.toUpperCase()}} {{this.userModel.last_name.toUpperCase()}}</h1>
-      <table>
-        <thead>
-        <tr>
-          <th width="36%">Area of Knowledge</th>
-          <th colspan="4">
-            <md-radio-group class="lvl_skills" >
-            <md-radio-button *ngFor="let lvl of levels" class="lvl_skills"
-                              (change)="aokChanged(lvl)"
-                              [value]="lvl">
-               {{lvl}}
-            </md-radio-button>
-          </md-radio-group>
-          </th>
-        </tr>
-        </thead>
-      </table>
-      <table>
-        <tbody>
-        <tr>
-          <td>&nbsp;</td>
-          <td width="16%"><b>1</b></td>
-          <td width="16%"><b>2</b></td>
-          <td width="16%"><b>3</b></td>
-          <td width="16%"><b>n/a</b></td>
-        </tr>
-        <tr *ngFor="let item of specific_appointment_types | enumVal ">
-          <ng-container *ngIf="item.value !== 'Other' && item.value !== 'None'">
-          <td>&nbsp;{{item.value}}</td>
-          <td *ngFor="let lvl of levels">
-            <md-checkbox   (change)="skillChanged(lvl, item.value)" [checked]="isChecked(lvl, item.value)" [value]="lvl">
-          </md-checkbox>
-          </td>
-          </ng-container>
-        </tr>
-
-        </tbody>
-      </table>
+    <section id="submenu">
+        <app-user-header id="main-submenu-links">
+        </app-user-header>
+        <div>
+            <button (click)="apply(false)" class="button pink">Cancel</button>
+            <div class="sep"></div>
+            <button (click)="apply(true)" [disabled]="!doSave"
+                    class='button inverse'>Save
+            </button>
+        </div>
     </section>
-  </main>
+    <main>
+        <aside>
+            <strong>NAVIGATION</strong>
+            <nav>
+                <ng-container *ngFor="let item of appointment_types | enumVal ">
+                    <ng-container *ngIf="item.value !== 'Other' && item.value !== 'None'">
+                        <a [ngClass]="{'active': item.value === raw_nature_of_appointment}"
+                           (click)="natureOfApptChange(item.value)">{{item.value}}
+                        </a></ng-container>
+                </ng-container>
+            </nav>
+        </aside>
+        <section>
+            <h1>SKILL MATRIX {{this.userModel?.first_name.toUpperCase()}}
+                {{this.userModel?.last_name.toUpperCase()}}</h1>
+            <table>
+                <thead>
+                <tr>
+                    <th class="no-padding">
+                        <md-radio-group class="radio-group no-padding no-margin">
+                            <table class="no-margin">
+                                <thead>
+                                <tr>
+                                    <th>Area of Knowledge</th>
+                                    <th width="16%" *ngFor="let lvl of levels">
+                                        <md-radio-button class="lvl_skills"
+                                                         (change)="aokChanged(lvl)"
+                                                         [checked]="isAOKChecked(lvl)"
+                                                         [value]="lvl">
+                                            {{lvl}}
+                                        </md-radio-button>
+                                    </th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </md-radio-group>
+                    </th>
+                </tr>
+                </thead>
+            </table>
+            <table>
+                <tbody>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td width="16%"><b>1</b></td>
+                    <td width="16%"><b>2</b></td>
+                    <td width="16%"><b>3</b></td>
+                    <td width="16%"><b>n/a</b></td>
+                </tr>
+                <tr *ngFor="let item of specific_appointment_types | enumVal ">
+                    <ng-container *ngIf="item.value !== 'Other' && item.value !== 'None'">
+                        <td>&nbsp;{{item.value}}</td>
+                        <td *ngFor="let lvl of levels">
+                            <md-checkbox (change)="skillChanged(lvl, item.value)" [checked]="isChecked(lvl, item.value)"
+                                         [value]="lvl">
+                            </md-checkbox>
+                        </td>
+                    </ng-container>
+                </tr>
+
+                </tbody>
+            </table>
+        </section>
+    </main>
 </section>

@@ -39,7 +39,10 @@
               <span>Email is required</span>!</span>
           </div>
         </div>
-        <div *ngIf="userModel.type === 'Interpreter'" class="medium-6 columns">
+        <div *ngIf="userModel.type === 'Interpreter'
+        || userModel.type === 'BookingOfficer'
+        || userModel.type === 'Administrator'
+" class="medium-6 columns">
           <div class="form-field">
             <label>MOBILE * </label>
             <input type="tel" placeholder="" [(ngModel)]="userModel.mobile" name="mobile" #mobile="ngModel" required>
@@ -48,17 +51,35 @@
                       <span>Minimum 6 digits required.</span>!</span>
           </div>
         </div>
-        <div *ngIf="userModel.type !== 'Interpreter'" class="medium-6 columns">
+        <div *ngIf="userModel.type === 'Interpreter'
+        || userModel.type === 'BookingOfficer'
+        || userModel.type === 'Administrator'
+" class="medium-6 columns">
+          <div class="form-field">
+            <label>PHONE </label>
+            <input type="tel" placeholder="" [(ngModel)]="userModel.phone" name="phone" #phone="ngModel" required>
+
+          </div>
+        </div>
+        <div *ngIf="userModel.type === 'OrganisationalRepresentative'
+|| userModel.type === 'IndividualClient' " class="medium-6 columns">
           <div class="form-field">
             <label>PHONE * </label>
-            <input type="tel" placeholder="" [(ngModel)]="userModel.phone" name="mobile" #mobile="ngModel" required>
-            <span *ngIf="mobile.touched && !mobile.errors?.required;" class="inline-icon inline-icon-valid valid"></span>
-            <span *ngIf="mobile.touched && mobile.errors?.required;" class="inline-icon error">
+            <input type="tel" placeholder="" [(ngModel)]="userModel.phone" name="phone" #phone="ngModel" required>
+            <span *ngIf="phone.touched && !phone.errors?.required;" class="inline-icon inline-icon-valid valid"></span>
+            <span *ngIf="phone.touched && phone.errors?.required;" class="inline-icon error">
                       <span>Minimum 6 digits required.</span>!</span>
           </div>
         </div>
+        <div *ngIf="userModel.type === 'OrganisationalRepresentative'
+|| userModel.type === 'IndividualClient' " class="medium-6 columns">
+          <div class="form-field">
+            <label>MOBILE </label>
+            <input type="tel" placeholder="" [(ngModel)]="userModel.mobile" name="mobile" #mobile="ngModel" required>
 
-        <div [hidden]='!userModel.verified' class="medium-6 columns">
+          </div>
+        </div>
+        <div [hidden]="userModel.type === 'IndividualClient' || !userModel.verified" class="medium-6 columns">
           <div class="form-field">
             <label>STATUS</label>
             <select name="selStatus" [(ngModel)]="selectedStatus">

@@ -20,6 +20,7 @@ export class SkillMatrixComponent implements OnInit {
     doSave = false;
     sub;
     userModel: Interpreter;
+    current_level = '';
 
     constructor(public spinnerService: SpinnerService,
                 public notificationServiceBus: NotificationServiceBus,
@@ -76,6 +77,12 @@ export class SkillMatrixComponent implements OnInit {
                 this.doSave = true;
             }
         }
+        this.current_level = level;
+    }
+
+    isAOKChecked(level: string) {
+
+        return         this.current_level === level;
     }
 
     isChecked(level: string, raw_specific_booking_type: string) {
@@ -95,6 +102,8 @@ export class SkillMatrixComponent implements OnInit {
         this.raw_nature_of_appointment = value;
         let val: BOOKING_NATURE = <BOOKING_NATURE> BOOKING_NATURE[this.raw_nature_of_appointment];
         this.specific_appointment_types = BA.DISSCUSSION_ITEM[BOOKING_NATURE[val]];
+        this.current_level = '';
+
     }
 
     apply(val: boolean) {

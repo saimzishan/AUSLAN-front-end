@@ -29,7 +29,6 @@ export class JobDetailComponent implements OnDestroy {
     private dialogSub: any;
     dialogRef: MdDialogRef<any>;
     stateStr = '';
-
     constructor(public dialog: MdDialog,
                 public viewContainerRef: ViewContainerRef, public spinnerService: SpinnerService,
                 public notificationServiceBus: NotificationServiceBus,
@@ -42,6 +41,15 @@ export class JobDetailComponent implements OnDestroy {
                 this.getJobDetail(param_id);
             }
         });
+    }
+
+    isCurrentUserState (state: string) {
+        let currUser = this.selectedBookingModel.interpreters.filter(i => i.id === GLOBAL.currentUser.id);
+        if ( Boolean (currUser) && currUser.length > 0 ) {
+            return state === currUser[0].state;
+        }
+
+        return false;
     }
 
     anyInterpreterAccepted() {
@@ -81,6 +89,7 @@ export class JobDetailComponent implements OnDestroy {
                             this.disableAccept = true;
                             this.disableReject = true;
                             this.spinnerService.requestInProcess(false);
+                            this.getJobDetail(GLOBAL.currentUser.id);
                         },
                         err => {
                             this.spinnerService.requestInProcess(false);
@@ -127,6 +136,7 @@ export class JobDetailComponent implements OnDestroy {
                         );
                         this.selectedBookingModel.interpreters.filter(i => i.id === GLOBAL.currentUser.id)
                             .map(i => this.currentStatus = i.state || 'Invited');
+
                         this.disableAccept =
                             this.selectedBookingModel.state ===
                             BOOKING_STATUS.Allocated ? true :
@@ -135,7 +145,8 @@ export class JobDetailComponent implements OnDestroy {
 
                         this.disableReject =
                             this.selectedBookingModel.state ===
-                            BOOKING_STATUS.Allocated ? true : this.currentStatus === 'Rejected';
+                            BOOKING_STATUS.Allocated ? true : this.currentStatus === 'Rejected'
+                        || this.currentStatus === 'Accepted';
 
                         this.getStateString();
                     }

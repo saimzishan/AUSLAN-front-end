@@ -13,7 +13,7 @@ import {FormGroup} from '@angular/forms';
 })
 export class UserPasswordComponent {
 
-  curr_password = '*******';
+  curr_password = '';
   new_password = '';
   confirm_password = '';
   constructor(public userDataService: UserService,

@@ -8,7 +8,7 @@
       <div class="form-field">
         <label>CONTACT FIRST NAME *	</label>
 
-        <input type="text" class="inline-icon valid" placeholder="Enter your first name" [(ngModel)]="primaryContact.first_name" name="first_name"
+        <input type="text" class="inline-icon inline-icon-user-circle valid" placeholder="Enter your first name" [(ngModel)]="primaryContact.first_name" name="first_name"
                #first_name="ngModel" [rangeLength]="[3, 20]" required>
         <span *ngIf="first_name.touched && !first_name.errors?.required && !first_name.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
         <span *ngIf="first_name.touched && (first_name.errors?.required || first_name.errors?.rangeLength);" class="inline-icon error">
@@ -19,7 +19,7 @@
       <div class="form-field">
         <label>CONTACT LAST NAME *</label>
 
-        <input type="text" class="inline-icon valid" placeholder="Enter your last name" [(ngModel)]="primaryContact.last_name" name="last_name"
+        <input type="text" class="inline-icon inline-icon-user-circle valid" placeholder="Enter your last name" [(ngModel)]="primaryContact.last_name" name="last_name"
                #last_name="ngModel" [rangeLength]="[3, 30]" required>
         <span *ngIf="last_name.touched && !last_name.errors?.required && !last_name.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
         <span *ngIf="last_name.touched && (last_name.errors?.required || last_name.errors?.rangeLength);" class="inline-icon error">

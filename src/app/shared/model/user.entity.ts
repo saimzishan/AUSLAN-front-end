@@ -42,6 +42,7 @@ export class User {
   public last_name: string;
   public id: number;
   public mobile: string;
+  public phone: string
   public token = '';
   public verified = false;
   public disabled = true;
@@ -83,7 +84,6 @@ export class Organisational extends User {
   public group_email = '';
   public branch_office = '';
   public preferred_contact_method = '';
-  public phone: string;
   public email_receipt: boolean;
   public email_confirmation: boolean;
   public reffered_by: string;

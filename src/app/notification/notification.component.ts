@@ -10,7 +10,7 @@ import { NotificationServiceBus } from './notification.service';
 export class NotificationComponent implements OnDestroy {
   private sub: any;
   public options = {
-    position: ['bottom', 'right'],
+    position: ['bottom', 'left'],
     timeOut: 1200,
     lastOnBottom: true,
     maximumLength: 200,

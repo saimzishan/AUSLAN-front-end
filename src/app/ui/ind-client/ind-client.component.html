@@ -26,7 +26,7 @@
       <div class="form-field">
         <label>NDIS VALIDITY START DATE</label>
         <input type='date' name='dpEventDateStart'
-               [ngModel]="userModel.ndis_validity_start_date | date:'yyyy-MM-dd'" (ngModelChange)="userModel.ndis_validity_start_date = $event"
+               [ngModel]="userModel.ndis_validity_start_date" (ngModelChange)="userModel.ndis_validity_start_date = $event"
                #dpEventDateStart="ngModel" />
 
 
@@ -36,7 +36,7 @@
       <div class="form-field">
         <label>NDIS VALIDITY END DATE</label>
         <input type='date' name='dpEventDateEnd'
-               [ngModel]="userModel.ndis_validity_end_date | date:'yyyy-MM-dd'" (ngModelChange)="userModel.ndis_validity_end_date = $event"
+               [ngModel]="userModel.ndis_validity_end_date" (ngModelChange)="userModel.ndis_validity_end_date = $event"
                #dpEventDateEnd="ngModel" />
 
       </div>
@@ -95,13 +95,13 @@
       <div class="form-field">
         <label>HOW DID YOU FIND OUT ABOUT US?</label>
         <select [(ngModel)]="userModel.reffered_by">
-          <option value="0">A DEAF PERSON TOLD ME</option>
-          <option value="1">AN INTERPRETER TOLD ME</option>
-          <option value="2">INTERNET SEARCH ENGINE</option>
-          <option value="3">GOOGLE</option>
-          <option value="4">YELLOW PAGES</option>
-          <option value="5">WORD OF MOUTH</option>
-          <option value="6">OTHER</option>
+          <option value="A DEAF PERSON TOLD ME">A DEAF PERSON TOLD ME</option>
+          <option value="AN INTERPRETER TOLD ME">AN INTERPRETER TOLD ME</option>
+          <option value="INTERNET SEARCH ENGINE">INTERNET SEARCH ENGINE</option>
+          <option value="GOOGLE">GOOGLE</option>
+          <option value="YELLOW PAGES">YELLOW PAGES</option>
+          <option value="WORD OF MOUTH">WORD OF MOUTH</option>
+          <option value="OTHER">OTHER</option>
         </select>
       </div>
     </div>
