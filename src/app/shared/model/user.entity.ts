@@ -42,7 +42,7 @@ export class User {
   public last_name: string;
   public id: number;
   public mobile: string;
-  public phone: string
+  public phone: string;
   public token = '';
   public verified = false;
   public disabled = true;

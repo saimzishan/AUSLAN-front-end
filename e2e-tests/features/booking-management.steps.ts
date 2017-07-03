@@ -83,7 +83,7 @@ defineSupportCode(({Given, Then, When }) => {
     // // }
     //
     When(/^I filled all mandatory fields except (.*)$/, haventFilledAllMandatory);
-    async function haventFilledAllMandatory(mandatory_tag: string): Promise<void>{
+    async function haventFilledAllMandatory(mandatory_tag: string): Promise<void> {
         let all_required_input_fields = await $$('input[required]');
         let all_required_radio_buttons = await $$('md-radio-group');
         let all_required_drop_down = await $$('md-select');
@@ -182,7 +182,7 @@ defineSupportCode(({Given, Then, When }) => {
                     if (label_text.includes('EMAIL')) {
                         page.setValue(input_field, 'curve@auslan.com.au');
                     } else {
-                        page.setValue(input_field, isText ? 'Abcde' : '123')
+                        page.setValue(input_field, isText ? 'Abcde' : '123');
                         // if input_field has a next sibiling with span.inline-icon error  means its an error
 
                     }

@@ -30,6 +30,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy, OnChanges {
   public hasBaseDropZoneOver = false;
   bookingModel: Booking;
   standardInvoice: true;
+  maximumFileSizeInBytes = 2 * 1000 * 1000;
   appointment_types = Object.keys(BOOKING_NATURE).filter(value => value === BOOKING_NATURE[value]
   || BOOKING_NATURE[value].startsWith(value)).map(v => BOOKING_NATURE[v]) as string[];
 
@@ -70,7 +71,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   public fileOverBase(e: any) {
-    this.hasBaseDropZoneOver = e;
   }
 
   natureOfApptChange($event) {

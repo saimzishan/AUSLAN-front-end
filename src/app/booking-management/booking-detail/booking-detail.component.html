@@ -400,7 +400,7 @@
                         <i class="icon-add-file"></i>
                         <b>CHOOSE FILES TO UPLOAD</b>
                         <span>or drag &amp; drop them here</span>
-                        <input type="file" ng2FileSelect [uploader]="uploader" multiple
+                        <input type="file" ng2FileSelect (change)="handleFileSelect($event)" [uploader]="uploader" multiple
                                name="uploader"/>
                     </button>
                     <section ng2FileDrop
@@ -408,6 +408,8 @@
                              'nv-file-over': hasBaseDropZoneOver,
                              'well my-drop-zone' : !hasBaseDropZoneOver
                              }"
+                             (onFileDrop)="handleFileSelect($event)"
+
                              (fileOver)="fileOverBase($event)"
                              [uploader]="uploader">
                         <span></span>

@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {
+    Accountant,
     Administrator, BookingOfficer, IndividualClient, Interpreter, OrganisationalRepresentative,
     User
 } from '../../shared/model/user.entity';
@@ -37,6 +38,8 @@ export class UserProfileComponent implements OnInit {
                         (<Administrator>GLOBAL.currentUser) :
                         Boolean(GLOBAL.currentUser) && GLOBAL.currentUser instanceof BookingOfficer ?
                             (<BookingOfficer>GLOBAL.currentUser) :
+                            Boolean(GLOBAL.currentUser) && GLOBAL.currentUser instanceof Accountant ?
+                                (<Accountant>GLOBAL.currentUser) :
                             GLOBAL.currentUser;
 
         this.selectedStatus = Boolean(this.userModel && this.userModel.disabled === false) ?
