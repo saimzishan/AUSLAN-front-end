@@ -4,5 +4,5 @@
 
 import { User } from './app.user';
 
-export class Administrator extends User {
+export class Interpreter extends User{
 }

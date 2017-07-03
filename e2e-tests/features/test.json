@@ -1,0 +1,45 @@
+{
+  "user": {
+    "first_name": "Nomi",
+    "last_name": "Q",
+    "email": "nomi@curvetomorrow.com.au",
+    "password": "ABcd#1234",
+    "mobile": "0400 345 678",
+    "send_email_on_receipt_of_request": true,
+    "email_confirmation_on_interpreter_allocation": true,
+    "special_instructions": "be great",
+    "discovery_of_auslan": "social",
+    "ndis_id": "ABC-123",
+    "ndis_budget_limit": 100000,
+    "ndis_validity_start_date": "01/01/2010",
+    "ndis_validity_end_date": "01/01/2020",
+    "eaf_id": "DEF-987",
+    "eaf_budget_limit": "50000",
+    "eaf_start_date": "05/06/2015",
+    "eaf_end_date": "08/12/2018",
+    "address_attributes": {
+      "unit_number": "2A",
+      "street_number": "3",
+      "street_name": "Bayview Cres",
+      "suburb": "Werribee",
+      "state": "VIC",
+      "post_code": "3030"
+    },
+    "billing_account_attributes": {
+      "primary_contact_first_name": "Paul",
+      "primary_contact_last_name": "Biller",
+      "email_address": "paul@curve.com.au",
+      "account_number": "ABCD-1234",
+      "preferred_billing_method_email": false,
+      "external_reference": "Curve and Sanj",
+      "address_attributes": {
+        "unit_number": "2A",
+        "street_number": "3",
+        "street_name": "Bayview Cres",
+        "suburb": "Werribee",
+        "state": "VIC",
+        "post_code": "3030"
+      }
+    }
+  }
+}

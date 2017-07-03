@@ -2,7 +2,7 @@
  * Created by hientran on 8/5/17.
  */
 
-export class User {
+export class User{
     private _email: string;
     private _pass: string;
     private _first_name: string;

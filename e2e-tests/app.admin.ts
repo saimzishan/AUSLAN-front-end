@@ -4,5 +4,5 @@
 
 import { User } from './app.user';
 
-export class BookingOfficer extends User {
+export class Administrator extends User{
 }
