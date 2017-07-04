@@ -30,7 +30,8 @@ export class JobDetailComponent implements OnDestroy {
     dialogRef: MdDialogRef<any>;
     stateStr = '';
     constructor(public dialog: MdDialog,
-                public viewContainerRef: ViewContainerRef, public spinnerService: SpinnerService,
+                public viewContainerRef: ViewContainerRef,
+                public spinnerService: SpinnerService,
                 public notificationServiceBus: NotificationServiceBus,
                 public bookingService: BookingService,
                 private router: Router, private route: ActivatedRoute) {
