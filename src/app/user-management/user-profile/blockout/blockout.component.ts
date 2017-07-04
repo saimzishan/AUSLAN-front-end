@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {AvailibilityBlock, Interpreter} from '../../../shared/model/user.entity';
+import {AvailabilityBlock, Interpreter} from '../../../shared/model/user.entity';
 import {FormGroup} from '@angular/forms';
 import {SpinnerService} from '../../../spinner/spinner.service';
 import {NotificationServiceBus} from '../../../notification/notification.service';
@@ -12,7 +12,7 @@ import {GLOBAL} from '../../../shared/global';
   styleUrls: ['./blockout.component.css']
 })
 export class BlockoutComponent {
-  availibilityBlock: AvailibilityBlock = new AvailibilityBlock();
+  availabilityBlock: AvailabilityBlock = new AvailabilityBlock();
   constructor(public userDataService: UserService,
               public notificationServiceBus: NotificationServiceBus,
               public spinnerService: SpinnerService) {
@@ -25,8 +25,8 @@ export class BlockoutComponent {
       return;
     }
     this.spinnerService.requestInProcess(true);
-
-    this.userDataService.addBlockout( GLOBAL.currentUser.id , this.availibilityBlock)
+    delete this.availabilityBlock.booking_id;
+    this.userDataService.addBlockout( GLOBAL.currentUser.id , this.availabilityBlock)
         .subscribe((res: any) => {
           if (res.status === 200) {
             // UI Notification

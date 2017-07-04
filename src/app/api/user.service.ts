@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Headers, RequestOptions} from '@angular/http';
-import {AvailibilityBlock, IndividualClient, Interpreter, OrganisationalRepresentative, User} from '../shared/model/user.entity';
+import {AvailabilityBlock, IndividualClient, Interpreter, OrganisationalRepresentative, User} from '../shared/model/user.entity';
 import {ROLE} from '../shared/model/role.enum';
 import {GLOBAL} from '../shared/global';
 import { Observable } from 'rxjs/Observable';
@@ -242,7 +242,7 @@ export class UserService extends ApiService {
     /*
     * The api should add the blockout for interpreter
     */
-    addBlockout(userID: number, availibilityBlock: AvailibilityBlock) {
+    addBlockout(userID: number, availibilityBlock: AvailabilityBlock) {
         let headers = new Headers({'Accept': 'application/json',
             'Content-Type': 'application/json'});
         let options = new RequestOptions({ headers: headers });

@@ -333,7 +333,7 @@ export class Interpreter extends User {
   public location_pref = 'VIC';
   public comm_pref = 'SMS AND EMAIL';
   public assignments_attributes = [];
-  public availability_blocks: Array<AvailibilityBlock> = [];
+  public availability_blocks: Array<AvailabilityBlock> = [];
   get user_type() {
     return 'Interpreter';
   }
@@ -341,7 +341,7 @@ export class Interpreter extends User {
 
 }
 
-export class AvailibilityBlock {
+export class AvailabilityBlock {
   public name = '';
   public start_time = '';
   public end_time = '';

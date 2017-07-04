@@ -15,7 +15,7 @@
 
                         <input type='text'
                                name='blockout_name'
-                               [(ngModel)]="availibilityBlock.name" [rangeLength]="[1,50]" required
+                               [(ngModel)]="availabilityBlock.name" [rangeLength]="[1,50]" required
                                #blockout_name="ngModel"/>
 
                         <span *ngIf="blockout_name.touched &&  (!blockout_name.errors?.required && blockout_name.errors?.rangeLength);"
@@ -33,7 +33,7 @@
 
                         <input type='datetime-local'
                                name='dpEventDate_st' placeholder="DATE & Time OF APPOINTMENT *"
-                               [(ngModel)]="availibilityBlock.start_time" required #dpEventDate_st="ngModel"/>
+                               [(ngModel)]="availabilityBlock.start_time" required #dpEventDate_st="ngModel"/>
 
                         <span *ngIf="dpEventDate_st.touched &&  (!dpEventDate_st.errors?.required);"
                               class="inline-icon inline-icon-valid valid"></span>
@@ -51,7 +51,7 @@
 
                         <input type='datetime-local'
                                name='dpEventDate_end' placeholder="DATE & Time OF APPOINTMENT *"
-                               [(ngModel)]="availibilityBlock.end_time" required #dpEventDate_end="ngModel"/>
+                               [(ngModel)]="availabilityBlock.end_time" required #dpEventDate_end="ngModel"/>
 
                         <span *ngIf="dpEventDate_end.touched &&  (!dpEventDate_end.errors?.required);"
                               class="inline-icon inline-icon-valid valid"></span>
@@ -70,7 +70,7 @@
                         <md-slide-toggle
 
                                 name='sldRecurring'
-                                [(ngModel)]="availibilityBlock.recurring" required #sldRecurring="ngModel">
+                                [(ngModel)]="availabilityBlock.recurring" required #sldRecurring="ngModel">
                         </md-slide-toggle>
 
                     </div>
