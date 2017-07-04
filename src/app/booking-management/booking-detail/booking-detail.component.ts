@@ -128,8 +128,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy, OnChanges {
       launchNotification(true, 'Kindly fill all the required (*) fields');
       return;
     }
-    if ( GLOBAL.currentUser instanceof OrganisationalRepresentative
-    && this.isBookingTimeInNonStandardHours()) {
+    if (this.isBookingTimeInNonStandardHours()) {
       let config: MdDialogConfig = {
         disableClose: true
       };
