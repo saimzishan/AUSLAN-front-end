@@ -1,0 +1,90 @@
+<section id="submenu">
+    <app-user-header id="main-submenu-links">
+    </app-user-header>
+</section>
+<header>
+    <h1>ADD BLOCKOUT</h1>
+</header>
+<div id="page-common">
+    <main>
+        <form #user_blockout_form="ngForm" class="common-form reduced-top">
+            <div class="row">
+                <div class="medium-6 columns">
+                    <div class="form-field">
+                        <label>NAME BLOCKOUT *</label>
+
+                        <input type='text'
+                               name='blockout_name'
+                               [(ngModel)]="availibilityBlock.name" [rangeLength]="[1,50]" required
+                               #blockout_name="ngModel"/>
+
+                        <span *ngIf="blockout_name.touched &&  (!blockout_name.errors?.required && blockout_name.errors?.rangeLength);"
+                              class="inline-icon inline-icon-valid valid"></span>
+                        <span *ngIf="blockout_name.touched && (blockout_name.errors?.required || blockout_name.errors?.rangeLength);"
+                              class="inline-icon error">
+									<span>Minimum 1 characters required.</span>!</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="medium-6 columns">
+                    <div class="form-field">
+                        <label>START *</label>
+
+                        <input type='datetime-local'
+                               name='dpEventDate_st' placeholder="DATE & Time OF APPOINTMENT *"
+                               [(ngModel)]="availibilityBlock.start_time" required #dpEventDate_st="ngModel"/>
+
+                        <span *ngIf="dpEventDate_st.touched &&  (!dpEventDate_st.errors?.required);"
+                              class="inline-icon inline-icon-valid valid"></span>
+                        <span *ngIf="dpEventDate_st.touched && (dpEventDate_st.errors?.required);"
+                              class="inline-icon error">
+									<span>Start Date is required.</span>!</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="medium-6 columns">
+                    <div class="form-field">
+                        <label>END *</label>
+
+                        <input type='datetime-local'
+                               name='dpEventDate_end' placeholder="DATE & Time OF APPOINTMENT *"
+                               [(ngModel)]="availibilityBlock.end_time" required #dpEventDate_end="ngModel"/>
+
+                        <span *ngIf="dpEventDate_end.touched &&  (!dpEventDate_end.errors?.required);"
+                              class="inline-icon inline-icon-valid valid"></span>
+                        <span *ngIf="dpEventDate_end.touched && (dpEventDate_end.errors?.required);"
+                              class="inline-icon error">
+									<span>End Date is required.</span>!</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="medium-6 columns">
+                    <div class="form-field">
+                        <label>RECURRING *</label>
+
+                        <md-slide-toggle
+
+                                name='sldRecurring'
+                                [(ngModel)]="availibilityBlock.recurring" required #sldRecurring="ngModel">
+                        </md-slide-toggle>
+
+                    </div>
+                </div>
+            </div>
+
+            <section class="actions">
+            </section>
+            <section>
+                <button name="add_blockout"
+                        (click)="addBlockouts(user_blockout_form)"> SAVE
+                </button>
+
+            </section>
+        </form>
+    </main>
+</div>
