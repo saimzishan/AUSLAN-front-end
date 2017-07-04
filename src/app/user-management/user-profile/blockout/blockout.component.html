@@ -84,7 +84,7 @@
                         <select [(ngModel)]="availabilityBlock.frequency" name = "availabilityBlock_frequency"
                                 #availabilityBlock_frequency="ngModel" required
                                 aria-label="A">
-                            <option *ngFor="let frequency_name of ['Daily', 'Weekly', 'Biweekly', 'Every 4 weeks']" [value]="frequency_name">{{frequency_name}}</option>
+                            <option *ngFor="let frequency_name of ['daily', 'weekly', 'biweekly', 'every 4 weeks']" [value]="frequency_name">{{frequency_name.toUpperCase()}}</option>
 
                         </select>
 
