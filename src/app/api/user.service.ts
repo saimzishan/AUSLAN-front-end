@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Headers, RequestOptions} from '@angular/http';
-import {IndividualClient, Interpreter, OrganisationalRepresentative, User} from '../shared/model/user.entity';
+import {AvailibilityBlock, IndividualClient, Interpreter, OrganisationalRepresentative, User} from '../shared/model/user.entity';
 import {ROLE} from '../shared/model/role.enum';
 import {GLOBAL} from '../shared/global';
 import { Observable } from 'rxjs/Observable';
@@ -235,6 +235,21 @@ export class UserService extends ApiService {
 
         return this.http
             .patch(GLOBAL.USER_API + '/' + userID + '/update_password' ,
+                JSON.stringify(obj) , options) // Better add verify in path
+            .catch((err) => { return Observable.throw(err); });
+    }
+
+    /*
+    * The api should add the blockout for interpreter
+    */
+    addBlockout(userID: number, availibilityBlock: AvailibilityBlock) {
+        let headers = new Headers({'Accept': 'application/json',
+            'Content-Type': 'application/json'});
+        let options = new RequestOptions({ headers: headers });
+        let obj = { 'availability_block': availibilityBlock };
+
+        return this.http
+            .post(GLOBAL.USER_API_ENDPOINT + '/interpreters/' + userID + '/availability_blocks' ,
                 JSON.stringify(obj) , options) // Better add verify in path
             .catch((err) => { return Observable.throw(err); });
     }

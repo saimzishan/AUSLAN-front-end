@@ -63,6 +63,7 @@ import {IndClientComponent} from './ui/ind-client/ind-client.component';
 import {BillingAccountComponent} from './ui/billing-account/billing-account.component';
 import {AccountantComponent} from './ui/accountant/accountant.component';
 import {PreComponent} from './register/pre/pre.component';
+import {BlockoutComponent} from './user-management/user-profile/blockout/blockout.component';
 
 describe('AppComponent', () => {
   beforeEach(() => {
@@ -75,7 +76,7 @@ describe('AppComponent', () => {
         EnumValPipe, HeaderComponent, SpacerPipe,
         NotFoundComponent, RegisterComponent, ResetComponent, VerifyComponent,
         BookingComponent, PrettyIDPipe,
-        BookingDetailComponent,
+        BookingDetailComponent, BlockoutComponent,
         SpinnerComponent, OrgRepComponent, InterpreterComponent, AddressComponent,
           IndClientComponent, BillingAccountComponent, AccountantComponent, PreComponent
 

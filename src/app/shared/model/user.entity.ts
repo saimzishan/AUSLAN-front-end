@@ -317,6 +317,8 @@ export class Administrator extends User {
 * "date_of_birth":"2017-08-31"}}
  */
 export class Interpreter extends User {
+
+
   public naati_id: string;
   public naati_validity_start_date: string;
   public naati_validity_end_date: string;
@@ -331,11 +333,19 @@ export class Interpreter extends User {
   public location_pref = 'VIC';
   public comm_pref = 'SMS AND EMAIL';
   public assignments_attributes = [];
+  public availability_blocks: Array<AvailibilityBlock> = [];
   get user_type() {
     return 'Interpreter';
   }
 
-  /*
-  *
-  * */
+
+}
+
+export class AvailibilityBlock {
+  public name = '';
+  public start_time = '';
+  public end_time = '';
+  public recurring = false;
+  public frequency = '';
+  public booking_id = -1;
 }

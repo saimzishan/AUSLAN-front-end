@@ -103,7 +103,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy, OnChanges {
     this.bookingModel.deaf_person.last_name = this.currentUserIsClient === 'true' ? GLOBAL.currentUser.last_name : '';
     this.bookingModel.deaf_person.email = this.currentUserIsClient === 'true' ? GLOBAL.currentUser.email : '';
     this.bookingModel.deaf_person.mobile_number = this.currentUserIsClient === 'true' ? GLOBAL.currentUser.mobile : '';
-    this.bookingModel.deaf_person.phone_number = this.currentUserIsClient === 'true' ? GLOBAL.currentUser.phone : '';
   }
 
   public onSelectionChange() {
@@ -115,8 +114,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy, OnChanges {
         this.currentUserIsContact === 'true' ? GLOBAL.currentUser.email : '';
     this.bookingModel.primaryContact.mobile_number =
         this.currentUserIsContact === 'true' ? GLOBAL.currentUser.mobile : '';
-    this.bookingModel.primaryContact.phone_number =
-        this.currentUserIsContact === 'true' ? GLOBAL.currentUser.phone : '';
   }
   /*
     Calling this method will create a new booking

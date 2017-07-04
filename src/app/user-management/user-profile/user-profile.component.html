@@ -48,11 +48,13 @@
                       <span>Minimum 6 digits required.</span>!</span>
           </div>
         </div>
-        <div class="medium-6 columns">
+        <div *ngIf="userModel.type === 'IndividualClient' || userModel.type === 'OrganisationalRepresentative'" class="medium-6 columns">
           <div class="form-field">
-            <label>PHONE </label>
+            <label>PHONE * </label>
             <input type="tel" placeholder="" [(ngModel)]="userModel.phone" name="phone" #phone="ngModel" required>
-
+            <span *ngIf="phone.touched && !phone.errors?.required;" class="inline-icon inline-icon-valid valid"></span>
+            <span *ngIf="phone.touched && phone.errors?.required;" class="inline-icon error">
+                      <span>Minimum 6 digits required.</span>!</span>
           </div>
         </div>
 
