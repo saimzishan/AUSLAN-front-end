@@ -12,6 +12,34 @@ import {DatePipe} from '@angular/common';
 })
 export class InterpreterComponent  implements  OnInit {
   @Input() userModel: Interpreter;
+  updateCalendar = false;
+  calendarOptions: Object = {
+    height: 'parent',
+    fixedWeekCount : false,
+    defaultDate: '2016-09-12',
+    header: {
+      left: 'prev,next today',
+      center: 'title',
+
+      right: 'listDay,listWeek,month'
+    },
+
+    // customize the button names,
+    // otherwise they'd all just say "list"
+    views: {
+      listDay: { buttonText: 'list day' },
+      listWeek: { buttonText: 'list week' }
+    },
+
+    defaultView: 'listWeek',
+    navLinks: true, // can click day/week names to navigate views
+
+    editable: true,
+    eventLimit: true, // allow "more" link when too many events
+    events: [
+
+    ]
+  };
 
   ngOnInit() {
     let d = new DatePipe('en-us');
@@ -24,5 +52,14 @@ export class InterpreterComponent  implements  OnInit {
 
     delete this.userModel.assignments_attributes;
     delete this.userModel.password;
+
+    for (let avail_block of this.userModel.availability_blocks) {
+      this.calendarOptions['events'].push({title: avail_block.name,
+        start: avail_block.start_time, end: avail_block.end_time,
+      id: avail_block.id, booking_id: avail_block.booking_id, recurring: avail_block.recurring,
+        frequency: avail_block.frequency});
+    }
+    this.updateCalendar = true;
+
   }
 }

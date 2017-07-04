@@ -334,6 +334,7 @@ export class Interpreter extends User {
   public comm_pref = 'SMS AND EMAIL';
   public assignments_attributes = [];
   public availability_blocks: Array<AvailabilityBlock> = [];
+
   get user_type() {
     return 'Interpreter';
   }
@@ -342,6 +343,7 @@ export class Interpreter extends User {
 }
 
 export class AvailabilityBlock {
+  public id = -1;
   public name = '';
   public start_time = '';
   public end_time = '';

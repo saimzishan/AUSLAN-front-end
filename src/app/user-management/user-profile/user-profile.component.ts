@@ -69,7 +69,7 @@ export class UserProfileComponent implements OnInit {
 
                     let e = errors.json();
                     this.notificationServiceBus.launchNotification(true, errors.statusText + ' '
-                        + JSON.stringify(e.errors).replace(/]|[[]/g, '').replace(/({|})/g, ''));
+                        + JSON.stringify(e || e.errors).replace(/]|[[]/g, '').replace(/({|})/g, ''));
                 });
     }
 
