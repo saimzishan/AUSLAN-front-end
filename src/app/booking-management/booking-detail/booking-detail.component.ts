@@ -34,7 +34,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy, OnChanges {
 
   private sub: any;
   public uploader: FileUploader = new FileUploader({url: ''});
-  public hasBaseDropZoneOver = false;
   bookingModel: Booking;
   standardInvoice: true;
   maximumFileSizeInBytes = 2 * 1000 * 1000;
