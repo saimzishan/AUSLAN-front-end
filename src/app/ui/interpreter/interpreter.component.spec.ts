@@ -7,6 +7,7 @@ import {AddressComponent} from '../address/address.component';
 import { Interpreter} from '../../shared/model/user.entity';
 import {MaterialModule} from '@angular/material';
 import {BillingAccountComponent} from '../billing-account/billing-account.component';
+import {CalendarModule} from 'ap-angular2-fullcalendar';
 
 describe('InterpreterComponent', () => {
   let component: InterpreterComponent;
@@ -15,7 +16,7 @@ describe('InterpreterComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ InterpreterComponent, AddressComponent, BillingAccountComponent ],
-      imports: [FormsModule, CustomFormsModule, MaterialModule]
+      imports: [FormsModule, CustomFormsModule, MaterialModule, CalendarModule]
     })
     .compileComponents();
   }));

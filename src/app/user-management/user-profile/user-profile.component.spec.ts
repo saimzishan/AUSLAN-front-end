@@ -22,6 +22,7 @@ import {BillingAccountComponent} from '../../ui/billing-account/billing-account.
 import {AddressComponent} from '../../ui/address/address.component';
 import {OrgRepComponent} from '../../ui/org-rep/org-rep.component';
 import {IndClientComponent} from '../../ui/ind-client/ind-client.component';
+import {CalendarModule} from 'ap-angular2-fullcalendar';
 
 describe('UserProfileComponent', () => {
   let component: UserProfileComponent;
@@ -36,7 +37,7 @@ describe('UserProfileComponent', () => {
          { provide: UserService, useClass: MockUserService}, { provide: AuthHttp, useClass: MockBackend},
         NotificationServiceBus,
         SpinnerService],
-        imports: [HttpModule, FormsModule, MaterialModule, RouterTestingModule, CustomFormsModule, BrowserAnimationsModule]
+        imports: [HttpModule, CalendarModule, FormsModule, MaterialModule, RouterTestingModule, CustomFormsModule, BrowserAnimationsModule]
     })
     .compileComponents();
   }));

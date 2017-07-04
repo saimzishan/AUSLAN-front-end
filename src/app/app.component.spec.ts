@@ -64,6 +64,7 @@ import {BillingAccountComponent} from './ui/billing-account/billing-account.comp
 import {AccountantComponent} from './ui/accountant/accountant.component';
 import {PreComponent} from './register/pre/pre.component';
 import {BlockoutComponent} from './user-management/user-profile/blockout/blockout.component';
+import {CalendarModule} from 'ap-angular2-fullcalendar';
 
 describe('AppComponent', () => {
   beforeEach(() => {
@@ -83,7 +84,7 @@ describe('AppComponent', () => {
       ],
       imports: [CustomFormsModule, FileuploaderModule, RouterTestingModule, Md2Module.forRoot(),
       MaterialModule, FormsModule, SimpleNotificationsModule.forRoot(), MobileFooterModule,
-        HttpModule
+        HttpModule, CalendarModule
       ],  providers: [ NotificationServiceBus,
          UserNameService, Title, SpinnerService, UserService, {provide: APP_BASE_HREF, useValue : '/' }, {
           provide: AuthHttp,

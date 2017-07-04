@@ -118,7 +118,7 @@ export class Booking {
                 data.billing_account_attributes.primary_contact_phone_number;
 
             this.client.organisation_primary_contact.email =
-                data.billing_account_attributes.primary_contact_email
+                data.billing_account_attributes.primary_contact_email;
 
 
             this.client.organisation_billing_account.external_reference =
