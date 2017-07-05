@@ -157,3 +157,5 @@
 <ng-container *ngIf="updateCalendar">
 <angular2-fullcalendar [options]="calendarOptions"></angular2-fullcalendar>
 </ng-container>
+<button anme="modify_blockouts" [routerLink]="['/user-management/',block_outID,'block_out']"
+  > {{block_outID === 0 ? 'Add Blockout' : 'Modify Blockout'}}</button>

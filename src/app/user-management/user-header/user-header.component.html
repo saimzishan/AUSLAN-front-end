@@ -6,10 +6,6 @@
 				   [ngClass]="{'active':  isActiveLink(linkName.change_pass)}"
 				   (click)="setActiveLink( linkName.change_pass)" >Change Password</a>
 
-		<a *ngIf="canShowLink('block_out')" id="lnkProfileBlockout" [routerLink]="['/user-management/','block_out']"
-		   [ngClass]="{'active':  isActiveLink(linkName.block_out)}"
-		   (click)="setActiveLink( linkName.block_out)" > Add Blockout</a>
-
 	</section>
 			<section>
 				<a id="lnkSettings" *ngIf="canShowLink('user-management')"  [routerLink]="['/user-management']"

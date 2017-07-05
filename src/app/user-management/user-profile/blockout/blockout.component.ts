@@ -1,23 +1,50 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {AvailabilityBlock, Interpreter} from '../../../shared/model/user.entity';
 import {FormGroup} from '@angular/forms';
 import {SpinnerService} from '../../../spinner/spinner.service';
 import {NotificationServiceBus} from '../../../notification/notification.service';
 import {UserService} from '../../../api/user.service';
 import {GLOBAL} from '../../../shared/global';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-blockout',
   templateUrl: './blockout.component.html',
   styleUrls: ['./blockout.component.css']
 })
-export class BlockoutComponent {
-  availabilityBlock: AvailabilityBlock = new AvailabilityBlock();
+export class BlockoutComponent implements  OnDestroy, OnInit {
+  availabilityBlock: AvailabilityBlock;
+  sub;
+  interpreter: Interpreter;
+    param_id: number;
   constructor(public userDataService: UserService,
               public notificationServiceBus: NotificationServiceBus,
-              public spinnerService: SpinnerService) {
+              public spinnerService: SpinnerService,
+              private route: ActivatedRoute) {
+
 
   }
+
+    ngOnInit() {
+        this.interpreter = Boolean(GLOBAL.currentUser) &&
+        GLOBAL.currentUser instanceof Interpreter ?
+            (<Interpreter>GLOBAL.currentUser) : null;
+
+        this.sub = this.route.params.subscribe(params => {
+            let param_id = params['id'] || '';
+            if (Boolean(param_id) && parseInt(param_id, 10) > 0) {
+                this.param_id = parseInt(param_id, 10);
+                this.interpreter.availability_blocks
+                    .filter( a => a.id === this.param_id  ).map( a => this.availabilityBlock = a );
+            } else {
+                this.availabilityBlock = new AvailabilityBlock();
+            }
+        });
+    }
+
+    ngOnDestroy() {
+        return this.sub && this.sub.unsubscribe();
+    }
 
   addBlockouts(form: FormGroup) {
     if (form.invalid) {
