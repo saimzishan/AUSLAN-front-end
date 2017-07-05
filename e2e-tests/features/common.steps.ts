@@ -44,6 +44,8 @@ defineSupportCode(({Given}) => {
     let return_command = '';
     let userType = user_type(data.type);
 
+    //delete the key type
+    delete data.type;
     // const user_json = json_for_user(data);
 
     return_command += 'a = ' + userType + '.create(' + JSON.stringify(data);
@@ -107,6 +109,9 @@ defineSupportCode(({Given}) => {
         valid_user = new Organisation('orgrepn@auslan.com.au', 'Abcd#1234');
         break;
     }
+    valid_user.first_name = 'MOH';
+    valid_user.last_name = 'JAY';
+    valid_user.mobile_num = '123123123';
     return { type: chosen_type, user: valid_user };
   }
 
@@ -118,11 +123,17 @@ defineSupportCode(({Given}) => {
     const extend_email = user_type(type).toLowerCase();
     let email = 'mohjay_test_' + extend_email + /*( (i === 0) ? '' :*/ i.toString() /*)*/ + '@auslan.com.au';
     let password = 'Abcd#1234';
+    let firstName = 'MOH';
+    let lastName = 'JAY';
+    let mobileNum = '123123123';
     console.log(email);
 
     if (typeof user !== 'undefined') {
       email = user.email;
       password = user.pass;
+      firstName = user.first_name;
+      lastName = user.last_name;
+      mobileNum = user.mobile_num;
     }
 
     // Similar for every user
@@ -130,9 +141,9 @@ defineSupportCode(({Given}) => {
     data_to_sent['type'] = type;
     data_to_sent['email'] = email;
     data_to_sent['password'] = password;
-    data_to_sent['first_name'] = 'MOH';
-    data_to_sent['last_name'] = 'JAY';
-    data_to_sent['mobile'] = '123123123';
+    data_to_sent['first_name'] = firstName;
+    data_to_sent['last_name'] = lastName;
+    data_to_sent['mobile'] = mobileNum;
     data_to_sent['verified'] = verified;
     let billing_account_attributes_fields = {};
     let billing_address_attributes_fields = {};
@@ -300,8 +311,25 @@ defineSupportCode(({Given}) => {
   async function onBookinManagementScreen(): Promise<void> {
     // isLoaded();
     // console.log(page.currentPath());
-    await browser.driver.sleep(2000); // waiting for the elements to be loaded
+    // await browser.driver.sleep(2000); // waiting for the elements to be loaded
     // console.log('It is here!');
+    await browser.waitForAngular();
     expect(page.currentPath()).to.eventually.contain('booking-management');
+  }
+
+
+  //    MOBILE
+  Given(/^I use mobile phone$/, useMobilePhone);
+  async function useMobilePhone(): Promise<void> {
+    browser.manage().window().setSize(600, 800);
+  }
+
+  Given(/^I am on the mobile login screen without a hero picture$/, onLoginScreenNoHero);
+  async function onLoginScreenNoHero(): Promise<void> {
+    let aside = $('aside');
+    await aside.getSize().then((size) => {
+      expect(size.width).to.eql(600);
+      expect(size.height).to.eql(800);
+    })
   }
 });

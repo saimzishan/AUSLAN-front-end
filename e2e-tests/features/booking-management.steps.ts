@@ -44,7 +44,7 @@ defineSupportCode(({Given, Then, When }) => {
 
     When(/^I click on 'New Booking'$/, newBookingClick);
     async function newBookingClick(): Promise<void> {
-        await browser.driver.sleep(5000);
+        await browser.waitForAngular();
         let newUserBtn = page.getElementByID('lnkNewBooking');
         let click = await newUserBtn.click();
     }
@@ -192,9 +192,72 @@ defineSupportCode(({Given, Then, When }) => {
                 // }
             }
         }
-        await browser.driver.sleep(2000);
+        // await browser.driver.sleep(2000);
         // await all_required_input_fields.then((input_list) => {
         //
         // })
+    }
+
+    // --------------------------------- AUTO POPULATE CLIENT DETAILS
+    When(/^I specify i am the client of this booking$/, specifyAsClientOfBooking);
+    async function specifyAsClientOfBooking(): Promise<void> {
+        const clientOptionLabel = page.getElementByCSSandText('.text-center', 'CLIENT DETAILS');
+        const divClientDetails = page.getNextSibling(clientOptionLabel, 'div');
+        const clientRadioGroup = page.getElementInsideByTag(divClientDetails, 'md-radio-group');
+        let all_radio_btn_in_group = await page.getAllByTagNameInElement(clientRadioGroup, 'md-radio-button');
+        all_radio_btn_in_group[YES].click();
+    }
+
+    Then(/^The booking form will be automatically populated with the details.$/, populatedUserDetails);
+    async function populatedUserDetails(): Promise<void> {
+        const clientOptionLabel = page.getElementByCSSandText('.text-center', 'CLIENT DETAILS');
+        const divClientDetails = page.getNextSibling(clientOptionLabel, 'div');
+        const all_input_in_div = page.getAllByTagNameInElement(divClientDetails, 'input');
+        let all_filled = true;
+        for (let i = 0; i < all_input_in_div.length; i++) {
+            const single_input = all_input_in_div[i];
+            all_filled = false;
+            await single_input.getAttribute('ng-reflect-model').then((val) => {
+                all_filled = true;
+            });
+        }
+        expect(all_filled).to.equal(true);
+        // expect(btn.isEnabled()).to.eventually.to.equal(true);
+    }
+
+    //    CANCEL BOOKING
+    When(/^I press '(.*)'$/, pressButtonOnNewBookingScreen);
+    async function pressButtonOnNewBookingScreen(buttonLabel: string): Promise<void> {
+        const button = page.getButtonByText(buttonLabel);
+        await button.click();
+    }
+
+    Then(/^I am back on booking page$/, backToBookinManagementScreen);
+    async function backToBookinManagementScreen(): Promise<void> {
+        await browser.waitForAngular();
+        expect(page.currentPath()).to.eventually.contain('booking-management');
+    }
+
+    // ---------------------------------   INDIVIDUAL BOOKING PAGE
+    When(/^I click on an individual booking$/, clickOnIndividualBooking);
+    async function clickOnIndividualBooking(): Promise<void> {
+        const bookingRows = await $$('tbody tr');
+        if (bookingRows.length > 1) {
+            let one_row = bookingRows[0];
+            await one_row.click();
+        }
+    }
+
+    Then(/^I am on the individual booking page$/, onIndividualBookingScreen);
+    async function onIndividualBookingScreen(): Promise<void> {
+        await browser.waitForAngular();
+        expect(page.currentPath()).to.eventually.contain('booking-job');
+    }
+
+    Then(/^I can see a list of (.*) (.*) interpreters$/, checkListofInterpreterIndividualBookingScreen);
+    async function checkListofInterpreterIndividualBookingScreen(num_of_user: string, verified: string): Promise<void> {
+        const interpreterRows = await $$('section[id=invited-interpreters] tbody tr');
+        const interpereter_num = interpreterRows.length;
+        expect(interpereter_num).to.eql(parseInt(num_of_user, 10));
     }
 });

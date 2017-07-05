@@ -45,7 +45,7 @@ Feature: Booking Management
 #    Then It will be displayed in the cell
 
 ###############################    Save without all mandatory fields
-  @runThis
+  @ignoreThis
   Scenario: Can't save without mandatory fields are not filled
 #    Given that I am on the new booking page as a Administrator
     Given I exist as an Administrator
@@ -59,3 +59,118 @@ Feature: Booking Management
 #    Then I am show with red explanation mark
 #    When I filled those missing fields
 #    Then Then the red explaination mark will be disappeared
+
+#  Auto Populated
+  @ignoreThis
+  Scenario: Auto populate details when specify as the client of booking
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on the bookings page
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    When I specify i am the client of this booking
+    Then The booking form will be automatically populated with the details.
+
+  @ignoreThis
+  Scenario: Auto populate details when specify as the client of booking
+    Given I exist as an Booking Officer
+    And I sign in with valid Administrator credentials
+    And I am on the bookings page
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    When I specify i am the client of this booking
+    Then The booking form will be automatically populated with the details.
+
+  @ignoreThis
+  Scenario: Auto populate details when specify as the client of booking
+    Given I exist as an Organisational Representative
+    And I sign in with valid Administrator credentials
+    And I am on the bookings page
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    When I specify i am the client of this booking
+    Then The booking form will be automatically populated with the details.
+
+  @ignoreThis
+  Scenario: Auto populate details when specify as the client of booking
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on the bookings page
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    When I specify i am the client of this booking
+    Then The booking form will be automatically populated with the details.
+
+  @ignoreThis
+  Scenario: Popup when cancel after fill in one fields.
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on the bookings page
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    And I filled in one field
+    When I press 'CANCEL'
+    Then A pop-up will display which will aks me if im sure to cancel
+
+#    Can cancel
+  @ignoreThis
+  Scenario: Can cancel booking and return to booking screen
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on the bookings page
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    When I press 'CANCEL'
+    Then I am back on booking page
+
+  @ignoreThis
+  Scenario: Can cancel booking and return to booking screen
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    And I am on the bookings page
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    When I press 'CANCEL'
+    Then I am back on booking page
+
+  @ignoreThis
+  Scenario: Can cancel booking and return to booking screen
+    Given I exist as an Client
+    And I sign in with valid Client credentials
+    And I am on the bookings page
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    When I press 'CANCEL'
+    Then I am back on booking page
+
+  @ignoreThis
+  Scenario: Can cancel booking and return to booking screen
+    Given I exist as an Organisational Representative
+    And I sign in with valid Organisational Representative credentials
+    And I am on the bookings page
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    When I press 'CANCEL'
+    Then I am back on booking page
+
+#  Only see the verified interpreter
+  @ignoreThis
+  Scenario: Can check the list of intepreter in booking
+    Given I exist as an Booking Officer
+#    And There is 1 active Interpreter
+#    And There is 1 inactive Interpreter
+    And I sign in with valid Booking Officer credentials
+    And I am on the bookings page
+    When I click on an individual booking
+    Then I am on the individual booking page
+    And I can see a list of 1 verified interpreters
+#    And I don't see 1 unverified interpreters
+
+#  On mobile
+  @runThis
+  Scenario: Interpreter login into using mobile
+    Given I use mobile phone
+    And I exist as an Interpreter
+    And I am on the mobile login screen without a hero picture
+    And I sign in with valid Interpreter credentials
+    And I am on the bookings page
