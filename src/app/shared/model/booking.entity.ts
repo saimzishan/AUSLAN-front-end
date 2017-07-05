@@ -33,7 +33,7 @@ export class Booking {
         this.venue.street_name = '';
         this.venue.street_number = '';
         this.requested_by.first_name = '';
-        this.requested_by.last_name = ',';
+        this.requested_by.last_name = '';
         this.client.organisation_primary_contact.first_name = '';
         this.client.organisation_primary_contact.last_name = '';
         this.client.organisation_primary_contact.phone_number = '';

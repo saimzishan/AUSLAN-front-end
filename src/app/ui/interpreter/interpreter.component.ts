@@ -4,6 +4,7 @@ import {Address} from '../../shared/model/venue.entity';
 import {AddressComponent} from '../address/address.component';
 import {GLOBAL} from '../../shared/global';
 import {DatePipe} from '@angular/common';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-interpreter',
@@ -13,7 +14,6 @@ import {DatePipe} from '@angular/common';
 export class InterpreterComponent implements OnInit {
     @Input() userModel: Interpreter;
     updateCalendar = false;
-    block_outID = 0;
     calendarOptions: Object = {
         height: 'parent',
         fixedWeekCount: false,
@@ -33,12 +33,17 @@ export class InterpreterComponent implements OnInit {
         defaultView: 'month',
         navLinks: true, // can click day/week names to navigate views
         eventClick: (calEvent, jsEvent, view) => {
-            this.block_outID =  calEvent.id;
+            this.router.navigate(['/user-management/', calEvent.id, 'block_out']);
         },
         editable: true,
         eventLimit: true, // allow "more" link when too many events
         events: []
     };
+
+    constructor(private router: Router) {
+
+
+    }
 
     ngOnInit() {
         let d = new DatePipe('en-us');
@@ -52,7 +57,7 @@ export class InterpreterComponent implements OnInit {
         delete this.userModel.assignments_attributes;
         delete this.userModel.password;
 
-        for (let avail_block of this.userModel.availability_blocks) {
+        for (let avail_block of this.userModel.availability_blocks_attributes ) {
             this.calendarOptions['events'].push({
                 title: avail_block.name,
                 start: avail_block.start_time, end: avail_block.end_time,

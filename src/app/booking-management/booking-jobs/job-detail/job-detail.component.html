@@ -86,20 +86,18 @@
                     <td data-title="TYPE OF JOB">{{selectedBookingModel.nature_of_appointment}}</td>
                     <td data-title="People">{{selectedBookingModel.venue.expected_attendance}}</td>
                     <td data-title="SPECIAL INSTRUCTIONS" class="new-line">{{selectedBookingModel.notes}}</td>
-                    <!-- <td align="center" data-title="Attached">
+                    <td align="center" data-title="Attached">
                                 <ul class="dropdown menu custom" data-dropdown-menu>
                                     <li>
                                         <a href="#" class="icon-attach"></a>
                                         <ul class="menu">
-                                            <li><a href="#"><i class="icon-attach"></i> Attachments.doc</a></li>
-                                            <li><a href="#"><i class="icon-attach"></i> Attachments.xls</a></li>
+                                            <li *ngFor="let attachment of selectedBookingModel.documents_attributes"><a href="{{attachment.url}}"><i class="icon-attach"></i> {{attachment.file_name}}</a></li>
                                         </ul>
                                     </li>
                                 </ul>
                             </td>
                             <td data-title="Date Added">61 days (27 Jan)</td>
                             <td data-title="Updated"><span class="underline">02-06 TS<br>7:15 A</span></td>
-                            -->
                 </tr>
                 </tbody>
             </table>

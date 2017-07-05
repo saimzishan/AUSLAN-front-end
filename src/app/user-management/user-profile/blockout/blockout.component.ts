@@ -34,7 +34,7 @@ export class BlockoutComponent implements  OnDestroy, OnInit {
             let param_id = params['id'] || '';
             if (Boolean(param_id) && parseInt(param_id, 10) > 0) {
                 this.param_id = parseInt(param_id, 10);
-                this.interpreter.availability_blocks
+                this.interpreter.availability_blocks_attributes
                     .filter( a => a.id === this.param_id  ).map( a => this.availabilityBlock = a );
             } else {
                 this.availabilityBlock = new AvailabilityBlock();
