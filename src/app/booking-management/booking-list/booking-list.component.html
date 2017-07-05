@@ -91,16 +91,26 @@
                             <li>
                                 <a href="javascript:void(0)"><i class="icon-more-icon"></i></a>
                                 <ul class="menu right-side green">
-                                    <li><a [routerLink]="['/booking-management/' + booking.id + '/job-detail']"><i class="icon-check-mobile"></i> Accept</a></li>
-                                    <li><a [routerLink]="['/booking-management/' + booking.id + '/job-detail']"><i class="icon-help"></i> Tentative</a></li>
-                                    <li><a [routerLink]="['/booking-management/' + booking.id + '/job-detail']"><i class="icon-decline"></i> Decline</a></li>
+                                    <li><a [routerLink]="['/booking-management/' + booking.id + '/job-detail']"><i
+                                            class="icon-check-mobile"></i> Accept</a></li>
+                                    <li><a [routerLink]="['/booking-management/' + booking.id + '/job-detail']"><i
+                                            class="icon-help"></i> Tentative</a></li>
+                                    <li><a [routerLink]="['/booking-management/' + booking.id + '/job-detail']"><i
+                                            class="icon-decline"></i> Decline</a></li>
                                 </ul>
                             </li>
                         </ul>
                     </div>
 
                 </td>
-                <td class="text-center"><i class="status status-ready-to-process"></i></td>
+                <td class="text-center">
+                    <i class="status"
+                            [ngClass]="{
+    'icon-check-green': booking.status === 'green1',
+    'status-allocated': booking.status === 'green',
+   'status-ready-to-process': booking.status === 'red'
+   }"></i>
+                </td>
                 <td style="text-transform: capitalize">{{stateToString(booking.state)}}</td>
                 <td>
                     <div class="job-date">
@@ -110,7 +120,7 @@
 										{{booking.venue.end_time_iso | date:'shortTime'}}</span><span>{{booking.venue.start_time_iso | date:'EEE d MMM yy'}}</span></span>
                                                                             </span>
 
-                        <i *ngIf="isCurrentUserInvitedInterpreter(booking.interpreters)" class= "icon-requested"></i>
+                        <i *ngIf="isCurrentUserInvitedInterpreter(booking.interpreters)" class="icon-requested"></i>
                     </div>
                 </td>
                 <td>Melbourne University</td>
@@ -122,13 +132,14 @@
                                     <b *ngIf="isCurrentUser(user.id); else sim_user_Block">
                                         {{user?.first_name  + ' ' + user?.last_name}}
                                     </b>
-                                    <ng-template #sim_user_Block>{{user?.first_name  + ' ' + user?.last_name}}</ng-template>
+                                    <ng-template
+                                            #sim_user_Block>{{user?.first_name  + ' ' + user?.last_name}}</ng-template>
 
 									<br/>
 								</span>
                     </ng-container>
 
-                    <span  *ngIf="booking.interpreters.length <1 ;">To be filled</span>
+                    <span *ngIf="booking.interpreters.length <1 ;">To be filled</span>
                 </td>
                 <td><a href="javascript:void(0)" class="attach"><i class="icon-attach"></i></a>
                     {{booking.raw_nature_of_appointment}}
@@ -140,9 +151,12 @@
                         <li>
                             <a href="javascript:void(0)"><i class="icon-more-icon"></i></a>
                             <ul class="menu right-side green">
-                                <li><a [routerLink]="['/booking-management/' + booking.id + '/job-detail']" ><i class="icon-check-mobile"></i> Accept</a></li>
-                                <li><a [routerLink]="['/booking-management/' + booking.id + '/job-detail']"><i class="icon-help"></i> Tentative</a></li>
-                                <li><a [routerLink]="['/booking-management/' + booking.id + '/job-detail']"><i class="icon-decline"></i> Decline</a></li>
+                                <li><a [routerLink]="['/booking-management/' + booking.id + '/job-detail']"><i
+                                        class="icon-check-mobile"></i> Accept</a></li>
+                                <li><a [routerLink]="['/booking-management/' + booking.id + '/job-detail']"><i
+                                        class="icon-help"></i> Tentative</a></li>
+                                <li><a [routerLink]="['/booking-management/' + booking.id + '/job-detail']"><i
+                                        class="icon-decline"></i> Decline</a></li>
                             </ul>
                         </li>
                     </ul>

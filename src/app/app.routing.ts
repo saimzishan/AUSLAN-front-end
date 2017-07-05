@@ -21,6 +21,7 @@ import {SkillMatrixComponent} from './user-management/skill-matrix/skill-matrix.
 import { InterpreterComponent } from './ui/interpreter/interpreter.component';
 import {UserPasswordComponent} from './user-management/user-password/user-password.component';
 import {PreComponent} from './register/pre/pre.component';
+import {BlockoutComponent} from './user-management/user-profile/blockout/blockout.component';
 
 const appRoutes: Routes = [
   { path: 'demo', component: OrgRepComponent },
@@ -29,6 +30,7 @@ const appRoutes: Routes = [
   { path: 'user-management/profile', component: UserProfileComponent, canActivate: [AuthGuard]},
   { path: 'user-management/secure_pass', component: UserPasswordComponent, canActivate: [AuthGuard]},
   { path: 'user-management/:id/skills', component: SkillMatrixComponent, canActivate: [AuthGuard]},
+  { path: 'user-management/block_out', component: BlockoutComponent, canActivate: [AuthGuard]},
   { path: 'booking-management', component: BookingComponent, canActivate: [AuthGuard]},
   { path: 'booking-management/:id/create-booking', component: BookingDetailComponent, canActivate: [AuthGuard]},
   { path: 'booking-management/create-booking', component: BookingDetailComponent, canActivate: [AuthGuard]},

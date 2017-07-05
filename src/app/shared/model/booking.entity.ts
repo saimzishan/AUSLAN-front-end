@@ -11,6 +11,7 @@ export class Booking {
     public requested_by: Contact = new Contact();
     public last_updated: Date;
     public update_by: string;
+    public status; string;
     public deaf_person: DEAFContact = new DEAFContact();
     public raw_nature_of_appointment: string;
     public nature_of_appointment: BOOKING_NATURE;
@@ -32,7 +33,7 @@ export class Booking {
         this.venue.street_name = '';
         this.venue.street_number = '';
         this.requested_by.first_name = '';
-        this.requested_by.last_name = '';
+        this.requested_by.last_name = ',';
         this.client.organisation_primary_contact.first_name = '';
         this.client.organisation_primary_contact.last_name = '';
         this.client.organisation_primary_contact.phone_number = '';
@@ -76,6 +77,7 @@ export class Booking {
         this.id = data.id;
         this.venue.expected_attendance = data.number_of_people_attending;
         this.venue.title = data.venue || '';
+        this.status = data.status;
         this.venue.unit_number = data.address_attributes.unit_number || '';
         this.venue.street_number = data.address_attributes.street_number;
         this.venue.street_name = data.address_attributes.street_name;
@@ -88,6 +90,7 @@ export class Booking {
         this.requested_by.first_name = data.requested_by_first_name;
         this.requested_by.last_name = data.requested_by_last_name;
         this.primaryContact.first_name = data.contact_first_name;
+        this.primaryContact.email = data.contact_email;
         this.primaryContact.last_name = data.contact_last_name;
         this.primaryContact.phone_number = data.contact_phone_number;
         this.primaryContact.mobile_number = data.contact_mobile_number;
@@ -111,8 +114,12 @@ export class Booking {
             this.client.organisation_primary_contact.last_name =
                 data.billing_account_attributes.primary_contact_last_name;
 
+            this.client.organisation_primary_contact.phone_number =
+                data.billing_account_attributes.primary_contact_phone_number;
+
             this.client.organisation_primary_contact.email =
-                data.billing_account_attributes.email_address;
+                data.billing_account_attributes.primary_contact_email;
+
 
             this.client.organisation_billing_account.external_reference =
                 data.billing_account_attributes.external_reference;
@@ -136,6 +143,10 @@ export class Booking {
                 this.interpreters.push(int);
             }
         }
+        if (Boolean(data.documents_attributes)) {
+            this.documents_attributes = data.documents_attributes;
+        }
+
     }
 
     toJSON() {
@@ -147,18 +158,8 @@ export class Booking {
             typeof this.venue.parking_type === 'string' ? this.venue.parking_type : PARKING[this.venue.parking_type];
         let _expected_attendance = this.venue.expected_attendance < 0 ? 0 : this.venue.expected_attendance;
 
-        /*let _start_time: Date = new Date(this.venue.start_time_iso);
 
-        let d: Date = new Date(this.venue.start_time_iso);
-        let parts: string[] = this.venue.end_time_iso.match(/(\d+)\:(\d+)/);
-        let hours = /am/i.test(parts[3]) ? parseInt(parts[1], 10) : parseInt(parts[1], 10);
-        let minutes = parseInt(parts[2], 10);
-        d.setHours(hours);
-        d.setMinutes(minutes);
-        let _end_time: Date = d;
-        */
-
-        return new Object({
+        let o = new Object({
             id: this.id, state: _state,
             venue: this.venue.title, requested_by_first_name: this.requested_by.first_name,
             requested_by_last_name: this.requested_by.last_name,
@@ -169,6 +170,7 @@ export class Booking {
             contact_last_name: this.primaryContact.last_name,
             contact_phone_number: this.primaryContact.phone_number,
             contact_mobile_number: this.primaryContact.mobile_number,
+            contact_email: this.primaryContact.email,
             deaf_persons_first_name: this.deaf_person.first_name,
             deaf_persons_last_name: this.deaf_person.last_name, deaf_persons_mobile: this.deaf_person.mobile_number,
             deaf_persons_email: this.deaf_person.email, deaf_persons_eaf_no: this.deaf_person.eaf,
@@ -177,7 +179,8 @@ export class Booking {
             billing_account_attributes: {
                 primary_contact_first_name: this.client.organisation_primary_contact.first_name,
                 primary_contact_last_name: this.client.organisation_primary_contact.last_name,
-                email_address: this.client.organisation_primary_contact.email,
+                primary_contact_email: this.client.organisation_primary_contact.email,
+                primary_contact_phone_number: this.client.organisation_primary_contact.phone_number,
                 account_number: 'ABCD-1234',
                 preferred_billing_method_email: false,
                 external_reference: this.client.organisation_billing_account.external_reference,
@@ -189,7 +192,9 @@ export class Booking {
                 street_number: this.venue.street_number,
                 street_name: this.venue.street_name,
                 suburb: this.venue.suburb, state: this.venue.state, post_code: this.venue.post_code
-            }
+            },
+            documents_attributes: this.documents_attributes
         });
+        return o;
     }
 }

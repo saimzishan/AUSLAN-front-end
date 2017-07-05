@@ -1,4 +1,4 @@
-import {Component, AfterViewChecked, OnDestroy, OnChanges, Directive, SimpleChanges, OnInit} from '@angular/core';
+import {Component, AfterViewChecked, OnDestroy, OnChanges, Directive, SimpleChanges, OnInit, ViewContainerRef} from '@angular/core';
 import { Booking } from '../../shared/model/booking.entity';
 import { BookingService } from '../../api/booking.service';
 import { BA, BOOKING_NATURE } from '../../shared/model/booking-nature.enum';
@@ -14,8 +14,14 @@ import {FormGroup, NgForm} from '@angular/forms';
 import { FileUploader } from 'ng2-file-upload';
 
 import {Address} from '../../shared/model/venue.entity';
+import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
+import {OrganisationalRepresentative} from '../../shared/model/user.entity';
+import {PopupComponent} from '../../shared/popup/popup.component';
 
-const URL = 'https://evening-anchorage-3159.herokuapp.com/api/';
+
+const _ONE_HOUR = 1000 /*milliseconds*/
+    * 60 /*seconds*/
+    * 60 /*minutes*/;
 
 @Component({
   selector: 'app-booking-detail',
@@ -25,12 +31,13 @@ const URL = 'https://evening-anchorage-3159.herokuapp.com/api/';
 })
 export class BookingDetailComponent implements OnInit, OnDestroy, OnChanges {
 
+
   private sub: any;
-  public uploader: FileUploader = new FileUploader({url: URL});
-  public hasBaseDropZoneOver = false;
+  public uploader: FileUploader = new FileUploader({url: ''});
   bookingModel: Booking;
   standardInvoice: true;
   maximumFileSizeInBytes = 2 * 1000 * 1000;
+  dialogSub;
   appointment_types = Object.keys(BOOKING_NATURE).filter(value => value === BOOKING_NATURE[value]
   || BOOKING_NATURE[value].startsWith(value)).map(v => BOOKING_NATURE[v]) as string[];
 
@@ -39,11 +46,13 @@ export class BookingDetailComponent implements OnInit, OnDestroy, OnChanges {
   currentUserIsContact = 'true';
   currentUserIsClient = 'true';
   prefInterpreter: boolean;
+  dialogRef: MdDialogRef<any>;
 
   constructor(public bookingService: BookingService, private router: Router,
   private route: ActivatedRoute, private rolePermission: RolePermission,
     public notificationServiceBus: NotificationServiceBus, public spinnerService: SpinnerService,
-    private datePipe: DatePipe) {
+    private datePipe: DatePipe, public dialog: MdDialog,
+              public viewContainerRef: ViewContainerRef) {
           BA.loadItems();
 
     this.bookingModel = new Booking();
@@ -94,7 +103,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy, OnChanges {
     this.bookingModel.deaf_person.last_name = this.currentUserIsClient === 'true' ? GLOBAL.currentUser.last_name : '';
     this.bookingModel.deaf_person.email = this.currentUserIsClient === 'true' ? GLOBAL.currentUser.email : '';
     this.bookingModel.deaf_person.mobile_number = this.currentUserIsClient === 'true' ? GLOBAL.currentUser.mobile : '';
-    this.bookingModel.deaf_person.phone_number = this.currentUserIsClient === 'true' ? GLOBAL.currentUser.phone : '';
   }
 
   public onSelectionChange() {
@@ -106,8 +114,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy, OnChanges {
         this.currentUserIsContact === 'true' ? GLOBAL.currentUser.email : '';
     this.bookingModel.primaryContact.mobile_number =
         this.currentUserIsContact === 'true' ? GLOBAL.currentUser.mobile : '';
-    this.bookingModel.primaryContact.phone_number =
-        this.currentUserIsContact === 'true' ? GLOBAL.currentUser.phone : '';
   }
   /*
     Calling this method will create a new booking
@@ -118,31 +124,65 @@ export class BookingDetailComponent implements OnInit, OnDestroy, OnChanges {
       launchNotification(true, 'Kindly fill all the required (*) fields');
       return;
     }
+    if (this.isBookingTimeInNonStandardHours()) {
+      let config: MdDialogConfig = {
+        disableClose: true
+      };
+      config.viewContainerRef = this.viewContainerRef;
+      this.dialogRef = this.dialog.open(PopupComponent, config);
+      this.dialogRef.componentInstance.title = 'NON-STANDARD HOURS WARNING';
+      this.dialogRef.componentInstance.cancelTitle = 'BACK';
+      this.dialogRef.componentInstance.okTitle = 'CREATE';
+      this.dialogRef.componentInstance.popupMessage =
+              `Do you still want to create booking?`;
 
-    for ( let item of uploader.queue)
-    {
-      this.handleFileSelect(item);
+      this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
+
+        if (result) {
+          this.createBooking();
+        }
+      });
+    } else {
+      this.createBooking();
     }
+  }
 
+  isMoreInterpreterNeeded() {
+    let startDate = new Date (this.bookingModel.venue.start_time_iso);
+    let endDate = new Date (this.bookingModel.venue.end_time_iso);
+    let timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
 
+    return timeDiff > _ONE_HOUR; /* One hour */
+  }
+
+  private isBookingTimeInNonStandardHours() {
+    let startDate = new Date (this.bookingModel.venue.start_time_iso);
+    let endDate = new Date (this.bookingModel.venue.end_time_iso);
+
+    return startDate.getHours() < 6 || (
+        (endDate.getHours() === 20 && (endDate.getMinutes() > 0
+        || endDate.getSeconds() > 0) ) || endDate.getHours() > 20);
+  }
+
+  createBooking() {
     this.spinnerService.requestInProcess(true);
     this.bookingModel.state = BOOKING_STATUS.Requested; // res.data.status;
     this.bookingModel.clean(this.bookingModel.toJSON());
     this.bookingService.createBooking(this.bookingModel)
-      .subscribe((res: any) => {
-        if (res.status === 201 && res.data.id && 0 < res.data.id) {
-          this.bookingModel.id = res.data.id;
-          this.notificationServiceBus.launchNotification(false, 'The Booking has been created.');
-          let route = this.rolePermission.getDefaultRouteForCurrentUser();
-          this.router.navigate( [route] );
-        }
-        this.spinnerService.requestInProcess(false);
-      },
-      errors => {
-                this.spinnerService.requestInProcess(false);
-                let e = errors.json();
-                this.notificationServiceBus.launchNotification(true,
-                'Error occured on server side. ' + errors.statusText + ' ' + JSON.stringify(e.errors));
+        .subscribe((res: any) => {
+              if (res.status === 201 && res.data.id && 0 < res.data.id) {
+                this.bookingModel.id = res.data.id;
+                this.notificationServiceBus.launchNotification(false, 'The Booking has been created.');
+                let route = this.rolePermission.getDefaultRouteForCurrentUser();
+                this.router.navigate( [route] );
+              }
+              this.spinnerService.requestInProcess(false);
+            },
+            errors => {
+              this.spinnerService.requestInProcess(false);
+              let e = errors.json();
+              this.notificationServiceBus.launchNotification(true,
+                  'Error occured on server side. ' + errors.statusText + ' ' + JSON.stringify(e.errors));
             });
   }
 

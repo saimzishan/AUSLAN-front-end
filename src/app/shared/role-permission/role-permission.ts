@@ -13,6 +13,9 @@ export class RolePermission {
      */`{
     "default-route": "booking-management",
     "booking-officer":{
+    "not-allowed-routes": [
+    "block_out"
+    ],
         "routes-with-data-permissions": {
             "user-management": {
                 "administrator": "no-access"
@@ -20,6 +23,9 @@ export class RolePermission {
         }
     },
      "accountant":{
+      "not-allowed-routes": [
+    "block_out"
+    ],
         "routes-with-data-permissions": {
             "user-management": {
                 "administrator": "no-access",
@@ -45,7 +51,7 @@ export class RolePermission {
     },
     "organisational-representative": {
         "not-allowed-routes": [
-            "user-management",
+            "user-management", "block_out",
             "booking-job",  "job-details"
         ],
         "routes-with-data-permissions": {
@@ -59,7 +65,7 @@ export class RolePermission {
     "individual-client": {
         "not-allowed-routes": [
             "user-management",
-            "booking-job"
+            "booking-job", "block_out"
         ],
         "routes-with-data-permissions": {
             "booking-management": {
@@ -71,7 +77,9 @@ export class RolePermission {
         }
     },
     "administrator": {
-       
+       "not-allowed-routes": [
+         "block_out"
+        ]
     }
 }`;
     curr_role = '';

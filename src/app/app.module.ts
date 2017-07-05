@@ -66,6 +66,8 @@ import { UserPasswordComponent } from './user-management/user-password/user-pass
 import { PreComponent } from './register/pre/pre.component';
 import {FileUploadModule} from 'ng2-file-upload';
 import {HashLocationStrategy, Location, LocationStrategy} from '@angular/common';
+import { BlockoutComponent } from './user-management/user-profile/blockout/blockout.component';
+import {CalendarModule} from 'ap-angular2-fullcalendar';
 
 @NgModule({
   declarations: [
@@ -93,7 +95,7 @@ import {HashLocationStrategy, Location, LocationStrategy} from '@angular/common'
     UserProfileComponent, HyphenPipe, PrettyIDPipe, SpacerPipe,
     BookingJobsComponent, PopupComponent, JobDetailComponent, OrgRepComponent, IndClientComponent,
     InterpreterComponent, BillingAccountComponent,
-    SkillMatrixComponent, AddressComponent, AccountantComponent, UserPasswordComponent, PreComponent
+    SkillMatrixComponent, AddressComponent, AccountantComponent, UserPasswordComponent, PreComponent, BlockoutComponent
   ],
   entryComponents: [UserDetailComponent, PopupComponent],
   imports: [CustomFormsModule, routing, FileUploadModule,
@@ -101,7 +103,7 @@ import {HashLocationStrategy, Location, LocationStrategy} from '@angular/common'
     FormsModule, BrowserAnimationsModule,
     HttpModule, SimpleNotificationsModule.forRoot(),
     ReactiveFormsModule, Md2Module.forRoot(),
-    MaterialModule
+    MaterialModule, CalendarModule
   ],  providers: [DatePipe, LinkAuth, UserNameService, RolePermission, AuthGuard, NoAuthGuard, Title, LinkHelper,
     NotificationServiceBus, SpinnerService, BookingService, UserService,
     { provide: APP_BASE_HREF, useValue : '/' },

@@ -27,6 +27,7 @@ import {BillingAccountComponent} from '../ui/billing-account/billing-account.com
 import {AccountantComponent} from '../ui/accountant/accountant.component';
 import {MaterialModule} from '@angular/material';
 import {IndividualClient, Interpreter, OrganisationalRepresentative, User} from '../shared/model/user.entity';
+import {CalendarModule} from 'ap-angular2-fullcalendar';
 
 
 describe('RegisterComponent', () => {
@@ -38,7 +39,7 @@ describe('RegisterComponent', () => {
             declarations: [RegisterComponent, NotificationComponent,
                 OrgRepComponent, InterpreterComponent, AddressComponent,
                 IndClientComponent, BillingAccountComponent, AccountantComponent],
-            imports: [FormsModule, MaterialModule,
+            imports: [FormsModule, MaterialModule, CalendarModule,
                 CustomFormsModule, SimpleNotificationsModule.forRoot(),
                 RouterTestingModule],
             providers: [NotificationServiceBus,
