@@ -1,0 +1,204 @@
+[
+  {
+    "keyword": "Feature",
+    "line": 1,
+    "name": "Booking Management",
+    "tags": [],
+    "uri": "/Users/hientran/Desktop/Angular/prod/booking-system-frontend/e2e-tests/features/booking-management.feature",
+    "elements": [
+      {
+        "keyword": "Scenario",
+        "line": 198,
+        "name": "Populate Both NATURE OF APPOINTMENT AND WHAT WILL BE DISCUSSED as User",
+        "tags": [
+          {
+            "line": 197,
+            "name": "@runThis"
+          }
+        ],
+        "id": "booking-management;populate-both-nature-of-appointment-and-what-will-be-discussed-as-user",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Before",
+            "result": {
+              "status": "passed",
+              "duration": 1
+            },
+            "hidden": true,
+            "match": {
+              "location": "/Users/hientran/Desktop/Angular/prod/booking-system-frontend/e2e-tests/config/helpers/before.scenario.ts:13"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "name": "I exist as an Administrator",
+            "result": {
+              "status": "passed",
+              "duration": 17085
+            },
+            "line": 199,
+            "match": {
+              "location": "/Users/hientran/Desktop/Angular/prod/booking-system-frontend/e2e-tests/features/common.steps.ts:278"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "name": "I sign in with valid Administrator credentials",
+            "result": {
+              "status": "passed",
+              "duration": 492
+            },
+            "line": 200,
+            "match": {
+              "location": "/Users/hientran/Desktop/Angular/prod/booking-system-frontend/e2e-tests/features/common.steps.ts:288"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "name": "I am on the bookings page",
+            "result": {
+              "status": "passed",
+              "duration": 224
+            },
+            "line": 201,
+            "match": {
+              "location": "/Users/hientran/Desktop/Angular/prod/booking-system-frontend/e2e-tests/features/common.steps.ts:309"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "name": "I click on 'New Booking'",
+            "result": {
+              "status": "passed",
+              "duration": 249
+            },
+            "line": 202,
+            "match": {
+              "location": "/Users/hientran/Desktop/Angular/prod/booking-system-frontend/e2e-tests/features/booking-management.steps.ts:67"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "name": "I will be taken to the 'New Booking' form",
+            "result": {
+              "status": "passed",
+              "duration": 2
+            },
+            "line": 203,
+            "match": {
+              "location": "/Users/hientran/Desktop/Angular/prod/booking-system-frontend/e2e-tests/features/booking-management.steps.ts:74"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "name": "I click dropdown NATURE OF APPOINTMENT *",
+            "result": {
+              "status": "passed",
+              "duration": 163
+            },
+            "line": 204,
+            "match": {
+              "location": "/Users/hientran/Desktop/Angular/prod/booking-system-frontend/e2e-tests/features/booking-management.steps.ts:314"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "name": "I click on option MEDICAL",
+            "result": {
+              "status": "passed",
+              "duration": 77
+            },
+            "line": 205,
+            "match": {
+              "location": "/Users/hientran/Desktop/Angular/prod/booking-system-frontend/e2e-tests/features/booking-management.steps.ts:322"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "name": "The cell of NATURE OF APPOINTMENT * will be populated with MEDICAL",
+            "result": {
+              "status": "passed",
+              "duration": 73
+            },
+            "line": 206,
+            "match": {
+              "location": "/Users/hientran/Desktop/Angular/prod/booking-system-frontend/e2e-tests/features/booking-management.steps.ts:328"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "name": "I click dropdown WHAT WILL BE DISCUSSED *",
+            "result": {
+              "status": "passed",
+              "duration": 429
+            },
+            "line": 207,
+            "match": {
+              "location": "/Users/hientran/Desktop/Angular/prod/booking-system-frontend/e2e-tests/features/booking-management.steps.ts:314"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "name": "I click on option GP",
+            "result": {
+              "status": "passed",
+              "duration": 67
+            },
+            "line": 208,
+            "match": {
+              "location": "/Users/hientran/Desktop/Angular/prod/booking-system-frontend/e2e-tests/features/booking-management.steps.ts:322"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "name": "The cell of WHAT WILL BE DISCUSSED * will be populated with GP",
+            "result": {
+              "status": "passed",
+              "duration": 72
+            },
+            "line": 209,
+            "match": {
+              "location": "/Users/hientran/Desktop/Angular/prod/booking-system-frontend/e2e-tests/features/booking-management.steps.ts:328"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "After",
+            "result": {
+              "status": "passed",
+              "duration": 1
+            },
+            "hidden": true,
+            "match": {
+              "location": "/Users/hientran/Desktop/Angular/prod/booking-system-frontend/e2e-tests/config/helpers/after.scenario.ts:12"
+            }
+          }
+        ]
+      }
+    ],
+    "id": "booking-management",
+    "metadata": {
+      "browser": {
+        "name": "chrome",
+        "version": "59.0.3071.115"
+      },
+      "device": "MacBook Pro 15\" 2017",
+      "platform": {
+        "name": "osx",
+        "version": "10.12.5"
+      }
+    }
+  }
+]

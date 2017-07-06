@@ -36,11 +36,33 @@ defineSupportCode(({Given, Then, When }) => {
     const mandatory_dropdown_related_label_fields = [
 
     ];
-    // Given(/^I am on the bookings page$/, onBookinManagementScreen);
-    // async function onBookinManagementScreen(): Promise<void>{
-    //     await browser.driver.sleep(2000); // waiting for the elements to be loaded
-    //     expect(page.currentPath()).to.eventually.contain('booking-management');
-    // }
+
+    const job_detail_fields = [
+        'Job',
+        'Status',
+        'State',
+        'Date',
+        'Org',
+        'Client',
+        'Suburb',
+        'Interpreter',
+        'Booking Type',
+        'Actions'
+    ];
+
+//  BE ABLE TO VIEW BOOKING PAGE
+    Then(/^I will be shown with summary details$/, showSummaryDetails);
+    async function showSummaryDetails(): Promise<void> {
+        await browser.waitForAngular();
+        const all_job_details = await $$('app-booking-list thead span');
+        const num_of_details = all_job_details.length;
+        expect(job_detail_fields.length).to.be.equal(num_of_details);
+        for (let i = 0; i < all_job_details.length; i++) {
+            let detail_label = await page.getText(all_job_details[i]);
+            // console.log(detail_label);
+            expect(job_detail_fields).to.includes(detail_label);
+        }
+    }
 
     When(/^I click on 'New Booking'$/, newBookingClick);
     async function newBookingClick(): Promise<void> {
@@ -220,8 +242,9 @@ defineSupportCode(({Given, Then, When }) => {
             await single_input.getAttribute('ng-reflect-model').then((val) => {
                 all_filled = true;
             });
+            expect(all_filled).to.equal(true);
         }
-        expect(all_filled).to.equal(true);
+        // expect(all_filled).to.equal(true);
         // expect(btn.isEnabled()).to.eventually.to.equal(true);
     }
 
@@ -259,5 +282,59 @@ defineSupportCode(({Given, Then, When }) => {
         const interpreterRows = await $$('section[id=invited-interpreters] tbody tr');
         const interpereter_num = interpreterRows.length;
         expect(interpereter_num).to.eql(parseInt(num_of_user, 10));
+    }
+
+//    VIEW PROFILE
+    When(/^I click on my name in the top corner$/, clickOnMyName);
+    async function clickOnMyName(): Promise<void> {
+        const profile = page.getElementByID('lnkProfile');
+        profile.click();
+    }
+
+    Then(/^I will be taken to my individual profile page$/, takeToIndividualPage);
+    async function takeToIndividualPage(): Promise<void> {
+        await browser.waitForAngular();
+        expect(page.currentPath()).to.eventually.contain('profile');
+    }
+
+    Then(/^I can see the fields (.*)$/, showAllTheFields);
+    async function showAllTheFields(fields_string: string): Promise<void> {
+        await browser.waitForAngular();
+        const fields = fields_string.split(', ');
+        const all_fields = await $$('form div.form-field label');
+        const all_fields_length = all_fields.length;
+        expect(fields.length).to.equal(all_fields_length);
+        for (let i = 0; i < all_fields_length; i++) {
+            let label_text = await page.getText(all_fields[i]);
+            expect(fields).to.includes(label_text);
+        }
+    }
+
+//    POPULATE DROP DOWN
+    When(/^I click dropdown (.*)$/, clickOnDropDown);
+    async function clickOnDropDown(label_text: string): Promise<void> {
+        const selected_label = await page.getElementByCSSandText('label', label_text);
+        const div = page.getParent(selected_label);
+        const select_dropdown = page.getElementInsideByTag(div, 'select');
+        await select_dropdown.click();
+    }
+
+    When(/^I click on option (.*)/, clickOnOption);
+    async function clickOnOption(option_text: string): Promise<void> {
+        const option_selected = await page.getElementByCSSandText('option', option_text);
+        await option_selected.click();
+    }
+
+    Then(/^The cell of (.*) will be populated with (.*)$/, checkTheDropDown);
+    async function checkTheDropDown(label_text: string, option_text: string): Promise<void> {
+        await browser.waitForAngular();
+        const selected_label = await page.getElementByCSSandText('label', label_text);
+        const div = page.getParent(selected_label);
+        const select_dropdown = page.getElementInsideByTag(div, 'select');
+        const selected_label_val = await select_dropdown.getAttribute('ng-reflect-model').then((val) => {
+            console.log(val);
+            return val.toUpperCase();
+        });
+        expect(selected_label_val).to.equal(option_text);
     }
 });

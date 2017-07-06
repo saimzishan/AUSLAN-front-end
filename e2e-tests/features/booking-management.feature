@@ -101,7 +101,7 @@ Feature: Booking Management
     When I specify i am the client of this booking
     Then The booking form will be automatically populated with the details.
 
-  @ignoreThis
+  @ignoreThis # -> Not working
   Scenario: Popup when cancel after fill in one fields.
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
@@ -167,10 +167,43 @@ Feature: Booking Management
 #    And I don't see 1 unverified interpreters
 
 #  On mobile
-  @runThis
+  @ignoreThis
   Scenario: Interpreter login into using mobile
     Given I use mobile phone
     And I exist as an Interpreter
     And I am on the mobile login screen without a hero picture
     And I sign in with valid Interpreter credentials
     And I am on the bookings page
+
+  @ignoreThis
+#  Another view booking page
+  Scenario: Be able to view the booking page with summary details columns
+    Given I exist as an Administrator
+    When I sign in with valid Administrator credentials
+    Then I am on the bookings page
+    And I will be shown with summary details
+
+  @ignoreThis
+#  Show profile page
+  Scenario: Be able to view the profile as Administrator
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on the bookings page
+    When I click on my name in the top corner
+    Then I will be taken to my individual profile page
+    And I can see the fields FIRST NAME *, LAST NAME *, EMAIL *, MOBILE *, STATUS, Change Picture:
+
+#  Populated NATURE OF APPOINTMENT AND WHAT WILL BE DISCUSSED
+  @runThis
+  Scenario: Populate Both NATURE OF APPOINTMENT AND WHAT WILL BE DISCUSSED as User
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on the bookings page
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    When I click dropdown NATURE OF APPOINTMENT *
+    And I click on option MEDICAL
+    Then The cell of NATURE OF APPOINTMENT * will be populated with MEDICAL
+    When I click dropdown WHAT WILL BE DISCUSSED *
+    And I click on option GP
+    Then The cell of WHAT WILL BE DISCUSSED * will be populated with GP
