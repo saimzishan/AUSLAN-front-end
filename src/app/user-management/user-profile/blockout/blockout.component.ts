@@ -58,7 +58,7 @@ export class BlockoutComponent implements  OnDestroy, OnInit {
           if (res.status === 200) {
             // UI Notification
             this.spinnerService.requestInProcess(false);
-
+            this.interpreter.availability_blocks_attributes.push(this.availabilityBlock);
             this.notificationServiceBus.launchNotification(false, 'Blockout added Successfully');
           }
         }, errors => {

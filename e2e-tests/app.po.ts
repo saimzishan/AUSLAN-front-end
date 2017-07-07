@@ -30,6 +30,9 @@ export class PageHelper {
     return element(by.name(name));
   }
 
+  getNextSibling(ele, tag: string) {
+    return ele.element(by.xpath('following-sibling::' + tag));
+  }
 
   getElementInside(ele, name: string) {
     return ele.element(by.name(name));

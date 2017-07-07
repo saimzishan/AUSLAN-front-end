@@ -5,6 +5,7 @@ import {AddressComponent} from '../address/address.component';
 import {GLOBAL} from '../../shared/global';
 import {DatePipe} from '@angular/common';
 import {Router} from '@angular/router';
+import * as moment from 'moment';
 
 @Component({
     selector: 'app-interpreter',
@@ -62,7 +63,14 @@ export class InterpreterComponent implements OnInit {
                 title: avail_block.name,
                 start: avail_block.start_time, end: avail_block.end_time,
                 id: avail_block.id, booking_id: avail_block.booking_id, recurring: avail_block.recurring,
-                frequency: avail_block.frequency
+                frequency: avail_block.frequency,
+                // dow: [ 1, 4 ], // Repeat monday and thursday
+                ranges: avail_block.frequency ?
+                 [{ // repeating events are only displayed
+                     // if they are within one of the following ranges.
+                     start: moment().startOf('week'), // next two weeks
+                     end: moment().endOf('week').add(7, 'd'),
+                 }] : []
             });
         }
         this.updateCalendar = true;
