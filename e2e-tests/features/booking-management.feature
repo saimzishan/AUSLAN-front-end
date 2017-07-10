@@ -194,7 +194,7 @@ Feature: Booking Management
     And I can see the fields FIRST NAME *, LAST NAME *, EMAIL *, MOBILE *, STATUS, Change Picture:
 
 #  Populated NATURE OF APPOINTMENT AND WHAT WILL BE DISCUSSED
-  @runThis
+  @ignoreThis
   Scenario: Populate Both NATURE OF APPOINTMENT AND WHAT WILL BE DISCUSSED as User
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials

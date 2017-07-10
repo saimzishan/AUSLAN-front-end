@@ -73,7 +73,9 @@ defineSupportCode(({Given, Then, When }) => {
 
     Then(/^I will be taken to the 'New Booking' form$/, showBookingForm);
     async function showBookingForm(): Promise<void> {
-        expect(page.currentPath()).to.eventually.contain('create-booking');
+        await browser.waitForAngular();
+        let currentPath = await page.currentPath();
+        expect(currentPath).to.contain('create-booking');
     }
 
     ////////////////////////////////////// Adding Date
@@ -258,7 +260,8 @@ defineSupportCode(({Given, Then, When }) => {
     Then(/^I am back on booking page$/, backToBookinManagementScreen);
     async function backToBookinManagementScreen(): Promise<void> {
         await browser.waitForAngular();
-        expect(page.currentPath()).to.eventually.contain('booking-management');
+        let currentPath = await page.currentPath();
+        expect(currentPath).to.contain('booking-management');
     }
 
     // ---------------------------------   INDIVIDUAL BOOKING PAGE
@@ -274,7 +277,8 @@ defineSupportCode(({Given, Then, When }) => {
     Then(/^I am on the individual booking page$/, onIndividualBookingScreen);
     async function onIndividualBookingScreen(): Promise<void> {
         await browser.waitForAngular();
-        expect(page.currentPath()).to.eventually.contain('booking-job');
+        let currentPath = await page.currentPath();
+        expect(currentPath).to.contain('booking-job');
     }
 
     Then(/^I can see a list of (.*) (.*) interpreters$/, checkListofInterpreterIndividualBookingScreen);
@@ -294,7 +298,8 @@ defineSupportCode(({Given, Then, When }) => {
     Then(/^I will be taken to my individual profile page$/, takeToIndividualPage);
     async function takeToIndividualPage(): Promise<void> {
         await browser.waitForAngular();
-        expect(page.currentPath()).to.eventually.contain('profile');
+        let currentPath = await page.currentPath();
+        expect(currentPath).to.contain('profile');
     }
 
     Then(/^I can see the fields (.*)$/, showAllTheFields);

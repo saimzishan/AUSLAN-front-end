@@ -24,16 +24,9 @@ defineSupportCode(({Given}) => {
 
   function puts(error, stdout, stderr) { console.log(stdout); }
 
-  function sendCommandToHeroku(data) {
+  function sendCommandToHeroku(command) {
     const exec = require('child_process').execSync;
-
-    const preloadAdmin = preloadUser(data);
-
-    console.log(data);
-
-    console.log(preloadAdmin);
-
-    exec('echo \'' + preloadAdmin + '; exit\' | heroku run console --app auslan-e2e-testing', puts);
+    exec('echo \'' + command + '; exit\' | heroku run console --app auslan-e2e-testing', puts);
   }
 
   function preloadUser(data) {
@@ -44,7 +37,7 @@ defineSupportCode(({Given}) => {
     let return_command = '';
     let userType = user_type(data.type);
 
-    //delete the key type
+    // delete the key type
     delete data.type;
     // const user_json = json_for_user(data);
 
@@ -236,6 +229,7 @@ defineSupportCode(({Given}) => {
     return data_to_sent;
   }
 
+
   function addUserToHeroku(numberOfUser: string, active: string, type: string) {
     const num_of_user = parseInt(numberOfUser, 10);
     console.log(num_of_user);
@@ -245,14 +239,16 @@ defineSupportCode(({Given}) => {
         verified = true;
       }
       const data_to_sent = returnJSONForUser(verified, type, i);
-      sendCommandToHeroku(data_to_sent);
+      const command = preloadUser(data_to_sent);
+      sendCommandToHeroku(command);
     }
   }
 
   function addValidLoginUser(valid_login_user: User, type: string) {
     const verifed = true;
     const data_to_sent = returnJSONForUser(verifed, type, 1, valid_login_user);
-    sendCommandToHeroku(data_to_sent);
+    const command = preloadUser(data_to_sent);
+    sendCommandToHeroku(command);
     // switch (type) {
     //     case 'Interpreter':
     //         sendCommandToHeroku(type, valid_login_user.email, valid_login_user.pass,
@@ -275,6 +271,14 @@ defineSupportCode(({Given}) => {
   }
 
   // ================================== COMMON PART ========================================
+  Given(/^A booking is created/, givenBookingCreated);
+
+  async function givenBookingCreated(): Promise<void> {
+    const booking_ = {};
+    const command = preloadUser(booking_);
+    sendCommandToHeroku(command);
+  }
+
   Given(/^I exist as an (.*)/, givenExistAsAValidUser);
   async function givenExistAsAValidUser(type: string): Promise<void> {
     // await sendCommandToHeroku('Booking Officer', 'mohjay_bookingOfficer2@auslan.com.au', 'Abcd#1234',
@@ -330,6 +334,6 @@ defineSupportCode(({Given}) => {
     await aside.getSize().then((size) => {
       expect(size.width).to.eql(600);
       expect(size.height).to.eql(800);
-    })
+    });
   }
 });
