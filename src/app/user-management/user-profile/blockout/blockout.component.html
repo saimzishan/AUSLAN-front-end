@@ -3,7 +3,7 @@
     </app-user-header>
 </section>
 <header class="text-center">
-    <h1>ADD BLOCKOUT</h1>
+    <h1>{{param_id ? 'ADD BLOCKOUT' : 'EDIT BLOCKOUT'}}</h1>
 </header>
 <div id="page-common">
     <main>
@@ -76,34 +76,41 @@
                         </md-slide-toggle>
                     </div>
                 </div>
-            <div class="medium-1 columns">
-                <div class="form-field">
-
-                </div>
-            </div>
-            <div *ngIf="availabilityBlock.recurring">
-
-                <div class="medium-5 columns">
+                <div class="medium-1 columns">
                     <div class="form-field">
-                        <label>FREQUENCY *</label>
-
-                        <select [(ngModel)]="availabilityBlock.frequency" name = "availabilityBlock_frequency"
-                                #availabilityBlock_frequency="ngModel" required
-                                aria-label="A">
-                            <option *ngFor="let frequency_name of ['daily', 'weekly', 'biweekly', 'every 4 weeks']" [value]="frequency_name">{{frequency_name.toUpperCase()}}</option>
-
-                        </select>
 
                     </div>
                 </div>
-            </div>
+                <div *ngIf="availabilityBlock.recurring">
+
+                    <div class="medium-5 columns">
+                        <div class="form-field">
+                            <label>FREQUENCY *</label>
+
+                            <select [(ngModel)]="availabilityBlock.frequency" name="availabilityBlock_frequency"
+                                    #availabilityBlock_frequency="ngModel" required
+                                    aria-label="A">
+                                <option *ngFor="let frequency_name of ['daily', 'weekly', 'monthly']"
+                                        [value]="frequency_name">{{frequency_name.toUpperCase()}}
+                                </option>
+
+                            </select>
+
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <section class="actions">
             </section>
             <section>
-                <button name="add_blockout"
+                <button *ngIf="availabilityBlock.id < 1" name="add_blockout"
                         (click)="addBlockouts(user_blockout_form)"> SAVE
+                </button>
+                <button *ngIf="availabilityBlock.id > 1" name="delete_blockout" (click)="deleteBlockout()"> DELETE
+                </button>
+                <button *ngIf="availabilityBlock.id > 1" name="edit_blockout"
+                        (click)="editBlockouts(user_blockout_form)"> EDIT
                 </button>
 
             </section>

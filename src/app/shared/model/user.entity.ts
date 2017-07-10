@@ -25,6 +25,7 @@ export class UserFactory {
       case 'Interpreter':
         let int = new  Interpreter (data);
         int.address_attributes = <Address> data.address_attributes;
+        int.availability_blocks_attributes = data.availability_blocks_attributes;
         return int;
       default: return new User (data);
     }
@@ -333,7 +334,7 @@ export class Interpreter extends User {
   public location_pref = 'VIC';
   public comm_pref = 'SMS AND EMAIL';
   public assignments_attributes = [];
-  public availability_blocks: Array<AvailabilityBlock> = [];
+  public availability_blocks_attributes = [];
 
   get user_type() {
     return 'Interpreter';

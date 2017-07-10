@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {
     Accountant,
     Administrator, BookingOfficer, IndividualClient, Interpreter, OrganisationalRepresentative,
@@ -15,6 +15,7 @@ import {FormGroup} from '@angular/forms';
     selector: 'app-user-profile',
     templateUrl: './user-profile.component.html',
     styleUrls: ['./user-profile.component.css']
+
 })
 export class UserProfileComponent implements OnInit {
     userModel;
@@ -55,13 +56,17 @@ export class UserProfileComponent implements OnInit {
 
         this.userModel.disabled = this.selectedStatus === 'Disabled';
         this.selectedStatus = '';
+        this.spinnerService.requestInProcess(true);
+
         this.userDataService.updateUser(this.userModel)
             .subscribe((res: any) => {
-                    if (res.status === 204) {
+                    if (res.status === 200) {
                         // UI Notification
-                        this.userModel.photo_url = res.data.photo_url || '';
+                        this.userModel.photo_url = res.json().photo_url || '';
                         this.userNameService.setLoggedInUser(this.userModel);
                         this.notificationServiceBus.launchNotification(false, 'User details updated Successfully');
+                        this.spinnerService.requestInProcess(false);
+
                     }
                 },
                 (errors) => {

@@ -47,7 +47,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy, OnChanges {
   currentUserIsClient = 'true';
   prefInterpreter: boolean;
   dialogRef: MdDialogRef<any>;
-
+  fileName = '';
   constructor(public bookingService: BookingService, private router: Router,
   private route: ActivatedRoute, private rolePermission: RolePermission,
     public notificationServiceBus: NotificationServiceBus, public spinnerService: SpinnerService,
@@ -196,6 +196,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy, OnChanges {
     let file = files[0];
 
     if (files && file) {
+      this.fileName = file.name;
       let reader = new FileReader();
 
       reader.onload = this._handleReaderLoaded.bind(this);
@@ -205,6 +206,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   _handleReaderLoaded(readerEvt) {
-    this.bookingModel.documents_attributes.push({document : readerEvt.target.result});
+    this.bookingModel.documents_attributes.push({document : readerEvt.target.result, file_name: this.fileName});
   }
 }

@@ -253,4 +253,29 @@ export class UserService extends ApiService {
                 JSON.stringify(obj) , options) // Better add verify in path
             .catch((err) => { return Observable.throw(err); });
     }
+
+    editBlockout( userID: number, availabilityBlock: AvailabilityBlock) {
+        let headers = new Headers({'Accept': 'application/json',
+            'Content-Type': 'application/json'});
+        let options = new RequestOptions({ headers: headers });
+        let obj = { 'availability_block': availabilityBlock };
+
+        return this.http
+            .put(GLOBAL.USER_API_ENDPOINT + '/interpreters/' + userID + '/availability_blocks/' +
+                availabilityBlock.id  ,
+                JSON.stringify(obj) , options) // Better add verify in path
+            .catch((err) => { return Observable.throw(err); });
+    }
+
+    deleteBlockout(userID: number, availability_block_id: number) {
+        let headers = new Headers({'Accept': 'application/json',
+            'Content-Type': 'application/json'});
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http
+            .delete(GLOBAL.USER_API_ENDPOINT + '/interpreters/' +
+                userID + '/availability_blocks/' + availability_block_id ,
+                options) // Better add verify in path
+            .catch((err) => { return Observable.throw(err); });
+    }
 }

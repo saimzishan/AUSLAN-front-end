@@ -112,9 +112,9 @@
 </span>
                         </div>
                     </div>
-                    <div class="medium-6 columns">
+                    <div class="medium-4 columns">
                         <div class="form-field">
-                            <label>WHO REQUESTED THIS MEETING * <span mdTooltip="Enter the Request By Name"><i
+                            <label>WHO REQUESTED THIS MEETING * <span mdTooltip="Enter the First Name"><i
                                     class="inline-icon-tip"></i></span></label>
                             <input type="text" placeholder="Enter the Request By Name"
                                    [(ngModel)]="bookingModel.requested_by.first_name" name="raw_booking_requested_by"
@@ -127,7 +127,22 @@
             </span>
                         </div>
                     </div>
-                    <div class="medium-6 columns">
+                    <div class="medium-4 columns">
+                        <div class="form-field">
+                            <label>WHO REQUESTED THIS MEETING * <span mdTooltip="Enter the Last Name"><i
+                                    class="inline-icon-tip"></i></span></label>
+                            <input type="text" placeholder="Enter the Request By Name"
+                                   [(ngModel)]="bookingModel.requested_by.last_name" name="raw_booking_requested_by_ln"
+                                   #raw_booking_requested_by_ln="ngModel" [rangeLength]="[4,20]" required>
+                            <span *ngIf="raw_booking_requested_by_ln.touched && !raw_booking_requested_by_ln.errors?.required && !raw_booking_requested_by_ln.errors?.rangeLength;"
+                                  class="inline-icon inline-icon-valid valid"></span>
+                            <span *ngIf="raw_booking_requested_by_ln.touched && (raw_booking_requested_by_ln.errors?.required || raw_booking_requested_by_ln.errors?.rangeLength);"
+                                  class="inline-icon error">
+              <span>Minimum 4 characters required.</span>!
+            </span>
+                        </div>
+                    </div>
+                    <div class="medium-4 columns">
                         <div class="form-field">
                             <label>NUMBER OF PEOPLE ATTENDING * <span
                                     mdTooltip="Enter the Number of people attending the meeting"><i
