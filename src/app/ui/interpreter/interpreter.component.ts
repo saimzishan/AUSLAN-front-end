@@ -69,7 +69,7 @@ export class InterpreterComponent implements OnInit {
             let ed = new Date(avail_block.end_time);
             let event = ({
                 title: avail_block.name,
-                color: '#257e4a',
+                color: avail_block.recurring ? '#257e4a' : '#0000ff',
                 id: avail_block.id,
                 booking_id: avail_block.booking_id,
                 start: `${sd.getHours()}:${sd.getMinutes()}`,

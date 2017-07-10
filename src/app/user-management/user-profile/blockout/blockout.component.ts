@@ -52,7 +52,7 @@ export class BlockoutComponent implements  OnDestroy, OnInit {
             .subscribe((res: any) => {
                 if (res.status === 204) {
                     // UI Notification
-                    let idx = this.interpreter.availability_blocks_attributes.indexOf(this.availabilityBlock)
+                    let idx = this.interpreter.availability_blocks_attributes.indexOf(this.availabilityBlock);
                     this.interpreter.availability_blocks_attributes.splice(idx, 1);
                     this.availabilityBlock = new AvailabilityBlock();
                     this.spinnerService.requestInProcess(false);
