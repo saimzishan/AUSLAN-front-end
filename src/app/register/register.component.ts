@@ -89,4 +89,21 @@ export class RegisterComponent implements OnInit, OnDestroy {
                     + JSON.stringify(e.errors).replace(/]|[[]/g, '').replace(/({|})/g, ''));
             });
     }
+
+    handleFileSelect(evt) {
+        let files = evt.target.files;
+        let file = files[0];
+
+        if (files && file) {
+            let reader = new FileReader();
+
+            reader.onload = this._handleReaderLoaded.bind(this);
+
+            reader.readAsDataURL(file);
+        }
+    }
+
+    _handleReaderLoaded(readerEvt) {
+        this.model.avatar = readerEvt.target.result;
+    }
 }

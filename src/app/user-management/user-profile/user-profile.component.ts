@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {
     Accountant,
     Administrator, BookingOfficer, IndividualClient, Interpreter, OrganisationalRepresentative,
@@ -15,6 +15,7 @@ import {FormGroup} from '@angular/forms';
     selector: 'app-user-profile',
     templateUrl: './user-profile.component.html',
     styleUrls: ['./user-profile.component.css']
+
 })
 export class UserProfileComponent implements OnInit {
     userModel;

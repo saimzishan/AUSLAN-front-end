@@ -1,5 +1,5 @@
 import {Component, OnInit, Input} from '@angular/core';
-import {Interpreter} from '../../shared/model/user.entity';
+import {AvailabilityBlock, Interpreter} from '../../shared/model/user.entity';
 import {Address} from '../../shared/model/venue.entity';
 import {AddressComponent} from '../address/address.component';
 import {GLOBAL} from '../../shared/global';
@@ -30,7 +30,13 @@ export class InterpreterComponent implements OnInit {
             listMonth: {buttonText: 'list Month'},
             month: {buttonText: 'Grid Month'}
         },
-
+        eventRender: function (event, element, view) {
+            // console.log(event.start.format());
+            return (event.ranges.filter(function (range) {
+                    return (event.start.isBefore(range.end) &&
+                    event.end.isAfter(range.start));
+                }).length) > 0;
+        },
         defaultView: 'month',
         navLinks: true, // can click day/week names to navigate views
         eventClick: (calEvent, jsEvent, view) => {
@@ -58,21 +64,35 @@ export class InterpreterComponent implements OnInit {
         delete this.userModel.assignments_attributes;
         delete this.userModel.password;
 
-        for (let avail_block of this.userModel.availability_blocks_attributes ) {
-            this.calendarOptions['events'].push({
+        for (let avail_block of this.userModel.availability_blocks_attributes) {
+            let sd = new Date(avail_block.start_time);
+            let ed = new Date(avail_block.end_time);
+            let event = ({
                 title: avail_block.name,
-                start: avail_block.start_time, end: avail_block.end_time,
-                id: avail_block.id, booking_id: avail_block.booking_id, recurring: avail_block.recurring,
-                frequency: avail_block.frequency,
-                // dow: [ 1, 4 ], // Repeat monday and thursday
-                ranges: avail_block.frequency ?
-                 [{ // repeating events are only displayed
-                     // if they are within one of the following ranges.
-                     start: moment().startOf('week'), // next two weeks
-                     end: moment().endOf('week').add(7, 'd'),
-                 }] : []
+                color: '#257e4a',
+                id: avail_block.id,
+                booking_id: avail_block.booking_id,
+                start: `${sd.getHours()}:${sd.getMinutes()}`,
+                end: `${ed.getHours()}:${ed.getMinutes()}`,
+                dow: avail_block.recurring && avail_block.frequency === 'daily' ? [1 , 2 , 3 , 4 , 5 , 6, 0] : [ sd.getDay()],
+                ranges: [
+                    {
+                        start: moment().endOf(avail_block.frequency === 'daily' ? 'day' :
+                            avail_block.frequency === 'weekly' ? 'week' :
+                            avail_block.frequency === 'monthly' ? 'month' : 'week')
+                        // ,end: moment().endOf('week').add(7,'d'),
+                    },
+                    {
+                    start: moment(sd.toISOString(), 'YYYY-MM-DD'),
+                    end: moment(ed.toISOString(), 'YYYY-MM-DD').endOf( avail_block.recurring ? 'year' : 'week')
+                }],
+                recurring: avail_block.recurring,
+                frequency: avail_block.frequency
             });
+            console.log (event);
+            this.calendarOptions['events'].push(event);
         }
+
         this.updateCalendar = true;
 
     }
