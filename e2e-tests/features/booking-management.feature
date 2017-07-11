@@ -167,10 +167,9 @@ Feature: Booking Management
 #    And I don't see 1 unverified interpreters
 
 #  On mobile
-  @ignoreThis
+  @runThis
   Scenario: Interpreter login into using mobile
-    Given I use mobile phone
-    And I exist as an Interpreter
+    Given I exist as an Interpreter
     And I am on the mobile login screen without a hero picture
     And I sign in with valid Interpreter credentials
     And I am on the bookings page
@@ -184,7 +183,7 @@ Feature: Booking Management
     Then I am on the bookings page
     And I will be shown with bookings
 
-  @runThis
+  @ignoreThis
   #  Booking Officer can see bookings
   Scenario: Be able to view the booking page with summary details columns
     Given I exist as an Booking Officer
@@ -239,7 +238,7 @@ Feature: Booking Management
     When I click at the 1st one of 3 Requested Bookings
     Then I am on the individual booking page
 
-  @runThis
+  @ignoreThis
   Scenario: Unable to service on the Requested booking as Admin
     Given I exist as an Administrator
 #    And There is 3 requested booking
@@ -251,7 +250,7 @@ Feature: Booking Management
     When I click on button 'Unable to Service'
     Then I will be shown a popup message
 
-    @runThis
+    @ignoreThis
   Scenario: Unable to service on the Requested booking as Booking Officer
     Given I exist as an Booking Officer
 #    And There is 3 requested booking

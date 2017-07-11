@@ -15,7 +15,6 @@ import {bufferWhen} from 'rxjs/operator/bufferWhen';
 defineSupportCode(({Given, Then, When }) => {
 
     let page = new PageHelper();
-    
 
     Then(/^I will be taken to the 'Choose Profile' page$/, showChooseProfilePage);
     async function showChooseProfilePage(): Promise<void> {

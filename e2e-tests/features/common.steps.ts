@@ -150,23 +150,8 @@ defineSupportCode(({Given, When}) => {
                 data_to_sent['billing_account_attributes'] = billing_account_attributes_fields;
                 break;
             case 'Interpreter':
-                data_to_sent['send_email_on_receipt_of_request'] = true;
-                data_to_sent['email_confirmation_on_interpreter_allocation'] = true;
-                billing_account_attributes_fields['primary_contact_first_name'] = 'MOH';
-                billing_account_attributes_fields['primary_contact_last_name'] = 'JAY';
-                billing_account_attributes_fields['email_address'] = 'mohjay_client ' + i * 9 + 5 + '@auslan.com.au';
-                billing_account_attributes_fields['account_number'] = (1111111 + (i * 4)).toString();
-                billing_account_attributes_fields['preferred_billing_method_email'] = true;
-                billing_address_attributes_fields['unit_number'] = i;
-                billing_address_attributes_fields['street_number'] = i * 2 + 1;
-                billing_address_attributes_fields['street_name'] = 'Flemington Road';
-                billing_address_attributes_fields['suburb'] = 'Flemington Road';
-                billing_address_attributes_fields['state'] = 'VIC';
-                billing_address_attributes_fields['post_code'] = 3054 + i;
-                billing_account_attributes_fields['address_attributes'] = billing_address_attributes_fields;
-                data_to_sent['billing_account_attributes'] = billing_account_attributes_fields;
                 data_to_sent['date_of_birth'] = '20/05/1987';
-                data_to_sent['naati_id'] = 'ABC-' + (123 + i * 7).toString();
+                data_to_sent['naati_id'] = 1234;
                 let address_attributes_fields = {};
                 address_attributes_fields['unit_number'] = i;
                 address_attributes_fields['street_number'] = i * 2 + 1;
@@ -337,13 +322,14 @@ defineSupportCode(({Given, When}) => {
         let click = await lu.click();
     }
 
-    Given(/^I am on the bookings page$/, onBookinManagementScreen);
+    Given(/^I am on the bookings page$/, onBookingPage);
+    async function onBookingPage(): Promise<void> {
+        await browser.waitForAngular();
+        expect(page.currentPath()).to.eventually.contain('booking-management');
+    }
+
     Given(/^I am on my admin home screen$/, onBookinManagementScreen);
     async function onBookinManagementScreen(): Promise<void> {
-        // isLoaded();
-        // console.log(page.currentPath());
-        // await browser.driver.sleep(2000); // waiting for the elements to be loaded
-        // console.log('It is here!');
         await browser.waitForAngular();
         let currPath = await page.currentPath();
         expect(currPath).to.contain('booking-management');
@@ -351,11 +337,7 @@ defineSupportCode(({Given, When}) => {
 
     Given(/^I am on the mobile login screen without a hero picture$/, onLoginScreenNoHero);
     async function onLoginScreenNoHero(): Promise<void> {
-        let aside = $('aside');
-        await aside.getSize().then((size) => {
-            expect(size.width).to.eql(600);
-            expect(size.height).to.eql(800);
-        });
+        browser.driver.manage().window().setSize(360, 640);
     }
 
     When(/^I click on button '(.*)'$/, clickOnButton);
