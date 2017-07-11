@@ -14,14 +14,14 @@ import {bufferWhen} from 'rxjs/operator/bufferWhen';
 import {OrganisationalRepresentative} from '../../src/app/shared/model/user.entity';
 import {main} from '@angular/compiler-cli/src/main';
 
-defineSupportCode(({Given}) => {
+defineSupportCode(({Given, When}) => {
 
     let page = new PageHelper();
 
     let valid_logged_in_user = new User('', '', '', '', '');
 
     function puts(error, stdout, stderr) {
-        console.log(stdout || stderr || error);
+        console.log(stdout);
     }
 
     function sendCommandToHeroku(command) {
@@ -240,8 +240,8 @@ defineSupportCode(({Given}) => {
         const command = preloadUser(data_to_sent);
         sendCommandToHeroku(command);
         sendCommandToHeroku(type.replace(/ /g, '') + '.first.update_attributes(verified:true)');
-
     }
+
 
     // // ================================== GIVEN PART ========================================
     Given(/^There is (.*) (.*) (.*)/, preloadANumberOfUser);
@@ -249,7 +249,6 @@ defineSupportCode(({Given}) => {
         await addUserToHeroku(numberOfUser, active, type);
     }
 
-    // ================================== COMMON PART ========================================
     Given(/^A booking is created/, givenBookingCreated);
 
     async function givenBookingCreated(): Promise<void> {
@@ -305,11 +304,25 @@ defineSupportCode(({Given}) => {
         sendCommandToHeroku(command);
     }
 
+    // ================================== COMMON PART ========================================
+
+
+    Given(/^I go to the website/, goToTheWebsite);
+    async function goToTheWebsite(): Promise<void> {
+        // await sendCommandToHeroku('Booking Officer', 'mohjay_bookingOfficer2@auslan.com.au', 'Abcd#1234',
+        // 'MOH', 'JAY', '123123123', true);
+        await page.navigateTo('/');
+        await browser.waitForAngular();
+        expect(page.getElementByCss('loginForm')).to.be.exist;
+    }
+
+
     Given(/^I exist as an (.*)/, givenExistAsAValidUser);
     async function givenExistAsAValidUser(type: string): Promise<void> {
         valid_logged_in_user = returnTypeAndUser(type).user;
         await addValidLoginUser(valid_logged_in_user, type);
         await page.navigateTo('/');
+        await browser.waitForAngular();
         expect(page.getElementByCss('loginForm')).to.be.exist;
     }
 
@@ -327,15 +340,13 @@ defineSupportCode(({Given}) => {
     Given(/^I am on the bookings page$/, onBookinManagementScreen);
     Given(/^I am on my admin home screen$/, onBookinManagementScreen);
     async function onBookinManagementScreen(): Promise<void> {
+        // isLoaded();
+        // console.log(page.currentPath());
+        // await browser.driver.sleep(2000); // waiting for the elements to be loaded
+        // console.log('It is here!');
         await browser.waitForAngular();
-        expect(page.currentPath()).to.eventually.contain('booking-management');
-    }
-
-
-    //    MOBILE
-    Given(/^I use mobile phone$/, useMobilePhone);
-    async function useMobilePhone(): Promise<void> {
-        browser.manage().window().setSize(600, 800);
+        let currPath = await page.currentPath();
+        expect(currPath).to.contain('booking-management');
     }
 
     Given(/^I am on the mobile login screen without a hero picture$/, onLoginScreenNoHero);
@@ -345,5 +356,12 @@ defineSupportCode(({Given}) => {
             expect(size.width).to.eql(600);
             expect(size.height).to.eql(800);
         });
+    }
+
+    When(/^I click on button '(.*)'$/, clickOnButton);
+    async function clickOnButton(btnLabel: string): Promise<void> {
+        await browser.waitForAngular();
+        let btn = page.getElementByCSSandText('.button', btnLabel);
+        await btn.click();
     }
 });

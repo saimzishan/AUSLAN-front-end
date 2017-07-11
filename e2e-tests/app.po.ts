@@ -50,6 +50,10 @@ export class PageHelper {
     return element(by.cssContainingText(css, text));
   }
 
+  getElementByCSSandExactText(css: string, text: string){
+    return element(by.xpath('.//*[text()="' + text + '" and class="' + css + '"]'));
+  }
+
   getParent(ele){
     return ele.element(by.xpath('..'));
   }

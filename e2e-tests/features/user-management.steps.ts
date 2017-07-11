@@ -207,8 +207,9 @@ defineSupportCode(({Given, Then, When }) => {
 
     Then(/^I am on the 'User Management' list page$/, onUserManagementPageAfterOperation);
     async function onUserManagementPageAfterOperation(): Promise<void>{
-        await browser.driver.sleep(2000);
-        expect(page.currentPath()).to.eventually.contain('user-management');
+        await browser.waitForAngular();
+        let currentPath = await page.currentPath();
+        expect(currentPath).to.contain('user-management');
     }
 
     Then(/^the valid (.*) should be in the list$/, validUserShouldBeOntheList);
@@ -249,7 +250,8 @@ defineSupportCode(({Given, Then, When }) => {
 
         let btn = page.getElementByName('add_user');
         await browser.driver.sleep(2000);
-        expect(btn.isEnabled()).to.eventually.to.equal(false);
+        let isBtnEnabled = await btn.isEnabled();
+        expect(isBtnEnabled).to.equal(false);
     }
 
     Then(/^I am shown a validation error/, showValidationError);
@@ -273,7 +275,8 @@ defineSupportCode(({Given, Then, When }) => {
         page.setValue(el, valid_user.email);
         let btn = page.getElementByName('add_user');
         await browser.driver.sleep(2000);
-        expect(btn.isEnabled()).to.eventually.to.equal(true);
+        let isBtnEnabled = await btn.isEnabled();
+        expect(isBtnEnabled).to.equal(true);
     }
 
     // ================================== UPDATING & DISABLE USER ========================================
@@ -332,7 +335,8 @@ defineSupportCode(({Given, Then, When }) => {
         page.setValue(ln, valid_user.last_name);
         let btn = page.getElementByName('add_user');
         await browser.driver.sleep(2000);
-        expect(btn.isEnabled()).to.eventually.to.equal(true);
+        let isBtnEnabled = await btn.isEnabled();
+        expect(isBtnEnabled).to.equal(true);
     }
 
     Then(/^I update (.*) available field/, updateAvailableField);
@@ -345,11 +349,13 @@ defineSupportCode(({Given, Then, When }) => {
         // page.setValue(el, invalid_org.email);
         let disable = page.getElementByCSSandText('.mat-option', 'Disabled');
         await browser.driver.sleep(1000);
-        expect(disable.getText()).to.eventually.equal('Disabled');
+        let isDisabled = await disable.getText();
+        expect(isDisabled).to.equal('Disabled');
         disable.click();
         await browser.driver.sleep(1000);
         let btn = page.getElementByName('add_user');
-        expect(btn.isEnabled()).to.eventually.to.equal(true);
+        let isBtnEnabled = await btn.isEnabled();
+        expect(isBtnEnabled).to.equal(true);
     }
 
     When(/^I click on update$/, clickOnUpdateOrSaveUser);
@@ -365,7 +371,8 @@ defineSupportCode(({Given, Then, When }) => {
     async function updatedUserShouldBeOntheList(type: string): Promise<void>{
         let notification = page.getElementByCss('.simple-notification');
         let sn_title = page.getElementInsideByCSS(notification, '.sn-title');
-        expect(page.getText(sn_title)).to.eventually.equal('Hurray!');
+        let notificationTitle = await page.getText(sn_title);
+        expect(notificationTitle).to.equal('Hurray!');
         await browser.driver.sleep(2000);
     }
 });

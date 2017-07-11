@@ -49,7 +49,9 @@ defineSupportCode(({Given, Then, When}) => {
 
     Then(/^I will be taken to the 'New Booking' form$/, showBookingForm);
     async function showBookingForm(): Promise<void> {
-        expect(page.currentPath()).to.eventually.contain('create-booking');
+        await browser.waitForAngular();
+        let currentPath = await page.currentPath();
+        expect(currentPath).to.contain('create-booking');
     }
 
     ////////////////////////////////////// Adding Date
@@ -234,7 +236,8 @@ defineSupportCode(({Given, Then, When}) => {
     Then(/^I am back on booking page$/, backToBookinManagementScreen);
     async function backToBookinManagementScreen(): Promise<void> {
         await browser.waitForAngular();
-        expect(page.currentPath()).to.eventually.contain('booking-management');
+        let currentPath = await page.currentPath();
+        expect(currentPath).to.contain('booking-management');
     }
 
     // ---------------------------------   INDIVIDUAL BOOKING PAGE
@@ -250,7 +253,8 @@ defineSupportCode(({Given, Then, When}) => {
     Then(/^I am on the individual booking page$/, onIndividualBookingScreen);
     async function onIndividualBookingScreen(): Promise<void> {
         await browser.waitForAngular();
-        expect(page.currentPath()).to.eventually.contain('booking-job');
+        let currentPath = await page.currentPath();
+        expect(currentPath).to.contain('booking-job');
     }
 
     Then(/^I can see a list of (.*) (.*) interpreters$/, checkListofInterpreterIndividualBookingScreen);
@@ -270,7 +274,8 @@ defineSupportCode(({Given, Then, When}) => {
     Then(/^I will be taken to my individual profile page$/, takeToIndividualPage);
     async function takeToIndividualPage(): Promise<void> {
         await browser.waitForAngular();
-        expect(page.currentPath()).to.eventually.contain('profile');
+        let currentPath = await page.currentPath();
+        expect(currentPath).to.contain('profile');
     }
 
     Then(/^I can see the fields (.*)$/, showAllTheFields);
@@ -312,5 +317,34 @@ defineSupportCode(({Given, Then, When}) => {
             return val.toUpperCase();
         });
         expect(selected_label_val).to.equal(option_text);
+    }
+
+//    CLick on Request bookings
+    Then(/^I am shown with (.*) (.*) Bookings$/, showTheNumberofBooking);
+    async function showTheNumberofBooking(num_of_booking: string, type_of_booking: string): Promise<void> {
+        await browser.waitForAngular();
+        let numBooking = parseInt(num_of_booking, 10);
+        let allTypeBooking = await page.getAllByCSSandText('tbody td',  type_of_booking);
+        const totalNumofType = allTypeBooking.length;
+        expect(totalNumofType).to.equal(numBooking);
+    }
+
+    When(/^I click at the (.*) one of (.*) (.*) Bookings$/, clickAtOneofTheBooking);
+    async function clickAtOneofTheBooking(pos: string, num_of_booking: string, type_of_booking: string): Promise<void> {
+        await browser.waitForAngular();
+        let numBooking = parseInt(num_of_booking, 10);
+        let posth = parseInt(pos, 10);
+        let allTypeBooking = await page.getAllByCSSandText('tbody td',  type_of_booking);
+        const totalNumofType = allTypeBooking.length;
+        expect(posth).to.be.lessThan(totalNumofType);
+        let row = page.getParent(allTypeBooking[posth - 1]);
+        await row.click();
+    }
+
+    Then(/^I will be shown a popup message$/, showThePopup);
+    async function showThePopup(): Promise<void> {
+        await browser.waitForAngular();
+        let app_popup = page.getElementByCss('app-popup');
+        expect(app_popup).to.be.exist;
     }
 });

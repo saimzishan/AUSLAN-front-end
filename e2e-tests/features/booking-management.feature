@@ -217,3 +217,48 @@ Feature: Booking Management
     When I click dropdown WHAT WILL BE DISCUSSED *
     And I click on option GP
     Then The cell of WHAT WILL BE DISCUSSED * will be populated with GP
+
+#  UNABLE TO SERVICE on Requested
+  @ignoreThis
+  Scenario: Able to click on the Requested booking as Admin
+    Given I exist as an Administrator
+#    And There is 3 requested booking
+    And I sign in with valid Administrator credentials
+    And I am on the bookings page
+    And I am shown with 3 Requested Bookings
+    When I click at the 1st one of 3 Requested Bookings
+    Then I am on the individual booking page
+
+  @ignoreThis
+  Scenario: Able to click on the Requested booking as Booking Officer
+    Given I exist as an Booking Officer
+#    And There is 3 requested booking
+    And I sign in with valid Booking Officer credentials
+    And I am on the bookings page
+    And I am shown with 3 Requested Bookings
+    When I click at the 1st one of 3 Requested Bookings
+    Then I am on the individual booking page
+
+  @runThis
+  Scenario: Unable to service on the Requested booking as Admin
+    Given I exist as an Administrator
+#    And There is 3 requested booking
+    And I sign in with valid Administrator credentials
+    And I am on the bookings page
+    And I am shown with 3 Requested Bookings
+    And I click at the 1st one of 3 Requested Bookings
+    And I am on the individual booking page
+    When I click on button 'Unable to Service'
+    Then I will be shown a popup message
+
+    @runThis
+  Scenario: Unable to service on the Requested booking as Booking Officer
+    Given I exist as an Booking Officer
+#    And There is 3 requested booking
+    And I sign in with valid Booking Officer credentials
+    And I am on the bookings page
+    And I am shown with 3 Requested Bookings
+    And I click at the 1st one of 3 Requested Bookings
+    And I am on the individual booking page
+    When I click on button 'Unable to Service'
+    Then I will be shown a popup message
