@@ -25,6 +25,10 @@ function sharedConfig() {
                 "~@ignoreThis"
             ]
         },
+        beforeLaunch: () => {
+            console.log('beforeLaunch');
+        },
+
         specs: getFeatureFiles(),
 
         onPrepare: function () {

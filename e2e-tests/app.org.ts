@@ -3,5 +3,5 @@
  */
 import { User } from './app.user';
 
-export class Organisation extends User{
+export class Organisation extends User {
 }

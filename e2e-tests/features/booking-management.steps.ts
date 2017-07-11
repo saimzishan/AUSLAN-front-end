@@ -1,18 +1,18 @@
-import { expect } from '../config/helpers/chai-imports';
+import {expect} from '../config/helpers/chai-imports';
 // import * from 'chai';
 // import {} from 'jasmine';
-import { defineSupportCode } from 'cucumber';
-import { browser, by, element, $, $$ } from 'protractor';
-import { PageHelper } from '../app.po';
-import { User } from '../app.user';
-import { Administrator } from '../app.admin';
-import { Organisation } from '../app.org';
-import { Client } from '../app.client';
-import { Interpreter } from '../app.interpreter';
-import { BookingOfficer } from '../app.bookofficer';
+import {defineSupportCode} from 'cucumber';
+import {browser, by, element, $, $$} from 'protractor';
+import {PageHelper} from '../app.po';
+import {User} from '../app.user';
+import {Administrator} from '../app.admin';
+import {Organisation} from '../app.org';
+import {Client} from '../app.client';
+import {Interpreter} from '../app.interpreter';
+import {BookingOfficer} from '../app.bookofficer';
 import {bufferWhen} from 'rxjs/operator/bufferWhen';
 
-defineSupportCode(({Given, Then, When }) => {
+defineSupportCode(({Given, Then, When}) => {
 
     let page = new PageHelper();
 
@@ -25,43 +25,19 @@ defineSupportCode(({Given, Then, When }) => {
 
     const OPTION_NUM = 1;
 
-    const mandatory_label_fields = [
+    const mandatory_label_fields = [];
 
-    ];
+    const mandatory_radio_button_related_label_fields = [];
 
-    const mandatory_radio_button_related_label_fields = [
-
-    ];
-
-    const mandatory_dropdown_related_label_fields = [
-
-    ];
-
-    const job_detail_fields = [
-        'Job',
-        'Status',
-        'State',
-        'Date',
-        'Org',
-        'Client',
-        'Suburb',
-        'Interpreter',
-        'Booking Type',
-        'Actions'
-    ];
-
+    const mandatory_dropdown_related_label_fields = [];
 //  BE ABLE TO VIEW BOOKING PAGE
-    Then(/^I will be shown with summary details$/, showSummaryDetails);
+    Then(/^I will be shown with bookings$/, showSummaryDetails);
     async function showSummaryDetails(): Promise<void> {
         await browser.waitForAngular();
-        const all_job_details = await $$('app-booking-list thead span');
-        const num_of_details = all_job_details.length;
-        expect(job_detail_fields.length).to.be.equal(num_of_details);
-        for (let i = 0; i < all_job_details.length; i++) {
-            let detail_label = await page.getText(all_job_details[i]);
-            // console.log(detail_label);
-            expect(job_detail_fields).to.includes(detail_label);
-        }
+        let tblRows = await $$('#jobs-responsive tbody tr');
+        expect(tblRows.length).to.be.greaterThan(0);
+        let span = await $('#jobs-responsive tbody > tr:first-child td.bookingID > div > span');
+        expect(span.getText()).to.eventually.equal('0001');
     }
 
     When(/^I click on 'New Booking'$/, newBookingClick);
@@ -135,11 +111,11 @@ defineSupportCode(({Given, Then, When }) => {
         // }
 
         // DROPDOWN MENU
-        for (let dropdown_i = 0; dropdown_i < all_required_drop_down.length ; dropdown_i++) {
+        for (let dropdown_i = 0; dropdown_i < all_required_drop_down.length; dropdown_i++) {
             let dropdown = all_required_drop_down[dropdown_i];
             let dropdown_parent = page.getParent(dropdown);
             let dropdown_label = page.getElementInsideByTag(dropdown_parent, 'label');
-            let dropdown_label_text = await dropdown_label.getText().then( (text) => {
+            let dropdown_label_text = await dropdown_label.getText().then((text) => {
                 // console.log(text);
                 return text;
             });
@@ -161,7 +137,7 @@ defineSupportCode(({Given, Then, When }) => {
             let radio_group = all_required_radio_buttons[radio_group_i];
             let radio_parent = page.getParent(radio_group);
             let radio_label = page.getElementInsideByTag(radio_parent, 'label');
-            let radio_label_text = await radio_label.getText().then( (text) => {
+            let radio_label_text = await radio_label.getText().then((text) => {
                 // console.log(text);
                 return text;
             });
@@ -178,19 +154,19 @@ defineSupportCode(({Given, Then, When }) => {
 
         // console.log(input_list);
         // expect(input_length).to.be.equal(mandatory_label_fields.length);
-        for (let i = 0; i < all_required_input_fields.length; i ++) {
+        for (let i = 0; i < all_required_input_fields.length; i++) {
             console.log(i);
             // page.setValue(input_list[i], '123123');
-            if ( i > 1 ) {
+            if (i > 1) {
                 let input_field = all_required_input_fields[i];
                 let isText = false;
-                await input_field.getAttribute('type').then( (val) => {
-                  isText = val  === 'text';
-                  console.log(val);
+                await input_field.getAttribute('type').then((val) => {
+                    isText = val === 'text';
+                    console.log(val);
                 });
                 let parent = page.getParent(input_field);
                 let input_label = page.getElementInsideByTag(parent, 'label');
-                let label_text = await input_label.getText().then( (text) => {
+                let label_text = await input_label.getText().then((text) => {
                     // console.log(text);
                     return text;
                 });

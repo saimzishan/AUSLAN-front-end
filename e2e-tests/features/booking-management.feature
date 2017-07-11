@@ -176,12 +176,22 @@ Feature: Booking Management
     And I am on the bookings page
 
   @ignoreThis
-#  Another view booking page
+#  Administrator can see bookings
   Scenario: Be able to view the booking page with summary details columns
     Given I exist as an Administrator
+    And A booking is created
     When I sign in with valid Administrator credentials
     Then I am on the bookings page
-    And I will be shown with summary details
+    And I will be shown with bookings
+
+  @runThis
+  #  Booking Officer can see bookings
+  Scenario: Be able to view the booking page with summary details columns
+    Given I exist as an Booking Officer
+    And A booking is created
+    When I sign in with valid Booking Officer credentials
+    Then I am on the bookings page
+    And I will be shown with bookings
 
   @ignoreThis
 #  Show profile page
@@ -194,7 +204,7 @@ Feature: Booking Management
     And I can see the fields FIRST NAME *, LAST NAME *, EMAIL *, MOBILE *, STATUS, Change Picture:
 
 #  Populated NATURE OF APPOINTMENT AND WHAT WILL BE DISCUSSED
-  @runThis
+  @ignoreThis
   Scenario: Populate Both NATURE OF APPOINTMENT AND WHAT WILL BE DISCUSSED as User
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials

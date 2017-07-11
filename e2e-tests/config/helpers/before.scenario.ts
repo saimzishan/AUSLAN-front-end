@@ -3,6 +3,7 @@ import * as path from 'path';
 import { browser } from 'protractor';
 import { WriteStream, ensureDirSync, createWriteStream } from 'fs-extra';
 import {log} from "util";
+import {exec} from 'child_process';
 
 
 interface World {
@@ -12,13 +13,7 @@ interface World {
 defineSupportCode(({Before}) => {
     Before(function (scenarioResult: HookScenarioResult) {
 
-        // const exec = require('child_process').execSync;
-        // function puts(error, stdout, stderr) { console.log(stdout); }
-        // const preloadAdmin = preloadUser('Booking Officer', 'mohjay_officer@auslan.com.au', 'Abcd#1234', 'MOH', 'JAY', '123123123', true);
-        // console.log(preloadAdmin);
-        // exec('echo \'' + preloadAdmin + '; exit\' | heroku run console --app auslan-e2e-testing', puts);
-        // exec('echo \'a = Administrator.create({email: "heuism@auslan.com.au", password: "Abcd#1234", first_name: "MOH", last_name: "JAY", mobile: "123123123"}); a.verified = true; a.save; exit\' | heroku run console --app auslan-e2e-testing', puts);
-    });
+  });
 
     function preloadUser(type: string, email: string, password: string, firstname: string, lastname: string, mobile, verified: boolean) {
         let return_command = '';
