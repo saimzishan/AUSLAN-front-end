@@ -342,4 +342,33 @@ defineSupportCode(({Given, Then, When }) => {
         });
         expect(selected_label_val).to.equal(option_text);
     }
+
+//    CLick on Request bookings
+    Then(/^I am shown with (.*) (.*) Bookings$/, showTheNumberofBooking);
+    async function showTheNumberofBooking(num_of_booking: string, type_of_booking: string): Promise<void> {
+        await browser.waitForAngular();
+        let numBooking = parseInt(num_of_booking, 10);
+        let allTypeBooking = await page.getAllByCSSandText('tbody td',  type_of_booking);
+        const totalNumofType = allTypeBooking.length;
+        expect(totalNumofType).to.equal(numBooking);
+    }
+
+    When(/^I click at the (.*) one of (.*) (.*) Bookings$/, clickAtOneofTheBooking);
+    async function clickAtOneofTheBooking(pos: string, num_of_booking: string, type_of_booking: string): Promise<void> {
+        await browser.waitForAngular();
+        let numBooking = parseInt(num_of_booking, 10);
+        let posth = parseInt(pos, 10);
+        let allTypeBooking = await page.getAllByCSSandText('tbody td',  type_of_booking);
+        const totalNumofType = allTypeBooking.length;
+        expect(posth).to.be.lessThan(totalNumofType);
+        let row = page.getParent(allTypeBooking[posth - 1]);
+        await row.click();
+    }
+
+    Then(/^I will be shown a popup message$/, showThePopup);
+    async function showThePopup(): Promise<void> {
+        await browser.waitForAngular();
+        let app_popup = page.getElementByCss('app-popup');
+        expect(app_popup).to.be.exist;
+    }
 });

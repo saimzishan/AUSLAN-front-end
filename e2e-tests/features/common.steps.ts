@@ -14,7 +14,7 @@ import {bufferWhen} from 'rxjs/operator/bufferWhen';
 import {OrganisationalRepresentative} from '../../src/app/shared/model/user.entity';
 import {main} from '@angular/compiler-cli/src/main';
 
-defineSupportCode(({Given}) => {
+defineSupportCode(({Given, When}) => {
 
   let page = new PageHelper();
 
@@ -286,6 +286,16 @@ defineSupportCode(({Given}) => {
     valid_logged_in_user = returnTypeAndUser(type).user;
     await addValidLoginUser(valid_logged_in_user, type);
     await page.navigateTo('/');
+    await browser.waitForAngular();
+    expect(page.getElementByCss('loginForm')).to.be.exist;
+  }
+
+  Given(/^I go to the website/, goToTheWebsite);
+  async function goToTheWebsite(): Promise<void> {
+    // await sendCommandToHeroku('Booking Officer', 'mohjay_bookingOfficer2@auslan.com.au', 'Abcd#1234',
+    // 'MOH', 'JAY', '123123123', true);
+    await page.navigateTo('/');
+    await browser.waitForAngular();
     expect(page.getElementByCss('loginForm')).to.be.exist;
   }
 
@@ -318,7 +328,8 @@ defineSupportCode(({Given}) => {
     // await browser.driver.sleep(2000); // waiting for the elements to be loaded
     // console.log('It is here!');
     await browser.waitForAngular();
-    expect(page.currentPath()).to.eventually.contain('booking-management');
+    let currPath = await page.currentPath();
+    expect(currPath).to.contain('booking-management');
   }
 
 
@@ -335,5 +346,12 @@ defineSupportCode(({Given}) => {
       expect(size.width).to.eql(600);
       expect(size.height).to.eql(800);
     });
+  }
+
+  When(/^I click on button '(.*)'$/, clickOnButton);
+  async function clickOnButton(btnLabel: string): Promise<void> {
+    await browser.waitForAngular();
+    let btn = page.getElementByCSSandText('.button', btnLabel);
+    await btn.click();
   }
 });

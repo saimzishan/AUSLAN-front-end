@@ -16,12 +16,12 @@ defineSupportCode(({Given, Then, When }) => {
 
     let page = new PageHelper();
 
-    When(/^I click on button '(.*)'$/, clickOnButton);
-    async function clickOnButton(btnLabel: string): Promise<void> {
-        await browser.waitForAngular();
-        let btn = page.getElementByCSSandText('.button', btnLabel);
-        await btn.click();
-    }
+    // When(/^I click on button '(.*)'$/, clickOnButton);
+    // async function clickOnButton(btnLabel: string): Promise<void> {
+    //     await browser.waitForAngular();
+    //     let btn = page.getElementByCSSandText('.button', btnLabel);
+    //     await btn.click();
+    // }
 
     Then(/^I will be taken to the 'Choose Profile' page$/, showChooseProfilePage);
     async function showChooseProfilePage(): Promise<void> {
@@ -41,14 +41,16 @@ defineSupportCode(({Given, Then, When }) => {
     When(/^I fill the field '(.*)' (.*)ly/, fillCorrectlyField);
     async function fillCorrectlyField(lblString: string, correnctNess: string): Promise<void> {
         await browser.waitForAngular();
-        let selected_label = await page.getElementByCSSandText('label', lblString);
+        // let selected_label = await page.getElementByCSSandExactText('label', lblString);
+        let select_labels = await page.getAllByCSSandText('label', lblString);
+        let selected_label = select_labels[0];
         const div = page.getParent(selected_label);
         let input = page.getElementInsideByTag(div, 'input');
         const isText = await input.getAttribute('type');
         if (correnctNess === 'correct'){
-            page.setValue(input, isText ? 'Abcde' : '123');
+            await page.setValue(input, isText ? 'Abcde' : '123');
         } else {
-            page.setValue(input, isText ? 'A' : '1');
+            await page.setValue(input, isText ? 'A' : '1');
         }
     }
 

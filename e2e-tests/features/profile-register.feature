@@ -32,8 +32,29 @@ Feature: Create Profile
     When I click on button 'Organisation'
     Then I will be taken to the 'ORGANISATION Signup' page
 
-#    On the signup page
-  @runThis
+##########    On the signup page for 3 different types of user
+#  -> valid notification
+  @ignoreThis
+  Scenario: Can get the valid notification
+    Given I go to the website
+    And I click on button 'CREATE AN ACCOUNT'
+    And I will be taken to the 'Choose Profile' page
+    And I click on button 'Interpreter'
+    And I will be taken to the 'INTERPRETER Signup' page
+    When I fill the field 'FIRST NAME *' correctly
+    Then I will get a valid notification
+
+  @ignoreThis
+  Scenario: Can get the valid notification
+    Given I go to the website
+    And I click on button 'CREATE AN ACCOUNT'
+    And I will be taken to the 'Choose Profile' page
+    And I click on button 'Client'
+    And I will be taken to the 'INDIVIDUALCLIENT Signup' page
+    When I fill the field 'FIRST NAME *' correctly
+    Then I will get a valid notification
+
+  @ignoreThis
   Scenario: Can get the valid notification
     Given I go to the website
     And I click on button 'CREATE AN ACCOUNT'
@@ -43,8 +64,28 @@ Feature: Create Profile
     When I fill the field 'FIRST NAME *' correctly
     Then I will get a valid notification
 
-#    On the signup page
-  @runThis
+#  -> invalid notification
+  @ignoreThis
+  Scenario: Can get the invalid notification
+    Given I go to the website
+    And I click on button 'CREATE AN ACCOUNT'
+    And I will be taken to the 'Choose Profile' page
+    And I click on button 'Interpreter'
+    And I will be taken to the 'INTERPRETER Signup' page
+    When I fill the field 'FIRST NAME *' incorrectly
+    Then I will get a invalid notification
+
+  @ignoreThis
+  Scenario: Can get the invalid notification
+    Given I go to the website
+    And I click on button 'CREATE AN ACCOUNT'
+    And I will be taken to the 'Choose Profile' page
+    And I click on button 'Client'
+    And I will be taken to the 'INDIVIDUALCLIENT Signup' page
+    When I fill the field 'FIRST NAME *' incorrectly
+    Then I will get a invalid notification
+
+  @ignoreThis
   Scenario: Can get the invalid notification
     Given I go to the website
     And I click on button 'CREATE AN ACCOUNT'
