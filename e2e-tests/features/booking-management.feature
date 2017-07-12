@@ -167,7 +167,7 @@ Feature: Booking Management
 #    And I don't see 1 unverified interpreters
 
 #  On mobile
-  @runThis
+  @ignoreThis
   Scenario: Interpreter login into using mobile
     Given I exist as an Interpreter
     And I am on the mobile login screen without a hero picture

@@ -4,36 +4,16 @@ import {expect} from '../config/helpers/chai-imports';
 import {defineSupportCode} from 'cucumber';
 import {browser, by, element, $, $$} from 'protractor';
 import {PageHelper} from '../app.po';
-import {User} from '../app.user';
-import {Administrator} from '../app.admin';
-import {Organisation} from '../app.org';
-import {Client} from '../app.client';
-import {Interpreter} from '../app.interpreter';
-import {BookingOfficer} from '../app.bookofficer';
-import {bufferWhen} from 'rxjs/operator/bufferWhen';
+import {CONSTANT} from '../helper';
+
 
 defineSupportCode(({Given, Then, When}) => {
 
     let page = new PageHelper();
-
-    // let nauman_admin = new Administrator('admin@auslan.com.au', 'Abcd#1234');
-
-    let cnt = 0;
-
-    const YES = 0;
-    const NO = 1;
-
-    const OPTION_NUM = 1;
-
-    const mandatory_label_fields = [];
-
-    const mandatory_radio_button_related_label_fields = [];
-
-    const mandatory_dropdown_related_label_fields = [];
 //  BE ABLE TO VIEW BOOKING PAGE
     Then(/^I will be shown with bookings$/, showSummaryDetails);
     async function showSummaryDetails(): Promise<void> {
-        await browser.waitForAngular();
+        
         let tblRows = await $$('#jobs-responsive tbody tr');
         expect(tblRows.length).to.be.greaterThan(0);
         let span = await $('#jobs-responsive tbody > tr:first-child td.bookingID > div > span');
@@ -42,14 +22,14 @@ defineSupportCode(({Given, Then, When}) => {
 
     When(/^I click on 'New Booking'$/, newBookingClick);
     async function newBookingClick(): Promise<void> {
-        await browser.waitForAngular();
+        
         let newUserBtn = page.getElementByID('lnkNewBooking');
         let click = await newUserBtn.click();
     }
 
     Then(/^I will be taken to the 'New Booking' form$/, showBookingForm);
     async function showBookingForm(): Promise<void> {
-        await browser.waitForAngular();
+        
         let currentPath = await page.currentPath();
         expect(currentPath).to.contain('create-booking');
     }
@@ -126,7 +106,7 @@ defineSupportCode(({Given, Then, When}) => {
                 await dropdown.click();
                 let all_options = await $$('md-option');
                 // console.log('get all options');
-                await all_options[OPTION_NUM].click();
+                await all_options[CONSTANT.OPTION_NUM].click();
                 // console.log('click 1 option');
             } else {
                 console.log('=========>' + dropdown_label_text + '<==========');
@@ -146,7 +126,7 @@ defineSupportCode(({Given, Then, When}) => {
             // expect(mandatory_radio_button_related_label_fields).to.include(radio_label_text);
             if (radio_label_text !== mandatory_tag) {
                 let all_radio_btn_in_group = await page.getAllByTagNameInElement(radio_group, 'md-radio-button');
-                all_radio_btn_in_group[NO].click();
+                all_radio_btn_in_group[CONSTANT.NO].click();
             } else {
                 console.log('=========>' + radio_label_text + '<==========');
             }
@@ -205,7 +185,7 @@ defineSupportCode(({Given, Then, When}) => {
         const divClientDetails = page.getNextSibling(clientOptionLabel, 'div');
         const clientRadioGroup = page.getElementInsideByTag(divClientDetails, 'md-radio-group');
         let all_radio_btn_in_group = await page.getAllByTagNameInElement(clientRadioGroup, 'md-radio-button');
-        all_radio_btn_in_group[YES].click();
+        all_radio_btn_in_group[CONSTANT.YES].click();
     }
 
     Then(/^The booking form will be automatically populated with the details.$/, populatedUserDetails);
@@ -235,7 +215,6 @@ defineSupportCode(({Given, Then, When}) => {
 
     Then(/^I am back on booking page$/, backToBookinManagementScreen);
     async function backToBookinManagementScreen(): Promise<void> {
-        await browser.waitForAngular();
         let currentPath = await page.currentPath();
         expect(currentPath).to.contain('booking-management');
     }
@@ -252,7 +231,6 @@ defineSupportCode(({Given, Then, When}) => {
 
     Then(/^I am on the individual booking page$/, onIndividualBookingScreen);
     async function onIndividualBookingScreen(): Promise<void> {
-        await browser.waitForAngular();
         let currentPath = await page.currentPath();
         expect(currentPath).to.contain('booking-job');
     }
@@ -273,14 +251,12 @@ defineSupportCode(({Given, Then, When}) => {
 
     Then(/^I will be taken to my individual profile page$/, takeToIndividualPage);
     async function takeToIndividualPage(): Promise<void> {
-        await browser.waitForAngular();
         let currentPath = await page.currentPath();
         expect(currentPath).to.contain('profile');
     }
 
     Then(/^I can see the fields (.*)$/, showAllTheFields);
     async function showAllTheFields(fields_string: string): Promise<void> {
-        await browser.waitForAngular();
         const fields = fields_string.split(', ');
         const all_fields = await $$('form div.form-field label');
         const all_fields_length = all_fields.length;
@@ -308,7 +284,6 @@ defineSupportCode(({Given, Then, When}) => {
 
     Then(/^The cell of (.*) will be populated with (.*)$/, checkTheDropDown);
     async function checkTheDropDown(label_text: string, option_text: string): Promise<void> {
-        await browser.waitForAngular();
         const selected_label = await page.getElementByCSSandText('label', label_text);
         const div = page.getParent(selected_label);
         const select_dropdown = page.getElementInsideByTag(div, 'select');
@@ -322,7 +297,6 @@ defineSupportCode(({Given, Then, When}) => {
 //    CLick on Request bookings
     Then(/^I am shown with (.*) (.*) Bookings$/, showTheNumberofBooking);
     async function showTheNumberofBooking(num_of_booking: string, type_of_booking: string): Promise<void> {
-        await browser.waitForAngular();
         let numBooking = parseInt(num_of_booking, 10);
         let allTypeBooking = await page.getAllByCSSandText('tbody td',  type_of_booking);
         const totalNumofType = allTypeBooking.length;
@@ -331,7 +305,6 @@ defineSupportCode(({Given, Then, When}) => {
 
     When(/^I click at the (.*) one of (.*) (.*) Bookings$/, clickAtOneofTheBooking);
     async function clickAtOneofTheBooking(pos: string, num_of_booking: string, type_of_booking: string): Promise<void> {
-        await browser.waitForAngular();
         let numBooking = parseInt(num_of_booking, 10);
         let posth = parseInt(pos, 10);
         let allTypeBooking = await page.getAllByCSSandText('tbody td',  type_of_booking);
@@ -343,7 +316,6 @@ defineSupportCode(({Given, Then, When}) => {
 
     Then(/^I will be shown a popup message$/, showThePopup);
     async function showThePopup(): Promise<void> {
-        await browser.waitForAngular();
         let app_popup = page.getElementByCss('app-popup');
         expect(app_popup).to.be.exist;
     }

@@ -16,7 +16,7 @@ defineSupportCode(({After}) => {
         // exec('heroku run console --app auslan', puts);
         //
         // // return Promise.resolve();
-
+        browser.get('/');
         const world = this;
         return (scenarioResult.status === 'failed') ? saveFailedScenarioScreenshot(world, scenarioResult) : Promise.resolve();
     });

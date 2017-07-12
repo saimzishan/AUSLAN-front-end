@@ -1,59 +1,49 @@
-import { expect } from '../config/helpers/chai-imports';
-// import * from 'chai';
-// import {} from 'jasmine';
-import { defineSupportCode } from 'cucumber';
-import { browser, by, element, $, $$ } from 'protractor';
-import { PageHelper } from '../app.po';
-import { User } from '../app.user';
-import { Administrator } from '../app.admin';
-import { Organisation } from '../app.org';
-import { Client } from '../app.client';
-import { Interpreter } from '../app.interpreter';
-import { BookingOfficer } from '../app.bookofficer';
-import {bufferWhen} from 'rxjs/operator/bufferWhen';
+import {expect} from '../config/helpers/chai-imports';
+import {defineSupportCode} from 'cucumber';
+import {browser, by, element, $, $$, protractor} from 'protractor';
+import {PageHelper} from '../app.po';
+import {User, Administrator, BookingOfficer, Interpreter, Organisation, Client} from '../helper';
 
-defineSupportCode(({Given, Then, When }) => {
+defineSupportCode(({Given, Then, When}) => {
 
     let page = new PageHelper();
 
-    // let nauman_admin = new Administrator('admin@auslan.com.au', 'Abcd#1234');
-
     let cnt = 0;
 
-    function returnValidUser(type: string){
+    function returnValidUser(type: string) {
         let chosen_type = '';
         let valid_user = new User('', '', '', '', '');
         switch (type) {
             case 'Administrator':
                 chosen_type = 'Administrator';
-                valid_user = new Administrator('the_admin'+ Math.round(Math.random() * 100) +'@curvetomorrow.com.au',
+                valid_user = new Administrator('the_admin' + Math.round(Math.random() * 100) + '@curvetomorrow.com.au',
                     'Pass@1234', 'Administrator', 'The', '0917257725');
                 break;
             case 'Booking Officer':
                 chosen_type = 'Booking Officer';
-                valid_user = new BookingOfficer('the_bookingofficer'+ Math.round(Math.random() * 100) +'@curvetomorrow.com.au',
+                valid_user = new BookingOfficer('the_bookingofficer' + Math.round(Math.random() * 100) + '@curvetomorrow.com.au',
                     'Pass@1234', 'BookingOfficer', 'The', '0917257725');
                 break;
             case 'Interpreter':
                 chosen_type = 'Interpreter';
-                valid_user = new Interpreter('the_interpreter'+ Math.round(Math.random() * 100) +'@curvetomorrow.com.au',
+                valid_user = new Interpreter('the_interpreter' + Math.round(Math.random() * 100) + '@curvetomorrow.com.au',
                     'Pass@1234', 'Interpreter', 'The', '0917257725');
                 break;
             case 'Client':
                 chosen_type = 'Individual Client';
-                valid_user = new Client('the_client'+ Math.round(Math.random() * 100) +'@curvetomorrow.com.au',
+                valid_user = new Client('the_client' + Math.round(Math.random() * 100) + '@curvetomorrow.com.au',
                     'Pass@1234', 'Client', 'The', '0917257725');
                 break;
             case 'Organisational Representative':
                 chosen_type = 'Organisational';
-                valid_user = new Organisation('the_orgrep'+ Math.round(Math.random() * 100) +'@curvetomorrow.com.au',
+                valid_user = new Organisation('the_orgrep' + Math.round(Math.random() * 100) + '@curvetomorrow.com.au',
                     'Pass@1234', 'OrgRep', 'The', '0917257725');
                 break;
         }
         return {type: chosen_type, user: valid_user};
     }
 
-    function returnInvalidUser(type: string){
+    function returnInvalidUser(type: string) {
         let chosen_type = '';
         let invalid_user = new User('', '', '', '', '');
         switch (type) {
@@ -86,7 +76,7 @@ defineSupportCode(({Given, Then, When }) => {
         return {type: chosen_type, user: invalid_user};
     }
 
-    function returnTypeAndUser(type: string, valid: boolean){
+    function returnTypeAndUser(type: string, valid: boolean) {
         if (valid) {
             return returnValidUser(type);
         }
@@ -137,25 +127,11 @@ defineSupportCode(({Given, Then, When }) => {
     //     expect(page.currentPath()).to.eventually.contain('booking-management');
     // }
 
-    Given(/^I hover on the 'Profile'$/, hoverOnProfile);
-    async function hoverOnProfile(): Promise<void>{
-        let el = page.getElementByID('lnkProfile');
 
-        browser.actions().mouseMove(el).perform();
-        await browser.driver.sleep(2000);
-        expect(page.getElementByID('lnkSettings')).to.be.exist;
-    }
-
-    Given(/^I go to the 'User Management' list page$/, clickOnUserManagementPage);
-    async function clickOnUserManagementPage(): Promise<void>{
-        page.getElementByID('lnkSettings').click();
-        await browser.driver.sleep(2000);
-        expect(page.currentPath()).to.eventually.contain('user-management');
-    }
 
     // ================================== CREATING USER ========================================
     When(/^I click on 'Create New User'$/, createUserClick);
-    async function createUserClick(): Promise<void>{
+    async function createUserClick(): Promise<void> {
         let newUserBtn = page.getButtonByText('+ New User');
         newUserBtn.click();
         await browser.driver.sleep(2000);
@@ -163,7 +139,7 @@ defineSupportCode(({Given, Then, When }) => {
     }
 
     When(/^I add a valid (.*)/, addValidUser);
-    async function addValidUser(type: string): Promise<void>{
+    async function addValidUser(type: string): Promise<void> {
         let type_valid_user = returnTypeAndUser(type, true);
         let chosen_type = type_valid_user.type;
         let valid_user = type_valid_user.user;
@@ -191,7 +167,7 @@ defineSupportCode(({Given, Then, When }) => {
     }
 
     When(/^I click on 'Create'$/, createUserClickInDialog);
-    async function createUserClickInDialog(): Promise<void>{
+    async function createUserClickInDialog(): Promise<void> {
         let tr = $$('table.custom tr');
         let current_count = await tr.count().then((count) => {
             // console.log(count);
@@ -206,14 +182,14 @@ defineSupportCode(({Given, Then, When }) => {
     }
 
     Then(/^I am on the 'User Management' list page$/, onUserManagementPageAfterOperation);
-    async function onUserManagementPageAfterOperation(): Promise<void>{
+    async function onUserManagementPageAfterOperation(): Promise<void> {
         await browser.waitForAngular();
         let currentPath = await page.currentPath();
         expect(currentPath).to.contain('user-management');
     }
 
     Then(/^the valid (.*) should be in the list$/, validUserShouldBeOntheList);
-    async function validUserShouldBeOntheList(type: string): Promise<void>{
+    async function validUserShouldBeOntheList(type: string): Promise<void> {
         let tr = $$('table.custom tr');
         let current_count = await tr.count().then((d) => {
             // console.log(d-1);
@@ -226,7 +202,7 @@ defineSupportCode(({Given, Then, When }) => {
 
     // ================================== INVALID CREATING ========================================
     When(/^I add an invalid (.*)/, addInvalidUser);
-    async function addInvalidUser(type: string): Promise<void>{
+    async function addInvalidUser(type: string): Promise<void> {
         let type_invalid_user = returnTypeAndUser(type, false);
         let chosen_type = type_invalid_user.type;
         let invalid_user = type_invalid_user.user;
@@ -255,7 +231,7 @@ defineSupportCode(({Given, Then, When }) => {
     }
 
     Then(/^I am shown a validation error/, showValidationError);
-    async function showValidationError(): Promise<void>{
+    async function showValidationError(): Promise<void> {
         let errs = page.getAll('.inline-icon.error');
         let errs_count = await errs.count().then((count) => {
             // expect(count).to.be.greaterThan(0);
@@ -266,7 +242,7 @@ defineSupportCode(({Given, Then, When }) => {
     }
 
     When(/^I update the invalid (.*) information/, updateInvalidatedField);
-    async function updateInvalidatedField(type: string): Promise<void>{
+    async function updateInvalidatedField(type: string): Promise<void> {
         let type_valid_user = returnTypeAndUser(type, true);
         let valid_user = type_valid_user.user;
         let dlg = page.getElementByCss('.md-dialog');
@@ -281,7 +257,7 @@ defineSupportCode(({Given, Then, When }) => {
 
     // ================================== UPDATING & DISABLE USER ========================================
     When(/^I click on edit for an (.*)existing (.*)$/, clickOnEditUser);
-    async function clickOnEditUser(active: string, type: string): Promise<void>{
+    async function clickOnEditUser(active: string, type: string): Promise<void> {
         let type_valid_user = returnTypeAndUser(type, true);
         let chosen_type = type_valid_user.type;
         let valid_user = type_valid_user.user;
@@ -321,7 +297,7 @@ defineSupportCode(({Given, Then, When }) => {
     }
 
     Then(/^I update some (.*) fields/, updateValidUserFields);
-    async function updateValidUserFields(type: string): Promise<void>{
+    async function updateValidUserFields(type: string): Promise<void> {
         let type_valid_user = returnTypeAndUser(type, true);
         let chosen_type = type_valid_user.type;
         let valid_user = type_valid_user.user;
@@ -340,7 +316,7 @@ defineSupportCode(({Given, Then, When }) => {
     }
 
     Then(/^I update (.*) available field/, updateAvailableField);
-    async function updateAvailableField(type: string): Promise<void>{
+    async function updateAvailableField(type: string): Promise<void> {
         await browser.driver.sleep(1000);
         let dlg = page.getElementByCss('.md-dialog');
         let trigger = page.getElementInsideByCSS(dlg, '.mat-select-trigger');
@@ -360,7 +336,7 @@ defineSupportCode(({Given, Then, When }) => {
 
     When(/^I click on update$/, clickOnUpdateOrSaveUser);
     When(/^I click on 'SAVE'$/, clickOnUpdateOrSaveUser);
-    async function clickOnUpdateOrSaveUser(): Promise<void>{
+    async function clickOnUpdateOrSaveUser(): Promise<void> {
         await browser.driver.sleep(2000);
         let btn = page.getElementByName('add_user');
         btn.click();
@@ -368,7 +344,7 @@ defineSupportCode(({Given, Then, When }) => {
 
     Then(/^the updated (.*) should be in the list$/, updatedUserShouldBeOntheList);
     Then(/^the (.*) should be disabled$/, updatedUserShouldBeOntheList);
-    async function updatedUserShouldBeOntheList(type: string): Promise<void>{
+    async function updatedUserShouldBeOntheList(type: string): Promise<void> {
         let notification = page.getElementByCss('.simple-notification');
         let sn_title = page.getElementInsideByCSS(notification, '.sn-title');
         let notificationTitle = await page.getText(sn_title);

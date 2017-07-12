@@ -26,23 +26,22 @@ function sharedConfig() {
             ]
         },
         beforeLaunch: () => {
-            console.log('beforeLaunch');
         },
 
         specs: getFeatureFiles(),
 
         onPrepare: function () {
-          browser.driver.manage().window().maximize();
+
         },
         afterLaunch: function () {
-            multiCucumberHTLMReporter.generate({
+            /*multiCucumberHTLMReporter.generate({
                 openReportInBrowser: true,
                 jsonDir: '.tmp/json-output',
                 reportPath: './.tmp/report/'
-            });
+            });*/
         },
 
-        allScriptsTimeout: 11000,
+        allScriptsTimeout: 30000,
         disableChecks: true,
 
         // From `protractor-cucumber-framework`, allows cucumber to handle the 199 exception and record it appropriately
