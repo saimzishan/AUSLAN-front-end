@@ -8,7 +8,7 @@ config.restartBrowserBetweenTests= false;
     {
       browserName: 'chrome',
       chromeOptions: {
-          args: ['--start-maximized', /*'--headless','--disable-gpu'*/]
+          args: ['--start-maximized', '--web-security=false'/*'--headless','--disable-gpu'*/]
       }
     }
 ];

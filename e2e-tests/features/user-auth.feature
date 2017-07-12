@@ -7,14 +7,14 @@ Feature: As all, I can login/logout, change profile, cannot login with invalid p
     Then I am shown the login screen, with picture and signup button
 
   @runThis
-  Scenario: As all, I cannot login without valid password
-    And I sign in with invalid Booking Officer credentials
-    Then I will get an error message saying "Email or password not found"
-
-  @runThis
   Scenario: As all, I can login/logout
     And I sign in with valid Booking Officer credentials
     Then I will be shown the bookings page
     And I click on my name
     And I click on logout
     Then I won't be logged in anymore and will be taken back to the loging screen
+
+  @runThis
+  Scenario: As all, I cannot login without valid password
+    And I sign in with invalid Booking Officer credentials
+    Then I will get an error message saying "Email or password not found"

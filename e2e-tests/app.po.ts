@@ -3,7 +3,7 @@ import { browser, element, by } from 'protractor';
 export class PageHelper {
 
   navigateTo(path: string ) {
-    return browser.get(path);
+    return browser.driver.get(path);
   }
 
   getElementByCss(css: string) {
@@ -79,6 +79,6 @@ export class PageHelper {
   }
 
   currentPath() {
-    return browser.getCurrentUrl();
+    return browser.driver.getCurrentUrl();
   }
 }

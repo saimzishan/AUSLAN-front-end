@@ -107,9 +107,6 @@ defineSupportCode(({Given, When}) => {
         await page.navigateTo(browser.baseUrl);
         // Cannot believe this workaround
         // https://stackoverflow.com/questions/35938841/window-angular-is-undefined-when-using-protractor-for-automated-testing
-        browser.ignoreSynchronization = true;
-        browser.waitForAngular();
-        browser.sleep(500);
         await loginScreenLoaded();
 
 
@@ -168,9 +165,6 @@ defineSupportCode(({Given, When}) => {
     Given(/^I am on the bookings page$/, onBookinManagementScreen);
     Given(/^I am on my admin home screen$/, onBookinManagementScreen);
     async function onBookinManagementScreen(): Promise<void> {
-        browser.ignoreSynchronization = false;
-        browser.waitForAngular();
-
         let path = await page.currentPath();
         expect(path).to.contain('booking-management');
     }
