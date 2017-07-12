@@ -13,8 +13,7 @@ interface World {
 
 defineSupportCode(({Before}) => {
     Before(function (scenarioResult: HookScenarioResult) {
-        Heroku.sendCommandToHeroku('User.destroy_all');
-        Heroku.sendCommandToHeroku('Booking.destroy_all');
+
     });
 
     function preloadUser(type: string, email: string, password: string, firstname: string, lastname: string, mobile, verified: boolean) {

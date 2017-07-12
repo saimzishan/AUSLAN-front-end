@@ -2,6 +2,7 @@ import { defineSupportCode, HookScenarioResult, } from 'cucumber';
 import * as path from 'path';
 import { browser } from 'protractor';
 import { WriteStream, ensureDirSync, createWriteStream } from 'fs-extra';
+import {Heroku} from '../../helper';
 
 
 interface World {
@@ -10,13 +11,8 @@ interface World {
 
 defineSupportCode(({After}) => {
     After(function (scenarioResult: HookScenarioResult): Promise<void> {
-    // After(function (scenarioResult: HookScenarioResult) {
-        // const exec = require('child_process').execSync;
-        // function puts(error, stdout, stderr) { console.log(stdout); }
-        // exec('heroku run console --app auslan', puts);
-        //
-        // // return Promise.resolve();
-        browser.get('/');
+        Heroku.sendCommandToHeroku('User.destroy_all');
+        Heroku.sendCommandToHeroku('Booking.destroy_all');
         const world = this;
         return (scenarioResult.status === 'failed') ? saveFailedScenarioScreenshot(world, scenarioResult) : Promise.resolve();
     });

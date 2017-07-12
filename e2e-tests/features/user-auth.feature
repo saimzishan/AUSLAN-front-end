@@ -6,13 +6,10 @@ Feature: As all, I can login/logout, change profile, cannot login with invalid p
     And I go to the website
     Then I am shown the login screen, with picture and signup button
 
-
   @runThis
   Scenario: As all, I cannot login without valid password
     And I sign in with invalid Booking Officer credentials
     Then I will get an error message saying "Email or password not found"
-
-
 
   @runThis
   Scenario: As all, I can login/logout

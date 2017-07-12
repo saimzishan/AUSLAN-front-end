@@ -79,7 +79,7 @@ defineSupportCode(({Given, When}) => {
         let el = page.getElementByID('lnkProfile');
         await browser.actions().mouseMove(el).perform();
         let elm = $('lnkLogout');
-        browser.wait(protractor.ExpectedConditions.presenceOf(elm), 5000);
+        browser.wait(protractor.ExpectedConditions.presenceOf(elm), 15000);
         expect(elm).to.be.exist;
 
     }
@@ -104,8 +104,14 @@ defineSupportCode(({Given, When}) => {
 
     Given(/^I go to the website/, goToTheWebsite);
     async function goToTheWebsite(): Promise<void> {
-        await page.navigateTo('/');
+        await page.navigateTo(browser.baseUrl);
+        // Cannot believe this workaround
+        // https://stackoverflow.com/questions/35938841/window-angular-is-undefined-when-using-protractor-for-automated-testing
+        browser.ignoreSynchronization = true;
+        browser.waitForAngular();
+        browser.sleep(500);
         await loginScreenLoaded();
+
 
     }
 
@@ -155,14 +161,18 @@ defineSupportCode(({Given, When}) => {
 
         page.setValue(el, email);
         page.setValue(ps, pass);
-        let click = await lu.click();
+        await lu.click();
     }
 
     Given(/^I will be shown the bookings page$/, onBookinManagementScreen);
     Given(/^I am on the bookings page$/, onBookinManagementScreen);
     Given(/^I am on my admin home screen$/, onBookinManagementScreen);
     async function onBookinManagementScreen(): Promise<void> {
-        expect(page.currentPath()).to.eventually.contain('booking-management');
+        browser.ignoreSynchronization = false;
+        browser.waitForAngular();
+
+        let path = await page.currentPath();
+        expect(path).to.contain('booking-management');
     }
 
     Given(/^I am on the mobile login screen without a hero picture$/, onMobileResolution);

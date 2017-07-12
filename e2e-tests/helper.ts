@@ -232,9 +232,20 @@ export class Heroku {
 
     static sendCommandToHeroku(command) {
         const exec = require('child_process').execSync;
-        // exec('echo \'' + command + '; exit\' | heroku run console --app auslan-e2e-testing', puts);
         console.log(command);
         execSync('cd ../booking-system-api/ && echo  \'' + command + ' \' | bundle exec rails c && cd ../booking-system-frontend/'
+            , (o1, o2, o3) => {
+                console.log('Heroku Command => Output', o1);
+                console.log('Heroku Command => StdError', o2);
+                console.log('Heroku Command => Error', o3);
+
+            });
+    }
+
+    static sendCommandToHerokuAsync(command) {
+        const exec = require('child_process').exec;
+        console.log(command);
+        exec('cd ../booking-system-api/ && echo  \'' + command + ' \' | bundle exec rails c && cd ../booking-system-frontend/'
             , (o1, o2, o3) => {
                 console.log('Heroku Command => Output', o1);
                 console.log('Heroku Command => StdError', o2);

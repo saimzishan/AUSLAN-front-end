@@ -13,7 +13,6 @@ defineSupportCode(({Given, Then, When}) => {
 //  BE ABLE TO VIEW BOOKING PAGE
     Then(/^I will be shown with bookings$/, showSummaryDetails);
     async function showSummaryDetails(): Promise<void> {
-        
         let tblRows = await $$('#jobs-responsive tbody tr');
         expect(tblRows.length).to.be.greaterThan(0);
         let span = await $('#jobs-responsive tbody > tr:first-child td.bookingID > div > span');
@@ -22,14 +21,12 @@ defineSupportCode(({Given, Then, When}) => {
 
     When(/^I click on 'New Booking'$/, newBookingClick);
     async function newBookingClick(): Promise<void> {
-        
         let newUserBtn = page.getElementByID('lnkNewBooking');
         let click = await newUserBtn.click();
     }
 
     Then(/^I will be taken to the 'New Booking' form$/, showBookingForm);
     async function showBookingForm(): Promise<void> {
-        
         let currentPath = await page.currentPath();
         expect(currentPath).to.contain('create-booking');
     }
