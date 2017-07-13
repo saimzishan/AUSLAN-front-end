@@ -1,12 +1,12 @@
 import {expect} from '../config/helpers/chai-imports';
 import {defineSupportCode} from 'cucumber';
 import {browser, by, element, $, $$, protractor} from 'protractor';
-import {PageHelper} from '../app.po';
+import {PageObject} from '../po/app.po';
 import {User, Administrator, BookingOfficer, Interpreter, Organisation, Client} from '../helper';
 
 defineSupportCode(({Given, Then, When}) => {
 
-    let page = new PageHelper();
+    let page = new PageObject();
 
     let cnt = 0;
 

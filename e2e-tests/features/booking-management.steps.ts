@@ -3,13 +3,13 @@ import {expect} from '../config/helpers/chai-imports';
 // import {} from 'jasmine';
 import {defineSupportCode} from 'cucumber';
 import {browser, by, element, $, $$} from 'protractor';
-import {PageHelper} from '../app.po';
+import {PageObject} from '../po/app.po';
 import {CONSTANT} from '../helper';
 
 
 defineSupportCode(({Given, Then, When}) => {
 
-    let page = new PageHelper();
+    let page = new PageObject();
 //  BE ABLE TO VIEW BOOKING PAGE
     Then(/^I will be shown with bookings$/, showSummaryDetails);
     async function showSummaryDetails(): Promise<void> {

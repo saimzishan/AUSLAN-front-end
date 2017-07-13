@@ -7,6 +7,7 @@ exports.config = sharedConfig();
 
 function sharedConfig() {
     const config = {
+
         framework: 'custom',
         frameworkPath: require.resolve('protractor-cucumber-framework'),
         cucumberOpts: {
@@ -41,11 +42,10 @@ function sharedConfig() {
             });*/
         },
 
-        allScriptsTimeout: 30000,
         disableChecks: true,
 
         // From `protractor-cucumber-framework`, allows cucumber to handle the 199 exception and record it appropriately
-        ignoreUncaughtExceptions: true
+        ignoreUncaughtExceptions: false
     };
 
     return config;

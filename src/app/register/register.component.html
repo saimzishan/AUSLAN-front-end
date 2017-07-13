@@ -18,7 +18,9 @@
 							<div class="form-field">
 								<label>FIRST NAME *	</label>
 
-								<input type="text" class="inline-icon inline-icon-user-circle valid" placeholder="Enter your first name" [(ngModel)]="model.first_name" name="first_name"
+								<input type="text" class="inline-icon inline-icon-user-circle valid" placeholder="Enter your first name"
+									   [(ngModel)]="model.first_name"
+									   name="first_name"
 									#first_name="ngModel" [rangeLength]="[3, 20]" required>
 									<span *ngIf="first_name.touched && !first_name.errors?.required && !first_name.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
 									<span *ngIf="first_name.touched && (first_name.errors?.required || first_name.errors?.rangeLength);" class="inline-icon error">

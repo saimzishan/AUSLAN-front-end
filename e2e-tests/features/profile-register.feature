@@ -1,96 +1,71 @@
 Feature: Create Profile
 
-#  Background: Can be able to show the booking form
-  @ignoreThis
-  Scenario: Can press the Create Account buttobuttonn
+ Background: I as an all user should be able to see the profile page to create different
+    types of accounts
     Given I go to the website
+    And I am shown the login screen, with picture and signup button
     When I click on button 'CREATE AN ACCOUNT'
     Then I will be taken to the 'Choose Profile' page
 
-#    go to the sign up page
-  @ignoreThis
+
+#  -> invalid notification
+  @runThis
+  Scenario: Can get the invalid notification for interpreter
+    And I click on button 'Interpreter'
+    And I will be taken to the 'INTERPRETER Signup' page
+    When I fill the field 'FIRST NAME *' incorrectly
+    Then I will get a error notification
+
+  @runThis
+  Scenario: Can get the invalid notification for individual client
+    And I click on button 'Client'
+    And I will be taken to the 'INDIVIDUALCLIENT Signup' page
+    When I fill the field 'FIRST NAME *' incorrectly
+    Then I will get a error notification
+
+  @runThis
+  Scenario: Can get the invalid notification for organisation
+    And I click on button 'Organisation'
+    And I will be taken to the 'ORGANISATION Signup' page
+    When I fill the field 'FIRST NAME *' incorrectly
+    Then I will get a error notification
+
+  @runThis
   Scenario: Can press the Interpreter
-    Given I go to the website
-    And I click on button 'CREATE AN ACCOUNT'
-    And I will be taken to the 'Choose Profile' page
     When I click on button 'Interpreter'
     Then I will be taken to the 'INTERPRETER Signup' page
 
-  @ignoreThis
+  @runThis
   Scenario: Can press the Client
-    Given I go to the website
-    And I click on button 'CREATE AN ACCOUNT'
-    And I will be taken to the 'Choose Profile' page
     When I click on button 'Client'
     Then I will be taken to the 'INDIVIDUALCLIENT Signup' page
 
-  @ignoreThis
+  @runThis
   Scenario: Can press the Organisation Rep
-    Given I go to the website
-    And I click on button 'CREATE AN ACCOUNT'
-    And I will be taken to the 'Choose Profile' page
     When I click on button 'Organisation'
     Then I will be taken to the 'ORGANISATION Signup' page
 
 ##########    On the signup page for 3 different types of user
 #  -> valid notification
-  @ignoreThis
-  Scenario: Can get the valid notification
-    Given I go to the website
-    And I click on button 'CREATE AN ACCOUNT'
-    And I will be taken to the 'Choose Profile' page
-    And I click on button 'Interpreter'
-    And I will be taken to the 'INTERPRETER Signup' page
-    When I fill the field 'FIRST NAME *' correctly
-    Then I will get a valid notification
 
-  @ignoreThis
-  Scenario: Can get the valid notification
-    Given I go to the website
-    And I click on button 'CREATE AN ACCOUNT'
-    And I will be taken to the 'Choose Profile' page
+  @runThis
+  Scenario: Can get the valid notification for Individual Client
     And I click on button 'Client'
     And I will be taken to the 'INDIVIDUALCLIENT Signup' page
     When I fill the field 'FIRST NAME *' correctly
     Then I will get a valid notification
 
-  @ignoreThis
-  Scenario: Can get the valid notification
-    Given I go to the website
-    And I click on button 'CREATE AN ACCOUNT'
-    And I will be taken to the 'Choose Profile' page
+
+  @runThis
+  Scenario: Can get the valid notification for interpreter page
+    And I click on button 'Interpreter'
+    And I will be taken to the 'INTERPRETER Signup' page
+    When I fill the field 'FIRST NAME *' correctly
+    Then I will get a valid notification
+
+  @runThis
+  Scenario: Can get the valid notification for organisation
     And I click on button 'Organisation'
     And I will be taken to the 'ORGANISATION Signup' page
     When I fill the field 'FIRST NAME *' correctly
     Then I will get a valid notification
-
-#  -> invalid notification
-  @ignoreThis
-  Scenario: Can get the invalid notification
-    Given I go to the website
-    And I click on button 'CREATE AN ACCOUNT'
-    And I will be taken to the 'Choose Profile' page
-    And I click on button 'Interpreter'
-    And I will be taken to the 'INTERPRETER Signup' page
-    When I fill the field 'FIRST NAME *' incorrectly
-    Then I will get a invalid notification
-
-  @ignoreThis
-  Scenario: Can get the invalid notification
-    Given I go to the website
-    And I click on button 'CREATE AN ACCOUNT'
-    And I will be taken to the 'Choose Profile' page
-    And I click on button 'Client'
-    And I will be taken to the 'INDIVIDUALCLIENT Signup' page
-    When I fill the field 'FIRST NAME *' incorrectly
-    Then I will get a invalid notification
-
-  @ignoreThis
-  Scenario: Can get the invalid notification
-    Given I go to the website
-    And I click on button 'CREATE AN ACCOUNT'
-    And I will be taken to the 'Choose Profile' page
-    And I click on button 'Organisation'
-    And I will be taken to the 'ORGANISATION Signup' page
-    When I fill the field 'FIRST NAME *' incorrectly
-    Then I will get a invalid notification

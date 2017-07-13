@@ -8,10 +8,10 @@
       <div class="form-field">
         <label>CONTACT FIRST NAME *	</label>
 
-        <input type="text" class="inline-icon inline-icon-user-circle valid" placeholder="Enter your first name" [(ngModel)]="primaryContact.first_name" name="first_name"
-               #first_name="ngModel" [rangeLength]="[3, 20]" required>
-        <span *ngIf="first_name.touched && !first_name.errors?.required && !first_name.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
-        <span *ngIf="first_name.touched && (first_name.errors?.required || first_name.errors?.rangeLength);" class="inline-icon error">
+        <input type="text" class="inline-icon inline-icon-user-circle valid" placeholder="Enter your first name" [(ngModel)]="primaryContact.first_name" name="cn_first_name"
+               #cn_first_name="ngModel" [rangeLength]="[3, 20]" required>
+        <span *ngIf="cn_first_name.touched && !cn_first_name.errors?.required && !cn_first_name.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
+        <span *ngIf="cn_first_name.touched && (cn_first_name.errors?.required || cn_first_name.errors?.rangeLength);" class="inline-icon error">
 											<span>Minimum 3 characters required.</span>!</span>
       </div>
     </div>
@@ -19,10 +19,10 @@
       <div class="form-field">
         <label>CONTACT LAST NAME *</label>
 
-        <input type="text" class="inline-icon inline-icon-user-circle valid" placeholder="Enter your last name" [(ngModel)]="primaryContact.last_name" name="last_name"
-               #last_name="ngModel" [rangeLength]="[3, 30]" required>
-        <span *ngIf="last_name.touched && !last_name.errors?.required && !last_name.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
-        <span *ngIf="last_name.touched && (last_name.errors?.required || last_name.errors?.rangeLength);" class="inline-icon error">
+        <input type="text" class="inline-icon inline-icon-user-circle valid" placeholder="Enter your last name" [(ngModel)]="primaryContact.last_name" name="cn_last_name"
+               #cn_last_name="ngModel" [rangeLength]="[3, 30]" required>
+        <span *ngIf="cn_last_name.touched && !cn_last_name.errors?.required && !cn_last_name.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
+        <span *ngIf="cn_last_name.touched && (cn_last_name.errors?.required || cn_last_name.errors?.rangeLength);" class="inline-icon error">
 													<span>Minimum 3 characters required.</span>!</span>
       </div>
     </div>
@@ -30,10 +30,10 @@
       <div class="form-field">
         <label class="icon-email">
           CONTACT EMAIL * </label>
-        <input type="email" id="email" placeholder="Enter your email" [(ngModel)]="primaryContact.email" name="email" #email="ngModel" email
+        <input type="email" id="email" placeholder="Enter your email" [(ngModel)]="primaryContact.email" name="cn_email" #cn_email="ngModel" email
                required>
-        <span *ngIf="email.touched && !email.errors?.email;" class="inline-icon inline-icon-valid valid"></span>
-        <span *ngIf="(email.dirty || email.touched) && (email.errors?.required || email.errors?.email);" class="inline-icon error">
+        <span *ngIf="cn_email.touched && !cn_email.errors?.email;" class="inline-icon inline-icon-valid valid"></span>
+        <span *ngIf="(cn_email.dirty || cn_email.touched) && (cn_email.errors?.required || cn_email.errors?.email);" class="inline-icon error">
 										<span>Email is required</span>!</span>
       </div>
     </div>
@@ -42,10 +42,10 @@
         <label class="icon-email">
           CONTACT NUMBER * </label>
         <input type="tel" id="phone" placeholder="Enter your contact number"
-               [(ngModel)]="primaryContact.phone_number" name="phone" #phone="ngModel" digits=""
+               [(ngModel)]="primaryContact.phone_number" name="cn_phone" #cn_phone="ngModel" digits
                required>
-        <span *ngIf="phone.touched && !phone.errors?.email;" class="inline-icon inline-icon-valid valid"></span>
-        <span *ngIf="(phone.dirty || phone.touched) && (phone.errors?.required || phone.errors?.email);" class="inline-icon error">
+        <span *ngIf="cn_phone.touched && !cn_phone.errors?.email;" class="inline-icon inline-icon-valid valid"></span>
+        <span *ngIf="(cn_phone.dirty || cn_phone.touched) && (cn_phone.errors?.required || cn_phone.errors?.email);" class="inline-icon error">
 										<span>Contact Number is required</span>!</span>
       </div>
     </div>

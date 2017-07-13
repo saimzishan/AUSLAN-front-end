@@ -1,24 +1,25 @@
 import {expect} from '../config/helpers/chai-imports';
 import {defineSupportCode} from 'cucumber';
 import {browser, by, element, $, $$, protractor} from 'protractor';
-import {PageHelper} from '../app.po';
+import {PageObject} from '../po/app.po';
 import {User, Administrator, BookingOfficer, Interpreter, Organisation, Client, Heroku} from '../helper';
 import {OrganisationalRepresentative} from '../../src/app/shared/model/user.entity';
+import {HomePage} from '../po/home-page.po';
 
 defineSupportCode(({Given, When}) => {
 
-    let page = new PageHelper();
+    let page = new PageObject();
 
     let currentlyLoggedInUser;
     // // ================================== GIVEN PART ========================================
     Given(/^There is (.*) (.*) (.*)/, preloadANumberOfUser);
-    async function preloadANumberOfUser(numberOfUser: string, active: string, type: string): Promise<void> {
+    async function preloadANumberOfUser(numberOfUser: string, active: string, type: string) {
         await Heroku.createBulkUsers(numberOfUser, active, type);
     }
 
     Given(/^A booking is created/, givenBookingCreated);
 
-    async function givenBookingCreated(): Promise<void> {
+    async function givenBookingCreated() {
         const mock_booking = new Object({
             'venue': 'Fed Square',
             'requested_by_first_name': 'Georgious',
@@ -74,7 +75,7 @@ defineSupportCode(({Given, When}) => {
     // ================================== COMMON PART ========================================
 
     Given(/^I click on my name$/, hoverOnProfile);
-    async function hoverOnProfile(): Promise<void> {
+    async function hoverOnProfile() {
 
         let el = page.getElementByID('lnkProfile');
         await browser.actions().mouseMove(el).perform();
@@ -85,73 +86,54 @@ defineSupportCode(({Given, When}) => {
     }
 
     Given(/^I click on logout$/, logoutClick);
-    async function logoutClick(): Promise<void> {
-        await page.getElementByID('lnkLogout').click();
+    function logoutClick() {
+        return page.getElementByID('lnkLogout').click();
     }
 
     Given(/^I hover on the 'Profile'$/, hoverOnProfileAsAdmin);
-    async function hoverOnProfileAsAdmin(): Promise<void> {
+    async function hoverOnProfileAsAdmin() {
         await hoverOnProfile();
         expect(page.getElementByID('lnkSettings')).to.be.exist;
     }
 
     Given(/^I go to the 'User Management' list page$/, clickOnUserManagementPage);
-    async function clickOnUserManagementPage(): Promise<void> {
+    async function clickOnUserManagementPage() {
         page.getElementByID('lnkSettings').click().then(() => {
             expect(page.currentPath()).to.eventually.contain('user-management');
         });
     }
 
-    Given(/^I go to the website/, goToTheWebsite);
-    async function goToTheWebsite(): Promise<void> {
-        await page.navigateTo(browser.baseUrl);
-        // Cannot believe this workaround
-        // https://stackoverflow.com/questions/35938841/window-angular-is-undefined-when-using-protractor-for-automated-testing
-        await loginScreenLoaded();
+    Given(/^I go to the website/, new HomePage().browse);
+    Given(/^I am shown the login screen, with picture and signup button/, new HomePage().isRender);
+    Given(/^I won't be logged in anymore and will be taken back to the loging screen/, new HomePage().isRender);
 
-
-    }
-
-    Given(/^I am shown the login screen, with picture and signup button/, loginScreenLoaded);
-    Given(/^I won't be logged in anymore and will be taken back to the loging screen/, loginScreenLoaded);
-    async function loginScreenLoaded(): Promise<void> {
-        let el = page.getElementByName('login_user');
-        let el1 = page.getElementByCss('loginForm');
-        browser.wait(protractor.ExpectedConditions.presenceOf(el), 10000);
-        browser.wait(protractor.ExpectedConditions.presenceOf(el1), 10000);
-        expect(el1).to.be.exist;
-        expect(el).to.be.exist;
-        el.getAttribute('disabled').then(function (value) {
-            expect(value).to.exist;
-        });
-    }
 
     Given(/^I exist as an (.*)/, givenExistAsAValidUser);
-    async function givenExistAsAValidUser(type: string): Promise<void> {
+    async function givenExistAsAValidUser(type: string) {
         currentlyLoggedInUser = User.returnTypeAndUser(type).user;
             await Heroku.addValidLoginUser(currentlyLoggedInUser, type);
         expect(currentlyLoggedInUser).to.not.null;
     }
 
     Given(/^I sign in with valid (.*) credentials$/, signInWithValidCredential);
-    async function signInWithValidCredential(type: string): Promise<void> {
+    async function signInWithValidCredential(type: string) {
         await tryLogin(currentlyLoggedInUser.email, currentlyLoggedInUser.pass);
 
     }
 
     Given(/^I sign in with invalid (.*) credentials$/, signInWithInValidCredential);
-    async function signInWithInValidCredential(type: string): Promise<void> {
+    async function signInWithInValidCredential(type: string) {
         await tryLogin(currentlyLoggedInUser.email, 'ABCD#1234');
     }
 
     Given(/^I will get an error message saying "Email or password not found"$/, getErrorNotification);
-    async function getErrorNotification(): Promise<void> {
+    async function getErrorNotification() {
         let elm = $('div.sn-content');
         browser.wait(protractor.ExpectedConditions.presenceOf(elm), 10000);
         expect(elm.getText()).to.eventually.contain('Email or Password not found');
     }
 
-    async function tryLogin(email, pass): Promise<void> {
+    async function tryLogin(email, pass) {
         let el = page.getElementByName('email');
         let ps = page.getElementByName('pass');
         let lu = page.getElementByName('login_user');
@@ -164,24 +146,23 @@ defineSupportCode(({Given, When}) => {
     Given(/^I will be shown the bookings page$/, onBookinManagementScreen);
     Given(/^I am on the bookings page$/, onBookinManagementScreen);
     Given(/^I am on my admin home screen$/, onBookinManagementScreen);
-    async function onBookinManagementScreen(): Promise<void> {
+    async function onBookinManagementScreen() {
         let path = await page.currentPath();
         expect(path).to.contain('booking-management');
     }
 
     Given(/^I am on the mobile login screen without a hero picture$/, onMobileResolution);
-    async function onMobileResolution(): Promise<void> {
+    async function onMobileResolution() {
         browser.driver.manage().window().setSize(360, 640);
     }
 
     Given(/^I am on a computer$/, onDesktopResolution);
-    async function onDesktopResolution(): Promise<void> {
+    async function onDesktopResolution() {
         browser.driver.manage().window().maximize();
     }
 
     When(/^I click on button '(.*)'$/, clickOnButton);
-    async function clickOnButton(btnLabel: string): Promise<void> {
-        let btn = page.getElementByCSSandText('.button', btnLabel);
-        await btn.click();
+    function clickOnButton(btnLabel: string) {
+       return page.getElementByCSSandText('.button', btnLabel).click();
     }
 });
