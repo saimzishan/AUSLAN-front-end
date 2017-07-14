@@ -416,8 +416,58 @@ export class Heroku {
             });
     }
 
-    static createSingleBooking(data) {
-        return 'Booking.create(' + JSON.stringify(data) + ');';
+    static createSingleBooking() {
+        const data = new Object({
+            'venue': 'Fed Square',
+            'requested_by_first_name': 'Georgious',
+            'requested_by_last_name': 'Chara',
+            'nature_of_appointment': 'Medical',
+            'specific_nature_of_appointment': 'Audiology',
+            'contact_first_name': 'Hadrian',
+            'contact_last_name': 'French',
+            'contact_email': 'a@a.com',
+            'contact_phone_number': '03 2342 2343',
+            'deaf_persons_first_name': 'Clifford',
+            'deaf_persons_last_name': 'Waz',
+            'deaf_persons_mobile': '0444 555 666',
+            'deaf_persons_email': 'clifford@vicdeaf.org.au',
+            'deaf_persons_eaf_no': '1231 0900',
+            'number_of_people_attending': 1,
+            'number_of_interpreters_required': 1,
+            'start_time': '2017-08-05T09: 01: 26.298+00: 00',
+            'end_time': '2017-08-05T10: 01: 26.298+00: 00',
+            'billing_account_attributes': {
+                'primary_contact_first_name': 'Paul',
+                'primary_contact_last_name': 'Biller',
+                'primary_contact_email': 'a@a.com',
+                'primary_contact_phone_number': '0482 232 232',
+                'account_number': 'ABCD-1234',
+                'preferred_billing_method_email': false,
+                'external_reference': 'Curve and Sanj',
+                'address_attributes': {
+                    'unit_number': 'Curve Tomorrow',
+                    'street_number': 'L4 West RCH',
+                    'street_name': '50 Flemington Rd',
+                    'suburb': 'Parkville',
+                    'state': 'VIC',
+                    'post_code': '3025'
+                }
+            },
+            'address_attributes': {
+                'unit_number': 'Curve Tomorrow',
+                'street_number': 'L4 West RCH',
+                'street_name': '50 Flemington Rd',
+                'suburb': 'Parkville',
+                'state': 'VIC',
+                'post_code': '3025'
+            },
+            'parking_availability': 'None - Use the Tram',
+            'bookable_id': 1,
+            'bookable_type': 'Administrator'
+        });
+        let command = 'Booking.create(' + JSON.stringify(data) + ');';
+        Heroku.sendCommandToHeroku(command);
+
     }
 
     static createSingleUser(data) {

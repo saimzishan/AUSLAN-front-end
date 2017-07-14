@@ -12,5 +12,11 @@ config.restartBrowserBetweenTests= false;
       }
     }
 ];
+config.allScriptsTimeout= 30000;
+// config.framework= 'jasmine';
+
+//config.jasmineNodeOpts= {
+//    defaultTimeoutInterval: 30000
+//}
 
 exports.config = config;

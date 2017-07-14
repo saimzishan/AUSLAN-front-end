@@ -3,15 +3,15 @@ import {expect} from '../config/helpers/chai-imports';
 // import {} from 'jasmine';
 import {defineSupportCode} from 'cucumber';
 import {browser, by, element, $, $$} from 'protractor';
-import {PageHelper} from '../app.po';
-import {Booking, CONSTANT} from '../helper';
+
+import {PageObject} from '../po/app.po';
+import {CONSTANT} from '../helper';
 
 
 defineSupportCode(({Given, Then, When}) => {
 
-    let list_of_object = {};
 
-    let page = new PageHelper();
+    let page = new PageObject();
 //  BE ABLE TO VIEW BOOKING PAGE
     Then(/^I will be shown with bookings$/, showSummaryDetails);
     async function showSummaryDetails(): Promise<void> {
@@ -286,21 +286,12 @@ defineSupportCode(({Given, Then, When}) => {
         const selected_label = await page.getElementByCSSandText('label', label_text);
         const div = page.getParent(selected_label);
         const select_dropdown = page.getElementInsideByTag(div, 'select');
-        if (option_text === 'NOTHING') {
-            const selected_label_attr = await select_dropdown.getAttribute('ng-reflect-model');
-            let expected = false;
-            if (typeof selected_label_attr !== typeof undefined && selected_label_attr !== false) {
-                expected = true;
-            }
-            expect(expected).to.be.true;
-            list_of_object['WHAT WILL BE DISCUSSED *'] = Booking.getWhatWillBeDiscussed('');
-        } else {
+
             const selected_label_val = await select_dropdown.getAttribute('ng-reflect-model').then((val) => {
                 console.log(val);
                 return val.toUpperCase();
             });
             expect(selected_label_val).to.equal(option_text);
-        }
     }
 
 //    CLick on Request bookings
