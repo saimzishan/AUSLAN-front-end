@@ -9,38 +9,38 @@ Feature: Create Profile
 
 
 #  -> invalid notification
-  @runThis
+  @ignoreThis
   Scenario: Can get the invalid notification for interpreter
     And I click on button 'Interpreter'
     And I will be taken to the 'INTERPRETER Signup' page
     When I fill the field 'FIRST NAME *' incorrectly
     Then I will get a error notification
 
-  @runThis
+  @ignoreThis
   Scenario: Can get the invalid notification for individual client
     And I click on button 'Client'
     And I will be taken to the 'INDIVIDUALCLIENT Signup' page
     When I fill the field 'FIRST NAME *' incorrectly
     Then I will get a error notification
 
-  @runThis
+  @ignoreThis
   Scenario: Can get the invalid notification for organisation
     And I click on button 'Organisation'
     And I will be taken to the 'ORGANISATION Signup' page
     When I fill the field 'FIRST NAME *' incorrectly
     Then I will get a error notification
 
-  @runThis
+  @ignoreThis
   Scenario: Can press the Interpreter
     When I click on button 'Interpreter'
     Then I will be taken to the 'INTERPRETER Signup' page
 
-  @runThis
+  @ignoreThis
   Scenario: Can press the Client
     When I click on button 'Client'
     Then I will be taken to the 'INDIVIDUALCLIENT Signup' page
 
-  @runThis
+  @ignoreThis
   Scenario: Can press the Organisation Rep
     When I click on button 'Organisation'
     Then I will be taken to the 'ORGANISATION Signup' page
@@ -48,7 +48,7 @@ Feature: Create Profile
 ##########    On the signup page for 3 different types of user
 #  -> valid notification
 
-  @runThis
+  @ignoreThis
   Scenario: Can get the valid notification for Individual Client
     And I click on button 'Client'
     And I will be taken to the 'INDIVIDUALCLIENT Signup' page
@@ -56,14 +56,14 @@ Feature: Create Profile
     Then I will get a valid notification
 
 
-  @runThis
+  @ignoreThis
   Scenario: Can get the valid notification for interpreter page
     And I click on button 'Interpreter'
     And I will be taken to the 'INTERPRETER Signup' page
     When I fill the field 'FIRST NAME *' correctly
     Then I will get a valid notification
 
-  @runThis
+  @ignoreThis
   Scenario: Can get the valid notification for organisation
     And I click on button 'Organisation'
     And I will be taken to the 'ORGANISATION Signup' page
