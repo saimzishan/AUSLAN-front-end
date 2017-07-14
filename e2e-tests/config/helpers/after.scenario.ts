@@ -11,10 +11,8 @@ interface World {
 
 defineSupportCode(({After}) => {
     After(function (scenarioResult: HookScenarioResult): Promise<void> {
-        if (scenarioResult.scenario.name === 'As Booking Officer, I can login/logout') {
-            Heroku.sendCommandToHeroku('User.destroy_all');
-            Heroku.sendCommandToHeroku('Booking.destroy_all');
-        }
+        Heroku.sendCommandToHeroku('User.destroy_all');
+        Heroku.sendCommandToHeroku('Booking.destroy_all');
         const world = this;
         return (scenarioResult.status === 'failed') ? saveFailedScenarioScreenshot(world, scenarioResult) : Promise.resolve();
     });
