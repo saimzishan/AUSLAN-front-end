@@ -7,7 +7,7 @@ Feature: As all, I can login/logout, change profile, cannot login with invalid p
     And I exist as an Booking Officer
 
   @runThis
-  Scenario: As all, I can login/logout
+  Scenario: As Booking Officer, I can login/logout
     And I sign in with valid Booking Officer credentials
     Then I will be shown the bookings page
     And I click on my name
@@ -15,6 +15,6 @@ Feature: As all, I can login/logout, change profile, cannot login with invalid p
     Then I won't be logged in anymore and will be taken back to the loging screen
 
   @runThis
-  Scenario: As all, I cannot login without valid password
+  Scenario: As Booking Officer, I cannot login without valid password
     And I sign in with invalid Booking Officer credentials
     Then I will get an error message saying "Email or password not found"

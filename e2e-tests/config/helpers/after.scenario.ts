@@ -1,7 +1,7 @@
-import { defineSupportCode, HookScenarioResult, } from 'cucumber';
+import {defineSupportCode, HookScenarioResult,} from 'cucumber';
 import * as path from 'path';
-import { browser } from 'protractor';
-import { WriteStream, ensureDirSync, createWriteStream } from 'fs-extra';
+import {browser} from 'protractor';
+import {WriteStream, ensureDirSync, createWriteStream} from 'fs-extra';
 import {Heroku} from '../../helper';
 
 
@@ -11,8 +11,10 @@ interface World {
 
 defineSupportCode(({After}) => {
     After(function (scenarioResult: HookScenarioResult): Promise<void> {
-        Heroku.sendCommandToHeroku('User.destroy_all');
-        Heroku.sendCommandToHeroku('Booking.destroy_all');
+        if (scenarioResult.scenario.name === 'As Booking Officer, I can login/logout') {
+            Heroku.sendCommandToHeroku('User.destroy_all');
+            Heroku.sendCommandToHeroku('Booking.destroy_all');
+        }
         const world = this;
         return (scenarioResult.status === 'failed') ? saveFailedScenarioScreenshot(world, scenarioResult) : Promise.resolve();
     });

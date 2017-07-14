@@ -1,4 +1,4 @@
-import {defineSupportCode, HookScenarioResult,} from 'cucumber';
+import {defineSupportCode, HookScenarioResult} from 'cucumber';
 import * as path from 'path';
 import {browser} from 'protractor';
 import {WriteStream, ensureDirSync, createWriteStream} from 'fs-extra';
@@ -13,7 +13,7 @@ interface World {
 
 defineSupportCode(({Before}) => {
     Before(function (scenario: HookScenarioResult) {
-        if (scenario.scenario.name === 'As all, I can login/logout') {
+        if (scenario.scenario.name === 'As Booking Officer, I can login/logout') {
             Heroku.createSingleBooking();
             let type = 'Booking Officer';
             let currentlyLoggedInUser = User.returnTypeAndUser(type).user;
