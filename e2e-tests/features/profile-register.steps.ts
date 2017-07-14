@@ -28,7 +28,7 @@ defineSupportCode(({Given, Then, When}) => {
         expect(input).to.exist;
         return input.getAttribute('type').then((type) => {
             let isText = type === 'text';
-            return page.setValue(input, (correnctNess === 'correct') ?
+            page.setValue(input, (correnctNess === 'correct') ?
                 (isText ? 'George Charalambous' : '123') :
                 (isText ? 'A' : '1'));
         });
@@ -39,7 +39,7 @@ defineSupportCode(({Given, Then, When}) => {
     function getNotification(validType: string) {
         return page.getElementByName('last_name').click().then(() => {
             let elm = page.getElementByCss('span.' + validType);
-            return browser.wait(protractor.ExpectedConditions.presenceOf(elm), 10000).then(() => {
+            browser.wait(protractor.ExpectedConditions.presenceOf(elm), 10000).then(() => {
                 expect(elm).to.exist;
             });
         });

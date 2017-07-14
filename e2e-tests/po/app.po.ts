@@ -79,6 +79,6 @@ export class PageObject {
     }
 
     currentPath() {
-        return browser.driver.getCurrentUrl();
+        return browser.getCurrentUrl();
     }
 }

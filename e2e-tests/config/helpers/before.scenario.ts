@@ -1,10 +1,10 @@
-import { defineSupportCode, HookScenarioResult, } from 'cucumber';
+import {defineSupportCode, HookScenarioResult,} from 'cucumber';
 import * as path from 'path';
-import { browser } from 'protractor';
-import { WriteStream, ensureDirSync, createWriteStream } from 'fs-extra';
-import {log} from "util";
+import {browser} from 'protractor';
+import {WriteStream, ensureDirSync, createWriteStream} from 'fs-extra';
+import {log} from 'util';
 import {exec} from 'child_process';
-import {Heroku} from '../../helper';
+import {Heroku, User} from '../../helper';
 
 
 interface World {
@@ -12,7 +12,12 @@ interface World {
 }
 
 defineSupportCode(({Before}) => {
-    Before(function (scenarioResult: HookScenarioResult) {
-
+    Before(function (scenario: HookScenarioResult) {
+        if (scenario.scenario.name === 'As all, I can login/logout') {
+            Heroku.createSingleBooking();
+            let type = 'Booking Officer';
+            let currentlyLoggedInUser = User.returnTypeAndUser(type).user;
+            Heroku.addValidLoginUser(currentlyLoggedInUser, type);
+        }
     });
 });
