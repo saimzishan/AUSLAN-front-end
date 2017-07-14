@@ -130,7 +130,8 @@ export class OrganisationalRepresentative extends Organisational {
                 'address_attributes' : this.address_attributes ,
                 'billing_account_attributes' : {'primary_contact_first_name' : this.organisation_primary_contact.first_name ,
                   'primary_contact_last_name' : this.organisation_primary_contact.last_name ,
-                  'email_address' : this.organisation_primary_contact.email ,
+                  'primary_contact_email' : this.organisation_primary_contact.email ,
+                  'primary_contact_phone_number' : this.organisation_primary_contact.phone_number ,
                   'account_number' : 'ABCD-1234' , 'preferred_billing_method_email' : this.email_confirmation ,
                   'external_reference' :  this.organisation_billing_account.external_reference ,
                   'address_attributes' : this.organisation_billing_account.organisation_billing_address}}};
@@ -179,7 +180,8 @@ export class OrganisationalRepresentative extends Organisational {
     this.address_attributes = obj.organisation.address_attributes;
     this.organisation_primary_contact.first_name = obj.organisation.billing_account.primary_contact_first_name || '';
     this.organisation_primary_contact.last_name = obj.organisation.billing_account.primary_contact_last_name || '';
-    this.organisation_primary_contact.email = obj.organisation.billing_account.email_address || '';
+    this.organisation_primary_contact.email = obj.organisation.billing_account.primary_contact_email || '';
+    this.organisation_primary_contact.phone_number = obj.organisation.billing_account.primary_contact_phone_number || '';
     this.email_confirmation = obj.organisation.billing_account.preferred_billing_method_email;
     this.organisation_billing_account.organisation_billing_address = obj.organisation.billing_account.address_attributes;
     this.organisation_billing_account.external_reference = obj.organisation.billing_account.external_reference;
@@ -255,7 +257,8 @@ constructor(data) {
           'address_attributes': this.address_attributes,
           'billing_account_attributes': {'primary_contact_first_name': this.individual_client_primary_contact.first_name ,
             'primary_contact_last_name': this.individual_client_primary_contact.last_name ,
-            'email_address': this.individual_client_primary_contact.email ,
+            'primary_contact_email' : this.individual_client_primary_contact.email ,
+            'primary_contact_phone_number' : this.individual_client_primary_contact.phone_number ,
             'account_number': 'ABCD-1234', 'preferred_billing_method_email': this.email_confirmation ,
             'external_reference': 'Curve and Sanji',
             'address_attributes': this.individual_client_billing_account.organisation_billing_address}};
@@ -287,7 +290,8 @@ constructor(data) {
     this.address_attributes = obj.address_attributes;
     this.individual_client_primary_contact.first_name = obj.billing_account_attributes.primary_contact_first_name;
     this.individual_client_primary_contact.last_name = obj.billing_account_attributes.primary_contact_last_name;
-    this.individual_client_primary_contact.email = obj.billing_account_attributes.email_address;
+    this.individual_client_primary_contact.email = obj.billing_account_attributes.primary_contact_email;
+    this.individual_client_primary_contact.phone_number = obj.billing_account_attributes.primary_contact_phone_number;
     this.email_confirmation = obj.billing_account_attributes.preferred_billing_method_email;
     this.individual_client_billing_account.organisation_billing_address = obj.billing_account_attributes.address_attributes;
 

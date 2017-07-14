@@ -42,7 +42,9 @@
 								<div class="form-field">
 									<label class="icon-lock">
 							    PASSWORD *</label>
-									<input id="pass1" type="password" placeholder="Enter your password" [(ngModel)]="model.password" name="password" #password="ngModel"
+									<input id="pass1" type="password"
+										   placeholder="Enter your password"
+										   [(ngModel)]="model.password" name="password" #password="ngModel"
 										required>
 
 										<span *ngIf="password.touched &&  (!password.errors?.required && password.errors?.rangeLength);" class="inline-icon inline-icon-valid valid"></span>

@@ -17,7 +17,7 @@ export class BookingPage extends PageObject {
     verify = () => {
         return this.currentPath().then((currentPath) => {
             expect(currentPath).to.contain('booking-management');
-            this.didFinishedRendering();
+            // this.didFinishedRendering();
         });
     }
 

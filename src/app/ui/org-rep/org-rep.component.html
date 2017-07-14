@@ -53,7 +53,7 @@
         <div class="medium-6 columns">
             <div class="form-field">
                 <label>'PREFFERED CONTACT METHOD</label>
-                <select [(ngModel)]="userModel.preferred_contact_method">
+                <select name="preferred_contact_method" [(ngModel)]="userModel.preferred_contact_method">
                     <option value="0">Email</option>
                     <option value="1">Phone</option>
                 </select>
@@ -94,7 +94,8 @@
             <div class="form-field">
                 <label>IS YOUR BILLING ADDRESS THE SAME AS YOUR ORGANISATION'S ADDRESS?</label>
                 <md-checkbox type="checkbox"
-                             [(ngModel)]="userModel.billingAddressIsSame" name="billingAddressIsDifferent_confirmation"
+                             [(ngModel)]="userModel.billingAddressIsSame"
+                             name="billingAddressIsDifferent_confirmation"
                              #billingAddressIsDifferent_confirmation="ngModel">Yes
                 </md-checkbox>
             </div>
