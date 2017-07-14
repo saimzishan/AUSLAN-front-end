@@ -7,7 +7,26 @@ Feature: Create Profile
     When I click on button 'CREATE AN ACCOUNT'
     Then I will be taken to the 'Choose Profile' page
 
+  @runThis
+  Scenario: An org rep can be created
+    And I click on button 'Organisation'
+    And I will be taken to the 'ORGANISATION Signup' page
+    When I fill all the details correctly for 'ORGANISATION'
+    Then 'ORGANISATION' will be created
 
+  @runThis
+  Scenario: An individual client can be created
+    And I click on button 'Client'
+    And I will be taken to the 'INDIVIDUALCLIENT Signup' page
+    When I fill all the details correctly for 'INDIVIDUALCLIENT'
+    Then 'INDIVIDUALCLIENT' will be created
+
+  @runThis
+  Scenario: An interpreter can be created
+    And I click on button 'Interpreter'
+    Then I will be taken to the 'INTERPRETER Signup' page
+    When I fill all the details correctly for 'INTERPRETER'
+    Then 'INTERPRETER' will be created
 #  -> invalid notification
   @runThis
   Scenario: Can get the invalid notification for interpreter

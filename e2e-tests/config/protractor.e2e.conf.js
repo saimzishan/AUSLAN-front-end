@@ -19,4 +19,8 @@ config.allScriptsTimeout= 30000;
 //    defaultTimeoutInterval: 30000
 //}
 
+config.params= {
+    env: 'localhost'
+}
+
 exports.config = config;

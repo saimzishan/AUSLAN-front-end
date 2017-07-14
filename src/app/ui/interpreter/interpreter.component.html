@@ -58,7 +58,8 @@
       <div class="form-field">
         <label>DATE OF BiRTHDAY</label>
         <input type="date" class="valid" placeholder="Date of Birth"
-                [ngModel]="userModel.date_of_birth" (ngModelChange)="userModel.date_of_birth = $event" name="date_of_birth"
+                [ngModel]="userModel.date_of_birth" (ngModelChange)="userModel.date_of_birth = $event"
+               name="date_of_birth"
                 #date_of_birth="ngModel"
                required>
 
@@ -73,7 +74,8 @@
     <div class="medium-6 columns">
       <div class="form-field">
         <label>HIGEST LEVEL OF EDUCATION *</label>
-        <select placeholder="Enter the Skill level" aria-label="A" [(ngModel)]="userModel.highest_level_edu" name="highest_level_edu"
+        <select placeholder="Enter the Skill level" aria-label="A"
+                [(ngModel)]="userModel.highest_level_edu" name="highest_level_edu"
                 #highest_level_edu="ngModel" required>
 
           <option *ngFor="let loc_name of ['Diploma of Auslan', 'Diploma of Interpreting Auslan/English',
@@ -92,7 +94,8 @@
     <div class="medium-3 columns">
       <div class="form-field">
         <label>WORK PREFERENCE *</label>
-        <select placeholder="Enter the Skill level" aria-label="A" [(ngModel)]="userModel.location_pref" name="location_pref"
+        <select placeholder="Enter the Skill level" aria-label="A"
+                [(ngModel)]="userModel.location_pref" name="location_pref"
                 #location_pref="ngModel" required>
 
           <option *ngFor="let loc_name of  ['ACT','NSW','QLD', 'TAS', 'VIC','WA', 'NT']" [selected]="loc_name === 'ACT'"
@@ -109,7 +112,8 @@
     <div class="medium-5 columns">
       <div class="form-field">
         <label>SKILL LEVEL *</label>
-        <select placeholder="Enter the Skill level" aria-label="A" [(ngModel)]="userModel.skill_level" name="skill_level" #skill_level="ngModel" required>
+        <select placeholder="Enter the Skill level" aria-label="A" [(ngModel)]="userModel.skill_level"
+                name="skill_level" #skill_level="ngModel" required>
 
           <option *ngFor="let skill_name of ['Auslan Paraprofessional','Auslan Professional','ASL Certified', 'BSL Certified', 'Deaf Interpreter Accredited','Deaf Interpreter Non-Accredited', 'Notetaker']"
                   [selected]="skill_name === 'Auslan Paraprofessional'" [value]="skill_name">{{skill_name.toUpperCase()}}</option>
@@ -124,7 +128,8 @@
     <div class="medium-4 columns">
       <div class="form-field">
         <label>COMM. PREFERENCE *</label>
-        <select placeholder="Enter the communication preference" aria-label="A" [(ngModel)]="userModel.comm_pref" name="comm_pref"
+        <select placeholder="Enter the communication preference" aria-label="A"
+                [(ngModel)]="userModel.comm_pref" name="comm_pref"
                 #comm_pref="ngModel" required>
 
           <option *ngFor="let comm_pref_name of ['SMS', 'SMS AND EMAIL']" [value]="comm_pref_name">{{comm_pref_name}}</option>

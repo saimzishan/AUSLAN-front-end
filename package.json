@@ -12,7 +12,8 @@
     "test": "ng test",
     "circle-test": "ng test --code-coverage --watch=false --singleRun=true --browser Chrome_without_security",
     "lint": "ng lint",
-    "e2e": "ng e2e",
+    "pree2e": "webdriver-manager update && webdriver-manager start",
+    "e2e": "protractor",
     "posttest": "node_modules/.bin/remap-istanbul -i coverage/coverage-final.json -o coverage -t html",
     "pact": "curl -v -XPUT \\-H \"Content-Type: application/json\" -d@tmp/booking/pacts/booking-specs-booking-api.json  https://auslan-pact-broker.herokuapp.com/pacts/provider/Booking-Api/consumer/Booking-Specs/version/1.0.0  --user admin:auslanPACT && curl -v -XPUT \\-H \"Content-Type: application/json\"   -d@tmp/user/pacts/user-specs-user-api.json https://auslan-pact-broker.herokuapp.com/pacts/provider/User-Api/consumer/User-Specs/version/2.0.0 --user admin:auslanPACT"
   },
