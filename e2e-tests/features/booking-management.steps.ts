@@ -4,10 +4,12 @@ import {expect} from '../config/helpers/chai-imports';
 import {defineSupportCode} from 'cucumber';
 import {browser, by, element, $, $$} from 'protractor';
 import {PageHelper} from '../app.po';
-import {CONSTANT} from '../helper';
+import {Booking, CONSTANT} from '../helper';
 
 
 defineSupportCode(({Given, Then, When}) => {
+
+    let list_of_object = {};
 
     let page = new PageHelper();
 //  BE ABLE TO VIEW BOOKING PAGE
@@ -284,11 +286,21 @@ defineSupportCode(({Given, Then, When}) => {
         const selected_label = await page.getElementByCSSandText('label', label_text);
         const div = page.getParent(selected_label);
         const select_dropdown = page.getElementInsideByTag(div, 'select');
-        const selected_label_val = await select_dropdown.getAttribute('ng-reflect-model').then((val) => {
-            console.log(val);
-            return val.toUpperCase();
-        });
-        expect(selected_label_val).to.equal(option_text);
+        if (option_text === 'NOTHING') {
+            const selected_label_attr = await select_dropdown.getAttribute('ng-reflect-model');
+            let expected = false;
+            if (typeof selected_label_attr !== typeof undefined && selected_label_attr !== false) {
+                expected = true;
+            }
+            expect(expected).to.be.true;
+            list_of_object['WHAT WILL BE DISCUSSED *'] = Booking.getWhatWillBeDiscussed('');
+        } else {
+            const selected_label_val = await select_dropdown.getAttribute('ng-reflect-model').then((val) => {
+                console.log(val);
+                return val.toUpperCase();
+            });
+            expect(selected_label_val).to.equal(option_text);
+        }
     }
 
 //    CLick on Request bookings
@@ -315,5 +327,16 @@ defineSupportCode(({Given, Then, When}) => {
     async function showThePopup(): Promise<void> {
         let app_popup = page.getElementByCss('app-popup');
         expect(app_popup).to.be.exist;
+    }
+
+    // Can't click on drop down
+    Then(/^The dropdown (.*) will have (.*) item$/, listTheIteminDropDown);
+    async function listTheIteminDropDown(type_of_dropdown: string, num_of_item: string): Promise<void> {
+        const item_num = parseInt(num_of_item, 10);
+        const selected_label = await page.getElementByCSSandText('label', type_of_dropdown);
+        const div = page.getParent(selected_label);
+        const all_option = await page.getAllByTagNameInElement(div, 'option');
+        const expected_option_list = list_of_object[type_of_dropdown];
+        expect(JSON.stringify(all_option)).to.be.equal(JSON.stringify(expected_option_list));
     }
 });
