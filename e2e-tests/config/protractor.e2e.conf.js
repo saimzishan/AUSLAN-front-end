@@ -20,7 +20,7 @@ config.allScriptsTimeout= 30000;
 //}
 
 config.params= {
-    env: 'localhost'
+    env: 'stage'
 }
 
 exports.config = config;

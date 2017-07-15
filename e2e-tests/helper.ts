@@ -395,12 +395,14 @@ export class Booking {
 export class Heroku {
 
     static sendCommandToHeroku(command) {
-        const exec = require('child_process').execSync;
-        console.log(browser.params.env, command);
+        const exec = require('child_process').exec;
         let herokuCommand = browser.params.env === 'localhost' ?
-            'cd ../booking-system-api/ && echo  \'' + command + ' \' | bundle exec rails c && cd ../booking-system-frontend/' :
-            'echo  \'' + command + ' \' ; exit | heroku run console --app auslan-e2e-testing';
-        execSync(herokuCommand
+            'cd ../booking-system-api/ && echo  \'' + command + '\' | bundle exec rails c && cd ../booking-system-frontend/' :
+            'echo  \'' + command + '\' | heroku run console --app auslan-e2e-testing';
+        console.log(browser.params.env);
+        console.log(herokuCommand);
+
+        exec(herokuCommand
             , (o1, o2, o3) => {
                 console.log('Heroku Command => Output', o1);
                 console.log('Heroku Command => StdError', o2);
@@ -458,7 +460,7 @@ export class Heroku {
             'bookable_id': 1,
             'bookable_type': 'Administrator'
         });
-        let command = 'Booking.create(' + JSON.stringify(data) + ');';
+        let command = 'Booking.create(' + JSON.stringify(data) + ')';
         Heroku.sendCommandToHeroku(command);
 
     }
