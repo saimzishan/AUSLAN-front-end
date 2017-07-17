@@ -12,6 +12,7 @@ dependencies:
             password $HEROKU_TOKEN
           EOF
         - chmod 600 ~/.netrc # Heroku cli complains about permissions without this
+        - sudo apt-get install heroku-toolbelt
 test:
   pre:
     - ng lint
