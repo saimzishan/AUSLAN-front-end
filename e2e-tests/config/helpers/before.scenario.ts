@@ -13,13 +13,21 @@ interface World {
 
 defineSupportCode(({Before}) => {
     Before(function (scenario: HookScenarioResult) {
-        // if (scenario.scenario.name === 'As Booking Officer, I can login/logout') {
-            Heroku.createSingleBooking();
-            let Personas = ['Booking Officer', 'Administrator', 'Interpreter', 'Client', 'Organisational Representative'];
-            for (let type of Personas) {
-                let currentlyLoggedInUser = User.returnTypeAndUser(type).user;
-                Heroku.addValidLoginUser(currentlyLoggedInUser, type);
+        let all_personas = ['Booking Officer', 'Administrator', 'Interpreter', 'Client', 'Organisational Representative'];
+        let personas = [];
+        all_personas.forEach((pn) => {
+            if (scenario.scenario.name.toUpperCase().indexOf(pn.toUpperCase()) > 0) {
+                personas.push(pn);
             }
-        // }
+        });
+
+        if (scenario.scenario.name.toUpperCase().indexOf('booking created'.toUpperCase()) > 0) {
+            Heroku.createSingleBooking();
+        }
+
+        for (let pn of personas) {
+            let currentlyLoggedInUser = User.returnTypeAndUser(pn).user;
+            Heroku.addVerifiedUser(currentlyLoggedInUser, pn);
+        }
     });
 });

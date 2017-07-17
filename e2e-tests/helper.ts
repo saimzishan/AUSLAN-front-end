@@ -59,7 +59,7 @@ export class User {
         return User.returnValidUser(type);
     }
 
-    static returnJSONForUser(verified: boolean, type: string, i, user?: User) {
+    static returnJSONForUser(type: string, i, user?: User) {
         const extend_email = User.user_type(type).toLowerCase();
         let email = 'mohjay_test_' + extend_email + /*( (i === 0) ? '' :*/ i.toString() /*)*/ + '@auslan.com.au';
         let password = 'Abcd#1234';
@@ -84,7 +84,7 @@ export class User {
         data_to_sent['first_name'] = firstName;
         data_to_sent['last_name'] = lastName;
         data_to_sent['mobile'] = mobileNum;
-        data_to_sent['verified'] = verified;
+        data_to_sent['verified'] = false;
         let billing_account_attributes_fields = {};
         let billing_address_attributes_fields = {};
 
@@ -308,8 +308,7 @@ export class Heroku {
         let userType = User.user_type(data.type);
         // delete the key type
         delete data.type;
-        return_command += 'a = ' + userType + '.create(' + JSON.stringify(data);
-        return_command += ')\n';
+        return_command += 'a = ' + userType + '.create(' + JSON.stringify(data) +  ')';
         return return_command;
     }
 
@@ -317,19 +316,24 @@ export class Heroku {
         const num_of_user = parseInt(numberOfUser, 10);
         for (let i = 0; i < num_of_user; i++) {
             let verified = (active === 'active');
-            const data_to_sent = User.returnJSONForUser(verified, type, i);
+            const data_to_sent = User.returnJSONForUser(type, i);
             const command = Heroku.createSingleUser(data_to_sent);
             Heroku.sendCommandToHeroku(command);
-            Heroku.sendCommandToHeroku(User.user_type(type) + '.first.update_attributes(verified:' + verified + ')');
+            Heroku.sendCommandToHeroku(User.user_type(type) + '.find_by_email!(params[:' + data_to_sent['email'] +
+                ']).update_attributes(verified:' + true + ')');
         }
     }
 
-    static addValidLoginUser(valid_login_user: User, type: string) {
-        const verified = true;
-        const data_to_sent = User.returnJSONForUser(verified, type, 1, valid_login_user);
+    static addVerifiedUser(valid_login_user: User, type: string) {
+        Heroku.createUser(valid_login_user, type);
+        Heroku.sendCommandToHeroku(User.user_type(type) + '.find_by_email!(params[:' + valid_login_user.email +
+            ']).update_attributes(verified:' + true + ')');
+    }
+
+    static createUser(valid_login_user: User, type: string) {
+        const data_to_sent = User.returnJSONForUser(type, 1, valid_login_user);
         const command = Heroku.createSingleUser(data_to_sent);
         Heroku.sendCommandToHeroku(command);
-        Heroku.sendCommandToHeroku(User.user_type(type) + '.first.update_attributes(verified:' + verified + ')');
     }
 
 }
