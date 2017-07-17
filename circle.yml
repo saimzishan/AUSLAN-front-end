@@ -7,7 +7,7 @@ dependencies:
         - npm install codeclimate-test-reporter -g
 test:
   pre:
-    - heroku update
+    - apt-get install heroku-toolbelt
     - ng lint
     - rm -rf tmp
     - bundle exec pact-mock-service start -p 1233 -l tmp/booking/pact-booking.log --pact-dir tmp/booking/pacts
