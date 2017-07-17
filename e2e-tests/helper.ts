@@ -319,15 +319,15 @@ export class Heroku {
             const data_to_sent = User.returnJSONForUser(type, i);
             const command = Heroku.createSingleUser(data_to_sent);
             Heroku.sendCommandToHeroku(command);
-            Heroku.sendCommandToHeroku(User.user_type(type) + '.find_by_email!(params[:' + data_to_sent['email'] +
-                ']).update_attributes(verified:' + true + ')');
+            Heroku.sendCommandToHeroku(User.user_type(type) + '.find_by(email: "' + data_to_sent['email'] +
+                '").update_attributes(verified:' + true + ')');
         }
     }
 
     static addVerifiedUser(valid_login_user: User, type: string) {
         Heroku.createUser(valid_login_user, type);
-        Heroku.sendCommandToHeroku(User.user_type(type) + '.find_by_email!(params[:' + valid_login_user.email +
-            ']).update_attributes(verified:' + true + ')');
+        Heroku.sendCommandToHeroku(User.user_type(type) + '.find_by(email: "' + valid_login_user.email +
+            '").update_attributes(verified:' + true + ')');
     }
 
     static createUser(valid_login_user: User, type: string) {

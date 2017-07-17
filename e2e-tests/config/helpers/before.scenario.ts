@@ -13,7 +13,7 @@ interface World {
 
 defineSupportCode(({Before}) => {
     Before(function (scenario: HookScenarioResult) {
-        let all_personas = ['Booking Officer', 'Administrator', 'Interpreter', 'Client', 'Organisational Representative'];
+        let all_personas = ['Booking Officer', 'Administrator', 'Interpreter', 'Individual Client', 'Organisational Representative'];
         let personas = [];
         all_personas.forEach((pn) => {
             if (scenario.scenario.name.toUpperCase().indexOf(pn.toUpperCase()) > 0) {
