@@ -1,6 +1,6 @@
 machine:
   node:
-    version: 8.1.4
+    version: 7.0.0
 
 dependencies:
     pre:
@@ -14,7 +14,6 @@ dependencies:
         - chmod 600 ~/.netrc # Heroku cli complains about permissions without this
 test:
   pre:
-    - npm install -g heroku-cli
     - ng lint
     - rm -rf tmp
     - bundle exec pact-mock-service start -p 1233 -l tmp/booking/pact-booking.log --pact-dir tmp/booking/pacts
