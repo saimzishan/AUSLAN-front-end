@@ -5,18 +5,15 @@ machine:
 dependencies:
     pre:
         - npm install codeclimate-test-reporter -g
+        - |
+          cat >~/.netrc <<EOF
+          machine api.heroku.com
+            login $HEROKU_EMAIL
+            password $HEROKU_TOKEN
+          EOF
+        - chmod 600 ~/.netrc # Heroku cli complains about permissions without this
 test:
   pre:
-    - |
-      cat >~/.netrc <<EOF
-      machine api.heroku.com
-        login $HEROKU_EMAIL
-        password $HEROKU_TOKEN
-      machine git.heroku.com
-        login $HEROKU_EMAIL
-        password $HEROKU_TOKEN
-      EOF
-    - chmod 600 ~/.netrc # Heroku cli complains about permissions without this
     - ng lint
     - rm -rf tmp
     - bundle exec pact-mock-service start -p 1233 -l tmp/booking/pact-booking.log --pact-dir tmp/booking/pacts
