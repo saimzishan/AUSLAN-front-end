@@ -15,9 +15,11 @@ defineSupportCode(({Before}) => {
     Before(function (scenario: HookScenarioResult) {
         // if (scenario.scenario.name === 'As Booking Officer, I can login/logout') {
             Heroku.createSingleBooking();
-            let type = 'Booking Officer';
-            let currentlyLoggedInUser = User.returnTypeAndUser(type).user;
-            Heroku.addValidLoginUser(currentlyLoggedInUser, type);
+            let Personas = ['Booking Officer', 'Administrator', 'Interpreter', 'Client', 'Organisational Representative'];
+            for (let type of Personas) {
+                let currentlyLoggedInUser = User.returnTypeAndUser(type).user;
+                Heroku.addValidLoginUser(currentlyLoggedInUser, type);
+            }
         // }
     });
 });

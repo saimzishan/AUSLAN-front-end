@@ -87,7 +87,7 @@
                     <td data-title="People">{{selectedBookingModel.venue.expected_attendance}}</td>
                     <td data-title="SPECIAL INSTRUCTIONS" class="new-line">{{selectedBookingModel.notes}}</td>
                     <td align="center" data-title="Attached">
-                                <ul class="dropdown menu custom" data-dropdown-menu>
+                                <ul *ngIf="selectedBookingModel.documents_attributes.length > 0"> class="dropdown menu custom" data-dropdown-menu>
                                     <li>
                                         <a href="#" class="icon-attach"></a>
                                         <ul class="menu">
@@ -132,22 +132,19 @@
                     <span>DESCRIPTION</span>
                 </div>
                 <p>{{selectedBookingModel.notes}}</p>
-
-                <!--
                 <div class="row">
                         <span>ATTACHMENTS</span>
                     </div>
                     <div>
-                    <ul class="attachments">
-                            <li>
-                                <a href="#">
-                                    <i class="icons icons-xls"></i>
+                    <ul class="attachments" *ngIf="selectedBookingModel.documents_attributes.length > 0">
+                        <li *ngFor="let attachment of selectedBookingModel.documents_attributes">
+                                <a href="{{attachment.url}}">
+                                    <i class="icon-attach"></i>
                                 </a>
-                                <span>auslan-very-long.xls</span>
+                                <span>{{attachment.file_name}}</span>
                             </li>
                             </ul>
                     </div>
-                -->
                 <div class="row">
                     <span>DO YOU WANT TO DO THIS JOB?</span>
                 </div>

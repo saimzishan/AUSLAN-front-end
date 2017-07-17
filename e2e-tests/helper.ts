@@ -26,11 +26,11 @@ export class User {
 
     static returnValidUser(type: string) {
         let chosen_type = '';
-        let valid_user = new User('', '', '', '', '');
+        let valid_user;
         switch (type) {
             case 'Administrator':
                 chosen_type = 'Administrator';
-                valid_user = new Administrator('admin@auslan.com.au', 'Abcd#1234');
+                valid_user = new Administrator('admin1@auslan.com.au', 'Abcd#1234');
                 break;
             case 'Booking Officer':
                 chosen_type = 'Booking Officer';
@@ -233,10 +233,10 @@ export class Administrator extends User {
 export class Heroku {
 
     static sendCommandToHeroku(command) {
-        const exec = require('child_process').exec;
+        const exec = require('child_process').execSync;
         let herokuCommand = browser.params.env === 'localhost' ?
-            'cd ../booking-system-api/ && echo  \'' + command + '\' | bundle exec rails c && cd ../booking-system-frontend/' :
-            'echo  \'' + command + '\' | heroku run console --app auslan-e2e-testing';
+            'cd ../booking-system-api/ && echo  \'' + command + ';exit\' | bundle exec rails c && cd ../booking-system-frontend/' :
+            'echo  \'' + command + ';exit\' | heroku run console --app auslan-e2e-testing';
         console.log(browser.params.env);
         console.log(herokuCommand);
 
