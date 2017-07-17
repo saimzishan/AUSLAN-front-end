@@ -13,6 +13,8 @@ dependencies:
           EOF
         - chmod 600 ~/.netrc # Heroku cli complains about permissions without this
         - sudo apt-get remove heroku-toolbelt
+        - sudo apt-add-repository 'deb http://toolbelt.herokuapp.com/ubuntu ./'
+        - sudo apt-get update
         - sudo apt-get install heroku-toolbelt --fix-missing
 test:
   pre:
