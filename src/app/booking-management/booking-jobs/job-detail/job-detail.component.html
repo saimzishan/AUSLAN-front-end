@@ -87,7 +87,7 @@
                     <td data-title="People">{{selectedBookingModel.venue.expected_attendance}}</td>
                     <td data-title="SPECIAL INSTRUCTIONS" class="new-line">{{selectedBookingModel.notes}}</td>
                     <td align="center" data-title="Attached">
-                                <ul class="dropdown menu custom" data-dropdown-menu>
+                                <ul *ngIf="selectedBookingModel.documents_attributes.length > 0"> class="dropdown menu custom" data-dropdown-menu>
                                     <li>
                                         <a href="#" class="icon-attach"></a>
                                         <ul class="menu">
@@ -105,7 +105,7 @@
             <section class="columns small-padding">
                 <ng-container *ngIf="anyInterpreterAccepted()">
                     <ng-container *ngFor="let interpreter of selectedBookingModel.interpreters; let i=index">
-
+                        <ng-container *ngIf="i < selectedBookingModel.interpreters_required">
                         <div *ngIf="interpreter.state === 'Accepted'"
                              class="row with-border">
 
@@ -123,6 +123,7 @@
                             <span>To be filled</span>
 
                         </div>
+                        </ng-container>
                     </ng-container>
                 </ng-container>
 
@@ -131,22 +132,19 @@
                     <span>DESCRIPTION</span>
                 </div>
                 <p>{{selectedBookingModel.notes}}</p>
-
-                <!--
                 <div class="row">
                         <span>ATTACHMENTS</span>
                     </div>
                     <div>
-                    <ul class="attachments">
-                            <li>
-                                <a href="#">
-                                    <i class="icons icons-xls"></i>
+                    <ul class="attachments" *ngIf="selectedBookingModel.documents_attributes.length > 0">
+                        <li *ngFor="let attachment of selectedBookingModel.documents_attributes">
+                                <a href="{{attachment.url}}">
+                                    <i class="icon-attach"></i>
                                 </a>
-                                <span>auslan-very-long.xls</span>
+                                <span>{{attachment.file_name}}</span>
                             </li>
                             </ul>
                     </div>
-                -->
                 <div class="row">
                     <span>DO YOU WANT TO DO THIS JOB?</span>
                 </div>
@@ -169,9 +167,9 @@
                 <div class="manage-interpreters-wrapper">
                     <section class="manage-interpreters">
                         <section>
-                            <div *ngFor="let interpreter of selectedBookingModel.interpreters; let i=index">
-                                <ng-container>
 
+                        <ng-container *ngFor="let interpreter of selectedBookingModel.interpreters; let i=index">
+                            <div *ngIf="i < selectedBookingModel.interpreters_required">
                                     <b>Interpreter {{i + 1}} :</b>
                                     <span *ngIf="interpreter.state === 'Accepted'">{{interpreter.first_name}} {{interpreter.last_name}}</span>
                                     <span *ngIf="interpreter.state !== 'Accepted'">To be filled</span>
@@ -179,9 +177,9 @@
                                         Unassign
                                     </button>
 
-                                </ng-container>
-
                             </div>
+
+                        </ng-container>
                         </section>
                     </section>
                 </div>

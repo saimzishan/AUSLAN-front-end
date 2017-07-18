@@ -87,6 +87,7 @@ defineSupportCode(({Given, Then, When}) => {
         return page.getElementByName('register_user').click();
     }
 
+
     When(/^'(.*)' will be created$/, userCreated);
     function userCreated(type: string) {
         let elm = $('div.sn-content');

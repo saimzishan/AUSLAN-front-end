@@ -2,7 +2,7 @@ Feature: Create Profile
 
  Background: I as an all user should be able to see the profile page to create different
     types of accounts
-    Given I go to the website
+   Given I go to the website
     And I am shown the login screen, with picture and signup button
     When I click on button 'CREATE AN ACCOUNT'
     Then I will be taken to the 'Choose Profile' page

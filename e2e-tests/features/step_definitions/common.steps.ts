@@ -73,9 +73,22 @@ defineSupportCode(({Given, When}) => {
     Given(/^I am on my admin home screen$/, bookingPage.verify);
 
 
+    Given(/^I am on a mobile$/, onMobileResolution);
     Given(/^I am on the mobile login screen without a hero picture$/, onMobileResolution);
     function onMobileResolution() {
         return browser.driver.manage().window().setSize(360, 640);
+    }
+
+    Given(/^I will be shown the booking detail page$/, isOnBookingJobDetails);
+    function isOnBookingJobDetails() {
+        return page.currentPath().then((currentPath) => {
+            expect(currentPath).to.contain('/booking-management/1/booking-job');
+    });
+    }
+
+    Given(/^I click on booking job detail page$/, onBookingJobDetails);
+    function onBookingJobDetails() {
+        return page.navigateTo('/booking-management/1/booking-job');
     }
 
     Given(/^I am on a computer$/, onDesktopResolution);
