@@ -53,6 +53,7 @@ defineSupportCode(({Given, When}) => {
 
     Given(/^I sign in with valid (.*) credentials$/, (type: string) => {
         return homePage.signInWithValidCredential(type).then(() => {
+            browser.sleep(10000);
             page.currentPath().then((currentPath) => {
                 expect(currentPath).to.contain('booking-management');
             });

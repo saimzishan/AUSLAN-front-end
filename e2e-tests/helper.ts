@@ -40,9 +40,9 @@ export class User {
                 chosen_type = 'Interpreter';
                 valid_user = new Interpreter('interpreter@auslan.com.au', 'Abcd#1234');
                 break;
-            case 'Client':
+            case 'Individual Client':
                 chosen_type = 'Individual Client';
-                valid_user = new Client('client@auslan.com.au', 'Abcd#1234');
+                valid_user = new Client('individualclient@auslan.com.au', 'Abcd#1234');
                 break;
             case 'Organisational Representative':
                 chosen_type = 'Organisational';
@@ -89,12 +89,12 @@ export class User {
         let billing_address_attributes_fields = {};
 
         switch (type) {
-            case 'Client':
+            case 'Individual Client':
                 data_to_sent['send_email_on_receipt_of_request'] = true;
                 data_to_sent['email_confirmation_on_interpreter_allocation'] = true;
                 billing_account_attributes_fields['primary_contact_first_name'] = 'MOH';
                 billing_account_attributes_fields['primary_contact_last_name'] = 'JAY';
-                billing_account_attributes_fields['email_address'] = 'mohjay_client ' + i * 9 + 5 + '@auslan.com.au';
+                billing_account_attributes_fields['email_address'] = 'mohjay_client' + (i * 9 + 5) + '@auslan.com.au';
                 billing_account_attributes_fields['account_number'] = (1111111 + (i * 4)).toString();
                 billing_account_attributes_fields['preferred_billing_method_email'] = true;
                 billing_address_attributes_fields['unit_number'] = i;
@@ -140,7 +140,7 @@ export class User {
                 let org_billing_account_attributes_fields = {};
                 org_billing_account_attributes_fields['primary_contact_first_name'] = 'MOH';
                 org_billing_account_attributes_fields['primary_contact_last_name'] = 'JAY';
-                org_billing_account_attributes_fields['email_address'] = 'mohjay_client ' + i * 9 + 5 + '@auslan.com.au';
+                org_billing_account_attributes_fields['email_address'] = 'mohjay_orgrep' + (i * 9 + 5) + '@auslan.com.au';
                 org_billing_account_attributes_fields['account_number'] = (1111111 + (i * 4)).toString();
                 org_billing_account_attributes_fields['preferred_billing_method_email'] = true;
                 let org_billing_address_attributes_fields = {};

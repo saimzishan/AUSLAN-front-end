@@ -19,55 +19,55 @@ Feature: As all, I can login/logout, change profile, cannot login with invalid p
     And I sign in with invalid Booking Officer credentials
     Then I will get an error message saying "Email or password not found"
 
-  @runThis
+  @ignoreThis
   Scenario: As Administrator, I cannot login without valid password
-    And I sign in with invalid Booking Officer credentials
+    And I sign in with invalid Administrator credentials
     Then I will get an error message saying "Email or password not found"
 
-  @runThis
+  @ignoreThis
   Scenario: As Administrator, I can login/logout
-    And I sign in with valid Booking Officer credentials
+    And I sign in with valid Administrator credentials
     Then I will be shown the bookings page
     And I click on my name
     And I click on logout
     Then I won't be logged in anymore and will be taken back to the loging screen
 
-  @runThis
+  @ignoreThis
   Scenario: As Interpreter, I can login/logout
-    And I sign in with valid Booking Officer credentials
+    And I sign in with valid Interpreter credentials
     Then I will be shown the bookings page
     And I click on my name
     And I click on logout
     Then I won't be logged in anymore and will be taken back to the loging screen
 
-  @runThis
+  @ignoreThis
   Scenario: As Interpreter, I cannot login without valid password
-    And I sign in with invalid Booking Officer credentials
+    And I sign in with invalid Interpreter credentials
     Then I will get an error message saying "Email or password not found"
 
-  @runThis
+  @ignoreThis
   Scenario: As Client, I can login/logout
-    And I sign in with valid Booking Officer credentials
+    And I sign in with valid Client credentials
     Then I will be shown the bookings page
     And I click on my name
     And I click on logout
     Then I won't be logged in anymore and will be taken back to the loging screen
 
-  @runThis
+  @ignoreThis
   Scenario: As Client, I cannot login without valid password
-    And I sign in with invalid Booking Officer credentials
+    And I sign in with invalid Client credentials
     Then I will get an error message saying "Email or password not found"
 
 
-  @runThis
+  @ignoreThis
   Scenario: As Organisational Representative, I can login/logout
-    And I sign in with valid Booking Officer credentials
+    And I sign in with valid Organisational Representative credentials
     Then I will be shown the bookings page
     And I click on my name
     And I click on logout
     Then I won't be logged in anymore and will be taken back to the loging screen
 
-  @runThis
+  @ignoreThis
   Scenario: As Organisational Representative, I cannot login without valid password
-    And I sign in with invalid Booking Officer credentials
+    And I sign in with invalid Organisational Representative credentials
     Then I will get an error message saying "Email or password not found"

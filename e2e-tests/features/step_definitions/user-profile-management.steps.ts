@@ -18,10 +18,11 @@ defineSupportCode(({Given, Then, When}) => {
 
     When(/^I click on my name in the top corner$/, bookingPage.clickOnProfile);
 
-    Then(/^I will be taken to my individual profile page$/, takeToIndividualPage);
-    async function takeToIndividualPage(): Promise<void> {
-        let currentPath = await page.currentPath();
-        expect(currentPath).to.contain('profile');
+    Then(/^I will be taken to my individual (.*) page$/, takeToIndividualPage);
+    function takeToIndividualPage(individual_type: string) {
+        return this.currentPath().then((currentPath) => {
+            expect(currentPath).to.contain(individual_type);
+        });
     }
 
     Then(/^I can see the fields (.*)$/, showAllTheFields);
@@ -56,5 +57,10 @@ defineSupportCode(({Given, Then, When}) => {
             // console.log(updated_text + '++++++');
             expect(value).to.be.equal(updated_text);
         });
+    }
+
+    When(/^I click on Profile '(.*)'/, clickonProfileButton);
+    function clickonProfileButton(btnLabel: string) {
+        return page.getElementByCSSandText('a', btnLabel).click();
     }
 });
