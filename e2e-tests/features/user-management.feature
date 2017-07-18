@@ -19,7 +19,7 @@ Feature: Create, read, update and delete a User
     And I click on 'Create'
     Then I am on the 'User Management' list page
     And the valid Administrator should be in the list
-#  @runThis
+#  @ignoreThis
 #  Scenario: Administrator should be able to update an Administrator
 #    Given There is 1 inactive Administrator
 #    When I click on edit for an existing Administrator
@@ -120,7 +120,7 @@ Feature: Create, read, update and delete a User
 #    And I click on 'Create'
 #    Then I am on the 'User Management' list page
 #    And the valid Client should be in the list
-#  @runThis
+#  @ignoreThis
 #  Scenario: Administrator should be able to update an Client
 #    Given There is 1 inactive Client
 #    When I click on edit for an existing Client

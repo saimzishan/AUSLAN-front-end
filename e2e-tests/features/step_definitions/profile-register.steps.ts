@@ -1,7 +1,7 @@
-import {expect} from '../config/helpers/chai-imports';
+import {expect} from '../../config/helpers/chai-imports';
 import {defineSupportCode} from 'cucumber';
 import {browser, by, element, $, $$, protractor, ExpectedConditions} from 'protractor';
-import {PageObject} from '../po/app.po';
+import {PageObject} from '../../po/app.po';
 
 defineSupportCode(({Given, Then, When}) => {
 

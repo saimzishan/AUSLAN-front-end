@@ -1,0 +1,167 @@
+[
+  {
+    "keyword": "Feature",
+    "line": 1,
+    "name": "User Profile Management",
+    "tags": [],
+    "uri": "/Users/hientran/Desktop/Angular/prod/booking-system-frontend/e2e-tests/features/user-profile-management.feature",
+    "elements": [
+      {
+        "keyword": "Scenario",
+        "line": 9,
+        "name": "Be able to view the profile as Booking Officer",
+        "tags": [
+          {
+            "line": 7,
+            "name": "@runThis"
+          }
+        ],
+        "id": "user-profile-management;be-able-to-view-the-profile-as-booking-officer",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Before",
+            "result": {
+              "status": "passed",
+              "duration": 4265
+            },
+            "hidden": true,
+            "match": {
+              "location": "/Users/hientran/Desktop/Angular/prod/booking-system-frontend/e2e-tests/config/helpers/before.scenario.ts:15"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "name": "I go to the website",
+            "result": {
+              "status": "passed",
+              "duration": 4338
+            },
+            "isBackground": true,
+            "line": 4,
+            "match": {
+              "location": "/Users/hientran/Desktop/Angular/prod/booking-system-frontend/e2e-tests/features/common.steps.ts:45"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "name": "I am shown the login screen, with picture and signup button",
+            "result": {
+              "status": "passed",
+              "duration": 76
+            },
+            "isBackground": true,
+            "line": 5,
+            "match": {
+              "location": "/Users/hientran/Desktop/Angular/prod/booking-system-frontend/e2e-tests/features/common.steps.ts:46"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "name": "I exist as an Booking Officer",
+            "result": {
+              "status": "passed",
+              "duration": 0
+            },
+            "line": 10,
+            "match": {
+              "location": "/Users/hientran/Desktop/Angular/prod/booking-system-frontend/e2e-tests/features/common.steps.ts:50"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "name": "I sign in with valid Booking Officer credentials",
+            "result": {
+              "status": "passed",
+              "duration": 769
+            },
+            "line": 11,
+            "match": {
+              "location": "/Users/hientran/Desktop/Angular/prod/booking-system-frontend/e2e-tests/features/common.steps.ts:54"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "name": "I am on the bookings page",
+            "result": {
+              "status": "passed",
+              "duration": 149
+            },
+            "line": 12,
+            "match": {
+              "location": "/Users/hientran/Desktop/Angular/prod/booking-system-frontend/e2e-tests/features/common.steps.ts:72"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "name": "I click on my name in the top corner",
+            "result": {
+              "status": "passed",
+              "duration": 153
+            },
+            "line": 13,
+            "match": {
+              "location": "/Users/hientran/Desktop/Angular/prod/booking-system-frontend/e2e-tests/features/user-profile-management.steps.ts:25"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "name": "I will be taken to my individual profile page",
+            "result": {
+              "status": "passed",
+              "duration": 32
+            },
+            "line": 14,
+            "match": {
+              "location": "/Users/hientran/Desktop/Angular/prod/booking-system-frontend/e2e-tests/features/user-profile-management.steps.ts:27"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "name": "I can see the fields FIRST NAME *, LAST NAME *, EMAIL *, MOBILE *, STATUS, Change Picture:",
+            "result": {
+              "status": "passed",
+              "duration": 213
+            },
+            "line": 15,
+            "match": {
+              "location": "/Users/hientran/Desktop/Angular/prod/booking-system-frontend/e2e-tests/features/user-profile-management.steps.ts:33"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "After",
+            "result": {
+              "status": "passed",
+              "duration": 1897
+            },
+            "hidden": true,
+            "match": {
+              "location": "/Users/hientran/Desktop/Angular/prod/booking-system-frontend/e2e-tests/config/helpers/after.scenario.ts:13"
+            }
+          }
+        ]
+      }
+    ],
+    "id": "user-profile-management",
+    "metadata": {
+      "browser": {
+        "name": "chrome",
+        "version": "59.0.3071.115"
+      },
+      "device": "MacBook Pro 15\" 2017",
+      "platform": {
+        "name": "osx",
+        "version": "10.12.5"
+      }
+    }
+  }
+]

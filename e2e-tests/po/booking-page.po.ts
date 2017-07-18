@@ -36,6 +36,11 @@ export class BookingPage extends PageObject {
             });
         });
     }
+
+    clickOnProfile = () => {
+        return this.getElementByID('lnkProfile').click();
+    }
+
     didFinishedRendering = () => {
         this.logoutLink = this.getElementByName('lnkLogout');
         this.profileLink = this.getElementByName('lnkProfile');

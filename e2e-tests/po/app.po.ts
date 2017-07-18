@@ -50,6 +50,10 @@ export class PageObject {
         return element(by.cssContainingText(css, text));
     }
 
+    getElementInsideByCSSandText(ele, css: string, text: string) {
+        return ele.element(by.cssContainingText(css, text));
+    }
+
     getElementByCSSandExactText(css: string, text: string) {
         return element(by.xpath('.//*[text()="' + text + '" and class="' + css + '"]'));
     }

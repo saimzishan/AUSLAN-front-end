@@ -1,17 +1,20 @@
-import {expect} from '../config/helpers/chai-imports';
+import {expect} from '../../config/helpers/chai-imports';
 // import * from 'chai';
 // import {} from 'jasmine';
 import {defineSupportCode} from 'cucumber';
 import {browser, by, element, $, $$} from 'protractor';
 
-import {PageObject} from '../po/app.po';
-import {CONSTANT} from '../helper';
+import {PageObject} from '../../po/app.po';
+import {BookingPage} from '../../po/booking-page.po';
+import {CONSTANT, Booking} from '../../helper';
 
 
 defineSupportCode(({Given, Then, When}) => {
 
+    let list_of_object = {};
 
     let page = new PageObject();
+    let bookingPage = new BookingPage();
 //  BE ABLE TO VIEW BOOKING PAGE
     Then(/^I will be shown with bookings$/, showSummaryDetails);
     async function showSummaryDetails(): Promise<void> {
@@ -220,11 +223,11 @@ defineSupportCode(({Given, Then, When}) => {
 
     // ---------------------------------   INDIVIDUAL BOOKING PAGE
     When(/^I click on an individual booking$/, clickOnIndividualBooking);
-    async function clickOnIndividualBooking(): Promise<void> {
-        const bookingRows = await $$('tbody tr');
+    function clickOnIndividualBooking() {
+        const bookingRows = $$('tbody tr');
         if (bookingRows.length > 1) {
             let one_row = bookingRows[0];
-            await one_row.click();
+            one_row.click();
         }
     }
 
@@ -241,31 +244,6 @@ defineSupportCode(({Given, Then, When}) => {
         expect(interpereter_num).to.eql(parseInt(num_of_user, 10));
     }
 
-//    VIEW PROFILE
-    When(/^I click on my name in the top corner$/, clickOnMyName);
-    async function clickOnMyName(): Promise<void> {
-        const profile = page.getElementByID('lnkProfile');
-        profile.click();
-    }
-
-    Then(/^I will be taken to my individual profile page$/, takeToIndividualPage);
-    async function takeToIndividualPage(): Promise<void> {
-        let currentPath = await page.currentPath();
-        expect(currentPath).to.contain('profile');
-    }
-
-    Then(/^I can see the fields (.*)$/, showAllTheFields);
-    async function showAllTheFields(fields_string: string): Promise<void> {
-        const fields = fields_string.split(', ');
-        const all_fields = await $$('form div.form-field label');
-        const all_fields_length = all_fields.length;
-        expect(fields.length).to.equal(all_fields_length);
-        for (let i = 0; i < all_fields_length; i++) {
-            let label_text = await page.getText(all_fields[i]);
-            expect(fields).to.includes(label_text);
-        }
-    }
-
 //    POPULATE DROP DOWN
     When(/^I click dropdown (.*)$/, clickOnDropDown);
     async function clickOnDropDown(label_text: string): Promise<void> {
@@ -275,10 +253,14 @@ defineSupportCode(({Given, Then, When}) => {
         await select_dropdown.click();
     }
 
-    When(/^I click on option (.*)/, clickOnOption);
-    async function clickOnOption(option_text: string): Promise<void> {
-        const option_selected = await page.getElementByCSSandText('option', option_text);
+    When(/^I click on option (.*) of (.*) for (.*)/, clickOnOption);
+    async function clickOnOption(option_text: string, drop_down: string, for_type: string): Promise<void> {
+        const selected_label = await page.getElementByCSSandText('label', drop_down);
+        const div = page.getParent(selected_label);
+        const option_selected = await page.getElementInsideByCSSandText(div, 'option', option_text);
         await option_selected.click();
+        list_of_object[for_type] = Booking.getWhatWillBeDiscussed(option_text);
+        // console.log(list_of_object);
     }
 
     Then(/^The cell of (.*) will be populated with (.*)$/, checkTheDropDown);
@@ -286,12 +268,21 @@ defineSupportCode(({Given, Then, When}) => {
         const selected_label = await page.getElementByCSSandText('label', label_text);
         const div = page.getParent(selected_label);
         const select_dropdown = page.getElementInsideByTag(div, 'select');
-
+        if (option_text === 'NOTHING') {
+            const selected_label_attr = await select_dropdown.getAttribute('ng-reflect-model');
+            let expected = false;
+            if (typeof selected_label_attr !== typeof undefined && selected_label_attr !== false) {
+                expected = true;
+            }
+            expect(expected).to.be.true;
+            list_of_object['WHAT WILL BE DISCUSSED *'] = Booking.getWhatWillBeDiscussed('');
+        } else {
             const selected_label_val = await select_dropdown.getAttribute('ng-reflect-model').then((val) => {
-                console.log(val);
+                // console.log(val);
                 return val.toUpperCase();
             });
             expect(selected_label_val).to.equal(option_text);
+        }
     }
 
 //    CLick on Request bookings
@@ -327,7 +318,16 @@ defineSupportCode(({Given, Then, When}) => {
         const selected_label = await page.getElementByCSSandText('label', type_of_dropdown);
         const div = page.getParent(selected_label);
         const all_option = await page.getAllByTagNameInElement(div, 'option');
+        let final_arr = [];
+        for (let i = 0; i < all_option.length; i++) {
+            let text = await page.getText(all_option[i]);
+            text = text.replace(/^\s+|\s+$/g, '');
+            // console.log(text);
+            final_arr.push(text);
+        }
         const expected_option_list = list_of_object[type_of_dropdown];
-        expect(JSON.stringify(all_option)).to.be.equal(JSON.stringify(expected_option_list));
+        // console.log(final_arr);
+        // console.log(expected_option_list);
+        expect(JSON.stringify(final_arr)).to.be.equal(JSON.stringify(expected_option_list));
     }
 });
