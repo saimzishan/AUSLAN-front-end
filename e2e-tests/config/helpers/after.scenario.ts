@@ -11,8 +11,10 @@ interface World {
 
 defineSupportCode(({After}) => {
     After(function (scenarioResult: HookScenarioResult): Promise<void> {
-        Heroku.sendCommandToHeroku('Booking.delete_all');
-        Heroku.sendCommandToHeroku('User.delete_all');
+        if(scenarioResult.status !== 'failed') {
+             Heroku.sendCommandToHeroku('Booking.delete_all');
+             Heroku.sendCommandToHeroku('User.delete_all');
+        }
         const world = this;
         return (scenarioResult.status === 'failed') ? saveFailedScenarioScreenshot(world, scenarioResult) : Promise.resolve();
     });

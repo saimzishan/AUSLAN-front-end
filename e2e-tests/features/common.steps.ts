@@ -45,6 +45,7 @@ defineSupportCode(({Given, When}) => {
     Given(/^I go to the website/, homePage.browse);
     Given(/^I am shown the login screen, with picture and signup button/, homePage.didFinishedRendering);
     Given(/^I won't be logged in anymore and will be taken back to the loging screen/, homePage.didFinishedRendering);
+    Given(/^I am on the mobile login screen without a hero picture$/, homePage.didFinishedRendering);
 
 
     Given(/^I exist as an (.*)/, givenExistAsAValidUser);
@@ -74,7 +75,6 @@ defineSupportCode(({Given, When}) => {
 
 
     Given(/^I am on a mobile$/, onMobileResolution);
-    Given(/^I am on the mobile login screen without a hero picture$/, onMobileResolution);
     function onMobileResolution() {
         return browser.driver.manage().window().setSize(360, 640);
     }
@@ -82,13 +82,14 @@ defineSupportCode(({Given, When}) => {
     Given(/^I will be shown the booking detail page$/, isOnBookingJobDetails);
     function isOnBookingJobDetails() {
         return page.currentPath().then((currentPath) => {
-            expect(currentPath).to.contain('/booking-management/1/booking-job');
-    });
+            expect(currentPath).to.contain('/booking-management/1/job-detail');
+            // browser.wait(protractor.ExpectedConditions.presenceOf(page.getElementByCss('fake element')), 30000);
+        });
     }
 
     Given(/^I click on booking job detail page$/, onBookingJobDetails);
     function onBookingJobDetails() {
-        return page.navigateTo('/booking-management/1/booking-job');
+        return page.navigateTo(browser.baseUrl + '/#/booking-management/1/job-detail');
     }
 
     Given(/^I am on a computer$/, onDesktopResolution);

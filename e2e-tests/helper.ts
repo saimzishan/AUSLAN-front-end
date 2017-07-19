@@ -1,6 +1,7 @@
 import {execSync} from 'child_process';
 import {environment} from '../src/environments/environment';
 import {browser} from 'protractor';
+
 /**
  * Created by hientran on 8/5/17.
  */
@@ -237,8 +238,8 @@ export class Heroku {
         let herokuCommand = browser.params.env === 'localhost' ?
             'cd ../booking-system-api/ && echo  \'' + command + ';exit\' | bundle exec rails c && cd ../booking-system-frontend/' :
             'echo  \'' + command + ';exit\' | heroku run console --app auslan-e2e-testing';
-        console.log(browser.params.env);
-        console.log(herokuCommand);
+        // console.log(browser.params.env);
+        // console.log(herokuCommand);
 
         exec(herokuCommand
             , (o1, o2, o3) => {
@@ -308,7 +309,7 @@ export class Heroku {
         let userType = User.user_type(data.type);
         // delete the key type
         delete data.type;
-        return_command += 'a = ' + userType + '.create(' + JSON.stringify(data) +  ')';
+        return_command += 'a = ' + userType + '.create(' + JSON.stringify(data) + ')';
         return return_command;
     }
 
@@ -336,4 +337,16 @@ export class Heroku {
         Heroku.sendCommandToHeroku(command);
     }
 
+    static inviteInterpreter() {
+        let command = 'b=Booking.first;';
+        command += 'i=interpreter.first;';
+        command += 'b.interpreter_ids=[i.id];';
+        command += ' b.add_interpreters_to_booking;';
+        command += 'b.invite_url = ' + browser.baseUrl +
+            '"/#/booking-management/#{b.id}/job-detail"';
+        command += 'b.next_state = Booking::STATE_IN_PROGRESS;';
+        command += 'b.save;';
+         command += 'b.id';
+        Heroku.sendCommandToHeroku(command);
+    }
 }

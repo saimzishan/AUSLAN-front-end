@@ -21,13 +21,19 @@ defineSupportCode(({Before}) => {
             }
         });
 
-        if (scenario.scenario.name.toUpperCase().indexOf('booking created'.toUpperCase()) > 0) {
-            Heroku.createSingleBooking();
-        }
-
         for (let pn of personas) {
             let currentlyLoggedInUser = User.returnTypeAndUser(pn).user;
             Heroku.addVerifiedUser(currentlyLoggedInUser, pn);
+            Heroku.sendCommandToHeroku(+ 'User.find_by(email: "' + currentlyLoggedInUser.email +
+                '").id');
+        }
+
+        if (scenario.scenario.name.toUpperCase().indexOf('a booking is created'.toUpperCase()) > 0) {
+            Heroku.createSingleBooking();
+        }
+
+        if (scenario.scenario.name.toUpperCase().indexOf('INTERPRETER Invited'.toUpperCase()) > 0) {
+           Heroku.inviteInterpreter();
         }
     });
 });
