@@ -7,6 +7,22 @@ Feature: As all, I can login/logout, change profile, cannot login with invalid p
     And I exist as an Booking Officer
 
   @runThis
+  Scenario: As Booking Officer, I can reset my password
+    And I click on forgot my password
+    Then I am at reset password page
+    Then I enter valid email
+    Then I press Submit
+    Then I get a valid reset password notification
+
+  @runThis
+  Scenario: As Booking Officer, I can reset my password
+    And I click on forgot my password
+    Then I am at reset password page
+    Then I enter invalid email
+    Then I press Submit
+    Then I get an error reset password notification
+
+  @ignoreThis
   Scenario: As Booking Officer, I can login/logout
     And I sign in with valid Booking Officer credentials
     Then I will be shown the bookings page
@@ -14,17 +30,17 @@ Feature: As all, I can login/logout, change profile, cannot login with invalid p
     And I click on logout
     Then I won't be logged in anymore and will be taken back to the loging screen
 
-  @runThis
+  @ignoreThis
   Scenario: As Booking Officer, I cannot login without valid password
     And I sign in with invalid Booking Officer credentials
     Then I will get an error message saying "Email or password not found"
 
-  @runThis
+  @ignoreThis
   Scenario: As Administrator, I cannot login without valid password
     And I sign in with invalid Booking Officer credentials
     Then I will get an error message saying "Email or password not found"
 
-  @runThis
+  @ignoreThis
   Scenario: As Administrator, I can login/logout
     And I sign in with valid Booking Officer credentials
     Then I will be shown the bookings page
@@ -32,7 +48,7 @@ Feature: As all, I can login/logout, change profile, cannot login with invalid p
     And I click on logout
     Then I won't be logged in anymore and will be taken back to the loging screen
 
-  @runThis
+  @ignoreThis
   Scenario: As Interpreter, I can login/logout
     And I sign in with valid Booking Officer credentials
     Then I will be shown the bookings page
@@ -40,12 +56,12 @@ Feature: As all, I can login/logout, change profile, cannot login with invalid p
     And I click on logout
     Then I won't be logged in anymore and will be taken back to the loging screen
 
-  @runThis
+  @ignoreThis
   Scenario: As Interpreter, I cannot login without valid password
     And I sign in with invalid Booking Officer credentials
     Then I will get an error message saying "Email or password not found"
 
-  @runThis
+  @ignoreThis
   Scenario: As Client, I can login/logout
     And I sign in with valid Booking Officer credentials
     Then I will be shown the bookings page
@@ -53,13 +69,13 @@ Feature: As all, I can login/logout, change profile, cannot login with invalid p
     And I click on logout
     Then I won't be logged in anymore and will be taken back to the loging screen
 
-  @runThis
+  @ignoreThis
   Scenario: As Client, I cannot login without valid password
     And I sign in with invalid Booking Officer credentials
     Then I will get an error message saying "Email or password not found"
 
 
-  @runThis
+  @ignoreThis
   Scenario: As Organisational Representative, I can login/logout
     And I sign in with valid Booking Officer credentials
     Then I will be shown the bookings page
@@ -67,7 +83,7 @@ Feature: As all, I can login/logout, change profile, cannot login with invalid p
     And I click on logout
     Then I won't be logged in anymore and will be taken back to the loging screen
 
-  @runThis
+  @ignoreThis
   Scenario: As Organisational Representative, I cannot login without valid password
     And I sign in with invalid Booking Officer credentials
     Then I will get an error message saying "Email or password not found"

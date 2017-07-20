@@ -13,6 +13,7 @@ interface World {
 
 defineSupportCode(({Before}) => {
     Before(function (scenario: HookScenarioResult) {
+
         let all_personas = ['Booking Officer', 'Administrator', 'Interpreter', 'Individual Client', 'Organisational Representative'];
         let personas = [];
         all_personas.forEach((pn) => {
@@ -24,8 +25,7 @@ defineSupportCode(({Before}) => {
         for (let pn of personas) {
             let currentlyLoggedInUser = User.returnTypeAndUser(pn).user;
             Heroku.addVerifiedUser(currentlyLoggedInUser, pn);
-            Heroku.sendCommandToHeroku(+ 'User.find_by(email: "' + currentlyLoggedInUser.email +
-                '").id');
+
         }
 
         if (scenario.scenario.name.toUpperCase().indexOf('a booking is created'.toUpperCase()) > 0) {

@@ -32,6 +32,10 @@ export class HomePage extends PageObject {
         });
     }
 
+    clickOnResetPassword = () => {
+        return this.getElementByName('lnkResetPass').click();
+    }
+
     getAuthErrorNotificationContent = () => {
         let elm = $('div.sn-content');
         return browser.wait(protractor.ExpectedConditions.presenceOf(elm), 10000).then(() => {

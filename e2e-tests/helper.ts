@@ -41,7 +41,7 @@ export class User {
                 chosen_type = 'Interpreter';
                 valid_user = new Interpreter('interpreter@auslan.com.au', 'Abcd#1234');
                 break;
-            case 'Client':
+            case 'Individual Client':
                 chosen_type = 'Individual Client';
                 valid_user = new Client('client@auslan.com.au', 'Abcd#1234');
                 break;
@@ -238,8 +238,8 @@ export class Heroku {
         let herokuCommand = browser.params.env === 'localhost' ?
             'cd ../booking-system-api/ && echo  \'' + command + ';exit\' | bundle exec rails c && cd ../booking-system-frontend/' :
             'echo  \'' + command + ';exit\' | heroku run console --app auslan-e2e-testing';
-        // console.log(browser.params.env);
-        // console.log(herokuCommand);
+        console.log(browser.params.env,
+            herokuCommand);
 
         exec(herokuCommand
             , (o1, o2, o3) => {
@@ -248,6 +248,25 @@ export class Heroku {
                 console.log('Heroku Command => Error', o3);
 
             });
+    }
+
+    static getOutputFromHeroku (command) {
+        let sync = require('child_process').spawn;
+        let herokuCommand = browser.params.env === 'localhost' ?
+            'cd ../booking-system-api/ && echo  \'' + command + ';\' | bundle exec rails c && cd ../booking-system-frontend/' :
+            'echo  \'' + command + '\' | heroku run console --app auslan-e2e-testing';
+        let child = sync(herokuCommand);
+        child.stdout.on('data',
+            function (data) {
+                console.log('ls command output: ' + data);
+            });
+        child.stderr.on('data', function (data) {
+            console.log('stderr: ' + data);
+        });
+
+        child.on('close', function (code) {
+            console.log('child process exited with code ' + code);
+        });
     }
 
     static createSingleBooking() {
@@ -296,18 +315,15 @@ export class Heroku {
                 'post_code': '3025'
             },
             'parking_availability': 'None - Use the Tram',
-            'bookable_id': 1,
-            'bookable_type': 'Administrator'
+            'bookable': 'Administrator.last'
         });
         let command = 'Booking.create(' + JSON.stringify(data) + ')';
         Heroku.sendCommandToHeroku(command);
-
     }
 
     static createSingleUser(data) {
         let return_command = '';
         let userType = User.user_type(data.type);
-        // delete the key type
         delete data.type;
         return_command += 'a = ' + userType + '.create(' + JSON.stringify(data) + ')';
         return return_command;
@@ -346,7 +362,6 @@ export class Heroku {
             '"/#/booking-management/#{b.id}/job-detail"';
         command += 'b.next_state = Booking::STATE_IN_PROGRESS;';
         command += 'b.save;';
-         command += 'b.id';
         Heroku.sendCommandToHeroku(command);
     }
 }

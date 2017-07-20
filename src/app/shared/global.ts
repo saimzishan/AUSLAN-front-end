@@ -15,6 +15,7 @@ export class GLOBAL {
     public static USER_API_ENDPOINT = (environment.production) ? 'https://auslan-staging.herokuapp.com/api/v1'
         : (environment.stage) ? 'https://auslan.herokuapp.com/api/v1' :
             (environment.localhost) ? `http://localhost:${GLOBAL.RAILS_LOCAL_SERVER_PORT}/api/v1` :
+                (environment.test) ? `https://auslan-e2e-testing.herokuapp.com/api/v1` :
                 `http://localhost:${GLOBAL.MOCK_USER_SERVER_PORT}/api/v1`;
     public static BOOKING_API_ENDPOINT = (environment.production) ? 'https://auslan-staging.herokuapp.com/api/v1'
         : (environment.stage) ? 'https://auslan.herokuapp.com/api/v1' :
