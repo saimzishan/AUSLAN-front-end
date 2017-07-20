@@ -26,13 +26,13 @@ defineSupportCode(({Given, Then, When}) => {
     }
 
     Then(/^I can see the fields (.*)$/, showAllTheFields);
-    async function showAllTheFields(fields_string: string): Promise<void> {
+    function showAllTheFields(fields_string: string) {
         const fields = fields_string.split(', ');
-        const all_fields = await $$('form div.form-field label');
+        const all_fields =  $$('form div.form-field label');
         const all_fields_length = all_fields.length;
         expect(fields.length).to.equal(all_fields_length);
         for (let i = 0; i < all_fields_length; i++) {
-            let label_text = await page.getText(all_fields[i]);
+            let label_text = page.getText(all_fields[i]);
             expect(fields).to.includes(label_text);
         }
     }
@@ -47,7 +47,7 @@ defineSupportCode(({Given, Then, When}) => {
     }
 
     Then(/^The input field (.*) will be updated with (.*)/, filedWillBeUpdated);
-    function filedWillBeUpdated(fields_string: string, updated_text: string): Promise<void> {
+    function filedWillBeUpdated(fields_string: string, updated_text: string)    {
         const selected_label = page.getElementByCSSandText('label', fields_string);
         const div = page.getParent(selected_label);
         let input_field = page.getElementInsideByTag(div, 'input');

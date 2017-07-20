@@ -123,7 +123,7 @@ Feature: User Profile Management
     Then The input field FIRST NAME * will be updated with Yesman
 
 ################################## Profile PASSWORD related ##################################
-  @runThis
+  @ignoreThis
 #  Show profile page
   Scenario: Be able to change password as Individual Client
     Given I exist as an Individual Client

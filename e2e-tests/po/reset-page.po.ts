@@ -42,13 +42,13 @@ export class ResetPage extends PageObject {
             User.returnTypeAndUser('Booking Officer').user.email);
     }
 
-    enterEmailAddress= () => {
-        let currentlyLoggedInUser = User.returnTypeAndUser('Booking Officer').user;
+    enterEmailAddress= (type: string) => {
+        let currentlyLoggedInUser = User.returnTypeAndUser(type).user;
         return this.setValue(this.emailField, currentlyLoggedInUser.email);
     }
 
-    enterInValidEmailAddress= () => {
-        let currentlyLoggedInUser = User.returnTypeAndUser('Booking Officer').user;
+    enterInValidEmailAddress= (type: string) => {
+        let currentlyLoggedInUser = User.returnTypeAndUser(type).user;
         return this.setValue(this.emailField, 'a' + currentlyLoggedInUser.email);
     }
 
