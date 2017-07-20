@@ -4,6 +4,11 @@ Feature: As INTERPRETER, I can login on mobile
     Given I am on a mobile
     And I go to the website
     And I am on the mobile login screen without a hero picture
+
+  @ignoreThis
+  Scenario: As Interpreter, I can login on mobile
+    And I go to the website
+    And I am shown the login screen, with picture and signup button
     And I exist as an Interpreter
 
   @ignoreThis

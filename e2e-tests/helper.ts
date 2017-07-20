@@ -43,7 +43,7 @@ export class User {
                 break;
             case 'Individual Client':
                 chosen_type = 'Individual Client';
-                valid_user = new Client('client@auslan.com.au', 'Abcd#1234');
+                valid_user = new Client('individualclient@auslan.com.au', 'Abcd#1234');
                 break;
             case 'Organisational Representative':
                 chosen_type = 'Organisational';
@@ -90,12 +90,12 @@ export class User {
         let billing_address_attributes_fields = {};
 
         switch (type) {
-            case 'Client':
+            case 'Individual Client':
                 data_to_sent['send_email_on_receipt_of_request'] = true;
                 data_to_sent['email_confirmation_on_interpreter_allocation'] = true;
                 billing_account_attributes_fields['primary_contact_first_name'] = 'MOH';
                 billing_account_attributes_fields['primary_contact_last_name'] = 'JAY';
-                billing_account_attributes_fields['email_address'] = 'mohjay_client ' + i * 9 + 5 + '@auslan.com.au';
+                billing_account_attributes_fields['email_address'] = 'mohjay_client' + (i * 9 + 5) + '@auslan.com.au';
                 billing_account_attributes_fields['account_number'] = (1111111 + (i * 4)).toString();
                 billing_account_attributes_fields['preferred_billing_method_email'] = true;
                 billing_address_attributes_fields['unit_number'] = i;
@@ -141,7 +141,7 @@ export class User {
                 let org_billing_account_attributes_fields = {};
                 org_billing_account_attributes_fields['primary_contact_first_name'] = 'MOH';
                 org_billing_account_attributes_fields['primary_contact_last_name'] = 'JAY';
-                org_billing_account_attributes_fields['email_address'] = 'mohjay_client ' + i * 9 + 5 + '@auslan.com.au';
+                org_billing_account_attributes_fields['email_address'] = 'mohjay_orgrep' + (i * 9 + 5) + '@auslan.com.au';
                 org_billing_account_attributes_fields['account_number'] = (1111111 + (i * 4)).toString();
                 org_billing_account_attributes_fields['preferred_billing_method_email'] = true;
                 let org_billing_address_attributes_fields = {};
@@ -230,6 +230,168 @@ export class BookingOfficer extends User {
 
 export class Administrator extends User {
 }
+
+
+export class Booking {
+
+    private static what_will_be_discussed = new Object({
+        'CONFERENCE/FORUM': [
+            'COMMUNITY CONSULTATION',
+            'CONFERENCE (PLEASE SPECIFY IN NOTES)',
+            'CREATIVE ARTS / FESTIVAL',
+            'EXPO',
+            'INFORMATION SESSION',
+            'OTHER',
+            'RALLY/PROTEST'
+        ],
+        'COUNSELLING': [
+            'FAMILY',
+            'FINANCIAL',
+            'INDIVIDUAL',
+            'MARRIAGE',
+            'OTHER'
+        ],
+        'COURT': [
+            'CHILDREN AND FAMILY COURT - MENTION',
+            'CHILDREN AND FAMILY COURT – CONTESTED HEARING/DHS',
+            'CHILDREN AND FAMILY COURT – INTERVENTION ORDER',
+            'CHILDREN AND FAMILY COURT – MEDIATION',
+            'CORONERS - DIRECTIONS',
+            'CORONERS - INQUEST',
+            'COUNTY/SUPREME – DIRECTIONS',
+            'COUNTY/SUPREME – TRIAL',
+            'DHS ORDER',
+            'MAGISTRATES - CONTESTED HEARING',
+            'MAGISTRATES - CRIMINAL',
+            'MAGISTRATES - INTERVENTION ORDER',
+            'MAGISTRATES - MENTION',
+            'MENTAL HEALTH COURT',
+            'OTHER'
+        ],
+        'EDUCATION': ['CHILDCARE',
+            'EARLY INTERVENTION',
+            'KINDERGARTEN',
+            'PRIMARY SCHOOL – GRADUATION',
+            'PRIMARY SCHOOL – OTHER',
+            'PRIMARY SCHOOL – PARENT MEETING/INFORMATION SESSION',
+            'PRIMARY SCHOOL – STAFF MEETING',
+            'SECONDARY SCHOOL - GRADUATION',
+            'SECONDARY SCHOOL – OTHER',
+            'SECONDARY SCHOOL – PARENT MEETING/INFORMATION SESSION',
+            'SECONDARY SCHOOL – STAFF MEETING',
+            'TAFE - GRADUATION',
+            'TAFE – PRACTICAL',
+            'TAFE – THEORETICAL',
+            'UNIVERSITY - GRADUATION',
+            'UNIVERSITY – DEAF LECTURER',
+            'UNIVERSITY – LECTURE',
+            'UNIVERSITY – MEETING',
+            'UNIVERSITY – PRACTICAL/TUTORIAL',
+            'OTHER'],
+        'EMPLOYMENT': ['JOB INTERVIEW – COMPLEX/DEAF PROFESSIONAL',
+            'JOB INTERVIEW – ENTRY LEVEL',
+            'MEETING - BOARD',
+            'MEETING – 1:1',
+            'MEETING – COACHING/MENTORING',
+            'MEETING – HUMAN RESOURCES',
+            'MEETING – LARGE GROUP (5 OR MORE)',
+            'MEETING AT EMPLOYMENT SERVICE / WITH EMPLOYMENT CONSULTANT',
+            'TRAINING SESSION',
+            'OTHER'],
+        'HUMAN SERVICES': [
+            'CENTRELINK',
+            'CHILD PROTECTION',
+            'CRISIS/EMERGENCY',
+            'HOME VISIT',
+            'HOUSING',
+            'OTHER'],
+        'LEGAL/TRIBUNAL': ['ANTI-DISCRIMINATION',
+            'FORENSIC ASSESSMENT',
+            'GUARDIANSHIP',
+            'MEDIATION',
+            'MEETING – SOLICITOR/LAWYER',
+            'PRISON VISIT',
+            'TRIBUNAL',
+            'WORK COVER',
+            'OTHER'],
+        'MEDIA': ['INTERVIEW – OTHER',
+            'INTERVIEW – RADIO',
+            'INTERVIEW – TELEVISION',
+            'MEDIA CONFERENCE',
+            'OTHER'],
+        'MEDICAL': ['AUDIOLOGY',
+            'COMPLIMENTARY MEDICINE (PLEASE SPECIFY IN NOTES)',
+            'DENTAL',
+            'DIETICIAN',
+            'EMERGENCY',
+            'FAMILY PLANNING',
+            'GP',
+            'HOME VISIT',
+            'HOSPITAL CLINICS (PLEASE SPECIFY IN NOTES)',
+            'IN-PATIENT (PLEASE SPECIFY IN NOTES)',
+            'MEDICAL IMAGING',
+            'MEN\'S HEALTH',
+            'ONCOLOGY',
+            'OPTOMETRIST',
+            'PAEDIATRIC',
+            'PALLIATIVE CARE',
+            'PHYSICAL THERAPY (PLEASE SPECIFY IN NOTES)',
+            'REHABILITATION (PLEASE SPECIFY IN NOTES)',
+            'SEXUAL HEALTH',
+            'SPECIALIST (PLEASE SPECIFY IN NOTES)',
+            'SPEECH THERAPY',
+            'WOMEN’S HEALTH',
+            'OTHER'],
+        'MENTAL HEALTH': ['ASSESSMENT',
+            'FORENSIC ASSESSMENT',
+            'HOME VISIT',
+            'MEDICATION APPOINTMENT',
+            'MENTAL HEALTH REVIEW BOARD',
+            'ONGOING APPOINTMENT (PLEASE SPECIFY LENGTH IN NOTES)',
+            'PSYCHIATRY',
+            'PSYCHOLOGY',
+            'OTHER'],
+        'POLICE': ['ARREST',
+            'INTERVIEW – ACCUSED',
+            'INTERVIEW – VICTIM',
+            'STATEMENT – ACCUSED',
+            'STATEMENT – VICTIM',
+            'WARRANT',
+            'OTHER'],
+        'SOCIAL/PRIVATE': [
+            'ACCOUNTANT',
+            'BAPTISM',
+            'BODY CORPORATE MEETING',
+            'CHURCH SERVICE',
+            'FAMILY CELEBRATION',
+            'FINANCIAL ADVISOR',
+            'FUNERAL – FULL MASS',
+            'FUNERAL – NON RELIGIOUS',
+            'FUNERAL – SERVICE',
+            'HEALTH AND LIFESTYLE',
+            'SCHOOL PLAY',
+            'SPORTS CLUB',
+            'WEDDING',
+            'OTHER'],
+        'THEATRE': [
+            'ADULTS ONLY',
+            'COMEDY',
+            'COMMUNITY',
+            'SCHOOL',
+            'STAGE SHOW',
+            'OTHER'],
+        'OTHER': ['PLEASE SPECIFY IN NOTES'],
+        'NONE': []
+    });
+
+    static getWhatWillBeDiscussed(nature: string) {
+        const obj = this.what_will_be_discussed;
+        let returnVal = (obj.hasOwnProperty(nature)) ? obj[nature] : [];
+        return returnVal;
+    }
+}
+
+
 
 export class Heroku {
 

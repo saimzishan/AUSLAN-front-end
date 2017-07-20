@@ -27,6 +27,7 @@ Feature: Create Profile
     Then I will be taken to the 'INTERPRETER Signup' page
     When I fill all the details correctly for 'INTERPRETER'
     Then 'INTERPRETER' will be created
+
 #  -> invalid notification
   @ignoreThis
   Scenario: Can get the invalid notification for interpreter
@@ -64,8 +65,6 @@ Feature: Create Profile
     When I click on button 'Organisation'
     Then I will be taken to the 'ORGANISATION Signup' page
 
-##########    On the signup page for 3 different types of user
-#  -> valid notification
 
   @ignoreThis
   Scenario: Can get the valid notification for Individual Client

@@ -1,6 +1,9 @@
 Feature: Booking Management
 
-#  Background: Can be able to show the booking form
+  Background: I as an all user should be able to see the website
+    Given I go to the website
+    And I am shown the login screen, with picture and signup button
+
   @ignoreThis
   Scenario: Administrator can show a booking screen
     Given I exist as an Administrator
@@ -192,16 +195,6 @@ Feature: Booking Management
     Then I am on the bookings page
     And I will be shown with bookings
 
-  @ignoreThis
-#  Show profile page
-  Scenario: Be able to view the profile as Administrator
-    Given I exist as an Administrator
-    And I sign in with valid Administrator credentials
-    And I am on the bookings page
-    When I click on my name in the top corner
-    Then I will be taken to my individual profile page
-    And I can see the fields FIRST NAME *, LAST NAME *, EMAIL *, MOBILE *, STATUS, Change Picture:
-
 #  Populated NATURE OF APPOINTMENT AND WHAT WILL BE DISCUSSED
   @ignoreThis
   Scenario: Populate Both NATURE OF APPOINTMENT AND WHAT WILL BE DISCUSSED as User
@@ -211,10 +204,10 @@ Feature: Booking Management
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
     When I click dropdown NATURE OF APPOINTMENT *
-    And I click on option MEDICAL
+    And I click on option MEDICAL of NATURE OF APPOINTMENT * for WHAT WILL BE DISCUSSED *
     Then The cell of NATURE OF APPOINTMENT * will be populated with MEDICAL
     When I click dropdown WHAT WILL BE DISCUSSED *
-    And I click on option GP
+    And I click on option GP of WHAT WILL BE DISCUSSED * for nothing
     Then The cell of WHAT WILL BE DISCUSSED * will be populated with GP
 
 #  UNABLE TO SERVICE on Requested
@@ -250,7 +243,7 @@ Feature: Booking Management
     When I click on button 'Unable to Service'
     Then I will be shown a popup message
 
-    @ignoreThis
+  @ignoreThis
   Scenario: Unable to service on the Requested booking as Booking Officer
     Given I exist as an Booking Officer
 #    And There is 3 requested booking
@@ -261,3 +254,48 @@ Feature: Booking Management
     And I am on the individual booking page
     When I click on button 'Unable to Service'
     Then I will be shown a popup message
+
+  @ignoreThis
+  Scenario: As a user who can make a booking, I can't select from a list of 'What Will Be Discussed' if the 'Nature of Bookings' is not selected
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    And I am on the bookings page
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    And The cell of NATURE OF APPOINTMENT * will be populated with NOTHING
+    When I click dropdown WHAT WILL BE DISCUSSED *
+    Then The dropdown WHAT WILL BE DISCUSSED * will have 0 item
+
+  @ignoreThis
+  Scenario: As a user who can make a booking, I can select from a list of 'Nature of Booking' and specifics of a booking
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    And I am on the bookings page
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    And The cell of NATURE OF APPOINTMENT * will be populated with NOTHING
+    And I click dropdown WHAT WILL BE DISCUSSED *
+    And The dropdown WHAT WILL BE DISCUSSED * will have 0 item
+    When I click dropdown NATURE OF APPOINTMENT *
+    And I click on option MEDICAL of NATURE OF APPOINTMENT * for WHAT WILL BE DISCUSSED *
+    Then The cell of NATURE OF APPOINTMENT * will be populated with MEDICAL
+    When I click dropdown WHAT WILL BE DISCUSSED *
+    Then The dropdown WHAT WILL BE DISCUSSED * will have 23 item
+
+  @ignoreThis
+  Scenario: Given 1 unverified Interpreter and 1 booking created, as a Booking Officer i can see there are non interpreter to be invited
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    And I am on the bookings page
+    When I click on an individual booking
+    Then I am on the individual booking page
+    And I can see a list of 0 verified interpreters
+
+  @ignoreThis
+  Scenario: Given 1 verified Interpreter and 1 booking created, as a Booking Officer i can see there are non interpreter to be invited
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    And I am on the bookings page
+    When I click on an individual booking
+    Then I am on the individual booking page
+    And I can see a list of 1 verified interpreters

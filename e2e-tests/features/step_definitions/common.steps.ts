@@ -1,12 +1,12 @@
-import {expect} from '../config/helpers/chai-imports';
+import {expect} from '../../config/helpers/chai-imports';
 import {defineSupportCode} from 'cucumber';
 import {browser, by, element, $, $$, protractor} from 'protractor';
-import {PageObject} from '../po/app.po';
-import {User, Administrator, BookingOfficer, Interpreter, Organisation, Client, Heroku} from '../helper';
-import {OrganisationalRepresentative} from '../../src/app/shared/model/user.entity';
-import {HomePage} from '../po/home-page.po';
-import {BookingPage} from '../po/booking-page.po';
-import {ResetPage} from '../po/reset-page.po';
+import {PageObject} from '../../po/app.po';
+import {User, Administrator, BookingOfficer, Interpreter, Organisation, Client, Heroku} from '../../helper';
+// import {OrganisationalRepresentative} from '../../src/app/shared/model/user.entity';
+import {HomePage} from '../../po/home-page.po';
+import {BookingPage} from '../../po/booking-page.po';
+import {ResetPage} from '../../po/reset-page.po';
 
 defineSupportCode(({Given, When}) => {
 
@@ -61,8 +61,8 @@ defineSupportCode(({Given, When}) => {
 
     Given(/^I click on forgot my password$/, homePage.clickOnResetPassword);
     Given(/^I am at reset password page$/, resetPage.browse);
-    Given(/^I enter valid email$/, resetPage.enterEmailAddress);
-    Given(/^I enter invalid email$/, resetPage.enterInValidEmailAddress);
+    Given(/^I enter valid (.*) email$/, resetPage.enterEmailAddress);
+    Given(/^I enter invalid (.*) email$/, resetPage.enterInValidEmailAddress);
     Given(/^I press Submit$/, resetPage.pressSubmit);
     Given(/^I get a valid reset password notification$/, resetPage.getSuccessNotificationContent);
     Given(/^I get an error reset password notification$/, resetPage.getErrorNotificationContent);
@@ -98,5 +98,10 @@ defineSupportCode(({Given, When}) => {
     When(/^I click on button '(.*)'$/, clickOnButton);
     function clickOnButton(btnLabel: string) {
         return page.getElementByCSSandText('.button', btnLabel).click();
+    }
+
+    When(/^I click on BUTTON '(.*)'$/, clickOnBtn);
+    function clickOnBtn(btnLabel: string) {
+        return page.getButtonByText(btnLabel).click();
     }
 });
