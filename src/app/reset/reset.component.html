@@ -16,7 +16,7 @@
 
 				<div class="form-field">
 
-					<label><i class="icon-email"></i><span>EMAIL</span></label> <input type="email" id="email" name="email" placeholder="Enter your email"
+					<label><i class="icon-email"></i><span>EMAIL</span></label> <input type="email" placeholder="Enter your email"
 					 [(ngModel)]="emailAddress" name="email" #email="ngModel" email required> <span *ngIf="email.touched && (!email.errors?.required && !email.errors?.email);"
 					 class="inline-icon inline-icon-valid valid"></span> <span *ngIf="(email.dirty || email.touched) && (email.errors?.required || email.errors?.email);"
 					 class="inline-icon error"> <span>This field is

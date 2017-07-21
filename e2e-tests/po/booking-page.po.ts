@@ -17,7 +17,7 @@ export class BookingPage extends PageObject {
     verify = () => {
         return this.currentPath().then((currentPath) => {
             expect(currentPath).to.contain('booking-management');
-            // this.didFinishedRendering();
+            this.didFinishedRendering();
         });
     }
 
@@ -47,6 +47,22 @@ export class BookingPage extends PageObject {
         return browser.wait(protractor.ExpectedConditions.presenceOf(this.logoutLink), 30000).then(() => {
             expect(this.logoutLink).to.exist;
             expect(this.profileLink).to.exist;
+        });
+    }
+
+    onBookingJobDetails = () => {
+        return this.navigateTo(browser.baseUrl + '/#/booking-management/1/job-detail');
+    }
+
+    isOnBookingJobDetails = (id) => {
+        return this.currentPath().then((currentPath) => {
+            expect(currentPath).to.contain('/booking-management/' + id + '/job-detail');
+        });
+    }
+
+    onBookingListPage = () => {
+        return this.currentPath().then((currentPath) => {
+            expect(currentPath).to.contain('booking-management');
         });
     }
 

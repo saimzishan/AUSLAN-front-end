@@ -4,7 +4,88 @@ Feature: As all, I can login/logout, change profile, cannot login with invalid p
     Given I am on a computer
     And I go to the website
     And I am shown the login screen, with picture and signup button
-    And I exist as an Booking Officer
+    And I exist as an valid user
+
+  @runThis
+  Scenario: As Organisational Representative, I can reset my password with valid email
+    And I click on forgot my password
+    Then I am at reset password page
+    Then I enter valid Organisational Representative email
+    Then I press Submit
+    Then I get a valid reset password notification
+
+  @ignoreThis
+  Scenario: As Organisational Representative, I cannot reset my password with invalid email
+    And I click on forgot my password
+    Then I am at reset password page
+    Then I enter invalid Organisational Representative email
+    Then I press Submit
+    Then I get an error reset password notification
+
+  @runThis
+  Scenario: As Individual Client, I can reset my password with valid email
+    And I click on forgot my password
+    Then I am at reset password page
+    Then I enter valid Individual Client email
+    Then I press Submit
+    Then I get a valid reset password notification
+
+  @ignoreThis
+  Scenario: As Individual Client, I cannot reset my password with invalid email
+    And I click on forgot my password
+    Then I am at reset password page
+    Then I enter invalid Individual Client email
+    Then I press Submit
+    Then I get an error reset password notification
+
+  @runThis
+  Scenario: As Interpreter, I can reset my password with valid email
+    And I click on forgot my password
+    Then I am at reset password page
+    Then I enter valid Interpreter email
+    Then I press Submit
+    Then I get a valid reset password notification
+
+  @ignoreThis
+  Scenario: As Interpreter, I cannot reset my password with invalid email
+    And I click on forgot my password
+    Then I am at reset password page
+    Then I enter invalid Interpreter email
+    Then I press Submit
+    Then I get an error reset password notification
+
+  @ignoreThis
+  Scenario: As Administrator, I can reset my password with valid email
+    And I click on forgot my password
+    Then I am at reset password page
+    Then I enter valid Administrator email
+    Then I press Submit
+    Then I get a valid reset password notification
+
+  @ignoreThis
+  Scenario: As Administrator, I cannot reset my password with invalid email
+    And I click on forgot my password
+    Then I am at reset password page
+    Then I enter invalid Administrator email
+    Then I press Submit
+    Then I get an error reset password notification
+
+  @ignoreThis
+  Scenario: As Booking Officer, I can reset my password with valid email
+    And I click on forgot my password
+    Then I am at reset password page
+    Then I enter valid Booking Officer email
+    Then I press Submit
+    Then I get a valid reset password notification
+
+  @ignoreThis
+  Scenario: As Booking Officer, I cannot reset my password with invalid email
+    And I click on forgot my password
+    Then I am at reset password page
+    Then I enter invalid Booking Officer email
+    Then I press Submit
+    Then I get an error reset password notification
+
 
   @ignoreThis
   Scenario: As Booking Officer, I can login/logout

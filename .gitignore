@@ -2,6 +2,7 @@
 aero-debug.log
 aero-deploy.tar.gz
 log/
+.tmp
 tmp
 .DS_Store
 typings

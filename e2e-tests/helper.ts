@@ -1,6 +1,7 @@
 import {execSync} from 'child_process';
 import {environment} from '../src/environments/environment';
 import {browser} from 'protractor';
+
 /**
  * Created by hientran on 8/5/17.
  */
@@ -18,6 +19,7 @@ export class User {
     private _first_name: string;
     private _last_name: string;
     private _mobile_num: string;
+    public type: string;
 
     static user_type(type: string) {
         return type.replace(/ /g, '');
@@ -85,8 +87,16 @@ export class User {
         data_to_sent['last_name'] = lastName;
         data_to_sent['mobile'] = mobileNum;
         data_to_sent['verified'] = false;
+
+        let address_attributes_fields = {};
+        address_attributes_fields['unit_number'] = 22;
+        address_attributes_fields['street_number'] = 62;
+        address_attributes_fields['street_name'] = 'Flemington Road';
+        address_attributes_fields['suburb'] = 'Parkville';
+        address_attributes_fields['state'] = 'VIC';
+        address_attributes_fields['post_code'] = 3054;
+
         let billing_account_attributes_fields = {};
-        let billing_address_attributes_fields = {};
 
         switch (type) {
             case 'Individual Client':
@@ -94,63 +104,44 @@ export class User {
                 data_to_sent['email_confirmation_on_interpreter_allocation'] = true;
                 billing_account_attributes_fields['primary_contact_first_name'] = 'MOH';
                 billing_account_attributes_fields['primary_contact_last_name'] = 'JAY';
-                billing_account_attributes_fields['email_address'] = 'mohjay_client' + (i * 9 + 5) + '@auslan.com.au';
-                billing_account_attributes_fields['account_number'] = (1111111 + (i * 4)).toString();
+                billing_account_attributes_fields['primary_contact_email'] = 'mohjay_client@auslan.com.au';
+                billing_account_attributes_fields['primary_contact_phone_number'] = ' 0490000001';
+                billing_account_attributes_fields['account_number'] = (12345).toString();
                 billing_account_attributes_fields['preferred_billing_method_email'] = true;
-                billing_address_attributes_fields['unit_number'] = i;
-                billing_address_attributes_fields['street_number'] = i * 2 + 1;
-                billing_address_attributes_fields['street_name'] = 'Flemington Road';
-                billing_address_attributes_fields['suburb'] = 'Flemington Road';
-                billing_address_attributes_fields['state'] = 'VIC';
-                billing_address_attributes_fields['post_code'] = 3054 + i;
-                billing_account_attributes_fields['address_attributes'] = billing_address_attributes_fields;
+                billing_account_attributes_fields['address_attributes'] = address_attributes_fields;
+                data_to_sent['address_attributes'] = address_attributes_fields;
                 data_to_sent['billing_account_attributes'] = billing_account_attributes_fields;
                 break;
             case 'Interpreter':
                 data_to_sent['date_of_birth'] = '20/05/1987';
-                data_to_sent['naati_id'] = 1234;
-                let address_attributes_fields = {};
-                address_attributes_fields['unit_number'] = i;
-                address_attributes_fields['street_number'] = i * 2 + 1;
-                address_attributes_fields['street_name'] = 'Flemington Road';
-                address_attributes_fields['suburb'] = 'Flemington Road';
-                address_attributes_fields['state'] = 'VIC';
-                address_attributes_fields['post_code'] = 3054 + i;
+                data_to_sent['naati_id'] = 12345;
+
                 data_to_sent['address_attributes'] = address_attributes_fields;
                 break;
             case 'Organisational Representative':
                 data_to_sent['send_email_on_receipt_of_request'] = true;
                 data_to_sent['email_confirmation_on_interpreter_allocation'] = true;
+                data_to_sent['business_hours_phone'] = data_to_sent['mobile'];
                 let organisation_attributes_fields = {};
-                organisation_attributes_fields['abn'] = 13878943 + i;
-                organisation_attributes_fields['name'] = 'CompanyName' + (i * 2).toString();
-                organisation_attributes_fields['group_email'] = 'info_group_' + (i * 2).toString();
-                organisation_attributes_fields['branch_office'] = 'Melbourne ' + (i * 2).toString();
-                organisation_attributes_fields['phone_number'] = 'info_group_' + (i * 2).toString();
-                organisation_attributes_fields['branch_office'] = 'Melbourne ' + (i * 2).toString();
-                let organisation_address_attributes_fields = {};
-                organisation_address_attributes_fields['unit_number'] = i;
-                organisation_address_attributes_fields['street_number'] = i * 2 + 1;
-                organisation_address_attributes_fields['street_name'] = 'Flemington Road';
-                organisation_address_attributes_fields['suburb'] = 'Flemington Road';
-                organisation_address_attributes_fields['state'] = 'VIC';
-                organisation_address_attributes_fields['post_code'] = 3054 + i;
-                organisation_attributes_fields['address_attributes'] = organisation_address_attributes_fields;
+                organisation_attributes_fields['abn'] = 12345;
+                organisation_attributes_fields['name'] = 'CurveTomorrow';
+                organisation_attributes_fields['group_email'] = 'group@ct.com.au';
+                organisation_attributes_fields['branch_office'] = 'Melbourne';
+                organisation_attributes_fields['phone_number'] = '049090001';
+                organisation_attributes_fields['preferred_contact_method'] = 'EMAIL';
+
+                organisation_attributes_fields['address_attributes'] = address_attributes_fields;
 
                 let org_billing_account_attributes_fields = {};
                 org_billing_account_attributes_fields['primary_contact_first_name'] = 'MOH';
                 org_billing_account_attributes_fields['primary_contact_last_name'] = 'JAY';
-                org_billing_account_attributes_fields['email_address'] = 'mohjay_orgrep' + (i * 9 + 5) + '@auslan.com.au';
-                org_billing_account_attributes_fields['account_number'] = (1111111 + (i * 4)).toString();
+                org_billing_account_attributes_fields['primary_contact_email'] = 'mohjay_client@auslan.com.au';
+                org_billing_account_attributes_fields['primary_contact_phone_number'] = ' 0490000001';
+                org_billing_account_attributes_fields['account_number'] = (12346).toString();
                 org_billing_account_attributes_fields['preferred_billing_method_email'] = true;
-                let org_billing_address_attributes_fields = {};
-                org_billing_address_attributes_fields['unit_number'] = i;
-                org_billing_address_attributes_fields['street_number'] = i * 2 + 1;
-                org_billing_address_attributes_fields['street_name'] = 'Flemington Road';
-                org_billing_address_attributes_fields['suburb'] = 'Flemington Road';
-                org_billing_address_attributes_fields['state'] = 'VIC';
-                org_billing_address_attributes_fields['post_code'] = 3054 + i;
-                org_billing_account_attributes_fields['address_attributes'] = org_billing_address_attributes_fields;
+                org_billing_account_attributes_fields['external_reference'] = 1233;
+
+                org_billing_account_attributes_fields['address_attributes'] = address_attributes_fields;
                 organisation_attributes_fields['billing_account_attributes'] = org_billing_account_attributes_fields;
                 data_to_sent['organisation_attributes'] = organisation_attributes_fields;
                 break;
@@ -399,8 +390,8 @@ export class Heroku {
         let herokuCommand = browser.params.env === 'localhost' ?
             'cd ../booking-system-api/ && echo  \'' + command + ';exit\' | bundle exec rails c && cd ../booking-system-frontend/' :
             'echo  \'' + command + ';exit\' | heroku run console --app auslan-e2e-testing';
-        console.log(browser.params.env);
-        console.log(herokuCommand);
+        console.log(browser.params.env,
+            herokuCommand);
 
         exec(herokuCommand
             , (o1, o2, o3) => {
@@ -409,6 +400,25 @@ export class Heroku {
                 console.log('Heroku Command => Error', o3);
 
             });
+    }
+
+    static getOutputFromHeroku (command) {
+        let sync = require('child_process').spawn;
+        let herokuCommand = browser.params.env === 'localhost' ?
+            'cd ../booking-system-api/ && echo  \'' + command + ';\' | bundle exec rails c && cd ../booking-system-frontend/' :
+            'echo  \'' + command + '\' | heroku run console --app auslan-e2e-testing';
+        let child = sync(herokuCommand);
+        child.stdout.on('data',
+            function (data) {
+                console.log('ls command output: ' + data);
+            });
+        child.stderr.on('data', function (data) {
+            console.log('stderr: ' + data);
+        });
+
+        child.on('close', function (code) {
+            console.log('child process exited with code ' + code);
+        });
     }
 
     static createSingleBooking() {
@@ -457,20 +467,17 @@ export class Heroku {
                 'post_code': '3025'
             },
             'parking_availability': 'None - Use the Tram',
-            'bookable_id': 1,
-            'bookable_type': 'Administrator'
+            'bookable': 'Administrator.last'
         });
         let command = 'Booking.create(' + JSON.stringify(data) + ')';
         Heroku.sendCommandToHeroku(command);
-
     }
 
     static createSingleUser(data) {
         let return_command = '';
         let userType = User.user_type(data.type);
-        // delete the key type
         delete data.type;
-        return_command += 'a = ' + userType + '.create(' + JSON.stringify(data) +  ')';
+        return_command += 'a = ' + userType + '.create(' + JSON.stringify(data) + ')';
         return return_command;
     }
 
@@ -498,4 +505,15 @@ export class Heroku {
         Heroku.sendCommandToHeroku(command);
     }
 
+    static inviteInterpreter() {
+        let command = 'b=Booking.first;';
+        command += 'i=interpreter.first;';
+        command += 'b.interpreter_ids=[i.id];';
+        command += ' b.add_interpreters_to_booking;';
+        command += 'b.invite_url = ' + browser.baseUrl +
+            '"/#/booking-management/#{b.id}/job-detail"';
+        command += 'b.next_state = Booking::STATE_IN_PROGRESS;';
+        command += 'b.save;';
+        Heroku.sendCommandToHeroku(command);
+    }
 }
