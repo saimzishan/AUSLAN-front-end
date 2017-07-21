@@ -5,7 +5,7 @@ import {defineSupportCode} from 'cucumber';
 import {browser, by, element, $, $$} from 'protractor';
 
 import {PageObject} from '../../po/app.po';
-import {BookingPage} from '../../po/booking-page.po';
+import {BookingManagementPage} from '../../po/booking-management-page.po';
 import {CONSTANT, Booking} from '../../helper';
 
 
@@ -14,7 +14,7 @@ defineSupportCode(({Given, Then, When}) => {
     let list_of_object = {};
 
     let page = new PageObject();
-    let bookingPage = new BookingPage();
+    let bookingPage = new BookingManagementPage();
 
     When(/^I click on my name in the top corner$/, bookingPage.clickOnProfile);
 

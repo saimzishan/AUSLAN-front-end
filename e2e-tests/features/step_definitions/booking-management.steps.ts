@@ -5,8 +5,10 @@ import {defineSupportCode} from 'cucumber';
 import {browser, by, element, $, $$} from 'protractor';
 
 import {PageObject} from '../../po/app.po';
-import {BookingPage} from '../../po/booking-page.po';
+import {BookingManagementPage} from '../../po/booking-management-page.po';
 import {CONSTANT, Booking} from '../../helper';
+import {BookingPage} from '../../po/create-booking.po';
+import {BookingJobPage} from '../../po/booking-job.po';
 
 
 defineSupportCode(({Given, Then, When}) => {
@@ -14,56 +16,13 @@ defineSupportCode(({Given, Then, When}) => {
     let list_of_object = {};
 
     let page = new PageObject();
-    let bookingPage = new BookingPage();
+    let bookingManagementPO = new BookingManagementPage();
+    let createBookingPO = new BookingPage();
+    let bookingjobPO = new BookingJobPage();
 //  BE ABLE TO VIEW BOOKING PAGE
-    Then(/^I will be shown with bookings$/, showSummaryDetails);
-    async function showSummaryDetails(): Promise<void> {
-        let tblRows = await $$('#jobs-responsive tbody tr');
-        expect(tblRows.length).to.be.greaterThan(0);
-        let span = await $('#jobs-responsive tbody > tr:first-child td.bookingID > div > span');
-        expect(span.getText()).to.eventually.equal('0001');
-    }
-
-    When(/^I click on 'New Booking'$/, newBookingClick);
-    async function newBookingClick(): Promise<void> {
-        let newUserBtn = page.getElementByID('lnkNewBooking');
-        let click = await newUserBtn.click();
-    }
-
-    Then(/^I will be taken to the 'New Booking' form$/, showBookingForm);
-    async function showBookingForm(): Promise<void> {
-        let currentPath = await page.currentPath();
-        expect(currentPath).to.contain('create-booking');
-    }
-
-    ////////////////////////////////////// Adding Date
-    // Given(/^I am on the booking page as a (.*)$/, givenOnBookingAsValid);
-    // async function givenOnBookingAsValid(type: string): Promise<void>{
-    //     // await browser.driver.sleep(2000); // waiting for the elements to be loaded
-    //     // expect(page.currentPath()).to.eventually.contain('booking-management');
-    // }
-
-    // When(/^I click on Date-Month-Year$/, clickOnDate);
-    // async function clickOnDate(): Promise<void>{
-    //     await browser.driver.sleep(2000); // waiting for the elements to be loaded
-    //     let eventDate = page.getElementByName('dpEventDate');
-    //     expect(eventDate).to.be.exist;
-    //     eventDate.click();
-    // }
-    //
-    // When(/^I type in the date: (.*) by hand$/, typeDateByHand);
-    // async function typeDateByHand(date: string): Promise<void>{
-    //     await browser.driver.sleep(2000); // waiting for the elements to be loaded
-    //     let eventDate = page.getElementByName('dpEventDate');
-    //     eventDate.sendKeys(date);
-    // }
-    //
-    // // Then(/^It will be displayed in the cell$/, displayInCell);
-    // // async function displayInCell(): Promise<void>{
-    // //     await browser.driver.sleep(2000); // waiting for the elements to be loaded
-    // //     expect(page.currentPath()).to.eventually.contain('booking-management');
-    // // }
-    //
+    Then(/^I will be shown with bookings$/, bookingManagementPO.showSummaryDetails);
+    When(/^I click on 'New Booking'$/, bookingManagementPO.newBookingClick);
+    Then(/^I will be taken to the 'New Booking' form$/, createBookingPO.verify);
     When(/^I filled all mandatory fields except (.*)$/, haventFilledAllMandatory);
     async function haventFilledAllMandatory(mandatory_tag: string): Promise<void> {
         let all_required_input_fields = await $$('input[required]');
@@ -74,25 +33,6 @@ defineSupportCode(({Given, Then, When}) => {
         const input_length = all_required_input_fields.length;
         console.log(input_length);
         console.log(all_required_radio_buttons.length);
-
-        // SIMPLE DROPDOWN MENU
-        // for (let simple_dropdown_i = 0; simple_dropdown_i < all_required_simple_drop_down.length ; simple_dropdown_i++) {
-        //     let simple_dropdown = all_required_simple_drop_down[simple_dropdown_i];
-        //     let simple_dropdown_parent = page.getParent(simple_dropdown);
-        //     let simple_dropdown_label = page.getElementInsideByTag(simple_dropdown_parent, 'label');
-        //     let simple_dropdown_label_text = await simple_dropdown_label.getText().then( (text) => {
-        //         // console.log(text);
-        //         return text;
-        //     });
-        //     // expect(mandatory_dropdown_related_label_fields).to.include(dropdown_label_text);
-        //     if (simple_dropdown_label_text !== mandatory_tag) {
-        //         await simple_dropdown.click();
-        //         let all_simple_options = await $$('option');
-        //         all_simple_options[Math.floor(Math.random() * (all_simple_options.length - 1))].click();
-        //     } else {
-        //         console.log('=========>' + simple_dropdown_label_text + '<==========');
-        //     }
-        // }
 
         // DROPDOWN MENU
         for (let dropdown_i = 0; dropdown_i < all_required_drop_down.length; dropdown_i++) {
@@ -181,15 +121,7 @@ defineSupportCode(({Given, Then, When}) => {
     }
 
     // --------------------------------- AUTO POPULATE CLIENT DETAILS
-    When(/^I specify i am the client of this booking$/, specifyAsClientOfBooking);
-    async function specifyAsClientOfBooking(): Promise<void> {
-        const clientOptionLabel = page.getElementByCSSandText('.text-center', 'CLIENT DETAILS');
-        const divClientDetails = page.getNextSibling(clientOptionLabel, 'div');
-        const clientRadioGroup = page.getElementInsideByTag(divClientDetails, 'md-radio-group');
-        let all_radio_btn_in_group = await page.getAllByTagNameInElement(clientRadioGroup, 'md-radio-button');
-        all_radio_btn_in_group[CONSTANT.YES].click();
-    }
-
+    When(/^I specify i am the client of this booking$/, createBookingPO.specifyAsClientOfBooking);
     Then(/^The booking form will be automatically populated with the details.$/, populatedUserDetails);
     async function populatedUserDetails(): Promise<void> {
         const clientOptionLabel = page.getElementByCSSandText('.text-center', 'CLIENT DETAILS');
@@ -209,33 +141,11 @@ defineSupportCode(({Given, Then, When}) => {
     }
 
     //    CANCEL BOOKING
-    When(/^I press '(.*)'$/, pressButtonOnNewBookingScreen);
-    async function pressButtonOnNewBookingScreen(buttonLabel: string): Promise<void> {
-        const button = page.getButtonByText(buttonLabel);
-        await button.click();
-    }
+    When(/^I press '(.*)'$/, bookingManagementPO.pressButtonOnNewBookingScreen);
+    Then(/^I am back on booking page$/, bookingManagementPO.verify);
+    When(/^I click on an individual booking$/, bookingManagementPO.clickOnIndividualBooking);
+    Then(/^I am on the individual booking page$/, bookingjobPO.verify);
 
-    Then(/^I am back on booking page$/, backToBookinManagementScreen);
-    async function backToBookinManagementScreen(): Promise<void> {
-        let currentPath = await page.currentPath();
-        expect(currentPath).to.contain('booking-management');
-    }
-
-    // ---------------------------------   INDIVIDUAL BOOKING PAGE
-    When(/^I click on an individual booking$/, clickOnIndividualBooking);
-    function clickOnIndividualBooking() {
-        const bookingRows = $$('tbody tr');
-        if (bookingRows.length > 1) {
-            let one_row = bookingRows[0];
-            one_row.click();
-        }
-    }
-
-    Then(/^I am on the individual booking page$/, onIndividualBookingScreen);
-    async function onIndividualBookingScreen(): Promise<void> {
-        let currentPath = await page.currentPath();
-        expect(currentPath).to.contain('booking-job');
-    }
 
     Then(/^I can see a list of (.*) (.*) interpreters$/, checkListofInterpreterIndividualBookingScreen);
     async function checkListofInterpreterIndividualBookingScreen(num_of_user: string, verified: string): Promise<void> {

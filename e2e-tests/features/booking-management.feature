@@ -169,14 +169,6 @@ Feature: Booking Management
     And I can see a list of 1 verified interpreters
 #    And I don't see 1 unverified interpreters
 
-#  On mobile
-  @ignoreThis
-  Scenario: Interpreter login into using mobile
-    Given I exist as an Interpreter
-    And I am on the mobile login screen without a hero picture
-    And I sign in with valid Interpreter credentials
-    And I am on the bookings page
-
   @ignoreThis
 #  Administrator can see bookings
   Scenario: Be able to view the booking page with summary details columns
