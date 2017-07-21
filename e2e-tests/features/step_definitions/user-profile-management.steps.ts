@@ -63,4 +63,33 @@ defineSupportCode(({Given, Then, When}) => {
     function clickonProfileButton(btnLabel: string) {
         return page.getElementByCSSandText('a', btnLabel).click();
     }
+
+    When(/^I type in current pass word is (.*)$/, typeInCurrentPassword);
+    function typeInCurrentPassword(password: string) {
+        const inputPass = page.getElementByID('curr_pass');
+        return inputPass.sendKeys(password);
+    }
+
+    When(/^I type in the new password is (.*)$/, typeInNewPassword);
+    function typeInNewPassword(password: string) {
+        const inputPass = page.getElementByID('pass');
+        return inputPass.sendKeys(password);
+    }
+
+    When(/^I type in the confirm password is (.*)$/, typeInConfirmPassword);
+    function typeInConfirmPassword(password: string) {
+        const inputPass = page.getElementByID('certainPassword');
+        return inputPass.sendKeys(password);
+    }
+
+    Then(/^I get (.*) message: '(.*)'$/, getMessage);
+    function getMessage(success: string, message: string) {
+        let checkingMessage = '';
+        if (success === 'success') {
+            checkingMessage = '';
+        } else {
+            checkingMessage = '';
+        }
+        return expect(checkingMessage).to.be.equal(message);
+    }
 });

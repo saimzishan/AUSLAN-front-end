@@ -45,7 +45,7 @@ export class UserPasswordComponent {
 
             let e = errors.json();
           this.notificationServiceBus.launchNotification(true, errors.statusText + ' '
-              + JSON.stringify(e.errors).replace(/]|[[]/g, '').replace(/({|})/g, ''));
+              + JSON.stringify(e.errors || e).replace(/]|[[]/g, '').replace(/({|})/g, ''));
         });
   }
 

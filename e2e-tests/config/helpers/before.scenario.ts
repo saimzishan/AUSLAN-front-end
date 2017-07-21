@@ -29,13 +29,13 @@ defineSupportCode(({Before}) => {
                 }
             }
         });
-
-        if (!(personas.indexOf('Administrator') >= 0)) {
-            personas.unshift('Administrator');
-        }
+        //
+        // if (!(personas.indexOf('Administrator') >= 0)) {
+        //     personas.unshift('Administrator');
+        // }
 
         for (let pn of personas) {
-            console.log(pn)
+            console.log(pn);
             let currentlyLoggedInUser = User.returnTypeAndUser(pn).user;
             Heroku.addVerifiedUser(currentlyLoggedInUser, pn);
         }
