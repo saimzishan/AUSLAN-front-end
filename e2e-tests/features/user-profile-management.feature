@@ -1,21 +1,23 @@
 Feature: User Profile Management
 
   Background: I as an all user should be able to see the website
-    Given I go to the website
+    Given I am on a computer
+    And I go to the website
     And I am shown the login screen, with picture and signup button
 
 ################################## Can View the Profile ##################################
-#  @runThis
+#  @ignoreThis
 #  Show profile page
+  @ignoreThis
   Scenario: Be able to view the profile as Booking Officer
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
-    And I am on the bookings page
+    Then I will be shown the bookings page
     When I click on my name in the top corner
     Then I will be taken to my individual profile page
     And I can see the fields FIRST NAME *, LAST NAME *, EMAIL *, MOBILE *, STATUS, Change Picture:
 
-  @runThis
+  @ignoreThis
 #  Show profile page
   Scenario: Be able to view the profile as Administrator
     Given I exist as an Administrator
@@ -25,7 +27,7 @@ Feature: User Profile Management
     Then I will be taken to my individual profile page
     And I can see the fields FIRST NAME *, LAST NAME *, EMAIL *, MOBILE *, STATUS, Change Picture:
 
-  @runThis
+  @ignoreThis
 #  Show profile page
   Scenario: Be able to view the profile as Interpreter
     Given I exist as an Interpreter
@@ -35,7 +37,7 @@ Feature: User Profile Management
     Then I will be taken to my individual profile page
     And I can see the fields FIRST NAME *, LAST NAME *, EMAIL *, MOBILE *, STATUS, Change Picture:
 
-  @runThis
+  @ignoreThis
 #  Show profile page
   Scenario: Be able to view the profile as Organisational Representative
     Given I exist as an Organisational Representative
@@ -45,7 +47,7 @@ Feature: User Profile Management
     Then I will be taken to my individual profile page
     And I can see the fields FIRST NAME *, LAST NAME *, EMAIL *, MOBILE *, STATUS, Change Picture:
 
-  @runThis
+  @ignoreThis
 #  Show profile page
   Scenario: Be able to view the profile as Individual Client
     Given I exist as an Individual Client
@@ -57,7 +59,7 @@ Feature: User Profile Management
 
 
 ################################## Can Edit and save the update ##################################
-  @runThis
+  @ignoreThis
 #  Show profile page
   Scenario: Be able to update the profile as Booking Officer
     Given I exist as an Booking Officer
@@ -70,7 +72,7 @@ Feature: User Profile Management
     And I click on BUTTON 'SAVE'
     Then The input field FIRST NAME * will be updated with Yesman
 
-  @runThis
+  @ignoreThis
 #  Show profile page
   Scenario: Be able to update the profile as Administrator
     Given I exist as an Administrator
@@ -83,7 +85,7 @@ Feature: User Profile Management
     And I click on BUTTON 'SAVE'
     Then The input field FIRST NAME * will be updated with Yesman
 
-  @runThis
+  @ignoreThis
 #  Show profile page
   Scenario: Be able to update the profile as Interpreter
     Given I exist as an Interpreter
@@ -96,7 +98,7 @@ Feature: User Profile Management
     And I click on BUTTON 'SAVE'
     Then The input field FIRST NAME * will be updated with Yesman
 
-  @runThis
+  @ignoreThis
 #  Show profile page
   Scenario: Be able to update the profile as Organisational Representative
     Given I exist as an Organisational Representative
@@ -109,7 +111,7 @@ Feature: User Profile Management
     And I click on BUTTON 'SAVE'
     Then The input field FIRST NAME * will be updated with Yesman
 
-   @runThis
+   @ignoreThis
 #  Show profile page
   Scenario: Be able to update the profile as Individual Client
     Given I exist as an Individual Client
