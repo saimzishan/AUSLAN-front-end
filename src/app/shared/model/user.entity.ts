@@ -114,16 +114,21 @@ export class OrganisationalRepresentative extends Organisational {
 
 
   toJSON() {
-    let o = {'first_name'  :  this.first_name , 'last_name' : this.last_name ,
-      'type': this.type, 'email' : this.email ,
-          'password' : this.password , 'business_hours_phone' : this.phone , 'mobile' : this.mobile ,
-          'send_email_on_receipt_of_request': this.email_receipt,
-          'email_confirmation_on_interpreter_allocation': this.email_confirmation,
-          'special_instructions' : this.special_instructions,
-      'discovery_of_auslan': this.reffered_by === 'OTHER' ?
+    let o = {
+        'first_name'  :  this.first_name ,
+        'last_name' : this.last_name ,
+        'type': this.type,
+        'email' : this.email ,
+        'password' : this.password ,
+        'business_hours_phone' : this.phone ,
+        'mobile' : this.mobile ,
+        'send_email_on_receipt_of_request': this.email_receipt,
+        'email_confirmation_on_interpreter_allocation': this.email_confirmation,
+        'special_instructions' : this.special_instructions,
+        'discovery_of_auslan': this.reffered_by === 'OTHER' ?
           'O:' + this.reffered_other : this.reffered_by,
-      'customer_reference': this.customer_ref,
-          'organisation_attributes' :
+        'customer_reference': this.customer_ref,
+        'organisation_attributes' :
               {'abn' : this.abn , 'name' : this.name , 'group_email' : this.group_email ,
                 'branch_office' : this.branch_office , 'phone_number' : this.phone ,
                 'preferred_contact_method' : this.preferred_contact_method ,
@@ -132,7 +137,8 @@ export class OrganisationalRepresentative extends Organisational {
                   'primary_contact_last_name' : this.organisation_primary_contact.last_name ,
                   'primary_contact_email' : this.organisation_primary_contact.email ,
                   'primary_contact_phone_number' : this.organisation_primary_contact.phone_number ,
-                  'account_number' : 'ABCD-1234' , 'preferred_billing_method_email' : this.email_confirmation ,
+                  'account_number' : 'ABCD-1234' ,
+                    'preferred_billing_method_email' : this.email_confirmation ,
                   'external_reference' :  this.organisation_billing_account.external_reference ,
                   'address_attributes' : this.organisation_billing_account.organisation_billing_address}}};
     return o;

@@ -62,15 +62,11 @@ defineSupportCode(({Given, When}) => {
     Given(/^I click on forgot my password$/, homePage.clickOnResetPassword);
     Given(/^I am at reset password page$/, resetPage.browse);
     Given(/^I enter valid (.*) email$/, resetPage.enterEmailAddress);
-
     Given(/^I enter invalid (.*) email$/, resetPage.enterInValidEmailAddress);
     Given(/^I press Submit$/, resetPage.pressSubmit);
     Given(/^I get a valid reset password notification$/, resetPage.getSuccessNotificationContent);
     Given(/^I get an error reset password notification$/, resetPage.getErrorNotificationContent);
-    Given(/^I sign in with invalid (.*) credentials$/, signInWithInValidCredential);
-    function signInWithInValidCredential(type: string) {
-        return homePage.signInWithInValidCredential(type);
-    }
+    Given(/^I sign in with invalid (.*) credentials$/, homePage.signInWithInValidCredential);
 
     Given(/^I will get an error message saying "Email or password not found"$/, homePage.getAuthErrorNotificationContent);
 

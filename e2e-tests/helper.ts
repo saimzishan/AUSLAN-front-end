@@ -19,6 +19,7 @@ export class User {
     private _first_name: string;
     private _last_name: string;
     private _mobile_num: string;
+    public type: string;
 
     static user_type(type: string) {
         return type.replace(/ /g, '');
@@ -86,8 +87,16 @@ export class User {
         data_to_sent['last_name'] = lastName;
         data_to_sent['mobile'] = mobileNum;
         data_to_sent['verified'] = false;
+
+        let address_attributes_fields = {};
+        address_attributes_fields['unit_number'] = i;
+        address_attributes_fields['street_number'] = i * 2 + 1;
+        address_attributes_fields['street_name'] = 'Flemington Road';
+        address_attributes_fields['suburb'] = 'Flemington Road';
+        address_attributes_fields['state'] = 'VIC';
+        address_attributes_fields['post_code'] = 3054 + i;
+
         let billing_account_attributes_fields = {};
-        let billing_address_attributes_fields = {};
 
         switch (type) {
             case 'Individual Client':
@@ -95,33 +104,24 @@ export class User {
                 data_to_sent['email_confirmation_on_interpreter_allocation'] = true;
                 billing_account_attributes_fields['primary_contact_first_name'] = 'MOH';
                 billing_account_attributes_fields['primary_contact_last_name'] = 'JAY';
-                billing_account_attributes_fields['email_address'] = 'mohjay_client' + (i * 9 + 5) + '@auslan.com.au';
+                billing_account_attributes_fields['primary_contact_email'] = 'mohjay_client' + (i * 9 + 5) + '@auslan.com.au';
+                billing_account_attributes_fields['primary_contact_phone_number'] = ' 0490000001';
                 billing_account_attributes_fields['account_number'] = (1111111 + (i * 4)).toString();
                 billing_account_attributes_fields['preferred_billing_method_email'] = true;
-                billing_address_attributes_fields['unit_number'] = i;
-                billing_address_attributes_fields['street_number'] = i * 2 + 1;
-                billing_address_attributes_fields['street_name'] = 'Flemington Road';
-                billing_address_attributes_fields['suburb'] = 'Flemington Road';
-                billing_address_attributes_fields['state'] = 'VIC';
-                billing_address_attributes_fields['post_code'] = 3054 + i;
-                billing_account_attributes_fields['address_attributes'] = billing_address_attributes_fields;
+                billing_account_attributes_fields['address_attributes'] = address_attributes_fields;
+                data_to_sent['address_attributes'] = address_attributes_fields;
                 data_to_sent['billing_account_attributes'] = billing_account_attributes_fields;
                 break;
             case 'Interpreter':
                 data_to_sent['date_of_birth'] = '20/05/1987';
                 data_to_sent['naati_id'] = 1234;
-                let address_attributes_fields = {};
-                address_attributes_fields['unit_number'] = i;
-                address_attributes_fields['street_number'] = i * 2 + 1;
-                address_attributes_fields['street_name'] = 'Flemington Road';
-                address_attributes_fields['suburb'] = 'Flemington Road';
-                address_attributes_fields['state'] = 'VIC';
-                address_attributes_fields['post_code'] = 3054 + i;
+
                 data_to_sent['address_attributes'] = address_attributes_fields;
                 break;
             case 'Organisational Representative':
                 data_to_sent['send_email_on_receipt_of_request'] = true;
                 data_to_sent['email_confirmation_on_interpreter_allocation'] = true;
+                data_to_sent['business_hours_phone'] = data_to_sent['mobile'];
                 let organisation_attributes_fields = {};
                 organisation_attributes_fields['abn'] = 13878943 + i;
                 organisation_attributes_fields['name'] = 'CompanyName' + (i * 2).toString();
@@ -129,29 +129,20 @@ export class User {
                 organisation_attributes_fields['branch_office'] = 'Melbourne ' + (i * 2).toString();
                 organisation_attributes_fields['phone_number'] = 'info_group_' + (i * 2).toString();
                 organisation_attributes_fields['branch_office'] = 'Melbourne ' + (i * 2).toString();
-                let organisation_address_attributes_fields = {};
-                organisation_address_attributes_fields['unit_number'] = i;
-                organisation_address_attributes_fields['street_number'] = i * 2 + 1;
-                organisation_address_attributes_fields['street_name'] = 'Flemington Road';
-                organisation_address_attributes_fields['suburb'] = 'Flemington Road';
-                organisation_address_attributes_fields['state'] = 'VIC';
-                organisation_address_attributes_fields['post_code'] = 3054 + i;
-                organisation_attributes_fields['address_attributes'] = organisation_address_attributes_fields;
+                organisation_attributes_fields['preferred_contact_method'] = 'EMAIL';
+
+                organisation_attributes_fields['address_attributes'] = address_attributes_fields;
 
                 let org_billing_account_attributes_fields = {};
                 org_billing_account_attributes_fields['primary_contact_first_name'] = 'MOH';
                 org_billing_account_attributes_fields['primary_contact_last_name'] = 'JAY';
-                org_billing_account_attributes_fields['email_address'] = 'mohjay_orgrep' + (i * 9 + 5) + '@auslan.com.au';
+                org_billing_account_attributes_fields['primary_contact_email'] = 'mohjay_client' + (i * 9 + 5) + '@auslan.com.au';
+                org_billing_account_attributes_fields['primary_contact_phone_number'] = ' 0490000001';
                 org_billing_account_attributes_fields['account_number'] = (1111111 + (i * 4)).toString();
                 org_billing_account_attributes_fields['preferred_billing_method_email'] = true;
-                let org_billing_address_attributes_fields = {};
-                org_billing_address_attributes_fields['unit_number'] = i;
-                org_billing_address_attributes_fields['street_number'] = i * 2 + 1;
-                org_billing_address_attributes_fields['street_name'] = 'Flemington Road';
-                org_billing_address_attributes_fields['suburb'] = 'Flemington Road';
-                org_billing_address_attributes_fields['state'] = 'VIC';
-                org_billing_address_attributes_fields['post_code'] = 3054 + i;
-                org_billing_account_attributes_fields['address_attributes'] = org_billing_address_attributes_fields;
+                org_billing_account_attributes_fields['external_reference'] = 1233;
+
+                org_billing_account_attributes_fields['address_attributes'] = address_attributes_fields;
                 organisation_attributes_fields['billing_account_attributes'] = org_billing_account_attributes_fields;
                 data_to_sent['organisation_attributes'] = organisation_attributes_fields;
                 break;

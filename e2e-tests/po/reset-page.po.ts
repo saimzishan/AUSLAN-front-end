@@ -15,6 +15,7 @@ export class ResetPage extends PageObject {
      * */
     resetUserBtn;
     emailField;
+    loggedInUser;
     browse = () => {
         return this.currentPath().then((currentPath) => {
             this.didFinishedRendering();
@@ -38,17 +39,19 @@ export class ResetPage extends PageObject {
     }
 
     getSuccessNotificationContent = () => {
-        return NotificationObject.getNotificationContent('The password has been reset for ' +
-            User.returnTypeAndUser('Booking Officer').user.email);
+        return NotificationObject.getNotificationContent('The password has been reset for '
+            + this.loggedInUser.email);
     }
 
     enterEmailAddress= (type: string) => {
         let currentlyLoggedInUser = User.returnTypeAndUser(type).user;
+        this.loggedInUser = currentlyLoggedInUser;
         return this.setValue(this.emailField, currentlyLoggedInUser.email);
     }
 
     enterInValidEmailAddress= (type: string) => {
         let currentlyLoggedInUser = User.returnTypeAndUser(type).user;
+        this.loggedInUser = currentlyLoggedInUser;
         return this.setValue(this.emailField, 'a' + currentlyLoggedInUser.email);
     }
 
