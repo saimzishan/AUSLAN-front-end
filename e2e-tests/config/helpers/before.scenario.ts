@@ -18,25 +18,12 @@ defineSupportCode(({Before}) => {
         let personas = [];
         all_personas.forEach((pn) => {
             if (scenario.scenario.name.toUpperCase().indexOf(pn.toUpperCase()) >= 0) {
-                // if (scenario.scenario.name.toUpperCase().indexOf('unverified'.toUpperCase()) >= 0 ) {
-                // console.log(pn);
-                /*
-                if (pn === 'Interpreter') {
-                    // console.log('unverified');
-                } else {
+                if (scenario.scenario.name.toUpperCase().indexOf(('unverified ' + pn).toUpperCase()) < 0) {
                     personas.push(pn);
                 }
-            } else {*/
-                personas.push(pn);
-                // }
             }
         });
 
-        /*         if (!(personas.indexOf('Administrator') >= 0)) {
-                    personas.unshift('Administrator');
-                }
-
-            */
         for (let pn of personas) {
             console.log(pn)
             let currentlyLoggedInUser = User.returnTypeAndUser(pn).user;
@@ -51,11 +38,9 @@ defineSupportCode(({Before}) => {
         if (scenario.scenario.name.toUpperCase().indexOf('INTERPRETER Invited'.toUpperCase()) > 0) {
             Heroku.inviteInterpreter();
         }
-        /*
-                if (scenario.scenario.name.toUpperCase().indexOf('unverified'.toUpperCase()) > 0 ) {
-                    let currentlyLoggedInUser = User.returnTypeAndUser('Interpreter').user;
-                    Heroku.createUser(currentlyLoggedInUser, 'Interpreter');
-                }
-        */
+        if (scenario.scenario.name.toUpperCase().indexOf('unverified'.toUpperCase()) > 0) {
+            let currentlyLoggedInUser = User.returnTypeAndUser('Interpreter').user;
+            Heroku.createUser(currentlyLoggedInUser, 'Interpreter');
+        }
     });
 });

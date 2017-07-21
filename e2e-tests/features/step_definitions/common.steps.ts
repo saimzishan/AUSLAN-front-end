@@ -24,7 +24,6 @@ defineSupportCode(({Given, When}) => {
     function givenBookingCreated() {
     }
 
-    // ================================== COMMON PART ========================================
 
     Given(/^I click on my name$/, () => {
         return bookingPage.hoverOnProfile('lnkLogout');
