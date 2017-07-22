@@ -6,6 +6,16 @@ Feature: As all, I can login/logout, change profile, cannot login with invalid p
     And I am shown the login screen, with picture and signup button
     And I exist as an valid user
 
+
+  @runThis
+  Scenario: As Booking Officer, I can login/logout
+    And I sign in with valid Booking Officer credentials
+    Then I will be shown the bookings page
+    And I click on my name
+    And I click on logout
+    Then I won't be logged in anymore and will be taken back to the loging screen
+
+
   @ignoreThis
   Scenario: As Organisational Representative, I can reset my password with valid email
     And I click on forgot my password
@@ -85,15 +95,6 @@ Feature: As all, I can login/logout, change profile, cannot login with invalid p
     Then I enter invalid Booking Officer email
     Then I press Submit
     Then I get an error reset password notification
-
-
-  @runThis
-  Scenario: As Booking Officer, I can login/logout
-    And I sign in with valid Booking Officer credentials
-    Then I will be shown the bookings page
-    And I click on my name
-    And I click on logout
-    Then I won't be logged in anymore and will be taken back to the loging screen
 
   @ignoreThis
   Scenario: As Booking Officer, I cannot login without valid password

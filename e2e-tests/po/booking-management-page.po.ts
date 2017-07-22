@@ -12,8 +12,6 @@ export class BookingManagementPage extends PageObject {
      * The jasmine and cuccumberjs does not work, so use chai.expect with chai-as-promised
      * Look at chai-import.ts for further details
      * */
-    logoutLink;
-    profileLink;
     verify = () => {
         return this.currentPath().then((currentPath) => {
             expect(currentPath).to.contain('booking-management');
@@ -46,11 +44,9 @@ export class BookingManagementPage extends PageObject {
     }
 
     didFinishedRendering = () => {
-        this.logoutLink = this.getElementByName('lnkLogout');
-        this.profileLink = this.getElementByName('lnkProfile');
-        return browser.wait(protractor.ExpectedConditions.presenceOf(this.logoutLink), 30000).then(() => {
-            expect(this.logoutLink).to.exist;
-            expect(this.profileLink).to.exist;
+        let el = this.getElementByID('jobs-responsive')
+        return browser.wait(protractor.ExpectedConditions.presenceOf(this.getElementByID('jobs-responsive')), 5000).then(() => {
+            expect(el).to.exist;
         });
     }
 
