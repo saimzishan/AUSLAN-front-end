@@ -30,12 +30,22 @@ export class PageObject {
         return element(by.name(name));
     }
 
+    setElementsValueByName(name: string, value: string) {
+        let els = element.all(by.name(name));
+        return els.each(el => {
+            el.sendKeys(value);
+        });
+    }
+
     getNextSibling(ele, tag: string) {
         return ele.element(by.xpath('following-sibling::' + tag));
     }
 
     getElementInside(ele, name: string) {
         return ele.element(by.name(name));
+    }
+    getElementInsideCSS(ele, css: string) {
+        return ele.element(by.css(css));
     }
 
     getButtonByTextInsideElement(ele, text: string) {

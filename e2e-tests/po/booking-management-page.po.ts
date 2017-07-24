@@ -28,7 +28,7 @@ export class BookingManagementPage extends PageObject {
         return browser.actions().mouseMove(el).perform().then(() => {
             let elm = this.getElementByID(insideElementCss);
             this.currentPath().then((path) => {
-                browser.wait(protractor.ExpectedConditions.presenceOf(elm), 5000).then(() => {
+                browser.wait(protractor.ExpectedConditions.presenceOf(elm), 10000).then(() => {
                     expect(elm).to.be.exist;
                 });
             });
@@ -44,8 +44,8 @@ export class BookingManagementPage extends PageObject {
     }
 
     didFinishedRendering = () => {
-        let el = this.getElementByID('jobs-responsive')
-        return browser.wait(protractor.ExpectedConditions.presenceOf(this.getElementByID('jobs-responsive')), 5000).then(() => {
+        let el = this.getElementByID('jobs-responsive');
+        return browser.wait(protractor.ExpectedConditions.presenceOf(this.getElementByID('jobs-responsive')), 10000).then(() => {
             expect(el).to.exist;
         });
     }
@@ -67,13 +67,21 @@ export class BookingManagementPage extends PageObject {
     }
 
     showSummaryDetails = () => {
-        let tblRows = $$('#jobs-responsive tbody tr');
-        expect(tblRows.length).to.be.greaterThan(0);
-        let span = $('#jobs-responsive tbody > tr:first-child td.bookingID > div > span');
-        return span.getText().then( (txt) => {
-            expect(txt).to.equal('0001');
+        let table = this.getElementByID('jobs-responsive');
+        return table.isPresent().then(res => {
+            expect(res).to.be.true;
+        }).then(() => {
+            let tblRows = table.$$('tr');
+            expect(tblRows.count()).to.eventually.be.greaterThan(0);
+        }).then(() => {
+            let el = table.$$('tr:first-child td.bookingID > div > span')
+            el.getText().then(txt => {
+                let len = txt[0].length;
+                expect(len).to.be.eq(4);
+            });
         });
     }
+
 
     getAuthErrorNotificationContent = () => {
         let elm = $('div.sn-content');
@@ -88,6 +96,13 @@ export class BookingManagementPage extends PageObject {
     clickOnIndividualBooking = () => {
         const bookingRows = $$('tbody tr');
         return bookingRows[0].click();
+    }
+
+
+    newBookingDoesNotExists = () => {
+        return $$('lnkNewBooking').count().then(cnt => {
+            expect(cnt).to.be.eq(0);
+        });
     }
 }
 

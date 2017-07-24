@@ -7,13 +7,15 @@ import {User, Administrator, BookingOfficer, Interpreter, Organisation, Client, 
 import {HomePage} from '../../po/home-page.po';
 import {BookingManagementPage} from '../../po/booking-management-page.po';
 import {ResetPage} from '../../po/reset-page.po';
+import {BookingPage} from '../../po/create-booking.po';
 
 defineSupportCode(({Given, When}) => {
 
     let page = new PageObject();
     let homePage = new HomePage();
-    let bookingPage = new BookingManagementPage();
+    let bookingManagementPage = new BookingManagementPage();
     let resetPage = new ResetPage();
+    let bookingPage = new BookingPage();
     // // ================================== GIVEN PART ========================================
     Given(/^There is (.*) (.*) (.*)/, preloadANumberOfUser);
     function preloadANumberOfUser(numberOfUser: string, active: string, type: string) {
@@ -24,11 +26,11 @@ defineSupportCode(({Given, When}) => {
     function givenBookingCreated() {
     }
     Given(/^I click on my name$/, () => {
-        return bookingPage.hoverOnProfile('lnkLogout');
+        return bookingManagementPage.hoverOnProfile('lnkLogout');
     });
-    Given(/^I click on logout$/, bookingPage.logoutClick);
+    Given(/^I click on logout$/, bookingManagementPage.logoutClick);
     Given(/^I hover on the 'Profile'$/, () => {
-        return bookingPage.hoverOnProfile('lnkSettings');
+        return bookingManagementPage.hoverOnProfile('lnkSettings');
     });
     Given(/^I go to the 'User Management' list page$/, clickOnUserManagementPage);
     function clickOnUserManagementPage() {
@@ -44,30 +46,35 @@ defineSupportCode(({Given, When}) => {
     });
     Given(/^I sign in with valid (.*) credentials$/, (type: string) => {
         return homePage.signInWithValidCredential(type).then(() => {
-            bookingPage.onBookingListPage();
+            bookingManagementPage.onBookingListPage();
         });
     });
+    Given(/^I don't see any new New Booking link/, bookingManagementPage.newBookingDoesNotExists);
+
     Given(/^I click on forgot my password$/, homePage.clickOnResetPassword);
     Given(/^I am at reset password page$/, resetPage.browse);
     Given(/^I enter valid (.*) email$/, resetPage.enterEmailAddress);
     Given(/^I enter invalid (.*) email$/, resetPage.enterInValidEmailAddress);
     Given(/^I press Submit$/, resetPage.pressSubmit);
+    Given(/^I get a valid create booking notification$/, bookingPage.getSuccessNotificationContent);
     Given(/^I get a valid reset password notification$/, resetPage.getSuccessNotificationContent);
     Given(/^I get an error reset password notification$/, resetPage.getErrorNotificationContent);
     Given(/^I sign in with invalid (.*) credentials$/, homePage.signInWithInValidCredential);
     Given(/^I will get an error message saying "Email or password not found"$/, homePage.getAuthErrorNotificationContent);
-    Given(/^I will be shown the bookings page$/, bookingPage.verify);
-    Given(/^I am on the bookings page$/, bookingPage.verify);
-    Given(/^I am on my admin home screen$/, bookingPage.verify);
+    Given(/^I will be shown the bookings page$/, bookingManagementPage.verify);
+    Given(/^I am on the bookings page$/, bookingManagementPage.verify);
+    Given(/^I am on my admin home screen$/, bookingManagementPage.verify);
+    Given(/^I fill New Booking form fields correctly$/, bookingPage.createBooking);
+
     Given(/^I am on a mobile$/, onMobileResolution);
     function onMobileResolution() {
         return browser.driver.manage().window().setSize(360, 640);
     }
-    Given(/^I will be shown the booking detail page with id (.*)$/, bookingPage.isOnBookingJobDetails);
-    Given(/^I click on booking job detail page$/, bookingPage.onBookingJobDetails);
+    Given(/^I will be shown the booking detail page with id (.*)$/, bookingManagementPage.isOnBookingJobDetails);
+    Given(/^I click on booking job detail page$/, bookingManagementPage.onBookingJobDetails);
     Given(/^I am on a computer$/, onDesktopResolution);
     function onDesktopResolution() {
-        return browser.driver.manage().window().setSize(1024, 768);
+        return browser.driver.manage().window().setSize(1200, 768);
     }
     When(/^I click on button '(.*)'$/, clickOnButton);
     function clickOnButton(btnLabel: string) {
