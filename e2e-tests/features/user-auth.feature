@@ -6,7 +6,7 @@ Feature: As all, I can login/logout, change profile, cannot login with invalid p
     And I am shown the login screen, with picture and signup button
     And I exist as an valid user
 
-  @runThis
+  @ingnoreThis
   Scenario: As Organisational Representative, I can reset my password with valid email
     And I click on forgot my password
     Then I am at reset password page
@@ -22,7 +22,7 @@ Feature: As all, I can login/logout, change profile, cannot login with invalid p
     Then I press Submit
     Then I get an error reset password notification
 
-  @runThis
+  @ingnoreThis
   Scenario: As Individual Client, I can reset my password with valid email
     And I click on forgot my password
     Then I am at reset password page
@@ -38,7 +38,7 @@ Feature: As all, I can login/logout, change profile, cannot login with invalid p
     Then I press Submit
     Then I get an error reset password notification
 
-  @runThis
+  @ingnoreThis
   Scenario: As Interpreter, I can reset my password with valid email
     And I click on forgot my password
     Then I am at reset password page

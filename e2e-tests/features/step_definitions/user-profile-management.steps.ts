@@ -7,6 +7,8 @@ import {browser, by, element, $, $$} from 'protractor';
 import {PageObject} from '../../po/app.po';
 import {BookingPage} from '../../po/booking-page.po';
 import {CONSTANT, Booking} from '../../helper';
+import {UserPasswordPage} from '../../po/user-password-page.po';
+import {UserProfilePage} from '../../po/user-profile-page.po';
 
 
 defineSupportCode(({Given, Then, When}) => {
@@ -15,23 +17,29 @@ defineSupportCode(({Given, Then, When}) => {
 
     let page = new PageObject();
     let bookingPage = new BookingPage();
+    let userPasswordPage = new UserPasswordPage();
+    let userProfilePage = new UserProfilePage();
 
     When(/^I click on my name in the top corner$/, bookingPage.clickOnProfile);
 
     Then(/^I will be taken to my individual (.*) page$/, takeToIndividualPage);
     function takeToIndividualPage(individual_type: string) {
-        return page.currentPath().then((currentPath) => {
-            expect(currentPath).to.contain(individual_type);
-        });
+        if (individual_type === 'secure_pass') {
+            return userPasswordPage.browse();
+        } else {
+            return userProfilePage.browse();
+        }
     }
 
     Then(/^I can see the fields (.*)$/, showAllTheFields);
     function showAllTheFields(fields_string: string) {
         const fields = fields_string.split(', ');
         const all_fields =  $$('form div.form-field label');
-        const all_fields_length = all_fields.length;
+        const all_fields_length = all_fields.then((array) => {
+            return array.length;
+        });
         expect(fields.length).to.equal(all_fields_length);
-        for (let i = 0; i < all_fields_length; i++) {
+        for (let i = 0; i < fields.length; i++) {
             let label_text = page.getText(all_fields[i]);
             expect(fields).to.includes(label_text);
         }
@@ -64,32 +72,14 @@ defineSupportCode(({Given, Then, When}) => {
         return page.getElementByCSSandText('a', btnLabel).click();
     }
 
-    When(/^I type in current pass word is (.*)$/, typeInCurrentPassword);
-    function typeInCurrentPassword(password: string) {
-        const inputPass = page.getElementByID('curr_pass');
-        return inputPass.sendKeys(password);
-    }
+    When(/^I type in current pass word is (.*)$/, userPasswordPage.enterCurrentPassword);
 
-    When(/^I type in the new password is (.*)$/, typeInNewPassword);
-    function typeInNewPassword(password: string) {
-        const inputPass = page.getElementByID('pass');
-        return inputPass.sendKeys(password);
-    }
+    When(/^I type in the new password is (.*)$/, userPasswordPage.enterNewPassword);
 
-    When(/^I type in the confirm password is (.*)$/, typeInConfirmPassword);
-    function typeInConfirmPassword(password: string) {
-        const inputPass = page.getElementByID('certainPassword');
-        return inputPass.sendKeys(password);
-    }
+    When(/^I type in the confirm password is (.*)$/, userPasswordPage.enterConfirmPassword);
 
     Then(/^I get (.*) message: '(.*)'$/, getMessage);
     function getMessage(success: string, message: string) {
-        let checkingMessage = '';
-        if (success === 'success') {
-            checkingMessage = '';
-        } else {
-            checkingMessage = '';
-        }
-        return expect(checkingMessage).to.be.equal(message);
+        return userPasswordPage.getNotificationContent(message);
     }
 });

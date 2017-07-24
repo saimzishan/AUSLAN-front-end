@@ -169,9 +169,9 @@ Feature: User Profile Management
 
   @ignoreThis
 #  Show profile pass page
-  Scenario: Be able to show password password page as Interpreter
-    Given I exist as an Interpreter
-    And I sign in with valid Interpreter credentials
+  Scenario: Be able to show password password page as Administrator
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
     And I am on the bookings page
     And I click on my name in the top corner
     And I will be taken to my individual profile page
@@ -180,64 +180,64 @@ Feature: User Profile Management
 
   @ignoreThis
 #  Change pass
-  Scenario: Be able to change password as Interpreter
-    Given I exist as an Interpreter
-    And I sign in with valid Interpreter credentials
+  Scenario: Be able to change password as Administrator
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
     And I am on the bookings page
     And I click on my name in the top corner
     And I will be taken to my individual profile page
     And I click on Profile 'Change Password'
     And I will be taken to my individual secure_pass page
     When I type in current pass word is Abcd#1234
-    And I type in the new password is ABCD#1234
-    And I type in the confirm password is ABCD#1234
+    And I type in the new password is Pass@1234
+    And I type in the confirm password is Pass@1234
     And I click on BUTTON 'SAVE'
-    Then I get success message: 'Congrats! Password successfully changed.'
+    Then I get success message: 'User password updated Successfully'
 
   @ignoreThis
 #  Change pass
-  Scenario: Be able to change password as Interpreter
-    Given I exist as an Interpreter
-    And I sign in with valid Interpreter credentials
+  Scenario: Be able to change password as Administrator
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
     And I am on the bookings page
     And I click on my name in the top corner
     And I will be taken to my individual profile page
     And I click on Profile 'Change Password'
     And I will be taken to my individual secure_pass page
     When I type in current pass word is Abcd1234
-    And I type in the new password is ABCD#1234
-    And I type in the confirm password is ABCD#1234
+    And I type in the new password is pass1234
+    And I type in the confirm password is pass1234
     And I click on BUTTON 'SAVE'
     Then I get error message: 'Current password is not correct.'
 
   @ignoreThis
 #  Change pass
-  Scenario: Be able to change password as Interpreter
-    Given I exist as an Interpreter
-    And I sign in with valid Interpreter credentials
+  Scenario: Be able to change password as Administrator
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
     And I am on the bookings page
     And I click on my name in the top corner
     And I will be taken to my individual profile page
     And I click on Profile 'Change Password'
     And I will be taken to my individual secure_pass page
     When I type in current pass word is Abcd#1234
-    And I type in the new password is Ab
-    And I type in the confirm password is Ab
+    And I type in the new password is pass123
+    And I type in the confirm password is pass1234
     And I click on BUTTON 'SAVE'
     Then I get error message: 'Password needs to be at least 8 characters.'
 
   @ignoreThis
 #  Change pass
-  Scenario: Be able to change password as Interpreter
-    Given I exist as an Interpreter
-    And I sign in with valid Interpreter credentials
+  Scenario: Be able to change password as Administrator
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
     And I am on the bookings page
     And I click on my name in the top corner
     And I will be taken to my individual profile page
     And I click on Profile 'Change Password'
     And I will be taken to my individual secure_pass page
     When I type in current pass word is Abcd#1234
-    And I type in the new password is ABCD#1234
-    And I type in the confirm password is ABCD#12
+    And I type in the new password is Pass@1234
+    And I type in the confirm password is Pass@123
     And I click on BUTTON 'SAVE'
     Then I get error message: 'Passwords don't match.'

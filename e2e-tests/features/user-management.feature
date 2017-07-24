@@ -5,7 +5,9 @@ Feature: Create, read, update and delete a User
 #  Background: list of users you can create  OrganisationalRepresentative= 1,
 #  Accountant= 2, Client= 3, BookingOfficer= 4, Administrator= 5, Interpreter= 6
   Background: List of users you can create  OrganisationalRepresentative= 1, Accountant= 2, Client= 3, BookingOfficer= 4, Administrator= 5, Interpreter= 6
-    Given I exist as an Administrator
+    Given I go to the website
+    And I am shown the login screen, with picture and signup button
+    And I exist as an Administrator
     And I sign in with valid Administrator credentials
     And I am on my admin home screen
     And I hover on the 'Profile'

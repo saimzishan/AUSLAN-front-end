@@ -3,7 +3,7 @@ import {browser, by, element, $, $$, protractor} from 'protractor';
 import {expect} from '../config/helpers/chai-imports';
 import {User} from '../helper';
 
-export class BookingPage extends PageObject {
+export class IndividualBookingPage extends PageObject {
     /*
      * The Syntax below is mandatory, for TS to recognize the method from base class
      * All statements are promises in protractor
@@ -14,15 +14,19 @@ export class BookingPage extends PageObject {
      * */
     logoutLink;
     profileLink;
-    verify = () => {
+    browse = () => {
         return this.currentPath().then((currentPath) => {
             // this.didFinishedRendering();
-            expect(currentPath).to.contain('booking-management');
+            expect(currentPath).to.contain('booking-job');
         });
     }
 
-    logoutClick = () => {
-        return this.getElementByID('lnkLogout').click();
+    checkListofInterpreterIndividualBookingScreen = (num_of_user: string, verified: string) => {
+        const interpreterRows = $$('section[id=invited-interpreters] tbody tr');
+        const interpereter_num = interpreterRows.count().then( (val) => {
+            return val;
+        });
+        return expect(interpereter_num).to.eql(parseInt(num_of_user, 10));
     }
 
     hoverOnProfile = (insideElementCss) => {
@@ -83,26 +87,6 @@ export class BookingPage extends PageObject {
                 let one_row = bookingRows[0];
                 return one_row.click();
             }
-        });
-    }
-
-    showTheNumberofBooking = (num_of_booking: string, type_of_booking: string) => {
-        let numBooking = parseInt(num_of_booking, 10);
-        let allTypeBooking = this.getAllByCSSandText('tbody td',  type_of_booking);
-        return allTypeBooking.count().then( (countNum) => {
-            expect(countNum).to.equal(numBooking);
-        });
-    }
-
-    clickAtOneofTheBooking = (pos: string, num_of_booking: string, type_of_booking: string) => {
-        let numBooking = parseInt(num_of_booking, 10);
-        let posth = parseInt(pos, 10);
-        let allTypeBooking = this.getAllByCSSandText('tbody td',  type_of_booking);
-        return allTypeBooking.then( (allBooking) => {
-            const totalNumofType = allBooking.length;
-            expect(posth).to.be.lessThan(totalNumofType);
-            let row = this.getParent(allTypeBooking[posth - 1]);
-            return row.click();
         });
     }
 
