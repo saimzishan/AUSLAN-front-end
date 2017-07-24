@@ -82,11 +82,10 @@ export class BookingManagementPage extends PageObject {
 
     clickOnIndividualBooking = () => {
         const bookingRows = $$('tbody tr');
-        return bookingRows.count().then( (rowCount) => {
-            if (rowCount > 1) {
-                let one_row = bookingRows[0];
-                return one_row.click();
-            }
+        return bookingRows.then( (bookingR) => {
+            // if (bookingR.length > 1) {
+            return bookingR[0].click();
+            // }
         });
     }
 
@@ -112,10 +111,12 @@ export class BookingManagementPage extends PageObject {
 
     showSummaryDetails = () => {
         let tblRows = $$('#jobs-responsive tbody tr');
-        expect(tblRows.length).to.be.greaterThan(0);
-        let span = $('#jobs-responsive tbody > tr:first-child td.bookingID > div > span');
-        return span.getText().then( (txt) => {
-            expect(txt).to.equal('0001');
+        return tblRows.then( (tRows) => {
+            expect(tRows.length).to.be.greaterThan(0);
+            let span = $('#jobs-responsive tbody > tr:first-child td.bookingID > div > span');
+            return span.getText().then( (txt) => {
+                expect(txt).to.equal('0001');
+            });
         });
     }
 

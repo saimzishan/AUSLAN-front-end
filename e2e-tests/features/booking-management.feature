@@ -279,8 +279,8 @@ Feature: Booking Management
     When I click dropdown WHAT WILL BE DISCUSSED *
     Then The dropdown WHAT WILL BE DISCUSSED * will have 23 item
 
-  @ignoreThis
-  Scenario: Given 1 unverified Interpreter and 1 booking created, as a Booking Officer i can see there are non interpreter to be invited
+  @runThis
+  Scenario: Given 1 unverified Interpreter, 1 Administrator and a booking is created, as a Booking Officer i can see there are non interpreter to be invited
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
     And I am on the bookings page
@@ -289,7 +289,7 @@ Feature: Booking Management
     And I can see a list of 0 verified interpreters
 
   @ignoreThis
-  Scenario: Given 1 verified Interpreter and 1 booking created, as a Booking Officer i can see there are non interpreter to be invited
+  Scenario: Given 1 verified Interpreter, 1 Administrator and a booking is created, as a Booking Officer i can see there are non interpreter to be invited
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
     And I am on the bookings page

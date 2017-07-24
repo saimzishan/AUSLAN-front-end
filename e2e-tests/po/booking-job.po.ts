@@ -81,16 +81,6 @@ export class BookingJobPage extends PageObject {
         });
     }
 
-    clickOnIndividualBooking = () => {
-        const bookingRows = $$('tbody tr');
-        return bookingRows.count().then( (rowCount) => {
-            if (rowCount > 1) {
-                let one_row = bookingRows[0];
-                return one_row.click();
-            }
-        });
-    }
-
     getAuthErrorNotificationContent = () => {
         let elm = $('div.sn-content');
         return browser.wait(protractor.ExpectedConditions.presenceOf(elm), 10000).then(() => {

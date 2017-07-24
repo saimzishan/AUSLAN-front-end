@@ -10,14 +10,14 @@ export class BookingPage extends PageObject {
     cancelCreateBooking;
     browse = () => {
         return this.currentPath().then((currentPath) => {
-            expect(currentPath).to.contain('create-booking');
             this.didFinishedRendering();
+            expect(currentPath).to.contain('create-booking');
         });
     }
 
     didFinishedRendering = () => {
-        this.createBookingBtn = this.getElementByName('btnCreateBooking');
-        this.cancelCreateBooking = this.getElementByName('btnCancelCreateBooking');
+        this.createBookingBtn = this.getButtonByText('SAVE');
+        this.cancelCreateBooking = this.getButtonByText('CANCEL');
         return browser.wait(protractor.ExpectedConditions.presenceOf(this.createBookingBtn), 30000).then(() => {
             expect(this.createBookingBtn).to.exist;
             expect(this.cancelCreateBooking).to.exist;
@@ -28,13 +28,13 @@ export class BookingPage extends PageObject {
         NotificationObject.getNotificationContent('Email or Password not found');
     }
 
-    specifyAsClientOfBooking = () => {
-        const clientOptionLabel = this.getElementByCSSandText('.text-center', 'CLIENT DETAILS');
-        const divClientDetails = this.getNextSibling(clientOptionLabel, 'div');
-        const clientRadioGroup = this.getElementInsideByTag(divClientDetails, 'md-radio-group');
-        let all_radio_btn_in_group = this.getAllByTagNameInElement(clientRadioGroup, 'md-radio-button');
-        return all_radio_btn_in_group[CONSTANT.YES].click();
-    }
+    // specifyAsClientOfBooking = () => {
+    //     const clientOptionLabel = this.getElementByCSSandText('.text-center', 'CLIENT DETAILS');
+    //     const divClientDetails = this.getNextSibling(clientOptionLabel, 'div');
+    //     const clientRadioGroup = this.getElementInsideByTag(divClientDetails, 'md-radio-group');
+    //     let all_radio_btn_in_group = this.getAllByTagNameInElement(clientRadioGroup, 'md-radio-button');
+    //     return all_radio_btn_in_group[CONSTANT.YES].click();
+    // }
 
 
     clickOnSave = () => {
@@ -81,11 +81,10 @@ export class BookingPage extends PageObject {
             this.list_of_object['WHAT WILL BE DISCUSSED *'] = Booking.getWhatWillBeDiscussed('');
             return expect(expected).to.be.true;
         } else {
-            const selected_label_val = select_dropdown.getAttribute('ng-reflect-model').then((val) => {
+            return select_dropdown.getAttribute('ng-reflect-model').then((val) => {
                 // console.log(val);
-                return val.toUpperCase();
+                expect(val.toUpperCase()).to.equal(option_text);
             });
-            return expect(selected_label_val).to.equal(option_text);
         }
     }
 
@@ -97,25 +96,26 @@ export class BookingPage extends PageObject {
         let final_arr = [];
         return all_option.then( (allOption) => {
             for (let i = 0; i < allOption.length; i++) {
-                let text = this.getText(all_option[i]);
-                text = text.replace(/^\s+|\s+$/g, '');
-                // console.log(text);
-                final_arr.push(text);
+                this.getText(allOption[i]).then( (text) => {
+                    text = text.replace(/^\s+|\s+$/g, '');
+                    console.log(text);
+                    final_arr.push(text);
+                });
             }
             const expected_option_list = this.list_of_object[type_of_dropdown];
             expect(JSON.stringify(final_arr)).to.be.equal(JSON.stringify(expected_option_list));
         });
     }
-    //
-    // specifyAsClientOfBooking = () => {
-    //     const clientOptionLabel = this.getElementByCSSandText('.text-center', 'CLIENT DETAILS');
-    //     const divClientDetails = this.getNextSibling(clientOptionLabel, 'div');
-    //     const clientRadioGroup = this.getElementInsideByTag(divClientDetails, 'md-radio-group');
-    //     let all_radio_btn_in_group = this.getAllByTagNameInElement(clientRadioGroup, 'md-radio-button');
-    //     return all_radio_btn_in_group.then( (all_radio) => {
-    //         return all_radio_btn_in_group[CONSTANT.YES].click();
-    //     });
-    // }
+
+    specifyAsClientOfBooking = () => {
+        const clientOptionLabel = this.getElementByCSSandText('.text-center', 'CLIENT DETAILS');
+        const divClientDetails = this.getNextSibling(clientOptionLabel, 'div');
+        const clientRadioGroup = this.getElementInsideByTag(divClientDetails, 'md-radio-group');
+        let all_radio_btn_in_group = this.getAllByTagNameInElement(clientRadioGroup, 'md-radio-button');
+        return all_radio_btn_in_group.then( (all_radio) => {
+            return all_radio[CONSTANT.YES].click();
+        });
+    }
 
     populatedUserDetails = () => {
         const clientOptionLabel = this.getElementByCSSandText('.text-center', 'CLIENT DETAILS');
@@ -124,12 +124,10 @@ export class BookingPage extends PageObject {
         return all_input_in_div.then( (inputDiv) => {
             let all_filled = true;
             for (let i = 0; i < inputDiv.length; i++) {
-                const single_input = all_input_in_div[i];
-                all_filled = false;
-                single_input.getAttribute('ng-reflect-model').then((val) => {
-                    all_filled = true;
+                const single_input = inputDiv[i];
+                return single_input.getAttribute('ng-reflect-model').then((val) => {
+                    expect(val).to.not.equal('');
                 });
-                expect(all_filled).to.equal(true);
             }
         });
     }
