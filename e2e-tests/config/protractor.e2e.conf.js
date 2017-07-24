@@ -7,9 +7,15 @@ config.restartBrowserBetweenTests= false;
     config.multiCapabilities = [
     {
       browserName: 'chrome',
-      chromeOptions: {
-          args: ['--start-maximized', '--web-security=false'/*'--headless','--disable-gpu'*/]
-      }
+        chromeOptions: {
+            'prefs': {
+                'credentials_enable_service': false,
+                'profile': {
+                    'password_manager_enabled': false
+                }
+            },
+            args: ['--start-maximized', '--web-security=false'/*'--headless','--disable-gpu'*/]
+        }
     }
 ];
 config.allScriptsTimeout= 30000;

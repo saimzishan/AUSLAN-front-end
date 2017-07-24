@@ -12,8 +12,6 @@ export class BookingManagementPage extends PageObject {
      * The jasmine and cuccumberjs does not work, so use chai.expect with chai-as-promised
      * Look at chai-import.ts for further details
      * */
-    logoutLink;
-    profileLink;
     verify = () => {
         return this.currentPath().then((currentPath) => {
             // this.didFinishedRendering();
@@ -30,7 +28,7 @@ export class BookingManagementPage extends PageObject {
         return browser.actions().mouseMove(el).perform().then(() => {
             let elm = this.getElementByID(insideElementCss);
             this.currentPath().then((path) => {
-                browser.wait(protractor.ExpectedConditions.presenceOf(elm), 5000).then(() => {
+                browser.wait(protractor.ExpectedConditions.presenceOf(elm), 10000).then(() => {
                     expect(elm).to.be.exist;
                 });
             });
@@ -46,11 +44,9 @@ export class BookingManagementPage extends PageObject {
     }
 
     didFinishedRendering = () => {
-        this.logoutLink = this.getElementByName('lnkLogout');
-        this.profileLink = this.getElementByName('lnkProfile');
-        return browser.wait(protractor.ExpectedConditions.presenceOf(this.logoutLink), 30000).then(() => {
-            expect(this.logoutLink).to.exist;
-            expect(this.profileLink).to.exist;
+        let el = this.getElementByID('jobs-responsive');
+        return browser.wait(protractor.ExpectedConditions.presenceOf(this.getElementByID('jobs-responsive')), 10000).then(() => {
+            expect(el).to.exist;
         });
     }
 
@@ -80,14 +76,14 @@ export class BookingManagementPage extends PageObject {
         });
     }
 
-    clickOnIndividualBooking = () => {
-        const bookingRows = $$('tbody tr');
-        return bookingRows.then( (bookingR) => {
-            // if (bookingR.length > 1) {
-            return bookingR[0].click();
-            // }
-        });
-    }
+    // clickOnIndividualBooking = () => {
+    //     const bookingRows = $$('tbody tr');
+    //     return bookingRows.then( (bookingR) => {
+    //         // if (bookingR.length > 1) {
+    //         return bookingR[0].click();
+    //         // }
+    //     });
+    // }
 
     showTheNumberofBooking = (num_of_booking: string, type_of_booking: string) => {
         let numBooking = parseInt(num_of_booking, 10);
@@ -110,15 +106,21 @@ export class BookingManagementPage extends PageObject {
     }
 
     showSummaryDetails = () => {
-        let tblRows = $$('#jobs-responsive tbody tr');
-        return tblRows.then( (tRows) => {
-            expect(tRows.length).to.be.greaterThan(0);
-            let span = $('#jobs-responsive tbody > tr:first-child td.bookingID > div > span');
-            return span.getText().then( (txt) => {
-                expect(txt).to.equal('0001');
+        let table = this.getElementByID('jobs-responsive');
+        return table.isPresent().then(res => {
+            expect(res).to.be.true;
+        }).then(() => {
+            let tblRows = table.$$('tr');
+            expect(tblRows.count()).to.eventually.be.greaterThan(0);
+        }).then(() => {
+            let el = table.$$('tr:first-child td.bookingID > div > span')
+            el.getText().then(txt => {
+                let len = txt[0].length;
+                expect(len).to.be.eq(4);
             });
         });
     }
+
 
     getAuthErrorNotificationContent = () => {
         let elm = $('div.sn-content');
@@ -131,9 +133,16 @@ export class BookingManagementPage extends PageObject {
         return this.getButtonByText(buttonLabel).click();
     }
 
-    // clickOnIndividualBooking = () => {
-    //     const bookingRows = $$('tbody tr');
-    //     return bookingRows[0].click();
-    // }
+    clickOnIndividualBooking = () => {
+        const bookingRows = $$('tbody tr');
+        return bookingRows[0].click();
+    }
+
+
+    newBookingDoesNotExists = () => {
+        return $$('lnkNewBooking').count().then(cnt => {
+            expect(cnt).to.be.eq(0);
+        });
+    }
 }
 
