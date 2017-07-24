@@ -14,7 +14,7 @@ export class BookingManagementPage extends PageObject {
      * */
     verify = () => {
         return this.currentPath().then((currentPath) => {
-            // this.didFinishedRendering();
+            this.didFinishedRendering();
             expect(currentPath).to.contain('booking-management');
         });
     }
@@ -33,10 +33,6 @@ export class BookingManagementPage extends PageObject {
                 });
             });
         });
-    }
-
-    newBookingClick = () => {
-        return this.getElementByID('lnkNewBooking').click();
     }
 
     clickOnProfile = () => {
@@ -105,7 +101,7 @@ export class BookingManagementPage extends PageObject {
         });
     }
 
-    showSummaryDetails = () => {
+    atleastABookingExists = () => {
         let table = this.getElementByID('jobs-responsive');
         return table.isPresent().then(res => {
             expect(res).to.be.true;

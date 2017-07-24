@@ -19,7 +19,7 @@ defineSupportCode(({Given, Then, When}) => {
     let createBookingPO = new BookingPage();
     let bookingjobPO = new BookingJobPage();
 //  BE ABLE TO VIEW BOOKING PAGE
-    Then(/^I will be shown with bookings$/, bookingManagementPO.showSummaryDetails);
+    Then(/^I will be shown with bookings$/, bookingManagementPO.atleastABookingExists);
 //    CLick on Request bookings
     Then(/^I am shown with (.*) (.*) Bookings$/, bookingManagementPO.showTheNumberofBooking);
 
