@@ -51,14 +51,14 @@ defineSupportCode(({Given, Then, When}) => {
     Then(/^I can see a list of (.*) (.*) interpreters$/, bookingjobPO.checkListofInterpreterIndividualBookingScreen);
 
 //    POPULATE DROP DOWN
-    When(/^I click dropdown (.*)$/, bookingjobPO.clickOnDropDown);
+    When(/^I click dropdown (.*)$/, createBookingPO.clickOnDropDown);
 
-    When(/^I click on option (.*) of (.*) for (.*)/, bookingjobPO.clickOnOption);
+    When(/^I click on option (.*) of (.*) for (.*)/, createBookingPO.clickOnOption);
 
-    Then(/^The cell of (.*) will be populated with (.*)$/, bookingjobPO.checkTheDropDown);
+    Then(/^The cell of (.*) will be populated with (.*)$/, createBookingPO.checkTheDropDown);
 
     // Can't click on drop down
-    Then(/^The dropdown (.*) will have (.*) item$/, bookingjobPO.listTheIteminDropDown);
+    Then(/^The dropdown (.*) will have (.*) item$/, createBookingPO.listTheIteminDropDown);
 
 //    WORKING ON BELOW
 

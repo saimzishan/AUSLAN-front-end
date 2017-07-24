@@ -107,7 +107,7 @@ export class BookingManagementPage extends PageObject {
             expect(posth).to.be.lessThan(totalNumofType);
             let row = this.getParent(allTypeBooking[posth - 1]);
             return row.click();
-        };
+        });
     }
 
     showSummaryDetails = () => {

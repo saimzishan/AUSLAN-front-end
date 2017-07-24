@@ -4,7 +4,7 @@ Feature: Booking Management
     Given I go to the website
     And I am shown the login screen, with picture and signup button
 
-  @runThis
+  @ignoreThis
   Scenario: Administrator can show a booking screen
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials

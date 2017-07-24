@@ -95,7 +95,7 @@ Feature: As all, I can login/logout, change profile, cannot login with invalid p
     Then I get an error reset password notification
 
 
-  @runThis
+  @ignoreThis
   Scenario: As Booking Officer, I can login/logout
     And I sign in with valid Booking Officer credentials
     Then I will be shown the bookings page

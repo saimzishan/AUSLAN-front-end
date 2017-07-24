@@ -1,10 +1,11 @@
 import {PageObject} from './app.po';
 import {browser, by, element, $, $$, protractor} from 'protractor';
 import {expect} from '../config/helpers/chai-imports';
-import {CONSTANT, User} from '../helper';
+import {CONSTANT, Booking} from '../helper';
 import {NotificationObject} from './notification';
 
 export class BookingPage extends PageObject {
+    list_of_object = {};
     createBookingBtn;
     cancelCreateBooking;
     browse = () => {
@@ -22,9 +23,11 @@ export class BookingPage extends PageObject {
             expect(this.cancelCreateBooking).to.exist;
         });
     }
+
     getAuthErrorNotificationContent = () => {
         NotificationObject.getNotificationContent('Email or Password not found');
     }
+
     specifyAsClientOfBooking = () => {
         const clientOptionLabel = this.getElementByCSSandText('.text-center', 'CLIENT DETAILS');
         const divClientDetails = this.getNextSibling(clientOptionLabel, 'div');
