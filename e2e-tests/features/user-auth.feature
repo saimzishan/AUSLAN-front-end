@@ -22,11 +22,7 @@ Feature: As all, I can login/logout, change profile, cannot login with invalid p
     Then I press Submit
     Then I get an error reset password notification
 
-<<<<<<< HEAD
-  @ingnoreThis
-=======
   @ignoreThis
->>>>>>> d7ce171e4303e7d31c80bf29fb3ab3323cda6f2a
   Scenario: As Individual Client, I can reset my password with valid email
     And I click on forgot my password
     Then I am at reset password page
@@ -42,11 +38,7 @@ Feature: As all, I can login/logout, change profile, cannot login with invalid p
     Then I press Submit
     Then I get an error reset password notification
 
-<<<<<<< HEAD
-  @ingnoreThis
-=======
   @ignoreThis
->>>>>>> d7ce171e4303e7d31c80bf29fb3ab3323cda6f2a
   Scenario: As Interpreter, I can reset my password with valid email
     And I click on forgot my password
     Then I am at reset password page

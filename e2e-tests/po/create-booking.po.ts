@@ -38,11 +38,11 @@ export class BookingPage extends PageObject {
 
 
     clickOnSave = () => {
-        return this.saveButton.click();
+        return this.createBookingBtn.click();
     }
 
     clickOnCancel = () => {
-        return this.cancleButton.click();
+        return this.cancelCreateBooking.click();
     }
 
     clickOnButton = (type: string) => {
