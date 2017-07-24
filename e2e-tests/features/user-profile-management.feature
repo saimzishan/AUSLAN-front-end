@@ -1,16 +1,18 @@
 Feature: User Profile Management
 
   Background: I as an all user should be able to see the website
-    Given I go to the website
+    Given I am on a computer
+    And I go to the website
     And I am shown the login screen, with picture and signup button
 
 ################################## Can View the Profile ##################################
 #  @ignoreThis
 #  Show profile page
+  @ignoreThis
   Scenario: Be able to view the profile as Booking Officer
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
-    And I am on the bookings page
+    Then I will be shown the bookings page
     When I click on my name in the top corner
     Then I will be taken to my individual profile page
     And I can see the fields FIRST NAME *, LAST NAME *, EMAIL *, MOBILE *, STATUS, Change Picture:

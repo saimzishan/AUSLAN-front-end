@@ -5,65 +5,60 @@ import {defineSupportCode} from 'cucumber';
 import {browser, by, element, $, $$} from 'protractor';
 
 import {PageObject} from '../../po/app.po';
-import {BookingPage} from '../../po/booking-page.po';
+import {BookingManagementPage} from '../../po/booking-management-page.po';
 import {CONSTANT, Booking} from '../../helper';
-import {BookingCreatingPage} from "../../po/booking-creating-page.po";
-import {IndividualBookingPage} from "../../po/individual-booking-page.po";
-
+import {BookingPage} from '../../po/create-booking.po';
+import {BookingJobPage} from '../../po/booking-job.po';
 
 defineSupportCode(({Given, Then, When}) => {
 
     // let list_of_object = {};
 
     let page = new PageObject();
-    let bookingPage = new BookingPage();
-    let bookingCreatingPage = new BookingCreatingPage();
-    let inidividualBookingPage = new IndividualBookingPage();
+    let bookingManagementPO = new BookingManagementPage();
+    let createBookingPO = new BookingPage();
+    let bookingjobPO = new BookingJobPage();
 //  BE ABLE TO VIEW BOOKING PAGE
-    Then(/^I will be shown with bookings$/, showSummaryDetails);
-    function showSummaryDetails() {
-        let tblRows = $$('#jobs-responsive tbody tr');
-        expect(tblRows.length).to.be.greaterThan(0);
-        let span = $('#jobs-responsive tbody > tr:first-child td.bookingID > div > span');
-        return expect(span.getText()).to.eventually.equal('0001');
-    }
+    Then(/^I will be shown with bookings$/, bookingManagementPO.showSummaryDetails);
 //    CLick on Request bookings
-    Then(/^I am shown with (.*) (.*) Bookings$/, bookingPage.showTheNumberofBooking);
+    Then(/^I am shown with (.*) (.*) Bookings$/, bookingManagementPO.showTheNumberofBooking);
 
-    When(/^I click at the (.*) one of (.*) (.*) Bookings$/, bookingPage.clickAtOneofTheBooking);
+    When(/^I click at the (.*) one of (.*) (.*) Bookings$/, bookingManagementPO.clickAtOneofTheBooking);
 
-    Then(/^I will be shown a popup message$/, bookingPage.showPopup);
+    Then(/^I will be shown a popup message$/, bookingManagementPO.showPopup);
 
-    When(/^I click on 'New Booking'$/, bookingPage.clickOnNewBooking);
+    When(/^I click on 'New Booking'$/, bookingManagementPO.clickOnNewBooking);
 
-    Then(/^I will be taken to the 'New Booking' form$/, bookingCreatingPage.browse);
+    When(/^I click on an individual booking$/, bookingManagementPO.clickOnIndividualBooking);
+
+
+    Then(/^I am back on booking page$/, bookingManagementPO.onBookingListPage);
 
     // --------------------------------- AUTO POPULATE CLIENT DETAILS
-    When(/^I specify i am the client of this booking$/, bookingCreatingPage.specifyAsClientOfBooking);
+    Then(/^I will be taken to the 'New Booking' form$/, createBookingPO.browse);
 
-    Then(/^The booking form will be automatically populated with the details.$/, bookingCreatingPage.populatedUserDetails);
+    When(/^I specify i am the client of this booking$/, createBookingPO.specifyAsClientOfBooking);
+
+    Then(/^The booking form will be automatically populated with the details.$/, createBookingPO.populatedUserDetails);
 
     //    CANCEL BOOKING
-    When(/^I press '(.*)'$/, bookingCreatingPage.clickOnButton);
-
-    Then(/^I am back on booking page$/, bookingPage.onBookingListPage);
+    When(/^I press '(.*)'$/, createBookingPO.clickOnButton);
 
     // ---------------------------------   INDIVIDUAL BOOKING PAGE
-    When(/^I click on an individual booking$/, bookingPage.clickOnIndividualBooking);
 
-    Then(/^I am on the individual booking page$/, inidividualBookingPage.browse);
+    Then(/^I am on the individual booking page$/, bookingjobPO.browse);
 
-    Then(/^I can see a list of (.*) (.*) interpreters$/, inidividualBookingPage.checkListofInterpreterIndividualBookingScreen);
+    Then(/^I can see a list of (.*) (.*) interpreters$/, bookingjobPO.checkListofInterpreterIndividualBookingScreen);
 
 //    POPULATE DROP DOWN
-    When(/^I click dropdown (.*)$/, bookingCreatingPage.clickOnDropDown);
+    When(/^I click dropdown (.*)$/, bookingjobPO.clickOnDropDown);
 
-    When(/^I click on option (.*) of (.*) for (.*)/, bookingCreatingPage.clickOnOption);
+    When(/^I click on option (.*) of (.*) for (.*)/, bookingjobPO.clickOnOption);
 
-    Then(/^The cell of (.*) will be populated with (.*)$/, bookingCreatingPage.checkTheDropDown);
+    Then(/^The cell of (.*) will be populated with (.*)$/, bookingjobPO.checkTheDropDown);
 
     // Can't click on drop down
-    Then(/^The dropdown (.*) will have (.*) item$/, bookingCreatingPage.listTheIteminDropDown);
+    Then(/^The dropdown (.*) will have (.*) item$/, bookingjobPO.listTheIteminDropDown);
 
 //    WORKING ON BELOW
 
@@ -211,5 +206,4 @@ defineSupportCode(({Given, Then, When}) => {
      //
      // })
      }*/
-
 });

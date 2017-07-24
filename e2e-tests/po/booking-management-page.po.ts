@@ -3,7 +3,7 @@ import {browser, by, element, $, $$, protractor} from 'protractor';
 import {expect} from '../config/helpers/chai-imports';
 import {User} from '../helper';
 
-export class BookingPage extends PageObject {
+export class BookingManagementPage extends PageObject {
     /*
      * The Syntax below is mandatory, for TS to recognize the method from base class
      * All statements are promises in protractor
@@ -35,6 +35,10 @@ export class BookingPage extends PageObject {
                 });
             });
         });
+    }
+
+    newBookingClick = () => {
+        return this.getElementByID('lnkNewBooking').click();
     }
 
     clickOnProfile = () => {
@@ -103,6 +107,15 @@ export class BookingPage extends PageObject {
             expect(posth).to.be.lessThan(totalNumofType);
             let row = this.getParent(allTypeBooking[posth - 1]);
             return row.click();
+        };
+    }
+
+    showSummaryDetails = () => {
+        let tblRows = $$('#jobs-responsive tbody tr');
+        expect(tblRows.length).to.be.greaterThan(0);
+        let span = $('#jobs-responsive tbody > tr:first-child td.bookingID > div > span');
+        return span.getText().then( (txt) => {
+            expect(txt).to.equal('0001');
         });
     }
 
@@ -112,5 +125,14 @@ export class BookingPage extends PageObject {
             expect(elm.getText()).to.eventually.contain('Email or Password not found');
         });
     }
+
+    pressButtonOnNewBookingScreen = (buttonLabel: string) => {
+        return this.getButtonByText(buttonLabel).click();
+    }
+
+    // clickOnIndividualBooking = () => {
+    //     const bookingRows = $$('tbody tr');
+    //     return bookingRows[0].click();
+    // }
 }
 

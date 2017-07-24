@@ -5,7 +5,7 @@ import {defineSupportCode} from 'cucumber';
 import {browser, by, element, $, $$} from 'protractor';
 
 import {PageObject} from '../../po/app.po';
-import {BookingPage} from '../../po/booking-page.po';
+import {BookingManagementPage} from '../../po/booking-management-page.po';
 import {CONSTANT, Booking} from '../../helper';
 import {UserPasswordPage} from '../../po/user-password-page.po';
 import {UserProfilePage} from '../../po/user-profile-page.po';
@@ -16,7 +16,7 @@ defineSupportCode(({Given, Then, When}) => {
     let list_of_object = {};
 
     let page = new PageObject();
-    let bookingPage = new BookingPage();
+    let bookingPage = new BookingManagementPage();
     let userPasswordPage = new UserPasswordPage();
     let userProfilePage = new UserProfilePage();
 
