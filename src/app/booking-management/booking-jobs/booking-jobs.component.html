@@ -9,7 +9,7 @@
 				<button *ngIf='!isCancelledOrUnableToServe' (click)="showDialogBox(true)" class="button pink">Cancel Booking</button>
 				<button (click)="duplicateBooking()" class="button inverse">Duplicate</button>
 				<div class="sep"></div>
-				<button (click)="saveChanges()" [disabled]="!invitePressed" class="button inverse">Save</button>
+				<button (click)="saveChanges()" name="saveBtn" [disabled]="!invitePressed" class="button inverse">Save</button>
 			</div>
 		</section>
 
@@ -145,7 +145,7 @@
 
 						<div class="separator"></div>
 
-						<button class="button active" (click)="inviteInterpreters()"><i class="icon-shape"></i> Invite</button>
+						<button class="button active" name='inviteBtn' (click)="inviteInterpreters()"><i class="icon-shape"></i> Invite</button>
 						<button class="button red"><i class="icon-assign"></i> Assign</button>
 					</section>
 				</section>
@@ -156,7 +156,7 @@
 					<thead>
 						<tr>
 							<th width="5%">
-								<md-checkbox></md-checkbox>
+								<!--md-checkbox></md-checkbox -->
 							</th>
 							<th width="7%">
 								<span class="order asc">#</span>
@@ -218,9 +218,9 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr *ngFor="let user of interpreterList">
-							<td>
-								<md-checkbox (change)="onChange($event,user)"></md-checkbox>
+						<tr *ngFor="let user of interpreterList; let ind = index">
+							<td width="5%">
+								<md-checkbox name='{{"Check" + ind}}' (change)="onChange($event,user)"></md-checkbox>
 							</td>
 							<td>{{user.id}}</td>
 							<td align="center"><!-- i [ngClass]="{'icon-check-green' :

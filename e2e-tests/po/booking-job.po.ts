@@ -23,19 +23,29 @@ export class BookingJobPage extends PageObject {
 
     checkListofInterpreterIndividualBookingScreen = (num_of_user: string, verified: string) => {
         const interpreterRows = $$('section[id=invited-interpreters] tbody tr');
-        return interpreterRows.count().then( interpereter_num => {
+        return interpreterRows.count().then(interpereter_num => {
             expect(interpereter_num).to.eql(parseInt(num_of_user, 10));
         });
     }
 
+    selectInterpreters = (num_of_interpreter: string) => {
+        let int_count = parseInt(num_of_interpreter, 10);
+        return $$('md-checkbox').each((ef, ind) => {
+            if (ind < int_count) {
+                return ef.click();
+            }
+        });
+
+    }
+
     listofInterpreterDoesNotExists = () => {
         return browser.sleep(1000).then(() => {
-            this.getElementByID('invited-interpreters').isPresent().then( val => {
-            expect(val).to.be.false;
+            this.getElementByID('invited-interpreters').isPresent().then(val => {
+                expect(val).to.be.false;
+            });
         });
-    });
 
-}
+    }
 
     didFinishedRendering = () => {
         this.unableToServeBtn = this.getElementByCSSandText('button.pink', 'Unable to Service');
@@ -61,19 +71,18 @@ export class BookingJobPage extends PageObject {
         });
     }
 
-    showPopup = () => {
-        return browser.wait(protractor.ExpectedConditions.presenceOf(this.getElementByCss('app-popup')), 30000).then(() => {
-
-        });
-    }
-
     getAuthErrorNotificationContent = () => {
         NotificationObject.getNotificationContent('Email or Password not found');
     }
-    getSuccessNotificationContentForState  = (state: string) => {
-        return browser.sleep(3000).then( () => {
+    getSuccessNotificationContentForState = (state: string) => {
+        return browser.sleep(3000).then(() => {
             NotificationObject.getNotificationContent('The booking has been transitioned to \"' + state + '\" state');
-        }) ;
+        });
+    }
+    getSuccessNotificationContentForInvite  = () => {
+        return browser.sleep(3000).then(() => {
+            NotificationObject.getNotificationContent('The interpreters have been invited');
+        });
     }
 }
 

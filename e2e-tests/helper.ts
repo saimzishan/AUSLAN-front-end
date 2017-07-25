@@ -32,7 +32,7 @@ export class User {
         switch (type) {
             case 'Administrator':
                 chosen_type = 'Administrator';
-                valid_user = new Administrator('admin1@auslan.com.au', 'Abcd#1234');
+                valid_user = new Administrator('admin@auslan.com.au', 'Abcd#1234');
                 break;
             case 'Booking Officer':
                 chosen_type = 'Booking Officer';
@@ -41,6 +41,14 @@ export class User {
             case 'Interpreter':
                 chosen_type = 'Interpreter';
                 valid_user = new Interpreter('interpreter@auslan.com.au', 'Abcd#1234');
+                break;
+            case 'Interpreter1':
+                chosen_type = 'Interpreter';
+                valid_user = new Interpreter('interpreter1@auslan.com.au', 'Abcd#1234');
+                break;
+            case 'Interpreter2':
+                chosen_type = 'Interpreter';
+                valid_user = new Interpreter('interpreter2@auslan.com.au', 'Abcd#1234');
                 break;
             case 'Individual Client':
                 chosen_type = 'Individual Client';
@@ -113,6 +121,8 @@ export class User {
                 data_to_sent['billing_account_attributes'] = billing_account_attributes_fields;
                 break;
             case 'Interpreter':
+            case 'Interpreter1':
+            case 'Interpreter2':
                 data_to_sent['date_of_birth'] = '20/05/1987';
                 data_to_sent['naati_id'] = 12345;
 

@@ -128,9 +128,9 @@ export class BookingManagementPage extends PageObject {
         return this.getButtonByText(buttonLabel).click();
     }
 
-    clickOnIndividualBooking = () => {
+    clickOnIndividualBooking = (booking_type: string) => {
         // this.getElementByID('jobs-responsive').$$(' tbody tr').first().click();
-        return this.clickAtOneofTheBooking('1', '1', 'Requested');
+        return this.clickAtOneofTheBooking('1', '1', booking_type);
     }
 
 

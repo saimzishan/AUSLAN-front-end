@@ -76,10 +76,16 @@ defineSupportCode(({Given, When}) => {
     Given(/^I will be shown the booking job page$/, bookingJob.browse);
     Given(/^I click on booking job detail page$/, bookingJob.onBookingJobDetails);
     Given(/^I get a valid '(.*)' notification for state$/, bookingJob.getSuccessNotificationContentForState);
+    Given(/^I get a valid invite notification$/, bookingJob.getSuccessNotificationContentForInvite);
+    Given(/^I select (.*) Interpreter$/, bookingJob.selectInterpreters);
 
     Given(/^I am on a computer$/, onDesktopResolution);
     function onDesktopResolution() {
-        return browser.driver.manage().window().setSize(1200, 900);
+        return browser.driver.manage().window().setSize(1400, 900).then( () => {
+
+             browser.driver.manage().window().maximize();
+        });
+
     }
     When(/^I click on button '(.*)'$/, clickOnButton);
     function clickOnButton(btnLabel: string) {

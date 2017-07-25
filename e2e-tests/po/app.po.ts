@@ -30,6 +30,10 @@ export class PageObject {
         return element(by.name(name));
     }
 
+    getAllElementByCSS(css: string) {
+        return element.all(by.css(css));
+    }
+
     setElementsValueByName(name: string, value: string) {
         let els = element.all(by.name(name));
         return els.each(el => {

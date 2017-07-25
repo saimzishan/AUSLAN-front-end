@@ -10,16 +10,22 @@ import {Heroku, User} from '../../helper';
 interface World {
     'attach': ((arg1: string | Buffer, arg2: string) => void);
 }
-
+let first_run = false;
 defineSupportCode(({Before}) => {
     Before(function (scenario: HookScenarioResult) {
 
-        let all_personas = ['Booking Officer', 'Administrator', 'Interpreter', 'Individual Client', 'Organisational Representative'];
+        if (!first_run) {
+            Heroku.sendCommandToHeroku('Booking.destroy_all');
+            Heroku.sendCommandToHeroku('User.destroy_all');
+        }
+
+        let all_personas = ['Booking Officer', 'Administrator', 'Interpreter',
+            'Interpreter1', 'Interpreter2', 'Individual Client', 'Organisational Representative'];
         let personas = [];
         all_personas.forEach((pn) => {
             if (scenario.scenario.name.toUpperCase().indexOf(pn.toUpperCase()) >= 0) {
                 if (scenario.scenario.name.toUpperCase().indexOf(('unverified ' + pn).toUpperCase()) < 0) {
-                    personas.push(pn);
+                        personas.push(pn);
                 }
             }
         });
@@ -42,5 +48,6 @@ defineSupportCode(({Before}) => {
             let currentlyLoggedInUser = User.returnTypeAndUser('Interpreter').user;
             Heroku.createUser(currentlyLoggedInUser, 'Interpreter');
         }
+        first_run = true;
     });
 });
