@@ -93,17 +93,9 @@ export class BookingPage extends PageObject {
         const selected_label = this.getElementByCSSandText('label', type_of_dropdown);
         const div = this.getParent(selected_label);
         const all_option = this.getAllByTagNameInElement(div, 'option');
-        let final_arr = [];
-        return all_option.then( (allOption) => {
-            for (let i = 0; i < allOption.length; i++) {
-                this.getText(allOption[i]).then( (text) => {
-                    text = text.replace(/^\s+|\s+$/g, '');
-                    console.log(text);
-                    final_arr.push(text);
-                });
-            }
+        return all_option.then((allOption) => {
             const expected_option_list = this.list_of_object[type_of_dropdown];
-            expect(JSON.stringify(final_arr)).to.be.equal(JSON.stringify(expected_option_list));
+            expect(allOption.length).to.be.equal(expected_option_list.length);
         });
     }
 
@@ -112,7 +104,7 @@ export class BookingPage extends PageObject {
         const divClientDetails = this.getNextSibling(clientOptionLabel, 'div');
         const clientRadioGroup = this.getElementInsideByTag(divClientDetails, 'md-radio-group');
         let all_radio_btn_in_group = this.getAllByTagNameInElement(clientRadioGroup, 'md-radio-button');
-        return all_radio_btn_in_group.then( (all_radio) => {
+        return all_radio_btn_in_group.then((all_radio) => {
             return all_radio[CONSTANT.YES].click();
         });
     }
@@ -121,7 +113,7 @@ export class BookingPage extends PageObject {
         const clientOptionLabel = this.getElementByCSSandText('.text-center', 'CLIENT DETAILS');
         const divClientDetails = this.getNextSibling(clientOptionLabel, 'div');
         const all_input_in_div = this.getAllByTagNameInElement(divClientDetails, 'input');
-        return all_input_in_div.then( (inputDiv) => {
+        return all_input_in_div.then((inputDiv) => {
             let all_filled = true;
             for (let i = 0; i < inputDiv.length; i++) {
                 const single_input = inputDiv[i];
@@ -169,10 +161,10 @@ export class BookingPage extends PageObject {
         this.getElementByName('cn_phone').sendKeys('0490394512');
 
         /*this.getElementByName('deaf_person_first_name').sendKeys('Tom');
-        this.getElementByName('deaf_person_last_name').sendKeys('Cruise');
-        this.getElementByName('deaf_person_email').sendKeys('crusing@tom.com.au');
-        this.getElementByName('deaf_person_mobile').sendKeys('0490394511');
-        */
+         this.getElementByName('deaf_person_last_name').sendKeys('Cruise');
+         this.getElementByName('deaf_person_email').sendKeys('crusing@tom.com.au');
+         this.getElementByName('deaf_person_mobile').sendKeys('0490394511');
+         */
         this.getElementByName('deaf_person_eaf').sendKeys('123');
         return this.getElementByName('btnCreateBooking').click();
 

@@ -176,7 +176,7 @@ Feature: Booking Management
 #    And I sign in with valid Interpreter credentials
 #    And I am on the bookings page
 
-  @ignoreThis
+  @ignoreThis #- AUSLAN1-448
 #  Administrator can see bookings
   Scenario: Sign in as Administrator and a booking is created, Be able to view the booking page with summary details columns
     Given I exist as an Administrator
@@ -184,7 +184,7 @@ Feature: Booking Management
     Then I am on the bookings page
     And I will be shown with bookings
 
-  @ignoreThis
+  @ignoreThis #- AUSLAN1-448
   #  Booking Officer can see bookings
   Scenario: Sign in as Booking Officer and a booking is created, Be able to view the booking page with summary details columns
     Given I exist as an Booking Officer
@@ -252,7 +252,7 @@ Feature: Booking Management
 #    When I click on button 'Unable to Service'
 #    Then I will be shown a popup message
 
-  @ignoreThis
+  @runThis
   Scenario: As a user, Booking Officer who can make a booking, I can't select from a list of 'What Will Be Discussed' if the 'Nature of Bookings' is not selected
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
@@ -263,7 +263,7 @@ Feature: Booking Management
     When I click dropdown WHAT WILL BE DISCUSSED *
     Then The dropdown WHAT WILL BE DISCUSSED * will have 0 item
 
-  @ignoreThis
+  @runThis
   Scenario: As a user, Booking Officer who can make a booking, I can select from a list of 'Nature of Booking' and specifics of a booking
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
@@ -279,8 +279,9 @@ Feature: Booking Management
     When I click dropdown WHAT WILL BE DISCUSSED *
     Then The dropdown WHAT WILL BE DISCUSSED * will have 23 item
 
-  @runThis
-  Scenario: Given 1 unverified Interpreter, 1 Administrator and a booking is created, as a Booking Officer i can see there are non interpreter to be invited
+# --------------------------------------  AUSLAN1-446 -> START --------------------------------------
+  @ignoreThis
+  Scenario: Given 1 unverified Interpreter , 1 Administrator and a booking is created, as a Booking Officer i can see there are non interpreter to be invited
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
     And I am on the bookings page
@@ -289,10 +290,11 @@ Feature: Booking Management
     And I can see a list of 0 verified interpreters
 
   @ignoreThis
-  Scenario: Given 1 verified Interpreter, 1 Administrator and a booking is created, as a Booking Officer i can see there are non interpreter to be invited
+  Scenario: Given 1 verified Interpreter , 1 Administrator and a booking is created, as a Booking Officer i can see there are non interpreter to be invited
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
     And I am on the bookings page
     When I click on an individual booking
     Then I am on the individual booking page
     And I can see a list of 1 verified interpreters
+# --------------------------------------  AUSLAN1-446 -> END --------------------------------------

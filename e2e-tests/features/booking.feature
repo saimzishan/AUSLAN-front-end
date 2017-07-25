@@ -5,7 +5,7 @@ Feature: Booking Management
     And I go to the website
     And I am shown the login screen, with picture and signup button
 
-  @runThis
+  @ignoreThis
   Scenario: Administrator can create a booking
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
@@ -17,7 +17,7 @@ Feature: Booking Management
     Then I am on the bookings page
     Then I will be shown with bookings
 
-  @runThis
+  @ignoreThis
   Scenario: Booking Officer can create a booking
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
@@ -29,7 +29,7 @@ Feature: Booking Management
     Then I am on the bookings page
     Then I will be shown with bookings
 
-  @runThis
+  @ignoreThis
   Scenario: Organisational Representative can create a booking
     Given I exist as an Organisational Representative
     And I sign in with valid Organisational Representative credentials
@@ -41,7 +41,7 @@ Feature: Booking Management
     Then I am on the bookings page
     Then I will be shown with bookings
 
-  @runThis
+  @ignoreThis
   Scenario: Individual Client can create a booking
     Given I exist as an Individual Client
     And I sign in with valid Individual Client credentials

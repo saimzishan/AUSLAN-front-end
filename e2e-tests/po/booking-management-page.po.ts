@@ -66,14 +66,17 @@ export class BookingManagementPage extends PageObject {
         });
     }
 
-    // clickOnIndividualBooking = () => {
-    //     const bookingRows = $$('tbody tr');
-    //     return bookingRows.then( (bookingR) => {
-    //         // if (bookingR.length > 1) {
-    //         return bookingR[0].click();
-    //         // }
-    //     });
-    // }
+    clickOnIndividualBooking = () => {
+        const bookingRows = $$('tbody tr');
+        return bookingRows.then((bookingR) => {
+            // if (bookingR.length > 1) {
+            return bookingR[0].click();
+            // }
+        });
+    }
+    clickOnIndividualBookingOfType = (booking_type: string) => {
+        return this.clickAtOneofTheBooking('1', '1', booking_type);
+    }
 
     showTheNumberofBooking = (num_of_booking: string, type_of_booking: string) => {
         let numBooking = parseInt(num_of_booking, 10);
@@ -95,9 +98,9 @@ export class BookingManagementPage extends PageObject {
     }
 
     bookingWithStateExists = (booking_state: string) => {
-            return this.getAllByCSSandText('tbody td', booking_state).count().then((cnt) => {
-                expect(cnt).to.be.greaterThan(0);
-            });
+        return this.getAllByCSSandText('tbody td', booking_state).count().then((cnt) => {
+            expect(cnt).to.be.greaterThan(0);
+        });
     }
 
     atleastABookingExists = () => {
@@ -127,13 +130,6 @@ export class BookingManagementPage extends PageObject {
     pressButtonOnNewBookingScreen = (buttonLabel: string) => {
         return this.getButtonByText(buttonLabel).click();
     }
-
-    clickOnIndividualBooking = (booking_type: string) => {
-        // this.getElementByID('jobs-responsive').$$(' tbody tr').first().click();
-        return this.clickAtOneofTheBooking('1', '1', booking_type);
-    }
-
-
     newBookingDoesNotExists = () => {
         return $$('lnkNewBooking').count().then(cnt => {
             expect(cnt).to.be.eq(0);

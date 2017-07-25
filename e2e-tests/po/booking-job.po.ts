@@ -25,6 +25,10 @@ export class BookingJobPage extends PageObject {
         const interpreterRows = $$('section[id=invited-interpreters] tbody tr');
         return interpreterRows.count().then(interpereter_num => {
             expect(interpereter_num).to.eql(parseInt(num_of_user, 10));
+/* Hien discuss **
+        return interpreterRows.then( (interRows) => {
+            return expect(interRows.length).to.eql(parseInt(num_of_user, 10));
+*/
         });
     }
 
@@ -52,11 +56,6 @@ export class BookingJobPage extends PageObject {
         return browser.wait(protractor.ExpectedConditions.presenceOf(this.unableToServeBtn), 30000).then(() => {
             expect(this.unableToServeBtn).to.exist;
         });
-    }
-
-
-    clickOnResetPassword = () => {
-        return this.getElementByName('lnkResetPass').click();
     }
 
 
