@@ -12,6 +12,8 @@ export class BookingManagementPage extends PageObject {
      * The jasmine and cuccumberjs does not work, so use chai.expect with chai-as-promised
      * Look at chai-import.ts for further details
      * */
+    rowCount = 0;
+
     verify = () => {
         return this.currentPath().then((currentPath) => {
             this.didFinishedRendering();
@@ -100,6 +102,18 @@ export class BookingManagementPage extends PageObject {
     bookingWithStateExists = (booking_state: string) => {
         return this.getAllByCSSandText('tbody td', booking_state).count().then((cnt) => {
             expect(cnt).to.be.greaterThan(0);
+        });
+    }
+
+    storeCurrentBookingCount = () => {
+        return this.getElementByID('jobs-responsive').$$('tr').count().then(cnt => {
+            this.rowCount = cnt;
+        });
+    }
+
+    isCurrentBookingCountGreaterThanStoredCount = () => {
+        return this.getElementByID('jobs-responsive').$$('tr').count().then(cnt => {
+            expect(cnt).to.be.greaterThan(this.rowCount);
         });
     }
 

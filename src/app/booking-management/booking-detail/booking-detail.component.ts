@@ -67,6 +67,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy, OnChanges {
         this.datePipe.transform(this.bookingModel.venue.start_time_iso, 'yyyy-MM-ddThh:mm:ss');
         this.bookingModel.venue.end_time_iso =
         this.datePipe.transform(this.bookingModel.venue.end_time_iso, 'yyyy-MM-ddThh:mm:ss');
+        this.natureOfApptChange(null);
       }
     });
   }
@@ -83,7 +84,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   natureOfApptChange($event) {
-    console.log(($event));
     let val: BOOKING_NATURE = <BOOKING_NATURE> BOOKING_NATURE[this.bookingModel.raw_nature_of_appointment];
     this.specific_appointment_types = BA.DISSCUSSION_ITEM[BOOKING_NATURE[val]];
   }

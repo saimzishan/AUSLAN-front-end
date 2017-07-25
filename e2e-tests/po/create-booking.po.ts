@@ -25,7 +25,9 @@ export class BookingPage extends PageObject {
     }
 
     getSuccessNotificationContent = () => {
-        NotificationObject.getNotificationContent('The Booking has been created.');
+        return browser.sleep(500).then( () => {
+            NotificationObject.getNotificationContent('The Booking has been created.');
+        });
     }
 
     // specifyAsClientOfBooking = () => {

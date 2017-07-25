@@ -20,6 +20,8 @@ defineSupportCode(({Given, Then, When}) => {
     let bookingjobPO = new BookingJobPage();
 //  BE ABLE TO VIEW BOOKING PAGE
     Then(/^I will be shown with bookings$/, bookingManagementPO.atleastABookingExists);
+    Then(/^I store the booking count$/, bookingManagementPO.storeCurrentBookingCount);
+    Then(/^I expect the booking count to be greater then before$/, bookingManagementPO.isCurrentBookingCountGreaterThanStoredCount);
 //    CLick on Request bookings
     Then(/^I am shown with (.*) (.*) Bookings$/, bookingManagementPO.showTheNumberofBooking);
 

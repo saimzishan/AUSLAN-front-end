@@ -60,3 +60,21 @@ Feature: Booking Management
     And I sign in with valid Interpreter credentials
     And I am on the bookings page
     Then I don't see any new New Booking link
+
+  @runThis
+  Scenario: Booking Officer can create duplicate booking, a booking is created
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    And I am on the bookings page
+    Then I will be shown with bookings
+    Then I store the booking count
+    Then I click on an individual booking of type 'Requested'
+    Then I will be shown the booking job page
+    Then I can see the button 'Save' is disabled
+    And I click on BUTTON 'Duplicate'
+    Then I will be taken to the 'New Booking' form
+    When I click on BUTTON 'SAVE'
+    Then I get a valid create booking notification
+    Then I am on the bookings page
+    Then I will be shown with bookings
+    Then I expect the booking count to be greater then before

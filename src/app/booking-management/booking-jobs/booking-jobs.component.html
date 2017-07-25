@@ -7,7 +7,7 @@
 			<div>
 				<button *ngIf='!isCancelledOrUnableToServe' (click)="showDialogBox(false)" class="button pink">Unable to Service</button>
 				<button *ngIf='!isCancelledOrUnableToServe' (click)="showDialogBox(true)" class="button pink">Cancel Booking</button>
-				<button (click)="duplicateBooking()" class="button inverse">Duplicate</button>
+				<button name="dupBtn" (click)="duplicateBooking()" class="button inverse">Duplicate</button>
 				<div class="sep"></div>
 				<button (click)="saveChanges()" name="saveBtn" [disabled]="!invitePressed" class="button inverse">Save</button>
 			</div>

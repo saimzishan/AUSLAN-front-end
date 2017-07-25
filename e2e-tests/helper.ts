@@ -446,7 +446,7 @@ export class Heroku {
             'deaf_persons_last_name': 'Waz',
             'deaf_persons_mobile': '0444 555 666',
             'deaf_persons_email': 'clifford@vicdeaf.org.au',
-            'deaf_persons_eaf_no': '1231 0900',
+            'deaf_persons_eaf_no': '124',
             'number_of_people_attending': 1,
             'number_of_interpreters_required': 1,
             'start_time': '2017-08-05T09: 01: 26.298+00: 00',
@@ -458,27 +458,27 @@ export class Heroku {
                 'primary_contact_phone_number': '0482 232 232',
                 'account_number': 'ABCD-1234',
                 'preferred_billing_method_email': false,
-                'external_reference': 'Curve and Sanj',
+                'external_reference': '3421',
                 'address_attributes': {
-                    'unit_number': 'Curve Tomorrow',
-                    'street_number': 'L4 West RCH',
-                    'street_name': '50 Flemington Rd',
+                    'unit_number': '02',
+                    'street_number': '50',
+                    'street_name': 'Flemington Rd',
                     'suburb': 'Parkville',
                     'state': 'VIC',
                     'post_code': '3025'
                 }
             },
             'address_attributes': {
-                'unit_number': 'Curve Tomorrow',
-                'street_number': 'L4 West RCH',
-                'street_name': '50 Flemington Rd',
+                'unit_number': '02',
+                'street_number': '50',
+                'street_name': 'Flemington Rd',
                 'suburb': 'Parkville',
                 'state': 'VIC',
                 'post_code': '3025'
             },
             'parking_availability': 'None - Use the Tram',
             'bookable_id': 1,
-            'bookable_type': 'User'
+            'bookable_type': 'Administrator'
         });
         let command = 'Booking.create(' + JSON.stringify(data) + ')';
         Heroku.sendCommandToHeroku(command);
