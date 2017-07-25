@@ -181,4 +181,8 @@ Feature: Create, read, update and delete a User
 #    Then I am on the 'User Management' list page
 #    And the valid Organisational Representative should be in the list
 
-
+# Trigger
+  @runThis
+  Scenario: Administrator should be able to trigger password reset for Interpreter
+    When I click on reset password for an active existing Interpreter
+    Then The password for the user should be reset

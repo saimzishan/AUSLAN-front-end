@@ -24,10 +24,9 @@ export class BookingJobPage extends PageObject {
 
     checkListofInterpreterIndividualBookingScreen = (num_of_user: string, verified: string) => {
         const interpreterRows = $$('section[id=invited-interpreters] tbody tr');
-        const interpereter_num = interpreterRows.count().then( (val) => {
-            return val;
+        return interpreterRows.then( (interRows) => {
+            return expect(interRows.length).to.eql(parseInt(num_of_user, 10));
         });
-        return expect(interpereter_num).to.eql(parseInt(num_of_user, 10));
     }
 
     hoverOnProfile = (insideElementCss) => {

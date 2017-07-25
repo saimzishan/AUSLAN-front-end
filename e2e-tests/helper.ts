@@ -467,7 +467,8 @@ export class Heroku {
                 'post_code': '3025'
             },
             'parking_availability': 'None - Use the Tram',
-            'bookable': 'Administrator.last'
+            'bookable_id': 1,
+            'bookable_type': 'User'
         });
         let command = 'Booking.create(' + JSON.stringify(data) + ')';
         Heroku.sendCommandToHeroku(command);

@@ -72,14 +72,14 @@ export class BookingManagementPage extends PageObject {
         });
     }
 
-    // clickOnIndividualBooking = () => {
-    //     const bookingRows = $$('tbody tr');
-    //     return bookingRows.then( (bookingR) => {
-    //         // if (bookingR.length > 1) {
-    //         return bookingR[0].click();
-    //         // }
-    //     });
-    // }
+    clickOnIndividualBooking = () => {
+        const bookingRows = $$('tbody tr');
+        return bookingRows.then( (bookingR) => {
+            // if (bookingR.length > 1) {
+            return bookingR[0].click();
+            // }
+        });
+    }
 
     showTheNumberofBooking = (num_of_booking: string, type_of_booking: string) => {
         let numBooking = parseInt(num_of_booking, 10);
@@ -129,10 +129,10 @@ export class BookingManagementPage extends PageObject {
         return this.getButtonByText(buttonLabel).click();
     }
 
-    clickOnIndividualBooking = () => {
-        const bookingRows = $$('tbody tr');
-        return bookingRows[0].click();
-    }
+    // clickOnIndividualBooking = () => {
+    //     const bookingRows = $$('tbody tr');
+    //     return bookingRows[0].click();
+    // }
 
 
     newBookingDoesNotExists = () => {

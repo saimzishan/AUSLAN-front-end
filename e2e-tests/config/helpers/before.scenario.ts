@@ -19,6 +19,7 @@ defineSupportCode(({Before}) => {
         all_personas.forEach((pn) => {
             if (scenario.scenario.name.toUpperCase().indexOf(pn.toUpperCase()) >= 0) {
                 if (scenario.scenario.name.toUpperCase().indexOf(('unverified ' + pn).toUpperCase()) < 0) {
+                    // console.log('===>' + pn);
                     personas.push(pn);
                 }
             }
