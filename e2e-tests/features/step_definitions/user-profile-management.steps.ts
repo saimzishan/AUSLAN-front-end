@@ -72,7 +72,7 @@ defineSupportCode(({Given, Then, When}) => {
         return page.getElementByCSSandText('a', btnLabel).click();
     }
 
-    When(/^I type in current pass word is (.*)$/, userPasswordPage.enterCurrentPassword);
+    When(/^I type in current password is (.*)$/, userPasswordPage.enterCurrentPassword);
 
     When(/^I type in the new password is (.*)$/, userPasswordPage.enterNewPassword);
 

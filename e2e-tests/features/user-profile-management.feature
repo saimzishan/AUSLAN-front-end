@@ -191,7 +191,7 @@ Feature: User Profile Management
     And I will be taken to my individual profile page
     And I click on Profile 'Change Password'
     And I will be taken to my individual secure_pass page
-    When I type in current pass word is Abcd#1234
+    When I type in current password is Abcd#1234
     And I type in the new password is Pass@1234
     And I type in the confirm password is Pass@1234
     And I click on BUTTON 'SAVE'
@@ -207,7 +207,7 @@ Feature: User Profile Management
     And I will be taken to my individual profile page
     And I click on Profile 'Change Password'
     And I will be taken to my individual secure_pass page
-    When I type in current pass word is Abcd#1234
+    When I type in current password is Abcd#1234
     And I type in the new password is Pass@1234
     And I type in the confirm password is Pass@1234
     And I click on BUTTON 'SAVE'
@@ -223,7 +223,7 @@ Feature: User Profile Management
     And I will be taken to my individual profile page
     And I click on Profile 'Change Password'
     And I will be taken to my individual secure_pass page
-    When I type in current pass word is Abcd#1234
+    When I type in current password is Abcd#1234
     And I type in the new password is Pass@1234
     And I type in the confirm password is Pass@1234
     And I click on BUTTON 'SAVE'
@@ -239,7 +239,7 @@ Feature: User Profile Management
     And I will be taken to my individual profile page
     And I click on Profile 'Change Password'
     And I will be taken to my individual secure_pass page
-    When I type in current pass word is Abcd#1234
+    When I type in current password is Abcd#1234
     And I type in the new password is Pass@1234
     And I type in the confirm password is Pass@1234
     And I click on BUTTON 'SAVE'
@@ -255,7 +255,7 @@ Feature: User Profile Management
     And I will be taken to my individual profile page
     And I click on Profile 'Change Password'
     And I will be taken to my individual secure_pass page
-    When I type in current pass word is Abcd#1234
+    When I type in current password is Abcd#1234
     And I type in the new password is Pass@1234
     And I type in the confirm password is Pass@1234
     And I click on BUTTON 'SAVE'
@@ -274,7 +274,7 @@ Feature: User Profile Management
     And I will be taken to my individual profile page
     And I click on Profile 'Change Password'
     And I will be taken to my individual secure_pass page
-    When I type in current pass word is Abcd1234
+    When I type in current password is Abcd1234
     And I type in the new password is Pass@1234
     And I type in the confirm password is Pass@1234
     And I click on BUTTON 'SAVE'
@@ -290,7 +290,7 @@ Feature: User Profile Management
     And I will be taken to my individual profile page
     And I click on Profile 'Change Password'
     And I will be taken to my individual secure_pass page
-    When I type in current pass word is Abcd1234
+    When I type in current password is Abcd1234
     And I type in the new password is Pass@1234
     And I type in the confirm password is Pass@1234
     And I click on BUTTON 'SAVE'
@@ -306,7 +306,7 @@ Feature: User Profile Management
     And I will be taken to my individual profile page
     And I click on Profile 'Change Password'
     And I will be taken to my individual secure_pass page
-    When I type in current pass word is Abcd1234
+    When I type in current password is Abcd1234
     And I type in the new password is Pass@1234
     And I type in the confirm password is Pass@1234
     And I click on BUTTON 'SAVE'
@@ -322,7 +322,7 @@ Feature: User Profile Management
     And I will be taken to my individual profile page
     And I click on Profile 'Change Password'
     And I will be taken to my individual secure_pass page
-    When I type in current pass word is Abcd1234
+    When I type in current password is Abcd1234
     And I type in the new password is Pass@1234
     And I type in the confirm password is Pass@1234
     And I click on BUTTON 'SAVE'
@@ -338,7 +338,7 @@ Feature: User Profile Management
     And I will be taken to my individual profile page
     And I click on Profile 'Change Password'
     And I will be taken to my individual secure_pass page
-    When I type in current pass word is Abcd1234
+    When I type in current password is Abcd1234
     And I type in the new password is Pass@1234
     And I type in the confirm password is Pass@1234
     And I click on BUTTON 'SAVE'
@@ -356,7 +356,7 @@ Feature: User Profile Management
     And I will be taken to my individual profile page
     And I click on Profile 'Change Password'
     And I will be taken to my individual secure_pass page
-    When I type in current pass word is Abcd#1234
+    When I type in current password is Abcd#1234
     And I type in the new password is Pass@
     And I type in the confirm password is Pass@
     And I click on BUTTON 'SAVE'
@@ -373,7 +373,7 @@ Feature: User Profile Management
     And I will be taken to my individual profile page
     And I click on Profile 'Change Password'
     And I will be taken to my individual secure_pass page
-    When I type in current pass word is Abcd#1234
+    When I type in current password is Abcd#1234
     And I type in the new password is Pass@
     And I type in the confirm password is Pass@
     And I click on BUTTON 'SAVE'
@@ -390,7 +390,7 @@ Feature: User Profile Management
     And I will be taken to my individual profile page
     And I click on Profile 'Change Password'
     And I will be taken to my individual secure_pass page
-    When I type in current pass word is Abcd#1234
+    When I type in current password is Abcd#1234
     And I type in the new password is Pass@
     And I type in the confirm password is Pass@
     And I click on BUTTON 'SAVE'
@@ -407,7 +407,7 @@ Feature: User Profile Management
     And I will be taken to my individual profile page
     And I click on Profile 'Change Password'
     And I will be taken to my individual secure_pass page
-    When I type in current pass word is Abcd#1234
+    When I type in current password is Abcd#1234
     And I type in the new password is Pass@
     And I type in the confirm password is Pass@
     And I click on BUTTON 'SAVE'
@@ -424,7 +424,7 @@ Feature: User Profile Management
     And I will be taken to my individual profile page
     And I click on Profile 'Change Password'
     And I will be taken to my individual secure_pass page
-    When I type in current pass word is Abcd#1234
+    When I type in current password is Abcd#1234
     And I type in the new password is Pass@
     And I type in the confirm password is Pass@
     And I click on BUTTON 'SAVE'
@@ -442,7 +442,7 @@ Feature: User Profile Management
     And I will be taken to my individual profile page
     And I click on Profile 'Change Password'
     And I will be taken to my individual secure_pass page
-    When I type in current pass word is Abcd#1234
+    When I type in current password is Abcd#1234
     And I type in the new password is Pass@1234
     And I type in the confirm password is Pass@123
     And I click on BUTTON 'SAVE'
@@ -458,7 +458,7 @@ Feature: User Profile Management
     And I will be taken to my individual profile page
     And I click on Profile 'Change Password'
     And I will be taken to my individual secure_pass page
-    When I type in current pass word is Abcd#1234
+    When I type in current password is Abcd#1234
     And I type in the new password is Pass@1234
     And I type in the confirm password is Pass@123
     And I click on BUTTON 'SAVE'
@@ -474,7 +474,7 @@ Feature: User Profile Management
     And I will be taken to my individual profile page
     And I click on Profile 'Change Password'
     And I will be taken to my individual secure_pass page
-    When I type in current pass word is Abcd#1234
+    When I type in current password is Abcd#1234
     And I type in the new password is Pass@1234
     And I type in the confirm password is Pass@123
     And I click on BUTTON 'SAVE'
@@ -490,7 +490,7 @@ Feature: User Profile Management
     And I will be taken to my individual profile page
     And I click on Profile 'Change Password'
     And I will be taken to my individual secure_pass page
-    When I type in current pass word is Abcd#1234
+    When I type in current password is Abcd#1234
     And I type in the new password is Pass@1234
     And I type in the confirm password is Pass@123
     And I click on BUTTON 'SAVE'
@@ -506,7 +506,7 @@ Feature: User Profile Management
     And I will be taken to my individual profile page
     And I click on Profile 'Change Password'
     And I will be taken to my individual secure_pass page
-    When I type in current pass word is Abcd#1234
+    When I type in current password is Abcd#1234
     And I type in the new password is Pass@1234
     And I type in the confirm password is Pass@123
     And I click on BUTTON 'SAVE'
