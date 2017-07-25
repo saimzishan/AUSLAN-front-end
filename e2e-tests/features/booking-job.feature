@@ -7,7 +7,7 @@ Feature: Booking Admin Management
 
 
   @runThis
-  Scenario: Administrator can create a booking, Interpreter exists
+  Scenario: Administrator can unable to service a booking, Interpreter exists
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
     And I am on the bookings page
@@ -16,6 +16,7 @@ Feature: Booking Admin Management
     Then I fill New Booking form fields correctly
     Then I get a valid create booking notification
     Then I am on the bookings page
+    Then I see one row with state 'Requested'
     Then I will be shown with bookings
     Then I click on an individual booking
     Then I will be shown the booking job page
@@ -41,6 +42,7 @@ Feature: Booking Admin Management
     Then I fill New Booking form fields correctly
     Then I get a valid create booking notification
     Then I am on the bookings page
+    Then I see one row with state 'Requested'
     Then I will be shown with bookings
     Then I click on an individual booking
     Then I will be shown the booking job page
@@ -54,7 +56,7 @@ Feature: Booking Admin Management
     Then I see one row with state 'Requested'
 
   @runThis
-  Scenario: Booking Officer can create a booking, Interpreter exists
+  Scenario: Booking Officer can unable to service a booking, Interpreter exists
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
     And I am on the bookings page
@@ -63,6 +65,7 @@ Feature: Booking Admin Management
     Then I fill New Booking form fields correctly
     Then I get a valid create booking notification
     Then I am on the bookings page
+    Then I see one row with state 'Requested'
     Then I will be shown with bookings
     Then I click on an individual booking
     Then I will be shown the booking job page
@@ -89,6 +92,7 @@ Feature: Booking Admin Management
     Then I fill New Booking form fields correctly
     Then I get a valid create booking notification
     Then I am on the bookings page
+    Then I see one row with state 'Requested'
     Then I will be shown with bookings
     Then I click on an individual booking
     Then I will be shown the booking job page
@@ -96,6 +100,104 @@ Feature: Booking Admin Management
     Then I will be shown a popup message
     Then I click on BUTTON name 'noBtn'
     Then I can see the button 'Unable to Service' is enabled
+    And I can see a list of 1 verified interpreters
+    Then I click on Bookings
+    And I am on the bookings page
+    Then I see one row with state 'Requested'
+
+  @runThis
+  Scenario: Administrator can the Cancel Booking action, Interpreter exists
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on the bookings page
+    When I click on 'New Booking'
+    Then I will be taken to the 'New Booking' form
+    Then I fill New Booking form fields correctly
+    Then I get a valid create booking notification
+    Then I am on the bookings page
+    Then I see one row with state 'Requested'
+    Then I will be shown with bookings
+    Then I click on an individual booking
+    Then I will be shown the booking job page
+    Then I click on BUTTON 'Cancel Booking'
+    Then I will be shown a popup message
+    Then I click on BUTTON name 'yesBtn'
+    Then I get a valid 'Cancelled' notification for state
+    And I can not see a list of interpreters
+    Then I can see the button state 'Unable to Service' is hidden
+    Then I can see the button state 'Cancel Booking' is hidden
+    Then I can see the booking state 'Cancelled'
+    Then I click on Bookings
+    And I am on the bookings page
+    Then I see one row with state 'Cancelled'
+
+  @runThis
+  Scenario: Administrator cancel the Cancel Booking action, Interpreter exists
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on the bookings page
+    When I click on 'New Booking'
+    Then I will be taken to the 'New Booking' form
+    Then I fill New Booking form fields correctly
+    Then I get a valid create booking notification
+    Then I am on the bookings page
+    Then I see one row with state 'Requested'
+    Then I will be shown with bookings
+    Then I click on an individual booking
+    Then I will be shown the booking job page
+    Then I click on BUTTON 'Cancel Booking'
+    Then I will be shown a popup message
+    Then I click on BUTTON name 'noBtn'
+    Then I can see the button 'Cancel Booking' is enabled
+    And I can see a list of 1 verified interpreters
+    Then I click on Bookings
+    And I am on the bookings page
+    Then I see one row with state 'Requested'
+
+  @runThis
+  Scenario: Booking Officer can cancel booking, Interpreter exists
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    And I am on the bookings page
+    When I click on 'New Booking'
+    Then I will be taken to the 'New Booking' form
+    Then I fill New Booking form fields correctly
+    Then I get a valid create booking notification
+    Then I am on the bookings page
+    Then I see one row with state 'Requested'
+    Then I will be shown with bookings
+    Then I click on an individual booking
+    Then I will be shown the booking job page
+    Then I click on BUTTON 'Cancel Booking'
+    Then I will be shown a popup message
+    Then I click on BUTTON name 'yesBtn'
+    Then I get a valid 'Cancelled' notification for state
+    And I can not see a list of interpreters
+    Then I can see the button state 'Unable to Service' is hidden
+    Then I can see the button state 'Cancel Booking' is hidden
+    Then I can see the booking state 'Cancelled'
+    Then I click on Bookings
+    And I am on the bookings page
+    Then I see one row with state 'Cancelled'
+
+  @runThis
+  Scenario: Booking Officer cancel the Cancel Booking action, Interpreter exists
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    And I am on the bookings page
+    When I click on 'New Booking'
+    Then I will be taken to the 'New Booking' form
+    Then I fill New Booking form fields correctly
+    Then I get a valid create booking notification
+    Then I am on the bookings page
+    Then I see one row with state 'Requested'
+    Then I will be shown with bookings
+    Then I click on an individual booking
+    Then I will be shown the booking job page
+    Then I click on BUTTON 'Cancel Booking'
+    Then I will be shown a popup message
+    Then I click on BUTTON name 'noBtn'
+    Then I can see the button 'Cancel Booking' is enabled
     And I can see a list of 1 verified interpreters
     Then I click on Bookings
     And I am on the bookings page
