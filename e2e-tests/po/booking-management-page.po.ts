@@ -46,15 +46,6 @@ export class BookingManagementPage extends PageObject {
         });
     }
 
-    onBookingJobDetails = () => {
-        return this.navigateTo(browser.baseUrl + '/#/booking-management/1/job-detail');
-    }
-
-    isOnBookingJobDetails = (id) => {
-        return this.currentPath().then((currentPath) => {
-            expect(currentPath).to.contain('/booking-management/' + id + '/job-detail');
-        });
-    }
 
     onBookingListPage = () => {
         return this.currentPath().then((currentPath) => {
@@ -66,6 +57,9 @@ export class BookingManagementPage extends PageObject {
         return this.getElementByID('lnkNewBooking').click();
     }
 
+    clickOnBookings = () => {
+        return this.getElementByID('lnkBooking').click();
+    }
     showPopup = () => {
         return browser.wait(protractor.ExpectedConditions.presenceOf(this.getElementByCss('app-popup')), 30000).then(() => {
 
@@ -83,22 +77,27 @@ export class BookingManagementPage extends PageObject {
 
     showTheNumberofBooking = (num_of_booking: string, type_of_booking: string) => {
         let numBooking = parseInt(num_of_booking, 10);
-        let allTypeBooking = this.getAllByCSSandText('tbody td',  type_of_booking);
-        return allTypeBooking.count().then( (countNum) => {
+        let allTypeBooking = this.getAllByCSSandText('tbody td', type_of_booking);
+        return allTypeBooking.count().then((countNum) => {
             expect(countNum).to.equal(numBooking);
         });
     }
 
-    clickAtOneofTheBooking = (pos: string, num_of_booking: string, type_of_booking: string) => {
-        let numBooking = parseInt(num_of_booking, 10);
+    clickAtOneofTheBooking = (pos: string, num_of_booking: string, booking_state: string) => {
         let posth = parseInt(pos, 10);
-        let allTypeBooking = this.getAllByCSSandText('tbody td',  type_of_booking);
-        return allTypeBooking.then( (allBooking) => {
+        let allTypeBooking = this.getAllByCSSandText('tbody td', booking_state);
+        return allTypeBooking.then((allBooking) => {
             const totalNumofType = allBooking.length;
-            expect(posth).to.be.lessThan(totalNumofType);
-            let row = this.getParent(allTypeBooking[posth - 1]);
-            return row.click();
+            expect(posth).not.to.be.greaterThan(totalNumofType);
+        }).then(() => {
+            return allTypeBooking.get(posth - 1).click();
         });
+    }
+
+    bookingWithStateExists = (booking_state: string) => {
+            return this.getAllByCSSandText('tbody td', booking_state).count().then((cnt) => {
+                expect(cnt).to.be.greaterThan(0);
+            });
     }
 
     atleastABookingExists = () => {
@@ -109,7 +108,7 @@ export class BookingManagementPage extends PageObject {
             let tblRows = table.$$('tr');
             expect(tblRows.count()).to.eventually.be.greaterThan(0);
         }).then(() => {
-            let el = table.$$('tr:first-child td.bookingID > div > span')
+            let el = table.$$('tr:first-child td.bookingID > div > span');
             el.getText().then(txt => {
                 let len = txt[0].length;
                 expect(len).to.be.eq(4);
@@ -130,8 +129,8 @@ export class BookingManagementPage extends PageObject {
     }
 
     clickOnIndividualBooking = () => {
-        const bookingRows = $$('tbody tr');
-        return bookingRows[0].click();
+        // this.getElementByID('jobs-responsive').$$(' tbody tr').first().click();
+        return this.clickAtOneofTheBooking('1', '1', 'Requested');
     }
 
 
@@ -139,6 +138,14 @@ export class BookingManagementPage extends PageObject {
         return $$('lnkNewBooking').count().then(cnt => {
             expect(cnt).to.be.eq(0);
         });
+    }
+    confirmBookingState = (booking_state: string) => {
+        return browser.sleep(3000).then(() => {
+            $('#steps > nav > a.active').getText().then(val => {
+                expect(val.toLowerCase()).to.be.eq(booking_state.toLowerCase());
+            });
+        });
+
     }
 }
 

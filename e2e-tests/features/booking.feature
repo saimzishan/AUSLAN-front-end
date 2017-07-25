@@ -54,7 +54,7 @@ Feature: Booking Management
     Then I will be shown with bookings
 
 
-  @runThis
+  @ignoreThis
   Scenario: Interpreter can create a booking
     Given I exist as an Interpreter
     And I sign in with valid Interpreter credentials

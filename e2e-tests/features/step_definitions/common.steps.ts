@@ -8,6 +8,7 @@ import {HomePage} from '../../po/home-page.po';
 import {BookingManagementPage} from '../../po/booking-management-page.po';
 import {ResetPage} from '../../po/reset-page.po';
 import {BookingPage} from '../../po/create-booking.po';
+import {BookingJobPage} from '../../po/booking-job.po';
 
 defineSupportCode(({Given, When}) => {
 
@@ -16,6 +17,7 @@ defineSupportCode(({Given, When}) => {
     let bookingManagementPage = new BookingManagementPage();
     let resetPage = new ResetPage();
     let bookingPage = new BookingPage();
+    let bookingJob = new BookingJobPage();
     // // ================================== GIVEN PART ========================================
     Given(/^There is (.*) (.*) (.*)/, preloadANumberOfUser);
     function preloadANumberOfUser(numberOfUser: string, active: string, type: string) {
@@ -70,18 +72,48 @@ defineSupportCode(({Given, When}) => {
     function onMobileResolution() {
         return browser.driver.manage().window().setSize(360, 640);
     }
-    Given(/^I will be shown the booking detail page with id (.*)$/, bookingManagementPage.isOnBookingJobDetails);
-    Given(/^I click on booking job detail page$/, bookingManagementPage.onBookingJobDetails);
+    Given(/^I will be shown the booking detail page with id (.*)$/, bookingJob.isOnBookingJobDetails);
+    Given(/^I will be shown the booking job page$/, bookingJob.browse);
+    Given(/^I click on booking job detail page$/, bookingJob.onBookingJobDetails);
+    Given(/^I get a valid '(.*)' notification for state$/, bookingJob.getSuccessNotificationContentForState);
+
     Given(/^I am on a computer$/, onDesktopResolution);
     function onDesktopResolution() {
-        return browser.driver.manage().window().setSize(1200, 768);
+        return browser.driver.manage().window().setSize(1200, 900);
     }
     When(/^I click on button '(.*)'$/, clickOnButton);
     function clickOnButton(btnLabel: string) {
         return page.getElementByCSSandText('.button', btnLabel).click();
     }
+
+    When(/^I can see the booking state '(.*)'$/, bookingManagementPage.confirmBookingState);
+
+
+    When(/^I can see the button '(.*)' is (.*)$/, isButtonDisabled);
+    function isButtonDisabled(btnLabel: string, disabled: string) {
+        let isEnabled = disabled.toLowerCase() === 'enabled';
+        return page.getElementByCSSandText('.button', btnLabel).isEnabled().then( (val) => {
+            expect(val).to.be.eq(isEnabled);
+        });
+    }
+
+    When(/^I can see the button state '(.*)' is (.*)$/, isButtonVisible);
+    function isButtonVisible(btnLabel: string, visible: string) {
+        let isDisplayed = visible.toLowerCase() === 'visible';
+        return browser.sleep(1000).then(() => {
+            page.getElementByCSSandText('.button', btnLabel).isPresent().then(val => {
+                expect(val).to.be.eq(isDisplayed);
+            });
+        });
+    }
+
     When(/^I click on BUTTON '(.*)'$/, clickOnBtn);
     function clickOnBtn(btnLabel: string) {
         return page.getButtonByText(btnLabel).click();
+    }
+
+    When(/^I click on BUTTON name '(.*)'$/, clickOnBtnByName);
+    function clickOnBtnByName(btnLabel: string) {
+        return page.getElementByName(btnLabel).click();
     }
 });

@@ -28,10 +28,10 @@ defineSupportCode(({Given, Then, When}) => {
     Then(/^I will be shown a popup message$/, bookingManagementPO.showPopup);
 
     When(/^I click on 'New Booking'$/, bookingManagementPO.clickOnNewBooking);
+    When(/^I click on Bookings$/, bookingManagementPO.clickOnBookings);
+    When(/^I see one row with state '(.*)'$/, bookingManagementPO.bookingWithStateExists);
 
     When(/^I click on an individual booking$/, bookingManagementPO.clickOnIndividualBooking);
-
-
     Then(/^I am back on booking page$/, bookingManagementPO.onBookingListPage);
 
     // --------------------------------- AUTO POPULATE CLIENT DETAILS
@@ -49,6 +49,8 @@ defineSupportCode(({Given, Then, When}) => {
     Then(/^I am on the individual booking page$/, bookingjobPO.browse);
 
     Then(/^I can see a list of (.*) (.*) interpreters$/, bookingjobPO.checkListofInterpreterIndividualBookingScreen);
+    Then(/^I can not see a list of interpreters$/, bookingjobPO.listofInterpreterDoesNotExists);
+
 
 //    POPULATE DROP DOWN
     When(/^I click dropdown (.*)$/, createBookingPO.clickOnDropDown);

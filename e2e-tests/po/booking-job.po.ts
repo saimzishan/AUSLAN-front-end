@@ -13,47 +13,42 @@ export class BookingJobPage extends PageObject {
      * The jasmine and cuccumberjs does not work, so use chai.expect with chai-as-promised
      * Look at chai-import.ts for further details
      * */
-    logoutLink;
-    profileLink;
+    unableToServeBtn;
     browse = () => {
         return this.currentPath().then((currentPath) => {
-            // this.didFinishedRendering();
+            this.didFinishedRendering();
             expect(currentPath).to.contain('booking-job');
         });
     }
 
     checkListofInterpreterIndividualBookingScreen = (num_of_user: string, verified: string) => {
         const interpreterRows = $$('section[id=invited-interpreters] tbody tr');
-        const interpereter_num = interpreterRows.count().then( (val) => {
-            return val;
-        });
-        return expect(interpereter_num).to.eql(parseInt(num_of_user, 10));
-    }
-
-    hoverOnProfile = (insideElementCss) => {
-        let el = this.getElementByID('lnkProfile');
-        return browser.actions().mouseMove(el).perform().then(() => {
-            let elm = this.getElementByID(insideElementCss);
-            this.currentPath().then((path) => {
-                browser.wait(protractor.ExpectedConditions.presenceOf(elm), 5000).then(() => {
-                    expect(elm).to.be.exist;
-                });
-            });
+        return interpreterRows.count().then( interpereter_num => {
+            expect(interpereter_num).to.eql(parseInt(num_of_user, 10));
         });
     }
 
-    clickOnProfile = () => {
-        return this.getElementByID('lnkProfile').click();
-    }
+    listofInterpreterDoesNotExists = () => {
+        return browser.sleep(1000).then(() => {
+            this.getElementByID('invited-interpreters').isPresent().then( val => {
+            expect(val).to.be.false;
+        });
+    });
+
+}
 
     didFinishedRendering = () => {
-        this.logoutLink = this.getElementByName('lnkLogout');
-        this.profileLink = this.getElementByName('lnkProfile');
-        return browser.wait(protractor.ExpectedConditions.presenceOf(this.logoutLink), 30000).then(() => {
-            expect(this.logoutLink).to.exist;
-            expect(this.profileLink).to.exist;
+        this.unableToServeBtn = this.getElementByCSSandText('button.pink', 'Unable to Service');
+        return browser.wait(protractor.ExpectedConditions.presenceOf(this.unableToServeBtn), 30000).then(() => {
+            expect(this.unableToServeBtn).to.exist;
         });
     }
+
+
+    clickOnResetPassword = () => {
+        return this.getElementByName('lnkResetPass').click();
+    }
+
 
     onBookingJobDetails = () => {
         return this.navigateTo(browser.baseUrl + '/#/booking-management/1/job-detail');
@@ -61,18 +56,9 @@ export class BookingJobPage extends PageObject {
 
     isOnBookingJobDetails = (id) => {
         return this.currentPath().then((currentPath) => {
-            expect(currentPath).to.contain('/booking-management/' + id + '/job-detail');
-        });
-    }
-
-    onBookingListPage = () => {
-        return this.currentPath().then((currentPath) => {
             expect(currentPath).to.contain('booking-management');
+            expect(currentPath).to.contain('job-detail');
         });
-    }
-
-    clickOnNewBooking = () => {
-        return this.getElementByID('lnkNewBooking').click();
     }
 
     showPopup = () => {
@@ -82,10 +68,12 @@ export class BookingJobPage extends PageObject {
     }
 
     getAuthErrorNotificationContent = () => {
-        let elm = $('div.sn-content');
-        return browser.wait(protractor.ExpectedConditions.presenceOf(elm), 10000).then(() => {
-            expect(elm.getText()).to.eventually.contain('Email or Password not found');
-        });
+        NotificationObject.getNotificationContent('Email or Password not found');
+    }
+    getSuccessNotificationContentForState  = (state: string) => {
+        return browser.sleep(3000).then( () => {
+            NotificationObject.getNotificationContent('The booking has been transitioned to \"' + state + '\" state');
+        }) ;
     }
 }
 
