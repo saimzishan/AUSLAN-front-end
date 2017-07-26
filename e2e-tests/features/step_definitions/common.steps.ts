@@ -70,9 +70,12 @@ defineSupportCode(({Given, When}) => {
 
     Given(/^I am on a mobile$/, onMobileResolution);
     function onMobileResolution() {
-        return browser.driver.manage().window().setSize(360, 640);
+        return browser.driver.manage().window().setSize(420, 768);
     }
     Given(/^I will be shown the booking detail page with id (.*)$/, bookingJob.isOnBookingJobDetails);
+    Given(/^I will be shown a valid booking detail page$/, bookingJob.isOnValidBookingJobDetails);
+    Given(/^I can see the valid header in booking detail page$/, bookingJob.isValidBookingHeader);
+    Given(/^I can see the booking state '(.*)' in booking detail page$/, bookingJob.isBookingStateText);
     Given(/^I will be shown the booking job page$/, bookingJob.browse);
     Given(/^I click on booking job detail page$/, bookingJob.onBookingJobDetails);
     Given(/^I get a valid '(.*)' notification for state$/, bookingJob.getSuccessNotificationContentForState);
@@ -87,9 +90,15 @@ defineSupportCode(({Given, When}) => {
         });
 
     }
+
     When(/^I click on button '(.*)'$/, clickOnButton);
     function clickOnButton(btnLabel: string) {
         return page.getElementByCSSandText('.button', btnLabel).click();
+    }
+
+    When(/^I click on button with css '(.*)'$/, clickOnButtonWithCSS);
+    function clickOnButtonWithCSS(css: string) {
+        return page.getElementByCss(css).click();
     }
 
     When(/^I can see the booking state '(.*)'$/, bookingManagementPage.confirmBookingState);
@@ -113,6 +122,24 @@ defineSupportCode(({Given, When}) => {
         });
     }
 
+    When(/^I can see the button with css '(.*)' is (.*)$/, isButtonWithCSSDisabled);
+    function isButtonWithCSSDisabled(css: string, disabled: string) {
+        let isEnabled = disabled.toLowerCase() === 'enabled';
+        return page.getElementByCss(css).isEnabled().then( (val) => {
+            expect(val).to.be.eq(isEnabled);
+        });
+    }
+
+    When(/^I can see the button state with css '(.*)' is (.*)$/, isButtonWithCSSVisible);
+    function isButtonWithCSSVisible(css: string, visible: string) {
+        let isDisplayed = visible.toLowerCase() === 'visible';
+        return browser.sleep(1000).then(() => {
+            page.getElementByCss(css).isPresent().then(val => {
+                expect(val).to.be.eq(isDisplayed);
+            });
+        });
+    }
+
     When(/^I click on BUTTON '(.*)'$/, clickOnBtn);
     function clickOnBtn(btnLabel: string) {
         return page.getButtonByText(btnLabel).click();
@@ -122,4 +149,9 @@ defineSupportCode(({Given, When}) => {
     function clickOnBtnByName(btnLabel: string) {
         return page.getElementByName(btnLabel).click();
     }
+
+    Given(/^I wait for (.*) milli-seconds/, (seconds: string) => {
+        return browser.sleep(parseInt(seconds, 10 ));
+    });
+
 });

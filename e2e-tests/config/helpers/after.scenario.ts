@@ -10,29 +10,29 @@ interface World {
 }
 
 defineSupportCode(({After}) => {
-    After(function (scenarioResult: HookScenarioResult): Promise<void> {
+    After(function (scenarioResult: HookScenarioResult) {
         if ( browser.params.env === 'localhost' && scenarioResult.status !== 'failed') {
             Heroku.sendCommandToHeroku('Booking.destroy_all');
             Heroku.sendCommandToHeroku('User.where.not(id: 1).destroy_all');
         }
-        const world = this;
-        return (scenarioResult.status === 'failed') ? saveFailedScenarioScreenshot(world, scenarioResult) : Promise.resolve();
+        return browser.restart();
+        // const world = this;
+        // return (scenarioResult.status === 'failed') ? saveFailedScenarioScreenshot(world, scenarioResult) : Promise.resolve();
     });
 
     /**
      * Save a screenshot when a scenario failed
      */
-    async function saveFailedScenarioScreenshot(world: World, scenarioResult: HookScenarioResult) {
-        const screenshot = await(browser.takeScreenshot());
-        const fileName = `${scenarioResult.scenario.name
-            .replace(/[^a-zA-Z0-9\s]/g, '').replace(/\s/g, '-')
-            .toLowerCase().substr(0, 100)}.png`;
+     function saveFailedScenarioScreenshot(world: World, scenarioResult: HookScenarioResult) {
+        return browser.takeScreenshot().then( (screenshot) => {
+            const fileName = `${scenarioResult.scenario.name
+                .replace(/[^a-zA-Z0-9\s]/g, '').replace(/\s/g, '-')
+                .toLowerCase().substr(0, 100)}.png`;
 
-        world.attach(screenshot, 'image/png');
+            world.attach(screenshot, 'image/png');
 
-        saveScreenshot(screenshot, fileName);
-
-        return Promise.resolve();
+            saveScreenshot(screenshot, fileName);
+        });
     }
 
     /**

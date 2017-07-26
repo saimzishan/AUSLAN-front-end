@@ -13,6 +13,7 @@ export class UserProfilePage extends PageObject {
      * The jasmine and cuccumberjs does not work, so use chai.expect with chai-as-promised
      * Look at chai-import.ts for further details
      * */
+    saveBtn;
     browse = () => {
         return this.currentPath().then((currentPath) => {
             this.didFinishedRendering();
@@ -22,15 +23,43 @@ export class UserProfilePage extends PageObject {
     }
 
     didFinishedRendering = () => {
-        // this.currPassword = this.getElementByID('curr_pass');
-        // this.newPassword = this.getElementByID('pass');
-        // this.confirmPassword = this.getElementByID('certainPassword');
-        // this.saveButton = this.getButtonByText('SAVE');
-        // return browser.wait(protractor.ExpectedConditions.presenceOf(this.saveButton), 30000).then(() => {
-        //     expect(this.currPassword).to.exist;
-        //     expect(this.newPassword).to.exist;
-        //     expect(this.confirmPassword).to.exist;
-        // });
+        this.saveBtn = this.getButtonByText('SAVE');
+        return browser.wait(protractor.ExpectedConditions.presenceOf(this.saveBtn), 30000).then(() => {
+            expect(this.saveBtn).to.exist;
+        });
+    }
+
+    updateTheField = (fields_string: string, updated_text: string) => {
+        const selected_label = this.getElementByCSSandText('label', fields_string);
+        const div = this.getParent(selected_label);
+        let input_field = this.getElementInsideByTag(div, 'input');
+        input_field.clear();
+        return this.setValue(input_field, updated_text);
+    }
+
+    updateDropDownField = (fields_string: string, updated_text: string) => {
+        const selected_label = this.getElementByCSSandText('label', fields_string);
+        const div = this.getParent(selected_label);
+        let input_field = this.getElementInsideByTag(div, 'select');
+        return this.setValue(input_field, updated_text);
+    }
+
+    fieldWillBeUpdated = (fields_string: string, updated_text: string) => {
+        const selected_label = this.getElementByCSSandText('label', fields_string);
+        const div = this.getParent(selected_label);
+        let input_field = this.getElementInsideByTag(div, 'input');
+        return input_field.getAttribute('value').then( (value) => {
+            expect(value).to.be.equal(updated_text);
+        });
+    }
+
+    dropdownFieldWillBeUpdated = (fields_string: string, updated_text: string) => {
+        const selected_label = this.getElementByCSSandText('label', fields_string);
+        const div = this.getParent(selected_label);
+        let input_field = this.getElementInsideByTag(div, 'select');
+        return input_field.getAttribute('ng-reflect-model').then( (value) => {
+            expect(value).to.be.equal(updated_text);
+        });
     }
 }
 

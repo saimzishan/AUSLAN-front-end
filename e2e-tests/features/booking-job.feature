@@ -8,7 +8,7 @@ Feature: Booking Admin Management
     ########### REQUESTED TO UNABLE TO SERVICE #######################################
 
   @runThis
-  Scenario: Administrator can unable to service a booking, Interpreter exists
+  Scenario: Administrator can REQUESTED to unable to service a booking, Interpreter exists
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
     And I am on the bookings page
@@ -34,7 +34,7 @@ Feature: Booking Admin Management
     Then I see one row with state 'Unable to service'
 
   @runThis
-  Scenario: Administrator cancel the unable to service action, Interpreter exists
+  Scenario: Administrator can cancel REQUESTED to the unable to service action, Interpreter exists
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
     And I am on the bookings page
@@ -57,7 +57,7 @@ Feature: Booking Admin Management
     Then I see one row with state 'Requested'
 
   @runThis
-  Scenario: Booking Officer can unable to service a booking, Interpreter exists
+  Scenario: Booking Officer can REQUESTED to the unable to service a booking, Interpreter exists
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
     And I am on the bookings page
@@ -84,7 +84,7 @@ Feature: Booking Admin Management
 
 
   @runThis
-  Scenario: Booking Officer cancel the unable to service action, Interpreter exists
+  Scenario: Booking Officer cancel the REQUESTED to the unable to service action, Interpreter exists
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
     And I am on the bookings page
@@ -109,7 +109,7 @@ Feature: Booking Admin Management
     ########### REQUESTED TO CANCEL #######################################
 
   @runThis
-  Scenario: Administrator can the Cancel Booking action, Interpreter exists
+  Scenario: Administrator can the REQUESTED to Cancel Booking action, Interpreter exists
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
     And I am on the bookings page
@@ -135,7 +135,7 @@ Feature: Booking Admin Management
     Then I see one row with state 'Cancelled'
 
   @runThis
-  Scenario: Administrator cancel the Cancel Booking action, Interpreter exists
+  Scenario: Administrator cancel the REQUESTED to Cancel Booking action, Interpreter exists
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
     And I am on the bookings page
@@ -158,7 +158,7 @@ Feature: Booking Admin Management
     Then I see one row with state 'Requested'
 
   @runThis
-  Scenario: Booking Officer can cancel booking, Interpreter exists
+  Scenario: Booking Officer can REQUESTED to Cancel Booking action, Interpreter exists
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
     And I am on the bookings page
@@ -184,7 +184,7 @@ Feature: Booking Admin Management
     Then I see one row with state 'Cancelled'
 
   @runThis
-  Scenario: Booking Officer cancel the Cancel Booking action, Interpreter exists
+  Scenario: Booking Officer cancel the REQUESTED to Cancel Booking action, Interpreter exists
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
     And I am on the bookings page
@@ -208,7 +208,7 @@ Feature: Booking Admin Management
 
     ########### IN PROGRESS TO UNABLE TO SERVICE #######################################
   @runThis
-  Scenario: Administrator can unable to service a booking, Interpreter exists
+  Scenario: Administrator can INPROGRESS to unable to service a booking, Interpreter exists
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
     And I am on the bookings page
@@ -246,7 +246,7 @@ Feature: Booking Admin Management
     Then I see one row with state 'Unable to service'
 
   @runThis
-  Scenario: Administrator cancel the unable to service action, Interpreter exists
+  Scenario: Administrator cancel the INPROGRESS to unable to service action, Interpreter exists
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
     And I am on the bookings page
@@ -281,7 +281,7 @@ Feature: Booking Admin Management
     Then I see one row with state 'In progress'
 
   @runThis
-  Scenario: Booking Officer can unable to service a booking, Interpreter exists
+  Scenario: Booking Officer can INPROGRESS to unable to service a booking, Interpreter exists
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
     And I am on the bookings page
@@ -320,7 +320,7 @@ Feature: Booking Admin Management
 
 
   @runThis
-  Scenario: Booking Officer cancel the unable to service action, Interpreter exists
+  Scenario: Booking Officer cancel the INPROGRESS to unable to service action, Interpreter exists
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
     And I am on the bookings page
@@ -358,7 +358,7 @@ Feature: Booking Admin Management
 
 
   @runThis
-  Scenario: Administrator can the Cancel Booking action, Interpreter exists
+  Scenario: Administrator can the INPROGRESS to Cancel Booking action, Interpreter exists
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
     And I am on the bookings page
@@ -396,7 +396,7 @@ Feature: Booking Admin Management
     Then I see one row with state 'Cancelled'
 
   @runThis
-  Scenario: Administrator cancel the Cancel Booking action, Interpreter exists
+  Scenario: Administrator cancel the INPROGRESS to Cancel Booking action, Interpreter exists
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
     And I am on the bookings page
@@ -431,7 +431,7 @@ Feature: Booking Admin Management
     Then I see one row with state 'In progress'
 
   @runThis
-  Scenario: Booking Officer can cancel booking, Interpreter exists
+  Scenario: Booking Officer can INPROGRESS to Cancel booking, Interpreter exists
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
     And I am on the bookings page
@@ -469,7 +469,7 @@ Feature: Booking Admin Management
     Then I see one row with state 'Cancelled'
 
   @runThis
-  Scenario: Booking Officer cancel the Cancel Booking action, Interpreter exists
+  Scenario: Booking Officer cancel the INPROGRESS to Cancel Booking action, Interpreter exists
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
     And I am on the bookings page

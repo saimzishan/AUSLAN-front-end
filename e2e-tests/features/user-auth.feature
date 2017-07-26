@@ -54,7 +54,7 @@ Feature: As all, I can login/logout, change profile, cannot login with invalid p
   Scenario: As Organisational Representative, I cannot login without valid password
     And I sign in with invalid Organisational Representative credentials
     Then I will get an error message saying "Email or password not found"
-    
+
   @runThis
   Scenario: As Booking Officer, I can login/logout
     And I sign in with valid Booking Officer credentials
