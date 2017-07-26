@@ -32,7 +32,7 @@ export class User {
         switch (type) {
             case 'Administrator':
                 chosen_type = 'Administrator';
-                valid_user = new Administrator('admin@auslan.com.au', 'Abcd#1234');
+                valid_user = new Administrator('admin1@auslan.com.au', 'Abcd#1234');
                 break;
             case 'Booking Officer':
                 chosen_type = 'Booking Officer';
