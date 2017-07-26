@@ -18,7 +18,7 @@ config.restartBrowserBetweenTests= false;
         }
     }
 ];
-config.allScriptsTimeout= 30000;
+config.allScriptsTimeout= 99000;
 // config.framework= 'jasmine';
 
 //config.jasmineNodeOpts= {
@@ -26,7 +26,7 @@ config.allScriptsTimeout= 30000;
 //}
 
 config.params= {
-    env: 'stage'
+    env: 'test'
 }
 
 exports.config = config;
