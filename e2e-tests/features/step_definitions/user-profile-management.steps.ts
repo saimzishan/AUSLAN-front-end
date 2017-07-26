@@ -31,41 +31,13 @@ defineSupportCode(({Given, Then, When}) => {
         }
     }
 
-    Then(/^I can see the fields (.*)$/, showAllTheFields);
-    function showAllTheFields(fields_string: string) {
-        const fields = fields_string.split(', ');
-        const all_fields =  $$('form div.form-field label');
-        const all_fields_length = all_fields.then((array) => {
-            return array.length;
-        });
-        expect(fields.length).to.equal(all_fields_length);
-        for (let i = 0; i < fields.length; i++) {
-            let label_text = page.getText(all_fields[i]);
-            expect(fields).to.includes(label_text);
-        }
-    }
+    When(/^I change the input field (.*) with (.*)/, userProfilePage.updateTheField);
 
-    When(/^I change the input field (.*) with (.*)/, updateTheField);
-    function updateTheField(fields_string: string, updated_text: string) {
-        const selected_label = page.getElementByCSSandText('label', fields_string);
-        const div = page.getParent(selected_label);
-        let input_field = page.getElementInsideByTag(div, 'input');
-        input_field.clear();
-        return page.setValue(input_field, updated_text);
-    }
+    When(/^I change the dropwdown field (.*) with (.*)/, userProfilePage.updateDropDownField);
 
-    Then(/^The input field (.*) will be updated with (.*)/, filedWillBeUpdated);
-    function filedWillBeUpdated(fields_string: string, updated_text: string)    {
-        const selected_label = page.getElementByCSSandText('label', fields_string);
-        const div = page.getParent(selected_label);
-        let input_field = page.getElementInsideByTag(div, 'input');
-        let val = input_field.getAttribute('value');
-        return val.then( (value) => {
-            // console.log(value+'------');
-            // console.log(updated_text + '++++++');
-            expect(value).to.be.equal(updated_text);
-        });
-    }
+    Then(/^The input field (.*) will be updated with (.*)/, userProfilePage.fieldWillBeUpdated);
+
+    Then(/^The dropdown field (.*) will be updated with (.*)/, userProfilePage.dropdownFieldWillBeUpdated);
 
     When(/^I click on Profile '(.*)'/, clickonProfileButton);
     function clickonProfileButton(btnLabel: string) {

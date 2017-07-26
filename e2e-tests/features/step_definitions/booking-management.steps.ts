@@ -17,7 +17,7 @@ defineSupportCode(({Given, Then, When}) => {
     let page = new PageObject();
     let bookingManagementPO = new BookingManagementPage();
     let createBookingPO = new BookingPage();
-    let bookingjobPO = new BookingJobPage();
+    let bookingJobPO = new BookingJobPage();
 //  BE ABLE TO VIEW BOOKING PAGE
     Then(/^I will be shown with bookings$/, bookingManagementPO.atleastABookingExists);
     Then(/^I store the booking count$/, bookingManagementPO.storeCurrentBookingCount);
@@ -48,10 +48,10 @@ defineSupportCode(({Given, Then, When}) => {
 
     // ---------------------------------   INDIVIDUAL BOOKING PAGE
 
-    Then(/^I am on the individual booking page$/, bookingjobPO.browse);
+    Then(/^I am on the individual booking page$/, bookingJobPO.browse);
 
-    Then(/^I can see a list of (.*) (.*) interpreters$/, bookingjobPO.checkListofInterpreterIndividualBookingScreen);
-    Then(/^I can not see a list of interpreters$/, bookingjobPO.listofInterpreterDoesNotExists);
+    Then(/^I can see a list of (.*) (.*) interpreters$/, bookingJobPO.checkListofInterpreterIndividualBookingScreen);
+    Then(/^I can not see a list of interpreters$/, bookingJobPO.listofInterpreterDoesNotExists);
 
 
 //    POPULATE DROP DOWN
