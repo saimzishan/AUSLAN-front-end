@@ -32,31 +32,31 @@ export class User {
         switch (type) {
             case 'Administrator':
                 chosen_type = 'Administrator';
-                valid_user = new Administrator('admin@auslan.com.au', 'Abcd#1234');
+                valid_user = new Administrator('georgeadministrator@auslan.com.au', 'Abcd#1234');
                 break;
             case 'Booking Officer':
                 chosen_type = 'Booking Officer';
-                valid_user = new BookingOfficer('bookingofficer@auslan.com.au', 'Abcd#1234');
+                valid_user = new BookingOfficer('georgebookingofficer@auslan.com.au', 'Abcd#1234');
                 break;
             case 'Interpreter':
                 chosen_type = 'Interpreter';
-                valid_user = new Interpreter('interpreter@auslan.com.au', 'Abcd#1234');
+                valid_user = new Interpreter('georgeinterpreter@auslan.com.au', 'Abcd#1234');
                 break;
             case 'Interpreter1':
                 chosen_type = 'Interpreter';
-                valid_user = new Interpreter('interpreter1@auslan.com.au', 'Abcd#1234');
+                valid_user = new Interpreter('georgeinterpreter1@auslan.com.au', 'Abcd#1234');
                 break;
             case 'Interpreter2':
                 chosen_type = 'Interpreter';
-                valid_user = new Interpreter('interpreter2@auslan.com.au', 'Abcd#1234');
+                valid_user = new Interpreter('georgeinterpreter2@auslan.com.au', 'Abcd#1234');
                 break;
             case 'Individual Client':
                 chosen_type = 'Individual Client';
-                valid_user = new Client('individualclient@auslan.com.au', 'Abcd#1234');
+                valid_user = new Client('georgeindividualclient@auslan.com.au', 'Abcd#1234');
                 break;
             case 'Organisational Representative':
                 chosen_type = 'Organisational';
-                valid_user = new Organisation('orgrepn@auslan.com.au', 'Abcd#1234');
+                valid_user = new Organisation('georgeorganisationalrepresentative@auslan.com.au', 'Abcd#1234');
                 break;
         }
         valid_user.first_name = 'MOH';
@@ -71,7 +71,7 @@ export class User {
 
     static returnJSONForUser(type: string, i, user?: User) {
         const extend_email = User.user_type(type).toLowerCase();
-        let email = 'mohjay_test_' + extend_email + /*( (i === 0) ? '' :*/ i.toString() /*)*/ + '@auslan.com.au';
+        let email = 'george' + extend_email + /*( (i === 0) ? '' :*/ i.toString() /*)*/ + '@auslan.com.au';
         let password = 'Abcd#1234';
         let firstName = 'MOH';
         let lastName = 'JAY';

@@ -7,83 +7,126 @@ Feature: Create Profile
     When I click on button 'CREATE AN ACCOUNT'
     Then I will be taken to the 'Choose Profile' page
 
+
+#  -> invalid notification
+  @ignoreThis
+  Scenario: Can get the invalid notification for interp
+    And I click on button 'Interpreter'
+    And I will be taken to the 'INTERPRETER Signup' page
+    When I fill the field 'FIRST NAME *' incorrectly
+    And I jump to last_name element
+    Then I will get a error notification
+
+  @ignoreThis
+  Scenario: Can get the invalid notification for cli
+    And I click on button 'Client'
+    And I will be taken to the 'INDIVIDUALCLIENT Signup' page
+    When I fill the field 'FIRST NAME *' incorrectly
+    And I jump to last_name element
+    Then I will get a error notification
+
+  @ignoreThis
+  Scenario: Can get the invalid notification for org rep
+    And I click on button 'Organisation'
+    And I will be taken to the 'ORGANISATION Signup' page
+    When I fill the field 'FIRST NAME *' incorrectly
+    And I jump to last_name element
+    Then I will get a error notification
+
+  @ignoreThis
+  Scenario: Can get the valid notification for cli
+    And I click on button 'Client'
+    And I will be taken to the 'INDIVIDUALCLIENT Signup' page
+    When I fill the field 'FIRST NAME *' correctly
+    And I jump to last_name element
+    Then I will get a valid notification
+
+  @ignoreThis
+  Scenario: Can get the valid notification for interp page
+    And I click on button 'Interpreter'
+    And I will be taken to the 'INTERPRETER Signup' page
+    When I fill the field 'FIRST NAME *' correctly
+    And I jump to last_name element
+    Then I will get a valid notification
+
+  @ignoreThis
+  Scenario: Can get the valid notification for org rep
+    And I click on button 'Organisation'
+    And I will be taken to the 'ORGANISATION Signup' page
+    When I fill the field 'FIRST NAME *' correctly
+    And I jump to last_name element
+    Then I will get a valid notification
+
+
+  @ignoreThis
+  Scenario: An org rep can be show the sign up page
+    And I click on button 'Organisation'
+    Then I will be taken to the 'ORGANISATION Signup' page
+
+  @ignoreThis
+  Scenario: An interp can be show the sign up page
+    And I click on button 'Interpreter'
+    Then I will be taken to the 'INTERPRETER Signup' page
+
+  @ignoreThis
+  Scenario: An cli can be show the sign up page
+    And I click on button 'Client'
+    Then I will be taken to the 'INDIVIDUALCLIENT Signup' page
+
   @ignoreThis
   Scenario: An org rep can be created
     And I click on button 'Organisation'
     And I will be taken to the 'ORGANISATION Signup' page
-    When I fill all the details correctly for 'ORGANISATION'
-    Then 'ORGANISATION' will be created
+    When I fill all the details correctly for 'ORGANISATIONALREPRESENTATIVE'
+    Then 'ORGANISATIONALREPRESENTATIVE' will be created
 
   @ignoreThis
-  Scenario: An individual client can be created
+  Scenario: An cli can be created
     And I click on button 'Client'
     And I will be taken to the 'INDIVIDUALCLIENT Signup' page
     When I fill all the details correctly for 'INDIVIDUALCLIENT'
     Then 'INDIVIDUALCLIENT' will be created
 
   @ignoreThis
-  Scenario: An interpreter can be created
+  Scenario: An interp can be created
     And I click on button 'Interpreter'
     Then I will be taken to the 'INTERPRETER Signup' page
     When I fill all the details correctly for 'INTERPRETER'
     Then 'INTERPRETER' will be created
 
-#  -> invalid notification
+ @ignoreThis
+ Scenario: With An Individual Client created before, can't create another cli with same email
+   And I click on button 'Client'
+   And I will be taken to the 'INDIVIDUALCLIENT Signup' page
+   When I fill all the details correctly for 'INDIVIDUALCLIENT'
+   Then I will get an error notification saying "This emailadress has already been taken. Please login or pick a different emailadress"
+
   @ignoreThis
-  Scenario: Can get the invalid notification for interpreter
+  Scenario: With An Interpreter created before, can't create another interp with same email
     And I click on button 'Interpreter'
     And I will be taken to the 'INTERPRETER Signup' page
-    When I fill the field 'FIRST NAME *' incorrectly
-    Then I will get a error notification
+    When I fill all the details correctly for 'INTERPRETER'
+    Then I will get an error notification saying "This emailadress has already been taken. Please login or pick a different emailadress"
 
   @ignoreThis
-  Scenario: Can get the invalid notification for individual client
-    And I click on button 'Client'
-    And I will be taken to the 'INDIVIDUALCLIENT Signup' page
-    When I fill the field 'FIRST NAME *' incorrectly
-    Then I will get a error notification
-
-  @ignoreThis
-  Scenario: Can get the invalid notification for organisation
+  Scenario: With An Organisational Representative created before, can't create another org rep with same email
     And I click on button 'Organisation'
     And I will be taken to the 'ORGANISATION Signup' page
-    When I fill the field 'FIRST NAME *' incorrectly
-    Then I will get a error notification
+    When I fill all the details correctly for 'ORGANISATIONALREPRESENTATIVE'
+    Then I will get an error notification saying "This emailadress has already been taken. Please login or pick a different emailadress"
 
-  @ignoreThis
-  Scenario: Can press the Interpreter
-    When I click on button 'Interpreter'
-    Then I will be taken to the 'INTERPRETER Signup' page
-
-  @ignoreThis
-  Scenario: Can press the Client
-    When I click on button 'Client'
-    Then I will be taken to the 'INDIVIDUALCLIENT Signup' page
-
-  @ignoreThis
-  Scenario: Can press the Organisation Rep
-    When I click on button 'Organisation'
-    Then I will be taken to the 'ORGANISATION Signup' page
-
-
-  @ignoreThis
-  Scenario: Can get the valid notification for Individual Client
-    And I click on button 'Client'
-    And I will be taken to the 'INDIVIDUALCLIENT Signup' page
-    When I fill the field 'FIRST NAME *' correctly
-    Then I will get a valid notification
-
-
-  @ignoreThis
-  Scenario: Can get the valid notification for interpreter page
+# --------------------------------------- AUSLAN1-472 START ------------------------------------------------
+  @runThis
+  Scenario: interp sign up with prefer communication
     And I click on button 'Interpreter'
     And I will be taken to the 'INTERPRETER Signup' page
-    When I fill the field 'FIRST NAME *' correctly
-    Then I will get a valid notification
+    When I fill most the details correctly for INTERPRETER with the pref communication is 'SMS'
+    Then 'INTERPRETER' will be created
 
-  @ignoreThis
-  Scenario: Can get the valid notification for organisation
-    And I click on button 'Organisation'
-    And I will be taken to the 'ORGANISATION Signup' page
-    When I fill the field 'FIRST NAME *' correctly
-    Then I will get a valid notification
+  @runThis
+  Scenario: interp sign up with prefer communication
+    And I click on button 'Interpreter'
+    And I will be taken to the 'INTERPRETER Signup' page
+    When I fill most the details correctly for INTERPRETER with the pref communication is 'SMS AND EMAIL'
+    Then 'INTERPRETER' will be created
+# --------------------------------------- AUSLAN1-472 END ------------------------------------------------
