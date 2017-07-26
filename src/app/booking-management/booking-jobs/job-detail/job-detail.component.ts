@@ -90,7 +90,7 @@ export class JobDetailComponent implements OnDestroy {
                             this.disableAccept = true;
                             this.disableReject = true;
                             this.spinnerService.requestInProcess(false);
-                            this.getJobDetail(GLOBAL.currentUser.id);
+                            this.getJobDetail(this.selectedBookingModel.id);
                         },
                         err => {
                             this.spinnerService.requestInProcess(false);

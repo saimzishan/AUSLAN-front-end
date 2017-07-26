@@ -518,11 +518,11 @@ export class Heroku {
 
     static inviteInterpreter() {
         let command = 'b=Booking.first;';
-        command += 'i=interpreter.first;';
+        command += 'i=Interpreter.first;';
         command += 'b.interpreter_ids=[i.id];';
-        command += ' b.add_interpreters_to_booking;';
-        command += 'b.invite_url = ' + browser.baseUrl +
-            '"/#/booking-management/#{b.id}/job-detail"';
+        command += 'b.add_interpreters_to_booking;';
+        command += 'b.invite_url = "' + browser.baseUrl +
+            '/#/booking-management/#{b.id}/job-detail";';
         command += 'b.next_state = Booking::STATE_IN_PROGRESS;';
         command += 'b.save;';
         Heroku.sendCommandToHeroku(command);

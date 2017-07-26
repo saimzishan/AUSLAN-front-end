@@ -14,6 +14,7 @@ export class BookingJobPage extends PageObject {
      * Look at chai-import.ts for further details
      * */
     unableToServeBtn;
+    bookingID = 0;
     browse = () => {
         return this.currentPath().then((currentPath) => {
             this.didFinishedRendering();
@@ -25,10 +26,6 @@ export class BookingJobPage extends PageObject {
         const interpreterRows = $$('section[id=invited-interpreters] tbody tr');
         return interpreterRows.count().then(interpereter_num => {
             expect(interpereter_num).to.eql(parseInt(num_of_user, 10));
-/* Hien discuss **
-        return interpreterRows.then( (interRows) => {
-            return expect(interRows.length).to.eql(parseInt(num_of_user, 10));
-*/
         });
     }
 
@@ -57,8 +54,6 @@ export class BookingJobPage extends PageObject {
             expect(this.unableToServeBtn).to.exist;
         });
     }
-
-
     onBookingJobDetails = () => {
         return this.navigateTo(browser.baseUrl + '/#/booking-management/1/job-detail');
     }
@@ -67,6 +62,18 @@ export class BookingJobPage extends PageObject {
         return this.currentPath().then((currentPath) => {
             expect(currentPath).to.contain('booking-management');
             expect(currentPath).to.contain('job-detail');
+        });
+    }
+
+    isOnValidBookingJobDetails = () => {
+        return this.currentPath().then((currentPath) => {
+            expect(currentPath).to.contain('/#/booking-management/' +
+                this.bookingID + '/job-detail');
+        });
+    }
+    isBookingStateText = (booking_state_text: string) => {
+        return this.getElementByCss('div.job-status > span').getText().then( (txt) => {
+            expect(txt.trim()).to.be.eq(booking_state_text.trim());
         });
     }
 
@@ -81,6 +88,14 @@ export class BookingJobPage extends PageObject {
     getSuccessNotificationContentForInvite  = () => {
         return browser.sleep(3000).then(() => {
             NotificationObject.getNotificationContent('The interpreters have been invited');
+        });
+    }
+    isValidBookingHeader  = () => {
+        return $('#header-mobile > h1').getText().then( (txt) => {
+            expect(txt.startsWith('JOB #')).to.be.true;
+            txt = txt.replace('JOB #', '');
+            this.bookingID = parseInt(txt, 10);
+            expect(this.bookingID).to.be.greaterThan(0);
         });
     }
 }
