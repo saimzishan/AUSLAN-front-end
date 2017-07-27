@@ -14,7 +14,7 @@ config.restartBrowserBetweenTests= false;
                     'password_manager_enabled': false
                 }
             },
-            args: ['--start-maximized', '--web-security=false'/*'--headless','--disable-gpu'*/]
+            args: ['--start-fullscreen', '--web-security=false'/*'--headless','--disable-gpu'*/]
         }
     }
 ];

@@ -1,8 +1,8 @@
 Feature: Booking Management
 
   Background: I as an all user should be able to see the website
-    Given I am on a computer
-    And I go to the website
+    Given I go to the website
+    And I am on a computer
     And I am shown the login screen, with picture and signup button
 
   @runThis
@@ -55,7 +55,7 @@ Feature: Booking Management
 
 
   @runThis
-  Scenario: Interpreter can create a booking
+  Scenario: Interpreter can NOT create a booking
     Given I exist as an Interpreter
     And I sign in with valid Interpreter credentials
     And I am on the bookings page

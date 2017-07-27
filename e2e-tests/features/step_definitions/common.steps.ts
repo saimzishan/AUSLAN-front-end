@@ -48,7 +48,9 @@ defineSupportCode(({Given, When}) => {
     });
     Given(/^I sign in with valid (.*) credentials$/, (type: string) => {
         return homePage.signInWithValidCredential(type).then(() => {
-            bookingManagementPage.onBookingListPage();
+            browser.sleep(5000).then( () => {
+                bookingManagementPage.onBookingListPage();
+            });
         });
     });
     Given(/^I don't see any new New Booking link/, bookingManagementPage.newBookingDoesNotExists);
@@ -84,11 +86,11 @@ defineSupportCode(({Given, When}) => {
 
     Given(/^I am on a computer$/, onDesktopResolution);
     function onDesktopResolution() {
-        return browser.driver.manage().window().setSize(1400, 900).then( () => {
+        /*return browser.driver.manage().window().setSize(1400, 900).then( () => {
 
              browser.driver.manage().window().maximize();
         });
-
+        */
     }
 
     When(/^I click on button '(.*)'$/, clickOnButton);

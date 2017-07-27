@@ -11,7 +11,7 @@ interface World {
 
 defineSupportCode(({After}) => {
     After(function (scenarioResult: HookScenarioResult) {
-        if ( browser.params.env !== 'localhost' || (browser.params.env === 'localhost' && scenarioResult.status !== 'failed')) {
+        if ( scenarioResult.status !== 'failed') {
             Heroku.sendCommandToHeroku('Booking.destroy_all');
             Heroku.sendCommandToHeroku('User.where.not(id: 1).destroy_all');
         }
