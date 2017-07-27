@@ -8,6 +8,27 @@ Feature: Create Profile
     Then I will be taken to the 'Choose Profile' page
 
 
+  @runThis
+  Scenario: With An Individual Client created before, can't create another cli with same email
+    And I click on button 'Client'
+    And I will be taken to the 'INDIVIDUALCLIENT Signup' page
+    When I fill all the details correctly for 'INDIVIDUALCLIENT'
+    Then I will get an error notification saying "Unprocessable Entity "email":"has already been taken""
+
+  @runThis
+  Scenario: With An Interpreter created before, can't create another interp with same email
+    And I click on button 'Interpreter'
+    And I will be taken to the 'INTERPRETER Signup' page
+    When I fill all the details correctly for 'INTERPRETER'
+    Then I will get an error notification saying "Unprocessable Entity "email":"has already been taken""
+
+  @runThis
+  Scenario: With An Organisational Representative created before, can't create another org rep with same email
+    And I click on button 'Organisation'
+    And I will be taken to the 'ORGANISATION Signup' page
+    When I fill all the details correctly for 'ORGANISATIONALREPRESENTATIVE'
+    Then I will get an error notification saying "Unprocessable Entity "email":"has already been taken""
+
 #  -> invalid notification
   @runThis
   Scenario: Can get the invalid notification for interp
@@ -93,27 +114,6 @@ Feature: Create Profile
     Then I will be taken to the 'INTERPRETER Signup' page
     When I fill all the details correctly for 'INTERPRETER'
     Then 'INTERPRETER' will be created
-
- @runThis
- Scenario: With An Individual Client created before, can't create another cli with same email
-   And I click on button 'Client'
-   And I will be taken to the 'INDIVIDUALCLIENT Signup' page
-   When I fill all the details correctly for 'INDIVIDUALCLIENT'
-   Then I will get an error notification saying "This emailadress has already been taken. Please login or pick a different emailadress"
-
-  @runThis
-  Scenario: With An Interpreter created before, can't create another interp with same email
-    And I click on button 'Interpreter'
-    And I will be taken to the 'INTERPRETER Signup' page
-    When I fill all the details correctly for 'INTERPRETER'
-    Then I will get an error notification saying "This emailadress has already been taken. Please login or pick a different emailadress"
-
-  @runThis
-  Scenario: With An Organisational Representative created before, can't create another org rep with same email
-    And I click on button 'Organisation'
-    And I will be taken to the 'ORGANISATION Signup' page
-    When I fill all the details correctly for 'ORGANISATIONALREPRESENTATIVE'
-    Then I will get an error notification saying "This emailadress has already been taken. Please login or pick a different emailadress"
 
 # --------------------------------------- AUSLAN1-472 START ------------------------------------------------
   @runThis

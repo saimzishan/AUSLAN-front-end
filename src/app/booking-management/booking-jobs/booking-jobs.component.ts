@@ -162,7 +162,7 @@ export class BookingJobsComponent implements OnDestroy {
         this.userDataService.fetchUsersOfType('interpreters')
             .subscribe((res: any) => {
                     if (res.status === 200) {
-                        this.interpreterList = res.data.users;
+                        this.interpreterList = res.data.users.filter( i => i.verified === true);
                     }
                     this.spinnerService.requestInProcess(false);
                 },

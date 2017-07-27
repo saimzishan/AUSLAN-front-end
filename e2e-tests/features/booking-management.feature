@@ -4,7 +4,28 @@ Feature: Booking Management
     Given I go to the website
     And I am shown the login screen, with picture and signup button
 
-  @ignoreThis
+
+# --------------------------------------  AUSLAN1-446 -> START --------------------------------------
+  @runThis
+  Scenario: Given 1 unverified Interpreter , 1 Administrator and a booking is created, as a Booking Officer i can see there are no one to be invited
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    And I am on the bookings page
+    When I click on an individual booking
+    Then I am on the individual booking page
+    And I can see a list of 0 verified interpreters
+
+  @runThis
+  Scenario: Given 1 verified Interpreter , 1 Administrator and a booking is created, as a Booking Officer i can see there is one to be invited
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    And I am on the bookings page
+    When I click on an individual booking
+    Then I am on the individual booking page
+    And I can see a list of 1 verified interpreters
+# --------------------------------------  AUSLAN1-446 -> END --------------------------------------
+
+  @runThis
   Scenario: Administrator can show a booking screen
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
@@ -35,7 +56,7 @@ Feature: Booking Management
 
 ###############################    Adding Date
 
-#  @ignoreThis
+#  @runThis
 #  Scenario: Administrator can add day on booking screen
 ##    Given I am on the booking page as a Administrator
 #    Given I exist as an Administrator
@@ -48,7 +69,7 @@ Feature: Booking Management
 ##    Then It will be displayed in the cell
 
 ###############################    Save without all mandatory fields
-#  @ignoreThis
+#  @runThis
 #  Scenario: Can't save without mandatory fields are not filled
 ##    Given that I am on the new booking page as a Administrator
 #    Given I exist as an Administrator
@@ -64,7 +85,7 @@ Feature: Booking Management
 ##    Then Then the red explaination mark will be disappeared
 
 #  Auto Populated -> not working with the return of the undefined ##############################
-  @ignoreThis
+  @runThis
   Scenario: Sign in as Administrator, Auto populate details when specify as the client of booking
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
@@ -74,7 +95,7 @@ Feature: Booking Management
     When I specify i am the client of this booking
     Then The booking form will be automatically populated with the details.
 
-  @ignoreThis
+  @runThis
   Scenario: Sign in as Booking Officer, Auto populate details when specify as the client of booking
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
@@ -84,7 +105,7 @@ Feature: Booking Management
     When I specify i am the client of this booking
     Then The booking form will be automatically populated with the details.
 
-  @ignoreThis
+  @runThis
   Scenario: Sign in as Organisational Representative, Auto populate details when specify as the client of booking
     Given I exist as an Organisational Representative
     And I sign in with valid Organisational Representative credentials
@@ -94,7 +115,7 @@ Feature: Booking Management
     When I specify i am the client of this booking
     Then The booking form will be automatically populated with the details.
 
-  @ignoreThis
+  @runThis
   Scenario: Sign in as Individual Client, Auto populate details when specify as the client of booking
     Given I exist as an Individual Client
     And I sign in with valid Individual Client credentials
@@ -104,7 +125,7 @@ Feature: Booking Management
     When I specify i am the client of this booking
     Then The booking form will be automatically populated with the details.
 
-#  @ignoreThis # -> Not working
+#  @runThis # -> Not working
 #  Scenario: Popup when cancel after fill in one fields.
 #    Given I exist as an Administrator
 #    And I sign in with valid Administrator credentials
@@ -116,7 +137,7 @@ Feature: Booking Management
 #    Then A pop-up will display which will aks me if im sure to cancel
 
 #    Can cancel
-  @ignoreThis
+  @runThis
   Scenario: Sign in as Administrator, Can cancel booking and return to booking screen
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
@@ -126,7 +147,7 @@ Feature: Booking Management
     When I press 'CANCEL'
     Then I am back on booking page
 
-  @ignoreThis
+  @runThis
   Scenario: Sign in as Booking Officer, Can cancel booking and return to booking screen
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
@@ -136,7 +157,7 @@ Feature: Booking Management
     When I press 'CANCEL'
     Then I am back on booking page
 
-  @ignoreThis
+  @runThis
   Scenario: Sign in as Individual Client, Can cancel booking and return to booking screen
     And I sign in with valid Individual Client credentials
     And I am on the bookings page
@@ -145,7 +166,7 @@ Feature: Booking Management
     When I press 'CANCEL'
     Then I am back on booking page
 
-  @ignoreThis
+  @runThis
   Scenario: Sign in as Organisational Representative, Can cancel booking and return to booking screen
     Given I exist as an Organisational Representative
     And I sign in with valid Organisational Representative credentials
@@ -156,7 +177,7 @@ Feature: Booking Management
     Then I am back on booking page
 #
 ##  Only see the verified interpreter
-#  @ignoreThis
+#  @runThis
 #  Scenario: Can check the list of intepreter in booking
 #    Given I exist as an Booking Officer
 ##    And There is 1 active Interpreter
@@ -169,14 +190,14 @@ Feature: Booking Management
 ##    And I don't see 1 unverified interpreters
 
 ##  On mobile
-#  @ignoreThis
+#  @runThis
 #  Scenario: Interpreter login into using mobile
 #    Given I exist as an Interpreter
 #    And I am on the mobile login screen without a hero picture
 #    And I sign in with valid Interpreter credentials
 #    And I am on the bookings page
 
-  @ignoreThis #- AUSLAN1-448
+  @runThis #- AUSLAN1-448
 #  Administrator can see bookings
   Scenario: Sign in as Administrator and a booking is created, Be able to view the booking page with summary details columns
     Given I exist as an Administrator
@@ -184,7 +205,7 @@ Feature: Booking Management
     Then I am on the bookings page
     And I will be shown with bookings
 
-  @ignoreThis #- AUSLAN1-448
+  @runThis #- AUSLAN1-448
   #  Booking Officer can see bookings
   Scenario: Sign in as Booking Officer and a booking is created, Be able to view the booking page with summary details columns
     Given I exist as an Booking Officer
@@ -193,7 +214,7 @@ Feature: Booking Management
     And I will be shown with bookings
 
 #  Populated NATURE OF APPOINTMENT AND WHAT WILL BE DISCUSSED
-  @ignoreThis
+  @runThis
   Scenario: Sign in as Administrator, Populate Both NATURE OF APPOINTMENT AND WHAT WILL BE DISCUSSED as User
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
@@ -206,51 +227,6 @@ Feature: Booking Management
     When I click dropdown WHAT WILL BE DISCUSSED *
     And I click on option GP of WHAT WILL BE DISCUSSED * for nothing
     Then The cell of WHAT WILL BE DISCUSSED * will be populated with GP
-
-##  UNABLE TO SERVICE on Requested
-#  @ignoreThis
-#  Scenario: Able to click on the Requested booking as Administrator
-#    Given I exist as an Administrator
-##    And There is 3 requested booking
-#    And I sign in with valid Administrator credentials
-#    And I am on the bookings page
-#    And I am shown with 3 Requested Bookings
-#    When I click at the 1st one of 3 Requested Bookings
-#    Then I am on the individual booking page
-#
-#  @ignoreThis
-#  Scenario: Able to click on the Requested booking as Booking Officer
-#    Given I exist as an Booking Officer
-##    And There is 3 requested booking
-#    And I sign in with valid Booking Officer credentials
-#    And I am on the bookings page
-#    And I am shown with 3 Requested Bookings
-#    When I click at the 1st one of 3 Requested Bookings
-#    Then I am on the individual booking page
-#
-#  @ignoreThis
-#  Scenario: Unable to service on the Requested booking as Admin
-#    Given I exist as an Administrator
-##    And There is 3 requested booking
-#    And I sign in with valid Administrator credentials
-#    And I am on the bookings page
-#    And I am shown with 3 Requested Bookings
-#    And I click at the 1st one of 3 Requested Bookings
-#    And I am on the individual booking page
-#    When I click on button 'Unable to Service'
-#    Then I will be shown a popup message
-#
-#  @ignoreThis
-#  Scenario: Unable to service on the Requested booking as Booking Officer
-#    Given I exist as an Booking Officer
-##    And There is 3 requested booking
-#    And I sign in with valid Booking Officer credentials
-#    And I am on the bookings page
-#    And I am shown with 3 Requested Bookings
-#    And I click at the 1st one of 3 Requested Bookings
-#    And I am on the individual booking page
-#    When I click on button 'Unable to Service'
-#    Then I will be shown a popup message
 
   @runThis
   Scenario: As a user, Booking Officer who can make a booking, I can't select from a list of 'What Will Be Discussed' if the 'Nature of Bookings' is not selected
@@ -278,23 +254,3 @@ Feature: Booking Management
     Then The cell of NATURE OF APPOINTMENT * will be populated with MEDICAL
     When I click dropdown WHAT WILL BE DISCUSSED *
     Then The dropdown WHAT WILL BE DISCUSSED * will have 23 item
-
-# --------------------------------------  AUSLAN1-446 -> START --------------------------------------
-  @ignoreThis
-  Scenario: Given 1 unverified Interpreter , 1 Administrator and a booking is created, as a Booking Officer i can see there are non interpreter to be invited
-    Given I exist as an Booking Officer
-    And I sign in with valid Booking Officer credentials
-    And I am on the bookings page
-    When I click on an individual booking
-    Then I am on the individual booking page
-    And I can see a list of 0 verified interpreters
-
-  @ignoreThis
-  Scenario: Given 1 verified Interpreter , 1 Administrator and a booking is created, as a Booking Officer i can see there are non interpreter to be invited
-    Given I exist as an Booking Officer
-    And I sign in with valid Booking Officer credentials
-    And I am on the bookings page
-    When I click on an individual booking
-    Then I am on the individual booking page
-    And I can see a list of 1 verified interpreters
-# --------------------------------------  AUSLAN1-446 -> END --------------------------------------

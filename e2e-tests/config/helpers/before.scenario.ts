@@ -31,7 +31,7 @@ defineSupportCode(({Before}) => {
         });
 
         for (let pn of personas) {
-            console.log(pn);
+            console.log('Adding Verified User', pn);
             let currentlyLoggedInUser = User.returnTypeAndUser(pn).user;
             Heroku.addVerifiedUser(currentlyLoggedInUser, pn);
 
@@ -44,7 +44,8 @@ defineSupportCode(({Before}) => {
         if (scenario.scenario.name.toUpperCase().indexOf('INTERPRETER Invited'.toUpperCase()) > 0) {
             Heroku.inviteInterpreter();
         }
-        if (scenario.scenario.name.toUpperCase().indexOf('unverified'.toUpperCase()) > 0) {
+        if (false === scenario.scenario.name.toUpperCase().indexOf(('unverified').toUpperCase()) < 0) {
+            console.log('Adding UnVerified Interpreter');
             let currentlyLoggedInUser = User.returnTypeAndUser('Interpreter').user;
             Heroku.createUser(currentlyLoggedInUser, 'Interpreter');
         }

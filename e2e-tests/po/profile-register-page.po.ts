@@ -64,7 +64,7 @@ export class ProfileRegisterPage extends PageObject {
             this.getElementByName('location_pref').sendKeys('ACT');
             this.getElementByName('skill_level').sendKeys('ASL Certified'.toUpperCase());
             this.getElementByName('comm_pref').sendKeys('SMS');
-        } else if (type === 'ORGANISATION') {
+        } else if (type === 'ORGANISATIONALREPRESENTATIVE') {
             this.getElementByName('business_abn').sendKeys('12312312311');
             this.getElementByName('business_name').sendKeys('Curve');
             this.getElementByName('business_branch_office').sendKeys('Melbourne');

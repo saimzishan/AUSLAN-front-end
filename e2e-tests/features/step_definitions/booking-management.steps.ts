@@ -34,6 +34,7 @@ defineSupportCode(({Given, Then, When}) => {
     When(/^I see one row with state '(.*)'$/, bookingManagementPO.bookingWithStateExists);
 
     When(/^I click on an individual booking of type '(.*)'$/, bookingManagementPO.clickOnIndividualBookingOfType);
+    When(/^I click on an individual booking$/, bookingManagementPO.clickOnIndividualBooking);
     Then(/^I am back on booking page$/, bookingManagementPO.onBookingListPage);
 
     // --------------------------------- AUTO POPULATE CLIENT DETAILS
