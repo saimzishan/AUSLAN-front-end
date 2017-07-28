@@ -25,8 +25,8 @@ defineSupportCode(({Then, When}) => {
 
     When(/^'(.*)' will be created$/, profileRegisterPage.userCreated);
 
-    Then(/^I will get a (.*) validation alert$/, profileRegisterPage.getValification);
-    Then(/^I will get a (.*) notification$/, profileRegisterPage.getValification);
+    Then(/^I will get a (.*) validation alert$/, profileRegisterPage.getValidation);
+    Then(/^I will get a (.*) notification$/, profileRegisterPage.getValidation);
 
     Then(/^I will get an error notification saying "(.*)"$/, profileRegisterPage.invalidNotification);
 

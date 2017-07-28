@@ -114,14 +114,14 @@ export class ProfileRegisterPage extends PageObject {
     }
 
     userCreated = (type: string) => {
-        NotificationObject.getNotificationContent('Congrats');
+        return NotificationObject.getNotificationContent('Congrats');
     }
 
     invalidNotification = (msg: string) => {
-        NotificationObject.getNotificationContent(msg);
+        return NotificationObject.getNotificationContent(msg);
     }
 
-    getValification = (validType: string) => {
+    getValidation = (validType: string) => {
         let elm = this.getElementByCss('span.' + validType);
         return browser.wait(protractor.ExpectedConditions.presenceOf(elm), 30000).then(() => {
             expect(elm).to.exist;

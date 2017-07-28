@@ -151,10 +151,6 @@ export class BookingPage extends PageObject {
         this.getElementByName('raw_booking_requested_by').sendKeys('Luke');
         this.getElementByName('raw_booking_requested_by_ln').sendKeys('Orange');
 
-        // this.getElementByName('md-radio-1').click();
-        // this.getElementByName('contact_first_name').sendKeys('Rema');
-        // this.getElementByName( 'contact_last_name').sendKeys('Ansa');
-        // this.getElementByName('email').sendKeys('rema@ansa.com.au');
         this.getElementByName('ext_ref_num').sendKeys('321');
 
         this.getElementByName('cn_first_name').sendKeys('John');
@@ -162,11 +158,6 @@ export class BookingPage extends PageObject {
         this.getElementByName('cn_email').sendKeys('jt@star.com.au');
         this.getElementByName('cn_phone').sendKeys('0490394512');
 
-        /*this.getElementByName('deaf_person_first_name').sendKeys('Tom');
-         this.getElementByName('deaf_person_last_name').sendKeys('Cruise');
-         this.getElementByName('deaf_person_email').sendKeys('crusing@tom.com.au');
-         this.getElementByName('deaf_person_mobile').sendKeys('0490394511');
-         */
         this.getElementByName('deaf_person_eaf').sendKeys('123');
         return this.getElementByName('btnCreateBooking').click();
 

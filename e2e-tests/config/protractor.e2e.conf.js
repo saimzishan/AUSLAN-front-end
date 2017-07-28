@@ -26,7 +26,7 @@ config.allScriptsTimeout= 99000;
 //}
 
 config.params= {
-    env: 'test'
+    env: 'localhost'
 }
 
 exports.config = config;
