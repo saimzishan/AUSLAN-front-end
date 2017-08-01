@@ -502,3 +502,35 @@ Feature: Booking Admin Management
     Then I click on Bookings
     And I am on the bookings page
     Then I see one row with state 'In progress'
+
+  @runThis
+  Scenario: Given 1 verified Interpreter and a booking is created, Administrator can transition a booking from Requested to In Progress
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    When I am on the bookings page
+    Then I see one row with state 'Requested'
+    Then I click on an individual booking of type 'Requested'
+    Then I will be shown the booking job page
+    Then I can see the button 'Save' is disabled
+    Then I select 1 Interpreter
+    And I click on BUTTON name 'inviteBtn'
+    Then I can see the button 'Save' is enabled
+    And I click on BUTTON 'Save'
+    Then I get a valid invite notification
+    Then I can see the booking state 'In Progress'
+
+  @runThis
+  Scenario: Given 1 verified Interpreter and a booking is created, Booking Officer can transition a booking from Requested to In Progress
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    When I am on the bookings page
+    Then I see one row with state 'Requested'
+    Then I click on an individual booking of type 'Requested'
+    Then I will be shown the booking job page
+    Then I can see the button 'Save' is disabled
+    Then I select 1 Interpreter
+    And I click on BUTTON name 'inviteBtn'
+    Then I can see the button 'Save' is enabled
+    And I click on BUTTON 'Save'
+    Then I get a valid invite notification
+    Then I can see the booking state 'In Progress'

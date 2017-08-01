@@ -143,7 +143,7 @@ defineSupportCode(({Given, When}) => {
         return page.getElementByCss(css).click();
     }
 
-    When(/^I can see the booking state '(.*)'$/, bookingManagementPage.confirmBookingState);
+    When(/^I can see the booking state '(.*)'$/, bookingJob.confirmBookingState);
 
 
     When(/^I can see the button '(.*)' is (.*)$/, isButtonDisabled);

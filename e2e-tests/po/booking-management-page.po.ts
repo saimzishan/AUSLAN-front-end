@@ -138,13 +138,5 @@ export class BookingManagementPage extends PageObject {
             expect(cnt).to.be.eq(0);
         });
     }
-    confirmBookingState = (booking_state: string) => {
-        return browser.sleep(3000).then(() => {
-            $('#steps > nav > a.active').getText().then(val => {
-                expect(val.toLowerCase()).to.be.eq(booking_state.toLowerCase());
-            });
-        });
-
-    }
 }
 
