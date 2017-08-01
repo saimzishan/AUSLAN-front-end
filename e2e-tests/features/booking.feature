@@ -53,7 +53,6 @@ Feature: Booking Management
     Then I am on the bookings page
     Then I will be shown with bookings
 
-
   @runThis
   Scenario: Interpreter can NOT create a booking
     Given I exist as an Interpreter
@@ -94,7 +93,6 @@ Feature: Booking Management
     Then I get a valid create booking notification
     Then I am on the bookings page
     Then I will be shown with bookings
-
 
   @runThis
   Scenario: Booking Officer can create a booking

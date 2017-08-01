@@ -9,6 +9,7 @@ import {BookingManagementPage} from '../../po/booking-management-page.po';
 import {ResetPage} from '../../po/reset-page.po';
 import {BookingPage} from '../../po/create-booking.po';
 import {BookingJobPage} from '../../po/booking-job.po';
+import * as path from 'path';
 
 defineSupportCode(({Given, When}) => {
 
@@ -92,9 +93,10 @@ defineSupportCode(({Given, When}) => {
     Given(/^I will upload a document$/, documentUpload);
 
     function documentUpload() {
-        let fileToUpload = '/Users/hientran/Desktop/Angular/tmp/front-end/booking-system-frontend/e2e-tests/sushi.pdf';
+        let fileToUpload = '../sushi.pdf';
+        let p = path.resolve(__dirname, fileToUpload);
         let elm = element(by.css('input[type="file"]'));
-            return elm.sendKeys(fileToUpload);
+            return elm.sendKeys(p);
     }
 
     Given(/^I will close the file upload$/, documentUploadClose);

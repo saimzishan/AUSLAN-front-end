@@ -111,8 +111,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.currentUserIsContact === 'true' ? GLOBAL.currentUser.mobile : '';
     }
 
-    isUserOrgRep() {
-        return GLOBAL.currentUser instanceof OrganisationalRepresentative;
+    isNotIndClient() {
+        return GLOBAL.currentUser instanceof IndividualClient === false;
     }
 
     isUserOrgRepORIndClientTemp() {
