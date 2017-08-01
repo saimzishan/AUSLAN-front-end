@@ -16,12 +16,9 @@ defineSupportCode(({Then, When}) => {
 
     Then(/^I will be taken to the '(.*) Signup' page$/, profileRegisterPage.showSignupPage);
 
-//    Correctly fill in
-    When(/^I fill the field '(.*)' (.*)ly/, profileRegisterPage.fillCorrectlyField);
-
-    Then(/^I jump to (.*) element$/, profileRegisterPage.toNextElement);
-
     When(/^I fill all the details correctly for '(.*)'$/, profileRegisterPage.fillAllDataForRegister);
+    When(/^I fill all the details correctly for -> '(.*)' with the pref communication is '(.*)'$/,
+        profileRegisterPage.fillAllDataForRegister);
 
     When(/^'(.*)' will be created$/, profileRegisterPage.userCreated);
 
@@ -30,6 +27,6 @@ defineSupportCode(({Then, When}) => {
 
     Then(/^I will get an error notification saying "(.*)"$/, profileRegisterPage.invalidNotification);
 
-    When(/^I fill most the details correctly for INTERPRETER with the pref communication is '(.*)'$/,
-        profileRegisterPage.fillAllDataForInterpreterWithPrefComm);
+    // When(/^I fill most the details correctly for INTERPRETER with the pref communication is '(.*)'$/,
+    //     profileRegisterPage.fillAllDataForInterpreterWithPrefComm);
 });

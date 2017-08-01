@@ -133,17 +133,6 @@ export class BookingManagementPage extends PageObject {
         });
     }
 
-
-    getAuthErrorNotificationContent = () => {
-        let elm = $('div.sn-content');
-        return browser.wait(protractor.ExpectedConditions.presenceOf(elm), 10000).then(() => {
-            expect(elm.getText()).to.eventually.contain('Email or Password not found');
-        });
-    }
-
-    pressButtonOnNewBookingScreen = (buttonLabel: string) => {
-        return this.getButtonByText(buttonLabel).click();
-    }
     newBookingDoesNotExists = () => {
         return $$('lnkNewBooking').count().then(cnt => {
             expect(cnt).to.be.eq(0);

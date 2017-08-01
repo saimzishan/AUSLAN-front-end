@@ -92,7 +92,7 @@ defineSupportCode(({Given, When}) => {
     Given(/^I will upload a document$/, documentUpload);
 
     function documentUpload() {
-        let fileToUpload = '/Users/naumanqazi/Documents/CT/booking-system-frontend/e2e-tests/sushi.pdf';
+        let fileToUpload = '/Users/hientran/Desktop/Angular/tmp/front-end/booking-system-frontend/e2e-tests/sushi.pdf';
         let elm = element(by.css('input[type="file"]'));
             return elm.sendKeys(fileToUpload);
     }
@@ -200,4 +200,21 @@ defineSupportCode(({Given, When}) => {
         return browser.sleep(parseInt(seconds, 10));
     });
 
+    Given(/^I fill the field '(.*)' (.*)ly/, fillCorrectlyField);
+    function fillCorrectlyField (lblString: string, correnctNess: string) {
+        let input = page.getElementByName(lblString);
+        expect(input).to.exist;
+        input.clear()
+        return input.getAttribute('type').then((type) => {
+            let isText = type === 'text';
+            page.setValue(input, (correnctNess === 'correct') ?
+                (isText ? 'George Charalambous' : '1234') :
+                (isText ? 'A' : '1'));
+        });
+    }
+
+    Given(/^I jump to '(.*)' element$/, toNextElement);
+    function toNextElement (element_tag: string) {
+        return page.getElementByName(element_tag).click();
+    }
 });

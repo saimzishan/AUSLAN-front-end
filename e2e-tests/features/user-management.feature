@@ -14,13 +14,13 @@ Feature: Create, read, update and delete a User
     And I go to the 'User Management' list page
 
 ############################## New Admin ##############################
-  @ignoreThis
-  Scenario: Administrator should be able to add a new Administrator
-    When I click on 'Create New User'
-    And I add a valid Administrator
-    And I click on 'Create'
-    Then I am on the 'User Management' list page
-    And the valid Administrator should be in the list
+#  @ignoreThis
+#  Scenario: Administrator should be able to add a new Administrator
+#    When I click on 'Create New User'
+#    And I add a valid Administrator
+#    And I click on 'Create'
+#    Then I am on the 'User Management' list page
+#    And the valid Administrator should be in the list
 #  @ignoreThis
 #  Scenario: Administrator should be able to update an Administrator
 #    Given There is 1 inactive Administrator
@@ -89,14 +89,14 @@ Feature: Create, read, update and delete a User
 #    Then I am on the 'User Management' list page
 #    And the valid Interpreter should be in the list
 #
-  @ignoreThis
-  Scenario: Administrator should be able to update an Interpreter
-    Given There is 1 inactive Interpreter
-    When I click on edit for an existing Interpreter
-    And I update some Interpreter fields
-    And I click on update
-    Then I am on the 'User Management' list page
-    And the updated Interpreter should be in the list
+#  @ignoreThis
+#  Scenario: Administrator should be able to update an Interpreter
+#    Given There is 1 inactive Interpreter
+#    When I click on edit for an existing Interpreter
+#    And I update some Interpreter fields
+#    And I click on update
+#    Then I am on the 'User Management' list page
+#    And the updated Interpreter should be in the list
 #
 #  Scenario: Administrator should be able to delete/disable an Interpreter
 #    Given There is 1 active Interpreter
@@ -186,3 +186,18 @@ Feature: Create, read, update and delete a User
   Scenario: Administrator should be able to trigger password reset for Interpreter
     When I click on reset password for an active existing Interpreter
     Then The password for the user should be reset
+
+#  @runThis
+#  Scenario: Administrator should be able to trigger password reset for Individual Client
+#    When I click on reset password for an active existing Individual Client
+#    Then The password for the user should be reset
+#
+#  @runThis
+#  Scenario: Administrator should be able to trigger password reset for Organisational Representative
+#    When I click on reset password for an active existing Organisational Representative
+#    Then The password for the user should be reset
+#
+#  @runThis
+#  Scenario: Administrator should be able to trigger password reset for Booking Officer
+#    When I click on reset password for an active existing Booking Officer
+#    Then The password for the user should be reset
