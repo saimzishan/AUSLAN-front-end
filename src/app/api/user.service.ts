@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Headers, RequestOptions} from '@angular/http';
-import {AvailabilityBlock, IndividualClient, Interpreter, OrganisationalRepresentative, User} from '../shared/model/user.entity';
+import {IndividualClient, Interpreter, OrganisationalRepresentative, User} from '../shared/model/user.entity';
 import {ROLE} from '../shared/model/role.enum';
 import {GLOBAL} from '../shared/global';
 import { Observable } from 'rxjs/Observable';
@@ -12,6 +12,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/observable/throw';
+import {AvailabilityBlock} from '../shared/model/availability-block.entity';
 
 @Injectable()
 export class UserService extends ApiService {

@@ -1,11 +1,11 @@
 import {Component, OnInit, Input} from '@angular/core';
-import {AvailabilityBlock, Interpreter} from '../../shared/model/user.entity';
 import {Address} from '../../shared/model/venue.entity';
 import {AddressComponent} from '../address/address.component';
 import {GLOBAL} from '../../shared/global';
 import {DatePipe} from '@angular/common';
 import {Router} from '@angular/router';
 import * as moment from 'moment';
+import {Interpreter} from '../../shared/model/user.entity';
 
 @Component({
     selector: 'app-interpreter',

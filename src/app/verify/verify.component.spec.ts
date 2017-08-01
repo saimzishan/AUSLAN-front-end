@@ -35,6 +35,7 @@ import { SpinnerComponent } from '../spinner/spinner.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import {SimpleNotificationsModule} from 'angular2-notifications';
+import {SpinnerService} from '../spinner/spinner.service';
 
 describe('VerifyComponent', () => {
     let component: VerifyComponent;
@@ -45,7 +46,7 @@ describe('VerifyComponent', () => {
             declarations: [VerifyComponent, NotificationComponent],
             imports: [FormsModule, RouterTestingModule, HttpModule, CustomFormsModule, SimpleNotificationsModule.forRoot()],
             providers: [{ provide: UserService, useClass: MockUserService},
-              NotificationServiceBus, { provide: AuthHttp, useClass: MockBackend} ]
+              NotificationServiceBus, SpinnerService, { provide: AuthHttp, useClass: MockBackend} ]
         })
             .compileComponents();
     }));

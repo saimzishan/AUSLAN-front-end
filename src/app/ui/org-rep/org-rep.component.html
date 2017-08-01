@@ -52,10 +52,10 @@
 
         <div class="medium-6 columns">
             <div class="form-field">
-                <label>'PREFFERED CONTACT METHOD</label>
+                <label>PREFFERED CONTACT METHOD</label>
                 <select name="preferred_contact_method" [(ngModel)]="userModel.preferred_contact_method">
-                    <option value="0">Email</option>
-                    <option value="1">Phone</option>
+                    <option value="SMS">SMS</option>
+                    <option value="SMS AND EMAIL">SMS AND EMAIL</option>
                 </select>
             </div>
         </div>
@@ -112,6 +112,12 @@
 
 <div class="row small-collapse">
     <div class="row-wrapper">
+        <div class="medium-12 columns">
+            <div class="form-field">
+                <label>CUSTOMER REF</label>
+                <input [(ngModel)]="userModel.customer_ref">
+            </div>
+        </div>
         <div class="medium-6 columns">
             <div class="form-field">
                 <label>HOW DID YOU FIND OUT ABOUT AUSLAN CONNECTIONS?</label>
@@ -131,13 +137,6 @@
                 <label>IF OTHER THEN PLEASE DESCRIBE HERE</label>
                 <textarea [disabled]="userModel.reffered_by !== 'OTHER'" [(ngModel)]="userModel.reffered_other" cols="30" rows="10"
                           class="inline-icon inline-icon-txt"></textarea>
-            </div>
-        </div>
-
-        <div class="medium-12 columns">
-            <div class="form-field">
-                <label>CUSTOMER REF</label>
-                <input [(ngModel)]="userModel.customer_ref">
             </div>
         </div>
         <div class="medium-12 columns">

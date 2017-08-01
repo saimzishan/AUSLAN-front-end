@@ -381,19 +381,19 @@
 
             <h4 class="text-center">INVOICE DETAILS</h4>
             <div class="row">
-                <div class="medium-12 columns">
+                <div class="medium-12 columns" *ngIf="isUserOrgRepORIndClientTemp()">
                     <div class="form-field">
                         <label>Do you want to use standard invoice details? * <span mdTooltip="Tooltip!"><i
                                 class="inline-icon-tip"></i></span></label>
-                        <md-radio-group name="rdStandardInvoice"
-                                        [(ngModel)]="standardInvoice">
+                        <md-radio-group name="rdStandardInvoice"[(ngModel)]="standardInvoice" (change)='onStandardInvoice()'>
                             <md-radio-button value=true>YES</md-radio-button>
                             <md-radio-button value=false>NO</md-radio-button>
                         </md-radio-group>
+                               
                     </div>
                 </div>
                 <div class="row-wrapper">
-                    <div class="medium-12 columns">
+                    <div class="medium-12 columns" *ngIf="isUserOrgRep()">
                         <div class="form-field">
                             <label>EXT. REFERENCE NUM * <span mdTooltip="Enter External Reference Number!"><i
                                     class="inline-icon-tip"></i></span></label>

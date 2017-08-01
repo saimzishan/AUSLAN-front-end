@@ -47,7 +47,7 @@ export class AuthComponent implements OnInit, OnDestroy {
       this.spinnerService.requestInProcess(true);
       this.service.login(this.model)
       .subscribe((res: any) => {
-        this.spinnerService.requestInProcess(false);
+        // this.spinnerService.requestInProcess(false);
 
         if ( res.data.jwt) {
         this.model.token = res.data.jwt;
