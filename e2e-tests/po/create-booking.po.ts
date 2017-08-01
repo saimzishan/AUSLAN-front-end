@@ -30,15 +30,6 @@ export class BookingPage extends PageObject {
         });
     }
 
-    // specifyAsClientOfBooking = () => {
-    //     const clientOptionLabel = this.getElementByCSSandText('.text-center', 'CLIENT DETAILS');
-    //     const divClientDetails = this.getNextSibling(clientOptionLabel, 'div');
-    //     const clientRadioGroup = this.getElementInsideByTag(divClientDetails, 'md-radio-group');
-    //     let all_radio_btn_in_group = this.getAllByTagNameInElement(clientRadioGroup, 'md-radio-button');
-    //     return all_radio_btn_in_group[CONSTANT.YES].click();
-    // }
-
-
     clickOnSave = () => {
         return this.createBookingBtn.click();
     }
@@ -102,9 +93,7 @@ export class BookingPage extends PageObject {
     }
 
     specifyAsClientOfBooking = () => {
-        const clientOptionLabel = this.getElementByCSSandText('.text-center', 'CLIENT DETAILS');
-        const divClientDetails = this.getNextSibling(clientOptionLabel, 'div');
-        const clientRadioGroup = this.getElementInsideByTag(divClientDetails, 'md-radio-group');
+        const clientRadioGroup = this.getElementByName('rdcurrentUserIsContact');
         let all_radio_btn_in_group = this.getAllByTagNameInElement(clientRadioGroup, 'md-radio-button');
         return all_radio_btn_in_group.then((all_radio) => {
             return all_radio[CONSTANT.YES].click();
@@ -116,10 +105,9 @@ export class BookingPage extends PageObject {
         const divClientDetails = this.getNextSibling(clientOptionLabel, 'div');
         const all_input_in_div = this.getAllByTagNameInElement(divClientDetails, 'input');
         return all_input_in_div.then((inputDiv) => {
-            let all_filled = true;
             for (let i = 0; i < inputDiv.length; i++) {
                 const single_input = inputDiv[i];
-                return single_input.getAttribute('ng-reflect-model').then((val) => {
+                return single_input.getAttribute('value').then((val) => {
                     expect(val).to.not.equal('');
                 });
             }

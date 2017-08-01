@@ -12,7 +12,6 @@ Feature: Booking Management
     And I am on the bookings page
     When I click on 'New Booking'
     Then I will be taken to the 'New Booking' form
-    Then I will close the file upload
     Then I fill New Booking form fields correctly
     Then I get a valid create booking notification
     Then I am on the bookings page
@@ -87,7 +86,7 @@ Feature: Booking Management
     And I am on the bookings page
     When I click on 'New Booking'
     Then I will be taken to the 'New Booking' form
-    Then I click on BUTTON name 'uploader'
+#    Then I click on BUTTON name 'uploader'
     Then I will upload a document
     Then I will see attachment
     Then I will close the file upload
@@ -104,7 +103,7 @@ Feature: Booking Management
     And I am on the bookings page
     When I click on 'New Booking'
     Then I will be taken to the 'New Booking' form
-    Then I click on BUTTON name 'uploader'
+#    Then I click on BUTTON name 'uploader'
     Then I will upload a document
     Then I will see attachment
     Then I will close the file upload

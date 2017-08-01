@@ -77,9 +77,6 @@ export class BookingJobPage extends PageObject {
         });
     }
 
-    getAuthErrorNotificationContent = () => {
-        NotificationObject.getNotificationContent('Email or Password not found');
-    }
     getSuccessNotificationContentForState = (state: string) => {
         return browser.sleep(3000).then(() => {
             NotificationObject.getNotificationContent('The booking has been transitioned to \"' + state + '\" state');
