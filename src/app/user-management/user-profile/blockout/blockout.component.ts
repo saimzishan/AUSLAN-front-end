@@ -1,11 +1,12 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {AvailabilityBlock, blockout_availability, Interpreter} from '../../../shared/model/user.entity';
+import {blockout_availability, Interpreter} from '../../../shared/model/user.entity';
 import {FormGroup} from '@angular/forms';
 import {SpinnerService} from '../../../spinner/spinner.service';
 import {NotificationServiceBus} from '../../../notification/notification.service';
 import {UserService} from '../../../api/user.service';
 import {GLOBAL} from '../../../shared/global';
 import {ActivatedRoute} from '@angular/router';
+import {AvailabilityBlock} from '../../../shared/model/availability-block.entity';
 
 @Component({
   selector: 'app-blockout',
