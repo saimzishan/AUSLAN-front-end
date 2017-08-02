@@ -23,7 +23,7 @@ test:
     - npm run startwebdriver:
           background: true
   override:   
-    - npm run end2end-cricle
+    - npm run end2end
     - npm run circle-test
     - npm run pact
   post:

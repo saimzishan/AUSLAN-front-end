@@ -15,7 +15,6 @@
     "startwebdriver": "webdriver-manager update && webdriver-manager start ",
     "e2e": "protractor",
     "end2end": "ng e2e --env=test --aot --progress=true",
-    "end2end-cricle": "ng e2e --env=stage --aot --progress=true",
     "posttest": "node_modules/.bin/remap-istanbul -i coverage/coverage-final.json -o coverage -t html",
     "pact": "curl -v -XPUT \\-H \"Content-Type: application/json\" -d@tmp/booking/pacts/booking-specs-booking-api.json  https://auslan-pact-broker.herokuapp.com/pacts/provider/Booking-Api/consumer/Booking-Specs/version/1.0.0  --user admin:auslanPACT && curl -v -XPUT \\-H \"Content-Type: application/json\"   -d@tmp/user/pacts/user-specs-user-api.json https://auslan-pact-broker.herokuapp.com/pacts/provider/User-Api/consumer/User-Specs/version/2.0.0 --user admin:auslanPACT"
   },
