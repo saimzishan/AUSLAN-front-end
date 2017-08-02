@@ -13,6 +13,7 @@ Feature: Booking Management
     When I click on 'New Booking'
     Then I will be taken to the 'New Booking' form
     Then I fill New Booking form fields correctly
+    Then I click the create booking button
     Then I get a valid create booking notification
     Then I am on the bookings page
     Then I will be shown with bookings
@@ -25,6 +26,7 @@ Feature: Booking Management
     When I click on 'New Booking'
     Then I will be taken to the 'New Booking' form
     Then I fill New Booking form fields correctly
+    Then I click the create booking button
     Then I get a valid create booking notification
     Then I am on the bookings page
     Then I will be shown with bookings
@@ -37,6 +39,7 @@ Feature: Booking Management
     When I click on 'New Booking'
     Then I will be taken to the 'New Booking' form
     Then I fill New Booking form fields correctly
+    Then I click the create booking button
     Then I get a valid create booking notification
     Then I am on the bookings page
     Then I will be shown with bookings
@@ -49,6 +52,7 @@ Feature: Booking Management
     When I click on 'New Booking'
     Then I will be taken to the 'New Booking' form
     Then I fill New Booking form fields correctly
+    Then I click the create booking button
     Then I get a valid create booking notification
     Then I am on the bookings page
     Then I will be shown with bookings
@@ -90,6 +94,7 @@ Feature: Booking Management
     Then I will see attachment
     Then I will close the file upload
     Then I fill New Booking form fields correctly
+    Then I click the create booking button
     Then I get a valid create booking notification
     Then I am on the bookings page
     Then I will be shown with bookings
@@ -106,6 +111,7 @@ Feature: Booking Management
     Then I will see attachment
     Then I will close the file upload
     Then I fill New Booking form fields correctly
+    Then I click the create booking button
     Then I get a valid create booking notification
     Then I am on the bookings page
     Then I will be shown with bookings
