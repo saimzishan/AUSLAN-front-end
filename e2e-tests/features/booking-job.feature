@@ -518,6 +518,9 @@ Feature: Booking Admin Management
     And I click on BUTTON 'Save'
     Then I get a valid invite notification
     Then I can see the booking state 'In Progress'
+    Then I click on Bookings
+    And I am on the bookings page
+    Then I see one row with state 'In progress'
 
   @runThis
   Scenario: Given 1 verified Interpreter and a booking is created, Booking Officer can transition a booking from Requested to In Progress
@@ -534,3 +537,6 @@ Feature: Booking Admin Management
     And I click on BUTTON 'Save'
     Then I get a valid invite notification
     Then I can see the booking state 'In Progress'
+    Then I click on Bookings
+    And I am on the bookings page
+    Then I see one row with state 'In progress'
