@@ -6,7 +6,7 @@ import {browser, by, element, $, $$} from 'protractor';
 
 import {PageObject} from '../../po/app.po';
 import {BookingManagementPage} from '../../po/booking-management-page.po';
-import {CONSTANT, Booking} from '../../helper';
+import {CONSTANT, Booking, Heroku} from '../../helper';
 import {BookingPage} from '../../po/create-booking.po';
 import {BookingJobPage} from '../../po/booking-job.po';
 
@@ -18,12 +18,14 @@ defineSupportCode(({Given, Then, When}) => {
     let bookingManagementPO = new BookingManagementPage();
     let createBookingPO = new BookingPage();
     let bookingJobPO = new BookingJobPage();
+
+    Given(/^The booking has status '(.*)'$/, Heroku.updateBookingWithStatus);
 //  BE ABLE TO VIEW BOOKING PAGE
     Then(/^I will be shown with bookings$/, bookingManagementPO.atleastABookingExists);
     Then(/^I store the booking count$/, bookingManagementPO.storeCurrentBookingCount);
     Then(/^I expect the booking count to be greater then before$/, bookingManagementPO.isCurrentBookingCountGreaterThanStoredCount);
 //    CLick on Request bookings
-    Then(/^I am shown with (.*) (.*) Bookings$/, bookingManagementPO.showTheNumberofBooking);
+    Then(/^I am shown with (\d+) (.*[^\s])?\s?Bookings$/, bookingManagementPO.showTheNumberofBooking);
 
     When(/^I click at the (.*) one of (.*) (.*) Bookings$/, bookingManagementPO.clickAtOneofTheBooking);
 
@@ -32,6 +34,7 @@ defineSupportCode(({Given, Then, When}) => {
     When(/^I click on 'New Booking'$/, bookingManagementPO.clickOnNewBooking);
     When(/^I click on Bookings$/, bookingManagementPO.clickOnBookings);
     When(/^I see one row with state '(.*)'$/, bookingManagementPO.bookingWithStateExists);
+    When(/^I see one row with status '(.*)'$/, bookingManagementPO.bookingWithStatusExists);
 
     When(/^I click on an individual booking of type '(.*)'$/, bookingManagementPO.clickOnIndividualBookingOfType);
     When(/^I click on an individual booking$/, bookingManagementPO.clickOnIndividualBooking);
@@ -43,6 +46,9 @@ defineSupportCode(({Given, Then, When}) => {
     When(/^I specify i am the client of this booking$/, createBookingPO.specifyAsClientOfBooking);
 
     Then(/^The booking form will be automatically populated with the details.$/, createBookingPO.populatedUserDetails);
+
+    // Filling in specific fields in the booking form
+    Then(/^I set the (\w+) time as (\d+) days (?:(\d+) hours?)?\s?from now$/, createBookingPO.setTime)
 
     //    CANCEL BOOKING
     When(/^I press '(.*)'$/, createBookingPO.clickOnButton);
@@ -64,6 +70,9 @@ defineSupportCode(({Given, Then, When}) => {
 
     // Can't click on drop down
     Then(/^The dropdown (.*) will have (.*) item$/, createBookingPO.listTheIteminDropDown);
+
+    // Click the create booking button
+    Then(/^I click the create booking button$/, createBookingPO.clickCreateBtn);
 
 //    WORKING ON BELOW
 
