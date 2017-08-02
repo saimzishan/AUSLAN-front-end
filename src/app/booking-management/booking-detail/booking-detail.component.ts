@@ -36,8 +36,10 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     private sub: any;
     public uploader: FileUploader = new FileUploader({url: ''});
     bookingModel: Booking;
-    standardInvoice: 'true';
+    standardInvoice = 'false';
+    rdgSpecialInstruction = 'false';
     maximumFileSizeInBytes = 2 * 1000 * 1000;
+    specialInstruction = '';
     dialogSub;
     appointment_types = Object.keys(BOOKING_NATURE).filter(value => value === BOOKING_NATURE[value]
         || BOOKING_NATURE[value].startsWith(value)).map(v => BOOKING_NATURE[v]) as string[];
@@ -118,6 +120,10 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     isUserOrgRepORIndClientTemp() {
     return GLOBAL.currentUser instanceof OrganisationalRepresentative ||
         GLOBAL.currentUser instanceof IndividualClient;
+    }
+    onSpecialInstruction () {
+        this.specialInstruction =
+            this.rdgSpecialInstruction === 'true' ? (<OrganisationalRepresentative>GLOBAL.currentUser).special_instructions : '';
     }
     public onStandardInvoice() {
         if ( GLOBAL.currentUser instanceof OrganisationalRepresentative) {

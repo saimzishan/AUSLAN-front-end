@@ -53,6 +53,12 @@ export class JobDetailComponent implements OnDestroy {
         return false;
     }
 
+
+    getSpecialInstruction() {
+        return (GLOBAL.currentUser instanceof OrganisationalRepresentative)
+            ? GLOBAL.currentUser.special_instructions : '';
+
+    }
     anyInterpreterAccepted() {
         return this.selectedBookingModel.interpreters.filter(i => i.state === 'Accepted').length > 0;
     }
@@ -121,8 +127,7 @@ export class JobDetailComponent implements OnDestroy {
     }
 
     isCurrentUserInterpreter() {
-        return GLOBAL.currentUser instanceof Interpreter ||
-            GLOBAL.currentUser instanceof OrganisationalRepresentative;
+        return GLOBAL.currentUser instanceof Interpreter;
     }
 
     getJobDetail(param_id) {
@@ -137,14 +142,14 @@ export class JobDetailComponent implements OnDestroy {
                         );
                         this.selectedBookingModel.interpreters.filter(i => i.id === GLOBAL.currentUser.id)
                             .map(i => this.currentStatus = i.state || 'Invited');
-
-                        this.disableAccept =
+                        /** Accept Button Disable Logic*/
+                        this.disableAccept = !this.isCurrentUserInterpreter() ? true :
                             this.selectedBookingModel.state ===
                             BOOKING_STATUS.Allocated ? true :
                                 this.currentStatus === 'Rejected' ? false :
                                     this.currentStatus === 'Accepted';
-
-                        this.disableReject =
+                        /** Decline Button Disable Logic*/
+                        this.disableReject = !this.isCurrentUserInterpreter() ? true :
                             this.selectedBookingModel.state ===
                             BOOKING_STATUS.Allocated ? true : this.currentStatus === 'Rejected'
                         || this.currentStatus === 'Accepted';

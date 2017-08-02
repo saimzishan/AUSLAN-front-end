@@ -395,17 +395,12 @@
                 <div class="row-wrapper">
                     <div class="medium-12 columns" *ngIf="isNotIndClient()">
                         <div class="form-field">
-                            <label>EXT. REFERENCE NUM * <span mdTooltip="Enter External Reference Number!"><i
+                            <label>EXT. REFERENCE NUM <span mdTooltip="Enter External Reference Number!"><i
                                     class="inline-icon-tip"></i></span></label>
                             <input type="tel" placeholder="Enter External Reference Number"
                                    [(ngModel)]="bookingModel.client.organisation_billing_account.external_reference"
-                                   name="ext_ref_num" #ext_ref_num="ngModel" required digits>
-                            <span *ngIf="ext_ref_num.touched && !ext_ref_num.errors?.required && !ext_ref_num.errors?.digits;"
-                                  class="inline-icon inline-icon-valid valid"></span>
-                            <span *ngIf="ext_ref_num.touched && (ext_ref_num.errors?.required || ext_ref_num.errors?.digits);"
-                                  class="inline-icon error">
-              <span>This field is required.</span>!
-            </span>
+                                   name="ext_ref_num"  digits>
+
                         </div>
                     </div>
                     <div class="medium-12 columns">
@@ -419,7 +414,35 @@
                 </div>
             </div>
 
+            <ng-container *ngIf="isUserOrgRepORIndClientTemp() && isNotIndClient()">
+                <div class="separator"></div>
 
+                <h4 class="text-center">SPECIAL INSTRUCTION</h4>
+            <div class="row">
+                <div class="medium-12 columns">
+                    <div class="form-field">
+                        <label>Do you want to use your standard special instructions? <span mdTooltip="Tooltip!"><i
+                                class="inline-icon-tip"></i></span></label>
+                        <md-radio-group name="rdSpecialInstruction" [(ngModel)]="rdgSpecialInstruction" (change)='onSpecialInstruction()'>
+                            <md-radio-button value=true>YES</md-radio-button>
+                            <md-radio-button value=false>NO</md-radio-button>
+                        </md-radio-group>
+
+                    </div>
+                </div>
+                <div class="row-wrapper">
+                    <div class="medium-12 columns">
+                        <div class="form-field">
+                            <label>Special instructions <span mdTooltip="Enter Special instructions!"><i
+                                    class="inline-icon-tip"></i></span></label>
+                            <input [(ngModel)]="specialInstruction"  name= 'txtSpecialInstruction' type='text' placeholder="Enter Special instructions">
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            </ng-container>
             <div class="separator"></div>
 
             <h4 class="text-center">JOB DOCUMENTS</h4>
