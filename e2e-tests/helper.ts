@@ -527,4 +527,24 @@ export class Heroku {
         command += 'b.save;';
         Heroku.sendCommandToHeroku(command);
     }
+
+    static assignEntityToDependant(entity: string, dependant: string) {
+        let command = entity.replace(' ', '') + '.last.update(';
+        command += dependant.replace(' ', '_').toLowerCase() + ': ';
+        command += dependant.replace(' ', '') + '.last)';
+        Heroku.sendCommandToHeroku(command);
+    }
+
+    static createFactory(factory: string) {
+        if (factory === 'booking') {
+            return Heroku.createSingleBooking();
+        }
+    }
+
+    static updateBookingWithStatus(status: string) {
+        let daysToAdd = status === 'red' ? '2' : '4';
+        let command = 'd = ' + daysToAdd + '.business_days.after(DateTime.now);'
+        command += 'Booking.last.update(start_time: d, end_time: d + 1.hour);Booking.last.update_status';
+        Heroku.sendCommandToHeroku(command);
+    }
 }

@@ -26,11 +26,7 @@ defineSupportCode(({Given, When}) => {
         return Heroku.createBulkUsers(numberOfUser, active, type);
     }
 
-    Given(/^A booking is created/, givenBookingCreated);
-
-    function givenBookingCreated() {
-    }
-
+    Given(/^There exists an? (.*)/, Heroku.createFactory);
     Given(/^I click on my name$/, () => {
         return bookingManagementPage.hoverOnProfile('lnkLogout');
     });
@@ -143,7 +139,7 @@ defineSupportCode(({Given, When}) => {
         return page.getElementByCss(css).click();
     }
 
-    When(/^I can see the booking state '(.*)'$/, bookingManagementPage.confirmBookingState);
+    When(/^I can see the booking state '(.*)'$/, bookingJob.confirmBookingState);
 
 
     When(/^I can see the button '(.*)' is (.*)$/, isButtonDisabled);
@@ -219,4 +215,7 @@ defineSupportCode(({Given, When}) => {
     function toNextElement (element_tag: string) {
         return page.getElementByName(element_tag).click();
     }
+    Given(/^(.*) belongs to (.*)/, (entity: string, dependant: string) => {
+        Heroku.assignEntityToDependant(entity, dependant);
+    });
 });
