@@ -12,13 +12,13 @@ export class GLOBAL {
         window.location.protocol + '//' + window.location.host + '/#' + '/booking-management/';
 
     public static LOG_LEVEL = 'INFO';
-    public static USER_API_ENDPOINT = (environment.production) ? 'https://auslan-staging.herokuapp.com/api/v1'
-        : (environment.stage) ? 'https://auslan.herokuapp.com/api/v1' :
+    public static USER_API_ENDPOINT = (environment.stage) ? 'https://auslan-staging.herokuapp.com/api/v1'
+        : (environment.canary) ? 'https://auslan.herokuapp.com/api/v1' :
             (environment.localhost) ? `http://localhost:${GLOBAL.RAILS_LOCAL_SERVER_PORT}/api/v1` :
                 (environment.test) ? `https://auslan-e2e-testing.herokuapp.com/api/v1` :
                 `http://localhost:${GLOBAL.MOCK_USER_SERVER_PORT}/api/v1`;
-    public static BOOKING_API_ENDPOINT = (environment.production) ? 'https://auslan-staging.herokuapp.com/api/v1'
-        : (environment.stage) ? 'https://auslan.herokuapp.com/api/v1' :
+    public static BOOKING_API_ENDPOINT = (environment.stage) ? 'https://auslan-staging.herokuapp.com/api/v1'
+        : (environment.canary) ? 'https://auslan.herokuapp.com/api/v1' :
             (environment.localhost) ? `http://localhost:${GLOBAL.RAILS_LOCAL_SERVER_PORT}/api/v1` :
                 (environment.test) ? `https://auslan-e2e-testing.herokuapp.com/api/v1` :
                     `http://localhost:${GLOBAL.MOCK_BOOKING_SERVER_PORT}/api/v1`;

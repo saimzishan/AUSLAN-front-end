@@ -137,7 +137,9 @@ export class OrganisationalRepresentative extends Organisational {
                 'branch_office' : this.branch_office , 'phone_number' : this.phone ,
                 'preferred_contact_method' : this.preferred_contact_method ,
                 'address_attributes' : this.address_attributes ,
-                'billing_account_attributes' : {'primary_contact_first_name' : this.organisation_primary_contact.first_name ,
+                'billing_account_attributes' : {
+                    'id': this.organisation_billing_account.id,
+      'primary_contact_first_name' : this.organisation_primary_contact.first_name ,
                   'primary_contact_last_name' : this.organisation_primary_contact.last_name ,
                   'primary_contact_email' : this.organisation_primary_contact.email ,
                   'primary_contact_phone_number' : this.organisation_primary_contact.phone_number ,
@@ -180,8 +182,8 @@ export class OrganisationalRepresentative extends Organisational {
     this.group_email = obj.organisation.group_email;
     this.special_instructions = obj.special_instructions;
     this.branch_office = obj.branch_office;
-    this.reffered_by = Boolean( obj.discovery_of_auslan ) && obj.discovery_of_auslan.startsWith('O:') ?
-        'Other' : '';
+      this.reffered_by = Boolean( obj.discovery_of_auslan ) ? obj.discovery_of_auslan.startsWith('O:') ?
+          'Other' : obj.discovery_of_auslan : '';
     this.reffered_other = this.reffered_by === 'OTHER'  ?
         obj.discovery_of_auslan.replaceAll('O:') : '';
     this.customer_ref = obj.customer_reference;
@@ -195,6 +197,8 @@ export class OrganisationalRepresentative extends Organisational {
     this.email_confirmation = obj.organisation.billing_account.preferred_billing_method_email;
     this.organisation_billing_account.organisation_billing_address = obj.organisation.billing_account.address_attributes;
     this.organisation_billing_account.external_reference = obj.organisation.billing_account.external_reference;
+    this.organisation_billing_account.id = obj.organisation.billing_account.id;
+
   }
 }
 
@@ -265,7 +269,8 @@ constructor(data) {
           'eaf_id': this.eaf_id, 'eaf_budget_limit': this.eaf_budget_limit, 'eaf_start_date': this.eaf_start_date,
           'eaf_end_date': this.eaf_end_date,
           'address_attributes': this.address_attributes,
-          'billing_account_attributes': {'primary_contact_first_name': this.individual_client_primary_contact.first_name ,
+          'billing_account_attributes': { 'id' : this.individual_client_billing_account.id,
+      'primary_contact_first_name': this.individual_client_primary_contact.first_name ,
             'primary_contact_last_name': this.individual_client_primary_contact.last_name ,
             'primary_contact_email' : this.individual_client_primary_contact.email ,
             'primary_contact_phone_number' : this.individual_client_primary_contact.phone_number ,
@@ -291,8 +296,8 @@ constructor(data) {
     this.eaf_start_date = obj.eaf_start_date;
     this.eaf_end_date = obj.eaf_end_date;
     this.special_instructions = obj.special_instructions;
-    this.reffered_by = Boolean( obj.discovery_of_auslan ) && obj.discovery_of_auslan.startsWith('O:') ?
-        'Other' : '';
+    this.reffered_by = Boolean( obj.discovery_of_auslan ) ? obj.discovery_of_auslan.startsWith('O:') ?
+        'Other' : obj.discovery_of_auslan : '';
     this.reffered_other = this.reffered_by === 'OTHER' ?
         obj.discovery_of_auslan.replaceAll('O:') : '';
     this.email_receipt = obj.send_email_on_receipt_of_request;
@@ -304,6 +309,7 @@ constructor(data) {
     this.individual_client_primary_contact.phone_number = obj.billing_account_attributes.primary_contact_phone_number;
     this.email_confirmation = obj.billing_account_attributes.preferred_billing_method_email;
     this.individual_client_billing_account.organisation_billing_address = obj.billing_account_attributes.address_attributes;
+    this.individual_client_billing_account.id = obj.billing_account_attributes.id;
 
 
   }

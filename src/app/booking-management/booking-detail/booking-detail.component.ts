@@ -11,7 +11,7 @@ import {Router, ActivatedRoute} from '@angular/router';
 import {RolePermission} from '../../shared/role-permission/role-permission';
 import {DatePipe} from '@angular/common';
 import {FormGroup, NgForm} from '@angular/forms';
-import {FileUploader} from 'ng2-file-upload';
+import {FileUploader, FileUploaderOptions} from 'ng2-file-upload';
 
 import {Address} from '../../shared/model/venue.entity';
 import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
@@ -34,10 +34,11 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
 
 
     private sub: any;
-    public uploader: FileUploader = new FileUploader({url: ''});
+    public uploader: FileUploader = new FileUploader({url: '', maxFileSize: 20 * 1024 * 1024});
     bookingModel: Booking;
-    standardInvoice: 'true';
-    maximumFileSizeInBytes = 2 * 1000 * 1000;
+    standardInvoice = 'false';
+    rdgSpecialInstruction = 'false';
+    specialInstruction = '';
     dialogSub;
     appointment_types = Object.keys(BOOKING_NATURE).filter(value => value === BOOKING_NATURE[value]
         || BOOKING_NATURE[value].startsWith(value)).map(v => BOOKING_NATURE[v]) as string[];
@@ -118,6 +119,10 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     isUserOrgRepORIndClientTemp() {
     return GLOBAL.currentUser instanceof OrganisationalRepresentative ||
         GLOBAL.currentUser instanceof IndividualClient;
+    }
+    onSpecialInstruction () {
+        this.specialInstruction =
+            this.rdgSpecialInstruction === 'true' ? (<OrganisationalRepresentative>GLOBAL.currentUser).special_instructions : '';
     }
     public onStandardInvoice() {
         if ( GLOBAL.currentUser instanceof OrganisationalRepresentative) {
@@ -204,9 +209,9 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 },
                 errors => {
                     this.spinnerService.requestInProcess(false);
-                    let e = errors.json();
+                    let e = errors.json() || '';
                     this.notificationServiceBus.launchNotification(true,
-                        'Error occured on server side. ' + errors.statusText + ' ' + JSON.stringify(e.errors));
+                        'Error occured on server side. ' + errors.statusText + ' ' + JSON.stringify(e || e.errors));
                 });
     }
 
@@ -221,11 +226,10 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
 
         if (files && file) {
             this.fileName = file.name;
-            let reader = new FileReader();
 
-            reader.onload = this._handleReaderLoaded.bind(this);
-
-            reader.readAsDataURL(file);
+                let reader = new FileReader();
+                reader.onload = this._handleReaderLoaded.bind(this);
+                reader.readAsDataURL(file);
         }
     }
 

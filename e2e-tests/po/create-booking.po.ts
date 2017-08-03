@@ -126,8 +126,8 @@ export class BookingPage extends PageObject {
 
     createBooking = () => {
 
-        this.setStartEndTime('start', '30/12/2017', '11:15AM');
-        this.setStartEndTime('end', '30/12/2017', '05:15AM');
+        this.setStartEndTime('start', '12/12/2017', '02:15PM');
+        this.setStartEndTime('end', '12/12/2017', '03:15PM');
 
         this.setElementsValueByName('address_street_number', '162');
         this.setElementsValueByName('address_street', 'Dave');
@@ -144,7 +144,7 @@ export class BookingPage extends PageObject {
         this.getElementByName('raw_booking_requested_by').sendKeys('Luke');
         this.getElementByName('raw_booking_requested_by_ln').sendKeys('Orange');
 
-        this.getElementByName('ext_ref_num').sendKeys('321');
+        // this.getElementByName('ext_ref_num').sendKeys('321');
 
         this.getElementByName('cn_first_name').sendKeys('John');
         this.getElementByName('cn_last_name').sendKeys('Travolta');

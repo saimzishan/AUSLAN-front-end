@@ -21,6 +21,7 @@ export class Booking {
     public interpreters: Array<BookingInterpreters> = [];
     public interpreters_required = 0;
     public notes = '';
+    public special_instructions = '';
     public primaryContact = new Contact();
     public client: OrganisationalRepresentative = new OrganisationalRepresentative({});
     public documents_attributes = [];
@@ -40,7 +41,7 @@ export class Booking {
         this.client.organisation_primary_contact.mobile_number = '';
         this.client.organisation_primary_contact.email = '';
         this.client.organisation_billing_account.external_reference = '';
-
+        this.special_instructions = '';
         this.deaf_person.first_name = '';
         this.deaf_person.last_name = '';
         this.deaf_person.email = '';
@@ -95,7 +96,7 @@ export class Booking {
         this.primaryContact.phone_number = data.contact_phone_number;
         this.primaryContact.mobile_number = data.contact_mobile_number;
         this.client.organisation_billing_account.external_reference = '';
-
+        this.special_instructions = data.special_instructions;
         this.deaf_person.first_name = data.deaf_persons_first_name;
         this.deaf_person.last_name = data.deaf_persons_last_name;
         this.deaf_person.email = data.deaf_persons_email;
@@ -161,7 +162,8 @@ export class Booking {
 
         let o = new Object({
             id: this.id, state: _state,
-            venue: this.venue.title, requested_by_first_name: this.requested_by.first_name,
+            special_instructions : this.special_instructions,
+        venue: this.venue.title, requested_by_first_name: this.requested_by.first_name,
             requested_by_last_name: this.requested_by.last_name,
             number_of_interpreters_required: this.interpreters_required,
             nature_of_appointment: _nature_of_appointment,

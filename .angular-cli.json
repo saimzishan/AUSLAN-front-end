@@ -26,7 +26,8 @@
         "dev": "environments/environment.ts",
         "prod": "environments/environment.prod.ts",
         "test": "environments/environment.test.ts",
-        "localhost" : "environments/environment.localhost.ts"
+        "localhost" : "environments/environment.localhost.ts",
+        "canary" : "environments/environment.canary.ts"
       }
     }
   ],

@@ -49,9 +49,8 @@ export class BookingJobsComponent implements OnDestroy {
     }
 
     getSpecialInstruction() {
-        return (GLOBAL.currentUser instanceof OrganisationalRepresentative || GLOBAL.currentUser instanceof IndividualClient)
-        && this.isInvited(GLOBAL.currentUser.id) && GLOBAL.currentUser.special_instructions.length > 0
-            ? GLOBAL.currentUser.special_instructions : '';
+        return (GLOBAL.currentUser instanceof OrganisationalRepresentative)
+           ? GLOBAL.currentUser.special_instructions : '';
 
     }
 

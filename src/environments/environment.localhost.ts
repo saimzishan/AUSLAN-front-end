@@ -1,6 +1,7 @@
 export const environment = {
-  stage: false,
-  production: false,
-  test: false,
-  localhost: true
+    stage: false,
+    canary: false,
+    test: false,
+    production: false,
+    localhost: true
 };
