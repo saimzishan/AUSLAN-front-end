@@ -80,9 +80,14 @@ export class BookingManagementPage extends PageObject {
         return this.clickAtOneofTheBooking('1', '1', booking_type);
     }
 
-    showTheNumberofBooking = (num_of_booking: string, type_of_booking: string) => {
+    showTheNumberofBooking = (num_of_booking: string, type_of_booking?: string) => {
         let numBooking = parseInt(num_of_booking, 10);
-        let allTypeBooking = this.getAllByCSSandText('tbody td', type_of_booking);
+        let allTypeBooking;
+        if (type_of_booking) {
+            allTypeBooking = this.getAllByCSSandText('tbody tr', type_of_booking);
+        } else {
+            allTypeBooking = this.getAllElementByCSS('tbody tr');
+        }
         return allTypeBooking.count().then((countNum) => {
             expect(countNum).to.equal(numBooking);
         });
@@ -101,6 +106,17 @@ export class BookingManagementPage extends PageObject {
 
     bookingWithStateExists = (booking_state: string) => {
         return this.getAllByCSSandText('tbody td', booking_state).count().then((cnt) => {
+            expect(cnt).to.be.greaterThan(0);
+        });
+    }
+
+    bookingWithStatusExists = (booking_status: string) => {
+        let className = {
+            'green': 'icon-check-green',
+            'red': 'status-allocated',
+            'orange': 'status-ready-to-process'
+        }[booking_status];
+        return this.getAllElementByCSS('i[class="status ' + className + '"]').count().then((cnt) => {
             expect(cnt).to.be.greaterThan(0);
         });
     }
@@ -137,14 +153,6 @@ export class BookingManagementPage extends PageObject {
         return $$('lnkNewBooking').count().then(cnt => {
             expect(cnt).to.be.eq(0);
         });
-    }
-    confirmBookingState = (booking_state: string) => {
-        return browser.sleep(3000).then(() => {
-            $('#steps > nav > a.active').getText().then(val => {
-                expect(val.toLowerCase()).to.be.eq(booking_state.toLowerCase());
-            });
-        });
-
     }
 }
 

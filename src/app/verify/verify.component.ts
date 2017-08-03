@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UserService } from '../api/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationServiceBus } from '../notification/notification.service';
+import {SpinnerService} from '../spinner/spinner.service';
 
 @Component({
   selector: 'app-verify',
@@ -13,7 +14,8 @@ export class VerifyComponent implements OnInit, OnDestroy {
   public verificationCode = '';
   private sub: any;
   constructor(public service: UserService,
-    public notificationServiceBus: NotificationServiceBus, public router: Router, public routes: ActivatedRoute) { }
+    public notificationServiceBus: NotificationServiceBus, public spinnerService: SpinnerService,
+              public router: Router, public routes: ActivatedRoute) { }
 
   /*
   Initialize subscriptions
@@ -21,6 +23,7 @@ export class VerifyComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.sub = this.routes.params.subscribe((p: any) => {
       this.userID = p.id;
+      this.spinnerService.requestInProcess(false);
     });
   }
 
@@ -35,14 +38,18 @@ export class VerifyComponent implements OnInit, OnDestroy {
     Handler to ask for verification code to be sent again
   */
   resendVerificationCode() {
-    this.service.resendVerificationCode(this.userID)
+      this.spinnerService.requestInProcess(true);
+
+      this.service.resendVerificationCode(this.userID)
       .subscribe((res: any) => {
         if (res.status === 200) {
         }
-      },
+              this.spinnerService.requestInProcess(false);
+
+          },
       err => {
-        console.log(err);
-        this.notificationServiceBus.launchNotification(true, err);
+        this.spinnerService.requestInProcess(false);
+        this.notificationServiceBus.launchNotification(true, JSON.stringify(err));
       },
       () => { });
   }
@@ -51,14 +58,17 @@ export class VerifyComponent implements OnInit, OnDestroy {
     Handler to send the verification code
   */
   verifyUser() {
-    this.service.verifyUser(this.userID, this.verificationCode)
+      this.spinnerService.requestInProcess(true);
+
+      this.service.verifyUser(this.userID, this.verificationCode)
       .subscribe((res: any) => {
         if (res.status === 200) {
-          this.router.navigate(['/dashboard']);
+            this.router.navigate(['/dashboard']);
         }
       },
       err => {
-        this.notificationServiceBus.launchNotification(true, 'The verification Code is not right.');
+          this.spinnerService.requestInProcess(false);
+          this.notificationServiceBus.launchNotification(true, 'The verification Code is not right.');
       },
       () => { });
   }

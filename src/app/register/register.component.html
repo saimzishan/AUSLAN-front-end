@@ -1,145 +1,161 @@
-
-
 <div>
-	<header id="header">
-	<a href="/"><i class="icons icons-logo"></i></a>
-</header>
-	<section id="page-signup-organisation">
-		<section>
-			<header>
-				<h1>SIGN UP AS {{ selectedRole }}</h1>
-				<p>Fields with * are required</p>
-			</header>
+    <header id="header">
+        <a href="/"><i class="icons icons-logo"></i></a>
+    </header>
+    <section id="page-signup-organisation">
+        <section>
+            <header>
+                <h1>SIGN UP AS {{ selectedRole }}</h1>
+                <p>Fields with * are required</p>
+            </header>
 
-			<form #registerForm="ngForm" class="common-form reduced-bottom" >
-				<div class="row small-collapse">
-					<div class="row-wrapper">
-						<div class="medium-6 columns">
-							<div class="form-field">
-								<label>FIRST NAME *	</label>
-
-								<input type="text" class="inline-icon inline-icon-user-circle valid" placeholder="Enter your first name"
-									   [(ngModel)]="model.first_name"
-									   name="first_name"
-									#first_name="ngModel" [rangeLength]="[3, 20]" required>
-									<span *ngIf="first_name.touched && !first_name.errors?.required && !first_name.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
-									<span *ngIf="first_name.touched && (first_name.errors?.required || first_name.errors?.rangeLength);" class="inline-icon error">
+            <form #registerForm="ngForm" class="common-form reduced-bottom">
+                <div class="row small-collapse">
+                    <div class="row-wrapper">
+                        <div class="medium-6 columns">
+                            <div class="form-field">
+                                <label>FIRST NAME * </label>
+                                <input type="text" class="inline-icon inline-icon-user-circle valid"
+                                       placeholder="Enter your first name"
+                                       [(ngModel)]="model.first_name"
+                                       name="first_name"
+                                       #first_name="ngModel" [rangeLength]="[3, 20]" required>
+                                <span *ngIf="first_name.touched && !first_name.errors?.required && !first_name.errors?.rangeLength;"
+                                      class="inline-icon inline-icon-valid valid"></span>
+                                <span *ngIf="first_name.touched && (first_name.errors?.required || first_name.errors?.rangeLength);"
+                                      class="inline-icon error">
 											<span>Minimum 3 characters required.</span>!</span>
-							</div>
-							</div>
-							<div class="medium-6 columns">
-								<div class="form-field">
-									<label>LAST NAME *</label>
+                            </div>
+                        </div>
+                        <div class="medium-6 columns">
+                            <div class="form-field">
+                                <label>LAST NAME *</label>
 
-									<input type="text" class="inline-icon inline-icon-user-circle valid" placeholder="Enter your last name" [(ngModel)]="model.last_name" name="last_name"
-										#last_name="ngModel" [rangeLength]="[3, 30]" required>
-										<span *ngIf="last_name.touched && !last_name.errors?.required && !last_name.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
-										<span *ngIf="last_name.touched && (last_name.errors?.required || last_name.errors?.rangeLength);" class="inline-icon error">
+                                <input type="text" class="inline-icon inline-icon-user-circle valid"
+                                       placeholder="Enter your last name" [(ngModel)]="model.last_name" name="last_name"
+                                       #last_name="ngModel" [rangeLength]="[3, 30]" required>
+                                <span *ngIf="last_name.touched && !last_name.errors?.required && !last_name.errors?.rangeLength;"
+                                      class="inline-icon inline-icon-valid valid"></span>
+                                <span *ngIf="last_name.touched && (last_name.errors?.required || last_name.errors?.rangeLength);"
+                                      class="inline-icon error">
 													<span>Minimum 3 characters required.</span>!</span>
-								</div>
-							</div>
-							<div class="medium-6 columns">
-								<div class="form-field">
-									<label class="icon-lock">
-							    PASSWORD *</label>
-									<input id="pass1" type="password"
-										   placeholder="Enter your password"
-										   [(ngModel)]="model.password" name="password" #password="ngModel"
-										required>
+                            </div>
+                        </div>
+                        <div class="medium-6 columns">
+                            <div class="form-field">
+                                <label class="icon-lock">
+                                    PASSWORD *</label>
+                                <input id="pass1" type="password"
+                                       placeholder="Enter your password"
+                                       [(ngModel)]="model.password" name="password" #password="ngModel"
+                                       required>
 
-										<span *ngIf="password.touched &&  (!password.errors?.required && password.errors?.rangeLength);" class="inline-icon inline-icon-valid valid"></span>
-										<span *ngIf="password.touched && (password.errors?.required || password.errors?.rangeLength);" class="inline-icon error">
+                                <span *ngIf="password.touched &&  (!password.errors?.required && password.errors?.rangeLength);"
+                                      class="inline-icon inline-icon-valid valid"></span>
+                                <span *ngIf="password.touched && (password.errors?.required || password.errors?.rangeLength);"
+                                      class="inline-icon error">
 										<span>Minimum 6 characters required.</span>!</span>
 
-								</div>
-							</div>
-							<div class="medium-6 columns">
-								<div class="form-field">
-									<label class="icon-lock">
-							    CONFIRM PASSWORD *</label>
-									<input id="certainPassword" name="certainPassword" type="password" placeholder="Confirm password" [(ngModel)]="model.confirm_password"
-										name="certainPassword" #certainPassword="ngModel" [equalTo]="password" required>
-										<span *ngIf="certainPassword.touched && (!certainPassword.errors?.required && !certainPassword.errors?.equalTo);" class="inline-icon inline-icon-valid valid"></span>
-										<span *ngIf="certainPassword.touched && (certainPassword.errors?.required || certainPassword.errors?.equalTo);" class="inline-icon error">
+                            </div>
+                        </div>
+                        <div class="medium-6 columns">
+                            <div class="form-field">
+                                <label class="icon-lock">
+                                    CONFIRM PASSWORD *</label>
+                                <input id="certainPassword" name="certainPassword" type="password"
+                                       placeholder="Confirm password" [(ngModel)]="model.confirm_password"
+                                       name="certainPassword" #certainPassword="ngModel" [equalTo]="password" required>
+                                <span *ngIf="certainPassword.touched && (!certainPassword.errors?.required && !certainPassword.errors?.equalTo);"
+                                      class="inline-icon inline-icon-valid valid"></span>
+                                <span *ngIf="certainPassword.touched && (certainPassword.errors?.required || certainPassword.errors?.equalTo);"
+                                      class="inline-icon error">
 									<span>Minimum 6 characters required.</span>!</span>
 
-								</div>
-							</div>
-							<div class="medium-6 columns">
-								<div class="form-field">
-									<label class="icon-email">
-						      EMAIL * </label>
-									<input type="email" id="email"
-										   placeholder="Enter your email"
-										   [(ngModel)]="model.email"
-										   name="email" #email="ngModel" email
-										required>
-										<span *ngIf="email.touched && !email.errors?.email;" class="inline-icon inline-icon-valid valid"></span>
-										<span *ngIf="(email.dirty || email.touched) && (email.errors?.required || email.errors?.email);" class="inline-icon error">
+                            </div>
+                        </div>
+                        <div class="medium-6 columns">
+                            <div class="form-field">
+                                <label class="icon-email">
+                                    EMAIL * </label>
+                                <input type="email" id="email"
+                                       placeholder="Enter your email"
+                                       [(ngModel)]="model.email"
+                                       name="email" #email="ngModel" email
+                                       required>
+                                <span *ngIf="email.touched && !email.errors?.email;"
+                                      class="inline-icon inline-icon-valid valid"></span>
+                                <span *ngIf="(email.dirty || email.touched) && (email.errors?.required || email.errors?.email);"
+                                      class="inline-icon error">
 										<span>Email is required</span>!</span>
-								</div>
-							</div>
-						<ng-container *ngIf="selectedRole !== 'INTERPRETER'">
-						<div class="medium-6 columns">
-							<div class="form-field">
-								<label class="icon-mobile">PHONE * </label>
-								<input type="tel" placeholder="Enter your phone" [(ngModel)]="model.phone" name="phone" #phone="ngModel" required>
-								<span *ngIf="phone.touched && !phone.errors?.required;" class="inline-icon inline-icon-valid valid"></span>
-								<span *ngIf="phone.touched && phone.errors?.required;" class="inline-icon error">
+                            </div>
+                        </div>
+                        <ng-container *ngIf="selectedRole !== 'INTERPRETER'">
+                            <div class="medium-6 columns">
+                                <div class="form-field">
+                                    <label class="icon-mobile">PHONE * </label>
+                                    <input type="tel" placeholder="Enter your phone" [(ngModel)]="model.phone"
+                                           name="phone" #phone="ngModel" required>
+                                    <span *ngIf="phone.touched && !phone.errors?.required;"
+                                          class="inline-icon inline-icon-valid valid"></span>
+                                    <span *ngIf="phone.touched && phone.errors?.required;" class="inline-icon error">
 											<span>Minimum 6 digits required.</span>!</span>
-							</div>
-						</div>
-							<div  class="medium-6 columns">
-								<div class="form-field">
-									<label class="icon-mobile">MOBILE </label>
-									<input type="tel" placeholder="Enter your mobile"
-										   [(ngModel)]="model.mobile" name="mobile" #mobile="ngModel">
+                                </div>
+                            </div>
+                            <div class="medium-6 columns">
+                                <div class="form-field">
+                                    <label class="icon-mobile">MOBILE </label>
+                                    <input type="tel" placeholder="Enter your mobile"
+                                           [(ngModel)]="model.mobile" name="mobile" #mobile="ngModel">
 
-								</div>
-							</div>
-						</ng-container>
-						<ng-container *ngIf="selectedRole === 'INTERPRETER'">
-							<div  class="medium-6 columns">
-								<div class="form-field">
-									<label class="icon-mobile">MOBILE *</label>
-									<input type="tel" placeholder="Enter your mobile"
-										   [(ngModel)]="model.mobile" name="mobile1" #mobile1="ngModel"
-										   required>
+                                </div>
+                            </div>
+                        </ng-container>
+                        <ng-container *ngIf="selectedRole === 'INTERPRETER'">
+                            <div class="medium-6 columns">
+                                <div class="form-field">
+                                    <label class="icon-mobile">MOBILE *</label>
+                                    <input type="tel" placeholder="Enter your mobile"
+                                           [(ngModel)]="model.mobile" name="mobile1" #mobile1="ngModel"
+                                           required>
 
-									<span *ngIf="mobile1.touched && !mobile1.errors?.required;" class="inline-icon inline-icon-valid valid"></span>
-									<span *ngIf="mobile1.touched && mobile1.errors?.required;" class="inline-icon error">
+                                    <span *ngIf="mobile1.touched && !mobile1.errors?.required;"
+                                          class="inline-icon inline-icon-valid valid"></span>
+                                    <span *ngIf="mobile1.touched && mobile1.errors?.required;"
+                                          class="inline-icon error">
 											<span>Minimum 6 digits required.</span>!</span>
-								</div>
-							</div>
-							<div class="medium-6 columns">
-								<div class="form-field">
-									<label class="icon-mobile">PHONE </label>
-									<input type="tel" placeholder="Enter your phone" [(ngModel)]="model.phone" name="phone1" #phone1="ngModel">
-								</div>
-							</div>
+                                </div>
+                            </div>
+                            <div class="medium-6 columns">
+                                <div class="form-field">
+                                    <label class="icon-mobile">PHONE </label>
+                                    <input type="tel" placeholder="Enter your phone" [(ngModel)]="model.phone"
+                                           name="phone1" #phone1="ngModel">
+                                </div>
+                            </div>
 
-						</ng-container>
-						<div class="medium-6 columns">
-							<div class="form-field">
-								<label>Change Picture:</label>
-								<input type="file" id="filePicker" (change)="handleFileSelect($event)">
+                        </ng-container>
+                        <div class="medium-6 columns">
+                            <div class="form-field">
+                                <label>Change Picture:</label>
+                                <input type="file" id="filePicker" (change)="handleFileSelect($event)">
 
-							</div>
-						</div>
-					</div>
-				</div>
-				<br>
-				<app-org-rep [userModel]="model" *ngIf="selectedRole === 'ORGANISATION'"></app-org-rep>
-				<app-interpreter [userModel]="model" *ngIf="selectedRole === 'INTERPRETER'"></app-interpreter>
-				<app-ind-client [userModel]="model" *ngIf="selectedRole === 'INDIVIDUALCLIENT'"></app-ind-client>
-				<br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <app-org-rep [userModel]="model" *ngIf="selectedRole === 'ORGANISATION'"></app-org-rep>
+                <app-interpreter [userModel]="model" *ngIf="selectedRole === 'INTERPRETER'"></app-interpreter>
+                <app-ind-client [userModel]="model" *ngIf="selectedRole === 'INDIVIDUALCLIENT'"></app-ind-client>
+                <br>
 
-				<div align="center">
-					<button class="login button" name="register_user" type="submit"
-						(click)="addUser(registerForm)" class="button">Register</button>
-				</div>
+                <div align="center">
+                    <button class="login button" name="register_user" type="submit"
+                            (click)="addUser(registerForm)" class="button">Register
+                    </button>
+                </div>
 
-			</form>
-		</section>
-	</section>
+            </form>
+        </section>
+    </section>
 </div>

@@ -66,18 +66,18 @@
 						<td>{{selectedBookingModel.nature_of_appointment}}</td>
 						<td>{{selectedBookingModel.venue.expected_attendance}}</td>
 						<td>{{getSpecialInstruction()}}</td>
-						<!-- td align="center">
-							<ul class="dropdown menu custom" data-dropdown-menu>
+						<td align="center" data-title="Attached">
+							<ul *ngIf="selectedBookingModel.documents_attributes.length > 0" class="dropdown menu custom" data-dropdown-menu>
 								<li>
 									<a href="#" class="icon-attach"></a>
 									<ul class="menu">
-										<li><a href="#"><i class="icon-attach"></i> Attachments.xls</a></li>
+										<li *ngFor="let attachment of selectedBookingModel.documents_attributes"><a href="{{attachment.url}}"><i class="icon-attach"></i> {{attachment.file_name}}</a></li>
 									</ul>
 								</li>
 							</ul>
 						</td>
 						<td>61 days (27 Jan)</td>
-						<td><span class="underline">02-06 TS<br>7:15 A</span></td -->
+						<td><span class="underline">02-06 TS<br>7:15 A</span></td>
 					</tr>
 				</tbody>
 			</table>

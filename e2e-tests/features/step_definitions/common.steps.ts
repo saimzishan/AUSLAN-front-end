@@ -9,6 +9,7 @@ import {BookingManagementPage} from '../../po/booking-management-page.po';
 import {ResetPage} from '../../po/reset-page.po';
 import {BookingPage} from '../../po/create-booking.po';
 import {BookingJobPage} from '../../po/booking-job.po';
+import * as path from 'path';
 
 defineSupportCode(({Given, When}) => {
 
@@ -25,11 +26,7 @@ defineSupportCode(({Given, When}) => {
         return Heroku.createBulkUsers(numberOfUser, active, type);
     }
 
-    Given(/^A booking is created/, givenBookingCreated);
-
-    function givenBookingCreated() {
-    }
-
+    Given(/^There exists an? (.*)/, Heroku.createFactory);
     Given(/^I click on my name$/, () => {
         return bookingManagementPage.hoverOnProfile('lnkLogout');
     });
@@ -90,11 +87,11 @@ defineSupportCode(({Given, When}) => {
     }
 
     Given(/^I will upload a document '(.*)'$/, documentUpload);
-
     function documentUpload(documentName: string) {
-        let fileToUpload = '/Users/hientran/Desktop/Angular/tmp/front-end/booking-system-frontend/e2e-tests/' + documentName;
+        let fileToUpload = '../' + documentName;
+        let p = path.resolve(__dirname, fileToUpload);
         let elm = element(by.css('input[type="file"]'));
-            return elm.sendKeys(fileToUpload);
+            return elm.sendKeys(p);
     }
 
     Given(/^I will close the file upload$/, documentUploadClose);
@@ -141,7 +138,7 @@ defineSupportCode(({Given, When}) => {
         return page.getElementByCss(css).click();
     }
 
-    When(/^I can see the booking state '(.*)'$/, bookingManagementPage.confirmBookingState);
+    When(/^I can see the booking state '(.*)'$/, bookingJob.confirmBookingState);
 
 
     When(/^I can see the button '(.*)' is (.*)$/, isButtonDisabled);
@@ -217,4 +214,7 @@ defineSupportCode(({Given, When}) => {
     function toNextElement (element_tag: string) {
         return page.getElementByName(element_tag).click();
     }
+    Given(/^(.*) belongs to (.*)/, (entity: string, dependant: string) => {
+        Heroku.assignEntityToDependant(entity, dependant);
+    });
 });

@@ -26,7 +26,7 @@ config.allScriptsTimeout= 99000;
 //}
 
 config.params= {
-    env: 'localhost'
+    env: process.env.E2E_ENV,
 }
 
 exports.config = config;

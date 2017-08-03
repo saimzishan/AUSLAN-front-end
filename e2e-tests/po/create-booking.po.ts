@@ -114,15 +114,20 @@ export class BookingPage extends PageObject {
         });
     }
 
+    setStartEndTime = (field: string, date: string, time: string) => {
+        let elementName = {
+            'start': 'dpEventDate',
+            'end': 'dpEventEndTime'
+        }[field];
+        this.getElementByName(elementName).sendKeys(date);
+        this.getElementByName(elementName).sendKeys(protractor.Key.TAB);
+        this.getElementByName(elementName).sendKeys(time);
+    }
+
     createBooking = () => {
-        this.getElementByName('dpEventDate').sendKeys('12/30/2017');
-        this.getElementByName('dpEventDate').sendKeys(protractor.Key.TAB);
-        this.getElementByName('dpEventDate').sendKeys('11:15AM');
 
-        this.getElementByName('dpEventEndTime').sendKeys('12/30/2017');
-        this.getElementByName('dpEventEndTime').sendKeys(protractor.Key.TAB);
-        this.getElementByName('dpEventEndTime').sendKeys('05:15PM');
-
+        this.setStartEndTime('start', '30/12/2017', '11:15AM');
+        this.setStartEndTime('end', '30/12/2017', '05:15AM');
 
         this.setElementsValueByName('address_street_number', '162');
         this.setElementsValueByName('address_street', 'Dave');
@@ -147,8 +152,28 @@ export class BookingPage extends PageObject {
         this.getElementByName('cn_phone').sendKeys('0490394512');
 
         this.getElementByName('deaf_person_eaf').sendKeys('123');
-        return this.getElementByName('btnCreateBooking').click();
+    }
 
+    clickCreateBtn = () => {
+        return this.getElementByName('btnCreateBooking').click();
+    }
+
+    setTime = (field: string, days: number, hours?: number) => {
+        let date = new Date(Date.now() + (1000 * 60 * 60 * (hours || 0)) + (1000 * 60 * 60 * 24 * (days || 0)));
+        let dd = ('0' + date.getDate()).slice(-2);
+        let mm = ('0' + (date.getMonth() + 1)).slice(-2);
+        let yy = date.getFullYear();
+        let hh: any = date.getHours();
+        let min = ('0' + date.getMinutes()).slice(-2);
+        let tt = 'AM';
+        if (hh - 12 > 0) {
+            hh -= 12;
+            tt = 'PM';
+        }
+        hh = ('0' + hh).slice(-2);
+        let dateString = [dd, mm, yy].join('/');
+        let timeString = hh + ':' + min + tt;
+        this.setStartEndTime(field, dateString, timeString);
     }
 }
 

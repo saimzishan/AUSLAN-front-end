@@ -1,6 +1,7 @@
 import { ROLE } from './role.enum';
 import { Address ,  Venue } from './venue.entity';
 import {Contact} from './contact.entity';
+import {AvailabilityBlock} from './availability-block.entity';
 
 export enum interpreter_avalability {}
 export enum blockout_availability {}
@@ -77,6 +78,7 @@ export class User {
 
 
 export class Organisational extends User {
+  public org_id: number;
   public abn: number;
   public organisation_primary_contact: Contact = new Contact();
   public address_attributes: Address = new Address();
@@ -129,7 +131,9 @@ export class OrganisationalRepresentative extends Organisational {
           'O:' + this.reffered_other : this.reffered_by,
         'customer_reference': this.customer_ref,
         'organisation_attributes' :
-              {'abn' : this.abn , 'name' : this.name , 'group_email' : this.group_email ,
+              {'abn' : this.abn ,
+                  'id': this.org_id ,
+                  'name' : this.name , 'group_email' : this.group_email ,
                 'branch_office' : this.branch_office , 'phone_number' : this.phone ,
                 'preferred_contact_method' : this.preferred_contact_method ,
                 'address_attributes' : this.address_attributes ,
@@ -170,7 +174,7 @@ export class OrganisationalRepresentative extends Organisational {
     obj.organisation = obj.organisation || obj.organisation_attributes;
     obj.organisation.billing_account = obj.organisation.billing_account ||
         obj.organisation.billing_account_attributes;
-
+    this.org_id = obj.organisation.id;
     this.abn = obj.organisation.abn;
     this.name = obj.organisation.name;
     this.group_email = obj.organisation.group_email;
@@ -344,21 +348,11 @@ export class Interpreter extends User {
   public location_pref = 'VIC';
   public comm_pref = 'SMS AND EMAIL';
   public assignments_attributes = [];
-  public availability_blocks_attributes = [];
+  public availability_blocks_attributes: Array<AvailabilityBlock> = [];
 
   get user_type() {
     return 'Interpreter';
   }
 
 
-}
-
-export class AvailabilityBlock {
-  public id = -1;
-  public name = '';
-  public start_time = '';
-  public end_time = '';
-  public recurring = false;
-  public frequency = '';
-  public booking_id = -1;
 }
