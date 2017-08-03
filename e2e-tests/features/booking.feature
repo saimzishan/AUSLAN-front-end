@@ -5,7 +5,7 @@ Feature: Booking Management
     And I am on a computer
     And I am shown the login screen, with picture and signup button
 
-  @runThis
+  @ignoreThis
   Scenario: Administrator can create a booking
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
@@ -17,7 +17,7 @@ Feature: Booking Management
     Then I am on the bookings page
     Then I will be shown with bookings
 
-  @runThis
+  @ignoreThis
   Scenario: Booking Officer can create a booking
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
@@ -29,7 +29,7 @@ Feature: Booking Management
     Then I am on the bookings page
     Then I will be shown with bookings
 
-  @runThis
+  @ignoreThis
   Scenario: Organisational Representative can create a booking
     Given I exist as an Organisational Representative
     And I sign in with valid Organisational Representative credentials
@@ -54,14 +54,14 @@ Feature: Booking Management
     Then I will be shown with bookings
 
 
-  @runThis
+  @ignoreThis
   Scenario: Interpreter can NOT create a booking
     Given I exist as an Interpreter
     And I sign in with valid Interpreter credentials
     And I am on the bookings page
     Then I don't see any new New Booking link
 
-  @runThis
+  @ignoreThis
   Scenario: Booking Officer can create duplicate booking, a booking is created
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
@@ -79,16 +79,16 @@ Feature: Booking Management
     Then I will be shown with bookings
     Then I expect the booking count to be greater then before
 
-  @runThis
-  Scenario: Administrator can create a booking
+  @ignoreThis
+  Scenario: Administrator can create a booking with pdf
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
     And I am on the bookings page
     When I click on 'New Booking'
     Then I will be taken to the 'New Booking' form
 #    Then I click on BUTTON name 'uploader'
-    Then I will upload a document
-    Then I will see attachment
+    Then I will upload a document 'sushi.pdf'
+    Then I will see attachment 'sushi.pdf'
     Then I will close the file upload
     Then I fill New Booking form fields correctly
     Then I get a valid create booking notification
@@ -96,16 +96,48 @@ Feature: Booking Management
     Then I will be shown with bookings
 
 
-  @runThis
-  Scenario: Booking Officer can create a booking
+  @ignoreThis
+  Scenario: Booking Officer can create a booking with pdf
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
     And I am on the bookings page
     When I click on 'New Booking'
     Then I will be taken to the 'New Booking' form
 #    Then I click on BUTTON name 'uploader'
-    Then I will upload a document
-    Then I will see attachment
+    Then I will upload a document 'sushi.pdf'
+    Then I will see attachment 'sushi.pdf'
+    Then I will close the file upload
+    Then I fill New Booking form fields correctly
+    Then I get a valid create booking notification
+    Then I am on the bookings page
+    Then I will be shown with bookings
+
+  @ignoreThis
+  Scenario: Administrator can create a booking with doc
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on the bookings page
+    When I click on 'New Booking'
+    Then I will be taken to the 'New Booking' form
+#    Then I click on BUTTON name 'uploader'
+    Then I will upload a document 'docu_not_sushi.doc'
+    Then I will see attachment 'docu_not_sushi.doc'
+    Then I will close the file upload
+    Then I fill New Booking form fields correctly
+    Then I get a valid create booking notification
+    Then I am on the bookings page
+    Then I will be shown with bookings
+
+  @ignoreThis
+  Scenario: Booking Officer can create a booking with doc
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    And I am on the bookings page
+    When I click on 'New Booking'
+    Then I will be taken to the 'New Booking' form
+#    Then I click on BUTTON name 'uploader'
+    Then I will upload a document 'docu_not_sushi.doc'
+    Then I will see attachment 'docu_not_sushi.doc'
     Then I will close the file upload
     Then I fill New Booking form fields correctly
     Then I get a valid create booking notification

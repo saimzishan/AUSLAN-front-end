@@ -81,18 +81,18 @@ defineSupportCode(({Given, When}) => {
         return browser.driver.manage().window().setSize(420, 768);
     }
 
-    Given(/^I will see attachment$/, verifyAttachment);
+    Given(/^I will see attachment '(.*)'$/, verifyAttachment);
 
-    function verifyAttachment() {
-        return element(by.partialButtonText('sushi.pdf')).isPresent().then((elm) => {
+    function verifyAttachment(attachmentName: string) {
+        return element(by.partialButtonText(attachmentName)).isPresent().then((elm) => {
                 expect(elm).to.exist;
         });
     }
 
-    Given(/^I will upload a document$/, documentUpload);
+    Given(/^I will upload a document '(.*)'$/, documentUpload);
 
-    function documentUpload() {
-        let fileToUpload = '/Users/hientran/Desktop/Angular/tmp/front-end/booking-system-frontend/e2e-tests/sushi.pdf';
+    function documentUpload(documentName: string) {
+        let fileToUpload = '/Users/hientran/Desktop/Angular/tmp/front-end/booking-system-frontend/e2e-tests/' + documentName;
         let elm = element(by.css('input[type="file"]'));
             return elm.sendKeys(fileToUpload);
     }
