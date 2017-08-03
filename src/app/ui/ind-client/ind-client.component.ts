@@ -12,13 +12,6 @@ export class IndClientComponent   implements  OnInit {
   @Input() userModel: IndividualClient;
   address_title = 'INDIVIDUAL CLIENT ADDRESS';
   ngOnInit() {
-    /*
-    this.userModel.ndis_validity_start_date = GLOBAL.fixDateFormat(this.userModel.ndis_validity_start_date);
-    this.userModel.ndis_validity_end_date = GLOBAL.fixDateFormat(this.userModel.ndis_validity_end_date);
-
-    this.userModel.eaf_start_date = GLOBAL.fixDateFormat(this.userModel.eaf_start_date);
-    this.userModel.eaf_end_date = GLOBAL.fixDateFormat(this.userModel.eaf_end_date);
-    */
     delete this.userModel.password;
 
   }

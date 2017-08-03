@@ -34,7 +34,7 @@ test:
     - cp -rf tmp/ $CIRCLE_ARTIFACTS/
     - codeclimate-test-reporter < $CIRCLE_ARTIFACTS/coverage/coverage.lcov
     - rm -rf dist
-    - ng build --aot --env=stage
+    - ng build --aot --env=canary
 
 deployment:
     commands:

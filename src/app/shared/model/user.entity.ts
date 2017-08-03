@@ -182,8 +182,8 @@ export class OrganisationalRepresentative extends Organisational {
     this.group_email = obj.organisation.group_email;
     this.special_instructions = obj.special_instructions;
     this.branch_office = obj.branch_office;
-    this.reffered_by = Boolean( obj.discovery_of_auslan ) && obj.discovery_of_auslan.startsWith('O:') ?
-        'Other' : '';
+      this.reffered_by = Boolean( obj.discovery_of_auslan ) ? obj.discovery_of_auslan.startsWith('O:') ?
+          'Other' : obj.discovery_of_auslan : '';
     this.reffered_other = this.reffered_by === 'OTHER'  ?
         obj.discovery_of_auslan.replaceAll('O:') : '';
     this.customer_ref = obj.customer_reference;
@@ -296,8 +296,8 @@ constructor(data) {
     this.eaf_start_date = obj.eaf_start_date;
     this.eaf_end_date = obj.eaf_end_date;
     this.special_instructions = obj.special_instructions;
-    this.reffered_by = Boolean( obj.discovery_of_auslan ) && obj.discovery_of_auslan.startsWith('O:') ?
-        'Other' : '';
+    this.reffered_by = Boolean( obj.discovery_of_auslan ) ? obj.discovery_of_auslan.startsWith('O:') ?
+        'Other' : obj.discovery_of_auslan : '';
     this.reffered_other = this.reffered_by === 'OTHER' ?
         obj.discovery_of_auslan.replaceAll('O:') : '';
     this.email_receipt = obj.send_email_on_receipt_of_request;
