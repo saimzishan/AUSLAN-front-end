@@ -37,6 +37,41 @@ export class UserProfilePage extends PageObject {
         return this.setValue(input_field, updated_text);
     }
 
+    updateMandatoryFields = (type: string, userType: string) => {
+        let input = 'AAA';
+        if (type === 'tel') {
+            input = '111';
+        }
+        return $$('input[type="' + type + '"]').each((el, index) => {
+            return el.getAttribute('name').then((val) => {
+                if (val === 'mobile' || val === 'mobile1' || val === 'phone' || val === 'phone1') {
+                    return;
+                } else {
+                    return this.setValue(el, input);
+                }
+            });
+        });
+    }
+
+    mandatoryFieldsIsUpdated = (type: string, userType: string) => {
+        let input = 'AAA';
+        if (type === 'tel') {
+            input = '111';
+        }
+        // browser.explore();
+        return this.getAllElementByCSS('input[type="' + type + '"]').each((el, index) => {
+            return el.getAttribute('name').then((val) => {
+                if (val === 'mobile' || val === 'mobile1' || val === 'phone' || val === 'phone1') {
+                    return;
+                } else {
+                    el.getAttribute('value').then((val) => {
+                        expect(val.endsWith(input)).to.be.true;
+                    });
+                }
+            });
+        });
+    };
+
     updateDropDownField = (fields_string: string, updated_text: string) => {
         const selected_label = this.getElementByCSSandText('label', fields_string);
         const div = this.getParent(selected_label);
@@ -48,7 +83,7 @@ export class UserProfilePage extends PageObject {
         const selected_label = this.getElementByCSSandText('label', fields_string);
         const div = this.getParent(selected_label);
         let input_field = this.getElementInsideByTag(div, 'input');
-        return input_field.getAttribute('value').then( (value) => {
+        return input_field.getAttribute('value').then((value) => {
             expect(value).to.be.equal(updated_text);
         });
     }
@@ -57,7 +92,7 @@ export class UserProfilePage extends PageObject {
         const selected_label = this.getElementByCSSandText('label', fields_string);
         const div = this.getParent(selected_label);
         let input_field = this.getElementInsideByTag(div, 'select');
-        return input_field.getAttribute('ng-reflect-model').then( (value) => {
+        return input_field.getAttribute('ng-reflect-model').then((value) => {
             expect(value).to.be.equal(updated_text);
         });
     }

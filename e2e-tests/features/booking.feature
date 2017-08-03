@@ -10,59 +10,59 @@ Feature: Booking Management
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
     And I am on the bookings page
-    When I click on 'New Booking'
-    Then I will be taken to the 'New Booking' form
-    Then I fill New Booking form fields correctly
-    Then I click the create booking button
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    When I fill New Booking form fields correctly
+    And I click the create booking button
     Then I get a valid create booking notification
-    Then I am on the bookings page
-    Then I will be shown with bookings
+    And I am on the bookings page
+    And I will be shown with bookings
 
   @ignoreThis
   Scenario: Booking Officer can create a booking
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
     And I am on the bookings page
-    When I click on 'New Booking'
-    Then I will be taken to the 'New Booking' form
-    Then I fill New Booking form fields correctly
-    Then I click the create booking button
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    When I fill New Booking form fields correctly
+    And I click the create booking button
     Then I get a valid create booking notification
-    Then I am on the bookings page
-    Then I will be shown with bookings
+    And I am on the bookings page
+    And I will be shown with bookings
 
   @ignoreThis
   Scenario: Organisational Representative can create a booking
     Given I exist as an Organisational Representative
     And I sign in with valid Organisational Representative credentials
     And I am on the bookings page
-    When I click on 'New Booking'
-    Then I will be taken to the 'New Booking' form
-    Then I fill New Booking form fields correctly
-    Then I click the create booking button
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    When I fill New Booking form fields correctly
+    And I click the create booking button
     Then I get a valid create booking notification
-    Then I am on the bookings page
-    Then I will be shown with bookings
+    And I am on the bookings page
+    And I will be shown with bookings
 
   @ignoreThis
   Scenario: Individual Client can create a booking
     Given I exist as an Individual Client
     And I sign in with valid Individual Client credentials
     And I am on the bookings page
-    When I click on 'New Booking'
-    Then I will be taken to the 'New Booking' form
-    Then I fill New Booking form fields correctly
-    Then I click the create booking button
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    When I fill New Booking form fields correctly
+    And I click the create booking button
     Then I get a valid create booking notification
-    Then I am on the bookings page
-    Then I will be shown with bookings
+    And I am on the bookings page
+    And I will be shown with bookings
 
   @ignoreThis
   Scenario: Interpreter can NOT create a booking
     Given I exist as an Interpreter
-    And I sign in with valid Interpreter credentials
-    And I am on the bookings page
-    Then I don't see any new New Booking link
+    When I sign in with valid Interpreter credentials
+    Then I am on the bookings page
+    And I don't see any new New Booking link
 
   @ignoreThis
   Scenario: Booking Officer can create duplicate booking, a booking is created
@@ -82,100 +82,150 @@ Feature: Booking Management
     Then I will be shown with bookings
     Then I expect the booking count to be greater then before
 
-  @runThis
+  @ignoreThis
   Scenario: Administrator can create a booking with pdf
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
     And I am on the bookings page
-    When I click on 'New Booking'
-    Then I will be taken to the 'New Booking' form
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
 #    Then I click on BUTTON name 'uploader'
-    Then I will upload a document 'sushi.pdf'
-    Then I will see attachment 'sushi.pdf'
-    Then I will close the file upload
-    Then I fill New Booking form fields correctly
-    Then I click the create booking button
+    When I will upload a document 'sushi.pdf'
+    And I will see attachment 'sushi.pdf'
+    And I will close the file upload
+    And I fill New Booking form fields correctly
+    And I click the create booking button
     Then I get a valid create booking notification
-    Then I am on the bookings page
-    Then I will be shown with bookings
+    And I am on the bookings page
+    And I will be shown with bookings
 
-  @runThis
+  @ignoreThis
   Scenario: Booking Officer can create a booking with pdf
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
     And I am on the bookings page
-    When I click on 'New Booking'
-    Then I will be taken to the 'New Booking' form
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
 #    Then I click on BUTTON name 'uploader'
-    Then I will upload a document 'sushi.pdf'
-    Then I will see attachment 'sushi.pdf'
-    Then I will close the file upload
-    Then I fill New Booking form fields correctly
+    When I will upload a document 'sushi.pdf'
+    And I will see attachment 'sushi.pdf'
+    And I will close the file upload
+    And I fill New Booking form fields correctly
+    And I click the create booking button
     Then I get a valid create booking notification
-    Then I am on the bookings page
-    Then I will be shown with bookings
+    And I am on the bookings page
+    And I will be shown with bookings
 
-  @runThis
+  @ignoreThis
   Scenario: Administrator can create a booking with doc
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
     And I am on the bookings page
-    When I click on 'New Booking'
-    Then I will be taken to the 'New Booking' form
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
 #    Then I click on BUTTON name 'uploader'
-    Then I will upload a document 'docu_not_sushi.doc'
-    Then I will see attachment 'docu_not_sushi.doc'
-    Then I will close the file upload
-    Then I fill New Booking form fields correctly
-    Then I click the create booking button
+    When I will upload a document 'docu_not_sushi.doc'
+    And I will see attachment 'docu_not_sushi.doc'
+    And I will close the file upload
+    And I fill New Booking form fields correctly
+    And I click the create booking button
     Then I get a valid create booking notification
-    Then I am on the bookings page
-    Then I will be shown with bookings
+    And I am on the bookings page
+    And I will be shown with bookings
 
-  @runThis
+  @ignoreThis
   Scenario: Booking Officer can create a booking with doc
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
     And I am on the bookings page
-    When I click on 'New Booking'
-    Then I will be taken to the 'New Booking' form
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
 #    Then I click on BUTTON name 'uploader'
-    Then I will upload a document 'docu_not_sushi.doc'
-    Then I will see attachment 'docu_not_sushi.doc'
-    Then I will close the file upload
-    Then I fill New Booking form fields correctly
+    When I will upload a document 'docu_not_sushi.doc'
+    And I will see attachment 'docu_not_sushi.doc'
+    And I will close the file upload
+    And I fill New Booking form fields correctly
+    And I click the create booking button
     Then I get a valid create booking notification
-    Then I am on the bookings page
-    Then I will be shown with bookings
+    And I am on the bookings page
+    And I will be shown with bookings
 
-  @runThis
+  @ignoreThis
   Scenario: Administrator can create a booking with doc
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
     And I am on the bookings page
-    When I click on 'New Booking'
-    Then I will be taken to the 'New Booking' form
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
 #    Then I click on BUTTON name 'uploader'
-    Then I will upload a document 'ppt_not_sushi.ppt'
-    Then I will see attachment 'ppt_not_sushi.ppt'
-    Then I will close the file upload
-    Then I fill New Booking form fields correctly
+    When I will upload a document 'ppt_not_sushi.ppt'
+    And I will see attachment 'ppt_not_sushi.ppt'
+    And I will close the file upload
+    And I fill New Booking form fields correctly
+    And I click the create booking button
     Then I get a valid create booking notification
-    Then I am on the bookings page
-    Then I will be shown with bookings
+    And I am on the bookings page
+    And I will be shown with bookings
 
-  @runThis
+  @ignoreThis
   Scenario: Booking Officer can create a booking with doc
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
     And I am on the bookings page
-    When I click on 'New Booking'
-    Then I will be taken to the 'New Booking' form
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
 #    Then I click on BUTTON name 'uploader'
-    Then I will upload a document 'ppt_not_sushi.ppt'
-    Then I will see attachment 'ppt_not_sushi.ppt'
-    Then I will close the file upload
-    Then I fill New Booking form fields correctly
+    When I will upload a document 'ppt_not_sushi.ppt'
+    And I will see attachment 'ppt_not_sushi.ppt'
+    And I will close the file upload
+    And I fill New Booking form fields correctly
+    And I click the create booking button
     Then I get a valid create booking notification
-    Then I am on the bookings page
-    Then I will be shown with bookings
+    And I am on the bookings page
+    And I will be shown with bookings
+
+# ---------------------------------------- AUSLAN1-252 -> START ----------------------------------------
+  @runThis
+  Scenario: Booking Officer can create a non-standard booking
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    And I am on the bookings page
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    When I fill New Booking form fields correctly with non-standard time from 04:00AM to 05:00AM
+    And I click the create booking button
+    Then I will be shown a popup message
+
+  @runThis
+  Scenario: Administrator can create a non-standard booking
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on the bookings page
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    When I fill New Booking form fields correctly with non-standard time from 04:00AM to 05:00AM
+    And I click the create booking button
+    Then I will be shown a popup message
+
+  @runThis
+  Scenario: Organisational Representative can create a non-standard booking
+    Given I exist as an Organisational Representative
+    And I sign in with valid Organisational Representative credentials
+    And I am on the bookings page
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    When I fill New Booking form fields correctly with non-standard time from 04:00AM to 05:00AM
+    And I click the create booking button
+    Then I will be shown a popup message
+
+  @runThis
+  Scenario: Individual Client can create a non-standard booking
+    Given I exist as an Individual Client
+    And I sign in with valid Individual Client credentials
+    And I am on the bookings page
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    When I fill New Booking form fields correctly with non-standard time from 04:00AM to 05:00AM
+    And I click the create booking button
+    Then I will be shown a popup message
+# ---------------------------------------- AUSLAN1-252 -> END ----------------------------------------

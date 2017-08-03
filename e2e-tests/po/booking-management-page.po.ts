@@ -58,10 +58,10 @@ export class BookingManagementPage extends PageObject {
     clickOnNewBooking = () => {
         return this.getElementByID('lnkNewBooking').click();
     }
-
-    clickOnBookings = () => {
-        return this.getElementByID('lnkBooking').click();
-    }
+    //
+    // clickOnBookings = () => {
+    //     return this.getElementByID('lnkBooking').click();
+    // }
     showPopup = () => {
         return browser.wait(protractor.ExpectedConditions.presenceOf(this.getElementByCss('app-popup')), 30000).then(() => {
 

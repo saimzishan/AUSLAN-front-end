@@ -31,6 +31,10 @@ defineSupportCode(({Given, Then, When}) => {
         }
     }
 
+    When(/^I change some input (.*) fields of the (.*)/, userProfilePage.updateMandatoryFields);
+
+    When(/^I verify input (.*) fields of the (.*) is updated/, userProfilePage.mandatoryFieldsIsUpdated);
+
     When(/^I change the input field (.*) with (.*)/, userProfilePage.updateTheField);
 
     When(/^I change the dropwdown field (.*) with (.*)/, userProfilePage.updateDropDownField);

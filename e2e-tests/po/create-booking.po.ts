@@ -154,9 +154,45 @@ export class BookingPage extends PageObject {
         this.getElementByName('deaf_person_eaf').sendKeys('123');
     }
 
+    createBookingWithTime = (standard: string, startTime: string, endTime: string) => {
+        this.setStartEndTime('start', '30/12/2017', startTime);
+        this.setStartEndTime('end', '30/12/2017', endTime);
+
+        this.setElementsValueByName('address_street_number', '162');
+        this.setElementsValueByName('address_street', 'Dave');
+        this.setElementsValueByName('address_post_code', '3064');
+        this.setElementsValueByName('address_suburb', 'Parkville');
+        this.setElementsValueByName('address_state', 'VIC'); // dropdown
+
+        this.getElementByName('attendee_count').sendKeys('1');
+        this.getElementByName('interpreters_count').sendKeys('2');
+
+        this.getElementByName('nature_of_appointment').sendKeys('COURT');
+        this.getElementByName('specific_nature_of_appointment').sendKeys('DHS ORDER');
+
+        this.getElementByName('raw_booking_requested_by').sendKeys('Luke');
+        this.getElementByName('raw_booking_requested_by_ln').sendKeys('Orange');
+
+        this.getElementByName('ext_ref_num').sendKeys('321');
+
+        this.getElementByName('cn_first_name').sendKeys('John');
+        this.getElementByName('cn_last_name').sendKeys('Travolta');
+        this.getElementByName('cn_email').sendKeys('jt@star.com.au');
+        this.getElementByName('cn_phone').sendKeys('0490394512');
+
+        this.getElementByName('deaf_person_eaf').sendKeys('123');
+    }
+
     clickCreateBtn = () => {
         return this.getElementByName('btnCreateBooking').click();
     }
+
+    // popupForNonStandard = () => {
+    //     browser.explore();
+    //     return browser.wait(protractor.ExpectedConditions.presenceOf(this.getElementByCss('')), 5000).then(() => {
+    //         expect(this.getElementByCss('')).to.exist;
+    //     });
+    // }
 
     setTime = (field: string, days: number, hours?: number) => {
         let date = new Date(Date.now() + (1000 * 60 * 60 * (hours || 0)) + (1000 * 60 * 60 * 24 * (days || 0)));
