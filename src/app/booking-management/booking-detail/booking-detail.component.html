@@ -427,7 +427,6 @@
                             <md-radio-button value=true>YES</md-radio-button>
                             <md-radio-button value=false>NO</md-radio-button>
                         </md-radio-group>
-
                     </div>
                 </div>
                 <div class="row-wrapper">
@@ -435,7 +434,7 @@
                         <div class="form-field">
                             <label>Special instructions <span mdTooltip="Enter Special instructions!"><i
                                     class="inline-icon-tip"></i></span></label>
-                            <input [(ngModel)]="specialInstruction"  name= 'txtSpecialInstruction' type='text' placeholder="Enter Special instructions">
+                            <input [(ngModel)]="bookingModel.special_instructions"  name= 'txtSpecialInstruction' type='text' placeholder="Enter Special instructions">
 
                         </div>
                     </div>
