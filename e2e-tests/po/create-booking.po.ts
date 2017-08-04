@@ -25,7 +25,7 @@ export class BookingPage extends PageObject {
     }
 
     getSuccessNotificationContent = () => {
-        return browser.sleep(500).then( () => {
+        return browser.sleep(500).then(() => {
             NotificationObject.getNotificationContent('The Booking has been created.');
         });
     }
@@ -154,7 +154,18 @@ export class BookingPage extends PageObject {
         this.getElementByName('deaf_person_eaf').sendKeys('123');
     }
 
-    createBookingWithTime = (standard: string, startTime: string, endTime: string) => {
+    checkTheFieldExist = (cant: string, fieldName: string) => {
+        if (cant === 'can\'t') {
+            return this.getElementByCss(fieldName).isPresent().then((val) => {
+                expect(val).to.false;
+            });
+        }
+        return browser.wait(protractor.ExpectedConditions.presenceOf(this.getElementByName('ext_ref_num')), 5000).then(() => {
+            expect(this.getElementByName(fieldName)).to.exist;
+        });
+    }
+
+    createBookingWithTimeAndInterpreter = (standard: string, startTime: string, endTime: string, interpreterNum: string) => {
         this.setStartEndTime('start', '30/12/2017', startTime);
         this.setStartEndTime('end', '30/12/2017', endTime);
 
@@ -165,7 +176,8 @@ export class BookingPage extends PageObject {
         this.setElementsValueByName('address_state', 'VIC'); // dropdown
 
         this.getElementByName('attendee_count').sendKeys('1');
-        this.getElementByName('interpreters_count').sendKeys('2');
+        this.getElementByName('interpreters_count').clear();
+        this.getElementByName('interpreters_count').sendKeys(interpreterNum);
 
         this.getElementByName('nature_of_appointment').sendKeys('COURT');
         this.getElementByName('specific_nature_of_appointment').sendKeys('DHS ORDER');
@@ -173,7 +185,7 @@ export class BookingPage extends PageObject {
         this.getElementByName('raw_booking_requested_by').sendKeys('Luke');
         this.getElementByName('raw_booking_requested_by_ln').sendKeys('Orange');
 
-        this.getElementByName('ext_ref_num').sendKeys('321');
+        // this.getElementByName('ext_ref_num').sendKeys('321');
 
         this.getElementByName('cn_first_name').sendKeys('John');
         this.getElementByName('cn_last_name').sendKeys('Travolta');

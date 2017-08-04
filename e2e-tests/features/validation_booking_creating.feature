@@ -15,7 +15,7 @@ Feature: Validation of Booking Management. Not mention about those unsure fields
     And I am on the bookings page
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
-    When I fill the field 'address_street' incorrectly
+    When I fill the field 'address_street' with value 'F'
     And I jump to 'address_suburb' element
     Then I will get a error notification
 
@@ -26,7 +26,7 @@ Feature: Validation of Booking Management. Not mention about those unsure fields
     And I am on the bookings page
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
-    When I fill the field 'address_suburb' incorrectly
+    When I fill the field 'address_suburb' with value 'S'
     And I jump to 'address_post_code' element
     Then I will get a error notification
 
@@ -37,7 +37,7 @@ Feature: Validation of Booking Management. Not mention about those unsure fields
     And I am on the bookings page
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
-    When I fill the field 'address_post_code' incorrectly
+    When I fill the field 'address_post_code' with value '3'
     And I jump to 'raw_booking_requested_by' element
     Then I will get a error notification
 
@@ -48,7 +48,7 @@ Feature: Validation of Booking Management. Not mention about those unsure fields
     And I am on the bookings page
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
-    When I fill the field 'raw_booking_requested_by' incorrectly
+    When I fill the field 'raw_booking_requested_by' with value 'G'
     And I jump to 'raw_booking_requested_by_ln' element
     Then I will get a error notification
 
@@ -59,8 +59,107 @@ Feature: Validation of Booking Management. Not mention about those unsure fields
     And I am on the bookings page
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
-    When I fill the field 'raw_booking_requested_by_ln' incorrectly
+    When I fill the field 'raw_booking_requested_by_ln' with value 'C'
     And I jump to 'attendee_count' element
+    Then I will get a error notification
+
+  @runThis
+  Scenario: Administrator can create a booking
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on the bookings page
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    When I fill the field 'deaf_person_eaf' with value ''
+    And I jump to 'deaf_person_name' element
+    Then I will get a error notification
+
+  @runThis
+  Scenario: Administrator can create a booking
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on the bookings page
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    When I fill the field 'deaf_person_name' with value 'G'
+    And I jump to 'deaf_person_last_name' element
+    Then I will get a error notification
+
+  @runThis
+  Scenario: Administrator can create a booking
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on the bookings page
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    When I fill the field 'deaf_person_last_name' with value 'C'
+    And I jump to 'deaf_person_email' element
+    Then I will get a error notification
+
+  @runThis
+  Scenario: Administrator can create a booking
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on the bookings page
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    When I fill the field 'deaf_person_email' with value 'georgeorganisationalrepresentative'
+    And I jump to 'deaf_person_mobile' element
+    Then I will get a error notification
+
+  @runThis
+  Scenario: Administrator can create a booking
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on the bookings page
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    When I fill the field 'deaf_person_mobile' with value '1'
+    And I jump to 'cn_first_name' element
+    Then I will get a error notification
+
+  @runThis
+  Scenario: Administrator can create a booking
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on the bookings page
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    When I fill the field 'cn_first_name' with value 'G'
+    And I jump to 'cn_last_name' element
+    Then I will get a error notification
+
+  @runThis
+  Scenario: Administrator can create a booking
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on the bookings page
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    When I fill the field 'cn_last_name' with value 'C'
+    And I jump to 'cn_email' element
+    Then I will get a error notification
+
+  @runThis
+  Scenario: Administrator can create a booking
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on the bookings page
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    When I fill the field 'cn_email' with value 'georgeorganisationalrepresentative'
+    And I jump to 'cn_phone' element
+    Then I will get a error notification
+
+  @runThis
+  Scenario: Administrator can create a booking
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on the bookings page
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    When I fill the field 'cn_phone' with value '1'
+    And I jump to 'cn_first_name' element
     Then I will get a error notification
 
 #  VALIDATION ICON
@@ -71,7 +170,7 @@ Feature: Validation of Booking Management. Not mention about those unsure fields
     And I am on the bookings page
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
-    When I fill the field 'address_street' correctly
+    When I fill the field 'address_street' with value 'Flemington'
     And I jump to 'address_suburb' element
     Then I will get a valid notification
 
@@ -82,7 +181,7 @@ Feature: Validation of Booking Management. Not mention about those unsure fields
     And I am on the bookings page
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
-    When I fill the field 'address_suburb' correctly
+    When I fill the field 'address_suburb' with value 'Solly'
     And I jump to 'address_post_code' element
     Then I will get a valid notification
 
@@ -93,7 +192,7 @@ Feature: Validation of Booking Management. Not mention about those unsure fields
     And I am on the bookings page
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
-    When I fill the field 'address_post_code' correctly
+    When I fill the field 'address_post_code' with value '3054'
     And I jump to 'raw_booking_requested_by' element
     Then I will get a valid notification
 
@@ -104,7 +203,7 @@ Feature: Validation of Booking Management. Not mention about those unsure fields
     And I am on the bookings page
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
-    When I fill the field 'raw_booking_requested_by' correctly
+    When I fill the field 'raw_booking_requested_by' with value 'George'
     And I jump to 'raw_booking_requested_by_ln' element
     Then I will get a valid notification
 
@@ -115,6 +214,6 @@ Feature: Validation of Booking Management. Not mention about those unsure fields
     And I am on the bookings page
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
-    When I fill the field 'raw_booking_requested_by_ln' correctly
+    When I fill the field 'raw_booking_requested_by_ln' with value 'Charalambous'
     And I jump to 'attendee_count' element
     Then I will get a valid notification

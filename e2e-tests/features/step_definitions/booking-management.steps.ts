@@ -72,6 +72,8 @@ defineSupportCode(({Given, Then, When}) => {
     // Click the create booking button
     Then(/^I click the create booking button$/, createBookingPO.clickCreateBtn);
 
+    Then(/^I (.*) see the (.*) field$/, createBookingPO.checkTheFieldExist);
+
     // Then(/^I get the popup warning that is the non-standard booking$/, createBookingPO.popupForNonStandard)
 
 //    WORKING ON BELOW

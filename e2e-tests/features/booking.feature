@@ -185,6 +185,52 @@ Feature: Booking Management
     And I will be shown with bookings
 
 # ---------------------------------------- AUSLAN1-252 -> START ----------------------------------------
+  @ignoreThis
+  Scenario: Booking Officer can create a non-standard booking
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    And I am on the bookings page
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    When I fill New Booking form fields correctly with non-standard time from 04:00AM to 05:00AM with 1 interpreters
+    And I click the create booking button
+    Then I will be shown a popup message
+
+  @ignoreThis
+  Scenario: Administrator can create a non-standard booking
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on the bookings page
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    When I fill New Booking form fields correctly with non-standard time from 04:00AM to 05:00AM with 1 interpreters
+    And I click the create booking button
+    Then I will be shown a popup message
+
+  @ignoreThis
+  Scenario: Organisational Representative can create a non-standard booking
+    Given I exist as an Organisational Representative
+    And I sign in with valid Organisational Representative credentials
+    And I am on the bookings page
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    When I fill New Booking form fields correctly with non-standard time from 04:00AM to 05:00AM with 1 interpreters
+    And I click the create booking button
+    Then I will be shown a popup message
+
+  @ignoreThis
+  Scenario: Individual Client can create a non-standard booking
+    Given I exist as an Individual Client
+    And I sign in with valid Individual Client credentials
+    And I am on the bookings page
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    When I fill New Booking form fields correctly with non-standard time from 04:00AM to 05:00AM with 1 interpreters
+    And I click the create booking button
+    Then I will be shown a popup message
+# ---------------------------------------- AUSLAN1-252 -> END ----------------------------------------
+
+# ---------------------------------------- AUSLAN1-254 -> START ----------------------------------------
   @runThis
   Scenario: Booking Officer can create a non-standard booking
     Given I exist as an Booking Officer
@@ -192,9 +238,8 @@ Feature: Booking Management
     And I am on the bookings page
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
-    When I fill New Booking form fields correctly with non-standard time from 04:00AM to 05:00AM
-    And I click the create booking button
-    Then I will be shown a popup message
+    When I fill New Booking form fields correctly with non-standard time from 04:00AM to 05:01AM with 1 interpreters
+    Then I am shown a validation error with the text 'You may require more than 1 interpreter for this booking'
 
   @runThis
   Scenario: Administrator can create a non-standard booking
@@ -203,9 +248,8 @@ Feature: Booking Management
     And I am on the bookings page
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
-    When I fill New Booking form fields correctly with non-standard time from 04:00AM to 05:00AM
-    And I click the create booking button
-    Then I will be shown a popup message
+    When I fill New Booking form fields correctly with non-standard time from 04:00AM to 05:01AM with 1 interpreters
+    Then I am shown a validation error with the text 'You may require more than 1 interpreter for this booking'
 
   @runThis
   Scenario: Organisational Representative can create a non-standard booking
@@ -214,9 +258,8 @@ Feature: Booking Management
     And I am on the bookings page
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
-    When I fill New Booking form fields correctly with non-standard time from 04:00AM to 05:00AM
-    And I click the create booking button
-    Then I will be shown a popup message
+    When I fill New Booking form fields correctly with non-standard time from 04:00AM to 05:01AM with 1 interpreters
+    Then I am shown a validation error with the text 'You may require more than 1 interpreter for this booking'
 
   @runThis
   Scenario: Individual Client can create a non-standard booking
@@ -225,7 +268,46 @@ Feature: Booking Management
     And I am on the bookings page
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
-    When I fill New Booking form fields correctly with non-standard time from 04:00AM to 05:00AM
-    And I click the create booking button
-    Then I will be shown a popup message
-# ---------------------------------------- AUSLAN1-252 -> END ----------------------------------------
+    When I fill New Booking form fields correctly with non-standard time from 04:00AM to 05:01AM with 1 interpreters
+    Then I am shown a validation error with the text 'You may require more than 1 interpreter for this booking'
+# ---------------------------------------- AUSLAN1-254 -> END ----------------------------------------
+
+# ---------------------------------------- AUSLAN1-242 -> START ----------------------------------------
+  @runThis
+  Scenario: Organisational Representative can create a non-standard booking
+    Given I exist as an Organisational Representative
+    And I sign in with valid Organisational Representative credentials
+    And I am on the bookings page
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    Then I can see the ext_ref_num field
+
+  @runThis
+  Scenario: Individual Client can create a non-standard booking
+    Given I exist as an Individual Client
+    And I sign in with valid Individual Client credentials
+    And I am on the bookings page
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    Then I can't see the ext_ref_num field
+# ---------------------------------------- AUSLAN1-242 -> END ----------------------------------------
+
+# ---------------------------------------- AUSLAN1-40 -> START ----------------------------------------
+  @runThis
+  Scenario: Organisational Representative will have special instruction fields
+    Given I exist as an Organisational Representative
+    And I sign in with valid Organisational Representative credentials
+    And I am on the bookings page
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    Then I can see the txtSpecialInstruction field
+
+  @runThis
+  Scenario: Individual Client can't have special instruction fields
+    Given I exist as an Individual Client
+    And I sign in with valid Individual Client credentials
+    And I am on the bookings page
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    Then I can't see the txtSpecialInstruction field
+# ---------------------------------------- AUSLAN1-40 -> END ----------------------------------------

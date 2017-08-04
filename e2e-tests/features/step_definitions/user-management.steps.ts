@@ -22,7 +22,7 @@ defineSupportCode(({Given, Then, When}) => {
     // ================================== INVALID CREATING ========================================
     When(/^I add an invalid (.*)/, userManagementPO.addInvalidUser);
 
-    Then(/^I am shown a validation error/, userManagementPO.showValidationError);
+    // Then(/^I am shown a validation error/, userManagementPO.showValidationError);
 
     When(/^I update the invalid (.*) information/, userManagementPO.updateInvalidatedField);
 

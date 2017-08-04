@@ -71,7 +71,8 @@ defineSupportCode(({Given, When}) => {
     Given(/^I am on the bookings page$/, bookingManagementPage.verify);
     Given(/^I am on my admin home screen$/, bookingManagementPage.verify);
     Given(/^I fill New Booking form fields correctly$/, bookingPage.createBooking);
-    Given(/^I fill New Booking form fields correctly with (.*) time from (.*) to (.*)$/, bookingPage.createBookingWithTime);
+    Given(/^I fill New Booking form fields correctly with (.*) time from (.*) to (.*) with (.*) interpreters$/, bookingPage.createBookingWithTimeAndInterpreter);
+
 
     Given(/^I am on a mobile$/, onMobileResolution);
 
@@ -198,17 +199,12 @@ defineSupportCode(({Given, When}) => {
         return browser.sleep(parseInt(seconds, 10));
     });
 
-    Given(/^I fill the field '(.*)' (.*)ly/, fillCorrectlyField);
-    function fillCorrectlyField(lblString: string, correnctNess: string) {
+    Given(/^I fill the field '(.*)' with value '(.*)'/, fillCorrectlyField);
+    function fillCorrectlyField(lblString: string, value: string) {
         let input = page.getElementByName(lblString);
         expect(input).to.exist;
-        input.clear()
-        return input.getAttribute('type').then((type) => {
-            let isText = type === 'text';
-            page.setValue(input, (correnctNess === 'correct') ?
-                (isText ? 'George Charalambous' : '1234') :
-                (isText ? 'A' : '1'));
-        });
+        input.clear();
+        return page.setValue(input, value);
     }
 
     Given(/^I jump to '(.*)' element$/, toNextElement);
@@ -228,6 +224,25 @@ defineSupportCode(({Given, When}) => {
     Given(/^I will be shown a popup message$/, showPopup);
     function showPopup() {
         return browser.wait(protractor.ExpectedConditions.presenceOf(page.getElementByCss('app-popup')), 30000).then(() => {
+        });
+    }
+
+    Given(/^I am shown a validation error$/, showValidationError);
+    function showValidationError() {
+        let errs = page.getAll('.inline-icon.error');
+        return errs.count().then((count) => {
+            // expect(count).to.be.greaterThan(0);
+            expect(count).to.be.greaterThan(0);
+        });
+    }
+
+    Given(/^I am shown a validation error with the text '(.*)'$/, showValidationErrorWithText);
+    function showValidationErrorWithText(errText: string) {
+        // browser.explore();
+        let errs = page.getAll('.inline-icon.error');
+        return errs.count().then((count) => {
+            // expect(count).to.be.greaterThan(0);
+            expect(count).to.be.greaterThan(0);
         });
     }
 });
