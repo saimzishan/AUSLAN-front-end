@@ -71,7 +71,8 @@ defineSupportCode(({Given, When}) => {
     Given(/^I am on the bookings page$/, bookingManagementPage.verify);
     Given(/^I am on my admin home screen$/, bookingManagementPage.verify);
     Given(/^I fill New Booking form fields correctly$/, bookingPage.createBooking);
-    Given(/^I fill New Booking form fields correctly with (.*) time from (.*) to (.*) with (.*) interpreters$/, bookingPage.createBookingWithTimeAndInterpreter);
+    Given(/^I fill New Booking form fields correctly with (.*) time from (.*) to (.*) with (.*) interpreters$/,
+        bookingPage.createBookingWithTimeAndInterpreter);
 
 
     Given(/^I am on a mobile$/, onMobileResolution);
