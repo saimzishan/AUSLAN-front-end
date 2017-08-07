@@ -118,12 +118,12 @@
                                     class="inline-icon-tip"></i></span></label>
                             <input type="text" placeholder="Enter the Request By Name"
                                    [(ngModel)]="bookingModel.requested_by.first_name" name="raw_booking_requested_by"
-                                   #raw_booking_requested_by="ngModel" [rangeLength]="[4,20]" required>
+                                   #raw_booking_requested_by="ngModel" [rangeLength]="[2,20]" required>
                             <span *ngIf="raw_booking_requested_by.touched && !raw_booking_requested_by.errors?.required && !raw_booking_requested_by.errors?.rangeLength;"
                                   class="inline-icon inline-icon-valid valid"></span>
                             <span *ngIf="raw_booking_requested_by.touched && (raw_booking_requested_by.errors?.required || raw_booking_requested_by.errors?.rangeLength);"
                                   class="inline-icon error">
-              <span>Minimum 4 characters required.</span>!
+              <span>Minimum 2 characters required.</span>!
             </span>
                         </div>
                     </div>
@@ -133,12 +133,12 @@
                                     class="inline-icon-tip"></i></span></label>
                             <input type="text" placeholder="Enter the Request By Name"
                                    [(ngModel)]="bookingModel.requested_by.last_name" name="raw_booking_requested_by_ln"
-                                   #raw_booking_requested_by_ln="ngModel" [rangeLength]="[4,20]" required>
+                                   #raw_booking_requested_by_ln="ngModel" [rangeLength]="[2,20]" required>
                             <span *ngIf="raw_booking_requested_by_ln.touched && !raw_booking_requested_by_ln.errors?.required && !raw_booking_requested_by_ln.errors?.rangeLength;"
                                   class="inline-icon inline-icon-valid valid"></span>
                             <span *ngIf="raw_booking_requested_by_ln.touched && (raw_booking_requested_by_ln.errors?.required || raw_booking_requested_by_ln.errors?.rangeLength);"
                                   class="inline-icon error">
-              <span>Minimum 4 characters required.</span>!
+              <span>Minimum 2 characters required.</span>!
             </span>
                         </div>
                     </div>
@@ -221,12 +221,12 @@
                                    type="text" placeholder="Enter Contact First Name"
                                    [(ngModel)]="bookingModel.primaryContact.first_name"
                                    name="contact_first_name"
-                                   #contact_first_name="ngModel" [rangeLength]="[1,20]" required>
+                                   #contact_first_name="ngModel" [rangeLength]="[2,20]" required>
                             <span *ngIf="contact_first_name.touched && !contact_first_name.errors?.required && !contact_first_name.errors?.rangeLength;"
                                   class="inline-icon inline-icon-valid valid"></span>
                             <span *ngIf="contact_first_name.touched && (contact_first_name.errors?.required || contact_first_name.errors?.rangeLength);"
                                   class="inline-icon error">
-              <span>Minimum 1 character required.</span>!</span>
+              <span>Minimum 2 character required.</span>!</span>
 
                         </div>
                     </div>
@@ -236,12 +236,12 @@
                                     class="inline-icon-tip"></i></span></label>
                             <input [disabled]='currentUserIsContact' type="text" placeholder="Enter Contact Last Name"
                                    [(ngModel)]="bookingModel.primaryContact.last_name" name="contact_last_name"
-                                   #contact_last_name="ngModel" [rangeLength]="[1,20]" required>
+                                   #contact_last_name="ngModel" [rangeLength]="[2,20]" required>
                             <span *ngIf="contact_last_name.touched && !contact_last_name.errors?.required && !contact_last_name.errors?.rangeLength;"
                                   class="inline-icon inline-icon-valid valid"></span>
                             <span *ngIf="contact_last_name.touched && (contact_last_name.errors?.required || contact_last_name.errors?.rangeLength);"
                                   class="inline-icon error">
-              <span>Minimum 1 character required.</span>!
+              <span>Minimum 2 character required.</span>!
             </span>
                         </div>
                     </div>
@@ -267,11 +267,11 @@
                                     class="inline-icon-tip"></i></span></label>
                             <input [disabled]='currentUserIsContact' type="tel"
                                    placeholder="Enter Contact Mobile Number"
-                                   [(ngModel)]="bookingModel.primaryContact.mobile_number" name="mobile"
+                                   [(ngModel)]="bookingModel.primaryContact.mobile_number" name="mobile" [rangeLength]="[2,20]"
                                    #mobile="ngModel">
-                            <span *ngIf="mobile.touched && !mobile.errors?.required;"
+                            <span *ngIf="mobile.touched && !mobile.errors?.required && !mobile.errors?.rangeLength;"
                                   class="inline-icon inline-icon-valid valid"></span>
-                            <span *ngIf="mobile.touched && mobile.errors?.required;" class="inline-icon error">
+                            <span *ngIf="mobile.touched && mobile.errors?.required || mobile.errors?.rangeLength;" class="inline-icon error">
               <span>Minimum 6 digits required.</span>!
             </span>
                         </div>
@@ -318,12 +318,12 @@
                                     class="inline-icon-tip"></i></span></label>
                             <input type="text" placeholder="Enter deaf person first name"
                                    [(ngModel)]="bookingModel.deaf_person.first_name" name="deaf_person_name"
-                                   #deaf_person_name="ngModel" [rangeLength]="[1,20]" required>
+                                   #deaf_person_name="ngModel" [rangeLength]="[2,20]" required>
                             <span *ngIf="deaf_person_name.touched && !deaf_person_name.errors?.required && !deaf_person_name.errors?.rangeLength;"
                                   class="inline-icon inline-icon-valid valid"></span>
                             <span *ngIf="deaf_person_name.touched && (deaf_person_name.errors?.required || deaf_person_name.errors?.rangeLength);"
                                   class="inline-icon error">
-              <span>Minimum 1 character required.</span>!
+              <span>Minimum 2 character required.</span>!
             </span>
                         </div>
                     </div>
@@ -333,12 +333,12 @@
                                     class="inline-icon-tip"></i></span></label>
                             <input type="text" placeholder="Enter deaf person last name"
                                    [(ngModel)]="bookingModel.deaf_person.last_name" name="deaf_person_last_name"
-                                   #deaf_person_last_name="ngModel" [rangeLength]="[1,20]" required>
+                                   #deaf_person_last_name="ngModel" [rangeLength]="[2,20]" required>
                             <span *ngIf="deaf_person_last_name.touched && !deaf_person_last_name.errors?.required && !deaf_person_last_name.errors?.rangeLength;"
                                   class="inline-icon inline-icon-valid valid"></span>
                             <span *ngIf="deaf_person_last_name.touched && (deaf_person_last_name.errors?.required || deaf_person_last_name.errors?.rangeLength);"
                                   class="inline-icon error">
-              <span>Minimum 1 character required.</span>!
+              <span>Minimum 2 character required.</span>!
             </span>
                         </div>
                     </div>
@@ -365,12 +365,12 @@
                                     class="inline-icon-tip"></i></span></label>
                             <input type="tel" placeholder="Enter deaf person Mobile Number"
                                    [(ngModel)]="bookingModel.deaf_person.mobile_number" name="deaf_person_mobile"
-                                   #deaf_person_mobile="ngModel" required>
-                            <span *ngIf="deaf_person_mobile.touched && !deaf_person_mobile.errors?.required;"
+                                   #deaf_person_mobile="ngModel" [rangeLength]="[10,11]" required>
+                            <span *ngIf="deaf_person_mobile.touched && !deaf_person_mobile.errors?.required && !deaf_person_mobile.errors?.rangeLength;"
                                   class="inline-icon inline-icon-valid valid"></span>
-                            <span *ngIf="deaf_person_mobile.touched && deaf_person_mobile.errors?.required;"
+                            <span *ngIf="deaf_person_mobile.touched && deaf_person_mobile.errors?.required || deaf_person_mobile.errors?.rangeLength;"
                                   class="inline-icon error">
-              <span>Minimum 6 digits required.</span>!
+              <span>Minimum 10 digits required.</span>!
             </span>
                         </div>
                     </div>

@@ -71,6 +71,8 @@ defineSupportCode(({Given, When}) => {
     Given(/^I am on the bookings page$/, bookingManagementPage.verify);
     Given(/^I am on my admin home screen$/, bookingManagementPage.verify);
     Given(/^I fill New Booking form fields correctly$/, bookingPage.createBooking);
+    Given(/^I fill New Booking form fields correctly with (.*) time from (.*) to (.*) with (.*) interpreters$/, bookingPage.createBookingWithTimeAndInterpreter);
+
 
     Given(/^I am on a mobile$/, onMobileResolution);
 
@@ -78,33 +80,32 @@ defineSupportCode(({Given, When}) => {
         return browser.driver.manage().window().setSize(420, 768);
     }
 
-    Given(/^I will see attachment$/, verifyAttachment);
+    Given(/^I will see attachment '(.*)'$/, verifyAttachment);
 
-    function verifyAttachment() {
-        return element(by.partialButtonText('sushi.pdf')).isPresent().then((elm) => {
-                expect(elm).to.exist;
+    function verifyAttachment(attachmentName: string) {
+        return element(by.partialButtonText(attachmentName)).isPresent().then((elm) => {
+            expect(elm).to.exist;
         });
     }
 
-    Given(/^I will upload a document$/, documentUpload);
-
-    function documentUpload() {
-        let fileToUpload = '../sushi.pdf';
+    Given(/^I will upload a document '(.*)'$/, documentUpload);
+    function documentUpload(documentName: string) {
+        let fileToUpload = '../' + documentName;
         let p = path.resolve(__dirname, fileToUpload);
         let elm = element(by.css('input[type="file"]'));
-            return elm.sendKeys(p);
+        return elm.sendKeys(p);
     }
 
     Given(/^I will close the file upload$/, documentUploadClose);
 
     function documentUploadClose() {
         /* let elm = element(by.css('input[type="file"]'));
-        return elm.click().then(el => {
-            return elm.sendKeys(protractor.Key.ESCAPE);
-        });
+         return elm.click().then(el => {
+         return elm.sendKeys(protractor.Key.ESCAPE);
+         });
 
-        return browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
-    */
+         return browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+         */
     }
 
     Given(/^I will be shown the booking detail page with id (.*)$/, bookingJob.isOnBookingJobDetails);
@@ -122,9 +123,9 @@ defineSupportCode(({Given, When}) => {
     function onDesktopResolution() {
         /*return browser.driver.manage().window().setSize(1400, 900).then( () => {
 
-             browser.driver.manage().window().maximize();
-        });
-        */
+         browser.driver.manage().window().maximize();
+         });
+         */
     }
 
     When(/^I click on button '(.*)'$/, clickOnButton);
@@ -198,24 +199,50 @@ defineSupportCode(({Given, When}) => {
         return browser.sleep(parseInt(seconds, 10));
     });
 
-    Given(/^I fill the field '(.*)' (.*)ly/, fillCorrectlyField);
-    function fillCorrectlyField (lblString: string, correnctNess: string) {
+    Given(/^I fill the field '(.*)' with value '(.*)'/, fillCorrectlyField);
+    function fillCorrectlyField(lblString: string, value: string) {
         let input = page.getElementByName(lblString);
         expect(input).to.exist;
-        input.clear()
-        return input.getAttribute('type').then((type) => {
-            let isText = type === 'text';
-            page.setValue(input, (correnctNess === 'correct') ?
-                (isText ? 'George Charalambous' : '1234') :
-                (isText ? 'A' : '1'));
-        });
+        input.clear();
+        return page.setValue(input, value);
     }
 
     Given(/^I jump to '(.*)' element$/, toNextElement);
-    function toNextElement (element_tag: string) {
+    function toNextElement(element_tag: string) {
         return page.getElementByName(element_tag).click();
     }
+
     Given(/^(.*) belongs to (.*)/, (entity: string, dependant: string) => {
         Heroku.assignEntityToDependant(entity, dependant);
     });
+
+    Given(/^I click on Bookings$/, clickOnBookings);
+    function clickOnBookings() {
+        return page.getElementByID('lnkBooking').click();
+    }
+
+    Given(/^I will be shown a popup message$/, showPopup);
+    function showPopup() {
+        return browser.wait(protractor.ExpectedConditions.presenceOf(page.getElementByCss('app-popup')), 30000).then(() => {
+        });
+    }
+
+    Given(/^I am shown a validation error$/, showValidationError);
+    function showValidationError() {
+        let errs = page.getAll('.inline-icon.error');
+        return errs.count().then((count) => {
+            // expect(count).to.be.greaterThan(0);
+            expect(count).to.be.greaterThan(0);
+        });
+    }
+
+    Given(/^I am shown a validation error with the text '(.*)'$/, showValidationErrorWithText);
+    function showValidationErrorWithText(errText: string) {
+        // browser.explore();
+        let errs = page.getAll('.inline-icon.error');
+        return errs.count().then((count) => {
+            // expect(count).to.be.greaterThan(0);
+            expect(count).to.be.greaterThan(0);
+        });
+    }
 });

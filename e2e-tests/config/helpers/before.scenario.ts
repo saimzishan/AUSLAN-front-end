@@ -15,6 +15,7 @@ defineSupportCode(({Before}) => {
     Before(function (scenario: HookScenarioResult) {
 
         if (!first_run) {
+            Heroku.sendCommandToHeroku('Assignment.destroy_all');
             Heroku.sendCommandToHeroku('Booking.destroy_all');
             Heroku.sendCommandToHeroku('User.where.not(id: 1).destroy_all');
         }

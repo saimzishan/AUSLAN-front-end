@@ -43,8 +43,8 @@ Feature: Booking Management
 
   @runThis
   Scenario: Individual Client can show a booking screen
-    Given I exist as an Client
-    And I sign in with valid Client credentials
+    Given I exist as an Individual Client
+    And I sign in with valid Individual Client credentials
     And I am on the bookings page
     When I click on 'New Booking'
     Then I will be taken to the 'New Booking' form

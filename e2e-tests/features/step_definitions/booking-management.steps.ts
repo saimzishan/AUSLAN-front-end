@@ -29,10 +29,8 @@ defineSupportCode(({Given, Then, When}) => {
 
     When(/^I click at the (.*) one of (.*) (.*) Bookings$/, bookingManagementPO.clickAtOneofTheBooking);
 
-    Then(/^I will be shown a popup message$/, bookingManagementPO.showPopup);
-
     When(/^I click on 'New Booking'$/, bookingManagementPO.clickOnNewBooking);
-    When(/^I click on Bookings$/, bookingManagementPO.clickOnBookings);
+    // When(/^I click on Bookings$/, bookingManagementPO.clickOnBookings);
     When(/^I see one row with state '(.*)'$/, bookingManagementPO.bookingWithStateExists);
     When(/^I see one row with status '(.*)'$/, bookingManagementPO.bookingWithStatusExists);
 
@@ -73,6 +71,10 @@ defineSupportCode(({Given, Then, When}) => {
 
     // Click the create booking button
     Then(/^I click the create booking button$/, createBookingPO.clickCreateBtn);
+
+    Then(/^I (.*) see the (.*) field$/, createBookingPO.checkTheFieldExist);
+
+    // Then(/^I get the popup warning that is the non-standard booking$/, createBookingPO.popupForNonStandard)
 
 //    WORKING ON BELOW
 
