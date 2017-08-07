@@ -46,7 +46,8 @@ defineSupportCode(({Given, When}) => {
     Given(/^I am shown the login screen, with picture and signup button/, homePage.didFinishedRendering);
     Given(/^I won't be logged in anymore and will be taken back to the loging screen/, homePage.didFinishedRendering);
     Given(/^I am on the mobile login screen without a hero picture$/, homePage.didFinishedRendering);
-    Given(/^I exist as an (.*)/, function (done) {
+    Given(/^I exist as an (.*)/, function (type: string) {
+        return browser.sleep(2000);
     });
     Given(/^I sign in with valid (.*) credentials$/, (type: string) => {
         return homePage.signInWithValidCredential(type).then(() => {
