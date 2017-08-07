@@ -29,6 +29,7 @@ export class JobDetailComponent implements OnDestroy {
     private dialogSub: any;
     dialogRef: MdDialogRef<any>;
     stateStr = '';
+
     constructor(public dialog: MdDialog,
                 public viewContainerRef: ViewContainerRef,
                 public spinnerService: SpinnerService,
@@ -44,9 +45,9 @@ export class JobDetailComponent implements OnDestroy {
         });
     }
 
-    isCurrentUserState (state: string) {
+    isCurrentUserState(state: string) {
         let currUser = this.selectedBookingModel.interpreters.filter(i => i.id === GLOBAL.currentUser.id);
-        if ( Boolean (currUser) && currUser.length > 0 ) {
+        if (Boolean(currUser) && currUser.length > 0) {
             return state === currUser[0].state;
         }
 
@@ -59,6 +60,7 @@ export class JobDetailComponent implements OnDestroy {
             ? GLOBAL.currentUser.special_instructions : '';
 
     }
+
     anyInterpreterAccepted() {
         return this.selectedBookingModel.interpreters.filter(i => i.state === 'Accepted').length > 0;
     }
@@ -71,19 +73,23 @@ export class JobDetailComponent implements OnDestroy {
         let config: MdDialogConfig = {
             disableClose: true
         };
+        let reachoutWarning = (this.currentStatus === 'Accepted' && this.isCurrentUserInterpreter() &&
+            this.selectedBookingModel.state === BOOKING_STATUS.In_progress) ;
         config.viewContainerRef = this.viewContainerRef;
         this.dialogRef = this.dialog.open(PopupComponent, config);
         this.dialogRef.componentInstance.title = isCancel ? 'Decline Booking' : 'Accept Booking';
         this.dialogRef.componentInstance.cancelTitle = 'Back to job';
-        this.dialogRef.componentInstance.okTitle = isCancel ? `Decline` : 'Accept';
+        this.dialogRef.componentInstance.okTitle = reachoutWarning ? 'OK' :
+            isCancel ? `Decline` : 'Accept';
         this.dialogRef.componentInstance.popupMessage =
+            reachoutWarning ? 'Kindly contact Booking Office' :
             isCancel ? `Do you want to decline the invitation?`
                 :
                 `Do you want to accept the invitation?`;
 
         this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
 
-            if (result) {
+            if (result && !reachoutWarning ) {
                 this.spinnerService.requestInProcess(true);
 
 
@@ -142,17 +148,37 @@ export class JobDetailComponent implements OnDestroy {
                         );
                         this.selectedBookingModel.interpreters.filter(i => i.id === GLOBAL.currentUser.id)
                             .map(i => this.currentStatus = i.state || 'Invited');
+
+                        if (this.currentStatus === 'Accepted' && this.isCurrentUserInterpreter() &&
+                            this.selectedBookingModel.state === BOOKING_STATUS.In_progress) {
+                            this.disableReject = false;
+                            this.disableAccept = true;
+                        } else if (this.currentStatus === 'Accepted' && this.isCurrentUserInterpreter() &&
+                            this.selectedBookingModel.state === BOOKING_STATUS.Allocated) {
+                            this.disableReject = true;
+                            this.disableAccept = true;
+                        } else if (this.currentStatus === 'Rejected' && this.isCurrentUserInterpreter() &&
+                            this.selectedBookingModel.state === BOOKING_STATUS.In_progress) {
+                            this.disableReject = true;
+                            this.disableAccept = false;
+                        }else if (this.currentStatus === 'Rejected' && this.isCurrentUserInterpreter() &&
+                            this.selectedBookingModel.state === BOOKING_STATUS.Allocated) {
+                            this.disableReject = true;
+                            this.disableAccept = true;
+                            /* Also Redirects */
+                            this.router.navigate(['/booking-management']);
+                        }
+
                         /** Accept Button Disable Logic*/
-                        this.disableAccept = !this.isCurrentUserInterpreter() ? true :
-                            this.selectedBookingModel.state ===
-                            BOOKING_STATUS.Allocated ? true :
-                                this.currentStatus === 'Rejected' ? false :
-                                    this.currentStatus === 'Accepted';
+                        this.disableAccept = !this.isCurrentUserInterpreter() ||
+                        this.selectedBookingModel.state === BOOKING_STATUS.Allocated ||
+                        this.currentStatus === 'Rejected' ? false :
+                            this.currentStatus === 'Accepted';
                         /** Decline Button Disable Logic*/
                         this.disableReject = !this.isCurrentUserInterpreter() ? true :
                             this.selectedBookingModel.state ===
                             BOOKING_STATUS.Allocated ? true : this.currentStatus === 'Rejected'
-                        || this.currentStatus === 'Accepted';
+                                || this.currentStatus === 'Accepted';
 
                         this.getStateString();
                     }
