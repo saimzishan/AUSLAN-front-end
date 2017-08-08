@@ -47,9 +47,9 @@
 						<!-- th width="7%">Language</th -->
 						<th width="7%">#People</th>
 						<th width="12%">Special Instructions</th>
-						<!-- th width="4%">Attached</th>
+						<th width="4%">Attached</th>
 							<th width="7%">Date Added</th>
-							<th width="8%">Updated</th -->
+							<th width="8%">Updated</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -65,14 +65,14 @@
 						<td>{{selectedBookingModel.venue.suburb}}</td>
 						<td>{{selectedBookingModel.nature_of_appointment}}</td>
 						<td>{{selectedBookingModel.venue.expected_attendance}}</td>
-						<td>{{getSpecialInstruction()}}</td>
+						<td>{{selectedBookingModel.special_instructions}}</td>
 						<td align="center" data-title="Attached">
 							<ul *ngIf="selectedBookingModel.documents_attributes.length > 0" class="dropdown menu custom" data-dropdown-menu>
 								<li>
 									<a href="#" class="icon-attach"></a>
 									<ul class="menu">
 										<li *ngFor="let attachment of selectedBookingModel.documents_attributes"><a download href="{{attachment.url}}"><i class="icon-attach"></i> {{attachment.file_name}}</a></li>
-									</ul>
+									</ul>n
 								</li>
 							</ul>
 						</td>

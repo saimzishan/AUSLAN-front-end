@@ -232,7 +232,11 @@ Feature: Booking Management
 
 # ---------------------------------------- AUSLAN1-254 -> START ----------------------------------------
   @ignoreThis
+<<<<<<< HEAD
   Scenario: Booking Officer can't create a less interpreter booking
+=======
+  Scenario: Booking Officer can create a non-standard booking
+>>>>>>> e4986feaea3f5d1f8e33c5f1c9e525ef9f94ef65
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
     And I am on the bookings page
@@ -242,7 +246,11 @@ Feature: Booking Management
     Then I am shown a validation error with the text 'You may require more than 1 interpreter for this booking'
 
   @ignoreThis
+<<<<<<< HEAD
   Scenario: Administrator can't create a less interpreter booking
+=======
+  Scenario: Administrator can create a non-standard booking
+>>>>>>> e4986feaea3f5d1f8e33c5f1c9e525ef9f94ef65
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
     And I am on the bookings page
@@ -252,7 +260,11 @@ Feature: Booking Management
     Then I am shown a validation error with the text 'You may require more than 1 interpreter for this booking'
 
   @ignoreThis
+<<<<<<< HEAD
   Scenario: Organisational Representative can't create a less interpreter booking
+=======
+  Scenario: Organisational Representative can create a non-standard booking
+>>>>>>> e4986feaea3f5d1f8e33c5f1c9e525ef9f94ef65
     Given I exist as an Organisational Representative
     And I sign in with valid Organisational Representative credentials
     And I am on the bookings page
@@ -262,7 +274,11 @@ Feature: Booking Management
     Then I am shown a validation error with the text 'You may require more than 1 interpreter for this booking'
 
   @ignoreThis
+<<<<<<< HEAD
   Scenario: Individual Client can't create a less interpreter booking
+=======
+  Scenario: Individual Client can create a non-standard booking
+>>>>>>> e4986feaea3f5d1f8e33c5f1c9e525ef9f94ef65
     Given I exist as an Individual Client
     And I sign in with valid Individual Client credentials
     And I am on the bookings page

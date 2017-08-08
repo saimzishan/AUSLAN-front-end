@@ -66,6 +66,9 @@
                     <th width="5%">Type</th>
                     <th width="7%">#People</th>
                     <th width="12%">Special Instructions</th>
+                    <th width="4%">Attached</th>
+                    <th width="7%">Date Added</th>
+                    <th width="8%">Updated</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -85,7 +88,7 @@
                     </td>
                     <td data-title="TYPE OF JOB">{{selectedBookingModel.nature_of_appointment}}</td>
                     <td data-title="People">{{selectedBookingModel.venue.expected_attendance}}</td>
-                    <td data-title="SPECIAL INSTRUCTIONS" class="new-line">{{getSpecialInstruction()}}</td>
+                    <td data-title="SPECIAL INSTRUCTIONS" class="new-line">{{selectedBookingModel.special_instructions}}</td>
                     <td align="center" data-title="Attached">
                                 <ul *ngIf="selectedBookingModel.documents_attributes.length > 0" class="dropdown menu custom" data-dropdown-menu>
                                     <li>
@@ -112,7 +115,7 @@
                             <div> INTERPRETER {{i + 1}}
                             </div>
                             <span class="with-avatar">
-                            <img src="assets/img/dummy/oval.png" alt="">
+                            <img src="{{photo_url}}" alt="">
                     {{interpreter.first_name}} {{interpreter.last_name}}
                     </span>
 

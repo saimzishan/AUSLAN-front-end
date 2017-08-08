@@ -165,7 +165,6 @@ export class BookingPage extends PageObject {
     createBookingWithTimeAndInterpreter = (standard: string, startTime: string, endTime: string, interpreterNum: string) => {
         this.setStartEndTime('start', '12/12/2017', startTime);
         this.setStartEndTime('end', '12/12/2017', endTime);
-        // browser.pause();
         this.setElementsValueByName('address_street_number', '162');
         this.setElementsValueByName('address_street', 'Dave');
         this.setElementsValueByName('address_post_code', '3064');
@@ -196,13 +195,6 @@ export class BookingPage extends PageObject {
         return this.getElementByName('btnCreateBooking').click();
     }
 
-    // popupForNonStandard = () => {
-    //     browser.explore();
-    //     return browser.wait(protractor.ExpectedConditions.presenceOf(this.getElementByCss('')), 5000).then(() => {
-    //         expect(this.getElementByCss('')).to.exist;
-    //     });
-    // }
-
     setTime = (field: string, days: number, hours?: number) => {
         let date = new Date(Date.now() + (1000 * 60 * 60 * (hours || 0)) + (1000 * 60 * 60 * 24 * (days || 0)));
         let dd = ('0' + date.getDate()).slice(-2);
@@ -219,6 +211,7 @@ export class BookingPage extends PageObject {
         let dateString = [dd, mm, yy].join('/');
         let timeString = hh + ':' + min + tt;
         this.setStartEndTime(field, dateString, timeString);
+
     }
 }
 

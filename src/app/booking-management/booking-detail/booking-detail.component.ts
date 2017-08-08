@@ -38,7 +38,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     bookingModel: Booking;
     standardInvoice = 'false';
     rdgSpecialInstruction = 'false';
-    specialInstruction = '';
     dialogSub;
     appointment_types = Object.keys(BOOKING_NATURE).filter(value => value === BOOKING_NATURE[value]
         || BOOKING_NATURE[value].startsWith(value)).map(v => BOOKING_NATURE[v]) as string[];
@@ -121,7 +120,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         GLOBAL.currentUser instanceof IndividualClient;
     }
     onSpecialInstruction () {
-        this.specialInstruction =
+        this.bookingModel.special_instructions =
             this.rdgSpecialInstruction === 'true' ? (<OrganisationalRepresentative>GLOBAL.currentUser).special_instructions : '';
     }
     public onStandardInvoice() {
