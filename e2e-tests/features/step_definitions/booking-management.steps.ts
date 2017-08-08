@@ -42,6 +42,11 @@ defineSupportCode(({Given, Then, When}) => {
     Then(/^I will be taken to the 'New Booking' form$/, createBookingPO.browse);
 
     When(/^I specify i am the client of this booking$/, createBookingPO.specifyAsClientOfBooking);
+    When(/^I specify i have special instruction$/, createBookingPO.specifyAsHavingSepcialInstruction);
+
+    Then(/^The field '(.*)' will be populated with '(.*)'$/, createBookingPO.theFieldWillBePopulated);
+
+    Then(/^I can see the field '(.*)' will have the value '(.*)'$/, createBookingPO.theFieldInBookingWillHaveValue);
 
     Then(/^The booking form will be automatically populated with the details.$/, createBookingPO.populatedUserDetails);
 
@@ -58,6 +63,7 @@ defineSupportCode(({Given, Then, When}) => {
     Then(/^I can see a list of (.*) (.*) interpreters$/, bookingJobPO.checkListofInterpreterIndividualBookingScreen);
     Then(/^I can not see a list of interpreters$/, bookingJobPO.listofInterpreterDoesNotExists);
 
+    Then(/^I can verify the image of myself in the list of interpreter start with '(.*)'$/, bookingJobPO.verifyPictureOfYourself)
 
 //    POPULATE DROP DOWN
     When(/^I click dropdown (.*)$/, createBookingPO.clickOnDropDown);
