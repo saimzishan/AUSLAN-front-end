@@ -193,7 +193,6 @@ export class BookingPage extends PageObject {
         this.getElementByName('cn_phone').sendKeys('0490394512');
 
         this.getElementByName('deaf_person_eaf').sendKeys('123');
-        browser.pause();
     }
 
     clickCreateBtn = () => {

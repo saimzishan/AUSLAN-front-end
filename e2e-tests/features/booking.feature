@@ -5,7 +5,7 @@ Feature: Booking Management
     And I am on a computer
     And I am shown the login screen, with picture and signup button
 
-  @ignoreThis
+  @runThis
   Scenario: Administrator can create a booking
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
@@ -18,7 +18,7 @@ Feature: Booking Management
     And I am on the bookings page
     And I will be shown with bookings
 
-  @ignoreThis
+  @runThis
   Scenario: Booking Officer can create a booking
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
@@ -31,7 +31,7 @@ Feature: Booking Management
     And I am on the bookings page
     And I will be shown with bookings
 
-  @ignoreThis
+  @runThis
   Scenario: Organisational Representative can create a booking
     Given I exist as an Organisational Representative
     And I sign in with valid Organisational Representative credentials
@@ -44,7 +44,7 @@ Feature: Booking Management
     And I am on the bookings page
     And I will be shown with bookings
 
-  @ignoreThis
+  @runThis
   Scenario: Individual Client can create a booking
     Given I exist as an Individual Client
     And I sign in with valid Individual Client credentials
@@ -57,14 +57,14 @@ Feature: Booking Management
     And I am on the bookings page
     And I will be shown with bookings
 
-  @ignoreThis
+  @runThis
   Scenario: Interpreter can NOT create a booking
     Given I exist as an Interpreter
     When I sign in with valid Interpreter credentials
     Then I am on the bookings page
     And I don't see any new New Booking link
 
-  @ignoreThis
+  @runThis
   Scenario: Booking Officer can create duplicate booking, a booking is created
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
@@ -82,7 +82,7 @@ Feature: Booking Management
     Then I will be shown with bookings
     Then I expect the booking count to be greater then before
 
-  @ignoreThis
+  @runThis
   Scenario: Administrator can create a booking with pdf
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
@@ -99,7 +99,7 @@ Feature: Booking Management
     And I am on the bookings page
     And I will be shown with bookings
 
-  @ignoreThis
+  @runThis
   Scenario: Booking Officer can create a booking with pdf
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
@@ -116,7 +116,7 @@ Feature: Booking Management
     And I am on the bookings page
     And I will be shown with bookings
 
-  @ignoreThis
+  @runThis
   Scenario: Administrator can create a booking with doc
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
@@ -133,7 +133,7 @@ Feature: Booking Management
     And I am on the bookings page
     And I will be shown with bookings
 
-  @ignoreThis
+  @runThis
   Scenario: Booking Officer can create a booking with doc
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
@@ -150,7 +150,7 @@ Feature: Booking Management
     And I am on the bookings page
     And I will be shown with bookings
 
-  @ignoreThis
+  @runThis
   Scenario: Administrator can create a booking with doc
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
@@ -167,7 +167,7 @@ Feature: Booking Management
     And I am on the bookings page
     And I will be shown with bookings
 
-  @ignoreThis
+  @runThis
   Scenario: Booking Officer can create a booking with doc
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
@@ -207,7 +207,7 @@ Feature: Booking Management
     And I click the create booking button
     Then I will be shown a popup message
 
-  @ignoreThis
+  @runThis
   Scenario: Organisational Representative can create a non-standard booking
     Given I exist as an Organisational Representative
     And I sign in with valid Organisational Representative credentials
@@ -218,7 +218,7 @@ Feature: Booking Management
     And I click the create booking button
     Then I will be shown a popup message
 
-  @ignoreThis
+  @runThis
   Scenario: Individual Client can create a non-standard booking
     Given I exist as an Individual Client
     And I sign in with valid Individual Client credentials
@@ -231,7 +231,7 @@ Feature: Booking Management
 # ---------------------------------------- AUSLAN1-252 -> END ----------------------------------------
 
 # ---------------------------------------- AUSLAN1-254 -> START ----------------------------------------
-  @ignoreThis
+  @runThis
   Scenario: Booking Officer can create a non-standard booking
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
@@ -241,7 +241,7 @@ Feature: Booking Management
     When I fill New Booking form fields correctly with non-standard time from 04:00AM to 05:01AM with 1 interpreters
     Then I am shown a validation error with the text 'You may require more than 1 interpreter for this booking'
 
-  @ignoreThis
+  @runThis
   Scenario: Administrator can create a non-standard booking
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
@@ -251,7 +251,7 @@ Feature: Booking Management
     When I fill New Booking form fields correctly with non-standard time from 04:00AM to 05:01AM with 1 interpreters
     Then I am shown a validation error with the text 'You may require more than 1 interpreter for this booking'
 
-  @ignoreThis
+  @runThis
   Scenario: Organisational Representative can create a non-standard booking
     Given I exist as an Organisational Representative
     And I sign in with valid Organisational Representative credentials
@@ -261,7 +261,7 @@ Feature: Booking Management
     When I fill New Booking form fields correctly with non-standard time from 04:00AM to 05:01AM with 1 interpreters
     Then I am shown a validation error with the text 'You may require more than 1 interpreter for this booking'
 
-  @ignoreThis
+  @runThis
   Scenario: Individual Client can create a non-standard booking
     Given I exist as an Individual Client
     And I sign in with valid Individual Client credentials
@@ -273,7 +273,7 @@ Feature: Booking Management
 # ---------------------------------------- AUSLAN1-254 -> END ----------------------------------------
 
 # ---------------------------------------- AUSLAN1-242 -> START ----------------------------------------
-  @ignoreThis
+  @runThis
   Scenario: Organisational Representative can create a non-standard booking
     Given I exist as an Organisational Representative
     And I sign in with valid Organisational Representative credentials
@@ -282,7 +282,7 @@ Feature: Booking Management
     And I will be taken to the 'New Booking' form
     Then I can see the ext_ref_num field
 
-  @ignoreThis
+  @runThis
   Scenario: Individual Client can create a non-standard booking
     Given I exist as an Individual Client
     And I sign in with valid Individual Client credentials
@@ -293,7 +293,7 @@ Feature: Booking Management
 # ---------------------------------------- AUSLAN1-242 -> END ----------------------------------------
 
 # ---------------------------------------- AUSLAN1-40 -> START ----------------------------------------
-  @ignoreThis
+  @runThis
   Scenario: Organisational Representative will have special instruction fields
     Given I exist as an Organisational Representative
     And I sign in with valid Organisational Representative credentials
@@ -302,7 +302,7 @@ Feature: Booking Management
     And I will be taken to the 'New Booking' form
     Then I can see the txtSpecialInstruction field
 
-  @ignoreThis
+  @runThis
   Scenario: Individual Client can't have special instruction fields
     Given I exist as an Individual Client
     And I sign in with valid Individual Client credentials

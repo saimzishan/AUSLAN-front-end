@@ -14,7 +14,7 @@ config.restartBrowserBetweenTests= false;
                     'password_manager_enabled': false
                 }
             },
-            args: ['--start-fullscreen', '--web-security=false'/*'--headless','--disable-gpu'*/]
+            args: ['--headless','--disable-gpu', "--window-size=1200,1024"]
         }
     }
 ];
@@ -24,9 +24,9 @@ config.allScriptsTimeout= 99000;
 //config.jasmineNodeOpts= {
 //    defaultTimeoutInterval: 30000
 //}
-
+config.directConnect=false;
 config.params= {
-    env: process.env.E2E_ENV,
+    env: process.env.E2E_ENV || 'test',
 }
 
 exports.config = config;
