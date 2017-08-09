@@ -33,10 +33,13 @@ export class BookingJobPage extends PageObject {
         let int_count = parseInt(num_of_interpreter, 10);
         return $$('md-checkbox').each((ef, ind) => {
             if (ind < int_count) {
-                return ef.click();
+                // return browser.actions().mouseMove(ef).perform().then( () => {
+                // browser.driver.executeScript("arguments[0].scrollIntoView(true);", ed.getWebElement());
+                    return ef.click();
+                // });
+
             }
         });
-
     }
 
     listofInterpreterDoesNotExists = () => {

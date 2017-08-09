@@ -14,7 +14,7 @@ config.restartBrowserBetweenTests= false;
                     'password_manager_enabled': false
                 }
             },
-            args: ['no-sandbox','--headless','--disable-gpu', "--window-size=1200,1024"]
+            args: ['no-sandbox','--headless','--disable-gpu','--window-size=1400,768']
         }
     }
 ];
@@ -26,7 +26,7 @@ config.allScriptsTimeout= 99000;
 //}
 config.directConnect=false;
 config.params= {
-    env: process.env.E2E_ENV || 'test',
+    env: process.env.E2E_ENV || 'localhost',
 }
 
 exports.config = config;

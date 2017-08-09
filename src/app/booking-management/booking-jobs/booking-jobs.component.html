@@ -54,7 +54,7 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td>{{selectedBookingModel.id | PrettyID}}</td>
+						<td width="5%">{{selectedBookingModel.id | PrettyID}}</td>
 
 						<td><span>{{selectedBookingModel.venue.start_time_iso | date:'shortTime'}} - {{selectedBookingModel.venue.end_time_iso | date:'shortTime'}}<br>
 													{{selectedBookingModel.venue.start_time_iso | date:'EEE d MMM yy'}}
@@ -155,7 +155,7 @@
 				<table class="custom custom-small-table">
 					<thead>
 						<tr>
-							<th width="5%">
+							<th width="10%">
 								<!--md-checkbox></md-checkbox -->
 							</th>
 							<th width="7%">
@@ -219,7 +219,7 @@
 					</thead>
 					<tbody>
 						<tr *ngFor="let user of interpreterList; let ind = index">
-							<td width="5%">
+							<td width="10%">
 								<md-checkbox name='{{"Check" + ind}}' (change)="onChange($event,user)"></md-checkbox>
 							</td>
 							<td>{{user.id}}</td>
