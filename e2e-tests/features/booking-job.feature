@@ -557,3 +557,35 @@ Feature: Booking Admin Management
     Then I click on Bookings
     And I am on the bookings page
     Then I see one row with state 'In progress'
+
+  # =================== IN PROGRESS to ALLOCATED ===============================
+  @runThis
+  Scenario: Given 1 verified Administrator, 1 verified Interpreter and a booking is created, Booking should transition to allocated when Interpreter accepts the invitation
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    When I am on the bookings page
+    Then I see one row with state 'Requested'
+    Then I click on an individual booking of type 'Requested'
+    Then I will be shown the booking job page
+    Then I can see the button 'Save' is disabled
+    Then I select 1 Interpreter
+    And I click on BUTTON name 'inviteBtn'
+    Then I can see the button 'Save' is enabled
+    And I click on BUTTON 'Save'
+    Then I click on Bookings
+    And I am on the bookings page
+    Then I see one row with state 'In progress'
+    Then I click on an individual booking of type 'In progress'
+    Then I will be shown the booking job page
+    Then I can see the booking state 'In Progress'
+    Then I hover on the 'Profile'
+    Given I click on logout
+    And I sign in with valid Interpreter credentials
+    Then I see one row with state 'In progress'
+    Then I click on an individual booking of type 'In progress'
+    Then I can see the booking state 'In Progress'
+    Then I can see the button 'Accept' is enabled
+    Then I click on button 'Accept'
+    Then I will be shown a popup message
+    Then I click on BUTTON name 'yesBtn'
+    Then I can see the booking state 'Allocated'
