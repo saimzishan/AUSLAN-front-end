@@ -41,7 +41,7 @@ Feature: As INTERPRETER, I can login on mobile
     And I am on the bookings page
     Then I see one row with state 'Allocated'
 
-  @runThis
+    @runThis
   Scenario: As INTERPRETER, I can decline the booking, if a booking is created and INTERPRETER Invited then
     And I sign in with valid Interpreter credentials
     Then I will be shown the bookings page
