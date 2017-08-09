@@ -13,7 +13,7 @@ interface World {
 let first_run = false;
 defineSupportCode(({Before}) => {
     Before(function (scenario: HookScenarioResult) {
-
+        console.log('Inside Before Scenario');
         if (!first_run) {
             Heroku.sendCommandToHeroku('Assignment.destroy_all');
             Heroku.sendCommandToHeroku('Booking.destroy_all');
