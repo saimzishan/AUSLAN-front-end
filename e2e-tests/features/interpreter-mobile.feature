@@ -5,18 +5,18 @@ Feature: As INTERPRETER, I can login on mobile
     And I go to the website
     And I am on the mobile login screen without a hero picture
 
-  @runThis
+  @ignoreThis
   Scenario: As Interpreter, I can login on mobile
     And I go to the website
     And I am shown the login screen, with picture and signup button
     And I exist as an Interpreter
 
-  @runThis
+  @ignoreThis
   Scenario: As INTERPRETER, I can login on mobile
     And I sign in with valid Interpreter credentials
     Then I will be shown the bookings page
 
-  @runThis
+  @ignoreThis
   Scenario: As INTERPRETER and a booking is created and INTERPRETER can open the link directly even if i am logged out
     And I click on booking job detail page
     And I sign in with valid Interpreter credentials
@@ -41,7 +41,7 @@ Feature: As INTERPRETER, I can login on mobile
     And I am on the bookings page
     Then I see one row with state 'Allocated'
 
-  @runThis
+  @ignoreThis
   Scenario: As INTERPRETER, I can decline the booking, if a booking is created and INTERPRETER Invited then
     And I sign in with valid Interpreter credentials
     Then I will be shown the bookings page
@@ -60,7 +60,7 @@ Feature: As INTERPRETER, I can login on mobile
     And I am on the bookings page
     And  I click on an individual booking of type 'In progress'
 
-  @runThis
+  @ignoreThis
   Scenario: As INTERPRETER, I can cancel the accept the booking, if a booking is created and INTERPRETER Invited then
     And I sign in with valid Interpreter credentials
     Then I will be shown the bookings page
@@ -78,7 +78,7 @@ Feature: As INTERPRETER, I can login on mobile
     And I am on the bookings page
     Then I see one row with state 'In progress'
 
-  @runThis
+  @ignoreThis
   Scenario: As INTERPRETER, I can cancel the accept the booking, if a booking is created and INTERPRETER Invited then
     And I sign in with valid Interpreter credentials
     Then I will be shown the bookings page

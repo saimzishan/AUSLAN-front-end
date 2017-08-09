@@ -92,6 +92,7 @@ export class BookingJobPage extends PageObject {
     }
     isValidBookingHeader  = () => {
         return $('#header-mobile > h1').getText().then( (txt) => {
+            console.log(txt);
             expect(txt.startsWith('JOB #')).to.be.true;
             txt = txt.replace('JOB #', '');
             this.bookingID = parseInt(txt, 10);
