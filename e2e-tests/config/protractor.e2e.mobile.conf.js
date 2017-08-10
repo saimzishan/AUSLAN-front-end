@@ -24,7 +24,7 @@ config.allScriptsTimeout= 99000;
 //config.jasmineNodeOpts= {
 //    defaultTimeoutInterval: 30000
 //}
-config.directConnect=false;
+config.directConnect=true;
 config.params= {
     env: process.env.E2E_ENV || 'localhost',
 }
