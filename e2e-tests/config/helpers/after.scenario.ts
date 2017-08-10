@@ -15,9 +15,9 @@ defineSupportCode(({After}) => {
             Heroku.sendCommandToHeroku('Booking.destroy_all');
             Heroku.sendCommandToHeroku('User.where.not(id: 1).destroy_all');
         }
+        const world = this;
+        (scenarioResult.status === 'failed') ? saveFailedScenarioScreenshot(world, scenarioResult) : Promise.resolve();
         return browser.restart();
-        // const world = this;
-        // return (scenarioResult.status === 'failed') ? saveFailedScenarioScreenshot(world, scenarioResult) : Promise.resolve();
     });
 
     /**

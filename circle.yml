@@ -4,6 +4,7 @@ machine:
 
 dependencies:
     pre:
+        - npm i enhanced-resolve@3.3.0 
         - npm install codeclimate-test-reporter -g
         - |
           cat >~/.netrc <<EOF
@@ -25,17 +26,6 @@ test:
   override:
     - npm run circle-test
     - npm run pact
-    - ng e2e --env=test --aot --progress=true --specs=e2e-tests/features/booking-job.feature
-    - ng e2e --env=test --aot --progress=true --specs=e2e-tests/features/booking-management.feature
-   # - ng e2e --env=test --aot --progress=true --specs=e2e-tests/features/booking-status.feature
-   # - ng e2e --env=test --aot --progress=true --specs=e2e-tests/features/booking.feature
-    - ng e2e --env=test --aot --progress=true --specs=e2e-tests/features/interpreter-mobile.feature
-    - ng e2e --env=test --aot --progress=true --specs=e2e-tests/features/profile-register.feature
-    - ng e2e --env=test --aot --progress=true --specs=e2e-tests/features/user-auth.feature
-    - ng e2e --env=test --aot --progress=true --specs=e2e-tests/features/user-management.feature
-    - ng e2e --env=test --aot --progress=true --specs=e2e-tests/features/user-profile-management.feature
-   # - ng e2e --env=test --aot --progress=true --specs=e2e-tests/features/validation_booking_creating.feature
-    - ng e2e --env=test --aot --progress=true --specs=e2e-tests/features/validation_profile_registration.feature
 
   post:
     - bundle exec pact-mock-service stop -p 1233

@@ -41,6 +41,16 @@
 
       </div>
     </div>
+
+    <div class="medium-6 columns">
+      <div class="form-field">
+        <label>PREFFERED CONTACT METHOD</label>
+        <select name="comm_pref" [(ngModel)]="userModel.preferred_contact_method">
+          <option value="SMS">SMS</option>
+          <option value="SMS AND EMAIL">SMS AND EMAIL</option>
+        </select>
+      </div>
+    </div>
   </div>
 </div>
 <div class="row small-collapse">

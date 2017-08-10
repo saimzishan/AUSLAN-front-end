@@ -35,11 +35,13 @@ function sharedConfig() {
 
         },
         afterLaunch: function () {
-            /*multiCucumberHTLMReporter.generate({
+            /*
+            multiCucumberHTLMReporter.generate({
                 openReportInBrowser: true,
                 jsonDir: '.tmp/json-output',
                 reportPath: './.tmp/report/'
-            });*/
+            });
+            */
         },
 
         disableChecks: true,
