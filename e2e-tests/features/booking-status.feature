@@ -6,7 +6,7 @@ Feature: Booking Status
 
 
   # ================ Admin / BO can see all bookings ====================
-  @ignoreThis
+  @runThis
   Scenario: Given a booking is created, Administrator can see a list of booking and their status
     Given The booking has status 'green'
     Given I exist as an Administrator
@@ -16,7 +16,7 @@ Feature: Booking Status
     Then I see one row with state 'Requested'
     Then I see one row with status 'green'
 
-  @ignoreThis
+  @runThis
   Scenario: Given a booking is created, Administrator can see a list of booking and their status
     Given The booking has status 'red'
     Given I exist as an Administrator
@@ -26,7 +26,7 @@ Feature: Booking Status
     Then I see one row with state 'Requested'
     Then I see one row with status 'red'
 
-  @ignoreThis
+  @runThis
   Scenario: Given a booking is created, Booking Officer can see a list of booking and their status
     Given The booking has status 'green'
     Given I exist as an Booking Officer
@@ -36,7 +36,7 @@ Feature: Booking Status
     Then I see one row with state 'Requested'
     Then I see one row with status 'green'
 
-  @ignoreThis
+  @runThis
   Scenario: Given a booking is created, Booking Officer can see a list of booking and their status
     Given The booking has status 'red'
     Given I exist as an Booking Officer
@@ -47,7 +47,7 @@ Feature: Booking Status
     Then I see one row with status 'red'
 
   # ================= Org Rep can only see bookings created by himself ===================
-  @ignoreThis
+  @runThis
   Scenario: Organisational Representative can see bookings created by himself and their status
     Given I exist as an Organisational Representative
     And I sign in with valid Organisational Representative credentials
@@ -62,7 +62,7 @@ Feature: Booking Status
     Then I see one row with state 'Requested'
     Then I see one row with status 'green'
 
-  @ignoreThis
+  @runThis
   Scenario: Organisational Representative can see bookings created by himself and their status
     Given I exist as an Organisational Representative
     And I sign in with valid Organisational Representative credentials
@@ -79,7 +79,7 @@ Feature: Booking Status
     Then I see one row with state 'Requested'
     Then I see one row with status 'red'
 
-  @ignoreThis
+  @runThis
   Scenario: Given a booking is created, Organisational Representative cannot see a list of booking and their status
     Given The booking has status 'red'
     Given I exist as an Organisational Representative

@@ -6,7 +6,7 @@ Feature: Booking Management
 
 
 # --------------------------------------  AUSLAN1-446 -> START --------------------------------------
-  @ignoreThis
+  @runThis
   Scenario: Given 1 unverified Interpreter , 1 Administrator and a booking is created, as a Booking Officer i can see there are no one to be invited
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
@@ -15,7 +15,7 @@ Feature: Booking Management
     Then I am on the individual booking page
     And I can see a list of 0 verified interpreters
 
-  @ignoreThis
+  @runThis
   Scenario: Given 1 verified Interpreter , 1 Administrator and a booking is created, as a Booking Officer i can see there is one to be invited
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
@@ -25,7 +25,7 @@ Feature: Booking Management
     And I can see a list of 1 verified interpreters
 # --------------------------------------  AUSLAN1-446 -> END --------------------------------------
 
-  @ignoreThis
+  @runThis
   Scenario: Administrator can show a booking screen
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
@@ -33,7 +33,7 @@ Feature: Booking Management
     When I click on 'New Booking'
     Then I will be taken to the 'New Booking' form
 
-  @ignoreThis
+  @runThis
   Scenario: Booking Officer can show a booking screen
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
@@ -41,7 +41,7 @@ Feature: Booking Management
     When I click on 'New Booking'
     Then I will be taken to the 'New Booking' form
 
-  @ignoreThis
+  @runThis
   Scenario: Individual Client can show a booking screen
     Given I exist as an Individual Client
     And I sign in with valid Individual Client credentials
@@ -49,7 +49,7 @@ Feature: Booking Management
     When I click on 'New Booking'
     Then I will be taken to the 'New Booking' form
 
-  @ignoreThis
+  @runThis
   Scenario: Organisational Representative can show a booking screen
     Given I exist as an Organisational Representative
     And I sign in with valid Organisational Representative credentials
@@ -58,7 +58,7 @@ Feature: Booking Management
     Then I will be taken to the 'New Booking' form
 
 #  Auto Populated -> not working with the return of the undefined ##############################
-  @ignoreThis
+  @runThis
   Scenario: Sign in as Administrator, Auto populate details when specify as the client of booking
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
@@ -68,7 +68,7 @@ Feature: Booking Management
     When I specify i am the client of this booking
     Then The booking form will be automatically populated with the details.
 
-  @ignoreThis
+  @runThis
   Scenario: Sign in as Booking Officer, Auto populate details when specify as the client of booking
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
@@ -78,7 +78,7 @@ Feature: Booking Management
     When I specify i am the client of this booking
     Then The booking form will be automatically populated with the details.
 
-  @ignoreThis
+  @runThis
   Scenario: Sign in as Organisational Representative, Auto populate details when specify as the client of booking
     Given I exist as an Organisational Representative
     And I sign in with valid Organisational Representative credentials
@@ -88,7 +88,7 @@ Feature: Booking Management
     When I specify i am the client of this booking
     Then The booking form will be automatically populated with the details.
 
-  @ignoreThis
+  @runThis
   Scenario: Sign in as Individual Client, Auto populate details when specify as the client of booking
     Given I exist as an Individual Client
     And I sign in with valid Individual Client credentials
@@ -98,7 +98,7 @@ Feature: Booking Management
     When I specify i am the client of this booking
     Then The booking form will be automatically populated with the details.
 
-#  @ignoreThis # -> Not working
+#  @runThis # -> Not working
 #  Scenario: Popup when cancel after fill in one fields.
 #    Given I exist as an Administrator
 #    And I sign in with valid Administrator credentials
@@ -110,7 +110,7 @@ Feature: Booking Management
 #    Then A pop-up will display which will aks me if im sure to cancel
 
 #    Can cancel
-  @ignoreThis
+  @runThis
   Scenario: Sign in as Administrator, Can cancel booking and return to booking screen
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
@@ -120,7 +120,7 @@ Feature: Booking Management
     When I press 'CANCEL'
     Then I am back on booking page
 
-  @ignoreThis
+  @runThis
   Scenario: Sign in as Booking Officer, Can cancel booking and return to booking screen
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
@@ -130,7 +130,7 @@ Feature: Booking Management
     When I press 'CANCEL'
     Then I am back on booking page
 
-  @ignoreThis
+  @runThis
   Scenario: Sign in as Individual Client, Can cancel booking and return to booking screen
     And I sign in with valid Individual Client credentials
     And I am on the bookings page
@@ -139,7 +139,7 @@ Feature: Booking Management
     When I press 'CANCEL'
     Then I am back on booking page
 
-  @ignoreThis
+  @runThis
   Scenario: Sign in as Organisational Representative, Can cancel booking and return to booking screen
     Given I exist as an Organisational Representative
     And I sign in with valid Organisational Representative credentials
@@ -149,7 +149,7 @@ Feature: Booking Management
     When I press 'CANCEL'
     Then I am back on booking page
 
-  @ignoreThis #- AUSLAN1-448
+  @runThis #- AUSLAN1-448
 #  Administrator can see bookings
   Scenario: Sign in as Administrator and a booking is created, Be able to view the booking page with summary details columns
     Given I exist as an Administrator
@@ -157,7 +157,7 @@ Feature: Booking Management
     Then I am on the bookings page
     And I will be shown with bookings
 
-  @ignoreThis #- AUSLAN1-448
+  @runThis #- AUSLAN1-448
   #  Booking Officer can see bookings
   Scenario: Sign in as Booking Officer and a booking is created, Be able to view the booking page with summary details columns
     Given I exist as an Booking Officer
@@ -166,7 +166,7 @@ Feature: Booking Management
     And I will be shown with bookings
 
 #  Populated NATURE OF APPOINTMENT AND WHAT WILL BE DISCUSSED
-  @ignoreThis
+  @runThis
   Scenario: Sign in as Administrator, Populate Both NATURE OF APPOINTMENT AND WHAT WILL BE DISCUSSED as User
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
@@ -180,7 +180,7 @@ Feature: Booking Management
     And I click on option GP of WHAT WILL BE DISCUSSED * for nothing
     Then The cell of WHAT WILL BE DISCUSSED * will be populated with GP
 
-  @ignoreThis
+  @runThis
   Scenario: As a user, Booking Officer who can make a booking, I can't select from a list of 'What Will Be Discussed' if the 'Nature of Bookings' is not selected
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
@@ -191,7 +191,7 @@ Feature: Booking Management
     When I click dropdown WHAT WILL BE DISCUSSED *
     Then The dropdown WHAT WILL BE DISCUSSED * will have 0 item
 
-  @ignoreThis
+  @runThis
   Scenario: As a user, Booking Officer who can make a booking, I can select from a list of 'Nature of Booking' and specifics of a booking
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
