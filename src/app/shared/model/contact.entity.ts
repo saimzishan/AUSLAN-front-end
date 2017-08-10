@@ -8,6 +8,8 @@ export class Contact {
   public phone_number: string;
   public mobile_number: string;
   public address: Venue;
+  public photo_url = '';
+
 
 }
 
@@ -15,7 +17,7 @@ export class DEAFContact extends Contact {
   public eaf: number;
 }
 
-export class BookingInterpreters extends Contact {
+export class BookingInterpreter extends Contact {
   public id: number;
   public state: string;
 }

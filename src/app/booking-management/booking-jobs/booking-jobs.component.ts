@@ -1,7 +1,7 @@
 import {Component, OnInit, Input, ViewContainerRef, AfterViewChecked, OnDestroy} from '@angular/core';
 import {BookingService} from '../../api/booking.service';
 import {Booking} from '../../shared/model/booking.entity';
-import {BookingInterpreters} from '../../shared/model/contact.entity';
+import {BookingInterpreter} from '../../shared/model/contact.entity';
 import {UserService} from '../../api/user.service';
 import {IndividualClient, OrganisationalRepresentative, User} from '../../shared/model/user.entity';
 import {ROLE} from '../../shared/model/role.enum';

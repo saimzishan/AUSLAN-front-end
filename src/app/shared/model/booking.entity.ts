@@ -1,5 +1,5 @@
 import {Address, Venue} from './venue.entity';
-import {Contact, BookingInterpreters, DEAFContact} from './contact.entity';
+import {Contact, BookingInterpreter, DEAFContact} from './contact.entity';
 import {BOOKING_NATURE} from './booking-nature.enum';
 import {BOOKING_STATUS} from './booking-status.enum';
 import {PARKING} from './parking.enum';
@@ -18,7 +18,7 @@ export class Booking {
     public specific_nature_of_appointment: string;
     public state: BOOKING_STATUS;
     public attachment: any;
-    public interpreters: Array<BookingInterpreters> = [];
+    public interpreters: Array<BookingInterpreter> = [];
     public interpreters_required = 0;
     public notes = '';
     public special_instructions = '';
@@ -128,10 +128,10 @@ export class Booking {
             this.client.organisation_billing_account.organisation_billing_address =
                 data.billing_account_attributes.address_attributes;
         }
-
+        this.interpreters = [];
         if (Boolean(data.interpreters_attributes)) {
             for (let i of data.interpreters_attributes) {
-                let int: BookingInterpreters = {
+                let int: BookingInterpreter = {
                     id: i.id,
                     state: i.state,
                     email: i.email,
@@ -139,7 +139,8 @@ export class Booking {
                     phone_number: '',
                     address: null,
                     first_name: i.first_name,
-                    last_name: i.last_name
+                    last_name: i.last_name,
+                    photo_url: i.photo_url
                 };
                 this.interpreters.push(int);
             }
