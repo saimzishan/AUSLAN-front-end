@@ -6,7 +6,7 @@ Feature: User Profile Management
     And I am shown the login screen, with picture and signup button
 
     # ---------------------------------------- AUSLAN1-504 -> START ----------------------------------------
-  @ignoreThis
+  @runThis
 #  Change pass
   Scenario: Be able to change password as Administrator
     Given I exist as an Administrator
@@ -22,7 +22,7 @@ Feature: User Profile Management
     And I click on BUTTON 'SAVE'
     Then I get success message: 'User password updated Successfully'
 
-  @ignoreThis
+  @runThis
 #  Change pass
   Scenario: Be able to change password as Organisational Representative
     Given I exist as an Organisational Representative
@@ -38,7 +38,7 @@ Feature: User Profile Management
     And I click on BUTTON 'SAVE'
     Then I get success message: 'User password updated Successfully'
 
-  @ignoreThis
+  @runThis
 #  Change pass
   Scenario: Be able to change password as Booking Officer
     Given I exist as an Booking Officer
@@ -54,7 +54,7 @@ Feature: User Profile Management
     And I click on BUTTON 'SAVE'
     Then I get success message: 'User password updated Successfully'
 
-  @ignoreThis
+  @runThis
 #  Change pass
   Scenario: Be able to change password as Interpreter
     Given I exist as an Interpreter
@@ -70,7 +70,7 @@ Feature: User Profile Management
     And I click on BUTTON 'SAVE'
     Then I get success message: 'User password updated Successfully'
 
-  @ignoreThis
+  @runThis
 #  Change pass
   Scenario: Be able to change password as Individual Client
     Given I exist as an Individual Client
@@ -89,9 +89,9 @@ Feature: User Profile Management
 # ---------------------------------------- AUSLAN1-504 -> END ----------------------------------------
 
 ################################## Can View the Profile ##################################
-#  @ignoreThis
+#  @runThis
 #  Show profile page
-  @ignoreThis
+  @runThis
   Scenario: Be able to view the profile as Booking Officer
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
@@ -99,7 +99,7 @@ Feature: User Profile Management
     When I click on my name in the top corner
     Then I will be taken to my individual profile page
 
-  @ignoreThis
+  @runThis
 #  Show profile page
   Scenario: Be able to view the profile as Administrator
     Given I exist as an Administrator
@@ -108,7 +108,7 @@ Feature: User Profile Management
     When I click on my name in the top corner
     Then I will be taken to my individual profile page
 
-  @ignoreThis
+  @runThis
 #  Show profile page
   Scenario: Be able to view the profile as Interpreter
     Given I exist as an Interpreter
@@ -117,7 +117,7 @@ Feature: User Profile Management
     When I click on my name in the top corner
     Then I will be taken to my individual profile page
 
-  @ignoreThis
+  @runThis
 #  Show profile page
   Scenario: Be able to view the profile as Organisational Representative
     Given I exist as an Organisational Representative
@@ -126,7 +126,7 @@ Feature: User Profile Management
     When I click on my name in the top corner
     Then I will be taken to my individual profile page
 
-  @ignoreThis
+  @runThis
 #  Show profile page
   Scenario: Be able to view the profile as Individual Client
     Given I exist as an Individual Client
@@ -136,7 +136,7 @@ Feature: User Profile Management
     Then I will be taken to my individual profile page
 
 ################################## Can Edit and save the update ##################################
-  @ignoreThis
+  @runThis
 #  Show profile page
   Scenario: Be able to update the profile as Booking Officer
     Given I exist as an Booking Officer
@@ -153,7 +153,7 @@ Feature: User Profile Management
     And I will be taken to my individual profile page
     And I verify input text fields of the BOOKINGOFFICER is updated
 
-  @ignoreThis
+  @runThis
 #  Show profile page
   Scenario: Be able to update the profile as Administrator
     Given I exist as an Administrator
@@ -170,7 +170,7 @@ Feature: User Profile Management
     And I will be taken to my individual profile page
     And I verify input text fields of the ADMINISTRATOR is updated
 
-  @ignoreThis
+  @runThis
 #  Show profile page
   Scenario: Be able to update the profile as Interpreter
     Given I exist as an Interpreter
@@ -222,7 +222,7 @@ Feature: User Profile Management
     And I verify input text fields of the INDIVIDUALCLIENT is updated
 
 ################################## Profile PASSWORD related ##################################
-  @ignoreThis
+  @runThis
 #  Show profile pass page
   Scenario: Be able to show password password page as Individual Client
     Given I exist as an Individual Client
@@ -233,7 +233,7 @@ Feature: User Profile Management
     When I click on Profile 'Change Password'
     Then I will be taken to my individual secure_pass page
 
-  @ignoreThis
+  @runThis
 #  Show profile pass page
   Scenario: Be able to show password password page as Administrator
     Given I exist as an Administrator
@@ -244,7 +244,7 @@ Feature: User Profile Management
     When I click on Profile 'Change Password'
     Then I will be taken to my individual secure_pass page
 
-  @ignoreThis
+  @runThis
 #  Show profile pass page
   Scenario: Be able to show password password page as Booking Officer
     Given I exist as an Booking Officer
@@ -255,7 +255,7 @@ Feature: User Profile Management
     When I click on Profile 'Change Password'
     Then I will be taken to my individual secure_pass page
 
-  @ignoreThis
+  @runThis
 #  Show profile pass page
   Scenario: Be able to show password password page as Organisational Representative
     Given I exist as an Organisational Representative
@@ -266,7 +266,7 @@ Feature: User Profile Management
     When I click on Profile 'Change Password'
     Then I will be taken to my individual secure_pass page
 
-  @ignoreThis
+  @runThis
 #  Show profile pass page
   Scenario: Be able to show password password page as Interpreter
     Given I exist as an Interpreter
@@ -278,7 +278,7 @@ Feature: User Profile Management
     Then I will be taken to my individual secure_pass page
 
 # ---------------------------------------- AUSLAN1-505 -> START ----------------------------------------
-  @ignoreThis
+  @runThis
 #  Change pass
   Scenario: Be able to change password as Administrator
     Given I exist as an Administrator
@@ -294,7 +294,7 @@ Feature: User Profile Management
     And I click on BUTTON 'SAVE'
     Then I get error message: 'password authentication failed'
 
-  @ignoreThis
+  @runThis
 #  Change pass
   Scenario: Be able to change password as Individual Client
     Given I exist as an Individual Client
@@ -310,7 +310,7 @@ Feature: User Profile Management
     And I click on BUTTON 'SAVE'
     Then I get error message: 'password authentication failed'
 
-  @ignoreThis
+  @runThis
 #  Change pass
   Scenario: Be able to change password as Interpreter
     Given I exist as an Interpreter
@@ -326,7 +326,7 @@ Feature: User Profile Management
     And I click on BUTTON 'SAVE'
     Then I get error message: 'password authentication failed'
 
-  @ignoreThis
+  @runThis
 #  Change pass
   Scenario: Be able to change password as Booking Officer
     Given I exist as an Booking Officer
@@ -342,7 +342,7 @@ Feature: User Profile Management
     And I click on BUTTON 'SAVE'
     Then I get error message: 'password authentication failed'
 
-  @ignoreThis
+  @runThis
 #  Change pass
   Scenario: Be able to change password as Organisational Representative
     Given I exist as an Organisational Representative
@@ -360,7 +360,7 @@ Feature: User Profile Management
 # ---------------------------------------- AUSLAN1-505 -> END ----------------------------------------
 
 # ---------------------------------------- AUSLAN1-506 -> START ----------------------------------------
-  @ignoreThis
+  @runThis
 #  Change pass
   Scenario: Be able to change password as Administrator
     Given I exist as an Administrator
@@ -377,7 +377,7 @@ Feature: User Profile Management
     Then I get error message: 'is not secure; use letters (uppercase and downcase), numbers and special characters'
 
 
-  @ignoreThis
+  @runThis
 #  Change pass
   Scenario: Be able to change password as Interpreter
     Given I exist as an Interpreter
@@ -394,7 +394,7 @@ Feature: User Profile Management
     Then I get error message: 'is not secure; use letters (uppercase and downcase), numbers and special characters'
 
 
-  @ignoreThis
+  @runThis
 #  Change pass
   Scenario: Be able to change password as Booking Officer
     Given I exist as an Booking Officer
@@ -411,7 +411,7 @@ Feature: User Profile Management
     Then I get error message: 'is not secure; use letters (uppercase and downcase), numbers and special characters'
 
 
-  @ignoreThis
+  @runThis
 #  Change pass
   Scenario: Be able to change password as Individual Client
     Given I exist as an Individual Client
@@ -428,7 +428,7 @@ Feature: User Profile Management
     Then I get error message: 'is not secure; use letters (uppercase and downcase), numbers and special characters'
 
 
-  @ignoreThis
+  @runThis
 #  Change pass
   Scenario: Be able to change password as Organisational Representative
     Given I exist as an Organisational Representative
@@ -446,7 +446,7 @@ Feature: User Profile Management
 # ---------------------------------------- AUSLAN1-506 -> END ----------------------------------------
 
 # ---------------------------------------- AUSLAN1-507 -> START ----------------------------------------
-  @ignoreThis
+  @runThis
 #  Change pass
   Scenario: Be able to change password as Administrator
     Given I exist as an Administrator
@@ -462,7 +462,7 @@ Feature: User Profile Management
     And I click on BUTTON 'SAVE'
     Then I get error message: 'Kindly fill all the required (*) fields'
 
-  @ignoreThis
+  @runThis
 #  Change pass
   Scenario: Be able to change password as Interpreter
     Given I exist as an Interpreter
@@ -478,7 +478,7 @@ Feature: User Profile Management
     And I click on BUTTON 'SAVE'
     Then I get error message: 'Kindly fill all the required (*) fields'
 
-  @ignoreThis
+  @runThis
 #  Change pass
   Scenario: Be able to change password as Booking Officer
     Given I exist as an Booking Officer
@@ -494,7 +494,7 @@ Feature: User Profile Management
     And I click on BUTTON 'SAVE'
     Then I get error message: 'Kindly fill all the required (*) fields'
 
-  @ignoreThis
+  @runThis
 #  Change pass
   Scenario: Be able to change password as Individual Client
     Given I exist as an Individual Client
@@ -510,7 +510,7 @@ Feature: User Profile Management
     And I click on BUTTON 'SAVE'
     Then I get error message: 'Kindly fill all the required (*) fields'
 
-  @ignoreThis
+  @runThis
 #  Change pass
   Scenario: Be able to change password as Organisational Representative
     Given I exist as an Organisational Representative
@@ -527,7 +527,7 @@ Feature: User Profile Management
     Then I get error message: 'Kindly fill all the required (*) fields'
 # ---------------------------------------- AUSLAN1-507 -> END ----------------------------------------
 
-  @ignoreThis
+  @runThis
 #  Show profile page
   Scenario: Be able to update the prefComm as Interpreter
     Given I exist as an Interpreter
@@ -537,9 +537,10 @@ Feature: User Profile Management
     And I will be taken to my individual profile page
     When I change the dropwdown field COMM. PREFERENCE * with SMS
     And I click on BUTTON 'SAVE'
-    Then The dropdown field COMM. PREFERENCE * will be updated with SMS
+    Then I get valid message: 'User details updated Successfully'
+    And The dropdown field COMM. PREFERENCE * will be updated with SMS
 
-  @ignoreThis
+  @runThis
 #  Show profile page
   Scenario: Be able to update the prefComm as Interpreter
     Given I exist as an Interpreter
@@ -549,4 +550,29 @@ Feature: User Profile Management
     And I will be taken to my individual profile page
     When I change the dropwdown field COMM. PREFERENCE * with SMS AND EMAIL
     And I click on BUTTON 'SAVE'
-    Then The dropdown field COMM. PREFERENCE * will be updated with SMS AND EMAIL
+    Then I get valid message: 'User details updated Successfully'
+    And The dropdown field COMM. PREFERENCE * will be updated with SMS AND EMAIL
+
+# --------------------------------------------- AUSLAN1-165 -> START ---------------------------------------------
+  @ignoreThis
+#  Show profile page
+  Scenario: Be able to check the profile picture as Administrator
+    Given I exist as an Administrator
+    When I sign in with valid Administrator credentials
+    Then I am on the bookings page
+    And I can verify my profile pic is same with link 'https://s3-ap-southeast-2.amazonaws.com/auslan-public-bucket/missing.svg'
+
+  @ignoreThis
+#  Show profile page
+  Scenario: Be able to update the profile picture as Administrator with different picture
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on the bookings page
+    And I can verify my profile pic is same with link 'https://s3-ap-southeast-2.amazonaws.com/auslan-public-bucket/missing.svg'
+    And I click on my name in the top corner
+    And I will be taken to my individual profile page
+    When I will upload a document 'sanji_not_sushi.png'
+    And I click on BUTTON 'SAVE'
+    Then I get valid message: 'User details updated Successfully'
+    And I can verify my profile pic is different with link 'https://s3-ap-southeast-2.amazonaws.com/auslan-public-bucket/missing.svg'
+# --------------------------------------------- AUSLAN1-165 -> END ---------------------------------------------

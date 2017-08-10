@@ -48,7 +48,7 @@ export class ProfileRegisterPage extends PageObject {
             this.getElementByName('highest_level_edu').sendKeys('Bachelor Degree'.toUpperCase());
             this.getElementByName('location_pref').sendKeys('ACT');
             this.getElementByName('skill_level').sendKeys('ASL Certified'.toUpperCase());
-            this.getElementByName('comm_pref').sendKeys(prefComm);
+            // this.getElementByName('comm_pref').sendKeys(prefComm);
         } else if (type === 'ORGANISATIONALREPRESENTATIVE') {
             this.getElementByName('business_abn').sendKeys('12312312311');
             this.getElementByName('business_name').sendKeys('Curve');
@@ -60,8 +60,10 @@ export class ProfileRegisterPage extends PageObject {
             this.getElementByName('cn_last_name').sendKeys('Charalambous');
             this.getElementByName('cn_email').sendKeys('george@curvetomorrow.com.au');
             this.getElementByName('cn_phone').sendKeys('0490394517');
+            // this.getElementByName('preferred_contact_method').sendKeys(prefComm);
         }
 
+        this.getElementByName('comm_pref').sendKeys(prefComm);
         this.getElementByName('address_unit_num').sendKeys('22');
         this.getElementByName('address_street_number').sendKeys('62');
         this.getElementByName('address_street').sendKeys('Dave');

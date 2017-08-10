@@ -8,7 +8,7 @@ Feature: Validation of Booking Management. Not mention about those unsure fields
     And I am shown the login screen, with picture and signup button
 
 #    INVALIDATION ICON
-  @runThis
+  @ignoreThis
   Scenario: Administrator can create a booking
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
@@ -19,7 +19,7 @@ Feature: Validation of Booking Management. Not mention about those unsure fields
     And I jump to 'address_suburb' element
     Then I will get a error notification
 
-  @runThis
+  @ignoreThis
   Scenario: Administrator can create a booking
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
@@ -30,7 +30,7 @@ Feature: Validation of Booking Management. Not mention about those unsure fields
     And I jump to 'address_post_code' element
     Then I will get a error notification
 
-  @runThis
+  @ignoreThis
   Scenario: Administrator can create a booking
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
@@ -41,7 +41,7 @@ Feature: Validation of Booking Management. Not mention about those unsure fields
     And I jump to 'raw_booking_requested_by' element
     Then I will get a error notification
 
-  @runThis
+  @ignoreThis
   Scenario: Administrator can create a booking
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
@@ -52,7 +52,7 @@ Feature: Validation of Booking Management. Not mention about those unsure fields
     And I jump to 'raw_booking_requested_by_ln' element
     Then I will get a error notification
 
-  @runThis
+  @ignoreThis
   Scenario: Administrator can create a booking
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
@@ -63,7 +63,7 @@ Feature: Validation of Booking Management. Not mention about those unsure fields
     And I jump to 'attendee_count' element
     Then I will get a error notification
 
-  @runThis
+  @ignoreThis
   Scenario: Administrator can create a booking
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
@@ -74,7 +74,7 @@ Feature: Validation of Booking Management. Not mention about those unsure fields
     And I jump to 'deaf_person_name' element
     Then I will get a error notification
 
-  @runThis
+  @ignoreThis
   Scenario: Administrator can create a booking
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
@@ -85,7 +85,7 @@ Feature: Validation of Booking Management. Not mention about those unsure fields
     And I jump to 'deaf_person_last_name' element
     Then I will get a error notification
 
-  @runThis
+  @ignoreThis
   Scenario: Administrator can create a booking
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
@@ -96,7 +96,7 @@ Feature: Validation of Booking Management. Not mention about those unsure fields
     And I jump to 'deaf_person_email' element
     Then I will get a error notification
 
-  @runThis
+  @ignoreThis
   Scenario: Administrator can create a booking
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
@@ -107,7 +107,7 @@ Feature: Validation of Booking Management. Not mention about those unsure fields
     And I jump to 'deaf_person_mobile' element
     Then I will get a error notification
 
-  @runThis
+  @ignoreThis
   Scenario: Administrator can create a booking
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
@@ -118,7 +118,7 @@ Feature: Validation of Booking Management. Not mention about those unsure fields
     And I jump to 'cn_first_name' element
     Then I will get a error notification
 
-  @runThis
+  @ignoreThis
   Scenario: Administrator can create a booking
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
@@ -129,7 +129,7 @@ Feature: Validation of Booking Management. Not mention about those unsure fields
     And I jump to 'cn_last_name' element
     Then I will get a error notification
 
-  @runThis
+  @ignoreThis
   Scenario: Administrator can create a booking
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
@@ -140,7 +140,7 @@ Feature: Validation of Booking Management. Not mention about those unsure fields
     And I jump to 'cn_email' element
     Then I will get a error notification
 
-  @runThis
+  @ignoreThis
   Scenario: Administrator can create a booking
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
@@ -151,7 +151,7 @@ Feature: Validation of Booking Management. Not mention about those unsure fields
     And I jump to 'cn_phone' element
     Then I will get a error notification
 
-  @runThis
+  @ignoreThis
   Scenario: Administrator can create a booking
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
@@ -163,7 +163,7 @@ Feature: Validation of Booking Management. Not mention about those unsure fields
     Then I will get a error notification
 
 #  VALIDATION ICON
-  @runThis
+  @ignoreThis
   Scenario: Administrator can create a booking
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
@@ -174,7 +174,7 @@ Feature: Validation of Booking Management. Not mention about those unsure fields
     And I jump to 'address_suburb' element
     Then I will get a valid notification
 
-  @runThis
+  @ignoreThis
   Scenario: Administrator can create a booking
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
@@ -185,7 +185,7 @@ Feature: Validation of Booking Management. Not mention about those unsure fields
     And I jump to 'address_post_code' element
     Then I will get a valid notification
 
-  @runThis
+  @ignoreThis
   Scenario: Administrator can create a booking
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
@@ -196,7 +196,7 @@ Feature: Validation of Booking Management. Not mention about those unsure fields
     And I jump to 'raw_booking_requested_by' element
     Then I will get a valid notification
 
-  @runThis
+  @ignoreThis
   Scenario: Administrator can create a booking
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
@@ -207,7 +207,7 @@ Feature: Validation of Booking Management. Not mention about those unsure fields
     And I jump to 'raw_booking_requested_by_ln' element
     Then I will get a valid notification
 
-  @runThis
+  @ignoreThis
   Scenario: Administrator can create a booking
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials

@@ -46,7 +46,7 @@ defineSupportCode(({Given, Then, When}) => {
 
     Then(/^The field '(.*)' will be populated with '(.*)'$/, createBookingPO.theFieldWillBePopulated);
 
-    Then(/^I can see the field '(.*)' will have the value '(.*)'$/, createBookingPO.theFieldInBookingWillHaveValue);
+    Then(/^I can verify the field '(.*)' will have the value '(.*)'$/, createBookingPO.theFieldInBookingWillHaveValue);
 
     Then(/^The booking form will be automatically populated with the details.$/, createBookingPO.populatedUserDetails);
 

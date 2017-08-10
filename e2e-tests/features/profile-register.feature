@@ -43,55 +43,55 @@ Feature: Create Profile
     When I fill all the details correctly for -> 'ORGANISATIONALREPRESENTATIVE' with the pref communication is 'SMS AND EMAIL'
     Then I will get an error notification saying "Unprocessable Entity "email":"has already been taken""
 
-#  -> invalid notification
-  @runThis
-  Scenario: Can get the invalid notification for interp
-    And I click on button 'Interpreter'
-    And I will be taken to the 'INTERPRETER Signup' page
-    When I fill the field 'first_name' incorrectly
-    And I jump to 'last_name' element
-    Then I will get a error notification
-
-  @runThis
-  Scenario: Can get the invalid notification for cli
-    And I click on button 'Client'
-    And I will be taken to the 'INDIVIDUALCLIENT Signup' page
-    When I fill the field 'first_name' incorrectly
-    And I jump to 'last_name' element
-    Then I will get a error notification
-
-  @runThis
-  Scenario: Can get the invalid notification for org rep
-    And I click on button 'Organisation'
-    And I will be taken to the 'ORGANISATION Signup' page
-    When I fill the field 'first_name' incorrectly
-    And I jump to 'last_name' element
-    Then I will get a error notification
-
-  @runThis
-  Scenario: Can get the valid notification for cli
-    And I click on button 'Client'
-    And I will be taken to the 'INDIVIDUALCLIENT Signup' page
-    When I fill the field 'first_name' correctly
-    And I jump to 'last_name' element
-    Then I will get a valid notification
-
-  @runThis
-  Scenario: Can get the valid notification for interp page
-    And I click on button 'Interpreter'
-    And I will be taken to the 'INTERPRETER Signup' page
-    When I fill the field 'first_name' correctly
-    And I jump to 'last_name' element
-    Then I will get a valid notification
-
-  @runThis
-  Scenario: Can get the valid notification for org rep
-    And I click on button 'Organisation'
-    And I will be taken to the 'ORGANISATION Signup' page
-    When I fill the field 'first_name' correctly
-    And I jump to 'last_name' element
-    Then I will get a valid notification
-
+##  -> invalid notification
+#  @runThis
+#  Scenario: Can get the invalid notification for interp
+#    And I click on button 'Interpreter'
+#    And I will be taken to the 'INTERPRETER Signup' page
+#    When I fill the field 'first_name' incorrectly
+#    And I jump to 'last_name' element
+#    Then I will get a error notification
+#
+#  @runThis
+#  Scenario: Can get the invalid notification for cli
+#    And I click on button 'Client'
+#    And I will be taken to the 'INDIVIDUALCLIENT Signup' page
+#    When I fill the field 'first_name' incorrectly
+#    And I jump to 'last_name' element
+#    Then I will get a error notification
+#
+#  @runThis
+#  Scenario: Can get the invalid notification for org rep
+#    And I click on button 'Organisation'
+#    And I will be taken to the 'ORGANISATION Signup' page
+#    When I fill the field 'first_name' incorrectly
+#    And I jump to 'last_name' element
+#    Then I will get a error notification
+#
+#  @runThis
+#  Scenario: Can get the valid notification for cli
+#    And I click on button 'Client'
+#    And I will be taken to the 'INDIVIDUALCLIENT Signup' page
+#    When I fill the field 'first_name' correctly
+#    And I jump to 'last_name' element
+#    Then I will get a valid notification
+#
+#  @runThis
+#  Scenario: Can get the valid notification for interp page
+#    And I click on button 'Interpreter'
+#    And I will be taken to the 'INTERPRETER Signup' page
+#    When I fill the field 'first_name' correctly
+#    And I jump to 'last_name' element
+#    Then I will get a valid notification
+#
+#  @runThis
+#  Scenario: Can get the valid notification for org rep
+#    And I click on button 'Organisation'
+#    And I will be taken to the 'ORGANISATION Signup' page
+#    When I fill the field 'first_name' correctly
+#    And I jump to 'last_name' element
+#    Then I will get a valid notification
+#
 
   @runThis
   Scenario: An org rep can be show the sign up page
@@ -144,3 +144,19 @@ Feature: Create Profile
     When I fill all the details correctly for -> 'INTERPRETER' with the pref communication is 'SMS AND EMAIL'
     Then 'INTERPRETER' will be created
 # --------------------------------------- AUSLAN1-472 END ------------------------------------------------
+
+# --------------------------------------- AUSLAN1-53 START ------------------------------------------------
+  @runThis
+  Scenario: interp sign up with prefer communication
+    And I click on button 'Client'
+    And I will be taken to the 'INDIVIDUALCLIENT Signup' page
+    When I fill all the details correctly for -> 'INDIVIDUALCLIENT' with the pref communication is 'SMS'
+    Then 'INTERPRETER' will be created
+
+  @runThis
+  Scenario: interp sign up with prefer communication
+    And I click on button 'Client'
+    And I will be taken to the 'INDIVIDUALCLIENT Signup' page
+    When I fill all the details correctly for -> 'INDIVIDUALCLIENT' with the pref communication is 'SMS AND EMAIL'
+    Then 'INTERPRETER' will be created
+# --------------------------------------- AUSLAN1-53 END ------------------------------------------------

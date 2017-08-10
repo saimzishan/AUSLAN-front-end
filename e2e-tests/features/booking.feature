@@ -368,7 +368,7 @@ Feature: Booking Management
     And I am on the bookings page
     When I click on an individual booking
     Then I am on the individual booking page
-    And I can see the field '' will have the value 'I am special'
+    And I can verify the field 'Sepcial Instruction' will have the value 'I am special'
 
 #  @runThis
 #  Scenario: Individual Client can't have special instruction fields

@@ -117,10 +117,15 @@ export class BookingPage extends PageObject {
 
     theFieldInBookingWillHaveValue = (fieldName: string, value: string) => {
         // browser.pause();
-        // let theFields = this.getElementByName(fieldName);
-        // return theField.getText().then( (val) => {
-        //     expect(val).to.be.equal(value);
-        // });
+        let allFields = $$('table.custom-small-table > tbody > tr > td');
+        return allFields.then((fields) => {
+            let theField = fields[8];
+            return theField.getText().then( (val) => {
+                // console.log(val);
+                expect(val).to.be.equal(value);
+            });
+        });
+
     }
 
     populatedUserDetails = () => {
