@@ -45,7 +45,7 @@ Feature: Booking Admin Management
     And I am on the bookings page
     Then I see one row with state 'Unable to service'
 
-  @ignoreThis
+  @runThis
   Scenario: Administrator cancel the INPROGRESS to unable to service action, Interpreter exists
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
@@ -80,6 +80,7 @@ Feature: Booking Admin Management
     Then I click on Bookings
     And I am on the bookings page
     Then I see one row with state 'In progress'
+
 
   @runThis
   Scenario: Booking Officer can INPROGRESS to unable to service a booking, Interpreter exists
@@ -119,7 +120,6 @@ Feature: Booking Admin Management
     Then I click on Bookings
     And I am on the bookings page
     Then I see one row with state 'Unable to service'
-
 
   @runThis
   Scenario: Booking Officer cancel the INPROGRESS to unable to service action, Interpreter exists
@@ -210,6 +210,7 @@ Feature: Booking Admin Management
     And I am on the bookings page
     Then I see one row with state 'Requested'
 
+
   @runThis
   Scenario: Booking Officer can REQUESTED to the unable to service a booking, Interpreter exists
     Given I exist as an Booking Officer
@@ -236,7 +237,6 @@ Feature: Booking Admin Management
     Then I click on Bookings
     And I am on the bookings page
     Then I see one row with state 'Unable to service'
-
 
   @runThis
   Scenario: Booking Officer cancel the REQUESTED to the unable to service action, Interpreter exists
@@ -370,7 +370,7 @@ Feature: Booking Admin Management
     ########### IN PROGRESS TO CANCEL #######################################
 
 
-  @runThis
+  @ignoreThis
   Scenario: Administrator can the INPROGRESS to Cancel Booking action, Interpreter exists
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
@@ -409,7 +409,7 @@ Feature: Booking Admin Management
     And I am on the bookings page
     Then I see one row with state 'Cancelled'
 
-  @runThis
+  @ignoreThis
   Scenario: Administrator cancel the INPROGRESS to Cancel Booking action, Interpreter exists
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
@@ -445,7 +445,7 @@ Feature: Booking Admin Management
     And I am on the bookings page
     Then I see one row with state 'In progress'
 
-  @runThis
+  @ignoreThis
   Scenario: Booking Officer can INPROGRESS to Cancel booking, Interpreter exists
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
@@ -484,7 +484,7 @@ Feature: Booking Admin Management
     And I am on the bookings page
     Then I see one row with state 'Cancelled'
 
-  @runThis
+  @ignoreThis
   Scenario: Booking Officer cancel the INPROGRESS to Cancel Booking action, Interpreter exists
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
@@ -520,7 +520,7 @@ Feature: Booking Admin Management
     And I am on the bookings page
     Then I see one row with state 'In progress'
 
-  @runThis
+  @ignoreThis
   Scenario: Given 1 verified Interpreter and a booking is created, Administrator can transition a booking from Requested to In Progress
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
@@ -539,7 +539,7 @@ Feature: Booking Admin Management
     And I am on the bookings page
     Then I see one row with state 'In progress'
 
-  @runThis
+  @ignoreThis
   Scenario: Given 1 verified Interpreter and a booking is created, Booking Officer can transition a booking from Requested to In Progress
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials

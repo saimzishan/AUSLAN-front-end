@@ -16,7 +16,7 @@ defineSupportCode(({Then, When}) => {
 
     Then(/^I will be taken to the '(.*) Signup' page$/, profileRegisterPage.showSignupPage);
 
-    When(/^I fill all the details correctly for '(.*)'$/, profileRegisterPage.fillAllDataForRegister);
+    // When(/^I fill all the details correctly for '(.*)'$/, profileRegisterPage.fillAllDataForRegister);
     When(/^I fill all the details correctly for -> '(.*)' with the pref communication is '(.*)'$/,
         profileRegisterPage.fillAllDataForRegister);
 

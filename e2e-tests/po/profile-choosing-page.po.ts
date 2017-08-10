@@ -17,6 +17,7 @@ export class ProfileChoosingPage extends PageObject {
     interpreterPic;
 
     browse = () => {
+        browser.sleep(2000);
         return this.currentPath().then((currentPath) => {
             this.didFinishedRendering();
             expect(currentPath).to.contain('register');
