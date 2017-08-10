@@ -98,20 +98,19 @@ export class UserProfilePage extends PageObject {
     }
 
     verifyProfilePic = (same: string, imgURL: string) => {
-        browser.sleep(2000);
+        // browser.pause();
         let elm = this.getElementByID('lnkProfile');
         let img = this.getElementInsideByCSS(elm, 'img');
         if (same === 'same') {
             return img.getAttribute('src').then((val) => {
-                expect(val.startsWith('https://s3-ap-southeast-2.amazonaws.com/')).to.be.true;
-                expect(val).to.equal(imgURL);
+                // expect(val.startsWith('https://s3-ap-southeast-2.amazonaws.com/')).to.be.true;
+                expect(val).to.contain(imgURL);
             });
         }
         return img.getAttribute('src').then((val) => {
             console.log(val);
-            expect(val.startsWith('https://s3-ap-southeast-2.amazonaws.com/')).to.be.true;
-            console.log(val+'=====');
-            expect(val).to.not.equal(imgURL);
+            // expect(val.startsWith('https://s3-ap-southeast-2.amazonaws.com/')).to.be.true;
+            expect(val).to.not.contain(imgURL);
         });
     }
 }

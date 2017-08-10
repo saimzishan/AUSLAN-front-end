@@ -568,11 +568,13 @@ Feature: User Profile Management
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
     And I am on the bookings page
-    And I can verify my profile pic is same with link 'https://s3-ap-southeast-2.amazonaws.com/auslan-public-bucket/missing.svg'
+    And I can verify my profile pic is same with link 'missing.svg'
     And I click on my name in the top corner
     And I will be taken to my individual profile page
     When I will upload a document 'sanji_not_sushi.png'
+    And I wait for 15000 milli-seconds
     And I click on BUTTON 'SAVE'
     Then I get valid message: 'User details updated Successfully'
-    And I can verify my profile pic is different with link 'https://s3-ap-southeast-2.amazonaws.com/auslan-public-bucket/missing.svg'
+    And I wait for 15000 milli-seconds
+    And I can verify my profile pic is different with link 'missing.svg'
 # --------------------------------------------- AUSLAN1-165 -> END ---------------------------------------------

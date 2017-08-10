@@ -5,24 +5,24 @@ Feature: As INTERPRETER, I can login on mobile
     And I go to the website
     And I am on the mobile login screen without a hero picture
 
-  @ignoreThis
+  @runThis
   Scenario: As Interpreter, I can login on mobile
     And I go to the website
     And I am shown the login screen, with picture and signup button
     And I exist as an Interpreter
 
-  @ignoreThis
+  @runThis
   Scenario: As INTERPRETER, I can login on mobile
     And I sign in with valid Interpreter credentials
     Then I will be shown the bookings page
 
-  @ignoreThis
+  @runThis
   Scenario: As INTERPRETER and a booking is created and INTERPRETER can open the link directly even if i am logged out
     And I click on booking job detail page
     And I sign in with valid Interpreter credentials
     Then I will be shown the booking detail page with id 1
 
-  @ignoreThis
+  @runThis
   Scenario: As INTERPRETER, I can accept the booking, if a booking is created and INTERPRETER Invited then
     And I sign in with valid Interpreter credentials
     Then I will be shown the bookings page
@@ -60,7 +60,7 @@ Feature: As INTERPRETER, I can login on mobile
     And I am on the bookings page
     And  I click on an individual booking of type 'In progress'
 
-  @ignoreThis
+  @runThis
   Scenario: As INTERPRETER, I can cancel the accept the booking, if a booking is created and INTERPRETER Invited then
     And I sign in with valid Interpreter credentials
     Then I will be shown the bookings page
@@ -78,7 +78,7 @@ Feature: As INTERPRETER, I can login on mobile
     And I am on the bookings page
     Then I see one row with state 'In progress'
 
-  @ignoreThis
+  @runThis
   Scenario: As INTERPRETER, I can cancel the accept the booking, if a booking is created and INTERPRETER Invited then
     And I sign in with valid Interpreter credentials
     Then I will be shown the bookings page
@@ -97,7 +97,7 @@ Feature: As INTERPRETER, I can login on mobile
     Then I see one row with state 'In progress'
 
 # ---------------------------------------- AUSLAN 1-67 -> START ----------------------------------------
-  @ignoreThis
+  @runThis
   Scenario: As INTERPRETER, I can cancel the accept the booking, if a booking is created and INTERPRETER Invited then
     And I sign in with valid Interpreter credentials
     And I will be shown the bookings page
