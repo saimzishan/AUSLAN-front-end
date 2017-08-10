@@ -528,6 +528,13 @@ export class Heroku {
         Heroku.sendCommandToHeroku(command);
     }
 
+    static specialOrgRepSetup() {
+        let command = 'o=OrganisationalRepresentative.first;';
+        command += 'o.special_instructions="I am special";';
+        command += 'o.save;';
+        Heroku.sendCommandToHeroku(command);
+    }
+
     static assignEntityToDependant(entity: string, dependant: string) {
         let command = entity.replace(' ', '') + '.last.update(';
         command += dependant.replace(' ', '_').toLowerCase() + ': ';

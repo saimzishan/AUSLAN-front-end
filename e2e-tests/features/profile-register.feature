@@ -94,3 +94,19 @@ Feature: Create Profile
     When I fill all the details correctly for -> 'INTERPRETER' with the pref communication is 'SMS AND EMAIL'
     Then 'INTERPRETER' will be created
 # --------------------------------------- AUSLAN1-472 END ------------------------------------------------
+
+# --------------------------------------- AUSLAN1-53 START ------------------------------------------------
+  @runThis
+  Scenario: interp sign up with prefer communication
+    And I click on button 'Client'
+    And I will be taken to the 'INDIVIDUALCLIENT Signup' page
+    When I fill all the details correctly for -> 'INDIVIDUALCLIENT' with the pref communication is 'SMS'
+    Then 'INTERPRETER' will be created
+
+  @runThis
+  Scenario: interp sign up with prefer communication
+    And I click on button 'Client'
+    And I will be taken to the 'INDIVIDUALCLIENT Signup' page
+    When I fill all the details correctly for -> 'INDIVIDUALCLIENT' with the pref communication is 'SMS AND EMAIL'
+    Then 'INTERPRETER' will be created
+# --------------------------------------- AUSLAN1-53 END ------------------------------------------------

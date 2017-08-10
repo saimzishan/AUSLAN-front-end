@@ -54,6 +54,8 @@ defineSupportCode(({Given, Then, When}) => {
 
     When(/^I type in the confirm password is (.*)$/, userPasswordPage.enterConfirmPassword);
 
+    When(/^I can verify my profile pic is (.*) with link '(.*)'$/, userProfilePage.verifyProfilePic);
+
     Then(/^I get (.*) message: '(.*)'$/, getMessage);
     function getMessage(success: string, message: string) {
         return userPasswordPage.getNotificationContent(message);

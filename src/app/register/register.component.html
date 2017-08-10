@@ -47,7 +47,7 @@
                                     PASSWORD *</label>
                                 <input id="pass1" type="password"
                                        placeholder="Enter your password"
-                                       [(ngModel)]="model.password" name="password" #password="ngModel"
+                                       [(ngModel)]="model.password" name="password" #password="ngModel" [rangeLength]="[6, 30]"
                                        required>
 
                                 <span *ngIf="password.touched &&  (!password.errors?.required && password.errors?.rangeLength);"

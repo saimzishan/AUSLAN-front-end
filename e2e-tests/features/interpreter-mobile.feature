@@ -95,3 +95,20 @@ Feature: As INTERPRETER, I can login on mobile
     Then I click on button with css 'button.icon-back'
     And I am on the bookings page
     Then I see one row with state 'In progress'
+
+# ---------------------------------------- AUSLAN 1-67 -> START ----------------------------------------
+  @runThis
+  Scenario: As INTERPRETER, I can cancel the accept the booking, if a booking is created and INTERPRETER Invited then
+    And I sign in with valid Interpreter credentials
+    And I will be shown the bookings page
+    And I see one row with state 'In progress'
+    And  I click on an individual booking of type 'In progress'
+    And I can see the valid header in booking detail page
+    And I will be shown a valid booking detail page
+    And I can see the booking state ' IN_PROGRESS - Invited ' in booking detail page
+    When I click on button with css 'div.manage-job-buttons > button.button.button-accept'
+    And I will be shown a popup message
+    And I click on BUTTON name 'yesBtn'
+    Then I can verify the image of myself in the list of interpreter start with 'https://s3-ap-southeast-2.amazonaws.com/'
+
+# ---------------------------------------- AUSLAN 1-67 -> END ----------------------------------------

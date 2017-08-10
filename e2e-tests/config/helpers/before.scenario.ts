@@ -38,12 +38,16 @@ defineSupportCode(({Before}) => {
 
         }
 
-        if (scenario.scenario.name.toUpperCase().indexOf('a booking is created'.toUpperCase()) > 0) {
+        if (scenario.scenario.name.toUpperCase().indexOf('a booking is created'.toUpperCase()) >= 0) {
             Heroku.createSingleBooking();
         }
 
-        if (scenario.scenario.name.toUpperCase().indexOf('INTERPRETER Invited'.toUpperCase()) > 0) {
+        if (scenario.scenario.name.toUpperCase().indexOf('INTERPRETER Invited'.toUpperCase()) >= 0) {
             Heroku.inviteInterpreter();
+        }
+
+        if (scenario.scenario.name.toUpperCase().indexOf('Special'.toUpperCase()) >= 0) {
+            Heroku.specialOrgRepSetup();
         }
         if (false === scenario.scenario.name.toUpperCase().indexOf(('unverified').toUpperCase()) < 0) {
             console.log('Adding UnVerified Interpreter');

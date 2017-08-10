@@ -4,6 +4,7 @@ const config = require('./protractor.shared.conf').config;
 config.baseUrl = 'http://localhost:4200';
 config.seleniumAddress = 'http://localhost:4444/wd/hub/';
 config.restartBrowserBetweenTests= false;
+config.directConnect = true;
     config.multiCapabilities = [
     {
       browserName: 'chrome',
@@ -24,7 +25,6 @@ config.allScriptsTimeout= 99000;
 //config.jasmineNodeOpts= {
 //    defaultTimeoutInterval: 30000
 //}
-config.directConnect=false;
 config.params= {
     env: process.env.E2E_ENV || 'localhost',
 }

@@ -100,6 +100,34 @@ export class BookingPage extends PageObject {
         });
     }
 
+    specifyAsHavingSepcialInstruction = () => {
+        const clientRadioGroup = this.getElementByName('rdSpecialInstruction');
+        let all_radio_btn_in_group = this.getAllByTagNameInElement(clientRadioGroup, 'md-radio-button');
+        return all_radio_btn_in_group.then((all_radio) => {
+            return all_radio[CONSTANT.YES].click();
+        });
+    }
+
+    theFieldWillBePopulated = (fieldName: string, value: string) => {
+        let theField = this.getElementByName(fieldName);
+        return theField.getAttribute('value').then( (val) => {
+            expect(val).to.be.equal(value);
+        });
+    }
+
+    theFieldInBookingWillHaveValue = (fieldName: string, value: string) => {
+        // browser.pause();
+        let allFields = $$('table.custom-small-table > tbody > tr > td');
+        return allFields.then((fields) => {
+            let theField = fields[8];
+            return theField.getText().then( (val) => {
+                // console.log(val);
+                expect(val).to.be.equal(value);
+            });
+        });
+
+    }
+
     populatedUserDetails = () => {
         const clientOptionLabel = this.getElementByCSSandText('.text-center', 'CLIENT DETAILS');
         const divClientDetails = this.getNextSibling(clientOptionLabel, 'div');
@@ -125,33 +153,7 @@ export class BookingPage extends PageObject {
     }
 
     createBooking = () => {
-
-        this.setStartEndTime('start', '12/12/2017', '02:15PM');
-        this.setStartEndTime('end', '12/12/2017', '03:15PM');
-
-        this.setElementsValueByName('address_street_number', '162');
-        this.setElementsValueByName('address_street', 'Dave');
-        this.setElementsValueByName('address_post_code', '3064');
-        this.setElementsValueByName('address_suburb', 'Parkville');
-        this.setElementsValueByName('address_state', 'VIC'); // dropdown
-
-        this.getElementByName('attendee_count').sendKeys('1');
-        this.getElementByName('interpreters_count').sendKeys('2');
-
-        this.getElementByName('nature_of_appointment').sendKeys('COURT');
-        this.getElementByName('specific_nature_of_appointment').sendKeys('DHS ORDER');
-
-        this.getElementByName('raw_booking_requested_by').sendKeys('Luke');
-        this.getElementByName('raw_booking_requested_by_ln').sendKeys('Orange');
-
-        // this.getElementByName('ext_ref_num').sendKeys('321');
-
-        this.getElementByName('cn_first_name').sendKeys('John');
-        this.getElementByName('cn_last_name').sendKeys('Travolta');
-        this.getElementByName('cn_email').sendKeys('jt@star.com.au');
-        this.getElementByName('cn_phone').sendKeys('0490394512');
-
-        this.getElementByName('deaf_person_eaf').sendKeys('123');
+        return this.createBookingWithTimeAndInterpreter('standard', '02:15PM', '03:15PM', '2');
     }
 
     checkTheFieldExist = (cant: string, fieldName: string) => {
@@ -160,7 +162,7 @@ export class BookingPage extends PageObject {
                 expect(val).to.false;
             });
         }
-        return browser.wait(protractor.ExpectedConditions.presenceOf(this.getElementByName('ext_ref_num')), 5000).then(() => {
+        return browser.wait(protractor.ExpectedConditions.presenceOf(this.getElementByName(fieldName)), 5000).then(() => {
             expect(this.getElementByName(fieldName)).to.exist;
         });
     }
@@ -168,7 +170,6 @@ export class BookingPage extends PageObject {
     createBookingWithTimeAndInterpreter = (standard: string, startTime: string, endTime: string, interpreterNum: string) => {
         this.setStartEndTime('start', '12/12/2017', startTime);
         this.setStartEndTime('end', '12/12/2017', endTime);
-
         this.setElementsValueByName('address_street_number', '162');
         this.setElementsValueByName('address_street', 'Dave');
         this.setElementsValueByName('address_post_code', '3064');

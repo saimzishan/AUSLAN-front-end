@@ -96,5 +96,22 @@ export class UserProfilePage extends PageObject {
             expect(value).to.be.equal(updated_text);
         });
     }
+
+    verifyProfilePic = (same: string, imgURL: string) => {
+        // browser.pause();
+        let elm = this.getElementByID('lnkProfile');
+        let img = this.getElementInsideByCSS(elm, 'img');
+        if (same === 'same') {
+            return img.getAttribute('src').then((val) => {
+                // expect(val.startsWith('https://s3-ap-southeast-2.amazonaws.com/')).to.be.true;
+                expect(val).to.contain(imgURL);
+            });
+        }
+        return img.getAttribute('src').then((val) => {
+            console.log(val);
+            // expect(val.startsWith('https://s3-ap-southeast-2.amazonaws.com/')).to.be.true;
+            expect(val).to.not.contain(imgURL);
+        });
+    }
 }
 
