@@ -168,13 +168,19 @@ export class UserManagementPage extends PageObject {
         });
     }
 
-    validUserShouldBeOntheList = (type: string) => {
-        let tr = $$('table.custom tr');
-        return tr.count().then((d) => {
-            console.log(d);
-            console.log(this.cnt);
-            expect(d - 1).to.be.greaterThan(this.cnt);
+    // This function assumes the UI
+    // The type column is user-management page is
+    // third column from left
+    validUserShouldBeOntheList = (count: number, type: string) => {
+        count = count || 1;
+        let trList = super.getAll('table.custom tbody tr');
+        trList = trList.filter((tr) => {
+            let el = super.getAllByTagNameInElement(tr, 'td').get(2);
+            return el.getText().then((text) => {
+                return text.toLowerCase() === type.toLowerCase();
+            });
         });
+        return trList.count().then((ntr) => expect(ntr).to.equal(count));
     }
 
     showValidationError = () => {

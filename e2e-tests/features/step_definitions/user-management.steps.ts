@@ -17,7 +17,13 @@ defineSupportCode(({Given, Then, When}) => {
 
     When(/^I click on 'Create'$/, userManagementPO.createUserClickInDialog);
 
-    Then(/^the valid (.*) should be in the list$/, userManagementPO.validUserShouldBeOntheList);
+    // Following strings are matched
+    // the 21 valid Interpreters should be in the list
+    // The valid Interpreters should be in the list
+    // The valid Interpreter should be in the list
+    // the valid Booking Officer should be in the list
+    // the 2 valid Administrators should be in the list
+    Then(/^[tT]he (\d+)?\s?valid (.*[^s])s? should be in the list$/, userManagementPO.validUserShouldBeOntheList);
 
     // ================================== INVALID CREATING ========================================
     When(/^I add an invalid (.*)/, userManagementPO.addInvalidUser);
