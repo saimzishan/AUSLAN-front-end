@@ -110,6 +110,18 @@ export class BookingManagementPage extends PageObject {
         });
     }
 
+    noBookingWithStateExists = (booking_state: string) => {
+        return this.getAllByCSSandText('tbody td', booking_state).count().then((cnt) => {
+            expect(cnt).not.to.be.greaterThan(0);
+        });
+    }
+
+    noBookingExists = () => {
+        return this.getAll('tbody td').count().then((cnt) => {
+            expect(cnt).not.to.be.greaterThan(0);
+        });
+    }
+
     bookingWithStatusExists = (booking_status: string) => {
         let className = {
             'green': 'icon-check-green',

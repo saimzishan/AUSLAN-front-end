@@ -11,11 +11,11 @@
                 <a href="javascript:void(0);" class="active">Booking info</a>
             </nav>
             <div *ngIf="isCurrentUserInterpreter()">
-                <button [disabled]="disableReject" (click)="showDialogBox(true)"
+                <button *ngIf="!disableReject" (click)="showDialogBox(true)"
                         class="button pink">Decline
                 </button>
                 <div class="sep"></div>
-                <button [disabled]="disableAccept" (click)="showDialogBox(false)"
+                <button *ngIf="!disableAccept" (click)="showDialogBox(false)"
                         class="button inverse">Accept
                 </button>
             </div>

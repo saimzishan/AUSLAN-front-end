@@ -22,9 +22,8 @@ export class User {
     public type: string;
 
     static user_type(type: string) {
-        return type.replace(/ /g, '');
+        return type.replace(/ /g, '').replace('1', '');
     }
-
 
     static returnValidUser(type: string) {
         let chosen_type = '';
@@ -432,54 +431,13 @@ export class Heroku {
     }
 
     static createSingleBooking() {
-        const data = new Object({
-            'venue': 'Fed Square',
-            'requested_by_first_name': 'Georgious',
-            'requested_by_last_name': 'Chara',
-            'nature_of_appointment': 'Medical',
-            'specific_nature_of_appointment': 'Audiology',
-            'contact_first_name': 'Hadrian',
-            'contact_last_name': 'French',
-            'contact_email': 'a@a.com',
-            'contact_phone_number': '03 2342 2343',
-            'deaf_persons_first_name': 'Clifford',
-            'deaf_persons_last_name': 'Waz',
-            'deaf_persons_mobile': '0444 555 666',
-            'deaf_persons_email': 'clifford@vicdeaf.org.au',
-            'deaf_persons_eaf_no': '124',
-            'number_of_people_attending': 1,
-            'number_of_interpreters_required': 1,
-            'start_time': '2017-08-05T09: 01: 26.298+00: 00',
-            'end_time': '2017-08-05T10: 01: 26.298+00: 00',
-            'billing_account_attributes': {
-                'primary_contact_first_name': 'Paul',
-                'primary_contact_last_name': 'Biller',
-                'primary_contact_email': 'a@a.com',
-                'primary_contact_phone_number': '0482 232 232',
-                'account_number': 'ABCD-1234',
-                'preferred_billing_method_email': false,
-                'external_reference': '3421',
-                'address_attributes': {
-                    'unit_number': '02',
-                    'street_number': '50',
-                    'street_name': 'Flemington Rd',
-                    'suburb': 'Parkville',
-                    'state': 'VIC',
-                    'post_code': '3025'
-                }
-            },
-            'address_attributes': {
-                'unit_number': '02',
-                'street_number': '50',
-                'street_name': 'Flemington Rd',
-                'suburb': 'Parkville',
-                'state': 'VIC',
-                'post_code': '3025'
-            },
-            'parking_availability': 'None - Use the Tram',
-            'bookable_id': 1,
-            'bookable_type': 'Administrator'
-        });
+        const data = Heroku.createBooking(1);
+        let command = 'Booking.create(' + JSON.stringify(data) + ')';
+        Heroku.sendCommandToHeroku(command);
+    }
+
+    static createSingleBookingWithMoreInterpreter() {
+        const data = Heroku.createBooking(2);
         let command = 'Booking.create(' + JSON.stringify(data) + ')';
         Heroku.sendCommandToHeroku(command);
     }
@@ -528,6 +486,15 @@ export class Heroku {
         Heroku.sendCommandToHeroku(command);
     }
 
+    static inviteAllInterpreter() {
+        Heroku.inviteInterpreter();
+        let command = 'b=Booking.first;';
+        command += 'i=Interpreter.last;';
+        command += 'b.interpreter_ids=[i.id];';
+        command += 'b.add_interpreters_to_booking;';
+        command += 'b.save;';
+        Heroku.sendCommandToHeroku(command);
+    }
     static specialOrgRepSetup() {
         let command = 'o=OrganisationalRepresentative.first;';
         command += 'o.special_instructions="I am special";';
@@ -553,5 +520,56 @@ export class Heroku {
         let command = 'd = ' + daysToAdd + '.business_days.after(DateTime.now);'
         command += 'Booking.last.update(start_time: d, end_time: d + 1.hour);Booking.last.update_status';
         Heroku.sendCommandToHeroku(command);
+    }
+
+    private static createBooking(int_required: number) {
+        return new Object({
+            'venue': 'Fed Square',
+            'requested_by_first_name': 'Georgious',
+            'requested_by_last_name': 'Chara',
+            'nature_of_appointment': 'Medical',
+            'specific_nature_of_appointment': 'Audiology',
+            'contact_first_name': 'Hadrian',
+            'contact_last_name': 'French',
+            'contact_email': 'a@a.com',
+            'contact_phone_number': '03 2342 2343',
+            'deaf_persons_first_name': 'Clifford',
+            'deaf_persons_last_name': 'Waz',
+            'deaf_persons_mobile': '0444 555 666',
+            'deaf_persons_email': 'clifford@vicdeaf.org.au',
+            'deaf_persons_eaf_no': '124',
+            'number_of_people_attending': 1,
+            'number_of_interpreters_required': int_required,
+            'start_time': '2017-08-05T09: 01: 26.298+00: 00',
+            'end_time': '2017-08-05T10: 01: 26.298+00: 00',
+            'billing_account_attributes': {
+                'primary_contact_first_name': 'Paul',
+                'primary_contact_last_name': 'Biller',
+                'primary_contact_email': 'a@a.com',
+                'primary_contact_phone_number': '0482 232 232',
+                'account_number': 'ABCD-1234',
+                'preferred_billing_method_email': false,
+                'external_reference': '3421',
+                'address_attributes': {
+                    'unit_number': '02',
+                    'street_number': '50',
+                    'street_name': 'Flemington Rd',
+                    'suburb': 'Parkville',
+                    'state': 'VIC',
+                    'post_code': '3025'
+                }
+            },
+            'address_attributes': {
+                'unit_number': '02',
+                'street_number': '50',
+                'street_name': 'Flemington Rd',
+                'suburb': 'Parkville',
+                'state': 'VIC',
+                'post_code': '3025'
+            },
+            'parking_availability': 'None - Use the Tram',
+            'bookable_id': 1,
+            'bookable_type': 'Administrator'
+        });
     }
 }

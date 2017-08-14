@@ -33,8 +33,11 @@ defineSupportCode(({Given, Then, When}) => {
     // When(/^I click on Bookings$/, bookingManagementPO.clickOnBookings);
     When(/^I see one row with state '(.*)'$/, bookingManagementPO.bookingWithStateExists);
     When(/^I see one row with status '(.*)'$/, bookingManagementPO.bookingWithStatusExists);
+    When(/^I do not see any row with state '(.*)'$/, bookingManagementPO.noBookingWithStateExists);
 
     When(/^I click on an individual booking of type '(.*)'$/, bookingManagementPO.clickOnIndividualBookingOfType);
+    When(/^I do not see any booking rows$/, bookingManagementPO.noBookingExists);
+
     When(/^I click on an individual booking$/, bookingManagementPO.clickOnIndividualBooking);
     Then(/^I am back on booking page$/, bookingManagementPO.onBookingListPage);
 

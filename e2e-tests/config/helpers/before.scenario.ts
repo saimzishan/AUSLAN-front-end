@@ -35,15 +35,22 @@ defineSupportCode(({Before}) => {
             console.log('Adding Verified User', pn);
             let currentlyLoggedInUser = User.returnTypeAndUser(pn).user;
             Heroku.addVerifiedUser(currentlyLoggedInUser, pn);
-
         }
 
         if (scenario.scenario.name.toUpperCase().indexOf('a booking is created'.toUpperCase()) >= 0) {
             Heroku.createSingleBooking();
         }
 
+        if (scenario.scenario.name.toUpperCase().indexOf('a booking with two interpreters is created'.toUpperCase()) >= 0) {
+            Heroku.createSingleBookingWithMoreInterpreter();
+        }
+
         if (scenario.scenario.name.toUpperCase().indexOf('INTERPRETER Invited'.toUpperCase()) >= 0) {
             Heroku.inviteInterpreter();
+        }
+
+        if (scenario.scenario.name.toUpperCase().indexOf('INTERPRETER_ALL Invited'.toUpperCase()) >= 0) {
+            Heroku.inviteAllInterpreter();
         }
 
         if (scenario.scenario.name.toUpperCase().indexOf('Special'.toUpperCase()) >= 0) {

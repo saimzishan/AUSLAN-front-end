@@ -114,6 +114,7 @@ defineSupportCode(({Given, When}) => {
     Given(/^I will be shown a valid booking detail page$/, bookingJob.isOnValidBookingJobDetails);
     Given(/^I can see the valid header in booking detail page$/, bookingJob.isValidBookingHeader);
     Given(/^I can see the booking state '(.*)' in booking detail page$/, bookingJob.isBookingStateText);
+    Given(/^I can see the booking state '(.*)' in booking job page$/, bookingJob.isBookingJOBStateText);
     Given(/^I will be shown the booking job page$/, bookingJob.browse);
     Given(/^I click on booking job detail page$/, bookingJob.onBookingJobDetails);
     Given(/^I get a valid '(.*)' notification for state$/, bookingJob.getSuccessNotificationContentForState);
@@ -137,7 +138,6 @@ defineSupportCode(({Given, When}) => {
     }
 
     When(/^I click on button with css '(.*)'$/, clickOnButtonWithCSS);
-
     function clickOnButtonWithCSS(css: string) {
         return page.getElementByCss(css).click();
     }
@@ -146,7 +146,6 @@ defineSupportCode(({Given, When}) => {
 
 
     When(/^I can see the button '(.*)' is (.*)$/, isButtonDisabled);
-
     function isButtonDisabled(btnLabel: string, disabled: string) {
         let isEnabled = disabled.toLowerCase() === 'enabled';
         return page.getElementByCSSandText('.button', btnLabel).isEnabled().then((val) => {
@@ -155,7 +154,6 @@ defineSupportCode(({Given, When}) => {
     }
 
     When(/^I can see the button state '(.*)' is (.*)$/, isButtonVisible);
-
     function isButtonVisible(btnLabel: string, visible: string) {
         let isDisplayed = visible.toLowerCase() === 'visible';
         return browser.sleep(1000).then(() => {
@@ -166,7 +164,6 @@ defineSupportCode(({Given, When}) => {
     }
 
     When(/^I can see the button with css '(.*)' is (.*)$/, isButtonWithCSSDisabled);
-
     function isButtonWithCSSDisabled(css: string, disabled: string) {
         let isEnabled = disabled.toLowerCase() === 'enabled';
         return page.getElementByCss(css).isEnabled().then((val) => {
@@ -226,6 +223,13 @@ defineSupportCode(({Given, When}) => {
     Given(/^I will be shown a popup message$/, showPopup);
     function showPopup() {
         return browser.wait(protractor.ExpectedConditions.presenceOf(page.getElementByCss('app-popup')), 30000).then(() => {
+        });
+    }
+    Given(/^I will be shown a popup message '(.*)'$/, showPopupWithMessage);
+    function showPopupWithMessage(message ) {
+        return browser.wait(protractor.ExpectedConditions.presenceOf(page.getElementByCss('app-popup')), 30000).then(() => {
+            let elm = page.getElementByCss('main > div > p');
+            expect(elm.getText()).to.be.eventually.eq(message);
         });
     }
 

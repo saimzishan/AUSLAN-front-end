@@ -86,6 +86,12 @@ export class BookingJobPage extends PageObject {
                 this.bookingID + '/job-detail');
         });
     }
+    isBookingJOBStateText = (booking_state_text: string) => {
+        return this.getElementByCss('#steps nav > a.active').getText().then( (txt) => {
+            expect(txt.trim()).to.be.eq(booking_state_text.trim());
+        });
+    }
+
     isBookingStateText = (booking_state_text: string) => {
         return this.getElementByCss('div.job-status > span').getText().then( (txt) => {
             expect(txt.trim()).to.be.eq(booking_state_text.trim());

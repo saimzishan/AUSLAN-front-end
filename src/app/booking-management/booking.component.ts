@@ -61,7 +61,7 @@ export class BookingComponent {
                                 if (GLOBAL.currentUser instanceof Interpreter && Boolean(currentInt)
                                     && b.state === BOOKING_STATUS.Allocated
                                     && (currentInt.state === 'Invited' ||
-                                        currentInt.state === 'decline')) {
+                                        currentInt.state === 'Rejected')) {
                                     continue;
                                 } else {
                                     this.bookings.push(b);
