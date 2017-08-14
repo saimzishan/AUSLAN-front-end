@@ -61,7 +61,7 @@ Feature: As INTERPRETER, I can login on mobile
     And  I click on an individual booking of type 'In progress'
 
   @runThis
-  Scenario: As INTERPRETER, I can cancel the accept the booking, if a booking is created and INTERPRETER Invited then
+  Scenario: As INTERPRETER, I can cancel the accept the booking action, if a booking is created and INTERPRETER Invited then
     And I sign in with valid Interpreter credentials
     Then I will be shown the bookings page
     Then I see one row with state 'In progress'
@@ -79,7 +79,7 @@ Feature: As INTERPRETER, I can login on mobile
     Then I see one row with state 'In progress'
 
   @runThis
-  Scenario: As INTERPRETER, I can cancel the accept the booking, if a booking is created and INTERPRETER Invited then
+  Scenario: As INTERPRETER, I can cancel booking, if a booking is created and INTERPRETER Invited then
     And I sign in with valid Interpreter credentials
     Then I will be shown the bookings page
     Then I see one row with state 'In progress'
@@ -98,7 +98,7 @@ Feature: As INTERPRETER, I can login on mobile
 
 # ---------------------------------------- AUSLAN 1-67 -> START ----------------------------------------
   @runThis
-  Scenario: As INTERPRETER, I can cancel the accept the booking, if a booking is created and INTERPRETER Invited then
+  Scenario: As INTERPRETER, I can  accept the booking, if a booking is created and INTERPRETER Invited then
     And I sign in with valid Interpreter credentials
     And I will be shown the bookings page
     And I see one row with state 'In progress'

@@ -98,7 +98,7 @@ export class BookingJobPage extends PageObject {
         });
     }
     getSuccessNotificationContentForInvite  = () => {
-        return browser.sleep(3000).then(() => {
+        return browser.sleep(1000).then(() => {
             NotificationObject.getNotificationContent('The interpreters have been invited');
         });
     }

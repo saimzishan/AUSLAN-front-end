@@ -572,9 +572,7 @@ Feature: User Profile Management
     And I click on my name in the top corner
     And I will be taken to my individual profile page
     When I will upload a document 'sanji_not_sushi.png'
-    And I wait for 15000 milli-seconds
     And I click on BUTTON 'SAVE'
     Then I get valid message: 'User details updated Successfully'
-    And I wait for 15000 milli-seconds
     And I can verify my profile pic is different with link 'missing.svg'
 # --------------------------------------------- AUSLAN1-165 -> END ---------------------------------------------

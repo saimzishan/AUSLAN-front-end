@@ -98,7 +98,6 @@ export class UserProfilePage extends PageObject {
     }
 
     verifyProfilePic = (same: string, imgURL: string) => {
-        // browser.pause();
         let elm = this.getElementByID('lnkProfile');
         let img = this.getElementInsideByCSS(elm, 'img');
         if (same === 'same') {

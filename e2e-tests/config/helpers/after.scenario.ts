@@ -11,20 +11,22 @@ interface World {
 
 defineSupportCode(({After}) => {
     After(function (scenarioResult: HookScenarioResult) {
-        if ( scenarioResult.status !== 'failed') {
+        if (Boolean(browser.params.debug) && browser.params.debug &&
+            scenarioResult.status === 'failed') {
+            const world = this;
+            (scenarioResult.status === 'failed') ? saveFailedScenarioScreenshot(world, scenarioResult) : Promise.resolve();
+        } else {
             Heroku.sendCommandToHeroku('Booking.destroy_all');
             Heroku.sendCommandToHeroku('User.where.not(id: 1).destroy_all');
         }
-        const world = this;
-        (scenarioResult.status === 'failed') ? saveFailedScenarioScreenshot(world, scenarioResult) : Promise.resolve();
         return browser.restart();
     });
 
     /**
      * Save a screenshot when a scenario failed
      */
-     function saveFailedScenarioScreenshot(world: World, scenarioResult: HookScenarioResult) {
-        return browser.takeScreenshot().then( (screenshot) => {
+    function saveFailedScenarioScreenshot(world: World, scenarioResult: HookScenarioResult) {
+        return browser.takeScreenshot().then((screenshot) => {
             const fileName = `${scenarioResult.scenario.name
                 .replace(/[^a-zA-Z0-9\s]/g, '').replace(/\s/g, '-')
                 .toLowerCase().substr(0, 100)}.png`;

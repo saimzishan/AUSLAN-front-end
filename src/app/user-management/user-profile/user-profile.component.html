@@ -69,8 +69,8 @@
         <div class="medium-6 columns">
           <div class="form-field">
             <label>Change Picture:</label>
-            <input type="file" id="filePicker" (change)="handleFileSelect($event)">
-
+            <input type="file" ng2FileSelect accept="image/*" (change)="handleFileSelect($event)" [uploader]="uploader"
+                   name="uploader"/>
           </div>
         </div>
       </div>

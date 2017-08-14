@@ -10,6 +10,7 @@ import {NotificationServiceBus} from '../../notification/notification.service';
 import {GLOBAL} from '../../shared/global';
 import {UserNameService} from '../../shared/user-name.service';
 import {FormGroup} from '@angular/forms';
+import {FileUploader, FileUploaderOptions} from 'ng2-file-upload';
 
 @Component({
     selector: 'app-user-profile',
@@ -21,6 +22,7 @@ export class UserProfileComponent implements OnInit {
     userModel;
     selectedStatus = '';
     userStatusArray = GLOBAL.userStatusArray;
+    public uploader: FileUploader = new FileUploader({url: '', maxFileSize: 20 * 1024 * 1024});
 
     constructor(public userDataService: UserService, public userNameService: UserNameService,
                 public notificationServiceBus: NotificationServiceBus,
@@ -57,7 +59,7 @@ export class UserProfileComponent implements OnInit {
         this.userModel.disabled = this.selectedStatus === 'Disabled';
         this.selectedStatus = '';
         this.spinnerService.requestInProcess(true);
-
+        console.log (this.userModel);
         this.userDataService.updateUser(this.userModel)
             .subscribe((res: any) => {
                     if (res.status === 200) {
@@ -83,14 +85,12 @@ export class UserProfileComponent implements OnInit {
         let file = files[0];
 
         if (files && file) {
+
             let reader = new FileReader();
-
             reader.onload = this._handleReaderLoaded.bind(this);
-
             reader.readAsDataURL(file);
         }
     }
-
     _handleReaderLoaded(readerEvt) {
         this.userModel.avatar = readerEvt.target.result;
     }

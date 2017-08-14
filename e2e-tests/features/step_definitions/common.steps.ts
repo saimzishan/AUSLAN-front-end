@@ -95,7 +95,6 @@ defineSupportCode(({Given, When}) => {
         let fileToUpload = '../data/' + documentName;
         let p = path.resolve(__dirname, fileToUpload);
         let elm = element(by.css('input[type="file"]'));
-        elm.click();
         return elm.sendKeys(p);
     }
 
@@ -221,7 +220,6 @@ defineSupportCode(({Given, When}) => {
 
     Given(/^I click on Bookings$/, clickOnBookings);
     function clickOnBookings() {
-        browser.pause();
         return page.getElementByID('lnkBooking').click();
     }
 
