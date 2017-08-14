@@ -153,7 +153,7 @@ export class BookingPage extends PageObject {
     }
 
     createBooking = () => {
-        return this.createBookingWithTimeAndInterpreter('standard', '02:15PM', '03:15PM', '2');
+        return this.createBookingWithTimeAndInterpreter('standard', '10:15AM', '11:15AM', '2');
     }
 
     checkTheFieldExist = (cant: string, fieldName: string) => {
@@ -201,20 +201,22 @@ export class BookingPage extends PageObject {
     }
 
     setTime = (field: string, days: number, hours?: number) => {
+        // add logic for business days
+        // this is a quick fix, improve this
+        // TODO: refactor this to use a standard method
+        let dayOfTheWeek = new Date(Date.now()).getDay();
+        if (dayOfTheWeek >= 4) {
+           days = 5 - dayOfTheWeek;
+        }
         let date = new Date(Date.now() + (1000 * 60 * 60 * (hours || 0)) + (1000 * 60 * 60 * 24 * (days || 0)));
         let dd = ('0' + date.getDate()).slice(-2);
         let mm = ('0' + (date.getMonth() + 1)).slice(-2);
         let yy = date.getFullYear();
         let hh: any = date.getHours();
         let min = ('0' + date.getMinutes()).slice(-2);
-        let tt = 'AM';
-        if (hh - 12 > 0) {
-            hh -= 12;
-            tt = 'PM';
-        }
         hh = ('0' + hh).slice(-2);
         let dateString = [dd, mm, yy].join('/');
-        let timeString = hh + ':' + min + tt;
+        let timeString = hh + ':' + min;
         this.setStartEndTime(field, dateString, timeString);
 
     }
