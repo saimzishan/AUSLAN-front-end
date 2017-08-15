@@ -200,6 +200,19 @@ defineSupportCode(({Given, When}) => {
         return page.getElementByName(btnName).click();
     }
 
+    When(/^I click on checkbox name '(.*)'$/, clickOnCBByName);
+    function clickOnCBByName(btnName: string) {
+        return page.getElementByName(btnName).click();
+    }
+
+    When(/^I verify checkbox name '(.*)' and is checked '(.*)'$/, verifyOnCBByName);
+    function verifyOnCBByName(btnName: string, checkedState: string) {
+        let bVal = ((checkedState === 'True') || (checkedState === 'true')) ?
+            true : false;
+        return page.getElementByName(btnName).isSelected().then( val => {
+            expect(val).to.be.eq(bVal);
+        });
+    }
     Given(/^I wait for (.*) milli-seconds/, (seconds: string) => {
         return browser.sleep(parseInt(seconds, 10));
     });

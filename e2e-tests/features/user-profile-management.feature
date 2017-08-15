@@ -568,6 +568,131 @@ Feature: User Profile Management
     And I will be taken to my individual profile page
     And The dropdown field COMM. PREFERENCE * will be updated with email_and_sms
 
+
+  @runThis
+#  Show profile page
+    Scenario: Be able to update the prefComm as Individual Client
+      Given I exist as an Individual Client
+      And I sign in with valid Individual Client credentials
+      And I am on the bookings page
+      And I click on my name in the top corner
+      And I will be taken to my individual profile page
+      When I change the dropwdown field COMM. PREFERENCE * with EMAIL
+      And I click on BUTTON 'SAVE'
+      Then I get valid message: 'User details updated Successfully'
+      Then I scroll to top
+      And I click on my name in the top corner
+      Then I click on logout
+    And I sign in with valid Individual Client credentials
+      And I am on the bookings page
+      And I click on my name in the top corner
+      And I will be taken to my individual profile page
+      And The dropdown field COMM. PREFERENCE * will be updated with email_only
+
+    @runThis
+#  Show profile page
+    Scenario: Be able to update the prefComm as Individual Client
+      Given I exist as an Individual Client
+      And I sign in with valid Individual Client credentials
+      And I am on the bookings page
+      And I click on my name in the top corner
+      And I will be taken to my individual profile page
+      When I change the dropwdown field COMM. PREFERENCE * with SMS AND EMAIL
+      And I click on BUTTON 'SAVE'
+      Then I get valid message: 'User details updated Successfully'
+      Then I scroll to top
+      And I click on my name in the top corner
+      Then I click on logout
+      And I sign in with valid Individual Client credentials
+      And I am on the bookings page
+      And I click on my name in the top corner
+      And I will be taken to my individual profile page
+      And The dropdown field COMM. PREFERENCE * will be updated with email_and_sms
+
+       @runThis
+#  Show profile page
+    Scenario: Be able to update the prefComm as Individual Client
+      Given I exist as an Individual Client
+      And I sign in with valid Individual Client credentials
+      And I am on the bookings page
+      And I click on my name in the top corner
+      And I will be taken to my individual profile page
+      When I click on checkbox name 'preferred_billing_method_email'
+      Then I verify checkbox name 'preferred_billing_method_email' and is checked 'false'
+      And I click on BUTTON 'SAVE'
+      Then I get valid message: 'User details updated Successfully'
+      Then I scroll to top
+      And I click on my name in the top corner
+      Then I click on logout
+      And I sign in with valid Individual Client credentials
+      And I am on the bookings page
+      And I click on my name in the top corner
+      And I will be taken to my individual profile page
+      Then I verify checkbox name 'preferred_billing_method_email' and is checked 'false'
+
+
+  @runThis
+#  Show profile page
+    Scenario: Be able to update the prefComm as Organisational Representative
+      Given I exist as an Organisational Representative
+      And I sign in with valid Organisational Representative credentials
+      And I am on the bookings page
+      And I click on my name in the top corner
+      And I will be taken to my individual profile page
+      When I change the dropwdown field COMM. PREFERENCE * with EMAIL
+      And I click on BUTTON 'SAVE'
+      Then I get valid message: 'User details updated Successfully'
+      Then I scroll to top
+      And I click on my name in the top corner
+      Then I click on logout
+    And I sign in with valid Organisational Representative credentials
+      And I am on the bookings page
+      And I click on my name in the top corner
+      And I will be taken to my individual profile page
+      And The dropdown field COMM. PREFERENCE * will be updated with email_only
+
+    @runThis
+#  Show profile page
+    Scenario: Be able to update the prefComm as Organisational Representative
+      Given I exist as an Organisational Representative
+      And I sign in with valid Organisational Representative credentials
+      And I am on the bookings page
+      And I click on my name in the top corner
+      And I will be taken to my individual profile page
+      When I change the dropwdown field PREFFERED CONTACT METHOD with PHONE
+      And I click on BUTTON 'SAVE'
+      Then I get valid message: 'User details updated Successfully'
+      Then I scroll to top
+      And I click on my name in the top corner
+      Then I click on logout
+      And I sign in with valid Organisational Representative credentials
+      And I am on the bookings page
+      And I click on my name in the top corner
+      And I will be taken to my individual profile page
+      And The dropdown field PREFFERED CONTACT METHOD will be updated with phone
+
+       @runThis
+#  Show profile page
+    Scenario: Be able to update the prefComm as Organisational Representative
+      Given I exist as an Organisational Representative
+      And I sign in with valid Organisational Representative credentials
+      And I am on the bookings page
+      And I click on my name in the top corner
+      And I will be taken to my individual profile page
+      When I click on checkbox name 'preferred_billing_method_email'
+      Then I verify checkbox name 'preferred_billing_method_email' and is checked 'false'
+      And I click on BUTTON 'SAVE'
+      Then I get valid message: 'User details updated Successfully'
+      Then I scroll to top
+      And I click on my name in the top corner
+      Then I click on logout
+      And I sign in with valid Organisational Representative credentials
+      And I am on the bookings page
+      And I click on my name in the top corner
+      And I will be taken to my individual profile page
+      Then I verify checkbox name 'preferred_billing_method_email' and is checked 'false'
+
+
 # --------------------------------------------- AUSLAN1-165 -> START ---------------------------------------------
   @ignoreThis
 #  Show profile page

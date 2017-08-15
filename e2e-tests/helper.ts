@@ -31,35 +31,35 @@ export class User {
         switch (type) {
             case 'Administrator':
                 chosen_type = 'Administrator';
-                valid_user = new Administrator('georgeadministrator@auslan.com.au', 'Abcd#1234');
+                valid_user = new Administrator('robin@auslan.com.au', 'Abcd#1234');
                 break;
             case 'Booking Officer':
                 chosen_type = 'Booking Officer';
-                valid_user = new BookingOfficer('georgebookingofficer@auslan.com.au', 'Abcd#1234');
+                valid_user = new BookingOfficer('frank@auslan.com.au', 'Abcd#1234');
                 break;
             case 'Interpreter':
                 chosen_type = 'Interpreter';
-                valid_user = new Interpreter('georgeinterpreter@auslan.com.au', 'Abcd#1234');
+                valid_user = new Interpreter('dragana@auslan.com.au', 'Abcd#1234');
                 break;
             case 'Interpreter1':
                 chosen_type = 'Interpreter';
-                valid_user = new Interpreter('georgeinterpreter1@auslan.com.au', 'Abcd#1234');
+                valid_user = new Interpreter('dragana_2@auslan.com.au', 'Abcd#1234');
                 break;
             case 'Interpreter2':
                 chosen_type = 'Interpreter';
-                valid_user = new Interpreter('georgeinterpreter2@auslan.com.au', 'Abcd#1234');
+                valid_user = new Interpreter('dragana_3@auslan.com.au', 'Abcd#1234');
                 break;
             case 'Individual Client':
                 chosen_type = 'Individual Client';
-                valid_user = new Client('georgeindividualclient@auslan.com.au', 'Abcd#1234');
+                valid_user = new Client('ted@auslan.com.au', 'Abcd#1234');
                 break;
             case 'Organisational Representative':
                 chosen_type = 'Organisational';
-                valid_user = new Organisation('georgeorganisationalrepresentative@auslan.com.au', 'Abcd#1234');
+                valid_user = new Organisation('alana@auslan.com.au', 'Abcd#1234');
                 break;
         }
-        valid_user.first_name = 'MOH';
-        valid_user.last_name = 'JAY';
+        valid_user.first_name = valid_user.email.replace('@auslan.com.au', '');
+        valid_user.last_name = chosen_type;
         valid_user.mobile_num = '0444 555 666';
         return {type: chosen_type, user: valid_user};
     }
