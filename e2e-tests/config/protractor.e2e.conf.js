@@ -15,7 +15,7 @@ config.directConnect = true;
                     'password_manager_enabled': false
                 }
             },
-            args: ['no-sandbox','--headless','--disable-gpu','--window-size=1400,768']
+            args: ['no-sandbox','--headless','--disable-gpu','--window-size=1400,800']
         }
     }
 ];

@@ -25,8 +25,10 @@ import {GLOBAL} from '../../shared/global';
 export class BookingJobsComponent implements OnDestroy {
     selectedBookingModel: Booking = new Booking();
     invitePressed = false;
+    unAssignPressed = false;
+    reAssignPressed = false;
     isCancelledOrUnableToServe = false;
-
+    selectedActionableInterpreterID = -1;
     interpreterList: User[] = [];
     selectedInterpreterIDs: number[] = [];
     private sub: any;
@@ -203,7 +205,19 @@ export class BookingJobsComponent implements OnDestroy {
     }
 
     inviteInterpreters() {
+        this.unAssignPressed = this.reAssignPressed = false;
         this.invitePressed = this.selectedInterpreterIDs.length > 0;
+    }
+
+    unAssignInterpreters(int_id: number) {
+        this.invitePressed = this.reAssignPressed = false;
+        this.unAssignPressed = true;
+        this.selectedActionableInterpreterID = int_id;
+    }
+
+    reAssignInterpreters() {
+        this.invitePressed = this.reAssignPressed = false;
+        this.reAssignPressed = this.selectedInterpreterIDs.length > 0;
     }
 
     sendInvite(interpreters) {
@@ -222,18 +236,60 @@ export class BookingJobsComponent implements OnDestroy {
                 });
     }
 
+    sendReAssign() {
+        this.bookingService.reAssignInterpreter(this.selectedBookingModel.id, this.selectedActionableInterpreterID)
+            .subscribe((res: any) => {
+                    if (res.status === 204) {
+                        this.notificationServiceBus.launchNotification(false, 'The interpreter have been Re-Assigned');
+                    }
+                    this.fetchBookingInterpreters(this.selectedBookingModel.id);
+                },
+                err => {
+                    this.spinnerService.requestInProcess(false);
+                    let e = err.json() || 'There is some error on server side';
+                    this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
+                });
+    }
+
+    sendUnAssign() {
+        this.bookingService.unAssignInterpreter(this.selectedBookingModel.id, this.selectedActionableInterpreterID)
+            .subscribe((res: any) => {
+                    if (res.status === 204) {
+                        this.notificationServiceBus.launchNotification(false, 'The interpreter have been Un-Assigned');
+                        this.selectedBookingModel.state = BOOKING_STATUS.In_progress;
+                    }
+                    this.fetchBookingInterpreters(this.selectedBookingModel.id);
+                },
+                err => {
+                    this.spinnerService.requestInProcess(false);
+                    let e = err.json() || 'There is some error on server side';
+                    this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
+                });
+    }
+
     saveChanges() {
         this.spinnerService.requestInProcess(true);
-
-        let selectedInt = [];
-        for (let _id of this.selectedInterpreterIDs) {
-            selectedInt.push(new Object({
-                id: _id
-            }));
+        if (this.invitePressed) {
+            let selectedInt = [];
+            for (let _id of this.selectedInterpreterIDs) {
+                selectedInt.push(new Object({
+                    id: _id
+                }));
+            }
+            this.selectedBookingModel.interpreters = selectedInt;
+            this.selectedInterpreterIDs = [];
+            this.invitePressed = false;
+            this.sendInvite(selectedInt);
+        } else if (this.unAssignPressed) {
+            this.unAssignPressed = false;
+            this.sendUnAssign();
+            this.selectedActionableInterpreterID = -1;
+        } else if (this.reAssignPressed) {
+            this.selectedActionableInterpreterID = this.selectedInterpreterIDs[0];
+            this.selectedInterpreterIDs = [];
+            this.reAssignPressed = false;
+            this.sendReAssign();
+            this.selectedActionableInterpreterID = -1;
         }
-        this.selectedBookingModel.interpreters = selectedInt;
-        this.selectedInterpreterIDs = [];
-        this.invitePressed = false;
-        this.sendInvite(selectedInt);
     }
 }

@@ -42,6 +42,13 @@ export class BookingJobPage extends PageObject {
         });
     }
 
+    /* TODO: Also check here interpreter name */
+    bookingAccepted = (numOfInterpreters: number) => {
+        return this.getAll('button.unassign').count().then( (cnt) => {
+            expect(cnt).to.be.eq(numOfInterpreters);
+        });
+    }
+
     listofInterpreterDoesNotExists = () => {
         return browser.sleep(1000).then(() => {
             this.getElementByID('invited-interpreters').isPresent().then(val => {

@@ -9,7 +9,7 @@
 				<button *ngIf='!isCancelledOrUnableToServe' (click)="showDialogBox(true)" class="button pink">Cancel Booking</button>
 				<button name="dupBtn" (click)="duplicateBooking()" class="button inverse">Duplicate</button>
 				<div class="sep"></div>
-				<button (click)="saveChanges()" name="saveBtn" [disabled]="!invitePressed" class="button inverse">Save</button>
+				<button (click)="saveChanges()" name="saveBtn" [disabled]="!invitePressed && !unAssignPressed && !reAssignPressed " class="button inverse">Save</button>
 			</div>
 		</section>
 
@@ -120,7 +120,7 @@
 
 															<b>Interpreter {{i + 1}} :</b> <span *ngIf="interpreter.state === 'Accepted'">{{interpreter.first_name}} {{interpreter.last_name}}</span>
 											<span *ngIf="interpreter.state === 'Invited'">To be filled</span>
-															<button *ngIf="interpreter.state === 'Accepted'">Unassing</button>
+															<button (click)="unAssignInterpreters(interpreter.id)" name='{{"unassingBtn_" + i+1}}' class="unassign" *ngIf="interpreter.state === 'Accepted'">Unassing</button>
 
 										</ng-container>
 									</div>
@@ -146,7 +146,7 @@
 						<div class="separator"></div>
 
 						<button class="button active" name='inviteBtn' (click)="inviteInterpreters()"><i class="icon-shape"></i> Invite</button>
-						<button class="button red"><i class="icon-assign"></i> Assign</button>
+						<button class="button red" (click)="reAssignInterpreters()"  name="reassingBtn"><i class="icon-assign"></i> Assign</button>
 					</section>
 				</section>
 			</section>

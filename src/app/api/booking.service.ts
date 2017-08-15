@@ -67,6 +67,32 @@ export class BookingService extends ApiService {
             .catch((err) => { return this.handleError(err); });
     }
     /*
+     The Api should be used to re assign interpreters
+   */
+    reAssignInterpreter(bookingID: number, interpreter_id: number): Observable<Object> {
+
+        let headers = new Headers({'Accept': 'application/json',
+            'Content-Type': 'application/json'});
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http.put(GLOBAL.BOOKING_API + '/' + bookingID + '/interpreter/' + interpreter_id + '/reassign' , options)
+            .map(this.extractData)
+            .catch((err) => { return this.handleError(err); });
+    }
+    /*
+     The Api should be used to re assign interpreters
+   */
+    unAssignInterpreter(bookingID: number, interpreter_id: number): Observable<Object> {
+
+        let headers = new Headers({'Accept': 'application/json',
+            'Content-Type': 'application/json'});
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http.put(GLOBAL.BOOKING_API + '/' + bookingID +  '/interpreter/' + interpreter_id + '/unassign'  , options)
+            .map(this.extractData)
+            .catch((err) => { return this.handleError(err); });
+    }
+    /*
       The Api should be able to update already created bookings.
     */
     updateBooking(booking: Booking): Observable<Object> {

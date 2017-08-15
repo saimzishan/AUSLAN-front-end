@@ -579,7 +579,7 @@ Feature: Booking Admin Management
     Then I will be shown the booking job page
     Then I can see the booking state 'In Progress'
     Then I hover on the 'Profile'
-    Given I click on logout
+    And I click on logout
     And I sign in with valid Interpreter credentials
     Then I see one row with state 'In progress'
     Then I click on an individual booking of type 'In progress'
@@ -589,3 +589,99 @@ Feature: Booking Admin Management
     Then I will be shown a popup message
     Then I click on BUTTON name 'yesBtn'
     Then I can see the booking state 'Allocated'
+
+  # =================== ALLOCATED to IN PROGRESS ===============================
+  @runThis
+    And I sign in with valid Interpreter credentials
+    Then I will be shown the bookings page
+    Then I see one row with state 'In progress'
+    And  I click on an individual booking of type 'In progress'
+    Then I wait for 2000 milli-seconds
+    Then I will be shown the booking detail page with id -1
+    Then I can see the booking state ' In Progress ' in booking job page
+    Then I can see the button state 'Accept' is visible
+    Then I can see the button state 'Decline' is visible
+    Then I click on BUTTON 'Accept'
+    Then I will be shown a popup message
+    Then I click on BUTTON name 'yesBtn'
+    Then I wait for 1000 milli-seconds
+    Then I can see the booking state ' Allocated ' in booking job page
+    Then I can see the button state 'Decline' is hidden
+    Then I can see the button state 'Accept' is hidden
+    Then I click on my name
+    And I click on logout
+    And I sign in with valid Administrator credentials
+    When I am on the bookings page
+    Then I see one row with state 'Allocated'
+    Then I click on an individual booking of type 'Allocated'
+    Then I will be shown the booking job page
+    Then I can see the button 'Save' is disabled
+    Then I see 1 interpreter has accepted the booking
+    And I click on BUTTON name 'unassingBtn_01'
+    Then I wait for 1000 milli-seconds
+    Then I can see the button 'Save' is enabled
+    And I click on BUTTON 'Save'
+    Then I wait for 1000 milli-seconds
+    Then I get valid message: 'The interpreter have been Un-Assigned'
+    Then I wait for 5000 milli-seconds
+    Then I see 0 interpreter has accepted the booking
+    And I can see the booking state 'In Progress'
+    Then I click on Bookings
+    And I am on the bookings page
+    Then I see one row with state 'In progress'
+
+
+  # =================== ALLOCATED to IN PROGRESS to ALLOCATED ===============================
+  @runThis
+  Scenario: As INTERPRETER, I cannot accept booking to allocated, but admin can UnAssign and ReAssign that, if a booking is created and INTERPRETER Invited and Administrator exists then
+    And I sign in with valid Interpreter credentials
+    Then I will be shown the bookings page
+    Then I see one row with state 'In progress'
+    And  I click on an individual booking of type 'In progress'
+    Then I wait for 2000 milli-seconds
+    Then I will be shown the booking detail page with id -1
+    Then I can see the booking state ' In Progress ' in booking job page
+    Then I can see the button state 'Accept' is visible
+    Then I can see the button state 'Decline' is visible
+    Then I click on BUTTON 'Accept'
+    Then I will be shown a popup message
+    Then I click on BUTTON name 'yesBtn'
+    Then I wait for 1000 milli-seconds
+    Then I can see the booking state ' Allocated ' in booking job page
+    Then I can see the button state 'Decline' is hidden
+    Then I can see the button state 'Accept' is hidden
+    Then I click on my name
+    And I click on logout
+    And I sign in with valid Administrator credentials
+    When I am on the bookings page
+    Then I see one row with state 'Allocated'
+    Then I click on an individual booking of type 'Allocated'
+    Then I will be shown the booking job page
+    Then I can see the button 'Save' is disabled
+    Then I see 1 interpreter has accepted the booking
+    And I click on BUTTON name 'unassingBtn_01'
+    Then I wait for 1000 milli-seconds
+    Then I can see the button 'Save' is enabled
+    And I click on BUTTON 'Save'
+    Then I wait for 1000 milli-seconds
+    Then I get valid message: 'The interpreter have been Un-Assigned'
+    Then I wait for 5000 milli-seconds
+    Then I see 0 interpreter has accepted the booking
+    And I can see the booking state 'In Progress'
+    Then I click on Bookings
+    And I am on the bookings page
+    Then I see one row with state 'In progress'
+    Then I click on an individual booking of type 'In progress'
+    Then I can see the button 'Save' is disabled
+    Then I select 1 Interpreter
+    And I click on BUTTON name 'reassingBtn'
+    Then I can see the button 'Save' is enabled
+    And I click on BUTTON 'Save'
+    Then I wait for 1000 milli-seconds
+    Then I get valid message: 'The interpreter have been Re-Assigned'
+    Then I can see the booking state 'Allocated'
+    Then I wait for 5000 milli-seconds
+    Then I see 1 interpreter has accepted the booking
+    Then I click on Bookings
+    And I am on the bookings page
+    Then I see one row with state 'Allocated'

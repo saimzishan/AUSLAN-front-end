@@ -15,7 +15,7 @@ config.multiCapabilities = [
                     'password_manager_enabled': false
                 }
             },
-            args: ['incognito', '--window-size=1400,768']
+            args: ['incognito', '--window-size=1400,800']
         }
     }
 ];

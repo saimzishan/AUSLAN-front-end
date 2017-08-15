@@ -126,7 +126,7 @@ defineSupportCode(({Given, When}) => {
     Given(/^I get a valid '(.*)' notification for state$/, bookingJob.getSuccessNotificationContentForState);
     Given(/^I get a valid invite notification$/, bookingJob.getSuccessNotificationContentForInvite);
     Given(/^I select (.*) Interpreter$/, bookingJob.selectInterpreters);
-
+    Given(/^I see (\d+) interpreter has accepted the booking$/, bookingJob.bookingAccepted)
     Given(/^I am on a computer$/, onDesktopResolution);
 
     function onDesktopResolution() {
@@ -136,7 +136,8 @@ defineSupportCode(({Given, When}) => {
          });
          */
     }
-
+    When(/^I debug$/, () => { return browser.pause(); });
+    When(/^I refresh/, () => { return browser.refresh(); });
     When(/^I click on button '(.*)'$/, clickOnButton);
 
     function clickOnButton(btnLabel: string) {

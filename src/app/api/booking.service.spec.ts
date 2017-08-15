@@ -97,7 +97,6 @@ describe('BookingService', () => {
         })();
     });
 
-    // Format is /bookings/:booking_id/interpreter/:interpreter_id/accept
   it('interpreters should accept invite', done => {
     inject([BookingService], (service: BookingService) => {
       bookingProvider
@@ -202,6 +201,55 @@ describe('BookingService', () => {
             });
         })();
     });
+
+    it('should unassign a interpreters', function (done) {
+        inject([BookingService], (service: BookingService) => {
+            bookingProvider
+                .given('an interpreter is assigned')
+                .uponReceiving('a request to unassign interpreter')
+                .withRequest('PUT', '/api/v1/bookings/3/interpreter/15/unassign', {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+
+                    }
+                ).willRespondWith(204);
+
+            bookingProvider.run(done, function (runComplete) {
+                service.unAssignInterpreter(3, 15)
+                    .subscribe((res: any) => {
+                        expect(res.status).toEqual(204);
+                        done();
+                    }, err => done.fail(err), () => {
+                        runComplete();
+                    });
+            });
+        })();
+    });
+
+    it('should reassign a interpreters', function (done) {
+        inject([BookingService], (service: BookingService) => {
+            bookingProvider
+                .given('an interpreter is unassigned')
+                .uponReceiving('a request to reassign interpreter')
+                .withRequest('PUT', '/api/v1/bookings/3/interpreter/15/reassign', {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+
+                    }
+                ).willRespondWith(204);
+
+            bookingProvider.run(done, function (runComplete) {
+                service.reAssignInterpreter(3, 15)
+                    .subscribe((res: any) => {
+                        expect(res.status).toEqual(204);
+                        done();
+                    }, err => done.fail(err), () => {
+                        runComplete();
+                    });
+            });
+        })();
+    });
+
 
     describe('Fetch All booking Api', () => {
 
