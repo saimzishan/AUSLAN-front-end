@@ -40,6 +40,6 @@ deployment:
     - rm -rf dist
     - ng build --aot --env=canary
     - aws s3 sync dist/  s3://auslan-booking-system-ct/ --delete
-    - rm -rf dist
-    - ng build --aot --env=stage
-    - aws s3 sync dist/  s3://auslandemo/ --delete
+    # - rm -rf dist
+    # - ng build --aot --env=stage
+    # - aws s3 sync dist/  s3://auslandemo/ --delete

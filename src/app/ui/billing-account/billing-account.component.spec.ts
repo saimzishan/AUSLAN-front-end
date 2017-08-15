@@ -7,6 +7,8 @@ import {Address} from '../../shared/model/venue.entity';
 import {FormsModule} from '@angular/forms';
 import { CustomFormsModule } from 'ng2-validation';
 import {AddressComponent} from '../address/address.component';
+import {MaterialModule} from '@angular/material';
+
 describe('BillingAccountComponent', () => {
   let component: BillingAccountComponent;
   let fixture: ComponentFixture<BillingAccountComponent>;
@@ -14,7 +16,7 @@ describe('BillingAccountComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ BillingAccountComponent, AddressComponent ],
-      imports: [FormsModule, CustomFormsModule]
+      imports: [FormsModule, CustomFormsModule, MaterialModule]
     })
     .compileComponents();
   }));

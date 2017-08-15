@@ -10,7 +10,6 @@ import {NotificationServiceBus} from '../../notification/notification.service';
 import {GLOBAL} from '../../shared/global';
 import {UserNameService} from '../../shared/user-name.service';
 import {FormGroup} from '@angular/forms';
-import {FileUploader, FileUploaderOptions} from 'ng2-file-upload';
 
 @Component({
     selector: 'app-user-profile',
@@ -22,7 +21,6 @@ export class UserProfileComponent implements OnInit {
     userModel;
     selectedStatus = '';
     userStatusArray = GLOBAL.userStatusArray;
-    public uploader: FileUploader = new FileUploader({url: '', maxFileSize: 20 * 1024 * 1024});
 
     constructor(public userDataService: UserService, public userNameService: UserNameService,
                 public notificationServiceBus: NotificationServiceBus,
