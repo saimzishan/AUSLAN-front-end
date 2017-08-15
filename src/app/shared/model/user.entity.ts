@@ -92,9 +92,9 @@ export class Organisational extends User {
     public name = '';
     public group_email = '';
     public branch_office = '';
-    public preferred_contact_method = 'SMS';
-    public email_receipt: boolean;
-    public email_confirmation: boolean;
+    public preferred_contact_method = 'email_only';
+    public email_receipt = false;
+    public email_confirmation = false;
     public reffered_by: string;
     public reffered_other: string;
     public customer_ref: string;
@@ -122,6 +122,7 @@ export class OrganisationalRepresentative extends Organisational {
 
 
     toJSON() {
+        this.preferred_contact_method = 'email_only';
         let o = {
             'first_name': this.first_name,
             'last_name': this.last_name,
@@ -136,13 +137,14 @@ export class OrganisationalRepresentative extends Organisational {
             'discovery_of_auslan': this.reffered_by === 'OTHER' ?
                 'O:' + this.reffered_other : this.reffered_by,
             'customer_reference': this.customer_ref,
+            'communication_preference': this.preferred_contact_method,
             'organisation_attributes':
                 {
                     'abn': this.abn,
                     'id': this.org_id,
                     'name': this.name, 'group_email': this.group_email,
                     'branch_office': this.branch_office, 'phone_number': this.phone,
-                    'preferred_contact_method': this.preferred_contact_method,
+                    'preferred_contact_method': this.organisation_billing_account.preferred_contact_method,
                     'address_attributes': this.address_attributes,
                     'billing_account_attributes': {
                         'id': this.organisation_billing_account.id,
@@ -151,7 +153,7 @@ export class OrganisationalRepresentative extends Organisational {
                         'primary_contact_email': this.organisation_primary_contact.email,
                         'primary_contact_phone_number': this.organisation_primary_contact.phone_number,
                         'account_number': 'ABCD-1234',
-                        'preferred_billing_method_email': this.email_confirmation,
+                        'preferred_billing_method_email': this.organisation_billing_account.preferred_billing_method_email,
                         'external_reference': this.organisation_billing_account.external_reference,
                         'address_attributes': this.organisation_billing_account.organisation_billing_address
                     }
@@ -198,16 +200,18 @@ export class OrganisationalRepresentative extends Organisational {
             obj.discovery_of_auslan.replaceAll('O:') : '';
         this.customer_ref = obj.customer_reference;
         this.phone = obj.organisation.phone_number;
-        this.preferred_contact_method = obj.organisation.preferred_contact_method;
+        this.preferred_contact_method = obj.communication_preference;
         this.address_attributes = obj.organisation.address_attributes;
         this.organisation_primary_contact.first_name = obj.organisation.billing_account.primary_contact_first_name || '';
         this.organisation_primary_contact.last_name = obj.organisation.billing_account.primary_contact_last_name || '';
         this.organisation_primary_contact.email = obj.organisation.billing_account.primary_contact_email || '';
         this.organisation_primary_contact.phone_number = obj.organisation.billing_account.primary_contact_phone_number || '';
-        this.email_confirmation = obj.organisation.billing_account.preferred_billing_method_email;
+        this.organisation_billing_account.preferred_billing_method_email =
+            obj.organisation.billing_account.preferred_billing_method_email;
         this.organisation_billing_account.organisation_billing_address = obj.organisation.billing_account.address_attributes;
         this.organisation_billing_account.external_reference = obj.organisation.billing_account.external_reference;
         this.organisation_billing_account.id = obj.organisation.billing_account.id;
+        this.organisation_billing_account.preferred_contact_method = obj.organisation.preferred_contact_method;
 
     }
 }
@@ -216,6 +220,8 @@ export class Accountant extends User {
     public account_number: number;
     public organisation_billing_address: Address = new Address();
     public external_reference: string;
+    public preferred_contact_method = 'email';
+    public preferred_billing_method_email = true;
 
     get user_type() {
         return 'Accountant';
@@ -233,7 +239,7 @@ export class IndividualClient extends User {
     public eaf_start_date: Date;
     public eaf_end_date: Date;
     public special_instructions = '';
-    public preferred_contact_method = 'SMS';
+    public preferred_contact_method = 'email_and_sms';
     public individual_client_primary_contact: Contact = new Contact();
     public address_attributes: Address = new Address();
     public individual_client_billing_account: Accountant = new Accountant();
@@ -281,13 +287,15 @@ export class IndividualClient extends User {
             'eaf_id': this.eaf_id, 'eaf_budget_limit': this.eaf_budget_limit, 'eaf_start_date': this.eaf_start_date,
             'eaf_end_date': this.eaf_end_date,
             'address_attributes': this.address_attributes,
+            'communication_preference': this.preferred_contact_method,
             'billing_account_attributes': {
                 'id': this.individual_client_billing_account.id,
                 'primary_contact_first_name': this.individual_client_primary_contact.first_name,
                 'primary_contact_last_name': this.individual_client_primary_contact.last_name,
                 'primary_contact_email': this.individual_client_primary_contact.email,
                 'primary_contact_phone_number': this.individual_client_primary_contact.phone_number,
-                'account_number': 'ABCD-1234', 'preferred_billing_method_email': this.preferred_contact_method,
+                'account_number': 'ABCD-1234',
+                'preferred_billing_method_email': this.individual_client_billing_account.preferred_billing_method_email,
                 'external_reference': 'Curve and Sanji',
                 'address_attributes': this.individual_client_billing_account.organisation_billing_address
             }
@@ -311,7 +319,7 @@ export class IndividualClient extends User {
         this.eaf_start_date = obj.eaf_start_date;
         this.eaf_end_date = obj.eaf_end_date;
         this.special_instructions = obj.special_instructions;
-
+        this.preferred_contact_method = obj.communication_preference;
         this.reffered_by = Boolean(obj.discovery_of_auslan) ? obj.discovery_of_auslan.startsWith('O:') ?
             'Other' : obj.discovery_of_auslan : '';
         this.reffered_other = this.reffered_by === 'OTHER' ?
@@ -323,11 +331,10 @@ export class IndividualClient extends User {
         this.individual_client_primary_contact.last_name = obj.billing_account_attributes.primary_contact_last_name;
         this.individual_client_primary_contact.email = obj.billing_account_attributes.primary_contact_email;
         this.individual_client_primary_contact.phone_number = obj.billing_account_attributes.primary_contact_phone_number;
-        this.preferred_contact_method = obj.billing_account_attributes.preferred_billing_method_email;
         this.individual_client_billing_account.organisation_billing_address = obj.billing_account_attributes.address_attributes;
         this.individual_client_billing_account.id = obj.billing_account_attributes.id;
-
-
+        this.individual_client_billing_account.preferred_billing_method_email =
+            obj.billing_account_attributes.preferred_billing_method_email;
     }
 }
 
@@ -369,7 +376,7 @@ export class Interpreter extends User {
     public skill_level = 'ASL Certified';
     public highest_level_edu = 'Diploma of Interpreting Auslan/English';
     public location_pref = 'VIC';
-    public comm_pref = 'SMS AND EMAIL';
+    public communication_preference = 'email_and_sms';
     public assignments_attributes = [];
     public availability_blocks_attributes: Array<AvailabilityBlock> = [];
 

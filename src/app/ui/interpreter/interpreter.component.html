@@ -129,11 +129,10 @@
       <div class="form-field">
         <label>COMM. PREFERENCE *</label>
         <select placeholder="Enter the communication preference" aria-label="A"
-                [(ngModel)]="userModel.comm_pref" name="comm_pref"
+                [(ngModel)]="userModel.communication_preference" name="comm_pref"
                 #comm_pref="ngModel" required>
-
-          <option *ngFor="let comm_pref_name of ['SMS', 'SMS AND EMAIL']" [value]="comm_pref_name">{{comm_pref_name}}</option>
-
+          <option value="sms_only">SMS</option>
+          <option value="email_and_sms">SMS AND EMAIL</option>
         </select>
         <span *ngIf="comm_pref.touched && !comm_pref.errors?.required && !comm_pref.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
         <span *ngIf="comm_pref.touched && (comm_pref.errors?.required || comm_pref.errors?.rangeLength);" class="inline-icon error">
