@@ -527,6 +527,7 @@ Feature: User Profile Management
     Then I get error message: 'Kindly fill all the required (*) fields'
 # ---------------------------------------- AUSLAN1-507 -> END ----------------------------------------
 
+# ---------------------------------------- AUSLAN1-53 -> Start ----------------------------------------
 
   @runThis
 #  Show profile page
@@ -691,6 +692,7 @@ Feature: User Profile Management
       And I click on my name in the top corner
       And I will be taken to my individual profile page
       Then I verify checkbox name 'preferred_billing_method_email' and is checked 'false'
+# ---------------------------------------- AUSLAN1-53 -> End ----------------------------------------
 
 
 # --------------------------------------------- AUSLAN1-165 -> START ---------------------------------------------
