@@ -30,6 +30,12 @@ defineSupportCode(({Given, When}) => {
     Given(/^I click on my name$/, () => {
         return bookingManagementPage.hoverOnProfile('lnkLogout');
     });
+    Given(/^I scroll to top$/, () => {
+        return browser.executeScript('window.scrollTo(0,0);').then(function() {
+            browser.sleep(1000);
+        });
+    });
+
     Given(/^I click on logout$/, bookingManagementPage.logoutClick);
     Given(/^I hover on the 'Profile'$/, () => {
         return bookingManagementPage.hoverOnProfile('lnkSettings');

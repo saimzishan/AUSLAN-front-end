@@ -527,6 +527,7 @@ Feature: User Profile Management
     Then I get error message: 'Kindly fill all the required (*) fields'
 # ---------------------------------------- AUSLAN1-507 -> END ----------------------------------------
 
+
   @runThis
 #  Show profile page
   Scenario: Be able to update the prefComm as Interpreter
@@ -538,7 +539,14 @@ Feature: User Profile Management
     When I change the dropwdown field COMM. PREFERENCE * with SMS
     And I click on BUTTON 'SAVE'
     Then I get valid message: 'User details updated Successfully'
-    And The dropdown field COMM. PREFERENCE * will be updated with SMS
+    Then I scroll to top
+    And I click on my name in the top corner
+    Then I click on logout
+    And I sign in with valid Interpreter credentials
+    And I am on the bookings page
+    And I click on my name in the top corner
+    And I will be taken to my individual profile page
+    And The dropdown field COMM. PREFERENCE * will be updated with sms_only
 
   @runThis
 #  Show profile page
@@ -551,7 +559,14 @@ Feature: User Profile Management
     When I change the dropwdown field COMM. PREFERENCE * with SMS AND EMAIL
     And I click on BUTTON 'SAVE'
     Then I get valid message: 'User details updated Successfully'
-    And The dropdown field COMM. PREFERENCE * will be updated with SMS AND EMAIL
+    Then I scroll to top
+    And I click on my name in the top corner
+    Then I click on logout
+    And I sign in with valid Interpreter credentials
+    And I am on the bookings page
+    And I click on my name in the top corner
+    And I will be taken to my individual profile page
+    And The dropdown field COMM. PREFERENCE * will be updated with email_and_sms
 
 # --------------------------------------------- AUSLAN1-165 -> START ---------------------------------------------
   @ignoreThis

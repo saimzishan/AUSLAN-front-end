@@ -58,7 +58,6 @@ defineSupportCode(({Given, Then, When}) => {
 
     Then(/^I get (.*) message: '(.*)'$/, getMessage);
     function getMessage(success: string, message: string) {
-        browser.pause();
         return userPasswordPage.getNotificationContent(message);
     }
 });

@@ -28,10 +28,11 @@ export class UserFactory {
             case 'Administrator':
                 return new Administrator(data);
             case 'Interpreter':
-                let int = new Interpreter(data);
-                int.address_attributes = <Address> data.address_attributes;
-                int.availability_blocks_attributes = data.availability_blocks_attributes;
-                return int;
+                let inte = new Interpreter(data);
+                inte.fromValues(data);
+                inte.address_attributes = <Address> data.address_attributes;
+                inte.availability_blocks_attributes = data.availability_blocks_attributes;
+                return inte;
             default:
                 return new User(data);
         }
@@ -384,5 +385,8 @@ export class Interpreter extends User {
         return 'Interpreter';
     }
 
+    fromValues(values: Object = {}) {
+        Object.assign(this, values);
+    }
 
 }

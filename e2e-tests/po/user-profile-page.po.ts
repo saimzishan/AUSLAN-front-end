@@ -64,19 +64,19 @@ export class UserProfilePage extends PageObject {
                 if (val === 'mobile' || val === 'mobile1' || val === 'phone' || val === 'phone1') {
                     return;
                 } else {
-                    el.getAttribute('value').then((val) => {
-                        expect(val.endsWith(input)).to.be.true;
+                    el.getAttribute('value').then((val1) => {
+                        expect(val1.endsWith(input)).to.be.true;
                     });
                 }
             });
         });
-    };
+    }
 
     updateDropDownField = (fields_string: string, updated_text: string) => {
         const selected_label = this.getElementByCSSandText('label', fields_string);
         const div = this.getParent(selected_label);
         let input_field = this.getElementInsideByTag(div, 'select');
-        return this.setValue(input_field, updated_text);
+        return input_field.element(by.cssContainingText('option', updated_text)).click();
     }
 
     fieldWillBeUpdated = (fields_string: string, updated_text: string) => {
