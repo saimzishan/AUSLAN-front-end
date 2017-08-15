@@ -5,7 +5,7 @@ Feature: As INTERPRETER, I can login on mobile
     And I am on a computer
     And I am shown the login screen, with picture and signup button
 
-  @ignoreThis
+  @runThis
   Scenario: As INTERPRETER, I can accept the booking, if a booking with two interpreters is created and INTERPRETER Invited then
     And I sign in with valid Interpreter credentials
     Then I will be shown the bookings page
@@ -37,7 +37,7 @@ Feature: As INTERPRETER, I can login on mobile
     Then I can see the button state 'Accept' is hidden
 
 
-  @ignoreThis
+  @runThis
   Scenario: As INTERPRETER, I cannot accept/decline if the booking is allocated, if a booking is created and INTERPRETER Invited then
     And I sign in with valid Interpreter credentials
     Then I will be shown the bookings page
