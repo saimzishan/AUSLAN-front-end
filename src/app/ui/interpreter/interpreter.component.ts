@@ -14,6 +14,7 @@ import {Interpreter} from '../../shared/model/user.entity';
 })
 export class InterpreterComponent implements OnInit {
     @Input() userModel: Interpreter;
+    @Input() displayCalendar= false;
     updateCalendar = false;
     calendarOptions: Object = {
         height: 'parent',
@@ -64,36 +65,38 @@ export class InterpreterComponent implements OnInit {
         delete this.userModel.assignments_attributes;
         delete this.userModel.password;
 
-        for (let avail_block of this.userModel.availability_blocks_attributes) {
-            let sd = new Date(avail_block.start_time);
-            let ed = new Date(avail_block.end_time);
-            let event = ({
-                title: avail_block.name,
-                color: avail_block.recurring ? '#257e4a' : '#0000ff',
-                id: avail_block.id,
-                booking_id: avail_block.booking_id,
-                start: `${sd.getHours()}:${sd.getMinutes()}`,
-                end: `${ed.getHours()}:${ed.getMinutes()}`,
-                dow: avail_block.recurring && avail_block.frequency === 'daily' ? [1 , 2 , 3 , 4 , 5 , 6, 0] : [ sd.getDay()],
-                ranges: [
-                    {
-                        start: moment().endOf(avail_block.frequency === 'daily' ? 'day' :
-                            avail_block.frequency === 'weekly' ? 'week' :
-                            avail_block.frequency === 'monthly' ? 'month' : 'week')
-                        // ,end: moment().endOf('week').add(7,'d'),
-                    },
-                    {
-                    start: moment(sd.toISOString(), 'YYYY-MM-DD'),
-                    end: moment(ed.toISOString(), 'YYYY-MM-DD').endOf( avail_block.recurring ? 'year' : 'week')
-                }],
-                recurring: avail_block.recurring,
-                frequency: avail_block.frequency
-            });
-            console.log (event);
-            this.calendarOptions['events'].push(event);
-        }
+        if (this.displayCalendar) {
+            for (let avail_block of this.userModel.availability_blocks_attributes) {
+                let sd = new Date(avail_block.start_time);
+                let ed = new Date(avail_block.end_time);
+                let event = ({
+                    title: avail_block.name,
+                    color: avail_block.recurring ? '#257e4a' : '#0000ff',
+                    id: avail_block.id,
+                    booking_id: avail_block.booking_id,
+                    start: `${sd.getHours()}:${sd.getMinutes()}`,
+                    end: `${ed.getHours()}:${ed.getMinutes()}`,
+                    dow: avail_block.recurring && avail_block.frequency === 'daily' ? [1, 2, 3, 4, 5, 6, 0] : [sd.getDay()],
+                    ranges: [
+                        {
+                            start: moment().endOf(avail_block.frequency === 'daily' ? 'day' :
+                                avail_block.frequency === 'weekly' ? 'week' :
+                                    avail_block.frequency === 'monthly' ? 'month' : 'week')
+                            // ,end: moment().endOf('week').add(7,'d'),
+                        },
+                        {
+                            start: moment(sd.toISOString(), 'YYYY-MM-DD'),
+                            end: moment(ed.toISOString(), 'YYYY-MM-DD').endOf(avail_block.recurring ? 'year' : 'week')
+                        }],
+                    recurring: avail_block.recurring,
+                    frequency: avail_block.frequency
+                });
+                console.log(event);
+                this.calendarOptions['events'].push(event);
+            }
 
-        this.updateCalendar = true;
+            this.updateCalendar = true;
+        }
 
     }
 }

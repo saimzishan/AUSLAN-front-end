@@ -158,8 +158,10 @@
   </div>
 </div>
 
+<ng-container  *ngIf="displayCalendar">
 <ng-container *ngIf="updateCalendar">
 <angular2-fullcalendar [options]="calendarOptions"></angular2-fullcalendar>
 </ng-container>
 <button name="modify_blockouts" [routerLink]="['/user-management/',-1,'block_out']"
   >Add Blockout</button>
+</ng-container>

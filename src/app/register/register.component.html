@@ -145,7 +145,7 @@
                 </div>
                 <br>
                 <app-org-rep [userModel]="model" *ngIf="selectedRole === 'ORGANISATION'"></app-org-rep>
-                <app-interpreter [userModel]="model" *ngIf="selectedRole === 'INTERPRETER'"></app-interpreter>
+                <app-interpreter [displayCalendar]="false" [userModel]="model" *ngIf="selectedRole === 'INTERPRETER'"></app-interpreter>
                 <app-ind-client [userModel]="model" *ngIf="selectedRole === 'INDIVIDUALCLIENT'"></app-ind-client>
                 <br>
 
