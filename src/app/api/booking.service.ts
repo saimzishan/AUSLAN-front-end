@@ -69,13 +69,14 @@ export class BookingService extends ApiService {
     /*
      The Api should be used to re assign interpreters
    */
-    reAssignInterpreter(bookingID: number, interpreter_id: number): Observable<Object> {
+    reAssignInterpreter(bookingID: number, interpreters: Array<Object>): Observable<Object> {
 
         let headers = new Headers({'Accept': 'application/json',
             'Content-Type': 'application/json'});
         let options = new RequestOptions({ headers: headers });
+        let obj = { 'interpreters' : interpreters};
 
-        return this.http.put(GLOBAL.BOOKING_API + '/' + bookingID + '/interpreter/' + interpreter_id + '/reassign' , options)
+        return this.http.put(GLOBAL.BOOKING_API + '/' + bookingID + '/reassign_interpreters/' , JSON.stringify(obj), options)
             .map(this.extractData)
             .catch((err) => { return this.handleError(err); });
     }

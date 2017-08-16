@@ -250,8 +250,8 @@ export class BookingJobsComponent implements OnDestroy {
                 });
     }
 
-    sendReAssign() {
-        this.bookingService.reAssignInterpreter(this.selectedBookingModel.id, this.selectedActionableInterpreterID)
+    sendReAssign(interpreters) {
+        this.bookingService.reAssignInterpreter(this.selectedBookingModel.id, interpreters)
             .subscribe((res: any) => {
                     if (res.status === 204) {
                         this.notificationServiceBus.launchNotification(false, 'The interpreter have been assigned');
@@ -282,9 +282,10 @@ export class BookingJobsComponent implements OnDestroy {
     }
 
     saveChanges() {
+        let selectedInt = [];
+
         this.spinnerService.requestInProcess(true);
         if (this.invitePressed) {
-            let selectedInt = [];
             for (let _id of this.selectedInterpreterIDs) {
                 selectedInt.push(new Object({
                     id: _id
@@ -299,10 +300,15 @@ export class BookingJobsComponent implements OnDestroy {
             this.sendUnAssign();
             this.selectedActionableInterpreterID = -1;
         } else if (this.reAssignPressed) {
-            this.selectedActionableInterpreterID = this.selectedInterpreterIDs[0];
+            for (let _id of this.selectedInterpreterIDs) {
+                selectedInt.push(new Object({
+                    id: _id
+                }));
+            }
+            this.selectedBookingModel.interpreters = selectedInt;
             this.selectedInterpreterIDs = [];
             this.reAssignPressed = false;
-            this.sendReAssign();
+            this.sendReAssign(selectedInt);
             this.selectedActionableInterpreterID = -1;
         }
     }
