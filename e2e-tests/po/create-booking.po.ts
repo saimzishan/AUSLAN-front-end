@@ -210,9 +210,6 @@ export class BookingPage extends PageObject {
         let hh = Number(14 + Number(hours)); // date.getHours();
         let dateString = [mm, dd, yy].join('/');
         let timeString = hh.toString() + ':00PM';
-        console.log(dateString, timeString);
         this.setStartEndTime(field, dateString, timeString);
-
     }
 }
-
