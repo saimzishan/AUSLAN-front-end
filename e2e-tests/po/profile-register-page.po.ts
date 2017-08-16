@@ -40,11 +40,10 @@ export class ProfileRegisterPage extends PageObject {
             this.getElementByName('cn_email').sendKeys('george@curvetomorrow.com.au');
             this.getElementByName('cn_phone').sendKeys('0490394517');
         } else if (type === 'INTERPRETER') {
-            this.getElementByName('naati_id').sendKeys('ZS-111');
+            this.getElementByName('naati_id').sendKeys('111');
             this.getElementByName('naati_validity_start_date').sendKeys('01-30-2015');
             this.getElementByName('naati_validity_end_date').sendKeys('01-30-2015');
             this.getElementByName('date_of_birth').sendKeys('01-30-2015');
-            this.getElementByName('after_hours_phone').sendKeys('0490394517');
             this.getElementByName('highest_level_edu').sendKeys('Bachelor Degree'.toUpperCase());
             this.getElementByName('location_pref').sendKeys('ACT');
             this.getElementByName('skill_level').sendKeys('ASL Certified'.toUpperCase());
@@ -75,7 +74,7 @@ export class ProfileRegisterPage extends PageObject {
     }
 
     userCreated = (type: string) => {
-        return NotificationObject.getNotificationContent('Congrats');
+        return NotificationObject.getNotificationContent('Congratulations');
     }
 
     invalidNotification = (msg: string) => {

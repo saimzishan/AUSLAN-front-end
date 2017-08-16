@@ -5,7 +5,7 @@
     <section id="page-signup-organisation">
         <section>
             <header>
-                <h1>SIGN UP AS {{ selectedRole }}</h1>
+                <h1>SIGN UP AS {{ selectedRole === 'INDIVIDUALCLIENT' ? 'INDIVIDUAL CLIENT' :  selectedRole}}</h1>
                 <p>Fields with * are required</p>
             </header>
 
@@ -103,7 +103,7 @@
                             </div>
                             <div class="medium-6 columns">
                                 <div class="form-field">
-                                    <label class="icon-mobile">MOBILE </label>
+                                    <label class="icon-mobile">MOBILE PHONE </label>
                                     <input type="tel" placeholder="Enter your mobile"
                                            [(ngModel)]="model.mobile" name="mobile" #mobile="ngModel">
 
@@ -113,7 +113,7 @@
                         <ng-container *ngIf="selectedRole === 'INTERPRETER'">
                             <div class="medium-6 columns">
                                 <div class="form-field">
-                                    <label class="icon-mobile">MOBILE *</label>
+                                    <label class="icon-mobile">MOBILE PHONE *</label>
                                     <input type="tel" placeholder="Enter your mobile"
                                            [(ngModel)]="model.mobile" name="mobile1" #mobile1="ngModel" [rangeLength]="[10, 11]"
                                            required>
@@ -125,7 +125,7 @@
 											<span>Minimum 10 digits required.</span>!</span>
                                 </div>
                             </div>
-                            <div class="medium-6 columns">
+                            <div [hidden]=true class="medium-6 columns">
                                 <div class="form-field">
                                     <label class="icon-mobile">PHONE </label>
                                     <input type="tel" placeholder="Enter your phone" [(ngModel)]="model.phone"

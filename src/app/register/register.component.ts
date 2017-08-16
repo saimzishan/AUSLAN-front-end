@@ -21,8 +21,8 @@ import {FormGroup} from '@angular/forms';
 export class RegisterComponent implements OnInit, OnDestroy {
 
     public model: any;
-    public successMessage = `Congrats Your user has been created.
-  Kindly go back to Login Page and Login`;
+    public successMessage = `Congratulations. Your account has been created.
+     Please login with your credentials. `;
     private sub_param: any;
     public selectedRole = '';
 
