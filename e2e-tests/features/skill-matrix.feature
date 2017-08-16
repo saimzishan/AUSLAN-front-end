@@ -12,3 +12,15 @@ Feature: Skill Matrix 1.0
     When I hover on the 'Profile'
     And I go to the 'User Management' list page
     Then The valid Interpreter should be in the list
+
+  @runThis
+  Scenario: Given 1 verified Interpreter, as a Booking Officer I can see his skills matrix
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    Then I am on the bookings page
+    When I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then The valid Interpreter should be in the list
+    When I hover on the 'Actions' of the Interpreter
+    And I click on 'Skill Matrix' for an active existing Interpreter
+    Then I should be on the skill matrix page

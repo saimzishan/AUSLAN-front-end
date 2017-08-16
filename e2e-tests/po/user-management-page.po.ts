@@ -167,19 +167,22 @@ export class UserManagementPage extends PageObject {
             return this.saveBtn.click();
         });
     }
-
-    // This function assumes the UI
-    // The type column is user-management page is
-    // third column from left
-    validUserShouldBeOntheList = (count: number, type: string) => {
-        count = count || 1;
+    trListByUserType = (type: string) => {
         let trList = super.getAll('table.custom tbody tr');
-        trList = trList.filter((tr) => {
+        return trList.filter((tr) => {
             let el = super.getAllByTagNameInElement(tr, 'td').get(2);
             return el.getText().then((text) => {
                 return text.toLowerCase() === type.toLowerCase();
             });
         });
+    }
+
+    // This function assumes the UI
+    // The type column is user-management page is
+    // third column from left
+    validUserShouldBeOnTheList = (count: number, type: string) => {
+        count = count || 1;
+        let trList = this.trListByUserType(type);
         return trList.count().then((ntr) => expect(ntr).to.equal(count));
     }
 
@@ -220,10 +223,9 @@ export class UserManagementPage extends PageObject {
         });
     }
 
-    clickOnEditUser = (active: string, type: string) => {
+    findClickableActionButton = (name: string, active: string, type: string) => {
         let type_valid_user = this.returnTypeAndUser(type, true);
         let chosen_type = type_valid_user.type;
-        let valid_user = type_valid_user.user;
         return this.getAllByCSSandText('.truncated-text', chosen_type).then( (list_of_ORs) => {
             let userRow: any;
             if (active === 'active ') {
@@ -236,7 +238,12 @@ export class UserManagementPage extends PageObject {
             let action_button = this.getElementInsideByCSS(userRow, '.icon-actions');
             // hover over that button
             browser.actions().mouseMove(action_button).perform();
-            let edit = this.getElementInsideByCSS(userRow, '.icon-edit');
+            return this.getElementInsideByCSS(userRow, '.icon-' + name);
+        });
+    }
+
+    clickOnEditUser = (active: string, type: string) => {
+        return this.findClickableActionButton('edit', active, type).then((edit) => {
             return edit.click().then(() => {
                 expect(this.getElementByCss('.md-dialog')).to.be.exist;
             });
@@ -244,22 +251,14 @@ export class UserManagementPage extends PageObject {
     }
 
     clickOnResetPassword = (active: string, type: string) => {
-        let type_valid_user = this.returnTypeAndUser(type, true);
-        let chosen_type = type_valid_user.type;
-        let valid_user = type_valid_user.user;
-        return this.getAllByCSSandText('.truncated-text', chosen_type).then( (list_of_ORs) => {
-            let userRow: any;
-            if (active === 'active ') {
-                let first_OR = list_of_ORs[0];
-                userRow = this.getParent(first_OR);
-            } else {
-                let first_OR = list_of_ORs[0];
-                userRow = this.getParent(first_OR);
-            }
-            let action_button = this.getElementInsideByCSS(userRow, '.icon-actions');
-            // hover over that button
-            browser.actions().mouseMove(action_button).perform();
-            return this.getElementInsideByCSS(userRow, '.icon-reset-password').click();
+        return this.findClickableActionButton('reset-password', active, type).then((btn) => {
+            return btn.click();
+        });
+    }
+
+    clickOnSkillMatrix = (active: string, type: string) => {
+        return this.findClickableActionButton('skill-matrix', active, type).then((btn) => {
+            return btn.click();
         });
     }
 
@@ -286,6 +285,13 @@ export class UserManagementPage extends PageObject {
         return browser.wait(protractor.ExpectedConditions.presenceOf(elm), 10000).then(() => {
             expect(elm.getText()).to.eventually.contain('Hurray');
         });
+    }
+
+    hoverOnActions = (type: string) => {
+        let trList = this.trListByUserType(type);
+        let firstTr = trList.get(0);
+        let actionsBtn = super.getElementInsideByCSS(firstTr, 'ul.actions > li');
+        return browser.actions().mouseMove(actionsBtn).perform();
     }
 }
 
