@@ -34,10 +34,10 @@
   <div class="medium-5 columns">
     <div class="form-field">
       <label>SUBURB * <span mdTooltip="Enter the Booking Suburb!"><i class="inline-icon-tip"></i></span></label>
-      <input type="text" placeholder="Enter the Booking Suburb" [(ngModel)]="address.suburb" name="address_suburb" #address_suburb="ngModel" [rangeLength]="[4, 30]" required>
+      <input type="text" placeholder="Enter the Booking Suburb" [(ngModel)]="address.suburb" name="address_suburb" #address_suburb="ngModel" [rangeLength]="[3, 30]" required>
       <span *ngIf="address_suburb.touched && !address_suburb.errors?.required && !address_suburb.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
       <span *ngIf="address_suburb.touched && (address_suburb.errors?.required || address_suburb.errors?.rangeLength);" class="inline-icon error">
-        <span>Minimum 4 characters required.</span>!
+        <span>Minimum 3 characters required.</span>!
       </span>
     </div>
   </div>

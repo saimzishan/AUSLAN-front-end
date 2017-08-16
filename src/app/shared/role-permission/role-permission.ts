@@ -52,7 +52,7 @@ export class RolePermission {
     "organisational-representative": {
         "not-allowed-routes": [
             "user-management", "block_out",
-            "booking-job",  "job-details"
+            "booking-job"
         ],
         "routes-with-data-permissions": {
             "booking-management": {

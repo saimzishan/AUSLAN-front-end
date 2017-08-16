@@ -607,7 +607,7 @@ Feature: Booking Admin Management
     Then I can see the button 'Save' is enabled
     And I click on BUTTON 'Save'
     Then I wait for 1000 milli-seconds
-    Then I get valid message: 'The interpreter have been Re-Assigned'
+    Then I get valid message: 'The interpreter have been assigned'
     Then I can see the booking state 'Allocated'
     Then I wait for 5000 milli-seconds
     Then I see 1 interpreter has accepted the booking
@@ -659,7 +659,7 @@ Feature: Booking Admin Management
     Then I can see the button 'Save' is enabled
     And I click on BUTTON 'Save'
     Then I wait for 1000 milli-seconds
-    Then I get valid message: 'The interpreter have been Un-Assigned'
+    Then I get valid message: 'The interpreter have been unassigned'
     Then I wait for 5000 milli-seconds
     Then I see 0 interpreter has accepted the booking
     And I can see the booking state 'In Progress'
@@ -701,7 +701,7 @@ Feature: Booking Admin Management
     Then I can see the button 'Save' is enabled
     And I click on BUTTON 'Save'
     Then I wait for 1000 milli-seconds
-    Then I get valid message: 'The interpreter have been Un-Assigned'
+    Then I get valid message: 'The interpreter have been unassigned'
     Then I wait for 5000 milli-seconds
     Then I see 0 interpreter has accepted the booking
     And I can see the booking state 'In Progress'
@@ -715,7 +715,7 @@ Feature: Booking Admin Management
     Then I can see the button 'Save' is enabled
     And I click on BUTTON 'Save'
     Then I wait for 1000 milli-seconds
-    Then I get valid message: 'The interpreter have been Re-Assigned'
+    Then I get valid message: 'The interpreter have been assigned'
     Then I can see the booking state 'Allocated'
     Then I wait for 5000 milli-seconds
     Then I see 1 interpreter has accepted the booking

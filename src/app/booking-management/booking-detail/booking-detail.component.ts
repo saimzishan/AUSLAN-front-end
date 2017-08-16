@@ -161,7 +161,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.dialogRef.componentInstance.cancelTitle = 'BACK';
             this.dialogRef.componentInstance.okTitle = 'CREATE';
             this.dialogRef.componentInstance.popupMessage =
-                `Do you still want to create booking?`;
+                `This booking is not within the standard booking hours (8AM - 6PM).
+                 Do you still want to create booking?`;
 
             this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
 

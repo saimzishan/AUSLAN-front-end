@@ -124,24 +124,23 @@
                     </div>
                 </td>
                 <td>Melbourne University</td>
-                <td>{{booking.client.organisation_primary_contact.first_name}}</td>
+                <td>{{booking.client.organisation_primary_contact.first_name + ' ' +  booking.client.organisation_primary_contact.last_name}}</td>
                 <td>{{booking.venue.suburb}}</td>
                 <td class="text-center truncated">
                     <ng-container *ngIf="booking.interpreters.length > 0;">
-                        <span *ngFor="let user of booking.interpreters">
+                        <span *ngFor="let user of didInterpreterAccepted(booking.interpreters)">
                                     <b *ngIf="isCurrentUser(user.id); else sim_user_Block">
                                         {{user?.first_name  + ' ' + user?.last_name}}
                                     </b>
                                     <ng-template
                                             #sim_user_Block>{{user?.first_name  + ' ' + user?.last_name}}</ng-template>
-
 									<br/>
 								</span>
                     </ng-container>
 
-                    <span *ngIf="booking.interpreters.length <1 ;">To be filled</span>
+                    <span *ngIf="didInterpreterAccepted(booking.interpreters).length <1 ;">To be filled</span>
                 </td>
-                <td><a href="javascript:void(0)" class="attach"><i class="icon-attach"></i></a>
+                <td class="truncated"><a href="javascript:void(0)" class="attach"><i class="icon-attach"></i></a>
                     {{booking.raw_nature_of_appointment}}
                 </td>
                 <!-- td><span class="underline">02-06 TS<br>7:15 A</span></td -->

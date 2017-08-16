@@ -3,7 +3,10 @@ import {BookingService} from '../../api/booking.service';
 import {Booking} from '../../shared/model/booking.entity';
 import {BookingInterpreter} from '../../shared/model/contact.entity';
 import {UserService} from '../../api/user.service';
-import {IndividualClient, OrganisationalRepresentative, User} from '../../shared/model/user.entity';
+import {
+    Administrator, BookingOfficer, IndividualClient, Interpreter, OrganisationalRepresentative,
+    User
+} from '../../shared/model/user.entity';
 import {ROLE} from '../../shared/model/role.enum';
 import {SpinnerService} from '../../spinner/spinner.service';
 import {NotificationServiceBus} from '../../notification/notification.service';
@@ -48,6 +51,10 @@ export class BookingJobsComponent implements OnDestroy {
                 this.fetchBookingInterpreters(param_id);
             }
         });
+    }
+
+    counter(length) {
+        return new Array(length);
     }
 
     getSpecialInstruction() {
@@ -101,6 +108,10 @@ export class BookingJobsComponent implements OnDestroy {
                 this.cancelBooking();
             }
         });
+    }
+
+    isCurrentUserInterpreter() {
+        return GLOBAL.currentUser instanceof Interpreter;
     }
 
     unableToServiceBooking() {
@@ -181,6 +192,9 @@ export class BookingJobsComponent implements OnDestroy {
                     if (res.status === 200) {
                         let data = res.data;
                         this.selectedBookingModel.fromJSON(data);
+                        this.selectedBookingModel.interpreters.sort((i, j) =>
+                            i.state === 'Accepted' ? -1 : j.state === 'Accepted' ? 1 : 0
+                        );
                         this.fetchAllInterpreters();
                         this.isCancelledOrUnableToServe = this.isActiveState('Cancelled')
                             || this.isActiveState('Unable_to_service');
@@ -240,7 +254,7 @@ export class BookingJobsComponent implements OnDestroy {
         this.bookingService.reAssignInterpreter(this.selectedBookingModel.id, this.selectedActionableInterpreterID)
             .subscribe((res: any) => {
                     if (res.status === 204) {
-                        this.notificationServiceBus.launchNotification(false, 'The interpreter have been Re-Assigned');
+                        this.notificationServiceBus.launchNotification(false, 'The interpreter have been assigned');
                     }
                     this.fetchBookingInterpreters(this.selectedBookingModel.id);
                 },
@@ -255,7 +269,7 @@ export class BookingJobsComponent implements OnDestroy {
         this.bookingService.unAssignInterpreter(this.selectedBookingModel.id, this.selectedActionableInterpreterID)
             .subscribe((res: any) => {
                     if (res.status === 204) {
-                        this.notificationServiceBus.launchNotification(false, 'The interpreter have been Un-Assigned');
+                        this.notificationServiceBus.launchNotification(false, 'The interpreter have been unassigned');
                         this.selectedBookingModel.state = BOOKING_STATUS.In_progress;
                     }
                     this.fetchBookingInterpreters(this.selectedBookingModel.id);

@@ -82,7 +82,7 @@ export class JobDetailComponent implements OnDestroy {
         this.dialogRef.componentInstance.okTitle = reachoutWarning ? 'OK' :
             isCancel ? `Decline` : 'Accept';
         this.dialogRef.componentInstance.popupMessage =
-            reachoutWarning ? 'Kindly contact Booking Office' :
+            reachoutWarning ? 'Please contact the booking office to cancel this booking.' :
                 isCancel ? `Do you want to decline the invitation?`
                     :
                     `Do you want to accept the invitation?`;

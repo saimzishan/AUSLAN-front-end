@@ -5,6 +5,7 @@ import { BOOKING_STATUS } from '../../shared/model/booking-status.enum';
 import {GLOBAL} from '../../shared/global';
 import { PrettyIDPipe } from '../../shared/pipe/pretty-id.pipe';
 import {Interpreter, OrganisationalRepresentative} from '../../shared/model/user.entity';
+import {BookingInterpreter} from '../../shared/model/contact.entity';
 
 @Component({
   selector: 'app-booking-list',
@@ -33,8 +34,8 @@ export class BookingListComponent {
   }
 
   setClickedRow(booking: Booking) {
-    let route =  false === GLOBAL.currentUser instanceof Interpreter
-        ? 'booking-job' : 'job-detail';
+    let route =  GLOBAL.currentUser instanceof Interpreter || GLOBAL.currentUser instanceof OrganisationalRepresentative
+        ?  'job-detail' : 'booking-job';
     this.router.navigate(['/booking-management/' + booking.id , route]);
     GLOBAL.selBookingID = booking.id;
   }
@@ -49,5 +50,8 @@ export class BookingListComponent {
     isCurrentUserInvitedInterpreter(interpreters) {
       // Array.includes is not there in IE
         return interpreters.filter( i => i.id === GLOBAL.currentUser.id).length > 0;
+    }
+    didInterpreterAccepted (interpreters: Array<BookingInterpreter>) {
+        return interpreters.filter(i => i.state === 'Accepted').slice(0, 3);
     }
 }

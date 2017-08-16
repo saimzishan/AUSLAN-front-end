@@ -96,7 +96,7 @@
                     </div>
                     <div class="medium-6 columns">
                         <div class="form-field">
-                            <label>WHAT WILL BE DISCUSSED * <span mdTooltip="Select sepcific nature of Appointment"><i
+                            <label>WHAT WILL BE DISCUSSED * <span mdTooltip="Select specific nature of Appointment"><i
                                     class="inline-icon-tip"></i></span></label>
                             <select [(ngModel)]="bookingModel.specific_nature_of_appointment"
                                     #specific_nature_of_appointment="ngModel" required
@@ -114,7 +114,7 @@
                     </div>
                     <div class="medium-4 columns">
                         <div class="form-field">
-                            <label>WHO REQUESTED THIS MEETING * <span mdTooltip="Enter the First Name"><i
+                            <label>REQUESTED BY FIRST NAME * <span mdTooltip="Enter the First Name"><i
                                     class="inline-icon-tip"></i></span></label>
                             <input type="text" placeholder="Enter the Request By Name"
                                    [(ngModel)]="bookingModel.requested_by.first_name" name="raw_booking_requested_by"
@@ -129,7 +129,7 @@
                     </div>
                     <div class="medium-4 columns">
                         <div class="form-field">
-                            <label>WHO REQUESTED THIS MEETING * <span mdTooltip="Enter the Last Name"><i
+                            <label>REQUESTED BY LAST NAME * <span mdTooltip="Enter the Last Name"><i
                                     class="inline-icon-tip"></i></span></label>
                             <input type="text" placeholder="Enter the Request By Name"
                                    [(ngModel)]="bookingModel.requested_by.last_name" name="raw_booking_requested_by_ln"
@@ -299,17 +299,11 @@
                 <div class="row-wrapper">
                     <div class="medium-2 columns">
                         <div class="form-field">
-                            <label>EAF-ID * <span mdTooltip="Enter deaf person EAF number!"><i
+                            <label>EAF/NDIS ID<span mdTooltip="Enter deaf person EAF number!"><i
                                     class="inline-icon-tip"></i></span></label>
                             <input type="tel" placeholder="Enter deaf person EAF number"
                                    [(ngModel)]="bookingModel.deaf_person.eaf" name="deaf_person_eaf"
-                                   #deaf_person_eaf="ngModel" required digits>
-                            <span *ngIf="deaf_person_eaf.touched && !deaf_person_eaf.errors?.required && !deaf_person_eaf.errors?.digits;"
-                                  class="inline-icon inline-icon-valid valid"></span>
-                            <span *ngIf="deaf_person_eaf.touched && (deaf_person_eaf.errors?.required || deaf_person_eaf.errors?.digits);"
-                                  class="inline-icon error">
-              <span>Minimum 6 digits required.</span>!
-            </span>
+                                   #deaf_person_eaf="ngModel">
                         </div>
                     </div>
                     <div class="medium-5 columns">
@@ -345,18 +339,13 @@
 
                     <div class="medium-6 columns">
                         <div class="form-field">
-                            <label>DEAF PERSON'S EMAIL * <span mdTooltip="Enter deaf person name!"><i
+                            <label>DEAF PERSON'S EMAIL <span mdTooltip="Enter deaf person name!"><i
                                     class="inline-icon-tip"></i></span></label>
                             <input type="email" class="inline-icon-user-email" id="deaf_person_email"
                                    placeholder="Enter deaf person email address"
                                    [(ngModel)]="bookingModel.deaf_person.email" name="deaf_person_email"
-                                   #deaf_person_email="ngModel" email required>
-                            <span *ngIf="deaf_person_email.touched && !deaf_person_email.errors?.email;"
-                                  class="inline-icon inline-icon-valid valid"></span>
-                            <span *ngIf="(deaf_person_email.dirty || deaf_person_email.touched) && (deaf_person_email.errors?.required || deaf_person_email.errors?.email);"
-                                  class="inline-icon error">
-              <span>Email is required</span>!
-            </span>
+                                   #deaf_person_email="ngModel" email >
+
                         </div>
                     </div>
                     <div class="medium-6 columns">
