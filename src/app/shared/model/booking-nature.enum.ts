@@ -68,7 +68,7 @@ export class BA {
           'University – Deaf Lecturer',
           'University – Lecture',
           'University – Meeting',
-          'University – Practical/Tutorial', 'Other',].sort();
+          'University – Practical/Tutorial', 'Other'].sort();
     BA.DISSCUSSION_ITEM[BOOKING_NATURE.Employment] =
       ['Job Interview – Complex/Deaf Professional',
           'Job Interview – Entry Level',
