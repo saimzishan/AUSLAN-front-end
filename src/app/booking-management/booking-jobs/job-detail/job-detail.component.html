@@ -174,7 +174,7 @@
                 <div  *ngIf="selectedBookingModel.documents_attributes.length > 0">
                     <ul class="attachments" *ngIf="selectedBookingModel.documents_attributes.length > 0">
                         <li *ngFor="let attachment of selectedBookingModel.documents_attributes">
-                            <a href="{{attachment.url}}">
+                            <a download href="{{attachment.url}}">
                                 <i class="icon-attach"></i>
                             </a>
                             <span>{{attachment.file_name}}</span>
