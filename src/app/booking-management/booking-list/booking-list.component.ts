@@ -45,7 +45,7 @@ export class BookingListComponent {
 }
 
     isCurrentUserAllowed() {
-        return false === GLOBAL.currentUser instanceof OrganisationalRepresentative;
+        return GLOBAL.currentUser instanceof Interpreter;
     }
     isCurrentUserInvitedInterpreter(interpreters) {
       // Array.includes is not there in IE

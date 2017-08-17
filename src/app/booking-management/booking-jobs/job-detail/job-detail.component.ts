@@ -54,7 +54,9 @@ export class JobDetailComponent implements OnDestroy {
         return false;
     }
 
-
+    counter(length) {
+        return new Array(length);
+    }
     getSpecialInstruction() {
         return (GLOBAL.currentUser instanceof OrganisationalRepresentative)
             ? GLOBAL.currentUser.special_instructions : '';

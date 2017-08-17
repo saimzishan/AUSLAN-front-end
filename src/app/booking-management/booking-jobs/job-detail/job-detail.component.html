@@ -140,6 +140,27 @@
                             </div>
                         </ng-container>
                     </ng-container>
+                    <ng-container *ngIf="(selectedBookingModel.interpreters_required - selectedBookingModel.interpreters.length) > 0">
+                        <ng-container *ngFor="let numb of counter(selectedBookingModel.interpreters_required - selectedBookingModel.interpreters.length ); let ii=index">
+                        <ng-container *ngIf="ii < (selectedBookingModel.interpreters_required - selectedBookingModel.interpreters.length)">
+                            <div class="row with-border">
+                            <div> INTERPRETER  {{selectedBookingModel.interpreters.length + ii + 1}} </div>
+                            <span>To be filled</span>
+                            </div>
+                        </ng-container>
+                        </ng-container>
+                    </ng-container>
+                </ng-container>
+                <ng-container *ngIf="!anyInterpreterAccepted()">
+                    <ng-container *ngFor="let numb of counter(selectedBookingModel.interpreters_required); let i=index">
+                        <ng-container *ngIf="i < selectedBookingModel.interpreters_required">
+                            <div class="row with-border">
+                                <div> INTERPRETER {{i + 1}}</div>
+                                <span>To be filled</span>
+
+                            </div>
+                        </ng-container>
+                    </ng-container>
                 </ng-container>
 
                 <div *ngIf="(selectedBookingModel.notes) && selectedBookingModel.notes.length > 0;"
@@ -187,18 +208,37 @@
                                     <b>Interpreter {{i + 1}} :</b>
                                     <span *ngIf="interpreter.state === 'Accepted'">{{interpreter.first_name}} {{interpreter.last_name}}</span>
                                     <span *ngIf="interpreter.state !== 'Accepted'">To be filled</span>
-                                    <button *ngIf="!isCurrentUserInterpreter() && interpreter.state === 'Accepted'">
-                                        Unassign
-                                    </button>
 
                                 </div>
 
+                            </ng-container>
+                            <ng-container *ngIf="(selectedBookingModel.interpreters_required - selectedBookingModel.interpreters.length) > 0">
+                                <ng-container *ngFor="let numb of counter(selectedBookingModel.interpreters_required - selectedBookingModel.interpreters.length ); let ii=index">
+                                    <ng-container *ngIf="ii < (selectedBookingModel.interpreters_required - selectedBookingModel.interpreters.length)">
+                                        <div>
+                                            <b>Interpreter {{selectedBookingModel.interpreters.length + ii + 1}} : </b>
+                                            <span>To be filled</span>
+                                        </div>
+                                    </ng-container>
+                                </ng-container>
                             </ng-container>
                         </section>
                     </section>
                 </div>
             </ng-container>
+            <ng-container  *ngIf="!anyInterpreterAccepted()">
+                <div class="manage-interpreters-wrapper">
+                    <section class="manage-interpreters">
+                        <section>
+                            <div *ngFor="let numb of counter(selectedBookingModel.interpreters_required); let i=index">
+                                <b>Interpreter {{i + 1}} :</b>
+                                <span>To be filled</span>
 
+                            </div>
+                        </section>
+                    </section>
+                </div>
+            </ng-container>
             <h2 class="hidden-mobile">History</h2>
             <table id="changes-history" class="custom-small-table">
                 <thead>

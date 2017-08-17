@@ -132,6 +132,16 @@
 								</div>
 
 							</ng-container>
+							<ng-container *ngIf="(selectedBookingModel.interpreters_required - selectedBookingModel.interpreters.length) > 0">
+								<ng-container *ngFor="let numb of counter(selectedBookingModel.interpreters_required - selectedBookingModel.interpreters.length ); let ii=index">
+									<ng-container *ngIf="ii < (selectedBookingModel.interpreters_required - selectedBookingModel.interpreters.length)">
+										<div>
+											<b>Interpreter {{selectedBookingModel.interpreters.length + ii + 1}} : </b>
+											<span>To be filled</span>
+										</div>
+									</ng-container>
+								</ng-container>
+							</ng-container>
 						</section>
 					</section>
 				</div>
