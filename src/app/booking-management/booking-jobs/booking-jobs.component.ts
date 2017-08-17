@@ -37,7 +37,7 @@ export class BookingJobsComponent implements OnDestroy {
     private sub: any;
     private dialogSub: any;
     dialogRef: MdDialogRef<any>;
-
+    checkList = {};
     constructor(public dialog: MdDialog,
                 public viewContainerRef: ViewContainerRef, public spinnerService: SpinnerService,
                 public notificationServiceBus: NotificationServiceBus,
@@ -158,13 +158,15 @@ export class BookingJobsComponent implements OnDestroy {
         this.router.navigate(['/booking-management', 'create-booking'], navigationExtras);
     }
 
-    onChange($event, user) {
+    onChange($event, user, ind) {
         let index = this.selectedInterpreterIDs.indexOf(user.id);
         if (index < 0) {
             this.selectedInterpreterIDs.push(user.id);
+            this.checkList[ind] = true;
         } else {
             // delete this.selectedInterpreterIDs[user.id];
             this.selectedInterpreterIDs.splice(index, 1);
+            this.checkList[ind] = false;
 
         }
     }
@@ -283,7 +285,7 @@ export class BookingJobsComponent implements OnDestroy {
 
     saveChanges() {
         let selectedInt = [];
-
+        this.checkList = {};
         this.spinnerService.requestInProcess(true);
         if (this.invitePressed) {
             for (let _id of this.selectedInterpreterIDs) {

@@ -125,7 +125,7 @@
 									<b>Interpreter {{i + 1}} :</b>
 									<span *ngIf="interpreter.state === 'Accepted'">{{interpreter.first_name}} {{interpreter.last_name}}</span>
 									<span *ngIf="interpreter.state !== 'Accepted'">To be filled</span>
-									<button *ngIf="!isCurrentUserInterpreter() && interpreter.state === 'Accepted'">
+									<button (click)="unAssignInterpreters(interpreter.id)" *ngIf="!isCurrentUserInterpreter() && interpreter.state === 'Accepted'">
 										Unassign
 									</button>
 
@@ -241,7 +241,7 @@
 					<tbody>
 						<tr *ngFor="let user of interpreterList; let ind = index">
 							<td width="10%">
-								<md-checkbox name='{{"Check" + ind}}' (change)="onChange($event,user)"></md-checkbox>
+								<md-checkbox name='{{"Check" + ind}}' [checked]="checkList[ind]===true" (change)="onChange($event,user, ind)"></md-checkbox>
 							</td>
 							<td>{{user.id}}</td>
 							<td align="center"><!-- i [ngClass]="{'icon-check-green' :

@@ -76,7 +76,7 @@ export class BookingService extends ApiService {
         let options = new RequestOptions({ headers: headers });
         let obj = { 'interpreters' : interpreters};
 
-        return this.http.put(GLOBAL.BOOKING_API + '/' + bookingID + '/reassign_interpreters/' , JSON.stringify(obj), options)
+        return this.http.put(GLOBAL.BOOKING_API + '/' + bookingID + '/assign_interpreters/' , JSON.stringify(obj), options)
             .map(this.extractData)
             .catch((err) => { return this.handleError(err); });
     }

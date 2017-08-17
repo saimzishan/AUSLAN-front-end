@@ -84,11 +84,11 @@
                     <td data-title="CLIENT">{{selectedBookingModel.client.organisation_primary_contact.first_name + ' '
                         + selectedBookingModel.client.organisation_primary_contact.last_name}}
                     </td>
+                    <td data-title="VENUE">{{selectedBookingModel.venue.title}}</td>
                     <td data-title="ADDRESS">
                         <a target="_blank"
                            href="{{'https://www.google.com.au/maps/place/' + selectedBookingModel.venue.street_number + ' ' + selectedBookingModel.venue.street_name + ' ' + selectedBookingModel.venue.suburb}}">{{selectedBookingModel.venue.street_number
                             + ' ' + selectedBookingModel.venue.street_name}}</a></td>
-                    <td data-title="VENUE">{{selectedBookingModel.venue.title}}</td>
                     <td data-title="SUBURB">
                         <a target="_blank"
                            href="{{'https://www.google.com.au/maps/place/' +selectedBookingModel.venue.suburb}}">{{selectedBookingModel.venue.suburb}}</a>

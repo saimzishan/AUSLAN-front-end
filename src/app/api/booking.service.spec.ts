@@ -226,20 +226,23 @@ describe('BookingService', () => {
         })();
     });
 
-    it('should reassign a interpreters', function (done) {
+    it('should reassign bulk of interpreters', function (done) {
+        let obj = {  'interpreters' : [{'id': 2579}] };
+
         inject([BookingService], (service: BookingService) => {
             bookingProvider
                 .given('an interpreter is unassigned')
                 .uponReceiving('a request to reassign interpreter')
-                .withRequest('PUT', '/api/v1/bookings/3/interpreter/15/reassign', {
+                .withRequest('PUT', '/api/v1/bookings/3/assign_interpreters', {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'
 
-                    }
+                    }, Pact.Match.somethingLike(obj)
                 ).willRespondWith(204);
 
             bookingProvider.run(done, function (runComplete) {
-                service.reAssignInterpreter(3, 15)
+                let mocK_invite = [{ 'id': 2579 }];
+                service.reAssignInterpreter(3, mocK_invite)
                     .subscribe((res: any) => {
                         expect(res.status).toEqual(204);
                         done();
