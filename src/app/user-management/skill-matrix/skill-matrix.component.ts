@@ -109,19 +109,21 @@ export class SkillMatrixComponent implements OnInit {
     apply(val: boolean) {
         if (!val) {
             location.reload();
+        } else {
+            this.spinnerService.requestInProcess(true);
+
+            this.userService.updateUser(this.userModel)
+                .subscribe((res: any) => {
+                        if (res.status === 200) {
+                            // UI Notification
+                            this.spinnerService.requestInProcess(false);
+                            this.notificationServiceBus.launchNotification(false, 'User details updated Successfully');
+                        }
+                    },
+                    (err) => {
+                        this.spinnerService.requestInProcess(false);
+                        this.notificationServiceBus.launchNotification(true, err);
+                    });
         }
-
-        this.userService.updateUser(this.userModel)
-            .subscribe((res: any) => {
-                    if (res.status === 204) {
-                        // UI Notification
-                        this.notificationServiceBus.launchNotification(false, 'User details updated Successfully');
-                    }
-                },
-                (err) => {
-                    this.spinnerService.requestInProcess(false);
-                    this.notificationServiceBus.launchNotification(true, err);
-                });
-
     }
 }

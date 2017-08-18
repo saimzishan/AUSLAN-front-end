@@ -396,9 +396,10 @@ export class Heroku {
 
     static sendCommandToHeroku(command) {
         const exec = require('child_process').execSync;
+        command += ';nil;exit';
         let herokuCommand = browser.params.env === 'localhost' ?
-            'cd ../booking-system-api/ && echo  \'' + command + ';exit\' | bundle exec rails c && cd ../booking-system-frontend/' :
-            'echo  \'' + command + ';exit\' | heroku run console --app auslan-e2e-testing';
+            'cd ../booking-system-api/ && echo  \'' + command + '\' | bundle exec rails c && cd ../booking-system-frontend/' :
+            'echo  \'' + command + '\' | heroku run console --app auslan-e2e-testing';
         console.log(browser.params.env,
             herokuCommand);
 

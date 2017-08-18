@@ -44,7 +44,7 @@ export class BookingJobPage extends PageObject {
 
     /* TODO: Also check here interpreter name */
     bookingAccepted = (numOfInterpreters: number) => {
-        return this.getAll('button.unassign').count().then( (cnt) => {
+        return this.getAll('span.interpreter-accepted').count().then( (cnt) => {
             expect(cnt).to.be.eq(numOfInterpreters);
         });
     }

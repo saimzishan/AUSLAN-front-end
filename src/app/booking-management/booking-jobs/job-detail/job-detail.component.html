@@ -206,7 +206,7 @@
                             <ng-container *ngFor="let interpreter of selectedBookingModel.interpreters; let i=index">
                                 <div *ngIf="i < selectedBookingModel.interpreters_required">
                                     <b>Interpreter {{i + 1}} :</b>
-                                    <span *ngIf="interpreter.state === 'Accepted'">{{interpreter.first_name}} {{interpreter.last_name}}</span>
+                                    <span *ngIf="interpreter.state === 'Accepted'" class='interpreter-accepted' >{{interpreter.first_name}} {{interpreter.last_name}}</span>
                                     <span *ngIf="interpreter.state !== 'Accepted'">To be filled</span>
 
                                 </div>
