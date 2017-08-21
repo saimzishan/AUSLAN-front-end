@@ -206,6 +206,11 @@ defineSupportCode(({Given, When}) => {
         return page.getElementByName(btnName).click();
     }
 
+    When(/^I move to element name '(.*)'$/, moveToElementByName);
+    function moveToElementByName(btnName: string) {
+        return browser.actions().mouseMove(page.getElementByName(btnName)).perform();
+    }
+
     When(/^I verify checkbox name '(.*)' and is checked '(.*)'$/, verifyOnCBByName);
     function verifyOnCBByName(btnName: string, checkedState: string) {
         let bVal = ((checkedState === 'True') || (checkedState === 'true')) ?

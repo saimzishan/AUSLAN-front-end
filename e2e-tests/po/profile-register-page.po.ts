@@ -26,9 +26,9 @@ export class ProfileRegisterPage extends PageObject {
         this.getElementByName('password').sendKeys('Abcd#1234');
         this.getElementByName('certainPassword').sendKeys('Abcd#1234');
         this.getElementByName('email').sendKeys('george' + type + '@auslan.com.au');
-        this.getElementByName(type === 'INTERPRETER' ? 'phone1' : 'phone').sendKeys('0490394517');
         this.getElementByName(type === 'INTERPRETER' ? 'mobile1' : 'mobile').sendKeys('0490394517');
         if (type === 'INDIVIDUALCLIENT') {
+            this.getElementByName('phone').sendKeys('0490394517');
             this.getElementByName('ndis_id').sendKeys('311');
             this.getElementByName('ndis_budget_limit').sendKeys('10000');
             this.getElementByName('dpEventDateStart').sendKeys('01-30-2015');
@@ -49,6 +49,7 @@ export class ProfileRegisterPage extends PageObject {
             this.getElementByName('skill_level').sendKeys('ASL Certified'.toUpperCase());
             // this.getElementByName('comm_pref').sendKeys(prefComm);
         } else if (type === 'ORGANISATIONALREPRESENTATIVE') {
+            this.getElementByName('phone').sendKeys('0490394517');
             this.getElementByName('business_abn').sendKeys('12312312311');
             this.getElementByName('business_name').sendKeys('Curve');
             this.getElementByName('business_branch_office').sendKeys('Melbourne');
@@ -71,6 +72,10 @@ export class ProfileRegisterPage extends PageObject {
         this.getElementByName('address_state').sendKeys('VIC'); // dropdown
 
         return this.getElementByName('register_user').click();
+    }
+
+    acceptTC = () => {
+        return  this.getElementByName('tnc').click();
     }
 
     userCreated = (type: string) => {

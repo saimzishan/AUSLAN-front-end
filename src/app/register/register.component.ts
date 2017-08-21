@@ -25,7 +25,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
      Please login with your credentials. `;
     private sub_param: any;
     public selectedRole = '';
-
+    termsAndConditionAccepted = false;
     constructor(public userService: UserService,
                 public notificationServiceBus: NotificationServiceBus,
                 public routes: ActivatedRoute, public router: Router) {
@@ -63,13 +63,20 @@ export class RegisterComponent implements OnInit, OnDestroy {
         });
     }
 
-
+    tocChanged (val: boolean) {
+        this.termsAndConditionAccepted = val;
+    }
 
     ngOnDestroy() {
         return this.sub_param && this.sub_param.unsubscribe();
     }
 
     addUser(form: FormGroup) {
+        if (!this.termsAndConditionAccepted) {
+            this.notificationServiceBus.
+            launchNotification(true, 'Kindly accept Terms and Conditions');
+            return;
+        }
         if ( form.invalid ) {
             this.notificationServiceBus.
             launchNotification(true, 'Kindly fill all the required (*) fields');

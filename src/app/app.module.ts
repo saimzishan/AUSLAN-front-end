@@ -68,6 +68,7 @@ import {FileUploadModule} from 'ng2-file-upload';
 import {HashLocationStrategy, Location, LocationStrategy} from '@angular/common';
 import { BlockoutComponent } from './user-management/user-profile/blockout/blockout.component';
 import {CalendarModule} from 'ap-angular2-fullcalendar';
+import { TermandconditionComponent } from './ui/termandcondition/termandcondition.component';
 
 @NgModule({
   declarations: [
@@ -95,7 +96,7 @@ import {CalendarModule} from 'ap-angular2-fullcalendar';
     UserProfileComponent, HyphenPipe, PrettyIDPipe, SpacerPipe,
     BookingJobsComponent, PopupComponent, JobDetailComponent, OrgRepComponent, IndClientComponent,
     InterpreterComponent, BillingAccountComponent,
-    SkillMatrixComponent, AddressComponent, AccountantComponent, UserPasswordComponent, PreComponent, BlockoutComponent
+    SkillMatrixComponent, AddressComponent, AccountantComponent, UserPasswordComponent, PreComponent, BlockoutComponent, TermandconditionComponent
   ],
   entryComponents: [UserDetailComponent, PopupComponent],
   imports: [CustomFormsModule, routing, FileUploadModule,

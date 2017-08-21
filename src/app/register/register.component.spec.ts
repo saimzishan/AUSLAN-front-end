@@ -28,6 +28,7 @@ import {AccountantComponent} from '../ui/accountant/accountant.component';
 import {MaterialModule} from '@angular/material';
 import {IndividualClient, Interpreter, OrganisationalRepresentative, User} from '../shared/model/user.entity';
 import {CalendarModule} from 'ap-angular2-fullcalendar';
+import {TermandconditionComponent} from '../ui/termandcondition/termandcondition.component';
 
 
 describe('RegisterComponent', () => {
@@ -37,7 +38,7 @@ describe('RegisterComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [RegisterComponent, NotificationComponent,
-                OrgRepComponent, InterpreterComponent, AddressComponent,
+                OrgRepComponent, InterpreterComponent, AddressComponent, TermandconditionComponent,
                 IndClientComponent, BillingAccountComponent, AccountantComponent],
             imports: [FormsModule, MaterialModule, CalendarModule,
                 CustomFormsModule, SimpleNotificationsModule.forRoot(),
@@ -59,10 +60,7 @@ describe('RegisterComponent', () => {
             fixture.debugElement.query(By.css('input[name=password]')).nativeElement.value = 'dummy@admin.com';
             fixture.debugElement.query(By.css('input[name=certainPassword]')).nativeElement.value = 'dummy@admin.com';
             fixture.debugElement.query(By.css('input[name=email]')).nativeElement.value = 'dummy@admin.com';
-            // fixture.debugElement.query(By.css('input[name=mobile]')).nativeElement.value = 'xxxxxxxxxx';
-
             fixture.detectChanges();
-
 
             done();
         });

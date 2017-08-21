@@ -148,7 +148,7 @@
                 <app-interpreter [displayCalendar]="false" [userModel]="model" *ngIf="selectedRole === 'INTERPRETER'"></app-interpreter>
                 <app-ind-client [userModel]="model" *ngIf="selectedRole === 'INDIVIDUALCLIENT'"></app-ind-client>
                 <br>
-
+                <app-termandcondition  (termAndConditionStatusChange)="tocChanged($event)" [termsAndConditionAccepted]="termsAndConditionAccepted" ></app-termandcondition>
                 <div align="center">
                     <button class="login button" name="register_user" type="submit"
                             (click)="addUser(registerForm)" class="button">Register

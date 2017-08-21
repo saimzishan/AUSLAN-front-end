@@ -62,21 +62,33 @@ Feature: Create Profile
   Scenario: An org rep can be created
     And I click on button 'Organisation'
     And I will be taken to the 'ORGANISATION Signup' page
+    Then I verify checkbox name 'tnc' and is checked 'false'
     When I fill all the details correctly for -> 'ORGANISATIONALREPRESENTATIVE' with the pref communication is 'SMS AND EMAIL'
+    Then I will get an error notification saying "Kindly accept Terms and Conditions"
+    Then I click on checkbox name 'tnc'
+    Then I click on BUTTON name 'register_user'
     Then 'ORGANISATIONALREPRESENTATIVE' will be created
 
   @runThis
   Scenario: An cli can be created
     And I click on button 'Client'
     And I will be taken to the 'INDIVIDUALCLIENT Signup' page
+    Then I verify checkbox name 'tnc' and is checked 'false'
     When I fill all the details correctly for -> 'INDIVIDUALCLIENT' with the pref communication is 'SMS AND EMAIL'
+    Then I will get an error notification saying "Kindly accept Terms and Conditions"
+    Then I click on checkbox name 'tnc'
+    Then I click on BUTTON name 'register_user'
     Then 'INDIVIDUALCLIENT' will be created
 
   @runThis
   Scenario: An interp can be created
     And I click on button 'Interpreter'
     And I will be taken to the 'INTERPRETER Signup' page
+    Then I verify checkbox name 'tnc' and is checked 'false'
     When I fill all the details correctly for -> 'INTERPRETER' with the pref communication is 'SMS AND EMAIL'
+    Then I will get an error notification saying "Kindly accept Terms and Conditions"
+    Then I click on checkbox name 'tnc'
+    Then I click on BUTTON name 'register_user'
     Then 'INTERPRETER' will be created
 
 # --------------------------------------- AUSLAN1-472 START ------------------------------------------------

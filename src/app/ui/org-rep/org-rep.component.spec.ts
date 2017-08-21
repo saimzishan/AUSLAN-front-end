@@ -28,7 +28,7 @@ describe('OrgRepComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(OrgRepComponent);
     component = fixture.componentInstance;
-    component.userModel = new OrganisationalRepresentative();
+    component.userModel = new OrganisationalRepresentative({});
     fixture.detectChanges();
   });
 
