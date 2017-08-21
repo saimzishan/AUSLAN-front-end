@@ -31,7 +31,7 @@ defineSupportCode(({Given, When}) => {
         return bookingManagementPage.hoverOnProfile('lnkLogout');
     });
     Given(/^I scroll to top$/, () => {
-        return browser.executeScript('window.scrollTo(0,0);').then(function() {
+        return browser.executeScript('window.scrollTo(0,0);').then(function () {
             browser.sleep(1000);
         });
     });
@@ -97,6 +97,7 @@ defineSupportCode(({Given, When}) => {
     }
 
     Given(/^I will upload a document '(.*)'$/, documentUpload);
+
     function documentUpload(documentName: string) {
         let fileToUpload = '../data/' + documentName;
         let p = path.resolve(__dirname, fileToUpload);
@@ -126,7 +127,7 @@ defineSupportCode(({Given, When}) => {
     Given(/^I get a valid '(.*)' notification for state$/, bookingJob.getSuccessNotificationContentForState);
     Given(/^I get a valid invite notification$/, bookingJob.getSuccessNotificationContentForInvite);
     Given(/^I select (.*) Interpreter$/, bookingJob.selectInterpreters);
-    Given(/^I see (\d+) interpreter has accepted the booking$/, bookingJob.bookingAccepted)
+    Given(/^I see (\d+) interpreter has accepted the booking$/, bookingJob.bookingAccepted);
     Given(/^I am on a computer$/, onDesktopResolution);
 
     function onDesktopResolution() {
@@ -136,8 +137,13 @@ defineSupportCode(({Given, When}) => {
          });
          */
     }
-    When(/^I debug$/, () => { return browser.pause(); });
-    When(/^I refresh/, () => { return browser.refresh(); });
+
+    When(/^I debug$/, () => {
+        return browser.pause();
+    });
+    When(/^I refresh/, () => {
+        return browser.refresh();
+    });
     When(/^I click on button '(.*)'$/, clickOnButton);
 
     function clickOnButton(btnLabel: string) {
@@ -145,6 +151,7 @@ defineSupportCode(({Given, When}) => {
     }
 
     When(/^I click on button with css '(.*)'$/, clickOnButtonWithCSS);
+
     function clickOnButtonWithCSS(css: string) {
         return page.getElementByCss(css).click();
     }
@@ -153,6 +160,7 @@ defineSupportCode(({Given, When}) => {
 
 
     When(/^I can see the button '(.*)' is (.*)$/, isButtonDisabled);
+
     function isButtonDisabled(btnLabel: string, disabled: string) {
         let isEnabled = disabled.toLowerCase() === 'enabled';
         return page.getElementByCSSandText('.button', btnLabel).isEnabled().then((val) => {
@@ -161,6 +169,7 @@ defineSupportCode(({Given, When}) => {
     }
 
     When(/^I can see the button state '(.*)' is (.*)$/, isButtonVisible);
+
     function isButtonVisible(btnLabel: string, visible: string) {
         let isDisplayed = visible.toLowerCase() === 'visible';
         return browser.sleep(1000).then(() => {
@@ -171,6 +180,7 @@ defineSupportCode(({Given, When}) => {
     }
 
     When(/^I can see the button with css '(.*)' is (.*)$/, isButtonWithCSSDisabled);
+
     function isButtonWithCSSDisabled(css: string, disabled: string) {
         let isEnabled = disabled.toLowerCase() === 'enabled';
         return page.getElementByCss(css).isEnabled().then((val) => {
@@ -202,28 +212,41 @@ defineSupportCode(({Given, When}) => {
     }
 
     When(/^I click on checkbox name '(.*)'$/, clickOnCBByName);
+
     function clickOnCBByName(btnName: string) {
         return page.getElementByName(btnName).click();
     }
 
+    When(/^I verify that the link with name '(.*)' href is '(.*)'$/, (linkName: string, linkUrl: string) => {
+        let link = page.getElementByName(linkName);
+        return link.getAttribute('href').then((v) => {
+            expect(v).to.be.eq(linkUrl);
+
+        });
+    });
+
     When(/^I move to element name '(.*)'$/, moveToElementByName);
+
     function moveToElementByName(btnName: string) {
         return browser.actions().mouseMove(page.getElementByName(btnName)).perform();
     }
 
     When(/^I verify checkbox name '(.*)' and is checked '(.*)'$/, verifyOnCBByName);
+
     function verifyOnCBByName(btnName: string, checkedState: string) {
         let bVal = ((checkedState === 'True') || (checkedState === 'true')) ?
             true : false;
-        return page.getElementByName(btnName).isSelected().then( val => {
+        return page.getElementByName(btnName).isSelected().then(val => {
             expect(val).to.be.eq(bVal);
         });
     }
+
     Given(/^I wait for (.*) milli-seconds/, (seconds: string) => {
         return browser.sleep(parseInt(seconds, 10));
     });
 
     Given(/^I fill the field '(.*)' with value '(.*)'/, fillCorrectlyField);
+
     function fillCorrectlyField(lblString: string, value: string) {
         let input = page.getElementByName(lblString);
         expect(input).to.exist;
@@ -232,6 +255,7 @@ defineSupportCode(({Given, When}) => {
     }
 
     Given(/^I jump to '(.*)' element$/, toNextElement);
+
     function toNextElement(element_tag: string) {
         return page.getElementByName(element_tag).click();
     }
@@ -241,17 +265,21 @@ defineSupportCode(({Given, When}) => {
     });
 
     Given(/^I click on Bookings$/, clickOnBookings);
+
     function clickOnBookings() {
         return page.getElementByID('lnkBooking').click();
     }
 
     Given(/^I will be shown a popup message$/, showPopup);
+
     function showPopup() {
         return browser.wait(protractor.ExpectedConditions.presenceOf(page.getElementByCss('app-popup')), 30000).then(() => {
         });
     }
+
     Given(/^I will be shown a popup message '(.*)'$/, showPopupWithMessage);
-    function showPopupWithMessage(message ) {
+
+    function showPopupWithMessage(message) {
         return browser.wait(protractor.ExpectedConditions.presenceOf(page.getElementByCss('app-popup')), 30000).then(() => {
             let elm = page.getElementByCss('main > div > p');
             expect(elm.getText()).to.be.eventually.eq(message);
@@ -259,6 +287,7 @@ defineSupportCode(({Given, When}) => {
     }
 
     Given(/^I am shown a validation error$/, showValidationError);
+
     function showValidationError() {
         let errs = page.getAll('.inline-icon.error');
         return errs.count().then((count) => {
@@ -268,6 +297,7 @@ defineSupportCode(({Given, When}) => {
     }
 
     Given(/^I am shown a validation error with the text '(.*)'$/, showValidationErrorWithText);
+
     function showValidationErrorWithText(errText: string) {
         // browser.explore();
         let errs = page.getAll('.inline-icon.error');

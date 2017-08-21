@@ -297,16 +297,27 @@
                     </div>
                 </div>
                 <div class="row-wrapper">
-                    <div class="medium-2 columns">
+                    <div class="medium-3 columns">
                         <div class="form-field">
-                            <label>EAF/NDIS ID<span mdTooltip="Enter deaf person EAF number!"><i
+                            <label>EAF/NDISID<span mdTooltip="Enter deaf person EAF number!"><i
                                     class="inline-icon-tip"></i></span></label>
                             <input type="tel" placeholder="Enter deaf person EAF number"
                                    [(ngModel)]="bookingModel.deaf_person.eaf" name="deaf_person_eaf"
                                    #deaf_person_eaf="ngModel">
                         </div>
                     </div>
-                    <div class="medium-5 columns">
+                    <div class="medium-9 columns">
+                        <div class="form-field">
+                            <label>DEAF PERSON'S EMAIL <span mdTooltip="Enter deaf person name!"><i
+                                    class="inline-icon-tip"></i></span></label>
+                            <input type="email" class="inline-icon-user-email" id="deaf_person_email"
+                                   placeholder="Enter deaf person email address"
+                                   [(ngModel)]="bookingModel.deaf_person.email" name="deaf_person_email"
+                                   #deaf_person_email="ngModel" email >
+
+                        </div>
+                    </div>
+                    <div class="medium-6 columns">
                         <div class="form-field">
                             <label>DEAF PERSON'S FIRST NAME * <span mdTooltip="Enter deaf person first name"><i
                                     class="inline-icon-tip"></i></span></label>
@@ -321,7 +332,7 @@
             </span>
                         </div>
                     </div>
-                    <div class="medium-5 columns">
+                    <div class="medium-6 columns">
                         <div class="form-field">
                             <label>DEAF PERSON'S LAST NAME * <span mdTooltip="Enter deaf person last name"><i
                                     class="inline-icon-tip"></i></span></label>
@@ -337,17 +348,7 @@
                         </div>
                     </div>
 
-                    <div class="medium-6 columns">
-                        <div class="form-field">
-                            <label>DEAF PERSON'S EMAIL <span mdTooltip="Enter deaf person name!"><i
-                                    class="inline-icon-tip"></i></span></label>
-                            <input type="email" class="inline-icon-user-email" id="deaf_person_email"
-                                   placeholder="Enter deaf person email address"
-                                   [(ngModel)]="bookingModel.deaf_person.email" name="deaf_person_email"
-                                   #deaf_person_email="ngModel" email >
 
-                        </div>
-                    </div>
                     <div class="medium-6 columns">
                         <div class="form-field">
                             <label>DEAF PERSON'S MOBILE <span mdTooltip="Enter deaf person Mobile Number"><i
@@ -494,6 +495,7 @@
                     </section>
                 </div>
             </div>
+            <app-termandcondition  (termAndConditionStatusChange)="tocChanged($event)" [termsAndConditionAccepted]="termsAndConditionAccepted" ></app-termandcondition>
 
             <div class="actions">
                 <button name="btnCreateBooking" (click)="onCreateBooking(booking_form, uploader);">SAVE</button>

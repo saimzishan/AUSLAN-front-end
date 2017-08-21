@@ -25,7 +25,11 @@ export class ProfileRegisterPage extends PageObject {
         this.getElementByName('last_name').sendKeys('Charalambous');
         this.getElementByName('password').sendKeys('Abcd#1234');
         this.getElementByName('certainPassword').sendKeys('Abcd#1234');
-        this.getElementByName('email').sendKeys('george' + type + '@auslan.com.au');
+        this.getElementByName('email').sendKeys(type === 'INDIVIDUALCLIENT' ? 'ted@auslan.com.au' :
+            type === 'INTERPRETER' ? 'dragana@auslan.com.au' :
+                type === 'ORGANISATIONALREPRESENTATIVE' ? 'alana@auslan.com.au' :
+                    'strangeTypeOfUser@auslan.com.au'
+        );
         this.getElementByName(type === 'INTERPRETER' ? 'mobile1' : 'mobile').sendKeys('0490394517');
         if (type === 'INDIVIDUALCLIENT') {
             this.getElementByName('phone').sendKeys('0490394517');

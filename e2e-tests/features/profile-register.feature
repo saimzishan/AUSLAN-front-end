@@ -26,13 +26,17 @@ Feature: Create Profile
   Scenario: With An Individual Client created before, can't create another cli with same email
     And I click on button 'Client'
     And I will be taken to the 'INDIVIDUALCLIENT Signup' page
+    Then I move to element name 'tnc'
+    Then I click on checkbox name 'tnc'
     When I fill all the details correctly for -> 'INDIVIDUALCLIENT' with the pref communication is 'SMS AND EMAIL'
-    Then I will get an error notification saying "Unprocessable Entity "email":"has already been taken""
+   Then I will get an error notification saying "Unprocessable Entity "email":"has already been taken""
 
   @runThis
   Scenario: With An Interpreter created before, can't create another interp with same email
     And I click on button 'Interpreter'
     And I will be taken to the 'INTERPRETER Signup' page
+    Then I move to element name 'tnc'
+    Then I click on checkbox name 'tnc'
     When I fill all the details correctly for -> 'INTERPRETER' with the pref communication is 'SMS AND EMAIL'
     Then I will get an error notification saying "Unprocessable Entity "email":"has already been taken""
 
@@ -40,6 +44,8 @@ Feature: Create Profile
   Scenario: With An Organisational Representative created before, can't create another org rep with same email
     And I click on button 'Organisation'
     And I will be taken to the 'ORGANISATION Signup' page
+    Then I move to element name 'tnc'
+    Then I click on checkbox name 'tnc'
     When I fill all the details correctly for -> 'ORGANISATIONALREPRESENTATIVE' with the pref communication is 'SMS AND EMAIL'
     Then I will get an error notification saying "Unprocessable Entity "email":"has already been taken""
 
@@ -58,44 +64,57 @@ Feature: Create Profile
     And I click on button 'Client'
     Then I will be taken to the 'INDIVIDUALCLIENT Signup' page
 
-  @runThis
-  Scenario: An org rep can be created
-    And I click on button 'Organisation'
-    And I will be taken to the 'ORGANISATION Signup' page
-    Then I verify checkbox name 'tnc' and is checked 'false'
-    When I fill all the details correctly for -> 'ORGANISATIONALREPRESENTATIVE' with the pref communication is 'SMS AND EMAIL'
-    Then I will get an error notification saying "Kindly accept Terms and Conditions"
-    Then I click on checkbox name 'tnc'
-    Then I click on BUTTON name 'register_user'
-    Then 'ORGANISATIONALREPRESENTATIVE' will be created
-
-  @runThis
-  Scenario: An cli can be created
-    And I click on button 'Client'
-    And I will be taken to the 'INDIVIDUALCLIENT Signup' page
-    Then I verify checkbox name 'tnc' and is checked 'false'
-    When I fill all the details correctly for -> 'INDIVIDUALCLIENT' with the pref communication is 'SMS AND EMAIL'
-    Then I will get an error notification saying "Kindly accept Terms and Conditions"
-    Then I click on checkbox name 'tnc'
-    Then I click on BUTTON name 'register_user'
-    Then 'INDIVIDUALCLIENT' will be created
+# --------------------------------------- AUSLAN1-174, AUSLAN1-53 START ------------------------------------------------
 
   @runThis
   Scenario: An interp can be created
     And I click on button 'Interpreter'
     And I will be taken to the 'INTERPRETER Signup' page
-    Then I verify checkbox name 'tnc' and is checked 'false'
     When I fill all the details correctly for -> 'INTERPRETER' with the pref communication is 'SMS AND EMAIL'
     Then I will get an error notification saying "Kindly accept Terms and Conditions"
+    Then I move to element name 'lnkTC'
+    Then I verify that the link with name 'lnkTC' href is 'https://s3-ap-southeast-2.amazonaws.com/auslan-public-bucket/Auslan_Online_Terms_And_Conditions.pdf'
+    Then I move to element name 'tnc'
     Then I click on checkbox name 'tnc'
     Then I click on BUTTON name 'register_user'
     Then 'INTERPRETER' will be created
+
+  @runThis
+  Scenario: An org rep can be created
+    And I click on button 'Organisation'
+    And I will be taken to the 'ORGANISATION Signup' page
+    When I fill all the details correctly for -> 'ORGANISATIONALREPRESENTATIVE' with the pref communication is 'SMS AND EMAIL'
+    Then I will get an error notification saying "Kindly accept Terms and Conditions"
+    Then I move to element name 'lnkTC'
+    Then I verify that the link with name 'lnkTC' href is 'https://s3-ap-southeast-2.amazonaws.com/auslan-public-bucket/Auslan_Online_Terms_And_Conditions.pdf'
+    Then I move to element name 'tnc'
+    Then I click on checkbox name 'tnc'
+    Then I click on BUTTON name 'register_user'
+    Then 'ORGANISATIONALREPRESENTATIVE' will be created
+
+
+  @runThis
+  Scenario: An individual-client can be created
+    And I click on button 'Client'
+    And I will be taken to the 'INDIVIDUALCLIENT Signup' page
+    When I fill all the details correctly for -> 'INDIVIDUALCLIENT' with the pref communication is 'SMS AND EMAIL'
+    Then I will get an error notification saying "Kindly accept Terms and Conditions"
+    Then I move to element name 'lnkTC'
+    Then I verify that the link with name 'lnkTC' href is 'https://s3-ap-southeast-2.amazonaws.com/auslan-public-bucket/Auslan_Online_Terms_And_Conditions.pdf'
+    Then I move to element name 'tnc'
+    Then I click on checkbox name 'tnc'
+    Then I click on BUTTON name 'register_user'
+    Then 'INDIVIDUALCLIENT' will be created
+# --------------------------------------- AUSLAN1-174, AUSLAN1-53 END ------------------------------------------------
+
 
 # --------------------------------------- AUSLAN1-472 START ------------------------------------------------
   @runThis
   Scenario: interp sign up with prefer communication
     And I click on button 'Interpreter'
     And I will be taken to the 'INTERPRETER Signup' page
+    Then I move to element name 'tnc'
+    Then I click on checkbox name 'tnc'
     When I fill all the details correctly for -> 'INTERPRETER' with the pref communication is 'SMS'
     Then 'INTERPRETER' will be created
 
@@ -103,6 +122,8 @@ Feature: Create Profile
   Scenario: interp sign up with prefer communication
     And I click on button 'Interpreter'
     And I will be taken to the 'INTERPRETER Signup' page
+    Then I move to element name 'tnc'
+    Then I click on checkbox name 'tnc'
     When I fill all the details correctly for -> 'INTERPRETER' with the pref communication is 'SMS AND EMAIL'
     Then 'INTERPRETER' will be created
 # --------------------------------------- AUSLAN1-472 END ------------------------------------------------
@@ -112,6 +133,8 @@ Feature: Create Profile
   Scenario: interp sign up with prefer communication
     And I click on button 'Client'
     And I will be taken to the 'INDIVIDUALCLIENT Signup' page
+    Then I move to element name 'tnc'
+    Then I click on checkbox name 'tnc'
     When I fill all the details correctly for -> 'INDIVIDUALCLIENT' with the pref communication is 'SMS'
     Then 'INTERPRETER' will be created
 
@@ -119,6 +142,8 @@ Feature: Create Profile
   Scenario: interp sign up with prefer communication
     And I click on button 'Client'
     And I will be taken to the 'INDIVIDUALCLIENT Signup' page
+    Then I move to element name 'tnc'
+    Then I click on checkbox name 'tnc'
     When I fill all the details correctly for -> 'INDIVIDUALCLIENT' with the pref communication is 'SMS AND EMAIL'
     Then 'INTERPRETER' will be created
 # --------------------------------------- AUSLAN1-53 END ------------------------------------------------

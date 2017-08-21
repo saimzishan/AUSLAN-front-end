@@ -14,7 +14,8 @@ Feature: Booking Admin Management
     When I click on 'New Booking'
     Then I will be taken to the 'New Booking' form
     Then I fill New Booking form fields correctly
-    Then I click the create booking button
+    Then I move to element name 'tnc'
+    Then I click on checkbox name 'tnc'
     Then I get a valid create booking notification
     Then I am on the bookings page
     Then I see one row with state 'Requested'
@@ -53,7 +54,8 @@ Feature: Booking Admin Management
     When I click on 'New Booking'
     Then I will be taken to the 'New Booking' form
     Then I fill New Booking form fields correctly
-    Then I click the create booking button
+    Then I move to element name 'tnc'
+    Then I click on checkbox name 'tnc'
     Then I get a valid create booking notification
     Then I am on the bookings page
     Then I see one row with state 'Requested'
@@ -90,7 +92,8 @@ Feature: Booking Admin Management
     When I click on 'New Booking'
     Then I will be taken to the 'New Booking' form
     Then I fill New Booking form fields correctly
-    Then I click the create booking button
+    Then I move to element name 'tnc'
+    Then I click on checkbox name 'tnc'
     Then I get a valid create booking notification
     Then I am on the bookings page
     Then I see one row with state 'Requested'
@@ -129,7 +132,8 @@ Feature: Booking Admin Management
     When I click on 'New Booking'
     Then I will be taken to the 'New Booking' form
     Then I fill New Booking form fields correctly
-    Then I click the create booking button
+    Then I move to element name 'tnc'
+    Then I click on checkbox name 'tnc'
     Then I get a valid create booking notification
     Then I am on the bookings page
     Then I see one row with state 'Requested'
@@ -167,7 +171,8 @@ Feature: Booking Admin Management
     When I click on 'New Booking'
     Then I will be taken to the 'New Booking' form
     Then I fill New Booking form fields correctly
-    Then I click the create booking button
+    Then I move to element name 'tnc'
+    Then I click on checkbox name 'tnc'
     Then I get a valid create booking notification
     Then I am on the bookings page
     Then I see one row with state 'Requested'
@@ -194,7 +199,8 @@ Feature: Booking Admin Management
     When I click on 'New Booking'
     Then I will be taken to the 'New Booking' form
     Then I fill New Booking form fields correctly
-    Then I click the create booking button
+    Then I move to element name 'tnc'
+    Then I click on checkbox name 'tnc'
     Then I get a valid create booking notification
     Then I am on the bookings page
     Then I see one row with state 'Requested'
@@ -219,7 +225,8 @@ Feature: Booking Admin Management
     When I click on 'New Booking'
     Then I will be taken to the 'New Booking' form
     Then I fill New Booking form fields correctly
-    Then I click the create booking button
+    Then I move to element name 'tnc'
+    Then I click on checkbox name 'tnc'
     Then I get a valid create booking notification
     Then I am on the bookings page
     Then I see one row with state 'Requested'
@@ -246,7 +253,8 @@ Feature: Booking Admin Management
     When I click on 'New Booking'
     Then I will be taken to the 'New Booking' form
     Then I fill New Booking form fields correctly
-    Then I click the create booking button
+    Then I move to element name 'tnc'
+    Then I click on checkbox name 'tnc'
     Then I get a valid create booking notification
     Then I am on the bookings page
     Then I see one row with state 'Requested'
@@ -272,7 +280,8 @@ Feature: Booking Admin Management
     When I click on 'New Booking'
     Then I will be taken to the 'New Booking' form
     Then I fill New Booking form fields correctly
-    Then I click the create booking button
+    Then I move to element name 'tnc'
+    Then I click on checkbox name 'tnc'
     Then I get a valid create booking notification
     Then I am on the bookings page
     Then I see one row with state 'Requested'
@@ -299,7 +308,8 @@ Feature: Booking Admin Management
     When I click on 'New Booking'
     Then I will be taken to the 'New Booking' form
     Then I fill New Booking form fields correctly
-    Then I click the create booking button
+    Then I move to element name 'tnc'
+    Then I click on checkbox name 'tnc'
     Then I get a valid create booking notification
     Then I am on the bookings page
     Then I see one row with state 'Requested'
@@ -323,7 +333,8 @@ Feature: Booking Admin Management
     When I click on 'New Booking'
     Then I will be taken to the 'New Booking' form
     Then I fill New Booking form fields correctly
-    Then I click the create booking button
+    Then I move to element name 'tnc'
+    Then I click on checkbox name 'tnc'
     Then I get a valid create booking notification
     Then I am on the bookings page
     Then I see one row with state 'Requested'
@@ -350,7 +361,8 @@ Feature: Booking Admin Management
     When I click on 'New Booking'
     Then I will be taken to the 'New Booking' form
     Then I fill New Booking form fields correctly
-    Then I click the create booking button
+    Then I move to element name 'tnc'
+    Then I click on checkbox name 'tnc'
     Then I get a valid create booking notification
     Then I am on the bookings page
     Then I see one row with state 'Requested'
@@ -378,7 +390,8 @@ Feature: Booking Admin Management
     When I click on 'New Booking'
     Then I will be taken to the 'New Booking' form
     Then I fill New Booking form fields correctly
-    Then I click the create booking button
+    Then I move to element name 'tnc'
+    Then I click on checkbox name 'tnc'
     Then I get a valid create booking notification
     Then I am on the bookings page
     Then I see one row with state 'Requested'
@@ -417,7 +430,8 @@ Feature: Booking Admin Management
     When I click on 'New Booking'
     Then I will be taken to the 'New Booking' form
     Then I fill New Booking form fields correctly
-    Then I click the create booking button
+    Then I move to element name 'tnc'
+    Then I click on checkbox name 'tnc'
     Then I get a valid create booking notification
     Then I am on the bookings page
     Then I see one row with state 'Requested'
@@ -453,7 +467,8 @@ Feature: Booking Admin Management
     When I click on 'New Booking'
     Then I will be taken to the 'New Booking' form
     Then I fill New Booking form fields correctly
-    Then I click the create booking button
+    Then I move to element name 'tnc'
+    Then I click on checkbox name 'tnc'
     Then I get a valid create booking notification
     Then I am on the bookings page
     Then I see one row with state 'Requested'
@@ -492,7 +507,8 @@ Feature: Booking Admin Management
     When I click on 'New Booking'
     Then I will be taken to the 'New Booking' form
     Then I fill New Booking form fields correctly
-    Then I click the create booking button
+    Then I move to element name 'tnc'
+    Then I click on checkbox name 'tnc'
     Then I get a valid create booking notification
     Then I am on the bookings page
     Then I see one row with state 'Requested'

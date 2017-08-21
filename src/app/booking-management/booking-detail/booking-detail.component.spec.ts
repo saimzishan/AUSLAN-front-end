@@ -28,6 +28,7 @@ import {HttpModule} from '@angular/http';
 import {FileuploaderModule} from '../../shared/fileuploader/fileuploader.module';
 import {AddressComponent} from '../../ui/address/address.component';
 import {BillingAccountComponent} from '../../ui/billing-account/billing-account.component';
+import {TermandconditionComponent} from '../../ui/termandcondition/termandcondition.component';
 
 describe('BookingDetailComponent', () => {
   let component: BookingDetailComponent;
@@ -36,7 +37,7 @@ describe('BookingDetailComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ BookingDetailComponent, EnumValPipe, AddressComponent,
-          BillingAccountComponent
+          BillingAccountComponent, TermandconditionComponent
       ],
       imports: [CustomFormsModule, FileuploaderModule,
         FormsModule, BrowserAnimationsModule, RouterTestingModule, HttpModule,

@@ -49,6 +49,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     prefInterpreter: boolean;
     dialogRef: MdDialogRef<any>;
     fileName = '';
+    termsAndConditionAccepted = false;
 
     constructor(public bookingService: BookingService, private router: Router,
                 private route: ActivatedRoute, private rolePermission: RolePermission,
@@ -147,6 +148,11 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
       Calling this method will create a new booking
     */
     public onCreateBooking(form: FormGroup, uploader: FileUploader) {
+        if (!this.termsAndConditionAccepted) {
+            this.notificationServiceBus.
+            launchNotification(true, 'Kindly accept Terms and Conditions');
+            return;
+        }
         if (form.invalid) {
             this.notificationServiceBus.launchNotification(true, 'Kindly fill all the required (*) fields');
             return;
@@ -218,6 +224,10 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     onCancelBooking() {
         let route = this.rolePermission.getDefaultRouteForCurrentUser();
         this.router.navigate([route]);
+    }
+
+    tocChanged (val: boolean) {
+        this.termsAndConditionAccepted = val;
     }
 
     handleFileSelect(evt) {

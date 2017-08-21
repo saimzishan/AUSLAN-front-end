@@ -110,21 +110,16 @@ export class BookingPage extends PageObject {
 
     theFieldWillBePopulated = (fieldName: string, value: string) => {
         let theField = this.getElementByName(fieldName);
-        return theField.getAttribute('value').then( (val) => {
+        return theField.getAttribute('value').then((val) => {
             expect(val).to.be.equal(value);
         });
     }
 
     theFieldInBookingWillHaveValue = (fieldName: string, value: string) => {
-        // browser.pause();
-        let allFields = $$('table.custom-small-table > tbody > tr > td');
-        return allFields.then((fields) => {
-            let theField = fields[8];
-            return theField.getText().then( (val) => {
-                // console.log(val);
-                expect(val).to.be.equal(value);
-            });
-        });
+        let allTds = $$('table.custom-small-table > tbody > tr > td');
+        allTds.filter((td, ind) => {
+            return td.getText().then((t) => t === value);
+        }).count().then((tot) => expect(tot).to.be.greaterThan(0));
 
     }
 
@@ -200,23 +195,22 @@ export class BookingPage extends PageObject {
         return this.getElementByName('btnCreateBooking').click();
     }
 
-    setTime = (field: string, days: number, hours?: number) => {
+    setTime = (field: string, days: number, hours: number) => {
         // add logic for business days
         // this is a quick fix, improve this
         // TODO: refactor this to use a standard method
         let dayOfTheWeek = new Date(Date.now()).getDay();
         if (dayOfTheWeek >= 4) {
-           days = 5 - dayOfTheWeek;
+            days = 5 - dayOfTheWeek;
         }
-        let date = new Date(Date.now() + (1000 * 60 * 60 * (hours || 0)) + (1000 * 60 * 60 * 24 * (days || 0)));
+        let date = new Date(Date.now() + (1000 * 60 * 60 * (Number(hours) || 0)) + (1000 * 60 * 60 * 24 * (days || 0)));
         let dd = ('0' + date.getDate()).slice(-2);
         let mm = ('0' + (date.getMonth() + 1)).slice(-2);
         let yy = date.getFullYear();
-        let hh: any = date.getHours();
-        let min = ('0' + date.getMinutes()).slice(-2);
-        hh = ('0' + hh).slice(-2);
-        let dateString = [dd, mm, yy].join('/');
-        let timeString = hh + ':' + min;
+        let hh = Number(14 + Number(hours)); // date.getHours();
+        let dateString = [mm, dd, yy].join('/');
+        let timeString = hh.toString() + ':00PM';
+        console.log(dateString, timeString);
         this.setStartEndTime(field, dateString, timeString);
 
     }
