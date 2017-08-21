@@ -65,6 +65,7 @@ import {AccountantComponent} from './ui/accountant/accountant.component';
 import {PreComponent} from './register/pre/pre.component';
 import {BlockoutComponent} from './user-management/user-profile/blockout/blockout.component';
 import {CalendarModule} from 'ap-angular2-fullcalendar';
+import {TermandconditionComponent} from './ui/termandcondition/termandcondition.component';
 
 describe('AppComponent', () => {
   beforeEach(() => {
@@ -76,7 +77,7 @@ describe('AppComponent', () => {
         UserManagementComponent, BookingHeaderComponent, BookingFilterComponent, BookingListComponent,
         EnumValPipe, HeaderComponent, SpacerPipe,
         NotFoundComponent, RegisterComponent, ResetComponent, VerifyComponent,
-        BookingComponent, PrettyIDPipe,
+        BookingComponent, PrettyIDPipe, TermandconditionComponent,
         BookingDetailComponent, BlockoutComponent,
         SpinnerComponent, OrgRepComponent, InterpreterComponent, AddressComponent,
           IndClientComponent, BillingAccountComponent, AccountantComponent, PreComponent
