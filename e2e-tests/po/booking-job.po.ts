@@ -106,7 +106,7 @@ export class BookingJobPage extends PageObject {
     }
 
     getSuccessNotificationContentForState = (state: string) => {
-        return browser.sleep(3000).then(() => {
+        return browser.sleep(1000).then(() => {
             NotificationObject.getNotificationContent('The booking has been transitioned to \"' + state + '\" state');
         });
     }

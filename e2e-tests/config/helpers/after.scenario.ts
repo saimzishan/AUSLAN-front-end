@@ -14,7 +14,7 @@ defineSupportCode(({After}) => {
         if (Boolean(browser.params.debug) && browser.params.debug &&
             scenarioResult.status === 'failed') {
             const world = this;
-            (scenarioResult.status === 'failed') ? saveFailedScenarioScreenshot(world, scenarioResult) : Promise.resolve();
+            // (scenarioResult.status === 'failed') ? saveFailedScenarioScreenshot(world, scenarioResult) : Promise.resolve();
         } else {
             Heroku.sendCommandToHeroku('Booking.destroy_all');
             Heroku.sendCommandToHeroku('User.where.not(id: 1).destroy_all');
