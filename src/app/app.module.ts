@@ -96,7 +96,8 @@ import { TermandconditionComponent } from './ui/termandcondition/termandconditio
     UserProfileComponent, HyphenPipe, PrettyIDPipe, SpacerPipe,
     BookingJobsComponent, PopupComponent, JobDetailComponent, OrgRepComponent, IndClientComponent,
     InterpreterComponent, BillingAccountComponent,
-    SkillMatrixComponent, AddressComponent, AccountantComponent, UserPasswordComponent, PreComponent, BlockoutComponent, TermandconditionComponent
+    SkillMatrixComponent, AddressComponent, AccountantComponent,
+      UserPasswordComponent, PreComponent, BlockoutComponent, TermandconditionComponent
   ],
   entryComponents: [UserDetailComponent, PopupComponent],
   imports: [CustomFormsModule, routing, FileUploadModule,
