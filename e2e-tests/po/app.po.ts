@@ -80,6 +80,10 @@ export class PageObject {
         return ele.element(by.css(css));
     }
 
+    getAllByCSSInElement(ele, css: string) {
+        return ele.all(by.css(css));
+    }
+
     getElementInsideByTag(ele, tag: string) {
         return ele.element(by.tagName(tag));
     }
