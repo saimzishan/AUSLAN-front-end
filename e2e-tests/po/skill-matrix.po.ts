@@ -3,7 +3,9 @@ import {expect} from '../config/helpers/chai-imports';
 import {browser, ElementFinder} from 'protractor';
 
 export class SkillMatrixPage extends PageObject {
-    static updatedSkillLevel: number = 1;
+    static initialSkillLevel = 0;
+    static updatedSkillLevel = 1;
+    static skillsChanged = 1;
     verify = () => {
         return this.currentPath().then((currentPath) => {
             expect(currentPath).to.contain('user-management');
@@ -23,8 +25,8 @@ export class SkillMatrixPage extends PageObject {
             return super.getNextSibling(el, 'a').then((sibling) => sibling.click());
         });
     }
-    getChangeableSkill = () => {
-        return super.getAll('table > tbody > tr').get(2);
+    getChangeableSkill = (n) => {
+        return super.getAll('table > tbody > tr').get(n);
     }
 
     firstCheckboxBySelectionIn = (skill: ElementFinder, givenSelection: boolean) => {
@@ -35,20 +37,30 @@ export class SkillMatrixPage extends PageObject {
             });
         }).first();
     }
-    changeSkillLevel = () => {
-        let skill = this.getChangeableSkill();
-        let clickable = this.firstCheckboxBySelectionIn(skill, false);
-        clickable.getAttribute('name').then((name) => {
-            SkillMatrixPage.updatedSkillLevel = Number(name.split('_')[2]);
-        });
-        return super.getParent(super.getParent(clickable)).click();
+    changeSkillLevel = (n: number) => {
+        SkillMatrixPage.skillsChanged = n;
+        while (n > 0) {
+            let skill = this.getChangeableSkill(n);
+            let clickable = this.firstCheckboxBySelectionIn(skill, false);
+            clickable.getAttribute('name').then((name) => {
+                SkillMatrixPage.updatedSkillLevel = Number(name.split('_')[2]);
+            });
+            super.getParent(super.getParent(clickable)).click();
+            n--;
+        }
     }
-    checkUpdatedSkill = () => {
-        let skill = this.getChangeableSkill();
-        let checkbox = this.firstCheckboxBySelectionIn(skill, true);
-        let selectedSkillLevel: number = checkbox.getAttribute('name').then((name) => {
-            return Number(name.split('_')[2]);
-        });
-        return expect(selectedSkillLevel).to.eventually.equal(SkillMatrixPage.updatedSkillLevel);
+    checkUpdatedSkill = (negate: string) => {
+        for (let i = 1; i <= SkillMatrixPage.skillsChanged; i++) {
+            let skill = this.getChangeableSkill(i);
+            let checkbox = this.firstCheckboxBySelectionIn(skill, true);
+            let selectedSkillLevel: number = checkbox.getAttribute('name').then((name) => {
+                return Number(name.split('_')[2]) || 0;
+            });
+            if (negate) {
+                expect(selectedSkillLevel).to.eventually.equal(SkillMatrixPage.initialSkillLevel);
+            } else {
+                expect(selectedSkillLevel).to.eventually.equal(SkillMatrixPage.updatedSkillLevel);
+            }
+        }
     }
 }
