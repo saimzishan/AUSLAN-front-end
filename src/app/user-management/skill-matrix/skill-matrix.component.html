@@ -50,8 +50,6 @@
                     </th>
                 </tr>
                 </thead>
-            </table>
-            <table>
                 <tbody>
                 <tr>
                     <td>&nbsp;</td>
@@ -65,7 +63,7 @@
                         <td>&nbsp;{{item.value}}</td>
                         <td *ngFor="let lvl of levels">
                             <md-checkbox (change)="skillChanged(lvl, item.value)" [checked]="isChecked(lvl, item.value)"
-                                         [value]="lvl" name="{{'skill_level_' + lvl}}">>
+                                         [value]="lvl" name="{{'skill_level_' + lvl}}">
                             </md-checkbox>
                         </td>
                     </ng-container>

@@ -17,7 +17,13 @@ defineSupportCode(({Given, Then, When}) => {
 
     When(/^I click on 'Create'$/, userManagementPO.createUserClickInDialog);
 
-    Then(/^the valid (.*) should be in the list$/, userManagementPO.validUserShouldBeOntheList);
+    // Following strings are matched
+    // the 21 valid Interpreters should be in the list
+    // The valid Interpreters should be in the list
+    // The valid Interpreter should be in the list
+    // the valid Booking Officer should be in the list
+    // the 2 valid Administrators should be in the list
+    Then(/^[tT]he (\d+)?\s?valid (.*[^s])s? should be in the list$/, userManagementPO.validUserShouldBeOnTheList);
 
     // ================================== INVALID CREATING ========================================
     When(/^I add an invalid (.*)/, userManagementPO.addInvalidUser);
@@ -33,8 +39,10 @@ defineSupportCode(({Given, Then, When}) => {
     Then(/^I update (.*) available field/, userManagementPO.updateAvailableField);
 
     When(/^I click on update$/, userManagementPO.clickOnUpdateOrSaveUser);
-
+    When(/^I hover on the 'Actions' of the (.*)$/, userManagementPO.hoverOnActions);
     When(/^I click on 'SAVE'$/, userManagementPO.clickOnUpdateOrSaveUser);
+
+    When(/^I click on 'Skill Matrix' for an (.*) existing (.*)$/, userManagementPO.clickOnSkillMatrix);
 
     Then(/^the updated (.*) should be in the list$/, userManagementPO.shouldShowTheValidNotification);
     Then(/^the (.*) should be disabled$/, userManagementPO.shouldShowTheValidNotification);
