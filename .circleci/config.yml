@@ -31,8 +31,8 @@ jobs:
             docker exec -it $container_id /bin/bash -l -c "git clone git@bitbucket.org:curvetomorrow/booking-system-api.git ../api"
             docker exec -it $container_id /bin/bash -l -c "cd ../api && bundle install"
             docker exec -it $container_id /bin/bash -l -c "service postgresql restart"
-            docker exec -it $container_id /bin/bash -l -c "bundle exec rake db:migrate"
-            docker exec -it $container_id /bin/bash -l -c "bundle exec rubocop"
+            docker exec -it $container_id /bin/bash -l -c "cd ../api && bundle exec rake db:migrate"
+            docker exec -it $container_id /bin/bash -l -c "cd ../api && bundle exec rubocop"
 
       - deploy:
           name: Deploy Master to Heroku
