@@ -33,7 +33,7 @@ jobs:
             docker exec -it $container_id /bin/bash -l -c "service postgresql restart"
             docker exec -it $container_id /bin/bash -l -c "cd ../api && bundle exec rake db:migrate"
             docker exec -it $container_id /bin/bash -l -c "cd ../api && nohup bundle exec rails s &"
-            docker exec -it $container_id /bin/bash -l -c "curl -v -H "Content-Type:application/json; charset=utf-8" -d '{"auth": {"email":"admin@auslan.com.au", "password":"Abcd#1234"}}' http://localhost:3000/api/v1/users/login.json"
+            docker exec -it $container_id /bin/bash -l -c "curl -v -H \"Content-Type:application/json; charset=utf-8\" -d '{\"auth\": {\"email\":\"admin@auslan.com.au\", \"password\":\"Abcd#1234\"}}' http://localhost:3000/api/v1/users/login.json"
 
       - deploy:
           name: Deploy Master to Heroku
