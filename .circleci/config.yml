@@ -1,0 +1,43 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: docker:1.13.1-git
+    working_directory: /var/www/app
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Install dependencies
+          command: |
+            apk add --no-cache \
+              py-pip=9.0.0-r1
+            pip install \
+              docker-compose==1.12.0 \
+              awscli==1.11.76
+      - run:
+          command: sh .circleci/setup-heroku.sh
+      - run:
+          name: Build application Docker image
+          command: |
+            heroku --version
+            docker build -t auslan/api:latest .
+      - run:
+          name: Create Docker container and run the tests
+          command: |
+            export container_id=$(docker run -i -t -d --net="host" -v /var/www/app:/usr/src/app auslan/api)
+            docker exec -it $container_id /bin/bash -l -c "gem install bundler"
+            docker exec -it $container_id /bin/bash -l -c "git clone git@bitbucket.org:curvetomorrow/booking-system-api.git ../api"
+            docker exec -it $container_id /bin/bash -l -c "cd ../api && bundle install"
+            docker exec -it $container_id /bin/bash -l -c "service postgresql restart"
+            docker exec -it $container_id /bin/bash -l -c "bundle exec rake db:migrate"
+            docker exec -it $container_id /bin/bash -l -c "bundle exec rubocop"
+
+      - deploy:
+          name: Deploy Master to Heroku
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              git push heroku master
+              heroku run rake db:migrate
+              heroku restart
+            fi
