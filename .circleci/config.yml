@@ -24,7 +24,7 @@ jobs:
           command: |
             docker build -t auslan/api:latest .
       - run:
-          name: Create Docker container and run the tests
+          name: Start rails server
           command: |
             export container_id=$(docker run -i -t -d --net="host" -v /var/www/app:/usr/src/app auslan/api)
             docker exec -it $container_id /bin/bash -l -c "gem install bundler"
@@ -33,6 +33,12 @@ jobs:
             docker exec -it $container_id /bin/bash -l -c "service postgresql restart"
             docker exec -it $container_id /bin/bash -l -c "cd ../api && bundle exec rake db:migrate"
             docker exec -it $container_id /bin/bash -l -c "cd ../api && nohup bundle exec rails s &"
+      - run:
+          name: Wait for rails server to start
+          command: sleep 5
+      - run:
+          name: Curl the localhost
+          command: |
             docker exec -it $container_id /bin/bash -l -c "curl -v -H \"Content-Type:application/json; charset=utf-8\" -d '{\"auth\": {\"email\":\"admin@auslan.com.au\", \"password\":\"Abcd#1234\"}}' http://localhost:3000/api/v1/users/login.json"
 
       - deploy:
