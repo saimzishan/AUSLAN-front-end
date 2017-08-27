@@ -32,7 +32,7 @@ jobs:
             docker exec -it $container_id /bin/bash -l -c "cd ../api && bundle install"
             docker exec -it $container_id /bin/bash -l -c "service postgresql restart"
             docker exec -it $container_id /bin/bash -l -c "cd ../api && bundle exec rake db:migrate"
-            docker exec -it $container_id /bin/bash -l -c "cd ../api && bundle exec rubocop"
+            docker exec -it $container_id /bin/bash -l -c "cd ../api && bundle exec rake db:seed"
 
       - deploy:
           name: Deploy Master to Heroku
