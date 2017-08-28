@@ -32,7 +32,7 @@ jobs:
             docker exec -it $container_id /bin/bash -l -c "cd ../booking-system-api && bundle install"
             docker exec -it $container_id /bin/bash -l -c "service postgresql restart"
             docker exec -it $container_id /bin/bash -l -c "cd ../booking-system-api && bundle exec rake db:migrate"
-            docker exec -it $container_id /bin/bash -l -c "cd ../booking-system-api && bundle exec rails s -d &>output & sleep 1"
+            docker exec -it $container_id /bin/bash -l -c "cd ../booking-system-api && bundle exec rails s -p 3001 &>output & sleep 1"
             docker exec -it $container_id /bin/bash -l -c "ps -ef"
 
       - deploy:
