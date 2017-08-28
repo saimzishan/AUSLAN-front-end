@@ -28,7 +28,7 @@ jobs:
           command: |
             export container_id=$(docker run -i -t -d --net="host" -v /var/www/app:/usr/src/app auslan/api)
             docker exec -it $container_id /bin/bash -l -c "gem install bundler"
-            docker exec -it $container_id /bin/bash -l -c "git clone git@bitbucket.org:curvetomorrow/booking-system-api.git"
+            docker exec -it $container_id /bin/bash -l -c "git clone git@bitbucket.org:curvetomorrow/booking-system-api.git ../booking-system-api"
             docker exec -it $container_id /bin/bash -l -c "cd ../booking-system-api && bundle install"
             docker exec -it $container_id /bin/bash -l -c "service postgresql restart"
             docker exec -it $container_id /bin/bash -l -c "cd ../booking-system-api && bundle exec rake db:migrate"
