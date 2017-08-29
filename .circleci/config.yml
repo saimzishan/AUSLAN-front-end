@@ -9,17 +9,18 @@ jobs:
     working_directory: /var/www/app
     steps:
       - checkout
-      - run:
+       - run:
           name: Install dependencies
           command: |
-            apk add --no-cache \
+             apk add --no-cache \
               py-pip=9.0.0-r1
             pip install \
               awscli==1.11.76
-      - run:
-          name: Running the Docker container and starting server and end to end test
-          command: |
-            docker run --rm --net="host" curvetomorrow/auslan-dev-image:v7.6-debug /bin/bash -l setup_ci.sh
+      - type: shell
+        shell: /bin/bash --login
+        name: Running the Docker container and starting server and end to end test
+        command: |
+          docker run --rm --net="host" curvetomorrow/auslan-dev-image:v7.6-debug /bin/bash -l setup_ci.sh
       - deploy:
           name: Deploy Master to Heroku
           command: |
