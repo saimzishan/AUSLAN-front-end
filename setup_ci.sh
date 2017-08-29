@@ -9,3 +9,7 @@ bundle exec rake -T
 nohup rails s > rails_server.log 2>&1 &
 sleep 10
 ps -ef | grep "puma"
+cd ../booking-system-front-end
+npm install
+sh run-test.sh
+

@@ -17,7 +17,7 @@ jobs:
             pip install \
               awscli==1.11.76
       - run:
-          name: Create Docker container and start server
+          name: Running the Docker container and starting server and end to end test
           command: |
             docker run --rm --net="host" curvetomorrow/auslan-dev-image:v7.6-debug /bin/bash -l setup_ci.sh
       - deploy:
