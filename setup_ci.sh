@@ -1,3 +1,5 @@
+export RAILS_ROOT=/var/www/app
+mkdir -p $RAILS_ROOT/tmp/pids
 gem install bundler
 git clone git@bitbucket.org:curvetomorrow/booking-system-api.git ../booking-system-api
 cd ../booking-system-api 
