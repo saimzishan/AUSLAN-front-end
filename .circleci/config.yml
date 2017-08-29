@@ -18,7 +18,7 @@ jobs:
       - run:
           name: Setup parallelism
           command: |
-            circleci tests glob "e2e-tests/features/*.features" | circleci tests split --index=0 --total=3
+            circleci tests glob "e2e-tests/features/*.features" | circleci tests split
       - run:
           name: Login to Docker with Curve account
           command: |
