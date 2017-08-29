@@ -4,8 +4,7 @@ jobs:
     docker:
       - image: docker:1.13.1-git
     working_directory: /var/www/booking-system-frontend
-    parallelism: 2
-    resource_class: large
+    parallelism: 1
     steps:
       - checkout
       - setup_remote_docker
@@ -21,7 +20,8 @@ jobs:
           type: shell
           name: Setup parallelism
           command: |
-            circleci tests glob "/var/www/booking-system-frontend/e2e-tests/features/*.feature" | circleci tests split
+            circleci tests glob "/var/www/booking-system-frontend/e2e-tests/features/*.feature" | circleci tests split --index=0 --total=5 > /var/www/booking-system-frontend/test_features_for_split_container.txt
+            cat /var/www/booking-system-frontend/test_features_for_split_container.txt
       - run:
           name: Login to Docker with Curve account
           command: |
