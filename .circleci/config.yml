@@ -3,7 +3,7 @@ jobs:
   build:
     docker:
       - image: docker:1.13.1-git
-    working_directory: /var/www/app
+    working_directory: /var/www/booking-system-frontend
     steps:
       - checkout
       - setup_remote_docker
