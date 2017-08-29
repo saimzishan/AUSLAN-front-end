@@ -26,9 +26,7 @@ jobs:
       - run:
           name: Create Docker container and start server
           command: |
-            docker run --rm --net="host" -v /var/www/app:/usr/src/app auslan/api bash /usr/src/app/setup_ci.sh
-
-
+            docker run --rm --net="host" auslan/api bash setup_ci.sh
       - deploy:
           name: Deploy Master to Heroku
           command: |
