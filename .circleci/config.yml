@@ -9,13 +9,14 @@ jobs:
     working_directory: /var/www/app
     steps:
       - checkout
-       - run:
+      - run:
           name: Install dependencies
           command: |
              apk add --no-cache \
               py-pip=9.0.0-r1
-            pip install \
+             pip install \
               awscli==1.11.76
+      
       - type: shell
         shell: /bin/bash --login
         name: Running the Docker container and starting server and end to end test
