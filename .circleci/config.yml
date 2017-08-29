@@ -4,6 +4,8 @@ jobs:
     docker:
       - image: docker:1.13.1-git
     working_directory: /var/www/booking-system-frontend
+    parallelism: 2
+    resource_class: large
     steps:
       - checkout
       - setup_remote_docker
