@@ -8,9 +8,6 @@ service postgresql restart
 nohup rails s > rails_server.log 2>ouput & sleep 1
 ps -ef | grep "puma"
 cd ../booking-system-frontend
-pwd
-cd ..
-ls -la
-# npm install
-# sh run-test.sh
+npm install
+sh run-test.sh
 
