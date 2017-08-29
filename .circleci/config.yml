@@ -19,7 +19,7 @@ jobs:
           type: shell
           name: Setup parallelism
           command: |
-            circleci tests glob "e2e-tests/features/*.features" | circleci tests split
+            circleci tests glob "/var/www/booking-system-frontend/e2e-tests/features/*.features" | circleci tests split
       - run:
           name: Login to Docker with Curve account
           command: |
