@@ -2,25 +2,30 @@ version: 2
 jobs:
   build:
     docker:
-      - image: curvetomorrow/auslan-dev-image:v7.6-debug
-        auth:
-          username: $DOCKER_USER
-          password: $DOCKER_PASS
+      - image: docker:1.13.1-git
     working_directory: /var/www/app
     steps:
       - checkout
+      - setup_remote_docker
       - run:
           name: Install dependencies
           command: |
-             apk add --no-cache \
+            apk add --no-cache \
               py-pip=9.0.0-r1
-             pip install \
+            pip install \
+              docker-compose==1.12.0 \
               awscli==1.11.76
-      
-      - type: shell
-        shell: /bin/bash --login
-        name: Running the Docker container and starting server and end to end test
-        command: |
+      - run:
+          name: Login to Docker with Curve account
+          command: |
+            docker login -u $DOCKER_USER -p $DOCKER_PASS  #just use your docker hub username and password
+      - run:
+          name: Build application Docker image
+          command: |
+            docker build -t auslan/api:latest .
+      - run:
+          name: Running the Docker container and starting server and end to end test
+          command: |
           docker run --rm --net="host" curvetomorrow/auslan-dev-image:v7.6-debug /bin/bash -l setup_ci.sh
       - deploy:
           name: Deploy Master to Heroku
