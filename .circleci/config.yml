@@ -26,8 +26,9 @@ jobs:
       - run:
           name: Running the Docker container and starting server and end to end test
           command: |
-            docker run --rm --net="host" curvetomorrow/auslan-dev-image:v7.6-debug ls -la
-            docker run --rm --net="host" curvetomorrow/auslan-dev-image:v7.6-debug bash -l "./setup_ci.sh"
+            docker run --rm --net="host" auslan/api pwd
+            docker run --rm --net="host" auslan/api ls -la
+            docker run --rm --net="host" auslan/api /bin/bash -l "./setup_ci.sh"
       - deploy:
           name: Deploy Master to Heroku
           command: |
