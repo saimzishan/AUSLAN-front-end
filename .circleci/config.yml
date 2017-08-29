@@ -4,7 +4,7 @@ jobs:
     docker:
       - image: docker:1.13.1-git
     working_directory: /var/www/booking-system-frontend
-    parallelism: 1
+    parallelism: 2
     steps:
       - checkout
       - setup_remote_docker
@@ -20,20 +20,20 @@ jobs:
           type: shell
           name: Setup parallelism
           command: |
-            circleci tests glob "/var/www/booking-system-frontend/e2e-tests/features/*.feature" | circleci tests split --index=0 --total=5 > /var/www/booking-system-frontend/test_features_for_split_container.txt
+            circleci tests glob "/var/www/booking-system-frontend/e2e-tests/features/*.feature" | circleci tests split > /var/www/booking-system-frontend/test_features_for_split_container.txt
             cat /var/www/booking-system-frontend/test_features_for_split_container.txt
       - run:
           name: Login to Docker with Curve account
           command: |
             docker login -u $DOCKER_USER -p $DOCKER_PASS  #just use your docker hub username and password
-#      - run:
-#          name: Build application Docker image
-#          command: |
-#            docker build -t auslan/api:latest .
-#      - run:
-#          name: Running the Docker container and starting server and end to end test
-#          command: |
-#            docker run --rm --net="host" auslan/api /bin/bash -l "./setup_ci.sh"
+      - run:
+          name: Build application Docker image
+          command: |
+            docker build -t auslan/api:latest .
+      - run:
+          name: Running the Docker container and starting server and end to end test
+          command: |
+            docker run --rm --net="host" auslan/api /bin/bash -l "./setup_ci.sh"
       - deploy:
           name: Deploy Master to Heroku
           command: |
