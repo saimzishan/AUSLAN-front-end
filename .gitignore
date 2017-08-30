@@ -1,4 +1,5 @@
 e2e-tests/features/debug.feature
+package-lock.json
 .vscode/
 aero-debug.log
 aero-deploy.tar.gz

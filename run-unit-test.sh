@@ -1,3 +1,4 @@
+export CHROME_BIN=$(which google-chrome)
 bundle install
 ng lint
 rm -rf tmp
