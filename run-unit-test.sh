@@ -1,3 +1,4 @@
+bundle install
 ng lint
 rm -rf tmp
 bundle exec pact-mock-service start -p 1233 -l tmp/booking/pact-booking.log --pact-dir tmp/booking/pacts
