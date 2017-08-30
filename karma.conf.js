@@ -96,7 +96,7 @@ module.exports = function(config) {
             },
             Chrome_without_security: {
                 base: 'Chrome',
-                flags: ['--headless','--disable-gpu', '--remote-debugging-port=9222', '--no-sandbox']
+                flags: ['--disable-web-security', '--headless','--disable-gpu', '--remote-debugging-port=9222', '--no-sandbox']
 
             }
         },
