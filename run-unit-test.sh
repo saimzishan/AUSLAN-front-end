@@ -8,4 +8,3 @@ npm run circle-test
 npm run pact
 bundle exec pact-mock-service stop -p 1233
 bundle exec pact-mock-service stop -p 1234
-
