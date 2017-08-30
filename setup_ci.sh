@@ -9,6 +9,6 @@ ps -ef | grep "puma"
 cd ../booking-system-frontend
 npm install codeclimate-test-reporter -g
 npm install
-sh run-unit.test.sh
+sh run-unit-test.sh
 #sh run-e2e-test.sh
 
