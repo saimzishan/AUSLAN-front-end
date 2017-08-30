@@ -34,6 +34,9 @@ jobs:
           name: Running the Docker container and starting server and end to end test
           command: |
             docker run --rm --net="host" auslan/api /bin/bash -l "./setup_ci.sh"
+
+      - store_test_results:
+                path: /var/www/booking-system-frontend/test-results
       - deploy:
           name: Deploy Master to Heroku
           command: |

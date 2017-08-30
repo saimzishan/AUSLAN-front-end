@@ -33,7 +33,7 @@ test:
     - mkdir $CIRCLE_ARTIFACTS/coverage
     - mv coverage/* $CIRCLE_ARTIFACTS/coverage
     - cp -rf tmp/ $CIRCLE_ARTIFACTS/
-    - codeclimate-test-reporter < $CIRCLE_ARTIFACTS/coverage/coverage.lcov
+    - codeclimate-test-reporter < $CIRCLE_ARTIFACTS/test-results/lcov.info
 
 deployment:
     commands:
