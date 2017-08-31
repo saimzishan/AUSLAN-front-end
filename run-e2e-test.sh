@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -x #echo on
 
 for file in $(cat test_features_for_split_container.txt)
