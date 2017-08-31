@@ -12,3 +12,4 @@ npm install codeclimate-test-reporter -g
 npm install
 sh run-unit-test.sh
 sh run-e2e-test.sh
+mv test-results /usr/src/tmp/

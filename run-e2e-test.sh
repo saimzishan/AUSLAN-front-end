@@ -8,5 +8,5 @@ if grep -q mobile "$file"; then
    ng e2e --env=localhost  --progress=true --specs=$file
 fi
 files=.tmp/json-output/*.json
-cat ${files[0]} | ./node_modules/.bin/cucumber-junit > test-results/e2e-test-report.xml
+cat ${files[0]} | ./node_modules/.bin/cucumber-junit > test-results/${files[0]}-e2e-test-report.xml
 done
