@@ -24,13 +24,13 @@ Feature: As INTERPRETER, I can login on mobile
     Then I can see the button state 'Decline' is visible
     Then I can see the button state 'Accept' is hidden
     Then I click on BUTTON 'Decline'
-    Then I will be shown a popup message 'Kindly contact Booking Office'
+    Then I will be shown a popup message 'Please contact the booking office to cancel this booking.'
     Then I click on BUTTON name 'yesBtn'
     Then I can see the booking state ' In Progress ' in booking job page
     Then I can see the button state 'Decline' is visible
     Then I can see the button state 'Accept' is hidden
     Then I click on BUTTON 'Decline'
-    Then I will be shown a popup message 'Kindly contact Booking Office'
+    Then I will be shown a popup message 'Please contact the booking office to cancel this booking.'
     Then I click on BUTTON name 'noBtn'
     Then I can see the booking state ' In Progress ' in booking job page
     Then I can see the button state 'Decline' is visible
