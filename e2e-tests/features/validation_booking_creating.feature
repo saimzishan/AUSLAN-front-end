@@ -85,16 +85,6 @@ Feature: Validation of Booking Management. Not mention about those unsure fields
     And I jump to 'deaf_person_email' element
     Then I will get a error notification
 
-  @runThis
-  Scenario: Administrator can create a booking
-    Given I exist as an Administrator
-    And I sign in with valid Administrator credentials
-    And I am on the bookings page
-    And I click on 'New Booking'
-    And I will be taken to the 'New Booking' form
-    When I fill the field 'deaf_person_email' with value 'georgeorganisationalrepresentative'
-    And I jump to 'deaf_person_mobile' element
-    Then I will get a error notification
 
   @runThis
   Scenario: Administrator can create a booking
