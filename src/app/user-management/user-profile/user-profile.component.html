@@ -39,7 +39,7 @@
               <span>Email is required</span>!</span>
           </div>
         </div>
-        <div *ngIf="userModel.type === 'Interpreter'" class="medium-6 columns">
+        <div *ngIf="userModel.type === 'Interpreter'  || userModel.type === 'Administrator'" class="medium-6 columns">
           <div class="form-field">
             <label>MOBILE PHONE * </label>
             <input type="tel" phone_num="true" placeholder="" [(ngModel)]="userModel.mobile" name="mobile" #mobile="ngModel" required [rangeLength]="[10, 11]">
@@ -48,14 +48,14 @@
                       <span>Minimum 6 digits required.</span>!</span>
           </div>
         </div>
-        <div *ngIf="userModel.type !== 'Interpreter'" class="medium-6 columns">
+        <div *ngIf="userModel.type !== 'Interpreter' && userModel.type !== 'Administrator'" class="medium-6 columns">
           <div class="form-field">
             <label>MOBILE PHONE </label>
             <input type="tel" phone_num="true" placeholder="" [(ngModel)]="userModel.mobile" name="mobile" #mobile="ngModel" [rangeLength]="[10, 11]">
 
           </div>
         </div>
-        <div *ngIf="userModel.type !== 'Interpreter'" class="medium-6 columns">
+        <div *ngIf="userModel.type !== 'Interpreter'  && userModel.type !== 'Administrator'" class="medium-6 columns">
           <div class="form-field">
             <label>PHONE * </label>
             <input type="tel" phone_num="true" placeholder="" [(ngModel)]="userModel.phone" name="phone" #phone="ngModel" required>
