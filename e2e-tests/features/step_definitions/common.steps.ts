@@ -11,7 +11,7 @@ import {BookingPage} from '../../po/create-booking.po';
 import {BookingJobPage} from '../../po/booking-job.po';
 import * as path from 'path';
 
-defineSupportCode(({Given, When}) => {
+defineSupportCode(({Given, When, Then}) => {
 
     let page = new PageObject();
     let homePage = new HomePage();
@@ -52,7 +52,7 @@ defineSupportCode(({Given, When}) => {
     Given(/^I am shown the login screen, with picture and signup button/, homePage.didFinishedRendering);
     Given(/^I won't be logged in anymore and will be taken back to the loging screen/, homePage.didFinishedRendering);
     Given(/^I am on the mobile login screen without a hero picture$/, homePage.didFinishedRendering);
-    Given(/^I exist as an (.*)/, function (type: string) {
+    Given(/^I exist as an? (.*)/, function (type: string) {
         return browser.sleep(2000);
     });
     Given(/^I sign in with valid (.*) credentials$/, (type: string) => {
@@ -304,6 +304,36 @@ defineSupportCode(({Given, When}) => {
         return errs.count().then((count) => {
             // expect(count).to.be.greaterThan(0);
             expect(count).to.be.greaterThan(0);
+        });
+    }
+
+    Then(/^I should not be able to navigate to '(.*)'$/, notNavigateToUrl);
+    function notNavigateToUrl(path: string) {
+        return page.currentPath().then(urlPart => {
+            let newPath = urlPart.split('/');
+            let defaultUrl = urlPart.substring(0, urlPart.indexOf('#') + 2);
+            let len = newPath.length;
+            browser.pause();
+            newPath[len - 1] = path;
+            return browser.get(newPath.join('/')).then(() => {
+                return page.currentPath().then(currentUrl => {
+                    return expect(currentUrl).to.equal(defaultUrl);
+                });
+            });
+        });
+    }
+
+    Then(/^I should be able to navigate to '(.*)'$/, navigateToUrl);
+    function navigateToUrl(path: string) {
+        return page.currentPath().then(urlPart => {
+            let newPath = urlPart.split('/');
+            let len = newPath.length;
+            newPath[len - 1] = path;
+            return browser.get(newPath.join('/')).then(() => {
+                return page.currentPath().then((currentUrl => {
+                    return expect(currentUrl).to.equal(newPath.join('/'));
+                }));
+            });
         });
     }
 });
