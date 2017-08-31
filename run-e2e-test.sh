@@ -1,9 +1,11 @@
-#!/usr/bin/env bash
+#!/bin/bash
+set -x #echo on
+
 for file in $(cat test_features_for_split_container.txt)
 do
 rm -rf .tmp
-if grep -q mobile "$file"; then
-    ng e2e --env=localhost  --progress=true --specs=$file --conf protractor.conf.mobile.js
+if [[ $file == *"mobile"* ]]; then
+	ng e2e --env=localhost  --progress=true --specs=$file --conf protractor.conf.mobile.js
  else
    ng e2e --env=localhost  --progress=true --specs=$file
 fi

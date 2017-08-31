@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-export CHROME_BIN=$(which google-chrome)
+set -x #echo on
 bundle install
 ng lint
 rm -rf tmp
