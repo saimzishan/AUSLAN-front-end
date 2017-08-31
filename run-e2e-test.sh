@@ -1,6 +1,7 @@
+#!/usr/bin/env bash
 for file in $(cat test_features_for_split_container.txt)
-rm -rf .tmp
 do
+rm -rf .tmp
 if grep -q mobile "$file"; then
     ng e2e --env=localhost  --progress=true --specs=$file --conf protractor.conf.mobile.js
  else

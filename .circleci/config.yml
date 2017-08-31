@@ -4,7 +4,7 @@ jobs:
     docker:
       - image: docker:1.13.1-git
     working_directory: /var/www/booking-system-frontend
-    parallelism: 3
+    parallelism: 2
     steps:
       - checkout
       - setup_remote_docker
@@ -33,10 +33,10 @@ jobs:
       - run:
           name: Running the Docker container and starting server and end to end test
           command: |
-            docker run --rm --net="host" auslan/api /bin/bash -l "./setup_ci.sh"
+            docker run --rm --net="host" -v /tmp:/usr/src/tmp/ auslan/api /bin/bash -l "./setup_ci.sh"
 
       - store_test_results:
-                path: /var/www/booking-system-frontend/test-results
+                path: /tmp/test-results
       - deploy:
           name: Deploy Master to Heroku
           command: |

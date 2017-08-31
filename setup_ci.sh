@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 gem install bundler
 git clone git@bitbucket.org:curvetomorrow/booking-system-api.git ../booking-system-api
 cd ../booking-system-api 
@@ -11,4 +12,3 @@ npm install codeclimate-test-reporter -g
 npm install
 sh run-unit-test.sh
 sh run-e2e-test.sh
-
