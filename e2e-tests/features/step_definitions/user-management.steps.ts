@@ -24,6 +24,7 @@ defineSupportCode(({Given, Then, When}) => {
     // the valid Booking Officer should be in the list
     // the 2 valid Administrators should be in the list
     Then(/^[tT]he (\d+)?\s?valid (.*[^s])s? should be in the list$/, userManagementPO.validUserShouldBeOnTheList);
+    Then(/^The valid (.*) should not be in the list$/, userManagementPO.userShouldNotBeOnTheList);
 
     // ================================== INVALID CREATING ========================================
     When(/^I add an invalid (.*)/, userManagementPO.addInvalidUser);

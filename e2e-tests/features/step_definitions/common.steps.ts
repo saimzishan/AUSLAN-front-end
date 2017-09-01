@@ -313,7 +313,6 @@ defineSupportCode(({Given, When, Then}) => {
             let newPath = urlPart.split('/');
             let defaultUrl = urlPart.substring(0, urlPart.indexOf('#') + 2);
             let len = newPath.length;
-            browser.pause();
             newPath[len - 1] = path;
             return browser.get(newPath.join('/')).then(() => {
                 return page.currentPath().then(currentUrl => {
