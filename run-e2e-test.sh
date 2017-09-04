@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -x #echo on
-
+set -eo pipefail
 for file in $(cat test_features_for_split_container.txt)
 do
 rm -rf .tmp
