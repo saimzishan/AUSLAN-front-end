@@ -15,4 +15,4 @@ npm install
 set -eo pipefail
 ./run-e2e-test.sh
 ./run-unit-test.sh
-mv test-results /usr/src/tmp/
+#mv test-results /usr/src/tmp/
