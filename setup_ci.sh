@@ -4,7 +4,7 @@ export CHROME_BIN=$(which google-chrome)
 gem install bundler
 git clone git@bitbucket.org:curvetomorrow/booking-system-api.git ../booking-system-api
 cd ../booking-system-api
-bundle install
+bundle install --path vendor
 service postgresql restart
 nohup rails s > rails_server.log 2>&1 &
 sleep 5
