@@ -572,7 +572,7 @@ Feature: User Profile Management
 
   @runThis
 #  Show profile page
-    Scenario: Be able to update the prefComm as Individual Client
+    Scenario: Be able to update the prefComm as Individual Client to Email only
       Given I exist as an Individual Client
       And I sign in with valid Individual Client credentials
       And I am on the bookings page
@@ -592,7 +592,7 @@ Feature: User Profile Management
 
     @runThis
 #  Show profile page
-    Scenario: Be able to update the prefComm as Individual Client
+    Scenario: Be able to update the prefComm as Individual Client to Email and SMS
       Given I exist as an Individual Client
       And I sign in with valid Individual Client credentials
       And I am on the bookings page
@@ -612,7 +612,7 @@ Feature: User Profile Management
 
        @runThis
 #  Show profile page
-    Scenario: Be able to update the prefComm as Individual Client
+    Scenario: Be able to update the pref Billing Method as Individual Client to email
       Given I exist as an Individual Client
       And I sign in with valid Individual Client credentials
       And I am on the bookings page
