@@ -287,6 +287,7 @@ export class IndividualClient extends User {
             'ndis_validity_start_date': this.ndis_validity_start_date, 'ndis_validity_end_date': this.ndis_validity_end_date,
             'eaf_id': this.eaf_id, 'eaf_budget_limit': this.eaf_budget_limit, 'eaf_start_date': this.eaf_start_date,
             'eaf_end_date': this.eaf_end_date,
+            'business_hours_phone': this.phone,
             'address_attributes': this.address_attributes,
             'communication_preference': this.preferred_contact_method,
             'billing_account_attributes': {
@@ -311,6 +312,7 @@ export class IndividualClient extends User {
         this.email = obj.email;
         this.password = obj.password;
         this.ndis_id = obj.ndis_id;
+        this.phone  = obj.business_hours_phone;
         this.ndis_budget_limit = obj.ndis_budget_limit;
         this.ndis_validity_start_date = obj.ndis_validity_start_date;
         this.ndis_validity_end_date = obj.ndis_validity_end_date;
