@@ -89,50 +89,35 @@
 										<span>Email is required</span>!</span>
                             </div>
                         </div>
-                        <ng-container *ngIf="selectedRole !== 'INTERPRETER'">
-                            <div class="medium-6 columns">
-                                <div class="form-field">
-                                    <label class="icon-mobile">PHONE * </label>
-                                    <input type="tel" placeholder="Enter your phone" [(ngModel)]="model.phone" [rangeLength]="[10, 11]"
-                                           name="phone" #phone="ngModel" required>
-                                    <span *ngIf="phone.touched && !phone.errors?.required && !phone.errors?.rangeLength;"
-                                          class="inline-icon inline-icon-valid valid"></span>
-                                    <span *ngIf="phone.touched && phone.errors?.required || phone.errors?.rangeLength;" class="inline-icon error">
-											<span>Minimum 10 digits required.</span>!</span>
-                                </div>
-                            </div>
-                            <div class="medium-6 columns">
-                                <div class="form-field">
-                                    <label class="icon-mobile">MOBILE PHONE </label>
-                                    <input type="tel" placeholder="Enter your mobile"
-                                           [(ngModel)]="model.mobile" name="mobile" #mobile="ngModel">
 
-                                </div>
-                            </div>
-                        </ng-container>
-                        <ng-container *ngIf="selectedRole === 'INTERPRETER'">
                             <div class="medium-6 columns">
                                 <div class="form-field">
                                     <label class="icon-mobile">MOBILE PHONE *</label>
                                     <input type="tel" placeholder="Enter your mobile"
-                                           [(ngModel)]="model.mobile" name="mobile1" #mobile1="ngModel" [rangeLength]="[10, 11]"
+                                           [(ngModel)]="model.mobile" name="mobile" #mobile="ngModel" [rangeLength]="[10, 11]"
                                            required>
 
-                                    <span *ngIf="mobile1.touched && !mobile1.errors?.required && !mobile1.errors?.rangeLength;"
+                                    <span *ngIf="mobile.touched && !mobile.errors?.required && !mobile.errors?.rangeLength;"
                                           class="inline-icon inline-icon-valid valid"></span>
-                                    <span *ngIf="mobile1.touched && mobile1.errors?.required  || mobile1.errors?.rangeLength;"
+                                    <span *ngIf="mobile.touched && mobile.errors?.required  || mobile.errors?.rangeLength;"
                                           class="inline-icon error">
 											<span>Minimum 10 digits required.</span>!</span>
                                 </div>
                             </div>
-                            <div [hidden]=true class="medium-6 columns">
+                        <ng-container *ngIf="selectedRole === 'INDIVIDUALCLIENT' || selectedRole === 'ORGANISATION'">
+                            <div class="medium-6 columns">
                                 <div class="form-field">
-                                    <label class="icon-mobile">PHONE </label>
+                                    <label class="icon-mobile">PHONE * </label>
                                     <input type="tel" placeholder="Enter your phone" [(ngModel)]="model.phone"
-                                           name="phone1" #phone1="ngModel">
+                                           name="phone" #phone="ngModel" [rangeLength]="[10, 11]" required>
+
+                                    <span *ngIf="phone.touched && !phone.errors?.required && !phone.errors?.rangeLength;"
+                                          class="inline-icon inline-icon-valid valid"></span>
+                                    <span *ngIf="phone.touched && phone.errors?.required  || phone.errors?.rangeLength;"
+                                          class="inline-icon error">
+											<span>Minimum 10 digits required.</span>!</span>
                                 </div>
                             </div>
-
                         </ng-container>
                         <div class="medium-6 columns">
                             <div class="form-field">

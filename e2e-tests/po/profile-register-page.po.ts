@@ -30,7 +30,7 @@ export class ProfileRegisterPage extends PageObject {
                 type === 'ORGANISATIONALREPRESENTATIVE' ? 'alana@auslan.com.au' :
                     'strangeTypeOfUser@auslan.com.au'
         );
-        this.getElementByName(type === 'INTERPRETER' ? 'mobile1' : 'mobile').sendKeys('0490394517');
+        this.getElementByName('mobile').sendKeys('0490394517');
         if (type === 'INDIVIDUALCLIENT') {
             this.getElementByName('phone').sendKeys('0490394517');
             this.getElementByName('ndis_id').sendKeys('311');

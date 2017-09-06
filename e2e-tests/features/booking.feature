@@ -205,7 +205,7 @@ Feature: Booking Management
     And I will be shown with bookings
 
   @runThis
-  Scenario: Administrator can create a booking with doc
+  Scenario: Administrator can create a booking with ppt
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
     And I am on the bookings page
@@ -228,7 +228,7 @@ Feature: Booking Management
     And I will be shown with bookings
 
   @runThis
-  Scenario: Booking Officer can create a booking with doc
+  Scenario: Booking Officer can create a booking with ppt
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
     And I am on the bookings page

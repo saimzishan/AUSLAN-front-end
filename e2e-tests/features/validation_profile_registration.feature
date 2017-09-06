@@ -21,7 +21,7 @@ Feature: Validation of Profile Registration.
 # ------------------------------ Interpreter ------------------------------
 
   @runThis
-  Scenario: interp can check invalidation
+  Scenario: interp signup can check an invalid first name gives a notification
     When I click on image of 'Interpreter'
     Then I will be taken to the 'INTERPRETER Signup' page
     When I fill the field 'first_name' with value 'G'
@@ -29,7 +29,7 @@ Feature: Validation of Profile Registration.
     Then I will get a error notification
 
   @runThis
-  Scenario: interp can check invalidation
+  Scenario: interp can check an invalid last name gives a notification
     When I click on image of 'Interpreter'
     Then I will be taken to the 'INTERPRETER Signup' page
     When I fill the field 'last_name' with value 'C'
@@ -37,7 +37,7 @@ Feature: Validation of Profile Registration.
     Then I will get a error notification
 
   @runThis
-  Scenario: interp can check invalidation
+  Scenario: interp can check an invalid password gives a notification
     When I click on image of 'Interpreter'
     Then I will be taken to the 'INTERPRETER Signup' page
     When I fill the field 'password' with value 'C'
@@ -45,7 +45,7 @@ Feature: Validation of Profile Registration.
     Then I will get a error notification
 
   @runThis
-  Scenario: interp can check invalidation
+  Scenario: interp can check an invalid repeated password gives a notification
     When I click on image of 'Interpreter'
     Then I will be taken to the 'INTERPRETER Signup' page
     When I fill the field 'password' with value 'Abcd#1234'
@@ -54,23 +54,23 @@ Feature: Validation of Profile Registration.
     Then I will get a error notification
 
   @runThis
-  Scenario: interp can check invalidation
+  Scenario: interp can check an invalid email gives a notification
     When I click on image of 'Interpreter'
     Then I will be taken to the 'INTERPRETER Signup' page
     When I fill the field 'email' with value 'georgeinterpreter'
-    And I jump to 'mobile1' element
+    And I jump to 'mobile' element
     Then I will get a error notification
 
   @runThis
-  Scenario: interp can check invalidation
+  Scenario: interp can check an invalid mobile gives a notification
     When I click on image of 'Interpreter'
     Then I will be taken to the 'INTERPRETER Signup' page
-    When I fill the field 'mobile1' with value '1'
+    When I fill the field 'mobile' with value '1'
     And I jump to 'address_street_number' element
     Then I will get a error notification
 
   @runThis
-  Scenario: cli can check invalidation
+  Scenario: interp can check an invalid address street number gives a notification
     When I click on image of 'Interpreter'
     Then I will be taken to the 'INTERPRETER Signup' page
     When I fill the field 'address_street_number' with value ''
@@ -78,7 +78,7 @@ Feature: Validation of Profile Registration.
     Then I will get a error notification
 
   @runThis
-  Scenario: interp can check invalidation
+  Scenario: interp can check an invalid address street name gives a notification
     When I click on image of 'Interpreter'
     Then I will be taken to the 'INTERPRETER Signup' page
     When I fill the field 'address_street' with value 'F'
@@ -86,7 +86,7 @@ Feature: Validation of Profile Registration.
     Then I will get a error notification
 
   @runThis
-  Scenario: interp can check invalidation
+  Scenario: interp can check an invalid address suburb gives a notification
     When I click on image of 'Interpreter'
     Then I will be taken to the 'INTERPRETER Signup' page
     When I fill the field 'address_suburb' with value 'S'
@@ -94,7 +94,7 @@ Feature: Validation of Profile Registration.
     Then I will get a error notification
 
   @runThis
-  Scenario: interp can check invalidation
+  Scenario: interp can check an invalid address postcode gives a notification
     When I click on image of 'Interpreter'
     Then I will be taken to the 'INTERPRETER Signup' page
     When I fill the field 'address_post_code' with value '1'
@@ -104,7 +104,7 @@ Feature: Validation of Profile Registration.
 # ------------------------------ Individual Client ------------------------------
 
   @runThis
-  Scenario: cli can check invalidation
+  Scenario: cli can can check an invalid first name gives a notification
     When I click on image of 'Individual Client'
     Then I will be taken to the 'INDIVIDUALCLIENT Signup' page
     When I fill the field 'first_name' with value 'G'
@@ -112,7 +112,7 @@ Feature: Validation of Profile Registration.
     Then I will get a error notification
 
   @runThis
-  Scenario: cli can check invalidation
+  Scenario: cli can check an invalid last name gives a notification
     When I click on image of 'Individual Client'
     Then I will be taken to the 'INDIVIDUALCLIENT Signup' page
     When I fill the field 'last_name' with value 'C'
@@ -120,7 +120,7 @@ Feature: Validation of Profile Registration.
     Then I will get a error notification
 
   @runThis
-  Scenario: cli can check invalidation
+  Scenario: cli can check an invalid password gives a notification
     When I click on image of 'Individual Client'
     Then I will be taken to the 'INDIVIDUALCLIENT Signup' page
     When I fill the field 'password' with value 'C'
@@ -128,7 +128,7 @@ Feature: Validation of Profile Registration.
     Then I will get a error notification
 
   @runThis
-  Scenario: cli can check invalidation
+  Scenario: cli can check an invalid confirm password gives a notification
     When I click on image of 'Individual Client'
     Then I will be taken to the 'INDIVIDUALCLIENT Signup' page
     When I fill the field 'password' with value 'Abcd#1234'
@@ -137,7 +137,7 @@ Feature: Validation of Profile Registration.
     Then I will get a error notification
 
   @runThis
-  Scenario: cli can check invalidation
+  Scenario: cli can check an invalid email gives a notification
     When I click on image of 'Individual Client'
     Then I will be taken to the 'INDIVIDUALCLIENT Signup' page
     When I fill the field 'email' with value 'georgeindividualclient'
@@ -145,7 +145,15 @@ Feature: Validation of Profile Registration.
     Then I will get a error notification
 
   @runThis
-  Scenario: cli can check invalidation
+  Scenario: cli can check an invalid mobile gives a notification
+    When I click on image of 'Individual Client'
+    Then I will be taken to the 'INDIVIDUALCLIENT Signup' page
+    When I fill the field 'mobile' with value '1'
+    And I jump to 'address_street_number' element
+    Then I will get a error notification
+
+  @runThis
+  Scenario: cli can check an invalid phone number number gives a notification
     When I click on image of 'Individual Client'
     Then I will be taken to the 'INDIVIDUALCLIENT Signup' page
     When I fill the field 'phone' with value '1'
@@ -153,7 +161,7 @@ Feature: Validation of Profile Registration.
     Then I will get a error notification
 
   @runThis
-  Scenario: cli can check invalidation
+  Scenario: cli can check an invalid address street number gives a notification
     When I click on image of 'Individual Client'
     Then I will be taken to the 'INDIVIDUALCLIENT Signup' page
     When I fill the field 'address_street_number' with value ''
@@ -161,7 +169,7 @@ Feature: Validation of Profile Registration.
     Then I will get a error notification
 
   @runThis
-  Scenario: cli can check invalidation
+  Scenario: cli can check an invalid address street name gives a notification
     When I click on image of 'Individual Client'
     Then I will be taken to the 'INDIVIDUALCLIENT Signup' page
     When I fill the field 'address_street' with value 'F'
@@ -169,7 +177,7 @@ Feature: Validation of Profile Registration.
     Then I will get a error notification
 
   @runThis
-  Scenario: cli can check invalidation
+  Scenario: cli can check an invalid address suburb gives a notification
     When I click on image of 'Individual Client'
     Then I will be taken to the 'INDIVIDUALCLIENT Signup' page
     When I fill the field 'address_suburb' with value 'S'
@@ -177,7 +185,7 @@ Feature: Validation of Profile Registration.
     Then I will get a error notification
 
   @runThis
-  Scenario: cli can check invalidation
+  Scenario: cli can check an invalid address post code gives a notification
     When I click on image of 'Individual Client'
     Then I will be taken to the 'INDIVIDUALCLIENT Signup' page
     When I fill the field 'address_post_code' with value '1'
@@ -185,7 +193,7 @@ Feature: Validation of Profile Registration.
     Then I will get a error notification
 
   @runThis
-  Scenario: cli can check invalidation
+  Scenario: cli can check an invalid contact first name gives a notification
     When I click on image of 'Individual Client'
     Then I will be taken to the 'INDIVIDUALCLIENT Signup' page
     When I fill the field 'cn_first_name' with value 'G'
@@ -193,7 +201,7 @@ Feature: Validation of Profile Registration.
     Then I will get a error notification
 
   @runThis
-  Scenario: cli can check invalidation
+  Scenario: cli can check an invalid contact last name gives a notification
     When I click on image of 'Individual Client'
     Then I will be taken to the 'INDIVIDUALCLIENT Signup' page
     When I fill the field 'cn_last_name' with value 'C'
@@ -201,7 +209,7 @@ Feature: Validation of Profile Registration.
     Then I will get a error notification
 
   @runThis
-  Scenario: cli can check invalidation
+  Scenario: cli can check an invalid contact email gives a notification
     When I click on image of 'Individual Client'
     Then I will be taken to the 'INDIVIDUALCLIENT Signup' page
     When I fill the field 'cn_email' with value 'georgeindividualclient'
@@ -209,7 +217,7 @@ Feature: Validation of Profile Registration.
     Then I will get a error notification
 
   @runThis
-  Scenario: cli can check invalidation
+  Scenario: cli can check an invalid contact phone number gives a notification
     When I click on image of 'Individual Client'
     Then I will be taken to the 'INDIVIDUALCLIENT Signup' page
     When I fill the field 'cn_phone' with value '1'
@@ -219,7 +227,7 @@ Feature: Validation of Profile Registration.
 # ------------------------------ Organisational Representative ------------------------------
 
   @runThis
-  Scenario: orgrep can check invalidation
+  Scenario: orgrep can can check an invalid first name gives a notification
     When I click on image of 'Organisational Representative'
     Then I will be taken to the 'ORGANISATION Signup' page
     When I fill the field 'first_name' with value 'G'
@@ -227,7 +235,7 @@ Feature: Validation of Profile Registration.
     Then I will get a error notification
 
   @runThis
-  Scenario: orgrep can check invalidation
+  Scenario: orgrep can check an invalid last name gives a notification
     When I click on image of 'Organisational Representative'
     Then I will be taken to the 'ORGANISATION Signup' page
     When I fill the field 'last_name' with value 'C'
@@ -235,7 +243,7 @@ Feature: Validation of Profile Registration.
     Then I will get a error notification
 
   @runThis
-  Scenario: orgrep can check invalidation
+  Scenario: orgrep can check an invalid password gives a notification
     When I click on image of 'Organisational Representative'
     Then I will be taken to the 'ORGANISATION Signup' page
     When I fill the field 'password' with value 'C'
@@ -243,7 +251,7 @@ Feature: Validation of Profile Registration.
     Then I will get a error notification
 
   @runThis
-  Scenario: orgrep can check invalidation
+  Scenario: orgrep can check an invalid confirm password gives a notification
     When I click on image of 'Organisational Representative'
     Then I will be taken to the 'ORGANISATION Signup' page
     When I fill the field 'password' with value 'Abcd#1234'
@@ -252,7 +260,7 @@ Feature: Validation of Profile Registration.
     Then I will get a error notification
 
   @runThis
-  Scenario: orgrep can check invalidation
+  Scenario: orgrep can check an invalid email gives a notification
     When I click on image of 'Organisational Representative'
     Then I will be taken to the 'ORGANISATION Signup' page
     When I fill the field 'email' with value 'georgeorganisationalrepresentative'
@@ -260,7 +268,15 @@ Feature: Validation of Profile Registration.
     Then I will get a error notification
 
   @runThis
-  Scenario: orgrep can check invalidation
+  Scenario: orgrep can check an invalid mobile gives a notification
+    When I click on image of 'Organisational Representative'
+    Then I will be taken to the 'ORGANISATION Signup' page
+    When I fill the field 'mobile' with value '1'
+    And I jump to 'address_street_number' element
+    Then I will get a error notification
+
+  @runThis
+  Scenario: orgrep can check an invalid phone number number gives a notification
     When I click on image of 'Organisational Representative'
     Then I will be taken to the 'ORGANISATION Signup' page
     When I fill the field 'phone' with value '1'
@@ -268,7 +284,7 @@ Feature: Validation of Profile Registration.
     Then I will get a error notification
 
   @runThis
-  Scenario: orgrep can check invalidation
+  Scenario: orgrep can check an business abn gives a notification
     When I click on image of 'Organisational Representative'
     Then I will be taken to the 'ORGANISATION Signup' page
     When I fill the field 'business_abn' with value '1'
@@ -276,7 +292,7 @@ Feature: Validation of Profile Registration.
     Then I will get a error notification
 
   @runThis
-  Scenario: orgrep can check invalidation
+  Scenario: orgrep can check an business name gives a notification
     When I click on image of 'Organisational Representative'
     Then I will be taken to the 'ORGANISATION Signup' page
     When I fill the field 'business_name' with value ''
@@ -284,7 +300,7 @@ Feature: Validation of Profile Registration.
     Then I will get a error notification
 
   @runThis
-  Scenario: orgrep can check invalidation
+  Scenario: orgrep can check an invalid address street number gives a notification
     When I click on image of 'Organisational Representative'
     Then I will be taken to the 'ORGANISATION Signup' page
     When I fill the field 'address_street_number' with value ''
@@ -292,7 +308,7 @@ Feature: Validation of Profile Registration.
     Then I will get a error notification
 
   @runThis
-  Scenario: orgrep can check invalidation
+  Scenario: orgrep can check an invalid address street name gives a notification
     When I click on image of 'Organisational Representative'
     Then I will be taken to the 'ORGANISATION Signup' page
     When I fill the field 'address_street' with value 'F'
@@ -300,7 +316,7 @@ Feature: Validation of Profile Registration.
     Then I will get a error notification
 
   @runThis
-  Scenario: orgrep can check invalidation
+  Scenario: orgrep can check an invalid address suburb gives a notification
     When I click on image of 'Organisational Representative'
     Then I will be taken to the 'ORGANISATION Signup' page
     When I fill the field 'address_suburb' with value 'S'
@@ -308,7 +324,7 @@ Feature: Validation of Profile Registration.
     Then I will get a error notification
 
   @runThis
-  Scenario: orgrep can check invalidation
+  Scenario: orgrep can check an invalid address post code gives a notification
     When I click on image of 'Organisational Representative'
     Then I will be taken to the 'ORGANISATION Signup' page
     When I fill the field 'address_post_code' with value '1'
@@ -316,7 +332,7 @@ Feature: Validation of Profile Registration.
     Then I will get a error notification
 
   @runThis
-  Scenario: orgrep can check invalidation
+  Scenario: orgrep can check an invalid contact first name gives a notification
     When I click on image of 'Organisational Representative'
     Then I will be taken to the 'ORGANISATION Signup' page
     When I fill the field 'cn_first_name' with value 'G'
@@ -324,7 +340,7 @@ Feature: Validation of Profile Registration.
     Then I will get a error notification
 
   @runThis
-  Scenario: orgrep can check invalidation
+  Scenario: orgrep can check an invalid contact last name gives a notification
     When I click on image of 'Organisational Representative'
     Then I will be taken to the 'ORGANISATION Signup' page
     When I fill the field 'cn_last_name' with value 'C'
@@ -332,7 +348,7 @@ Feature: Validation of Profile Registration.
     Then I will get a error notification
 
   @runThis
-  Scenario: orgrep can check invalidation
+  Scenario: orgrep can check an invalid contact email gives a notification
     When I click on image of 'Organisational Representative'
     Then I will be taken to the 'ORGANISATION Signup' page
     When I fill the field 'cn_email' with value 'georgeorganisationalrepresentative'
@@ -340,7 +356,7 @@ Feature: Validation of Profile Registration.
     Then I will get a error notification
 
   @runThis
-  Scenario: orgrep can check invalidation
+  Scenario: orgrep can check an invalid contact phone number gives a notification
     When I click on image of 'Organisational Representative'
     Then I will be taken to the 'ORGANISATION Signup' page
     When I fill the field 'cn_phone' with value '1'
@@ -385,14 +401,14 @@ Feature: Validation of Profile Registration.
     When I click on image of 'Interpreter'
     Then I will be taken to the 'INTERPRETER Signup' page
     When I fill the field 'email' with value 'georgeinterpreter@auslan.com.au'
-    And I jump to 'mobile1' element
+    And I jump to 'mobile' element
     Then I will get a valid notification
 
   @runThis
   Scenario: interp can check validation
     When I click on image of 'Interpreter'
     Then I will be taken to the 'INTERPRETER Signup' page
-    When I fill the field 'mobile1' with value '0946300001'
+    When I fill the field 'mobile' with value '0946300001'
     And I jump to 'address_street_number' element
     Then I will get a valid notification
 

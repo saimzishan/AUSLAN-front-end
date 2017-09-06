@@ -1,5 +1,6 @@
 // Karma configuration file, see link for more information
 // https://karma-runner.github.io/0.13/config/configuration-file.html
+const path = require('path');
 
 module.exports = function(config) {
     config.set({
@@ -12,6 +13,7 @@ module.exports = function(config) {
             require('karma-phantomjs-launcher'),
             require('karma-jasmine-html-reporter'),
             require('karma-coverage-istanbul-reporter'),
+            require('karma-junit-reporter'),
             require('@angular/cli/plugins/karma'),
             require('pact-consumer-js-dsl'),
             require('karma-intl-shim'),
@@ -60,29 +62,21 @@ module.exports = function(config) {
         mime: {
             'text/x-typescript': ['ts', 'tsx']
         },
-        remapIstanbulReporter: {
-            reports: {
-                html: 'coverage',
-                lcovonly: './coverage/coverage.lcov'
-            }
-        },
         coverageIstanbulReporter: {
-            reports: ['html', 'lcovonly'],
-            dir: './coverage', // base output directory
-            'report-config': {
-                html: { // any options here are valid: https://github.com/istanbuljs/istanbul-reports/blob/master/lib/html/index.js#L134-L139
-                },
-                lcovonly: {
-                    // options from here are valid: https://github.com/istanbuljs/istanbul-reports/blob/master/lib/lcovonly/index.js#L7-L10
-                    file: 'coverage.lcov'
-                }
-            },
-            fixWebpackSourcePaths: true
+            reports: ['lcovonly'],
+            dir: path.join(__dirname, 'test-results'),
+            fixWebpackSourcePaths: true,
+
+        },
+        junitReporter: {
+            outputDir: 'test-results', // results will be saved as $outputDir/$browserName.xml
+            outputFile: 'unit-test-report.xml', // if included, results will be saved as $outputDir/$browserName/$outputFile
+            useBrowserName: false // add browser name to report and classes names
         },
         angularCli: {
             environment: 'dev'
         },
-        reporters: config.angularCli && config.angularCli.codeCoverage ? ['progress', 'coverage-istanbul'] : ['progress', 'kjhtml'],
+        reporters: ['progress', 'coverage-istanbul', 'junit'],
 
         port: 9876,
         colors: true,
@@ -96,7 +90,8 @@ module.exports = function(config) {
             },
             Chrome_without_security: {
                 base: 'Chrome',
-                flags: ['--disable-web-security']
+                flags: ['--disable-web-security', '--headless','--disable-gpu', '--remote-debugging-port=9222', '--no-sandbox']
+
             }
         },
         browserNoActivityTimeout: 30000,

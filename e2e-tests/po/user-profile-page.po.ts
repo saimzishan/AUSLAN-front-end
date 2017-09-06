@@ -44,7 +44,7 @@ export class UserProfilePage extends PageObject {
         }
         return $$('input[type="' + type + '"]').each((el, index) => {
             return el.getAttribute('name').then((val) => {
-                if (val === 'mobile' || val === 'mobile1' || val === 'phone' || val === 'phone1') {
+                if (val === 'mobile' || val === 'phone' ) {
                     return;
                 } else {
                     return this.setValue(el, input);
@@ -61,7 +61,7 @@ export class UserProfilePage extends PageObject {
         // browser.explore();
         return this.getAllElementByCSS('input[type="' + type + '"]').each((el, index) => {
             return el.getAttribute('name').then((val) => {
-                if (val === 'mobile' || val === 'mobile1' || val === 'phone' || val === 'phone1') {
+                if (val === 'mobile' || val === 'phone') {
                     return;
                 } else {
                     el.getAttribute('value').then((val1) => {

@@ -26,12 +26,10 @@ function sharedConfig() {
                 "~@ignoreThis"
             ]
         },
-        beforeLaunch: () => {
-        },
 
         specs: getFeatureFiles(),
 
-        onPrepare: function () {
+        onPrepare: function() {
 
         },
         afterLaunch: function () {
@@ -41,7 +39,11 @@ function sharedConfig() {
                 jsonDir: '.tmp/json-output',
                 reportPath: './.tmp/report/'
             });
-            */
+*/
+        },
+        jasmineNodeOpts: {
+            showColors: true,
+            defaultTimeoutInterval: 30000
         },
 
         disableChecks: true,
