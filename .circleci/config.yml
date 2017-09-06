@@ -39,3 +39,5 @@ jobs:
           command: |
             docker run --rm -v /tmp/dist:/usr/src/tmp/dist auslan/api /bin/bash -l "./deploy-to-aws.sh"
 #            aws s3 sync /tmp/dist/  s3://auslan-booking-system-ct/ --delete
+      - store_artifacts:
+          path: /tmp/dist
