@@ -4,7 +4,7 @@ jobs:
     docker:
       - image: docker:1.13.1-git
     working_directory: /var/www/booking-system-frontend
-    parallelism: 5
+    parallelism: 1
     steps:
       - checkout
       - setup_remote_docker
@@ -20,7 +20,7 @@ jobs:
           type: shell
           name: Setup parallelism
           command: |
-            circleci tests glob "/var/www/booking-system-frontend/e2e-tests/features/*.feature" | circleci tests split > /var/www/booking-system-frontend/test_features_for_split_container.txt
+            circleci tests glob "/var/www/booking-system-frontend/e2e-tests/features/validation_profile_registration.feature" | circleci tests split > /var/www/booking-system-frontend/test_features_for_split_container.txt
             cat /var/www/booking-system-frontend/test_features_for_split_container.txt
       - run:
           name: Login to Docker with Curve account
@@ -33,15 +33,9 @@ jobs:
       - run:
           name: Running the Docker container and starting server and end to end test
           command: |
-            docker run --rm --net="host" -v /tmp:/usr/src/tmp/ auslan/api /bin/bash -l "./setup_ci.sh"
-
-      - store_test_results:
-                path: /tmp/test-results
+            docker run --rm -v /tmp:/usr/src/tmp/ auslan/api /bin/bash -l "./setup_ci.sh"
       - deploy:
-          name: Deploy Master to Heroku
+          name: Deploy to AWS Canary
           command: |
-            if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              git push heroku master
-              heroku run rake db:migrate
-              heroku restart
-            fi
+            docker run --rm -v /tmp/dist:/usr/src/tmp/dist auslan/api /bin/bash -l "./deploy-to-aws.sh"
+            aws s3 sync /tmp/dist/  s3://auslan-booking-system-ct/ --delete
