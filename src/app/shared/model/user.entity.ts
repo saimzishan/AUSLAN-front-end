@@ -144,7 +144,7 @@ export class OrganisationalRepresentative extends Organisational {
                     'abn': this.abn,
                     'id': this.org_id,
                     'name': this.name, 'group_email': this.group_email,
-                    'branch_office': this.branch_office, 'phone_number': this.phone,
+                    'branch_office': this.branch_office,
                     'preferred_contact_method': this.organisation_billing_account.preferred_contact_method,
                     'address_attributes': this.address_attributes,
                     'billing_account_attributes': {
@@ -200,7 +200,6 @@ export class OrganisationalRepresentative extends Organisational {
         this.reffered_other = this.reffered_by === 'OTHER' ?
             obj.discovery_of_auslan.replaceAll('O:') : '';
         this.customer_ref = obj.customer_reference;
-        this.phone = obj.organisation.phone_number;
         this.preferred_contact_method = obj.communication_preference;
         this.address_attributes = obj.organisation.address_attributes;
         this.organisation_primary_contact.first_name = obj.organisation.billing_account.primary_contact_first_name || '';
