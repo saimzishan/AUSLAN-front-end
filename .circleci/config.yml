@@ -30,10 +30,10 @@ jobs:
           name: Build application Docker image
           command: |
             docker build -t auslan/api:latest .
-      - run:
-          name: Running the Docker container and starting server and end to end test
-          command: |
-            docker run --rm -v /tmp:/usr/src/tmp/ auslan/api /bin/bash -l "./setup_ci.sh"
+#      - run:
+#          name: Running the Docker container and starting server and end to end test
+#          command: |
+#            docker run --rm -v /tmp:/usr/src/tmp/ auslan/api /bin/bash -l "./setup_ci.sh"
       - deploy:
           name: Deploy to AWS Canary
           command: |
