@@ -167,6 +167,10 @@ export class UserManagementPage extends PageObject {
             return this.saveBtn.click();
         });
     }
+
+    // This function assumes the UI
+    // The type column is user-management page is
+    // third column from left
     trListByUserType = (type: string) => {
         let trList = super.getAll('table.custom tbody tr');
         return trList.filter((tr) => {
@@ -176,14 +180,14 @@ export class UserManagementPage extends PageObject {
             });
         });
     }
-
-    // This function assumes the UI
-    // The type column is user-management page is
-    // third column from left
     validUserShouldBeOnTheList = (count: number, type: string) => {
         count = count || 1;
         let trList = this.trListByUserType(type);
         return trList.count().then((ntr) => expect(ntr).to.equal(count));
+    }
+    userShouldNotBeOnTheList = (type: string) => {
+        let trList = this.trListByUserType(type);
+        return trList.count().then((ntr) => expect(ntr).to.equal(0));
     }
 
     showValidationError = () => {

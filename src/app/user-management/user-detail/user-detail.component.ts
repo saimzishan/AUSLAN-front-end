@@ -18,7 +18,7 @@ export class UserDetailComponent {
     @Output() onRefresh = new EventEmitter();
     isNewUser = true;
     selRoles = [];
-    _selRoles = [ROLE.BookingOfficer, ROLE.IndividualClient , ROLE.Organisation, ROLE.Interpreter];
+    _selRoles = [ROLE.BookingOfficer, ROLE.IndividualClient , ROLE.OrganisationalRepresentative, ROLE.Interpreter];
     selectedRoles = {};
     showForm = false;
     userStatusArray = GLOBAL.userStatusArray;
@@ -60,6 +60,7 @@ export class UserDetailComponent {
     }
 
     isRoleSelected(val: string) {
+        val = val.replace(/\s/g, '');
         return this.selectedRoles[val];
     }
 
