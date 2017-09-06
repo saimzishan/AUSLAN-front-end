@@ -4,7 +4,7 @@ jobs:
     docker:
       - image: docker:1.13.1-git
     working_directory: /var/www/booking-system-frontend
-    parallelism: 1
+    parallelism: 5
     steps:
       - checkout
       - setup_remote_docker
@@ -34,8 +34,3 @@ jobs:
           name: Running the Docker container and starting server and end to end test
           command: |
             docker run --rm -v /tmp:/usr/src/tmp/ auslan/api /bin/bash -l "./setup_ci.sh"
-      - deploy:
-          name: Deploy to AWS Canary
-          command: |
-            docker run --rm -v /tmp/dist:/usr/src/tmp/dist auslan/api /bin/bash -l "./deploy-to-aws.sh"
-            aws s3 sync /tmp/dist/  s3://auslan-booking-system-ct/ --delete
