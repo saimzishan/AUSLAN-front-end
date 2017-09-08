@@ -384,7 +384,7 @@ Feature: Booking Admin Management
     And I click on BUTTON 'Save'
     Then I wait for 1000 milli-seconds
     Then I get valid message: 'The interpreter have been assigned'
-    Then I can see the booking state 'Allocated2'
+    Then I can see the booking state 'Allocated'
     Then I wait for 5000 milli-seconds
     Then I see 1 interpreter has accepted the booking
     Then I click on Bookings
