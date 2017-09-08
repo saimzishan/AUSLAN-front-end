@@ -24,7 +24,7 @@ jobs:
             E2E_ENV: "localhost"
           shell: /bin/bash
           command: |
-            bash -l ./setup_ci.sh
+            /var/www/booking-system-frontend/setup_ci.sh
       - store_artifacts:
           path: /var/www/booking-system-frontend/.tmp/json-output
 
