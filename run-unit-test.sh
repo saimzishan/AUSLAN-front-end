@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 set -x #echo on
+set -eo pipefail
 bundle install
 ng lint
 rm -rf tmp
