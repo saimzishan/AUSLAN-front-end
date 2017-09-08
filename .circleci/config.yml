@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: curvetomorrow/auslan-dev-image:v7.6-debug
+      - image: curvetomorrow/auslan-dev-image:v7.7
         auth:
           username: $DOCKER_USER
           password: $DOCKER_PASS
