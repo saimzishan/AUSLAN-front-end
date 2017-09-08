@@ -2,7 +2,10 @@ version: 2
 jobs:
   build:
     docker:
-      - image: docker:1.13.1-git
+      - image: curvetomorrow/auslan-dev-image:v7.6-debug
+        auth:
+          username: $DOCKER_USER
+          password: $DOCKER_PASS
     working_directory: /var/www/booking-system-frontend
     parallelism: 1
     steps:
@@ -23,21 +26,39 @@ jobs:
             circleci tests glob "/var/www/booking-system-frontend/e2e-tests/features/validation_profile_registration.feature" | circleci tests split > /var/www/booking-system-frontend/test_features_for_split_container.txt
             cat /var/www/booking-system-frontend/test_features_for_split_container.txt
       - run:
-          name: Login to Docker with Curve account
+          name: Running the server and end to end test
+          working_directory: /usr/src/app/booking-system-frontend
+          environment:
+            E2E_ENV: "localhost"
+          shell: /bin/bash
           command: |
-            docker login -u $DOCKER_USER -p $DOCKER_PASS  #just use your docker hub username and password
-      - run:
-          name: Build application Docker image
-          command: |
-            docker build -t auslan/api:latest .
-      - run:
-          name: Running the Docker container and starting server and end to end test
-          command: |
-            docker run --rm -v /var/www/booking-system-frontend:/usr/src/app/booking-system-frontend -v /tmp/:/usr/src/test-results/ auslan/api /bin/bash -l "./setup_ci.sh"
-#      - deploy:
-#          name: Deploy to AWS Canary
-#          command: |
-#            docker run --rm -v /tmp/dist:/usr/src/tmp/dist auslan/api /bin/bash -l "./deploy-to-aws.sh"
-##            aws s3 sync /tmp/dist/  s3://auslan-booking-system-ct/ --delete
+            bash -l ./setup_ci.sh
       - store_artifacts:
-          path: /tmp/
+          path: /var/www/booking-system-frontend/.tmp/json-output
+
+
+#          version: 2
+#          jobs:
+#            build:
+#              docker:
+#                - image: curvetomorrow/auslan-dev-image:v7.6-debug
+#                  auth:
+#                    username: $DOCKER_USER
+#                    password: $DOCKER_PASS
+#              working_directory: /usr/src/app/booking-system-frontend
+#              steps:
+#                - checkout
+#                - setup_remote_docker:
+#                    reusable: true    # default - false
+#                - run:
+#                    name: Running the server and end to end test
+#                    working_directory: /usr/src/app/booking-system-frontend
+#                    environment:
+#                      E2E_ENV: "localhost"
+#                    shell: /bin/bash
+#                    command: |
+#                      bash -l ./setup_ci.sh
+#                - deploy:
+#                    name: Deploy Master to AWS S3 Canary
+#                    command: |
+#                      echo "TODO"
