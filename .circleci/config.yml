@@ -33,7 +33,7 @@ jobs:
       - run:
           name: Running the Docker container and starting server and end to end test
           command: |
-            docker run --rm -v /tmp/:/usr/src/test-results/ auslan/api /bin/bash -l "./setup_ci.sh"
+            docker run --rm -v /var/www/booking-system-frontend:/usr/src/app/booking-system-frontend -v /tmp/:/usr/src/test-results/ auslan/api /bin/bash -l "./setup_ci.sh"
 #      - deploy:
 #          name: Deploy to AWS Canary
 #          command: |
