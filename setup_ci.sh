@@ -3,6 +3,7 @@ set -x #echo on
 set -eo pipefail
 export CHROME_BIN=$(which google-chrome)
 gem install bundler
+ssh -Tv git@github.com
 git clone  --verbose git@bitbucket.org:curvetomorrow/booking-system-api.git ../booking-system-api
 cd ../booking-system-api
 bundle install --path vendor/cache
