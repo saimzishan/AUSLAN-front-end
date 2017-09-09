@@ -47,3 +47,5 @@ jobs:
           path: /var/www/booking-system-frontend/.tmp/
       - store_artifacts:
           path: /var/www/booking-system-api/rails_server.log
+      - store_artifacts:
+          path: /var/www/booking-system-frontend/.tmp/

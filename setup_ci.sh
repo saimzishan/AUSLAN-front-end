@@ -8,7 +8,7 @@ git clone  --verbose git@bitbucket.org:curvetomorrow/booking-system-api.git ../b
 cd ../booking-system-api
 bundle install --path vendor/cache
 service postgresql restart
-nohup rails s > rails_server.log 2>&1 &
+nohup rails s -b 0.0.0.0 > rails_server.log 2>&1 &
 sleep 5
 ps -ef | grep "puma"
 cd ../booking-system-frontend
