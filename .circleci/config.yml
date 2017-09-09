@@ -14,6 +14,8 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - "4f:b6:43:43:0c:10:10:50:3d:30:ce:36:b1:b3:f9:d8"
+            - "3a:1b:f4:57:85:e7:ce:3e:85:63:4c:b2:6b:6b:ca:eb"
+            - "9f:a5:4b:07:3c:a0:38:17:90:93:4b:5a:52:8e:55:94"
       - run:
           type: shell
           name: Setup parallelism
