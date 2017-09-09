@@ -27,7 +27,7 @@ jobs:
           working_directory: /usr/src/app/booking-system-frontend
           environment:
             E2E_ENV: "localhost"
-          shell: /bin/bash
+          shell: /bin/bash -l
           command: |
             /var/www/booking-system-frontend/setup_ci.sh
       - store_artifacts:
