@@ -15,4 +15,4 @@ cd ../booking-system-frontend
 npm install codeclimate-test-reporter -g
 npm install
 
-#mv test-results /usr/src/tmp/
+#mv test-results /usr/Fsrc/tmp/

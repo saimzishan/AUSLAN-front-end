@@ -30,7 +30,7 @@ defineSupportCode(({registerListener}) => {
         const browserName = capabilities.get('browserName');
         const jsonReport = JSON.parse(report);
         const featureName = jsonReport[0].name.replace(/\s+/g, '_').replace(/\W/g, '').toLowerCase() || 'noName';
-        const snapshotPath = path.join(projectRoot, '.tmp/json-output');
+        const snapshotPath = path.join(projectRoot, '.tmp/cucumber');
         // const filePath = path.join(snapshotPath, `${featureName}.${capabilities.get('browserName')}.${(new Date).getTime()}.json`);
         const filePath = path.join(snapshotPath, `${featureName}.${capabilities.get('browserName')}.json`);
 
