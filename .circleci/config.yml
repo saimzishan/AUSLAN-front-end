@@ -11,7 +11,9 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-          reusable: true    # default - false
+      - add_ssh_keys:
+          fingerprints:
+            - "11:70:25:a0:52:fd:40:c4:db:c9:4a:b6:e7:f2:36:f1"
       - run:
           type: shell
           name: Setup parallelism
@@ -28,30 +30,3 @@ jobs:
             /var/www/booking-system-frontend/setup_ci.sh
       - store_artifacts:
           path: /var/www/booking-system-frontend/.tmp/json-output
-
-
-#          version: 2
-#          jobs:
-#            build:
-#              docker:
-#                - image: curvetomorrow/auslan-dev-image:v7.6-debug
-#                  auth:
-#                    username: $DOCKER_USER
-#                    password: $DOCKER_PASS
-#              working_directory: /usr/src/app/booking-system-frontend
-#              steps:
-#                - checkout
-#                - setup_remote_docker:
-#                    reusable: true    # default - false
-#                - run:
-#                    name: Running the server and end to end test
-#                    working_directory: /usr/src/app/booking-system-frontend
-#                    environment:
-#                      E2E_ENV: "localhost"
-#                    shell: /bin/bash
-#                    command: |
-#                      bash -l ./setup_ci.sh
-#                - deploy:
-#                    name: Deploy Master to AWS S3 Canary
-#                    command: |
-#                      echo "TODO"
