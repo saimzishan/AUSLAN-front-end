@@ -3,6 +3,7 @@ set -x #echo on
 set -eo pipefail
 export CHROME_BIN=$(which google-chrome)
 gem install bundler
+mkdir ../bookin-system-api
 #ssh-agent bash -c 'ssh-add ~/.ssh/id_rsa.pub; git clone git@bitbucket.org:curvetomorrow/booking-system-api.git ../booking-system-api'
 git clone  --verbose git@bitbucket.org:curvetomorrow/booking-system-api.git ../bookin-system-api
 cd ../booking-system-api
