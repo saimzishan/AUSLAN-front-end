@@ -30,5 +30,7 @@ jobs:
           shell: /bin/bash -l
           command: |
             /var/www/booking-system-frontend/setup_ci.sh
+            /var/www/booking-system-frontend/run-e2e-test.sh
+            /var/www/booking-system-frontend/run-unit-test.sh
       - store_artifacts:
           path: /var/www/booking-system-frontend/.tmp/json-output
