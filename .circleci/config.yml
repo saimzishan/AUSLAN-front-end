@@ -24,7 +24,6 @@ jobs:
             cat /var/www/booking-system-frontend/test_features_for_split_container.txt
       - run:
           name: Running the server and end to end test
-          working_directory: /usr/src/app/booking-system-frontend
           environment:
             E2E_ENV: "localhost"
           shell: /bin/bash -l
