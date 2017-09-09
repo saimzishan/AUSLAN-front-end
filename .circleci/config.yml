@@ -12,9 +12,6 @@ jobs:
       - checkout
       - setup_remote_docker
           reusable: true    # default - false
-      - add_ssh_keys:
-          fingerprints:
-            - "11:70:25:a0:52:fd:40:c4:db:c9:4a:b6:e7:f2:36:f1"
       - run:
           type: shell
           name: Setup parallelism
