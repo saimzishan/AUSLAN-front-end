@@ -23,13 +23,25 @@ jobs:
             circleci tests glob "/var/www/booking-system-frontend/e2e-tests/features/validation_profile_registration.feature" | circleci tests split > /var/www/booking-system-frontend/test_features_for_split_container.txt
             cat /var/www/booking-system-frontend/test_features_for_split_container.txt
       - run:
-          name: Running the server and end to end test
+          name: Setup the server and prepare Angular
           environment:
             E2E_ENV: "localhost"
           shell: /bin/bash -l
           command: |
-            /var/www/booking-system-frontend/setup_ci.sh
-            /var/www/booking-system-frontend/run-e2e-test.sh
-            /var/www/booking-system-frontend/run-unit-test.sh
-      - store_artifacts:
+            ./setup_ci.sh
+      - run:
+          name: Running the unit tests
+          environment:
+            E2E_ENV: "localhost"
+          shell: /bin/bash -l
+          command: |
+            ./run-unit-test.sh
+      - run:
+          name: Running the E2E tests
+          environment:
+            E2E_ENV: "localhost"
+          shell: /bin/bash -l
+          command: |
+            ./run-e2e-test.sh
+      - store_test_results:
           path: /var/www/booking-system-frontend/.tmp/json-output
