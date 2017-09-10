@@ -64,12 +64,12 @@ module.exports = function(config) {
         },
         coverageIstanbulReporter: {
             reports: ['lcovonly'],
-            dir: path.join(__dirname, '.tmp'),
+            dir: path.join(__dirname, '.tmp/junit'),
             fixWebpackSourcePaths: true,
 
         },
         junitReporter: {
-            outputDir: '.tmp', // results will be saved as $outputDir/$browserName.xml
+            outputDir: '.tmp/junit', // results will be saved as $outputDir/$browserName.xml
             outputFile: 'test-results.xml', // if included, results will be saved as $outputDir/$browserName/$outputFile
             useBrowserName: false // add browser name to report and classes names
         },

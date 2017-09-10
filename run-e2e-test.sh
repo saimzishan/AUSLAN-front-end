@@ -10,3 +10,6 @@ if [[ $file == *"mobile"* ]]; then
    ng e2e --env=localhost  --progress=true --specs=$file
 fi
 done
+
+cat .tmp/cucumber/*.cucumber > .tmp/cucumber/tests.cucumber
+

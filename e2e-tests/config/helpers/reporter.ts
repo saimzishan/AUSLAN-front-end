@@ -32,7 +32,7 @@ defineSupportCode(({registerListener}) => {
         const featureName = jsonReport[0].name.replace(/\s+/g, '_').replace(/\W/g, '').toLowerCase() || 'noName';
         const snapshotPath = path.join(projectRoot, '.tmp/cucumber');
         // const filePath = path.join(snapshotPath, `${featureName}.${capabilities.get('browserName')}.${(new Date).getTime()}.json`);
-        const filePath = path.join(snapshotPath, `tests.cucumber`);
+        const filePath = path.join(snapshotPath, `${featureName}.${capabilities.get('browserName')}.cucumber`);
 
         jsonReport[0].metadata = {
             'browser': {
