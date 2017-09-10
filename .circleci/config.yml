@@ -38,7 +38,7 @@ jobs:
           command: |
             ./run-unit-test.sh
       - store_test_results:
-          path: /var/www/booking-system-frontend/.tmp/
+          path: /var/www/booking-system-frontend/.tmp/cucumber
       - store_artifacts:
           path: /var/www/booking-system-api/rails_server.log
       - store_artifacts:
