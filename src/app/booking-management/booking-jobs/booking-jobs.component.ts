@@ -12,7 +12,7 @@ import {SpinnerService} from '../../spinner/spinner.service';
 import {NotificationServiceBus} from '../../notification/notification.service';
 import {ActivatedRoute} from '@angular/router';
 import {Router, NavigationExtras} from '@angular/router';
-import {BOOKING_STATUS} from '../../shared/model/booking-status.enum';
+import {BOOKING_STATE} from '../../shared/model/booking-state.enum';
 import {PopupComponent} from '../../shared/popup/popup.component';
 import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
 import {PrettyIDPipe} from '../../shared/pipe/pretty-id.pipe';
@@ -73,12 +73,12 @@ export class BookingJobsComponent implements OnDestroy {
     }
 
     isActiveState(bookingStatus: string) {
-        return BOOKING_STATUS[this.selectedBookingModel.state].toLowerCase() === bookingStatus.toLowerCase();
+        return BOOKING_STATE[this.selectedBookingModel.state].toLowerCase() === bookingStatus.toLowerCase();
     }
 
     isPassedState(bookingStatus: string) {
         return parseInt(this.selectedBookingModel.state.toString(), 10) >
-            parseInt(BOOKING_STATUS[bookingStatus].toString(), 10);
+            parseInt(BOOKING_STATE[bookingStatus].toString(), 10);
     }
 
     public showDialogBox(isCancel: Boolean) {
@@ -119,7 +119,7 @@ export class BookingJobsComponent implements OnDestroy {
         this.bookingService.updateBookingByTransitioning(this.selectedBookingModel.id, 'unable_to_service')
             .subscribe((res: any) => {
                     if (res.status === 204) {
-                        this.selectedBookingModel.state = BOOKING_STATUS.Unable_to_service;
+                        this.selectedBookingModel.state = BOOKING_STATE.Unable_to_service;
                         this.isCancelledOrUnableToServe = true;
                         this.notificationServiceBus.
                         launchNotification(false, 'The booking has been transitioned to \"Unable to Service\" state');
@@ -138,7 +138,7 @@ export class BookingJobsComponent implements OnDestroy {
         this.bookingService.updateBookingByTransitioning(this.selectedBookingModel.id, 'cancelled')
             .subscribe((res: any) => {
                     if (res.status === 204) {
-                        this.selectedBookingModel.state = BOOKING_STATUS.Cancelled;
+                        this.selectedBookingModel.state = BOOKING_STATE.Cancelled;
                         this.isCancelledOrUnableToServe = true;
                         this.notificationServiceBus.launchNotification(false, 'The booking has been transitioned to \"Cancelled\" state');
                     }
@@ -241,7 +241,7 @@ export class BookingJobsComponent implements OnDestroy {
             .subscribe((res: any) => {
                     if (res.status === 204) {
                         this.notificationServiceBus.launchNotification(false, 'The interpreters have been invited');
-                        this.selectedBookingModel.state = BOOKING_STATUS.In_progress;
+                        this.selectedBookingModel.state = BOOKING_STATE.In_progress;
                     }
                     this.spinnerService.requestInProcess(false);
                 },
@@ -272,7 +272,7 @@ export class BookingJobsComponent implements OnDestroy {
             .subscribe((res: any) => {
                     if (res.status === 204) {
                         this.notificationServiceBus.launchNotification(false, 'The interpreter have been unassigned');
-                        this.selectedBookingModel.state = BOOKING_STATUS.In_progress;
+                        this.selectedBookingModel.state = BOOKING_STATE.In_progress;
                     }
                     this.fetchBookingInterpreters(this.selectedBookingModel.id);
                 },

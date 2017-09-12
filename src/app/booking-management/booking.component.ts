@@ -14,7 +14,7 @@ import {IndividualClient, Interpreter, OrganisationalRepresentative, User} from 
 import {ROLE} from '../shared/model/role.enum';
 import {GLOBAL} from '../shared/global';
 import {MobileFooterComponent} from '../ui/mobile-footer/mobile-footer.component';
-import {BOOKING_STATUS} from '../shared/model/booking-status.enum';
+import {BOOKING_STATE} from '../shared/model/booking-state.enum';
 import {BookingInterpreter} from '../shared/model/contact.entity';
 
 
@@ -59,7 +59,7 @@ export class BookingComponent {
                                 b.interpreters.filter(int => int.id === GLOBAL.currentUser.id)
                                     .map(int => currentInt = int);
                                 if (GLOBAL.currentUser instanceof Interpreter && Boolean(currentInt)
-                                    && b.state === BOOKING_STATUS.Allocated
+                                    && b.state === BOOKING_STATE.Allocated
                                     && (currentInt.state === 'Invited' ||
                                         currentInt.state === 'Rejected')) {
                                     continue;

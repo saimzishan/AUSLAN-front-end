@@ -5,7 +5,7 @@ import { EnumValPipe } from './enum-val.pipe';
 import {ROLE} from '../model/role.enum';
 
 import {BOOKING_NATURE} from '../model/booking-nature.enum';
-import {BOOKING_STATUS} from '../model/booking-status.enum';
+import {BOOKING_STATE} from '../model/booking-state.enum';
 import {PARKING} from '../model/parking.enum';
 
 describe('EnumValPipe', () => {
@@ -31,7 +31,7 @@ describe('EnumValPipe', () => {
 
 
   it('transforms enum into dict, as far as its base 10 >= 0', () => {
-    let r = BOOKING_STATUS;
+    let r = BOOKING_STATE;
     let keys = pipe.transform(r);
 
     expect(keys[r.Ready_to_process].key).toEqual([r.Ready_to_process].toString());

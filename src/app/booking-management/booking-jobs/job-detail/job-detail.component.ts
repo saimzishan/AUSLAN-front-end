@@ -6,7 +6,7 @@ import {NotificationServiceBus} from '../../../notification/notification.service
 import {Router, NavigationExtras} from '@angular/router';
 import {ActivatedRoute} from '@angular/router';
 import {PrettyIDPipe} from '../../../shared/pipe/pretty-id.pipe';
-import {BOOKING_STATUS} from '../../../shared/model/booking-status.enum';
+import {BOOKING_STATE} from '../../../shared/model/booking-state.enum';
 import {MobileFooterModule} from '../../../ui/mobile-footer/mobile-footer.module';
 import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
 import {PopupComponent} from '../../../shared/popup/popup.component';
@@ -77,7 +77,7 @@ export class JobDetailComponent implements OnDestroy {
             disableClose: true
         };
         let reachoutWarning = (this.currentStatus === 'Accepted' && this.isCurrentUserInterpreter() &&
-            this.selectedBookingModel.state === BOOKING_STATUS.In_progress);
+            this.selectedBookingModel.state === BOOKING_STATE.In_progress);
         config.viewContainerRef = this.viewContainerRef;
         this.dialogRef = this.dialog.open(PopupComponent, config);
         this.dialogRef.componentInstance.title = isCancel ? 'Decline Booking' : 'Accept Booking';
@@ -117,20 +117,20 @@ export class JobDetailComponent implements OnDestroy {
     }
 
     isActiveState(bookingStatus: string) {
-        return BOOKING_STATUS[this.selectedBookingModel.state].toLowerCase() === bookingStatus.toLowerCase();
+        return BOOKING_STATE[this.selectedBookingModel.state].toLowerCase() === bookingStatus.toLowerCase();
     }
 
     isPassedState(bookingStatus: string) {
         return parseInt(this.selectedBookingModel.state.toString(), 10) >
-            parseInt(BOOKING_STATUS[bookingStatus].toString(), 10);
+            parseInt(BOOKING_STATE[bookingStatus].toString(), 10);
     }
 
-    // BOOKING_STATUS comparison is a mess, need to fix later
+    // BOOKING_STATE comparison is a mess, need to fix later
     getStateString() {
         this.stateStr =
             parseInt(this.selectedBookingModel.state.toString(), 10) ===
-            parseInt(BOOKING_STATUS.In_progress.toString(), 10) ? ' - ' + this.currentStatus : '';
-        this.stateStr = BOOKING_STATUS[this.selectedBookingModel.state].toUpperCase() + this.stateStr;
+            parseInt(BOOKING_STATE.In_progress.toString(), 10) ? ' - ' + this.currentStatus : '';
+        this.stateStr = BOOKING_STATE[this.selectedBookingModel.state].toUpperCase() + this.stateStr;
         this.stateStr = this.stateStr.trim();
 
     }
@@ -156,19 +156,19 @@ export class JobDetailComponent implements OnDestroy {
                             .map(i => this.currentStatus = i.state || 'Invited');
 
                         if (this.currentStatus === 'Accepted' && this.isCurrentUserInterpreter() &&
-                            this.selectedBookingModel.state === BOOKING_STATUS.In_progress) {
+                            this.selectedBookingModel.state === BOOKING_STATE.In_progress) {
                             this.disableReject = false;
                             this.disableAccept = true;
                         } else if (this.currentStatus === 'Accepted' && this.isCurrentUserInterpreter() &&
-                            this.selectedBookingModel.state === BOOKING_STATUS.Allocated) {
+                            this.selectedBookingModel.state === BOOKING_STATE.Allocated) {
                             this.disableReject = true;
                             this.disableAccept = true;
                         } else if (this.currentStatus === 'Rejected' && this.isCurrentUserInterpreter() &&
-                            this.selectedBookingModel.state === BOOKING_STATUS.In_progress) {
+                            this.selectedBookingModel.state === BOOKING_STATE.In_progress) {
                             this.disableReject = true;
                             this.disableAccept = false;
                         } else if (this.currentStatus !== 'Accepted' && this.isCurrentUserInterpreter() &&
-                            this.selectedBookingModel.state === BOOKING_STATUS.Allocated) {
+                            this.selectedBookingModel.state === BOOKING_STATE.Allocated) {
                             this.disableReject = true;
                             this.disableAccept = true;
                             /* Also Redirects */
@@ -176,12 +176,12 @@ export class JobDetailComponent implements OnDestroy {
                         }
                         /** Accept Button Disable Logic
                          this.disableAccept = !this.isCurrentUserInterpreter() ||
-                         this.selectedBookingModel.state === BOOKING_STATUS.Allocated ||
+                         this.selectedBookingModel.state === BOOKING_STATE.Allocated ||
                          this.currentStatus === 'Rejected' ? false :
                          this.currentStatus === 'Accepted';
                          this.disableReject = !this.isCurrentUserInterpreter() ? true :
                          this.selectedBookingModel.state ===
-                         BOOKING_STATUS.Allocated ? true : this.currentStatus === 'Rejected'
+                         BOOKING_STATE.Allocated ? true : this.currentStatus === 'Rejected'
                          || this.currentStatus === 'Accepted';
                          */
                         this.getStateString();

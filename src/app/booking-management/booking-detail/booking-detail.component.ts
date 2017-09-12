@@ -4,7 +4,7 @@ import {BookingService} from '../../api/booking.service';
 import {BA, BOOKING_NATURE} from '../../shared/model/booking-nature.enum';
 import {PARKING} from '../../shared/model/parking.enum';
 import {SpinnerService} from '../../spinner/spinner.service';
-import {BOOKING_STATUS} from '../../shared/model/booking-status.enum';
+import {BOOKING_STATE} from '../../shared/model/booking-state.enum';
 import {GLOBAL} from '../../shared/global';
 import {NotificationServiceBus} from '../../notification/notification.service';
 import {Router, ActivatedRoute} from '@angular/router';
@@ -202,7 +202,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
 
     createBooking() {
         this.spinnerService.requestInProcess(true);
-        this.bookingModel.state = BOOKING_STATUS.Requested; // res.data.status;
+        this.bookingModel.state = BOOKING_STATE.Requested; // res.data.state;
         this.bookingModel.clean(this.bookingModel.toJSON());
         this.bookingService.createBooking(this.bookingModel)
             .subscribe((res: any) => {
