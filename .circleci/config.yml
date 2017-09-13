@@ -20,7 +20,7 @@ jobs:
           type: shell
           name: Setup parallelism
           command: |
-            circleci tests glob "/var/www/booking-system-frontend/e2e-tests/features/interpreter*.feature" | circleci tests split > /var/www/booking-system-frontend/test_features_for_split_container.txt
+            circleci tests glob "/var/www/booking-system-frontend/e2e-tests/features/*.feature" | circleci tests split > /var/www/booking-system-frontend/test_features_for_split_container.txt
             cat /var/www/booking-system-frontend/test_features_for_split_container.txt
       - run:
           name: Setup the server and run E2E tests
