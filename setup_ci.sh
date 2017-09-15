@@ -5,8 +5,10 @@ gem install bundler
 git clone git@bitbucket.org:curvetomorrow/booking-system-api.git ../booking-system-api
 cd ../booking-system-api
 bundle install --path vendor/cache
+bundle exec rake db:migrate
+spring stop
 service postgresql restart
-nohup rails s > rails_server.log 2>&1 &
+nohup rails s -b 0.0.0.0 > rails_server.log 2>&1 &
 sleep 5
 ps -ef | grep "puma"
 cd ../booking-system-frontend
