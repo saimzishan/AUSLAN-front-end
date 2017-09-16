@@ -15,5 +15,4 @@ ps -ef | grep "puma"
 cd ../booking-system-frontend
 npm install codeclimate-test-reporter -g
 npm install
-
-#mv test-results /usr/Fsrc/tmp/
+npm install
