@@ -13,6 +13,7 @@ nohup bundle exec rails s -b 0.0.0.0 > rails_server.log 2>&1 &
 sleep 5
 ps -ef | grep "puma"
 cd ../booking-system-frontend
+sleep 1
 npm install codeclimate-test-reporter -g
-npm install
+sleep 1
 npm install
