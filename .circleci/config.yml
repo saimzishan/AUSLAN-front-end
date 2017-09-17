@@ -28,6 +28,8 @@ jobs:
             E2E_ENV: "localhost"
           shell: /bin/bash -l
           command: |
+            npm install
+            npm install codeclimate-test-reporter -g
             ./setup_ci.sh
             ./run-e2e-test.sh
       - run:
