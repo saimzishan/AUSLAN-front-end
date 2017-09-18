@@ -153,16 +153,15 @@ export class Booking {
         this.versions = [];
         if (Boolean(data.versions_attributes)) {
             for (let version_attributr of data.versions_attributes) {
-                let version: BookingVersion = {
-                    changeset: version_attributr.changeset,
-                    event: version_attributr.event,
-                    created_at: version_attributr.created_at,
-                    first_name: version_attributr.first_name,
-                    last_name: version_attributr.last_name,
-                    photo_url: version_attributr.photo_url
-                };
+                let version = new BookingVersion();
+                version.changeset = version_attributr.changeset;
+                version.booking_event = version_attributr.event;
+                version.created_at = version_attributr.created_at;
+                version.first_name = version_attributr.first_name;
+                version.last_name = version_attributr.last_name;
+                version.photo_url = version_attributr.photo_url;
                 this.versions.push(version);
-            }
+            };
         }
     }
 

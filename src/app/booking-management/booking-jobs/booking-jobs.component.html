@@ -304,7 +304,7 @@
 				<ng-container *ngFor="let version of selectedBookingModel.versions; let i=index">
 					<tr>
 						<td>{{version.created_at | date:'shortTime'}} on {{version.created_at | date:'EEE d MMM yy'}}</td>
-						<td>{{version.action}} by</td>
+						<td>{{version.change_event_with_author()}}</td>
 						<td>{{version.changeset}}</td>
 					</tr>
 				</ng-container>
