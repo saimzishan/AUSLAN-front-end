@@ -2,7 +2,7 @@
 export class BookingVersion {
 
     public created_at: Date;
-    public changeset: string;
+    public change_set: string;
     public booking_event: string;
     public first_name: string;
     public last_name: string;

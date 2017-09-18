@@ -154,7 +154,7 @@ export class Booking {
         if (Boolean(data.versions_attributes)) {
             for (let version_attributr of data.versions_attributes) {
                 let version = new BookingVersion();
-                version.changeset = version_attributr.changeset;
+                version.change_set = version_attributr.changeset;
                 version.booking_event = version_attributr.event;
                 version.created_at = version_attributr.created_at;
                 version.first_name = version_attributr.first_name;
