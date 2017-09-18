@@ -244,6 +244,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     _handleReaderLoaded(readerEvt) {
-        this.bookingModel.documents_attributes.push({document: readerEvt.target.result, file_name: this.fileName});
+        this.bookingModel.documents_attributes.push({document: readerEvt.target.result, document_file_name: this.fileName});
     }
 }

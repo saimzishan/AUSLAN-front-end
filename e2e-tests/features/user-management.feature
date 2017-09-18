@@ -12,6 +12,8 @@ Feature: Create, read, update and delete a User
     And I am on my admin home screen
     And I hover on the 'Profile'
     And I go to the 'User Management' list page
+    Then The valid Interpreter should be in the list
+    When I hover on the 'Actions' of the Interpreter
 
 ############################## New Admin ##############################
 #  @ignoreThis
