@@ -4,6 +4,7 @@ import {BOOKING_NATURE} from './booking-nature.enum';
 import {BOOKING_STATUS} from './booking-status.enum';
 import {PARKING} from './parking.enum';
 import {OrganisationalRepresentative} from './user.entity';
+import {BookingVersion} from "./booking-version.entity";
 export class Booking {
 
     public id: any;
@@ -25,6 +26,7 @@ export class Booking {
     public primaryContact = new Contact();
     public client: OrganisationalRepresentative = new OrganisationalRepresentative({});
     public documents_attributes = [];
+    public versions: Array<BookingVersion> = [];
     // Is it a limitation on interpreters invitation.
 
     constructor() {
@@ -148,7 +150,20 @@ export class Booking {
         if (Boolean(data.documents_attributes)) {
             this.documents_attributes = data.documents_attributes;
         }
-
+        this.versions = [];
+        if (Boolean(data.versions_attributes)) {
+            for (let version_attributr of data.versions_attributes) {
+                let version: BookingVersion = {
+                    changeset: version_attributr.changeset,
+                    event: version_attributr.event,
+                    created_at: version_attributr.created_at,
+                    first_name: version_attributr.first_name,
+                    last_name: version_attributr.last_name,
+                    photo_url: version_attributr.photo_url
+                };
+                this.versions.push(version);
+            }
+        }
     }
 
     toJSON() {
