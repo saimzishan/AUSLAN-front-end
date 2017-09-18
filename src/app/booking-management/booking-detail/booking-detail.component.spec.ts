@@ -73,8 +73,8 @@ describe('BookingDetailComponent', () => {
   });
 
     it('should save the file name correctly when upload of file is complete', () => {
-        component.fileName = 'test.png'
-        component._handleReaderLoaded({ 'target': { 'result': 'BASE64encode'}})
-        expect(component.bookingModel.documents_attributes[0]).toEqual({ document: 'BASE64encode', document_file_name: 'test.png' })
+        component.fileName = 'test.png';
+        component._handleReaderLoaded({ 'target': { 'result': 'BASE64encode'}});
+        expect(component.bookingModel.documents_attributes[0]).toEqual({ document: 'BASE64encode', document_file_name: 'test.png' });
     });
 });
