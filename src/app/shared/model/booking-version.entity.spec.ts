@@ -22,7 +22,7 @@ describe('Booking Entity', () => {
     });
 
     it('get pretty display for changeset should formatted changeset data', () => {
-        booking_version.booking_event = 'update'
+        booking_version.booking_event = 'update';
         booking_version.change_set = {
             'id': [0, 1],
             'venue': ['MCRI', 'RCH'],
@@ -59,7 +59,7 @@ describe('Booking Entity', () => {
     });
 
     it('get pretty display for changeset should return blank if event was create', () => {
-        booking_version.booking_event = 'create'
+        booking_version.booking_event = 'create';
         booking_version.change_set = {
             'id': [0, 1],
             'venue': ['MCRI', 'RCH'],

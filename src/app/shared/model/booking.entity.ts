@@ -4,7 +4,7 @@ import {BOOKING_NATURE} from './booking-nature.enum';
 import {BOOKING_STATUS} from './booking-status.enum';
 import {PARKING} from './parking.enum';
 import {OrganisationalRepresentative} from './user.entity';
-import {BookingVersion} from "./booking-version.entity";
+import {BookingVersion} from './booking-version.entity';
 export class Booking {
 
     public id: any;
