@@ -156,7 +156,7 @@ export class Booking {
                 let version = new BookingVersion();
                 version.change_set = version_attributr.changeset;
                 version.booking_event = version_attributr.event;
-                version.created_at = version_attributr.created_at;
+                version.created_at_iso = new Date(version_attributr.created_at).toISOString();
                 version.first_name = version_attributr.first_name;
                 version.last_name = version_attributr.last_name;
                 version.photo_url = version_attributr.photo_url;
