@@ -1,4 +1,5 @@
 import {Component, AfterViewChecked} from '@angular/core';
+import {URLSearchParams} from '@angular/http';
 import {BookingService} from '../api/booking.service';
 import {Booking} from '../shared/model/booking.entity';
 import 'rxjs/add/operator/catch';
@@ -42,9 +43,9 @@ export class BookingComponent {
         return this.activeFilter === activeFilter;
     }
 
-    fetchBookings() {
+    fetchBookings(search?: URLSearchParams) {
         this.spinnerService.requestInProcess(true);
-        this.bookingDataService.fetchBookings()
+        this.bookingDataService.fetchBookings(search || undefined)
             .subscribe((res: any) => {
                     if (res.status === 200) {
                         for (let o of res.data.bookings) {
