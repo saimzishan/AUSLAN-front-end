@@ -59,7 +59,7 @@ export class BookingJobPage extends PageObject {
     }
 
     verifyPictureOfYourself = (src: string) => {
-        browser.pause();
+        // browser.pause();
         let elm = this.getElementByCss('div.row.with-border > span.with-avatar > img');
         return browser.wait(protractor.ExpectedConditions.presenceOf(elm), 30000).then(() => {
             return elm.getAttribute('src').then((val) => {

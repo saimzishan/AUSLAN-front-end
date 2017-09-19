@@ -367,8 +367,8 @@ Feature: Booking Admin Management
 
   ########### REQUESTED TO ALLOCATED SINGLE INTERPRETER WITHOUT INVITE #######################################
 
-  @ignoreThis
-  Scenario: As Administrator, I can assign  uninvited with invite interpreter if a booking is created and INTERPRETER exists then
+  @runThis
+  Scenario: As Administrator, I can assign uninvited with invite interpreter if a booking is created and INTERPRETER exists then
     And I sign in with valid Administrator credentials
     When I am on the bookings page
     Then I see one row with state 'Requested'
@@ -402,9 +402,9 @@ Feature: Booking Admin Management
     Then I can see the button state 'Decline' is hidden
     Then I can see the button state 'Accept' is hidden
 
-  ########### REQUESTED TO ALLOCATED MULTIPLE INTERPRETER  WITHOUT INVITE  #######################################
-  @ignoreThis
-  Scenario: As Administrator, I can assign  multiple uninvited with invite interpreter if a booking with two interpreters is created and INTERPRETER and INTERPRETER1 exists then
+  ########### REQUESTED TO ALLOCATED MULTIPLE INTERPRETER WITHOUT INVITE  #######################################
+  @runThis
+  Scenario: As Administrator, I can assign multiple uninvited with invite interpreter if a booking with two interpreters is created and INTERPRETER and INTERPRETER1 exists then
     And I sign in with valid Administrator credentials
     When I am on the bookings page
     Then I see one row with state 'Requested'
@@ -422,7 +422,7 @@ Feature: Booking Admin Management
     Then I get valid message: 'The interpreter have been assigned'
     Then I can see the booking state 'Allocated'
     Then I wait for 5000 milli-seconds
-    Then I see 1 interpreter has accepted the booking
+    Then I see 2 interpreter has accepted the booking
     Then I click on Bookings
     And I am on the bookings page
     Then I see one row with state 'Allocated'
