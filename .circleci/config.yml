@@ -10,7 +10,7 @@ jobs:
     parallelism: 6
     steps:
       - checkout
-      - setup_remote_docker
+      - setup_remote_docker:
           reusable: true
       - add_ssh_keys:
           fingerprints:
