@@ -4,7 +4,6 @@ set -eo pipefail
 export CHROME_BIN=$(which google-chrome)
 service postgresql restart
 gem install bundler
-#ssh-agent bash -c 'ssh-add ~/.ssh/id_rsa.pub; git clone git@bitbucket.org:curvetomorrow/booking-system-api.git ../booking-system-api'
 git clone  --verbose git@bitbucket.org:curvetomorrow/booking-system-api.git ../booking-system-api
 cd ../booking-system-api
 bundle install --path vendor/cache
