@@ -74,6 +74,10 @@ export class BookingJobPage extends PageObject {
         return $('#changes-history > tbody > tr:nth-child(1) > td:nth-child(2)').getText().then( (txt) => {
             expect(txt).to.eq('Created by\nSystem System');
         });
+        // check row 1 column 2 is 'Created by System System'
+        // check row 1 column 3 is ''
+        // check row 2 column 2 is 'Updated by Robin Administrator'
+        // check row 2 column 3 is 'State: Requested to In Progress'
     }
 
     didFinishedRendering = () => {
