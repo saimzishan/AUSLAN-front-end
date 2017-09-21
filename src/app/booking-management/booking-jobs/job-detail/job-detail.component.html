@@ -247,7 +247,15 @@
                 <th>Changes</th>
                 </thead>
                 <tbody>
-
+                    <tr *ngFor="let version of selectedBookingModel.versions; let i=index">
+                        <td>{{version.created_at_iso | date:'shortTime'}} on {{version.created_at_iso | date:'EEE d MMM yy'}}</td>
+                        <td><img height="40px" width="40px" src="{{version.photo_url}}" alt="">{{version.booking_event_formatted()}}<br/>{{version.full_name()}}</td>
+                        <td>
+                            <div *ngFor="let change_item_key of version.change_set_formatted_hash()">
+                                <b>{{change_item_key[0]}}: </b>{{change_item_key[1][0]}} <b>to</b> <span>{{change_item_key[1][1]}}</span>
+                            </div>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </main>

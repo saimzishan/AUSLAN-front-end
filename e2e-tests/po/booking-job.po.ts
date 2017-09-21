@@ -70,6 +70,12 @@ export class BookingJobPage extends PageObject {
 
     }
 
+    verifyVersionInfo = () => {
+        return $('#changes-history > tbody > tr:nth-child(1) > td:nth-child(2)').getText().then( (txt) => {
+            expect(txt).to.eq('Created by\nSystem System');
+        });
+    }
+
     didFinishedRendering = () => {
         this.unableToServeBtn = this.getElementByCSSandText('button.pink', 'Unable to Service');
         return browser.wait(protractor.ExpectedConditions.presenceOf(this.unableToServeBtn), 30000).then(() => {
