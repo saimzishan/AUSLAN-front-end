@@ -178,7 +178,8 @@ export class Booking {
             deaf_persons_last_name: this.deaf_person.last_name, deaf_persons_mobile: this.deaf_person.mobile_number,
             deaf_persons_email: this.deaf_person.email, deaf_persons_eaf_no: this.deaf_person.eaf,
             number_of_people_attending: _expected_attendance,
-            start_time: this.venue.start_time_iso, end_time: this.venue.end_time_iso,
+            start_time: new Date(this.venue.start_time_iso).toISOString(),
+            end_time: new Date(this.venue.end_time_iso).toISOString(),
             billing_account_attributes: {
                 primary_contact_first_name: this.client.organisation_primary_contact.first_name,
                 primary_contact_last_name: this.client.organisation_primary_contact.last_name,

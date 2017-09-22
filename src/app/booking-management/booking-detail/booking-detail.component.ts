@@ -68,9 +68,9 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 this.bookingModel.fromJSON(jsonData);
                 this.bookingModel.documents_attributes = [];
                 this.bookingModel.venue.start_time_iso =
-                    this.datePipe.transform(this.bookingModel.venue.start_time_iso, 'yyyy-MM-ddThh:mm:ss');
+                    this.datePipe.transform(this.bookingModel.venue.start_time_iso, 'yyyy-MM-ddTHH:mm:ss');
                 this.bookingModel.venue.end_time_iso =
-                    this.datePipe.transform(this.bookingModel.venue.end_time_iso, 'yyyy-MM-ddThh:mm:ss');
+                    this.datePipe.transform(this.bookingModel.venue.end_time_iso, 'yyyy-MM-ddTHH:mm:ss');
                 this.natureOfApptChange(null);
             }
         });
