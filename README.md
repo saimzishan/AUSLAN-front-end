@@ -27,29 +27,61 @@ bundle exec pact-mock-service stop -p 1234
 This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.22-1.
 
 ## Development server
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive/pipe/service/class`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+   1. `ng serve --env=localhost`
+       * Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+   1. `ng serve --env=stage` - Uses the canary environment (nightly build). Note: it doesn't point to stage.
 
 ## Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+   1. `ng test`
 
 ## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `ng serve`.
+Check docker instructions. Just run them locally in your terminal
 
-## Deploying to Github Pages
 
-Run `ng github-pages:deploy` to deploy to Github Pages.
+## Use Docker to run server
 
-## Further help
+   1. Install docker
+        * Unix - (https://runnable.com/docker/install-docker-on-linux)
+        * Mac - Install Docker for Mac
+   1. Login with your dockerhub account
+        * Create account
+        * Ask team member to add you to CurveTomorrow dockerhub group to get access to image
+   1. Run docker and get a bash terminal
+        * `docker run -i -t --rm -p 4200:4200 -v path/to/booking-system-frontend:/usr/src/app curvetomorrow/auslan-dev-image:v7.8 /bin/bash -l`
+   1. Install gems
+        * `bundle install`
+   1. NPM install
+        * `npm install`
+   1. Run server for access to localhost
+        * `ng serve --env=localhost --host=0.0.0.0`
+        * the port is required if you want server to be accessible to the host
+   1. Follow the README.md on the booking-system-api to launch the localhost API server in another terminal window
 
-To get more help on the `angular-cli` use `ng --help` or go check out the [Angular-CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+## Use Docker to run Unit tests
+
+   1. Run docker and get a bash terminal
+        * `docker run -i -t --rm -v path/to/booking-system-frontend:/usr/src/app curvetomorrow/auslan-dev-image:v7.8 /bin/bash -l`
+   1. Install gems
+        * `bundle install`
+   1. Download and run the latest rails server
+        * `./setup_ci.sh`
+   1. Create the input file with all files to test
+        * `ls -d -1 e2e-tests/features/* > test_features_for_split_container.txt`
+   1. Run the e2e tests
+        * `./run-e2e-test.sh`
+
+## Use Docker to run E2E tests
+
+   1. Run docker and get a bash terminal
+        * `docker run -i -t --rm -v path/to/booking-system-frontend:/usr/src/app curvetomorrow/auslan-dev-image:v7.8 /bin/bash -l`
+   1. Install gems
+        * `bundle install`
+   1. Download and run the latest rails server
+        * `./setup_ci.sh`
+   1. Create the input file with all files to test
+        * `ls -d -1 e2e-tests/features/* > test_features_for_split_container.txt`
+   1. Run the e2e tests
+        * `./run-e2e-test.sh`
