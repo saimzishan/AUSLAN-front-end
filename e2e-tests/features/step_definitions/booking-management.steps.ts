@@ -13,7 +13,6 @@ import {BookingJobPage} from '../../po/booking-job.po';
 defineSupportCode(({Given, Then, When}) => {
 
     // let list_of_object = {};
-
     let page = new PageObject();
     let bookingManagementPO = new BookingManagementPage();
     let createBookingPO = new BookingPage();
@@ -23,6 +22,9 @@ defineSupportCode(({Given, Then, When}) => {
 //  BE ABLE TO VIEW BOOKING PAGE
     Then(/^I will be shown with bookings$/, bookingManagementPO.atleastABookingExists);
     Then(/^I store the booking count$/, bookingManagementPO.storeCurrentBookingCount);
+    Then(/^I store the current url$/, bookingJobPO.storePath);
+    Then(/^I go to stored url$/, bookingJobPO.gotoStorePath);
+    Then(/^I see the error page$/, bookingJobPO.errorPage);
     Then(/^I expect the booking count to be greater then before$/, bookingManagementPO.isCurrentBookingCountGreaterThanStoredCount);
 //    CLick on Request bookings
     Then(/^I am shown with (\d+) (.*[^\s])?\s?Bookings$/, bookingManagementPO.showTheNumberofBooking);

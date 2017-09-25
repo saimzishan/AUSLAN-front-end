@@ -1,10 +1,11 @@
 <header id="header-mobile">
     <button [routerLink]="['/booking-management']" class="icon-back"></button>
-    <h1>JOB #{{selectedBookingModel.id | PrettyID}}</h1>
+    <h1 *ngIf="!jobAccessError">JOB #{{selectedBookingModel.id | PrettyID}}</h1>
 </header>
 
+    <ng-container *ngIf="!jobAccessError">
+        <section id="page-common">
 
-<section id="page-common">
     <section id="static-flow">
         <section id="submenu">
             <nav>
@@ -253,3 +254,22 @@
         </main>
     </section>
 </section>
+
+</ng-container>
+<ng-container *ngIf="jobAccessError">
+    <div class="error">
+        <span
+                style="display:table-cell; vertical-align:middle;  text-align:center;">
+        <img  src="../../../../assets/img/error-redcross.svg" />
+        <p>
+            Sorry, you don't have access to this job.
+        </p>
+        <p>
+            Contact Auslan if you think this is not right.
+        </p>
+    </span>
+    </div>
+</ng-container>
+
+
+

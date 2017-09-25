@@ -29,6 +29,7 @@ export class JobDetailComponent implements OnDestroy {
     private dialogSub: any;
     dialogRef: MdDialogRef<any>;
     stateStr = '';
+    jobAccessError = false;
 
     constructor(public dialog: MdDialog,
                 public viewContainerRef: ViewContainerRef,
@@ -142,7 +143,10 @@ export class JobDetailComponent implements OnDestroy {
         this.spinnerService.requestInProcess(true);
         this.bookingService.getBooking(param_id)
             .subscribe((res: any) => {
-                    if (res.status === 200) {
+                    if (res.status === 404) {
+                        this.jobAccessError = true;
+                    } else if (res.status === 200) {
+                        this.jobAccessError = false;
                         let data = res.data;
                         this.selectedBookingModel.fromJSON(data);
                         this.selectedBookingModel.interpreters.sort((i, j) =>
@@ -185,6 +189,8 @@ export class JobDetailComponent implements OnDestroy {
                     this.spinnerService.requestInProcess(false);
                 },
                 err => {
+                    this.jobAccessError = true;
+
                     this.spinnerService.requestInProcess(false);
                     let e = err.json() || 'There is some error on server side';
                     this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
