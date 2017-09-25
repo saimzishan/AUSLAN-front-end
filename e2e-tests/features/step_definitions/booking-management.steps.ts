@@ -13,7 +13,6 @@ import {BookingJobPage} from '../../po/booking-job.po';
 defineSupportCode(({Given, Then, When}) => {
 
     // let list_of_object = {};
-    let page = new PageObject();
     let bookingManagementPO = new BookingManagementPage();
     let createBookingPO = new BookingPage();
     let bookingJobPO = new BookingJobPage();
