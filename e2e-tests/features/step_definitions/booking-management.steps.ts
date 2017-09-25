@@ -61,6 +61,7 @@ defineSupportCode(({Given, Then, When}) => {
 
     // ---------------------------------   INDIVIDUAL BOOKING PAGE
 
+    Then(/^The version history with name '(.*)' at index '(.*)' with text '(.*)'$/, bookingJobPO.verifyVersionInfo);
     Then(/^I am on the individual booking page$/, bookingJobPO.browse);
 
     Then(/^I can see a list of (.*) (.*) interpreters$/, bookingJobPO.checkListofInterpreterIndividualBookingScreen);

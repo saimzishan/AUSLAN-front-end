@@ -234,8 +234,7 @@ defineSupportCode(({Given, When, Then}) => {
     When(/^I verify checkbox name '(.*)' and is checked '(.*)'$/, verifyOnCBByName);
 
     function verifyOnCBByName(btnName: string, checkedState: string) {
-        let bVal = ((checkedState === 'True') || (checkedState === 'true')) ?
-            true : false;
+        let bVal = ((checkedState === 'True') || (checkedState === 'true'));
         return page.getElementByName(btnName).isSelected().then(val => {
             expect(val).to.be.eq(bVal);
         });

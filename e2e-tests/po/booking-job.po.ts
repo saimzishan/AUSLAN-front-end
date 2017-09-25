@@ -70,6 +70,18 @@ export class BookingJobPage extends PageObject {
 
     }
 
+    verifyVersionInfo = (css_name, index, expected_text) => {
+        let elm = this.getAllElementByName(css_name);
+
+        return elm.get(index).getText().then( (txt) => {
+            expect(txt).to.contain(expected_text);
+         });
+        // check row 1 column 2 is 'Created by System System'
+        // check row 1 column 3 is ''
+        // check row 2 column 2 is 'Updated by Robin Administrator'
+        // check row 2 column 3 is 'State: Requested to In Progress'
+    }
+
     didFinishedRendering = () => {
         this.unableToServeBtn = this.getElementByCSSandText('button.pink', 'Unable to Service');
         return browser.wait(protractor.ExpectedConditions.presenceOf(this.unableToServeBtn), 30000).then(() => {

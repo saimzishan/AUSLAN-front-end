@@ -296,12 +296,25 @@
 			<h2>History</h2>
 			<table id="changes-history" class="custom-small-table">
 				<thead>
-					<th width="20%" class="sort asc">Date and Time</th>
-					<th width="30%" class="sort desc">Action</th>
-					<th>Change</th>
+					<th width="20%">Date and Time</th>
+					<th width="30%">Action</th>
+					<th>Changes</th>
 				</thead>
 				<tbody>
-
+					<tr *ngFor="let version of selectedBookingModel.versions; let i=index">
+						<td name="data_created_at">{{version.created_at_iso | date:'shortTime'}} on {{version.created_at_iso | date:'EEE d MMM yy'}}</td>
+						<td><img height="40px" width="40px" src="{{version.photo_url}}" alt="">
+							<span name="data_action">{{version.booking_event_formatted()}}<br/>{{version.full_name()}}
+							</span>
+						</td>
+						<td>
+							<div name="data_changes">
+							<div *ngFor="let change_item_key of version.change_set_formatted_hash()">
+									<b>{{change_item_key[0]}}: </b>{{change_item_key[1][0]}} <b>to</b> <span>{{change_item_key[1][1]}}</span>
+							</div>
+							</div>
+						</td>
+					</tr>
 				</tbody>
 			</table>
 		</main>

@@ -34,6 +34,10 @@ export class PageObject {
         return element.all(by.css(css));
     }
 
+    getAllElementByName(name: string) {
+        return element.all(by.name(name));
+    }
+
     setElementsValueByName(name: string, value: string) {
         let els = element.all(by.name(name));
         return els.each(el => {
