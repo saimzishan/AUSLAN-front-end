@@ -25,4 +25,10 @@ Feature: Booking Admin Management
     And I see one row with state 'In progress'
     And I click on an individual booking of type 'In progress'
     And I will be shown the booking job page
-    And The booking has a created version entry
+    And The version history with name 'data_action' at index '0' with text 'Created by'
+    And The version history with name 'data_action' at index '0' with text 'System System'
+    And The version history with name 'data_action' at index '1' with text 'Updated by'
+    And The version history with name 'data_action' at index '1' with text 'robin Administrator'
+    And The version history with name 'data_changes' at index '1' with text 'State: Requested to In Progress'
+    And The version history with name 'data_changes' at index '1' with text 'Invite Url: [blank] to http://localhost:49152/#/booking-management/'
+    And The version history with name 'data_changes' at index '1' with text 'job-detail'

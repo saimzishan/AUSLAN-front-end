@@ -70,10 +70,12 @@ export class BookingJobPage extends PageObject {
 
     }
 
-    verifyVersionInfo = () => {
-        return $('#changes-history > tbody > tr:nth-child(1) > td:nth-child(2)').getText().then( (txt) => {
-            expect(txt).to.eq('Created by\nSystem System');
-        });
+    verifyVersionInfo = (css_name, index, expected_text) => {
+        let elm = this.getAllElementByName(css_name);
+
+        return elm.get(index).getText().then( (txt) => {
+            expect(txt).to.contain(expected_text);
+         });
         // check row 1 column 2 is 'Created by System System'
         // check row 1 column 3 is ''
         // check row 2 column 2 is 'Updated by Robin Administrator'
