@@ -256,10 +256,13 @@
 </section>
 
 </ng-container>
+<!-- Make this as a class-->
 <ng-container *ngIf="jobAccessError">
-    <div class="error">
-        <span
-                style="display:table-cell; vertical-align:middle;  text-align:center;">
+    <div class="error" style="
+    text-align: center;
+    padding-top: 100px;
+">
+        <span>
         <img  src="../../../../assets/img/error-redcross.svg" />
         <p>
             Sorry, you don't have access to this job.
