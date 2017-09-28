@@ -58,14 +58,20 @@ export class BookingService extends ApiService {
         let headers = new Headers({'Accept': 'application/json',
             'Content-Type': 'application/json'});
         let options = new RequestOptions({ headers: headers });
-        let invite_url = GLOBAL.BOOKING_JOB_INVITE + bookingID + '/job-detail';
-        invite_url = invite_url.startsWith('http') === false ? 'http://' + invite_url : invite_url;
-        let obj = { 'invite_url': invite_url , 'interpreters' : interpreters};
+        let obj = this.getParamsForInviteOrAssign(bookingID, interpreters);
 
         return this.http.post(GLOBAL.BOOKING_API + '/' + bookingID + '/invite_interpreters' , JSON.stringify(obj), options)
             .map(this.extractData)
             .catch((err) => { return this.handleError(err); });
     }
+
+    private getParamsForInviteOrAssign(bookingID: number, interpreters: Array<Object>) {
+        let invite_url = GLOBAL.BOOKING_JOB_INVITE + bookingID + '/job-detail';
+        invite_url = invite_url.startsWith('http') === false ? 'http://' + invite_url : invite_url;
+        let obj = {'invite_url': invite_url, 'interpreters': interpreters};
+        return obj;
+    }
+
     /*
      The Api should be used to re assign interpreters
    */
@@ -74,7 +80,7 @@ export class BookingService extends ApiService {
         let headers = new Headers({'Accept': 'application/json',
             'Content-Type': 'application/json'});
         let options = new RequestOptions({ headers: headers });
-        let obj = { 'interpreters' : interpreters};
+        let obj = this.getParamsForInviteOrAssign(bookingID, interpreters);
 
         return this.http.put(GLOBAL.BOOKING_API + '/' + bookingID + '/assign_interpreters/' , JSON.stringify(obj), options)
             .map(this.extractData)
