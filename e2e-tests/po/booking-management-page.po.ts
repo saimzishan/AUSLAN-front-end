@@ -37,6 +37,17 @@ export class BookingManagementPage extends PageObject {
             });
         });
     }
+    hoverOnTableHeader = (headerTitle: string, selection: string) => {
+        let headerId = {
+            'Status': 'booking-status',
+            'State': 'booking-state'
+        }[headerTitle];
+        let el = this.getElementByCss('.dropdown#' + headerId);
+        return browser.actions().mouseMove(el).perform().then(() => {
+            let listEl = this.getElementInsideByCSSandText(el, 'ul li a', selection);
+            return listEl.click();
+        });
+    }
 
     clickOnProfile = () => {
         return this.getElementByID('lnkProfile').click();

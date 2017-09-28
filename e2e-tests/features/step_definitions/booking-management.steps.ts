@@ -76,6 +76,7 @@ defineSupportCode(({Given, Then, When}) => {
 
     When(/^I click on option (.*) of (.*) for (.*)/, createBookingPO.clickOnOption);
     When(/^I query booking with booking id$/, bookingManagementPO.queryBookingWithID)
+    When(/^I hover on the (.*) dropdown and select '(.*)'$/, bookingManagementPO.hoverOnTableHeader)
 
     Then(/^The cell of (.*) will be populated with (.*)$/, createBookingPO.checkTheDropDown);
 
