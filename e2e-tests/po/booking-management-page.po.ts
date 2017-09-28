@@ -105,7 +105,8 @@ export class BookingManagementPage extends PageObject {
         });
     }
 
-    bookingWithStateExists = (booking_state: string) => {
+    bookingWithStateExists = (count: string | number, booking_state: string) => {
+        if (count === 'one') { count = 1; }
         return this.getAllByCSSandText('tbody td', booking_state).count().then((cnt) => {
             expect(cnt).to.be.greaterThan(0);
         });
@@ -123,14 +124,15 @@ export class BookingManagementPage extends PageObject {
         });
     }
 
-    bookingWithStatusExists = (booking_status: string) => {
+    bookingWithStatusExists = (count: string | number, booking_status: string) => {
+        if (count === 'one') { count = 1; }
         let className = {
             'green': 'icon-check-green',
             'red': 'status-allocated',
             'orange': 'status-ready-to-process'
         }[booking_status];
         return this.getAllElementByCSS('i[class="status ' + className + '"]').count().then((cnt) => {
-            expect(cnt).to.be.greaterThan(0);
+            expect(cnt).to.be.eq(count);
         });
     }
 
