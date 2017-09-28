@@ -240,7 +240,8 @@ describe('BookingService', () => {
     });
 */
     it('should reassign bulk of interpreters', function (done) {
-        let obj = {'interpreters': [{'id': 2579}]};
+        let invite_url = 'http://' + GLOBAL.BOOKING_JOB_INVITE + 2 + '/job-detail';
+        let obj = {'invite_url': invite_url, 'interpreters': [{'id': 2579}]};
 
         inject([BookingService], (service: BookingService) => {
             bookingProvider
