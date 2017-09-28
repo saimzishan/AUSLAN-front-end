@@ -77,18 +77,21 @@ export class BookingListComponent{
         let keys = Object.keys(BOOKING_STATE);
         return keys.slice(keys.length / 2);
     }
-    private formatValueFor(filter: string, value: string) {
-        switch(filter) {
+    private formatterValueFor(field: string, value: string) {
+        let formattedValue: string;
+        switch(field) {
             case 'booking_status':
-                value = BOOKING_STATUS[value]
+                formattedValue = BOOKING_STATUS[value];
                 break;
+            default:
+                formattedValue = value;
         }
-        return value;
+        return formattedValue;
     }
     filter(field: string, value: string) {
+        value = value.trim();
         value = value.replace(/,$/g, '');
-        value = this.formatValueFor(field, value);
-        this.bookingFilter[field] = value.trim ? value.trim() : value;
+        this.bookingFilter[field] = this.formatterValueFor(field, value);
         let params: URLSearchParams = new URLSearchParams();
         for(let k in this.bookingFilter) {
             params.set('filter[' + k +']', this.bookingFilter[k]);

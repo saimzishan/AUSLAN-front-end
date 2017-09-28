@@ -48,6 +48,7 @@ export class BookingComponent {
         this.bookingDataService.fetchBookings(search || undefined)
             .subscribe((res: any) => {
                     if (res.status === 200) {
+                        this.bookings = [];
                         for (let o of res.data.bookings) {
                             if (Boolean(!this.rolePermission.isDataRestrictedForCurrentUser('booking-management', o.created_by.type))
                                 || (GLOBAL.currentUser instanceof OrganisationalRepresentative && GLOBAL.currentUser.id === o.created_by.id)
