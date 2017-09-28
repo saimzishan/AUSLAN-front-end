@@ -18,6 +18,7 @@ defineSupportCode(({Given, Then, When}) => {
     let bookingJobPO = new BookingJobPage();
 
     Given(/^The booking has status '(.*)'$/, Heroku.updateBookingWithStatus);
+    Given(/^There exist (\d+) bookings$/, Heroku.createBulkBookings);
 //  BE ABLE TO VIEW BOOKING PAGE
     Then(/^I will be shown with bookings$/, bookingManagementPO.atleastABookingExists);
     Then(/^I store the booking count$/, bookingManagementPO.storeCurrentBookingCount);
@@ -26,7 +27,7 @@ defineSupportCode(({Given, Then, When}) => {
     Then(/^I see the error page$/, bookingJobPO.errorPage);
     Then(/^I expect the booking count to be greater then before$/, bookingManagementPO.isCurrentBookingCountGreaterThanStoredCount);
 //    CLick on Request bookings
-    Then(/^I am shown with (\d+) (.*[^\s])?\s?Bookings$/, bookingManagementPO.showTheNumberofBooking);
+    Then(/^I am shown with (\d+) (.*[^\s])?\s?[bB]ookings?$/, bookingManagementPO.showTheNumberofBooking);
 
     When(/^I click at the (.*) one of (.*) (.*) Bookings$/, bookingManagementPO.clickAtOneofTheBooking);
 
@@ -74,6 +75,7 @@ defineSupportCode(({Given, Then, When}) => {
     When(/^I click dropdown (.*)$/, createBookingPO.clickOnDropDown);
 
     When(/^I click on option (.*) of (.*) for (.*)/, createBookingPO.clickOnOption);
+    When(/^I query booking with booking id$/, bookingManagementPO.queryBookingWithID)
 
     Then(/^The cell of (.*) will be populated with (.*)$/, createBookingPO.checkTheDropDown);
 
@@ -84,6 +86,7 @@ defineSupportCode(({Given, Then, When}) => {
     Then(/^I click the create booking button$/, createBookingPO.clickCreateBtn);
 
     Then(/^I (.*) see the (.*) field$/, createBookingPO.checkTheFieldExist);
+    Then(/^I see one row with the booking id$/, bookingManagementPO.bookingExistsWithId);
 
     // Then(/^I get the popup warning that is the non-standard booking$/, createBookingPO.popupForNonStandard)
 

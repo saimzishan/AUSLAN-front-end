@@ -57,7 +57,7 @@ defineSupportCode(({Given, When, Then}) => {
     });
     Given(/^I sign in with valid (.*) credentials$/, (type: string) => {
         return homePage.signInWithValidCredential(type).then(() => {
-            browser.sleep(7000).then(() => {
+            browser.sleep(2000).then(() => {
                 bookingManagementPage.onBookingListPage();
             });
         });

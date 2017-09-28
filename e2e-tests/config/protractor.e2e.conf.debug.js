@@ -14,11 +14,11 @@ config.multiCapabilities = [
                     'password_manager_enabled': false
                 }
             },
-            args: ['incognito', '--window-size=1400,800']
+            args: ['no-sandbox', 'incognito', '--disable-gpu', '--headless', '--window-size=1400,800']
         }
     }
 ];
-config.allScriptsTimeout= 99000;
+config.allScriptsTimeout= 990000;
 config.params= {
     env:  'localhost',
     debug: true

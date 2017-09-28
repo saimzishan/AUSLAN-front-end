@@ -443,6 +443,10 @@ export class Heroku {
         let command = 'Booking.create(' + JSON.stringify(data) + ')';
         Heroku.sendCommandToHeroku(command);
     }
+    static createBulkBookings(count: string) {
+        let command = 'FactoryGirl.create_list(:booking, ' + count + ', bookable: User.first)';
+        Heroku.sendCommandToHeroku(command);
+    }
 
     static createSingleUser(data) {
         let return_command = '';

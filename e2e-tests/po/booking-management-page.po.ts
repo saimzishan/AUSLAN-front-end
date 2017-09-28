@@ -12,7 +12,8 @@ export class BookingManagementPage extends PageObject {
      * The jasmine and cuccumberjs does not work, so use chai.expect with chai-as-promised
      * Look at chai-import.ts for further details
      * */
-    rowCount = 0;
+    rowCount: number = 0;
+    queryIdBooking: string = '';
 
     verify = () => {
         return this.currentPath().then((currentPath) => {
@@ -145,7 +146,7 @@ export class BookingManagementPage extends PageObject {
         });
     }
 
-    atleastABookingExists = () => {
+    private getFirstBookingID = () => {
         let table = this.getElementByID('jobs-responsive');
         return table.isPresent().then(res => {
             expect(res).to.be.true;
@@ -154,16 +155,38 @@ export class BookingManagementPage extends PageObject {
             expect(tblRows.count()).to.eventually.be.greaterThan(0);
         }).then(() => {
             let el = table.$$('tr:first-child td.bookingID > div > span');
-            el.getText().then(txt => {
-                let len = txt[0].length;
-                expect(len).to.be.eq(4);
-            });
+            return el.getText();
+        });
+    }
+
+    atleastABookingExists = () => {
+        this.getFirstBookingID().then(txt => {
+            let len = txt[0].length;
+            expect(len).to.be.eq(4);
         });
     }
 
     newBookingDoesNotExists = () => {
         return $$('lnkNewBooking').count().then(cnt => {
             expect(cnt).to.be.eq(0);
+        });
+    }
+    queryBookingWithID = () => {
+        let bookingIdForm = this.getElementByCss('table thead tr th form');
+        let bookingIdInput = this.getElementInsideByCSS(bookingIdForm, 'input');
+        return this.getFirstBookingID().then((txt) => {
+            let firstID = txt[0];
+            this.queryIdBooking = firstID;
+            bookingIdInput.sendKeys(firstID);
+            return bookingIdForm.submit();
+        });
+    }
+    bookingExistsWithId = () => {
+        let queriedID = this.queryIdBooking;
+        let tblRows = this.getAllElementByCSS('table tbody tr');
+        expect(tblRows.count()).to.eventually.be.equal(1);
+        return this.getFirstBookingID().then((txt) => {
+            return expect(queriedID).to.be.eq(txt[0]);
         });
     }
 }
