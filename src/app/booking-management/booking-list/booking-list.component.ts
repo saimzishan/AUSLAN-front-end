@@ -9,6 +9,7 @@ import {Interpreter, OrganisationalRepresentative} from '../../shared/model/user
 import {BookingInterpreter} from '../../shared/model/contact.entity';
 import {BookingFilter} from '../../shared/model/booking-filter.interface';
 import {BookingComponent} from '../booking.component';
+import {FormGroup, NgForm} from '@angular/forms';
 
 @Component({
     selector: 'app-booking-list',
