@@ -5,7 +5,6 @@ import {Router, NavigationExtras} from '@angular/router';
 import {BOOKING_STATE} from '../../shared/model/booking-state.enum';
 import {BOOKING_STATUS} from '../../shared/model/booking-status.enum';
 import {GLOBAL} from '../../shared/global';
-import {PrettyIDPipe} from '../../shared/pipe/pretty-id.pipe';
 import {Interpreter, OrganisationalRepresentative} from '../../shared/model/user.entity';
 import {BookingInterpreter} from '../../shared/model/contact.entity';
 import {BookingFilter} from '../../shared/model/booking-filter.interface';
