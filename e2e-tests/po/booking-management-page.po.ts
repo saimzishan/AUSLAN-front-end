@@ -12,8 +12,8 @@ export class BookingManagementPage extends PageObject {
      * The jasmine and cuccumberjs does not work, so use chai.expect with chai-as-promised
      * Look at chai-import.ts for further details
      * */
-    rowCount: number = 0;
-    queryIdBooking: string = '';
+    rowCount = 0;
+    queryIdBooking = '';
 
     verify = () => {
         return this.currentPath().then((currentPath) => {
