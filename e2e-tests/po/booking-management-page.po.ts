@@ -143,7 +143,7 @@ export class BookingManagementPage extends PageObject {
             'orange': 'status-ready-to-process'
         }[booking_status];
         return this.getAllElementByCSS('i[class="status ' + className + '"]').count().then((cnt) => {
-            expect(cnt).to.be.eq(count);
+            expect(cnt.toString()).to.be.eq(count);
         });
     }
 

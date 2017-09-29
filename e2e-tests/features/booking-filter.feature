@@ -25,3 +25,14 @@ Feature: Booking Filter
     When I hover on the Status dropdown and select 'Red'
     Then I am shown with 1 booking
     Then I see one row with status 'red'
+
+  @runThis
+  Scenario: Given 1 verified Booking Officer, I should be able to filter by booking status
+    Given The booking has status 'red'
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    When I am on the bookings page
+    Then I will be shown with bookings
+    When I hover on the Status dropdown and select 'Green'
+    Then I am shown with 4 bookings
+    Then I see 4 rows with status 'green'
