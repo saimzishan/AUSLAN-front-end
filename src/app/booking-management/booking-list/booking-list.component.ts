@@ -16,7 +16,7 @@ import {BookingComponent} from '../booking.component';
     templateUrl: './booking-list.component.html',
     styleUrls: ['./booking-list.component.css']
 })
-export class BookingListComponent{
+export class BookingListComponent {
     @Input('bookingList') bookingList: Array<Booking> = [];
     @Input('bookingFilter') bookingFilter: BookingFilter = {};
     @Output() onEditBooking = new EventEmitter<Booking>();
@@ -79,7 +79,7 @@ export class BookingListComponent{
     }
     private formatterValueFor(field: string, value: string) {
         let formattedValue: string;
-        switch(field) {
+        switch (field) {
             case 'booking_status':
                 formattedValue = BOOKING_STATUS[value];
                 break;
@@ -93,8 +93,10 @@ export class BookingListComponent{
         value = value.replace(/,$/g, '');
         this.bookingFilter[field] = this.formatterValueFor(field, value);
         let params: URLSearchParams = new URLSearchParams();
-        for(let k in this.bookingFilter) {
-            params.set('filter[' + k +']', this.bookingFilter[k]);
+        for (let k in this.bookingFilter) {
+            if (this.bookingFilter.hasOwnProperty(k)) {
+                params.set('filter[' + k + ']', this.bookingFilter[k]);
+            }
         }
         this.bookingComponent.fetchBookings(params);
     }
