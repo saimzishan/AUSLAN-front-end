@@ -1,0 +1,25 @@
+<div class="md-dialog">
+  <md-dialog-content>
+    <header>
+     <h1>All Interpreters</h1>
+      <button (click)="closeDialog()"><i class="icon-close"></i></button>
+    </header>
+    <main>
+      <section id="interpreters-list">
+        <section name="interpreters" *ngFor="let interpreter of selectedInterpreters;">
+          <img (click)="addInterpreter(interpreter.id)" src="{{interpreter.photo_url}}"  alt="">
+          <span>{{interpreter.first_name}} {{interpreter.last_name}}</span>
+          <button (click)="removeInterpreter(interpreter.id)"><i class="icon-close"></i></button>
+        </section>
+      </section>
+    </main>
+  </md-dialog-content>
+
+  <div>
+    <md-dialog-actions>
+      <button name="yesBtn" (click)="closeDialog(true)" class="button"> SELECT </button>
+      <button name="noBtn"  (click)="closeDialog(false)" class="button red"> CANCEL </button>
+    </md-dialog-actions>
+  </div>
+</div>
+	
