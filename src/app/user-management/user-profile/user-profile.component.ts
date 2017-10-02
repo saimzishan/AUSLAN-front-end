@@ -21,6 +21,7 @@ export class UserProfileComponent implements OnInit {
     userModel;
     selectedStatus = '';
     userStatusArray = GLOBAL.userStatusArray;
+    public selectedRole = '';
 
     constructor(public userDataService: UserService, public userNameService: UserNameService,
                 public notificationServiceBus: NotificationServiceBus,

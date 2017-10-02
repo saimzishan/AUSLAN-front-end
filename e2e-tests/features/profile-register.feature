@@ -185,7 +185,7 @@ Feature: Create Profile
     Then I can see the element with name 'interpreter_block' is 'visible'
     When I click on BUTTON name 'btnYes'
     Then I can see the element with name 'booking-preferences' is 'visible'
-    And  I click on BUTTON name 'btnAddInterpreter'
+    And  I click on BUTTON name 'btnManageInterpreter'
     Then  I can see the element with css 'section.interpreters-list' is 'visible'
     Then I can see '3' validated interpreters
     And I can see interpreters in alphabetical order

@@ -11,7 +11,7 @@ export class InterpreterBoxComponent implements OnInit {
 
     @Input() isPreffered = false;
     @Input() selectedInterpreters = [];
-    needInterpreter = false;
+    needInterpreter= false;
     private dialogSub: any;
     dialogRef: MdDialogRef<any>;
     title = '';
@@ -24,7 +24,7 @@ export class InterpreterBoxComponent implements OnInit {
 
     }
 
-    addInterpreter() {
+    manageInterpreter() {
 
         if (this.dialogSub) {
             this.dialogSub.unsubscribe();
@@ -35,8 +35,7 @@ export class InterpreterBoxComponent implements OnInit {
         };
         config.viewContainerRef = this.viewContainerRef;
         this.dialogRef = this.dialog.open(InterpreterPopupComponent, config);
-        this.dialogRef.componentInstance.title = this.isPreffered ?
-            'ADD PREFFERED INTERPRETER' : 'ADD BLOCKED INTERPRETER';
+        this.dialogRef.componentInstance.selectedInterpreters = this.selectedInterpreters ;
 
 
         this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {

@@ -1,23 +1,30 @@
 <div class="separator"></div>
 <h4 class="text-center">{{title}}</h4>
-<div id="interpreter_block" name="interpreter_block" class="row ext">
-  <div class="form-field">
-    <label>Do you have prefered interpreters?</label>
-    <md-radio-group name="rdNeedInterpreter"
-                    [(ngModel)]="needInterpreter">
-      <md-radio-button value=true>YES</md-radio-button>
-      <md-radio-button value=false>NO</md-radio-button>
-    </md-radio-group>
-  </div>
-  <section name="booking-preferences">
-    <section *ngFor="let interpreter of selectedInterpreters; let i = index">
-      <strong>PREFERED INTERPTRETER {{i + 1}}</strong>
-      <img src="{{interpreter.photo_url}}" alt="">
-      <span>{{interpreter.first_name}} {{interpreter.last_name}}</span>
-    </section>
-    <button md-button name='btnAddInterpreter' (click)="addInterpreter()">
-      <i class="inline-icon-add-file"></i>
-      ADD INTERPRETER
-    </button>
-  </section>
-</div>
+<section id="page-booking">
+    <main>
+        <form>
+            <div name="interpreter_block" class="row ext">
+                <div class="form-field">
+                    <label>Do you want to manage {{isPreffered ? 'prefered' : 'blocked'}} interpreters?</label>
+                    <md-radio-group name="rd + {{isPreffered}}"
+                            [(ngModel)]="needInterpreter">
+                        <md-radio-button [value]=true>YES</md-radio-button>
+                        <md-radio-button [value]=false>NO</md-radio-button>
+                    </md-radio-group>
+                </div>
+                <section id="booking-preferences" name="booking-preferences">
+                    <section *ngFor="let interpreter of selectedInterpreters; let i = index">
+                        <strong>PREFERED INTERPTRETER {{i + 1}}</strong>
+                        <img src="{{interpreter.photo_url}}" alt="">
+                        <span>{{interpreter.first_name}} {{interpreter.last_name}}</span>
+                    </section>
+                    <button *ngIf="needInterpreter" md-button name='btnManageInterpreter' (click)="manageInterpreter()">
+                        <i class="inline-icon-add-file"></i>
+                        MANAGE INTERPRETER
+                    </button>
+
+                </section>
+            </div>
+        </form>
+    </main>
+</section>

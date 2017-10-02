@@ -138,11 +138,15 @@
                         [selectedInterpreters]="model.prefferedInterpreters"
                         *ngIf="selectedRole === 'ORGANISATION' || selectedRole === 'INDIVIDUALCLIENT'"
                 ></app-interpreter-box>
+                <br>
+
                 <app-interpreter-box
                         [isPreffered]="true"
                         [selectedInterpreters]="model.blockedInterpreters"
                         *ngIf="selectedRole === 'ORGANISATION' || selectedRole === 'INDIVIDUALCLIENT'"
                 ></app-interpreter-box>
+                <br>
+
                 <app-termandcondition  (termAndConditionStatusChange)="tocChanged($event)" [termsAndConditionAccepted]="termsAndConditionAccepted" ></app-termandcondition>
                 <div align="center">
                     <button class="login button" name="register_user" type="submit"

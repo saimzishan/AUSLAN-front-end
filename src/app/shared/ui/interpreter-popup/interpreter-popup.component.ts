@@ -26,8 +26,8 @@ export class InterpreterPopupComponent implements OnInit {
                 private spinnerService: SpinnerService) {
     }
 
-    closeDialog(val) {
-        this.dialogRef.close(val);
+    closeDialog() {
+        this.dialogRef.close();
     }
 
     removeInterpreter(interpreter_id) {
@@ -37,12 +37,11 @@ export class InterpreterPopupComponent implements OnInit {
 
     addInterpreter(interpreter_id) {
         this.selectedInterpreters.push(interpreter_id);
-        this.addSelectedInterpreter(interpreter_id);
     }
 
     /* Hmm need a class as an api wrapper to throw in all such method, its anti-DRY*/
     fetchAllInterpreters() {
-        // this.spinnerService.requestInProcess(true);
+        this.spinnerService.requestInProcess(true);
         this.userDataService.fetchUsersOfType('interpreters')
             .subscribe((res: any) => {
                     if (res.status === 200) {
@@ -56,10 +55,10 @@ export class InterpreterPopupComponent implements OnInit {
                     this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
                 });
     }
-    addSelectedInterpreter(interpreter_id) {
+    addSelectedInterpreter() {
         this.spinnerService.requestInProcess(true);
         this.userDataService.assignPreferredInterpreter(GLOBAL.currentUser.id,
-            [interpreter_id])
+            this.selectedInterpreters)
             .subscribe((res: any) => {
                     if (res.status === 200) {
                         this.notificationServiceBus.launchNotification(false,

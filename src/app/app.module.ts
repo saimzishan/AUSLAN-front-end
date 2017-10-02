@@ -100,9 +100,9 @@ import { InterpreterBoxComponent } from './shared/ui/interpreter-box/interpreter
     InterpreterComponent, BillingAccountComponent,
     SkillMatrixComponent, AddressComponent, AccountantComponent,
       UserPasswordComponent, PreComponent, BlockoutComponent, TermandconditionComponent,
-      InterpreterPopupComponent, InterpreterBoxComponent
+       InterpreterBoxComponent, InterpreterPopupComponent
   ],
-  entryComponents: [UserDetailComponent, PopupComponent],
+  entryComponents: [UserDetailComponent, PopupComponent, InterpreterPopupComponent],
   imports: [CustomFormsModule, routing, FileUploadModule,
     BrowserModule, RouterModule, CommonModule, MobileFooterModule,
     FormsModule, BrowserAnimationsModule,
