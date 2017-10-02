@@ -79,9 +79,53 @@ export class ProfileRegisterPage extends PageObject {
     }
 
     acceptTC = () => {
-        return  this.getElementByName('tnc').click();
+        return this.getElementByName('tnc').click();
     }
 
+    verifyInterpreterName = (index, expected_name) => {
+        let elm = this.getAllElementByCSS('div.interpreter-list');
+
+        return elm.get(index).getText().then((txt) => {
+            expect(txt).to.contain(expected_name);
+        });
+    }
+
+    verifyInterpreterPhoto = (index) => {
+        let elm = this.getAllElementByCSS('div.interpreter-list');
+        return this.getElementInsideCSS(elm.get(index), 'img').count().then((cnt) => {
+            expect(cnt).to.be.eq(1);
+        });
+    }
+
+    countInterpreter = (index) => {
+        return this.getElementByCss('md-dialog.select_interpreter.interpreter-list').count().then((cnt) => {
+            expect(cnt).to.be.eq(1);
+        });
+    }
+
+    addInterpreter = (index) => {
+        let elm = this.getAllElementByCSS('div.interpreter-list');
+        return elm.get(index).click();
+
+    }
+    validateAlphabeticalOrder = () => {
+    let  sorted = [] , unSorted = [];
+    let i = 0;
+    $$('div.interpreter-list').each((elem, idx) => {
+        elem.getText().then((name) => {
+                unSorted[i++] = name;
+            });
+        }).then(function(){
+            sorted = unSorted.slice();
+            sorted.sort();
+            expect(sorted).to.be.eq(unSorted);
+        });
+    }
+    removeInterpreter = (css, index) => {
+        let elm = this.getAllElementByCSS('div.interpreter-list > div.delete');
+        return elm.get(index).click();
+
+    }
     userCreated = (type: string) => {
         return NotificationObject.getNotificationContent('Congratulations');
     }

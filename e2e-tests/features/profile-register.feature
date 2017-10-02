@@ -1,8 +1,8 @@
 Feature: Create Profile
 
- Background: I as an all user should be able to see the profile page to create different
-    types of accounts
-   Given I go to the website
+  Background: I as an all user should be able to see the profile page to create different
+  types of accounts
+    Given I go to the website
     And I am shown the login screen, with picture and signup button
     When I click on button 'CREATE AN ACCOUNT'
     Then I will be taken to the 'Choose Profile' page
@@ -29,7 +29,7 @@ Feature: Create Profile
     Then I move to element name 'tnc'
     Then I click on checkbox name 'tnc'
     When I fill all the details correctly for -> 'INDIVIDUALCLIENT' with the pref communication is 'SMS AND EMAIL'
-   Then I will get an error notification saying "Unprocessable Entity "email":"has already been taken""
+    Then I will get an error notification saying "Unprocessable Entity "email":"has already been taken""
 
   @runThis
   Scenario: With An Interpreter created before, can't create another interp with same email
@@ -136,7 +136,7 @@ Feature: Create Profile
     Then I move to element name 'tnc'
     Then I click on checkbox name 'tnc'
     When I fill all the details correctly for -> 'INDIVIDUALCLIENT' with the pref communication is 'SMS'
-    Then 'INTERPRETER' will be created
+    Then 'INDIVIDUALCLIENT' will be created
 
   @runThis
   Scenario: interp sign up with prefer communication
@@ -145,5 +145,47 @@ Feature: Create Profile
     Then I move to element name 'tnc'
     Then I click on checkbox name 'tnc'
     When I fill all the details correctly for -> 'INDIVIDUALCLIENT' with the pref communication is 'SMS AND EMAIL'
-    Then 'INTERPRETER' will be created
+    Then 'INDIVIDUALCLIENT' will be created
 # --------------------------------------- AUSLAN1-53 END ------------------------------------------------
+
+# --------------------------------------- AUSLAN1-379 START ------------------------------------------------
+  @runThis
+  Scenario: interp sign up with prefer communication
+    And I click on button 'Client'
+    And I will be taken to the 'INDIVIDUALCLIENT Signup' page
+    Then I can see the element with css 'div.interpreter.block' is 'visible'
+    When I click on BUTTON name 'btnYes'
+    Then I can see the element with css 'div.interpreter.block.interpreters' is 'visible'
+    And  I click on BUTTON name 'btnAddInterpreter'
+    Then  I can see the element with css 'md-dialog.select_interpreter' is 'visible'
+    Then I can see '3' validated interpreters
+    And I can see interpreters in alphabetical order
+    And I verify '1' interpreter is 'Dragana'
+    And I verify '2' interpreter is 'Dragana_2'
+    And I verify '3' interpreter is 'Dragana_3'
+    When I click on '1' interpreter
+    Then I can see the element with css 'md-dialog.select_interpreter > div.interpreter.block.checked' is 'visible'
+    Then I can see the element with css 'div.interpreter.block.checked' is 'visible'
+    When I click on '2' interpreter
+    Then I can see the element with css 'md-dialog.select_interpreter > div.interpreter.block.checked' is 'visible'
+    Then I can see the element with css 'div.interpreter.block.checked' is 'visible'
+    When I click on '3' interpreter
+    Then I can see the element with css 'md-dialog.select_interpreter > div.interpreter.block.checked' is 'visible'
+    Then I can see the element with css 'div.interpreter.block.checked' is 'visible'
+    Then I can see the element of type 'div'  with text 'Add Interpreter'
+    When I fill all the details correctly for -> 'INDIVIDUALCLIENT' with the pref communication is 'SMS AND EMAIL'
+    Then I move to element name 'tnc'
+    Then I click on checkbox name 'tnc'
+    Then 'INDIVIDUALCLIENT' will be created
+
+  @runThis
+  Scenario: An org rep can be created
+    And I click on button 'Organisation'
+    And I will be taken to the 'ORGANISATION Signup' page
+    When I fill all the details correctly for -> 'ORGANISATIONALREPRESENTATIVE' with the pref communication is 'SMS AND EMAIL'
+    Then I move to element name 'tnc'
+    Then I click on checkbox name 'tnc'
+    Then I click on BUTTON name 'register_user'
+    Then 'ORGANISATIONALREPRESENTATIVE' will be created
+
+# --------------------------------------- AUSLAN1-379 END ------------------------------------------------

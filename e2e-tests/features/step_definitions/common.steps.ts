@@ -189,12 +189,21 @@ defineSupportCode(({Given, When, Then}) => {
     }
 
     When(/^I can see the button state with css '(.*)' is (.*)$/, isButtonWithCSSVisible);
-
+    When(/^I can see the element with css '(.*)' is (.*)$/, isButtonWithCSSVisible);
     function isButtonWithCSSVisible(css: string, visible: string) {
         let isDisplayed = visible.toLowerCase() === 'visible';
         return browser.sleep(1000).then(() => {
             page.getElementByCss(css).isPresent().then(val => {
                 expect(val).to.be.eq(isDisplayed);
+            });
+        });
+    }
+
+    When(/^I can see the element of type '(.*)'  with text '(.*)'$/, isElementWithTextVisible);
+    function isElementWithTextVisible(text: string) {
+        return browser.sleep(1000).then(() => {
+            page.getElementByCSSandText('', text).isPresent().then(val => {
+                expect(val).to.be.true;
             });
         });
     }
