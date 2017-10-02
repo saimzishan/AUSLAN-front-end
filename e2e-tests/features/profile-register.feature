@@ -150,12 +150,12 @@ Feature: Create Profile
 
 # --------------------------------------- AUSLAN1-379 START ------------------------------------------------
   @runThis
-  Scenario: interp sign up with prefer communication
+  Scenario: INDIVIDUAL-CLIENT sign up with prefered-interpreters
     And I click on button 'Client'
     And I will be taken to the 'INDIVIDUALCLIENT Signup' page
     Then I can see the element with css 'div.interpreter.block' is 'visible'
     When I click on BUTTON name 'btnYes'
-    Then I can see the element with css 'div.interpreter.block.interpreters' is 'visible'
+    Then I can see the element with css 'div.interpreter.block.interpreters' is 'not visible'
     And  I click on BUTTON name 'btnAddInterpreter'
     Then  I can see the element with css 'md-dialog.select_interpreter' is 'visible'
     Then I can see '3' validated interpreters
