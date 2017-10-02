@@ -69,6 +69,7 @@ import {HashLocationStrategy, Location, LocationStrategy} from '@angular/common'
 import { BlockoutComponent } from './user-management/user-profile/blockout/blockout.component';
 import {CalendarModule} from 'ap-angular2-fullcalendar';
 import { TermandconditionComponent } from './ui/termandcondition/termandcondition.component';
+import { InterpreterPopupComponent } from './shared/interpreter-popup/interpreter-popup.component';
 
 @NgModule({
   declarations: [
@@ -97,7 +98,7 @@ import { TermandconditionComponent } from './ui/termandcondition/termandconditio
     BookingJobsComponent, PopupComponent, JobDetailComponent, OrgRepComponent, IndClientComponent,
     InterpreterComponent, BillingAccountComponent,
     SkillMatrixComponent, AddressComponent, AccountantComponent,
-      UserPasswordComponent, PreComponent, BlockoutComponent, TermandconditionComponent
+      UserPasswordComponent, PreComponent, BlockoutComponent, TermandconditionComponent, InterpreterPopupComponent
   ],
   entryComponents: [UserDetailComponent, PopupComponent],
   imports: [CustomFormsModule, routing, FileUploadModule,
