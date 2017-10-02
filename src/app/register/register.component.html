@@ -133,6 +133,16 @@
                 <app-interpreter [displayCalendar]="false" [userModel]="model" *ngIf="selectedRole === 'INTERPRETER'"></app-interpreter>
                 <app-ind-client [userModel]="model" *ngIf="selectedRole === 'INDIVIDUALCLIENT'"></app-ind-client>
                 <br>
+                <app-interpreter-box
+                        [isPreffered]="false"
+                        [selectedInterpreters]="model.prefferedInterpreters"
+                        *ngIf="selectedRole === 'ORGANISATION' || selectedRole === 'INDIVIDUALCLIENT'"
+                ></app-interpreter-box>
+                <app-interpreter-box
+                        [isPreffered]="true"
+                        [selectedInterpreters]="model.blockedInterpreters"
+                        *ngIf="selectedRole === 'ORGANISATION' || selectedRole === 'INDIVIDUALCLIENT'"
+                ></app-interpreter-box>
                 <app-termandcondition  (termAndConditionStatusChange)="tocChanged($event)" [termsAndConditionAccepted]="termsAndConditionAccepted" ></app-termandcondition>
                 <div align="center">
                     <button class="login button" name="register_user" type="submit"

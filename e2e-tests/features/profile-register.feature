@@ -153,11 +153,11 @@ Feature: Create Profile
   Scenario: INDIVIDUAL-CLIENT sign up with prefered-interpreters
     And I click on button 'Client'
     And I will be taken to the 'INDIVIDUALCLIENT Signup' page
-    Then I can see the element with css 'div.interpreter.block' is 'visible'
+    Then I can see the element with name 'interpreter_block' is 'visible'
     When I click on BUTTON name 'btnYes'
-    Then I can see the element with css 'div.interpreter.block.interpreters' is 'not visible'
+    Then I can see the element with name 'booking-preferences' is 'visible'
     And  I click on BUTTON name 'btnAddInterpreter'
-    Then  I can see the element with css 'md-dialog.select_interpreter' is 'visible'
+    Then  I can see the element with css 'section.interpreters-list' is 'visible'
     Then I can see '3' validated interpreters
     And I can see interpreters in alphabetical order
     And I verify '1' interpreter is 'Dragana'
@@ -182,6 +182,26 @@ Feature: Create Profile
   Scenario: An org rep can be created
     And I click on button 'Organisation'
     And I will be taken to the 'ORGANISATION Signup' page
+    Then I can see the element with name 'interpreter_block' is 'visible'
+    When I click on BUTTON name 'btnYes'
+    Then I can see the element with name 'booking-preferences' is 'visible'
+    And  I click on BUTTON name 'btnAddInterpreter'
+    Then  I can see the element with css 'section.interpreters-list' is 'visible'
+    Then I can see '3' validated interpreters
+    And I can see interpreters in alphabetical order
+    And I verify '1' interpreter is 'Dragana'
+    And I verify '2' interpreter is 'Dragana_2'
+    And I verify '3' interpreter is 'Dragana_3'
+    When I click on '1' interpreter
+    Then I can see the element with css 'md-dialog.select_interpreter > div.interpreter.block.checked' is 'visible'
+    Then I can see the element with css 'div.interpreter.block.checked' is 'visible'
+    When I click on '2' interpreter
+    Then I can see the element with css 'md-dialog.select_interpreter > div.interpreter.block.checked' is 'visible'
+    Then I can see the element with css 'div.interpreter.block.checked' is 'visible'
+    When I click on '3' interpreter
+    Then I can see the element with css 'md-dialog.select_interpreter > div.interpreter.block.checked' is 'visible'
+    Then I can see the element with css 'div.interpreter.block.checked' is 'visible'
+    Then I can see the element of type 'div'  with text 'Add Interpreter'
     When I fill all the details correctly for -> 'ORGANISATIONALREPRESENTATIVE' with the pref communication is 'SMS AND EMAIL'
     Then I move to element name 'tnc'
     Then I click on checkbox name 'tnc'

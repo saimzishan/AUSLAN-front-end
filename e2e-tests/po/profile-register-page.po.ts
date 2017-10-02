@@ -83,7 +83,7 @@ export class ProfileRegisterPage extends PageObject {
     }
 
     verifyInterpreterName = (index, expected_name) => {
-        let elm = this.getAllElementByCSS('div.interpreter-list');
+        let elm = this.getAllElementByCSS('section[name="interpreters"]');
 
         return elm.get(index).getText().then((txt) => {
             expect(txt).to.contain(expected_name);
@@ -91,27 +91,27 @@ export class ProfileRegisterPage extends PageObject {
     }
 
     verifyInterpreterPhoto = (index) => {
-        let elm = this.getAllElementByCSS('div.interpreter-list');
+        let elm = this.getAllElementByCSS('section[name="interpreters"]');
         return this.getElementInsideCSS(elm.get(index), 'img').count().then((cnt) => {
             expect(cnt).to.be.eq(1);
         });
     }
 
-    countInterpreter = (index) => {
-        return this.getElementByCss('md-dialog.select_interpreter.interpreter-list').count().then((cnt) => {
-            expect(cnt).to.be.eq(1);
+    countInterpreter = (count) => {
+        return this.getAllElementByCSS('section[name="interpreters"]').count().then((cnt) => {
+            expect(cnt).to.be.eq(count);
         });
     }
 
     addInterpreter = (index) => {
-        let elm = this.getAllElementByCSS('div.interpreter-list');
+        let elm = this.getAllElementByCSS('section[name="interpreters"]');
         return elm.get(index).click();
 
     }
     validateAlphabeticalOrder = () => {
     let  sorted = [] , unSorted = [];
     let i = 0;
-    $$('div.interpreter-list').each((elem, idx) => {
+    $$('section[name="interpreters"]').each((elem, idx) => {
         elem.getText().then((name) => {
                 unSorted[i++] = name;
             });

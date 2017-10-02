@@ -160,6 +160,34 @@ export class UserService extends ApiService {
             .get(GLOBAL.USER_API + '/' + userID + '/resend_verification_code' , options)
             .catch((err) => { return Observable.throw(err); });
     }
+    /*
+     The Api should be used to assign preferred or blocked interpreters
+   */
+    assignPreferredInterpreter(userID: number, interpreters: Array<Object>): Observable<Object> {
+
+        let headers = new Headers({'Accept': 'application/json',
+            'Content-Type': 'application/json'});
+        let options = new RequestOptions({ headers: headers });
+        let obj = { 'interpreters' : interpreters};
+
+        return this.http.put(GLOBAL.USER_API + '/' + userID + '/assign_interpreters/' , JSON.stringify(obj), options)
+            .map(this.extractData)
+            .catch((err) => { return this.handleError(err); });
+    }
+    /*
+         The Api should be used to un-assign preferred or blocked interpreters
+       */
+    unassignPreferredInterpreter(userID: number, interpreters_id): Observable<Object> {
+
+        let headers = new Headers({'Accept': 'application/json',
+            'Content-Type': 'application/json'});
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http.put(GLOBAL.USER_API + '/' + userID +
+            '/assign_interpreters/' + interpreters_id, options)
+            .map(this.extractData)
+            .catch((err) => { return this.handleError(err); });
+    }
 
     /*
       The Api should be to reset user password

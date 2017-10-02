@@ -196,6 +196,13 @@ defineSupportCode(({Given, When, Then}) => {
                 expect(val).to.be.eq(isDisplayed);
         });
     }
+    When(/^I can see the element with name '(.*)' is (.*)$/, isElementWithNameVisible);
+    function isElementWithNameVisible(text: string) {
+        return page.getElementByName(text).isPresent().then(val => {
+            expect(val).to.be.true;
+        });
+    }
+
 
     When(/^I can see the element of type '(.*)'  with text '(.*)'$/, isElementWithTextVisible);
     function isElementWithTextVisible(text: string) {
