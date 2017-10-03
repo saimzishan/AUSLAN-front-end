@@ -119,7 +119,18 @@ export class UserService extends ApiService {
             .catch((err) => { return this.handleError(err); });
 
     }
+    /*
+         The Api should be able to fetch basic data for interpreters.
+        */
+    fetchBasicDetailsForInterpreter(): Observable<Object> {
+        let headers = new Headers({'Accept': 'application/json',
+            'Content-Type': 'application/json'});
+        let options = new RequestOptions({ headers: headers });
+        return this.http.get(GLOBAL.USER_API_ENDPOINT + '/interpreters/basic_list' , options)
+            .map(this.extractData)
+            .catch((err) => { return this.handleError(err); });
 
+    }
     /*
       The Api should be get user by its ID (The Id should be email)
     */

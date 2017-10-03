@@ -15,6 +15,7 @@ export class InterpreterPopupComponent implements OnInit {
     @Input() title = '';
     @Input() selectedInterpreters = [];
     interpreterList = [];
+    checkedInterpreter = -1;
 
     ngOnInit() {
         this.fetchAllInterpreters();
@@ -30,22 +31,13 @@ export class InterpreterPopupComponent implements OnInit {
         this.dialogRef.close();
     }
 
-    removeInterpreter(interpreter_id) {
-        this.selectedInterpreters =
-            this.selectedInterpreters.filter(i => i === interpreter_id);
-    }
-
-    addInterpreter(interpreter_id) {
-        this.selectedInterpreters.push(interpreter_id);
-    }
-
     /* Hmm need a class as an api wrapper to throw in all such method, its anti-DRY*/
     fetchAllInterpreters() {
         this.spinnerService.requestInProcess(true);
-        this.userDataService.fetchUsersOfType('interpreters')
+        this.userDataService.fetchBasicDetailsForInterpreter()
             .subscribe((res: any) => {
                     if (res.status === 200) {
-                        this.interpreterList = res.data.users.filter(i => i.verified === true);
+                        this.interpreterList = res.data.users;
                     }
                     this.spinnerService.requestInProcess(false);
                 },
@@ -58,9 +50,12 @@ export class InterpreterPopupComponent implements OnInit {
     addSelectedInterpreter() {
         this.spinnerService.requestInProcess(true);
         this.userDataService.assignPreferredInterpreter(GLOBAL.currentUser.id,
-            this.selectedInterpreters)
+            [this.checkedInterpreter])
             .subscribe((res: any) => {
                     if (res.status === 200) {
+                        let selectedInterpreter =
+                            this.interpreterList.filter(i => i.id === this.checkedInterpreter);
+                        this.selectedInterpreters.push(selectedInterpreter);
                         this.notificationServiceBus.launchNotification(false,
                             'Interpreter Added Successfully');
 

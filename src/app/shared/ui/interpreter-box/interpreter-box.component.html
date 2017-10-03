@@ -5,7 +5,7 @@
         <form>
             <div name="interpreter_block" class="row ext">
                 <div class="form-field">
-                    <label>Do you want to manage {{isPreffered ? 'prefered' : 'blocked'}} interpreters?</label>
+                    <label>Do you want to add {{isPreffered ? 'prefered' : 'blocked'}} interpreters?</label>
                     <md-radio-group name="rd + {{isPreffered}}"
                             [(ngModel)]="needInterpreter">
                         <md-radio-button [value]=true>YES</md-radio-button>
@@ -20,7 +20,7 @@
                     </section>
                     <button *ngIf="needInterpreter" md-button name='btnManageInterpreter' (click)="manageInterpreter()">
                         <i class="inline-icon-add-file"></i>
-                        MANAGE INTERPRETER
+                         ADD INTERPRETER
                     </button>
 
                 </section>

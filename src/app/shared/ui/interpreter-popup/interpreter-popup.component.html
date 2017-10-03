@@ -1,4 +1,4 @@
-<div class="md-dialog">
+<div class="md-dialog add-interpreters">
   <md-dialog-content>
     <header>
      <h1>All Interpreters</h1>
@@ -6,10 +6,11 @@
     </header>
     <main>
       <section id="interpreters-list">
-        <section name="interpreters" *ngFor="let interpreter of selectedInterpreters;">
-          <img (click)="addInterpreter(interpreter.id)" src="{{interpreter.photo_url}}"  alt="">
+        <section name="interpreters" *ngFor="let interpreter of interpreterList;"
+                 [ngClass]="{'selected': interpreter.id === checkedInterpreter  }"
+                 (click)="checkedInterpreter = interpreter.id ;">
+          <img (click)="checkedInterpreter = interpreter.id ;" src="{{interpreter.photo_url}}"  alt="">
           <span>{{interpreter.first_name}} {{interpreter.last_name}}</span>
-          <button (click)="removeInterpreter(interpreter.id)"><i class="icon-close"></i></button>
         </section>
       </section>
     </main>
@@ -17,7 +18,7 @@
 
   <div>
     <md-dialog-actions>
-      <button name="yesBtn" (click)="addSelectedInterpreter()" class="button"> SELECT </button>
+      <button *ngIf="checkedInterpreter > -1" name="yesBtn" (click)="addSelectedInterpreter()" class="button"> SELECT </button>
       <button name="noBtn"  (click)="closeDialog()" class="button red"> CANCEL </button>
     </md-dialog-actions>
   </div>
