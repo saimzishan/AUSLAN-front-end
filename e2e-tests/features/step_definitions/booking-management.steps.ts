@@ -21,6 +21,7 @@ defineSupportCode(({Given, Then, When}) => {
     Given(/^There exist (\d+) bookings$/, Heroku.createBulkBookings);
     Given(/^One booking has client name as '(.*)'$/, Heroku.updateBookingWithClientName)
     Given(/^One booking has org name as '(.*)'$/, Heroku.updateBookingWithOrgName)
+    Given(/^One booking has suburb as '(.*)'$/, Heroku.updateBookingWithSuburb)
 //  BE ABLE TO VIEW BOOKING PAGE
     Then(/^I will be shown with bookings$/, bookingManagementPO.atleastABookingExists);
     Then(/^I store the booking count$/, bookingManagementPO.storeCurrentBookingCount);
@@ -80,6 +81,7 @@ defineSupportCode(({Given, Then, When}) => {
     When(/^I query booking with booking id$/, bookingManagementPO.queryBookingWithID)
     When(/^I query booking with client name '(.*)'$/, bookingManagementPO.queryBookingByClientName)
     When(/^I query booking with org name '(.*)'$/, bookingManagementPO.queryBookingByOrgName);
+    When(/^I query booking with suburb '(.*)'$/, bookingManagementPO.queryBookingBySuburb);
     When(/^I hover on the (.*) dropdown and select '(.*)'$/, bookingManagementPO.hoverOnTableHeader)
 
     Then(/^The cell of (.*) will be populated with (.*)$/, createBookingPO.checkTheDropDown);
@@ -94,6 +96,7 @@ defineSupportCode(({Given, Then, When}) => {
     Then(/^I see one row with the booking id$/, bookingManagementPO.bookingExistsWithId);
     Then(/^I see one row with client name '(.*)'$/, bookingManagementPO.bookingExistsWithClientName);
     Then(/^I see one row with org name '(.*)'$/, bookingManagementPO.bookingExistsWithOrgName);
+    Then(/^I see one row with suburb '(.*)'$/, bookingManagementPO.bookingExistsWithSuburb);
 
     // Then(/^I get the popup warning that is the non-standard booking$/, createBookingPO.popupForNonStandard)
 

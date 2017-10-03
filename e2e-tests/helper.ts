@@ -538,6 +538,11 @@ export class Heroku {
         Heroku.sendCommandToHeroku(command);
     }
 
+    static updateBookingWithSuburb(suburb: string) {
+        let command = 'Booking.last.address.update(suburb: "' + suburb + '")';
+        Heroku.sendCommandToHeroku(command);
+    }
+
     private static createBooking(int_required: number) {
         return new Object({
             'venue': 'Fed Square',

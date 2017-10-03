@@ -206,6 +206,12 @@ export class BookingManagementPage extends PageObject {
         bookingOrgNameInput.sendKeys(org_name);
         return bookingOrgNameForm.submit();
     }
+    queryBookingBySuburb = (suburb: string) => {
+        let bookingSuburbInput = this.getElementByCss('form input[name=suburb]');
+        let bookingSuburbForm = this.getParent(bookingSuburbInput);
+        bookingSuburbInput.sendKeys(suburb);
+        return bookingSuburbForm.submit();
+    }
     bookingExistsWithId = () => {
         let queriedID = this.queryIdBooking;
         let tblRows = this.getAllElementByCSS('table tbody tr');
@@ -228,6 +234,14 @@ export class BookingManagementPage extends PageObject {
         let orgNameTd = this.getElementByCss('table tbody tr:first-child td:nth-child(6)');
         return orgNameTd.getText().then((txt) => {
             return expect(txt).to.be.eq(org_name);
+        });
+    }
+    bookingExistsWithSuburb = (suburb: string) => {
+        let tblRows = this.getAllElementByCSS('table tbody tr');
+        expect(tblRows.count()).to.eventually.be.equal(1);
+        let suburbTd = this.getElementByCss('table tbody tr:first-child td:nth-child(8)');
+        return suburbTd.getText().then((txt) => {
+            return expect(txt).to.be.eq(suburb);
         });
     }
 }
