@@ -92,7 +92,7 @@ export class ProfileRegisterPage extends PageObject {
 
     verifyInterpreterPhoto = (index) => {
         let elm = this.getAllElementByCSS('section[name="interpreters"]');
-        return this.getElementInsideCSS(elm.get(index), 'img').count().then((cnt) => {
+        return this.getElementInsideCSS(elm.get(index - 1), 'img').count().then((cnt) => {
             expect(cnt).to.be.eq(1);
         });
     }
@@ -105,7 +105,7 @@ export class ProfileRegisterPage extends PageObject {
 
     addInterpreter = (index) => {
         let elm = this.getAllElementByCSS('section[name="interpreters"]');
-        return elm.get(index).click();
+        return elm.get(index - 1).click();
 
     }
     validateAlphabeticalOrder = () => {
@@ -123,7 +123,7 @@ export class ProfileRegisterPage extends PageObject {
     }
     removeInterpreter = (css, index) => {
         let elm = this.getAllElementByCSS('div.interpreter-list > div.delete');
-        return elm.get(index).click();
+        return elm.get(index - 1).click();
 
     }
     userCreated = (type: string) => {
