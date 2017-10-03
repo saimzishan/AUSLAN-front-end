@@ -156,7 +156,7 @@ Feature: Create Profile
     Then I wait for 1000 milli-seconds
     Then I can see the element with name 'interpreter_block_prefered' is 'visible'
     Then I can see the element with css '.btnYes_prefered' is 'visible'
-    Then I can see the element with css 'div.row ext' is 'visible'
+    Then I can see the element with css 'div.row.ext' is 'visible'
     When I click on element with css '.btnYes_prefered'
     Then I can see the element with name 'booking-preferences' is 'visible'
     And  I click on BUTTON name 'btnManageInterpreter'
