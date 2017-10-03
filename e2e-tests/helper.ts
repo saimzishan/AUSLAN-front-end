@@ -528,6 +528,11 @@ export class Heroku {
         Heroku.sendCommandToHeroku(command);
     }
 
+    static updateBookingWithClientName(client_name: string) {
+        let command = 'Booking.last.update(deaf_persons_first_name: "' + client_name + '")';
+        Heroku.sendCommandToHeroku(command);
+    }
+
     private static createBooking(int_required: number) {
         return new Object({
             'venue': 'Fed Square',

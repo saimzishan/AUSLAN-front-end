@@ -194,6 +194,12 @@ export class BookingManagementPage extends PageObject {
             return bookingIdForm.submit();
         });
     }
+    queryBookingByClientName = (clientName: string) => {
+        let bookingClientNameInput = this.getElementByCss('form input[name=client_name]');
+        let bookingClientNameForm = this.getParent(bookingClientNameInput);
+        bookingClientNameInput.sendKeys(clientName);
+        return bookingClientNameForm.submit();
+    }
     bookingExistsWithId = () => {
         let queriedID = this.queryIdBooking;
         let tblRows = this.getAllElementByCSS('table tbody tr');
@@ -201,6 +207,14 @@ export class BookingManagementPage extends PageObject {
         return this.getFirstBookingID().then((txt) => {
             return expect(queriedID).to.be.eq(txt[0]);
         });
+    }
+    bookingExistsWithClientName = (client_name: string) => {
+        let tblRows = this.getAllElementByCSS('table tbody tr');
+        expect(tblRows.count()).to.eventually.be.equal(1);
+        let clientNameTd = this.getElementByCss('table tbody tr:first-child td:nth-child(7)');
+        return clientNameTd.getText().then((txt) => {
+            return expect(txt.split(' ')[0]).to.be.eq(client_name);
+        })
     }
 }
 

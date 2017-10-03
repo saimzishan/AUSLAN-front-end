@@ -19,6 +19,7 @@ defineSupportCode(({Given, Then, When}) => {
 
     Given(/^The booking has status '(.*)'$/, Heroku.updateBookingWithStatus);
     Given(/^There exist (\d+) bookings$/, Heroku.createBulkBookings);
+    Given(/^One booking has client name as '(.*)'$/, Heroku.updateBookingWithClientName)
 //  BE ABLE TO VIEW BOOKING PAGE
     Then(/^I will be shown with bookings$/, bookingManagementPO.atleastABookingExists);
     Then(/^I store the booking count$/, bookingManagementPO.storeCurrentBookingCount);
@@ -76,6 +77,7 @@ defineSupportCode(({Given, Then, When}) => {
 
     When(/^I click on option (.*) of (.*) for (.*)/, createBookingPO.clickOnOption);
     When(/^I query booking with booking id$/, bookingManagementPO.queryBookingWithID)
+    When(/^I query booking with client name '(.*)'$/, bookingManagementPO.queryBookingByClientName)
     When(/^I hover on the (.*) dropdown and select '(.*)'$/, bookingManagementPO.hoverOnTableHeader)
 
     Then(/^The cell of (.*) will be populated with (.*)$/, createBookingPO.checkTheDropDown);
@@ -88,6 +90,7 @@ defineSupportCode(({Given, Then, When}) => {
 
     Then(/^I (.*) see the (.*) field$/, createBookingPO.checkTheFieldExist);
     Then(/^I see one row with the booking id$/, bookingManagementPO.bookingExistsWithId);
+    Then(/^I see one row with client name '(.*)'$/, bookingManagementPO.bookingExistsWithClientName);
 
     // Then(/^I get the popup warning that is the non-standard booking$/, createBookingPO.popupForNonStandard)
 
