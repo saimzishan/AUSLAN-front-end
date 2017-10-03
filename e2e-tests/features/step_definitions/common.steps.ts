@@ -188,7 +188,7 @@ defineSupportCode(({Given, When, Then}) => {
     }
     /* Need to recheck this method*/
     When(/^I can see the button state with css '(.*)' is '(.*)'$/, isButtonWithCSSVisible);
-    When(/^I can see the element with css '(.*)' is (.*)$/, isButtonWithCSSVisible);
+    When(/^I can see the element with css '(.*)' is '(.*)'$/, isButtonWithCSSVisible);
     function isButtonWithCSSVisible(css: string, visible: string) {
         let isDisplayed = visible.toLowerCase() === 'visible';
         return page.getElementByCss(css).isPresent().then(val => {
