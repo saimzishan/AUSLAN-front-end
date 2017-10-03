@@ -7,8 +7,8 @@
     <main>
       <section id="interpreters-list">
         <section name="interpreters" *ngFor="let interpreter of interpreterList;"
-                 [ngClass]="{'selected': interpreter.id === checkedInterpreter  }"
-                 (click)="checkedInterpreter = interpreter.id ;">
+                 [ngClass]="{'selected': interpreter.id === checkedInterpreter || isAlreadyAdded(interpreter.id)  }"
+                 (click)="isInterpreterSelectable(interpreter.id)">
           <img (click)="checkedInterpreter = interpreter.id ;" src="{{interpreter.photo_url}}"  alt="">
           <span>{{interpreter.first_name}} {{interpreter.last_name}}</span>
         </section>
@@ -18,7 +18,7 @@
 
   <div>
     <md-dialog-actions>
-      <button *ngIf="checkedInterpreter > -1" name="yesBtn" (click)="addSelectedInterpreter()" class="button"> SELECT </button>
+      <button *ngIf="checkedInterpreter > -1" name="selectBtn" (click)="addSelectedInterpreter()" class="button"> SELECT </button>
       <button name="noBtn"  (click)="closeDialog()" class="button red"> CANCEL </button>
     </md-dialog-actions>
   </div>

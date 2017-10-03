@@ -150,29 +150,34 @@ Feature: Create Profile
 
 # --------------------------------------- AUSLAN1-379 START ------------------------------------------------
   @runThis
-  Scenario: INDIVIDUAL-CLIENT sign up with prefered-interpreters
+  Scenario: INDIVIDUAL-CLIENT sign up with prefered-interpreters, Interpreter and Interpreter1 and Interpreter2 exists
     And I click on button 'Client'
     And I will be taken to the 'INDIVIDUALCLIENT Signup' page
-    Then I can see the element with name 'interpreter_block' is 'visible'
-    When I click on BUTTON name 'btnYes'
+    Then I wait for 1000 milli-seconds
+    Then I can see the element with name 'interpreter_block_prefered' is 'visible'
+    Then I can see the element with css 'md-radio-button > md-radio-button btnYes_prefered' is 'visible'
+    Then I can see the element with css 'div.row ext' is 'visible'
+    When I click on element with css '.btnYes_prefered'
     Then I can see the element with name 'booking-preferences' is 'visible'
-    And  I click on BUTTON name 'btnAddInterpreter'
+    And  I click on BUTTON name 'btnManageInterpreter'
     Then  I can see the element with css 'section.interpreters-list' is 'visible'
     Then I can see '3' validated interpreters
     And I can see interpreters in alphabetical order
-    And I verify '1' interpreter is 'Dragana'
-    And I verify '2' interpreter is 'Dragana_2'
-    And I verify '3' interpreter is 'Dragana_3'
+    And I verify '1' interpreter is 'dragana'
+    And I verify '2' interpreter is 'dragana_2'
+    And I verify '3' interpreter is 'dragana_3'
+    Then I can see the element with css 'div.md-dialog' is 'visible'
+    Then I can see the element with css 'section[name="interpreters"]' is 'visible'
     When I click on '1' interpreter
-    Then I can see the element with css 'md-dialog.select_interpreter > div.interpreter.block.checked' is 'visible'
-    Then I can see the element with css 'div.interpreter.block.checked' is 'visible'
+    Then I can see the element with css 'section[name="interpreters"].selected' is 'visible'
+    Then I click on BUTTON name 'selectBtn'
+    Then I can see the element with css 'div.md-dialog' is 'hidden'
+    And  I click on BUTTON name 'btnManageInterpreter'
     When I click on '2' interpreter
-    Then I can see the element with css 'md-dialog.select_interpreter > div.interpreter.block.checked' is 'visible'
-    Then I can see the element with css 'div.interpreter.block.checked' is 'visible'
-    When I click on '3' interpreter
-    Then I can see the element with css 'md-dialog.select_interpreter > div.interpreter.block.checked' is 'visible'
-    Then I can see the element with css 'div.interpreter.block.checked' is 'visible'
-    Then I can see the element of type 'div'  with text 'Add Interpreter'
+    Then I can see the element with css 'section[name="interpreters"].selected' is 'visible'
+    Then I click on BUTTON name 'selectBtn'
+    Then I can see the element with css '.md-dialog.add-interpreters' is 'hidden'
+    And  I click on BUTTON name 'btnManageInterpreter'
     When I fill all the details correctly for -> 'INDIVIDUALCLIENT' with the pref communication is 'SMS AND EMAIL'
     Then I move to element name 'tnc'
     Then I click on checkbox name 'tnc'

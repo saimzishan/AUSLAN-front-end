@@ -102,7 +102,6 @@ export class Organisational extends User {
     public special_instructions = '';
     public billingAddressIsSame = true;
     public prefferedInterpreters = [];
-    public blockedInterpreters = [];
 
     constructor(data) {
         super(data);
@@ -141,6 +140,7 @@ export class OrganisationalRepresentative extends Organisational {
                 'O:' + this.reffered_other : this.reffered_by,
             'customer_reference': this.customer_ref,
             'communication_preference': this.preferred_contact_method,
+            'preference_allocations_attributes': this.prefferedInterpreters,
             'organisation_attributes':
                 {
                     'abn': this.abn,
@@ -202,6 +202,7 @@ export class OrganisationalRepresentative extends Organisational {
         this.reffered_other = this.reffered_by === 'OTHER' ?
             obj.discovery_of_auslan.replaceAll('O:') : '';
         this.customer_ref = obj.customer_reference;
+        this.prefferedInterpreters = obj.preference_allocations_attributes;
         this.preferred_contact_method = obj.communication_preference;
         this.address_attributes = obj.organisation.address_attributes;
         this.organisation_primary_contact.first_name = obj.organisation.billing_account.primary_contact_first_name || '';
@@ -293,6 +294,7 @@ export class IndividualClient extends User {
             'business_hours_phone': this.phone,
             'address_attributes': this.address_attributes,
             'communication_preference': this.preferred_contact_method,
+            'preference_allocations_attributes': this.prefferedInterpreters,
             'billing_account_attributes': {
                 'id': this.individual_client_billing_account.id,
                 'primary_contact_first_name': this.individual_client_primary_contact.first_name,
@@ -326,6 +328,7 @@ export class IndividualClient extends User {
         this.eaf_end_date = obj.eaf_end_date;
         this.special_instructions = obj.special_instructions;
         this.preferred_contact_method = obj.communication_preference;
+        this.prefferedInterpreters = obj.preference_allocations_attributes;
         this.reffered_by = Boolean(obj.discovery_of_auslan) ? obj.discovery_of_auslan.startsWith('O:') ?
             'Other' : obj.discovery_of_auslan : '';
         this.reffered_other = this.reffered_by === 'OTHER' ?

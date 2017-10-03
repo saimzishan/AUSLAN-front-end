@@ -13,7 +13,7 @@ declare var $: any;
   styleUrls: ['./app.component.css']
 })
 export class AppComponent  implements OnDestroy, AfterViewChecked {
-  public isRequesting: boolean;
+  public isRequesting = false;
   private sub: any;
 
   public constructor(public spinnerService: SpinnerService,

@@ -85,7 +85,7 @@ export class ProfileRegisterPage extends PageObject {
     verifyInterpreterName = (index, expected_name) => {
         let elm = this.getAllElementByCSS('section[name="interpreters"]');
 
-        return elm.get(index).getText().then((txt) => {
+        return elm.get(index - 1).getText().then((txt) => {
             expect(txt).to.contain(expected_name);
         });
     }
@@ -99,7 +99,7 @@ export class ProfileRegisterPage extends PageObject {
 
     countInterpreter = (count) => {
         return this.getAllElementByCSS('section[name="interpreters"]').count().then((cnt) => {
-            expect(cnt).to.be.eq(count);
+            expect(cnt).to.be.eq(+count);
         });
     }
 
@@ -118,7 +118,7 @@ export class ProfileRegisterPage extends PageObject {
         }).then(function(){
             sorted = unSorted.slice();
             sorted.sort();
-            expect(sorted).to.be.eq(unSorted);
+            expect(sorted.toString()).to.be.eq(unSorted.toString());
         });
     }
     removeInterpreter = (css, index) => {

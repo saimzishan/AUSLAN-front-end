@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
 import {MdDialogRef} from '@angular/material';
 import {UserService} from '../../../api/user.service';
 import {SpinnerService} from '../../../spinner/spinner.service';
@@ -12,8 +12,8 @@ import {GLOBAL} from '../../global';
 })
 export class InterpreterPopupComponent implements OnInit {
 
-    @Input() title = '';
-    @Input() selectedInterpreters = [];
+    selectedInterpreters = [];
+    isPreffered = false;
     interpreterList = [];
     checkedInterpreter = -1;
 
@@ -31,9 +31,19 @@ export class InterpreterPopupComponent implements OnInit {
         this.dialogRef.close();
     }
 
+    isAlreadyAdded(interpreter_id) {
+        return this.selectedInterpreters.filter((i) => i.id === interpreter_id).length > 0;
+    }
+
+    isInterpreterSelectable(interpreter_id) {
+        this.checkedInterpreter =
+            this.isAlreadyAdded(interpreter_id) ? -1 : interpreter_id;
+    }
+
     /* Hmm need a class as an api wrapper to throw in all such method, its anti-DRY*/
     fetchAllInterpreters() {
-        this.spinnerService.requestInProcess(true);
+        // This call is creating problem in console, why ?
+        this.spinnerService.requestInProcess(false);
         this.userDataService.fetchBasicDetailsForInterpreter()
             .subscribe((res: any) => {
                     if (res.status === 200) {
@@ -47,44 +57,13 @@ export class InterpreterPopupComponent implements OnInit {
                     this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
                 });
     }
+
     addSelectedInterpreter() {
-        this.spinnerService.requestInProcess(true);
-        this.userDataService.assignPreferredInterpreter(GLOBAL.currentUser.id,
-            [this.checkedInterpreter])
-            .subscribe((res: any) => {
-                    if (res.status === 200) {
-                        let selectedInterpreter =
-                            this.interpreterList.filter(i => i.id === this.checkedInterpreter);
-                        this.selectedInterpreters.push(selectedInterpreter);
-                        this.notificationServiceBus.launchNotification(false,
-                            'Interpreter Added Successfully');
-
-                    }
-                    this.spinnerService.requestInProcess(false);
-
-                },
-                err => {
-                    this.spinnerService.requestInProcess(false);
-                    let e = err.json() || 'There is some error on server side';
-                    this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
-                });
+        let selectedInterpreter =
+            this.interpreterList.filter(i => i.id === this.checkedInterpreter)[0];
+        selectedInterpreter.preference = this.isPreffered ? 'preferred' : 'blocked';
+        this.selectedInterpreters.push(selectedInterpreter);
+        this.closeDialog();
     }
-    removeSelectedInterpreter(interpreter_id) {
-        this.spinnerService.requestInProcess(true);
-        this.userDataService.unassignPreferredInterpreter(GLOBAL.currentUser.id,
-            [interpreter_id])
-            .subscribe((res: any) => {
-                    if (res.status === 200) {
-                        this.notificationServiceBus.launchNotification(false,
-                            'Interpreter Removed Successfully');
-                    }
-                    this.spinnerService.requestInProcess(false);
 
-                },
-                err => {
-                    this.spinnerService.requestInProcess(false);
-                    let e = err.json() || 'There is some error on server side';
-                    this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
-                });
-    }
 }
