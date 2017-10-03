@@ -200,6 +200,12 @@ export class BookingManagementPage extends PageObject {
         bookingClientNameInput.sendKeys(clientName);
         return bookingClientNameForm.submit();
     }
+    queryBookingByOrgName = (org_name: string) => {
+        let bookingOrgNameInput = this.getElementByCss('form input[name=organisation]');
+        let bookingOrgNameForm = this.getParent(bookingOrgNameInput);
+        bookingOrgNameInput.sendKeys(org_name);
+        return bookingOrgNameForm.submit();
+    }
     bookingExistsWithId = () => {
         let queriedID = this.queryIdBooking;
         let tblRows = this.getAllElementByCSS('table tbody tr');
@@ -214,7 +220,15 @@ export class BookingManagementPage extends PageObject {
         let clientNameTd = this.getElementByCss('table tbody tr:first-child td:nth-child(7)');
         return clientNameTd.getText().then((txt) => {
             return expect(txt.split(' ')[0]).to.be.eq(client_name);
-        })
+        });
+    }
+    bookingExistsWithOrgName = (org_name: string) => {
+        let tblRows = this.getAllElementByCSS('table tbody tr');
+        expect(tblRows.count()).to.eventually.be.equal(1);
+        let orgNameTd = this.getElementByCss('table tbody tr:first-child td:nth-child(6)');
+        return orgNameTd.getText().then((txt) => {
+            return expect(txt).to.be.eq(org_name);
+        });
     }
 }
 

@@ -533,6 +533,11 @@ export class Heroku {
         Heroku.sendCommandToHeroku(command);
     }
 
+    static updateBookingWithOrgName(org_name: string) {
+        let command = 'b = Booking.last;o = OrganisationalRepresentative.last;o.organisation.update(name: "' + org_name + '");o.save;b.bookable = o;b.save';
+        Heroku.sendCommandToHeroku(command);
+    }
+
     private static createBooking(int_required: number) {
         return new Object({
             'venue': 'Fed Square',
