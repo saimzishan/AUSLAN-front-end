@@ -18,8 +18,8 @@ import {FormGroup, NgForm} from '@angular/forms';
 })
 export class BookingListComponent {
     @Input('bookingList') bookingList: Array<Booking> = [];
-    @Input('bookingFilter') bookingFilter: BookingFilter = {};
     @Output() onEditBooking = new EventEmitter<Booking>();
+    bookingFilter: BookingFilter = {};
     private validKeys(list): Array<string> {
         let keys = Object.keys(list);
         return keys.slice(keys.length / 2);
@@ -76,6 +76,9 @@ export class BookingListComponent {
     stateList() {
         let keys = Object.keys(BOOKING_STATE);
         return keys.slice(keys.length / 2);
+    }
+    filterStatus() {
+        return BOOKING_STATUS[this.bookingFilter.booking_status];
     }
     private formatterValueFor(field: string, value: string) {
         let formattedValue: string;

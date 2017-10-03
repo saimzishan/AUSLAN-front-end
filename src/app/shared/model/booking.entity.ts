@@ -12,7 +12,7 @@ export class Booking {
     public requested_by: Contact = new Contact();
     public last_updated: Date;
     public update_by: string;
-    public status; string;
+    public status: string;
     public deaf_person: DEAFContact = new DEAFContact();
     public raw_nature_of_appointment: string;
     public nature_of_appointment: BOOKING_NATURE;
@@ -27,6 +27,7 @@ export class Booking {
     public client: OrganisationalRepresentative = new OrganisationalRepresentative({});
     public documents_attributes = [];
     public versions: Array<BookingVersion> = [];
+    public organisation_name: string;
     // Is it a limitation on interpreters invitation.
 
     constructor() {
@@ -53,6 +54,7 @@ export class Booking {
         this.raw_nature_of_appointment = '';
         this.specific_nature_of_appointment = '';
         this.state = BOOKING_STATE.None;
+        this.organisation_name = '';
     }
 
     clean(theObject) {
@@ -109,6 +111,7 @@ export class Booking {
         this.specific_nature_of_appointment = data.specific_nature_of_appointment;
         let state: string = data.state;
         this.state = BOOKING_STATE[state];
+        this.organisation_name = data.created_by.organisation;
 
         if (Boolean(data.billing_account_attributes)) {
             this.client.organisation_primary_contact.first_name =
