@@ -155,12 +155,12 @@ Feature: Create Profile
     And I will be taken to the 'INDIVIDUALCLIENT Signup' page
     Then I wait for 1000 milli-seconds
     Then I can see the element with name 'interpreter_block_prefered' is 'visible'
-    Then I can see the element with css 'md-radio-button > md-radio-button btnYes_prefered' is 'visible'
+    Then I can see the element with css '.btnYes_prefered' is 'visible'
     Then I can see the element with css 'div.row ext' is 'visible'
     When I click on element with css '.btnYes_prefered'
     Then I can see the element with name 'booking-preferences' is 'visible'
     And  I click on BUTTON name 'btnManageInterpreter'
-    Then  I can see the element with css 'section.interpreters-list' is 'visible'
+    Then  I can see the element with css 'section#interpreters-list' is 'visible'
     Then I can see '3' validated interpreters
     And I can see interpreters in alphabetical order
     And I verify '1' interpreter is 'dragana'

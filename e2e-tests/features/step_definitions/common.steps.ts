@@ -186,7 +186,6 @@ defineSupportCode(({Given, When, Then}) => {
             expect(val).to.be.eq(isEnabled);
         });
     }
-    /* Need to recheck this method*/
     When(/^I can see the button state with css '(.*)' is '(.*)'$/, isButtonWithCSSVisible);
     When(/^I can see the element with css '(.*)' is '(.*)'$/, isButtonWithCSSVisible);
     function isButtonWithCSSVisible(css: string, visible: string) {
