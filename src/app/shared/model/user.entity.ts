@@ -83,7 +83,7 @@ export class User {
     }
 }
 
-
+/* This needs to be fixed*/
 export class Organisational extends User {
     public org_id: number;
     public abn: number;
