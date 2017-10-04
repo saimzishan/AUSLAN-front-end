@@ -62,6 +62,7 @@ export class InterpreterPopupComponent implements OnInit {
         let selectedInterpreter =
             this.interpreterList.filter(i => i.id === this.checkedInterpreter)[0];
         selectedInterpreter.preference = this.isPreffered ? 'preferred' : 'blocked';
+        selectedInterpreter.interpreter_id = selectedInterpreter.id;
         this.selectedInterpreters.push(selectedInterpreter);
         this.closeDialog();
     }

@@ -153,7 +153,7 @@ Feature: Create Profile
   Scenario: INDIVIDUAL-CLIENT sign up with prefered-interpreters, Interpreter and Interpreter1 and Interpreter2 exists
     And I click on button 'Client'
     And I will be taken to the 'INDIVIDUALCLIENT Signup' page
-    Then I wait for 1000 milli-seconds
+    Then I wait for 1500 milli-seconds
     Then I move to element name 'tnc'
     Then I click on checkbox name 'tnc'
     Then I wait for 1500 milli-seconds
@@ -174,23 +174,23 @@ Feature: Create Profile
     When I click on '1' interpreter
     Then I can see the element with css 'section[name="interpreters"].selected' is 'visible'
     Then I click on BUTTON name 'selectBtn'
-    Then I wait for 1000 milli-seconds
+    Then I wait for 1500 milli-seconds
     Then I can see the element with css 'div.md-dialog' is 'hidden'
     And  I click on BUTTON name 'btnManageInterpreter'
     Then I can see the element with css 'div.md-dialog' is 'visible'
     When I click on '2' interpreter
     Then I can see the element with css 'section[name="interpreters"].selected' is 'visible'
     Then I click on BUTTON name 'selectBtn'
-    Then I wait for 1000 milli-seconds
+    Then I wait for 1500 milli-seconds
     Then I can see the element with css 'div.md-dialog' is 'hidden'
     When I fill all the details correctly for -> 'INDIVIDUALCLIENT' with the pref communication is 'SMS AND EMAIL'
     Then 'INDIVIDUALCLIENT' will be created
 
   @runThis
-  Scenario: An org rep can be created
+  Scenario: An org rep can be created, Interpreter and Interpreter1 and Interpreter2 exists
     And I click on button 'Organisation'
     And I will be taken to the 'ORGANISATION Signup' page
-    Then I wait for 1000 milli-seconds
+    Then I wait for 1500 milli-seconds
     Then I move to element name 'tnc'
     Then I click on checkbox name 'tnc'
     Then I wait for 1500 milli-seconds
@@ -211,16 +211,89 @@ Feature: Create Profile
     When I click on '1' interpreter
     Then I can see the element with css 'section[name="interpreters"].selected' is 'visible'
     Then I click on BUTTON name 'selectBtn'
-    Then I wait for 1000 milli-seconds
+    Then I wait for 1500 milli-seconds
     Then I can see the element with css 'div.md-dialog' is 'hidden'
     And  I click on BUTTON name 'btnManageInterpreter'
     Then I can see the element with css 'div.md-dialog' is 'visible'
     When I click on '2' interpreter
     Then I can see the element with css 'section[name="interpreters"].selected' is 'visible'
     Then I click on BUTTON name 'selectBtn'
-    Then I wait for 1000 milli-seconds
+    Then I wait for 1500 milli-seconds
     Then I can see the element with css 'div.md-dialog' is 'hidden'
-    Then I click on BUTTON name 'register_user'
+    When I fill all the details correctly for -> 'ORGANISATIONALREPRESENTATIVE' with the pref communication is 'SMS AND EMAIL'
     Then 'ORGANISATIONALREPRESENTATIVE' will be created
 
+  @runThis
+  Scenario: INDIVIDUAL-CLIENT sign up with prefered-interpreters, Interpreter and Interpreter1 and Interpreter2 exists
+    And I click on button 'Client'
+    And I will be taken to the 'INDIVIDUALCLIENT Signup' page
+    Then I wait for 1500 milli-seconds
+    Then I move to element name 'tnc'
+    Then I click on checkbox name 'tnc'
+    Then I wait for 1500 milli-seconds
+    Then I can see the element with name 'interpreter_block_blocked' is 'visible'
+    Then I can see the element with css '.btnYes_blocked' is 'visible'
+    Then I can see the element with css 'div.row.ext' is 'visible'
+    When I click on element with css '.btnYes_blocked'
+    Then I can see the element with name 'booking-preferences' is 'visible'
+    And  I click on BUTTON name 'btnManageInterpreter'
+    Then I can see the element with css 'div.md-dialog' is 'visible'
+    Then  I can see the element with css 'section#interpreters-list' is 'visible'
+    Then I can see '3' validated interpreters
+    And I can see interpreters in alphabetical order
+    And I verify '1' interpreter is 'dragana'
+    And I verify '2' interpreter is 'dragana_2'
+    And I verify '3' interpreter is 'dragana_3'
+    Then I can see the element with css 'section[name="interpreters"]' is 'visible'
+    When I click on '1' interpreter
+    Then I can see the element with css 'section[name="interpreters"].selected' is 'visible'
+    Then I click on BUTTON name 'selectBtn'
+    Then I wait for 1500 milli-seconds
+    Then I can see the element with css 'div.md-dialog' is 'hidden'
+    And  I click on BUTTON name 'btnManageInterpreter'
+    Then I can see the element with css 'div.md-dialog' is 'visible'
+    When I click on '2' interpreter
+    Then I can see the element with css 'section[name="interpreters"].selected' is 'visible'
+    Then I click on BUTTON name 'selectBtn'
+    Then I wait for 1500 milli-seconds
+    Then I can see the element with css 'div.md-dialog' is 'hidden'
+    When I fill all the details correctly for -> 'INDIVIDUALCLIENT' with the pref communication is 'SMS AND EMAIL'
+    Then 'INDIVIDUALCLIENT' will be created
+
+  @runThis
+  Scenario: An org rep can be created, Interpreter and Interpreter1 and Interpreter2 exists
+    And I click on button 'Organisation'
+    And I will be taken to the 'ORGANISATION Signup' page
+    Then I wait for 1500 milli-seconds
+    Then I move to element name 'tnc'
+    Then I click on checkbox name 'tnc'
+    Then I wait for 1500 milli-seconds
+    Then I can see the element with name 'interpreter_block_blocked' is 'visible'
+    Then I can see the element with css '.btnYes_blocked' is 'visible'
+    Then I can see the element with css 'div.row.ext' is 'visible'
+    When I click on element with css '.btnYes_blocked'
+    Then I can see the element with name 'booking-preferences' is 'visible'
+    And  I click on BUTTON name 'btnManageInterpreter'
+    Then I can see the element with css 'div.md-dialog' is 'visible'
+    Then  I can see the element with css 'section#interpreters-list' is 'visible'
+    Then I can see '3' validated interpreters
+    And I can see interpreters in alphabetical order
+    And I verify '1' interpreter is 'dragana'
+    And I verify '2' interpreter is 'dragana_2'
+    And I verify '3' interpreter is 'dragana_3'
+    Then I can see the element with css 'section[name="interpreters"]' is 'visible'
+    When I click on '1' interpreter
+    Then I can see the element with css 'section[name="interpreters"].selected' is 'visible'
+    Then I click on BUTTON name 'selectBtn'
+    Then I wait for 1500 milli-seconds
+    Then I can see the element with css 'div.md-dialog' is 'hidden'
+    And  I click on BUTTON name 'btnManageInterpreter'
+    Then I can see the element with css 'div.md-dialog' is 'visible'
+    When I click on '2' interpreter
+    Then I can see the element with css 'section[name="interpreters"].selected' is 'visible'
+    Then I click on BUTTON name 'selectBtn'
+    Then I wait for 1500 milli-seconds
+    Then I can see the element with css 'div.md-dialog' is 'hidden'
+    When I fill all the details correctly for -> 'ORGANISATIONALREPRESENTATIVE' with the pref communication is 'SMS AND EMAIL'
+    Then 'ORGANISATIONALREPRESENTATIVE' will be created
 # --------------------------------------- AUSLAN1-379 END ------------------------------------------------
