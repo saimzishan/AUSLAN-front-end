@@ -194,10 +194,10 @@ defineSupportCode(({Given, When, Then}) => {
                 expect(val).to.be.eq(isDisplayed);
         });
     }
-    When(/^I can count the element with css '(.*)' to be '(.*)'$/, elementCount);
-    function elementCount(css: string, count: string) {
-        return page.getAllElementByCSS(css).count().then(val => {
-            expect(val).to.be.eq(+count);
+    When(/^I can count the element with css '(.*)' to be '(.*)'$/, elementWithCSSCount);
+    function elementWithCSSCount(css: string, count: string) {
+        return page.getAllElementByCSS(css).count().then((cnt) => {
+            expect(cnt).to.be.eq(+count);
         });
     }
     When(/^I can see the element with name '(.*)' is '(.*)'$/, isElementWithNameVisible);
