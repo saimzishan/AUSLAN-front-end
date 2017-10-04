@@ -28,8 +28,7 @@ export class InterpreterBoxComponent implements OnInit {
     }
 
     checkInterpreterPreference (interpreter) {
-        let res = interpreter.preference === (this.isPreffered ? 'preferred' : 'blocked');
-        return res;
+        return interpreter.preference === (this.isPreffered ? 'preferred' : 'blocked');
     }
 
     manageInterpreter() {

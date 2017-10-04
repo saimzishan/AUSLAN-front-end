@@ -47,8 +47,17 @@ export class InterpreterPopupComponent implements OnInit {
         this.userDataService.fetchBasicDetailsForInterpreter()
             .subscribe((res: any) => {
                     if (res.status === 200) {
-                        this.interpreterList = res.data.users.sort( (a, b) =>
-                            a.first_name[0] < b.first_name[0] );
+                        this.interpreterList = res.data.users.sort( function(a, b){
+                            let nameA = a.first_name.toLowerCase();
+                            let nameB = b.first_name.toLowerCase();
+                            if (nameA < nameB) { // sort string ascending
+                                return -1;
+                            }
+                            if (nameA > nameB) {
+                                return 1;
+                            }
+                            return 0; // default return value (no sorting)
+                        });
                     }
                     this.spinnerService.requestInProcess(false);
                 },

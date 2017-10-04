@@ -4,7 +4,7 @@
     <main>
         <form name="{{isPreffered ? 'interpreter_block_prefered' : 'interpreter_block_blocked'}}">
             <div class="row ext">
-                <!-- div has no name property -->
+                <!-- div has no name property to bind -- big surprise -->
                 <div class="form-field">
                     <label>Do you want to add {{isPreffered ? 'prefered' : 'blocked'}} interpreters?</label>
                     <md-radio-group name="{{'rdNeedInterpreter_' + isPreffered}} "
