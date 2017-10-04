@@ -41,12 +41,12 @@ describe('BookingListComponent' ,  () => {
       imports: [RouterTestingModule, FormsModule]
     })
     .compileComponents();
-    let b = new Booking();
-    b.fromJSON(data);
-    mock_booking_list.push(b);
   }));
 
   beforeEach(() => {
+    let b = new Booking();
+    b.fromJSON(data);
+    mock_booking_list.push(b);
     fixture = TestBed.createComponent(BookingListComponent);
     component = fixture.componentInstance;
     component.bookingList = mock_booking_list;
