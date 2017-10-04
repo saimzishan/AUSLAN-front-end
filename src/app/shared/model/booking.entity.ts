@@ -54,7 +54,6 @@ export class Booking {
         this.raw_nature_of_appointment = '';
         this.specific_nature_of_appointment = '';
         this.state = BOOKING_STATE.None;
-        this.organisation_name = '';
     }
 
     clean(theObject) {
@@ -111,7 +110,6 @@ export class Booking {
         this.specific_nature_of_appointment = data.specific_nature_of_appointment;
         let state: string = data.state;
         this.state = BOOKING_STATE[state];
-        this.organisation_name = data.created_by.organisation;
 
         if (Boolean(data.billing_account_attributes)) {
             this.client.organisation_primary_contact.first_name =

@@ -37,6 +37,7 @@ describe('BookingListComponent' ,  () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations :  [ BookingListComponent, PrettyIDPipe ],
+
       imports: [RouterTestingModule, FormsModule]
     })
     .compileComponents();

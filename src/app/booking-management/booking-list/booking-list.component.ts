@@ -8,7 +8,6 @@ import {GLOBAL} from '../../shared/global';
 import {Interpreter, OrganisationalRepresentative} from '../../shared/model/user.entity';
 import {BookingInterpreter} from '../../shared/model/contact.entity';
 import {BookingFilter} from '../../shared/model/booking-filter.interface';
-import {BookingComponent} from '../booking.component';
 import {FormGroup, NgForm} from '@angular/forms';
 
 @Component({
@@ -18,18 +17,14 @@ import {FormGroup, NgForm} from '@angular/forms';
 })
 export class BookingListComponent {
     @Input('bookingList') bookingList: Array<Booking> = [];
-    @Output() onEditBooking = new EventEmitter<Booking>();
+    @Output() onBookingFilter = new EventEmitter<URLSearchParams>();
     bookingFilter: BookingFilter = {};
     private validKeys(list): Array<string> {
         let keys = Object.keys(list);
         return keys.slice(keys.length / 2);
     };
 
-    constructor(public router: Router, protected bookingComponent: BookingComponent) {
-    }
-
-    onBookingSelect(booking: Booking) {
-        this.onEditBooking.emit(booking);
+    constructor(public router: Router) {
     }
 
     underScoreToSpaces(str: string) {
@@ -101,6 +96,6 @@ export class BookingListComponent {
                 params.set('filter[' + k + ']', this.bookingFilter[k]);
             }
         }
-        this.bookingComponent.fetchBookings(params);
+        this.onBookingFilter.emit(params);
     }
 }
