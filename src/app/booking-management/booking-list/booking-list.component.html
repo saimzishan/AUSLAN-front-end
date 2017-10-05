@@ -12,45 +12,57 @@
                 </th>
                 <th width="5%">
                     <span class="order asc">Job</span>
-                    <input type="text" name="job">
+                    <form #filterByBookingIds="ngForm" class="common-form compact" (ngSubmit)="filter('booking_ids', filterByBookingIds.value.booking_ids)" novalidate>
+                        <input type="text" name="booking_ids" [(ngModel)]="bookingFilter.booking_ids">
+                    </form>
                 </th>
                 <th width="7%">
                     <span class="order asc">Status</span>
-                    <ul class="dropdown menu custom" data-dropdown-menu>
+                    <ul class="dropdown menu custom" id="booking-status" data-dropdown-menu>
                         <li>
-                            <a href="javascript:void(0)">All</a>
+                            <a href="javascript:void(0)">{{underScoreToSpaces(filterStatus())}}</a>
                             <ul class="menu smaller">
-                                <li><a href="javascript:void(0)"><i></i> Option 1</a></li>
+                                <li *ngFor="let status of statusList()">
+                                    <a href="javascript:void(0)" (click)="filter('booking_status', status)"><i></i>{{underScoreToSpaces(status)}}</a>
+                                </li>
                             </ul>
                         </li>
                     </ul>
                 </th>
                 <th>
                     <span class="order asc">State</span>
-                    <ul class="dropdown menu custom" data-dropdown-menu>
+                    <ul class="dropdown menu custom" id="booking-state" data-dropdown-menu>
                         <li>
-                            <a href="javascript:void(0)">All</a>
+                            <a href="javascript:void(0)">{{underScoreToSpaces(bookingFilter.state)}}</a>
                             <ul class="menu smaller">
-                                <li><a href="javascript:void(0)"><i></i> Option 1</a></li>
+                                <li *ngFor="let state of stateList()">
+                                    <a href="javascript:void(0)" (click)="filter('state', state.toLowerCase())"><i></i>{{underScoreToSpaces(state)}}</a>
+                                </li>
                             </ul>
                         </li>
                     </ul>
                 </th>
                 <th width="20%">
-                    <span class="order desc">Date</span>
+                    <span class="order asc">Date</span>
                 </th>
 
                 <th>
-                    <span class="order desc">Org</span>
-                    <input type="text" name="org">
+                    <span class="order asc">Org</span>
+                    <form #filterByOrg="ngForm" class="common-form compact" (ngSubmit)="filter('organisation', filterByOrg.value.organisation)" novalidate>
+                        <input type="text" name="organisation" [(ngModel)]="bookingFilter.organisation">
+                    </form>
                 </th>
                 <th>
                     <span class="order asc">Client</span>
-                    <input type="text" name="client">
+                    <form #filterByClientName="ngForm" class="common-form compact" (ngSubmit)="filter('client_name', filterByClientName.value.client_name)" novalidate>
+                        <input type="text" name="client_name" [(ngModel)]="bookingFilter.client_name">
+                    </form>
                 </th>
                 <th>
                     <span class="order asc">Suburb</span>
-                    <input type="text" name="suburb">
+                    <form #filterBySuburb="ngForm" class="common-form compact" (ngSubmit)="filter('suburb', filterBySuburb.value.suburb)" novalidate>
+                        <input type="text" name="suburb" [(ngModel)]="bookingFilter.suburb">
+                    </form>
                 </th>
                 <th width="10%">
                     <span class="order asc">Interpreter</span>
@@ -105,7 +117,7 @@
                 </td>
                 <td class="text-center">
                     <i class="status"
-                            [ngClass]="{
+                       [ngClass]="{
     'icon-check-green': booking.status === 'green',
     'status-allocated': booking.status === 'red',
    'status-ready-to-process': booking.status === 'orange'
@@ -123,8 +135,10 @@
                         <i *ngIf="isCurrentUserInvitedInterpreter(booking.interpreters)" class="icon-requested"></i>
                     </div>
                 </td>
-                <td>Melbourne University</td>
-                <td>{{booking.client.organisation_primary_contact.first_name + ' ' +  booking.client.organisation_primary_contact.last_name}}</td>
+                <td>{{booking.client.name}}</td>
+                <td>{{booking.deaf_person.first_name + ' ' +
+                    booking.deaf_person.last_name}}
+                </td>
                 <td>{{booking.venue.suburb}}</td>
                 <td class="text-center truncated">
                     <ng-container *ngIf="booking.interpreters.length > 0;">

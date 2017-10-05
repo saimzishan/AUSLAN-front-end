@@ -1,7 +1,7 @@
 import {Address, Venue} from './venue.entity';
 import {Contact, BookingInterpreter, DEAFContact} from './contact.entity';
 import {BOOKING_NATURE} from './booking-nature.enum';
-import {BOOKING_STATUS} from './booking-status.enum';
+import {BOOKING_STATE} from './booking-state.enum';
 import {PARKING} from './parking.enum';
 import {OrganisationalRepresentative} from './user.entity';
 import {BookingVersion} from './booking-version.entity';
@@ -12,12 +12,12 @@ export class Booking {
     public requested_by: Contact = new Contact();
     public last_updated: Date;
     public update_by: string;
-    public status; string;
+    public status: string;
     public deaf_person: DEAFContact = new DEAFContact();
     public raw_nature_of_appointment: string;
     public nature_of_appointment: BOOKING_NATURE;
     public specific_nature_of_appointment: string;
-    public state: BOOKING_STATUS;
+    public state: BOOKING_STATE;
     public attachment: any;
     public interpreters: Array<BookingInterpreter> = [];
     public interpreters_required = 0;
@@ -27,6 +27,7 @@ export class Booking {
     public client: OrganisationalRepresentative = new OrganisationalRepresentative({});
     public documents_attributes = [];
     public versions: Array<BookingVersion> = [];
+    public organisation_name: string;
     // Is it a limitation on interpreters invitation.
 
     constructor() {
@@ -52,7 +53,7 @@ export class Booking {
         this.nature_of_appointment = BOOKING_NATURE.None;
         this.raw_nature_of_appointment = '';
         this.specific_nature_of_appointment = '';
-        this.state = BOOKING_STATUS.None;
+        this.state = BOOKING_STATE.None;
     }
 
     clean(theObject) {
@@ -108,7 +109,7 @@ export class Booking {
         this.nature_of_appointment = <BOOKING_NATURE>BOOKING_NATURE[this.raw_nature_of_appointment];
         this.specific_nature_of_appointment = data.specific_nature_of_appointment;
         let state: string = data.state;
-        this.state = BOOKING_STATUS[state];
+        this.state = BOOKING_STATE[state];
 
         if (Boolean(data.billing_account_attributes)) {
             this.client.organisation_primary_contact.first_name =
@@ -167,7 +168,7 @@ export class Booking {
 
     toJSON() {
         let _state = typeof this.state === 'string' ?
-            this.state : BOOKING_STATUS[this.state];
+            this.state : BOOKING_STATE[this.state];
         let _nature_of_appointment = this.raw_nature_of_appointment;
         let _specific_nature_of_appointment = this.specific_nature_of_appointment;
         let _parking_type =

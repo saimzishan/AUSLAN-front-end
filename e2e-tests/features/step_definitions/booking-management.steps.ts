@@ -18,6 +18,10 @@ defineSupportCode(({Given, Then, When}) => {
     let bookingJobPO = new BookingJobPage();
 
     Given(/^The booking has status '(.*)'$/, Heroku.updateBookingWithStatus);
+    Given(/^There exist (\d+) bookings$/, Heroku.createBulkBookings);
+    Given(/^One booking has client name as '(.*)'$/, Heroku.updateBookingWithClientName)
+    Given(/^One booking has org name as '(.*)'$/, Heroku.updateBookingWithOrgName)
+    Given(/^One booking has suburb as '(.*)'$/, Heroku.updateBookingWithSuburb)
 //  BE ABLE TO VIEW BOOKING PAGE
     Then(/^I will be shown with bookings$/, bookingManagementPO.atleastABookingExists);
     Then(/^I store the booking count$/, bookingManagementPO.storeCurrentBookingCount);
@@ -26,14 +30,14 @@ defineSupportCode(({Given, Then, When}) => {
     Then(/^I see the error page$/, bookingJobPO.errorPage);
     Then(/^I expect the booking count to be greater then before$/, bookingManagementPO.isCurrentBookingCountGreaterThanStoredCount);
 //    CLick on Request bookings
-    Then(/^I am shown with (\d+) (.*[^\s])?\s?Bookings$/, bookingManagementPO.showTheNumberofBooking);
+    Then(/^I am shown with (\d+) (.*[^\s])?\s?[bB]ookings?$/, bookingManagementPO.showTheNumberofBooking);
 
     When(/^I click at the (.*) one of (.*) (.*) Bookings$/, bookingManagementPO.clickAtOneofTheBooking);
 
     When(/^I click on 'New Booking'$/, bookingManagementPO.clickOnNewBooking);
     // When(/^I click on Bookings$/, bookingManagementPO.clickOnBookings);
-    When(/^I see one row with state '(.*)'$/, bookingManagementPO.bookingWithStateExists);
-    When(/^I see one row with status '(.*)'$/, bookingManagementPO.bookingWithStatusExists);
+    When(/^I see (one|\d+) rows? with state '(.*)'$/, bookingManagementPO.bookingWithStateExists);
+    When(/^I see (one|\d+) rows? with status '(.*)'$/, bookingManagementPO.bookingWithStatusExists);
     When(/^I do not see any row with state '(.*)'$/, bookingManagementPO.noBookingWithStateExists);
 
     When(/^I click on an individual booking of type '(.*)'$/, bookingManagementPO.clickOnIndividualBookingOfType);
@@ -74,6 +78,11 @@ defineSupportCode(({Given, Then, When}) => {
     When(/^I click dropdown (.*)$/, createBookingPO.clickOnDropDown);
 
     When(/^I click on option (.*) of (.*) for (.*)/, createBookingPO.clickOnOption);
+    When(/^I query booking with booking id$/, bookingManagementPO.queryBookingWithID)
+    When(/^I query booking with client name '(.*)'$/, bookingManagementPO.queryBookingByClientName)
+    When(/^I query booking with org name '(.*)'$/, bookingManagementPO.queryBookingByOrgName);
+    When(/^I query booking with suburb '(.*)'$/, bookingManagementPO.queryBookingBySuburb);
+    When(/^I hover on the (.*) dropdown and select '(.*)'$/, bookingManagementPO.hoverOnTableHeader)
 
     Then(/^The cell of (.*) will be populated with (.*)$/, createBookingPO.checkTheDropDown);
 
@@ -84,6 +93,10 @@ defineSupportCode(({Given, Then, When}) => {
     Then(/^I click the create booking button$/, createBookingPO.clickCreateBtn);
 
     Then(/^I (.*) see the (.*) field$/, createBookingPO.checkTheFieldExist);
+    Then(/^I see one row with the booking id$/, bookingManagementPO.bookingExistsWithId);
+    Then(/^I see one row with client name '(.*)'$/, bookingManagementPO.bookingExistsWithClientName);
+    Then(/^I see one row with org name '(.*)'$/, bookingManagementPO.bookingExistsWithOrgName);
+    Then(/^I see one row with suburb '(.*)'$/, bookingManagementPO.bookingExistsWithSuburb);
 
     // Then(/^I get the popup warning that is the non-standard booking$/, createBookingPO.popupForNonStandard)
 

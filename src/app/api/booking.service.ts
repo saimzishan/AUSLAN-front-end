@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Headers, RequestOptions} from '@angular/http';
+import {Headers, RequestOptions, URLSearchParams} from '@angular/http';
 import {Booking} from '../shared/model/booking.entity';
 import {GLOBAL} from '../shared/global';
 import { Observable } from 'rxjs/Observable';
@@ -129,9 +129,9 @@ export class BookingService extends ApiService {
     /*
       The Api should be able to fetch all the bookings.
     */
-    fetchBookings(): Observable<Object> {
+    fetchBookings(search?: URLSearchParams): Observable<Object> {
         let headers = new Headers({'Accept': 'application/json'});
-        let options = new RequestOptions({ headers: headers });
+        let options = new RequestOptions({ headers: headers, search: search });
         return this.http.get(GLOBAL.BOOKING_API, options)
             .map(this.extractData)
             .catch((err) => { return this.handleError(err); });

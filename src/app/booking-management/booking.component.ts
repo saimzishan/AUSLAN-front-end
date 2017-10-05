@@ -1,4 +1,5 @@
 import {Component, AfterViewChecked} from '@angular/core';
+import {URLSearchParams} from '@angular/http';
 import {BookingService} from '../api/booking.service';
 import {Booking} from '../shared/model/booking.entity';
 import 'rxjs/add/operator/catch';
@@ -14,7 +15,7 @@ import {IndividualClient, Interpreter, OrganisationalRepresentative, User} from 
 import {ROLE} from '../shared/model/role.enum';
 import {GLOBAL} from '../shared/global';
 import {MobileFooterComponent} from '../ui/mobile-footer/mobile-footer.component';
-import {BOOKING_STATUS} from '../shared/model/booking-status.enum';
+import {BOOKING_STATE} from '../shared/model/booking-state.enum';
 import {BookingInterpreter} from '../shared/model/contact.entity';
 
 
@@ -42,11 +43,12 @@ export class BookingComponent {
         return this.activeFilter === activeFilter;
     }
 
-    fetchBookings() {
+    fetchBookings(search?: URLSearchParams) {
         this.spinnerService.requestInProcess(true);
-        this.bookingDataService.fetchBookings()
+        this.bookingDataService.fetchBookings(search || undefined)
             .subscribe((res: any) => {
                     if (res.status === 200) {
+                        this.bookings = [];
                         for (let o of res.data.bookings) {
                             if (Boolean(!this.rolePermission.isDataRestrictedForCurrentUser('booking-management', o.created_by.type))
                                 || (GLOBAL.currentUser instanceof OrganisationalRepresentative && GLOBAL.currentUser.id === o.created_by.id)
@@ -59,7 +61,7 @@ export class BookingComponent {
                                 b.interpreters.filter(int => int.id === GLOBAL.currentUser.id)
                                     .map(int => currentInt = int);
                                 if (GLOBAL.currentUser instanceof Interpreter && Boolean(currentInt)
-                                    && b.state === BOOKING_STATUS.Allocated
+                                    && b.state === BOOKING_STATE.Allocated
                                     && (currentInt.state === 'Invited' ||
                                         currentInt.state === 'Rejected')) {
                                     continue;

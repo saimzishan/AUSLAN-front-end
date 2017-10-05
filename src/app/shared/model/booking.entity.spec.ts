@@ -2,7 +2,7 @@
 import {Venue} from './venue.entity';
 import {Contact, DEAFContact} from './contact.entity';
 import {BOOKING_NATURE} from './booking-nature.enum';
-import {BOOKING_STATUS} from './booking-status.enum';
+import {BOOKING_STATE} from './booking-state.enum';
 import {Booking} from './booking.entity';
 import {PARKING} from './parking.enum';
 
