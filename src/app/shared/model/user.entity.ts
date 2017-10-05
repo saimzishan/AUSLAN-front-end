@@ -252,7 +252,6 @@ export class IndividualClient extends User {
     public billingAddressIsSame = true;
     public reffered_other: string;
     public prefferedInterpreters = [];
-    public blockedInterpreters = [];
 
     constructor(data) {
         super(data);

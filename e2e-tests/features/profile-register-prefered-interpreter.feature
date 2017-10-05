@@ -196,7 +196,7 @@ Feature: Create Profile with prefered or blocked interpreters
     When I click on element with css '.btnYes_prefered'
     And  I click on BUTTON name 'btnManageInterpreter_prefered'
     Then I can see the element with css 'div.md-dialog' is 'visible'
-    Then I can count the element with css 'section[name="interpreters"].added' to be '1'
+    Then I can count the element with css 'section[name="interpreters"].interpreter_added' to be '1'
     When I click on '1' interpreter
     Then I can see the element with css 'section[name="interpreters"].selected' is 'hidden'
     When I click on '2' interpreter
@@ -209,7 +209,7 @@ Feature: Create Profile with prefered or blocked interpreters
     Then I can see the element with name 'booking-preferences' is 'visible'
     And  I click on BUTTON name 'btnManageInterpreter_blocked'
     Then I can see the element with css 'div.md-dialog' is 'visible'
-    Then I can count the element with css 'section[name="interpreters"].added' to be '2'
+    Then I can count the element with css 'section[name="interpreters"].interpreter_added' to be '2'
     When I click on '2' interpreter
     Then I can see the element with css 'section[name="interpreters"].selected' is 'hidden'
     Then I click on BUTTON name 'noBtn'
@@ -223,7 +223,7 @@ Feature: Create Profile with prefered or blocked interpreters
     When I click on element with css '.btnYes_prefered'
     And  I click on BUTTON name 'btnManageInterpreter_prefered'
     Then I can see the element with css 'div.md-dialog' is 'visible'
-    Then I can count the element with css 'section[name="interpreters"].added' to be '0'
+    Then I can count the element with css 'section[name="interpreters"].interpreter_added' to be '0'
     When I click on '1' interpreter
     Then I can see the element with css 'section[name="interpreters"].selected' is 'visible'
     Then I click on BUTTON name 'selectBtn'
@@ -232,7 +232,7 @@ Feature: Create Profile with prefered or blocked interpreters
     Then I can count the element with css 'section.interpreter_selected_prefered' to be '1'
 
   @runThis
-  Scenario: Individual Client sign up with prefered-interpreters can edit once logs in, Interpreter , Interpreter2 and Interpreter1 exists
+  Scenario: Individual Client can edit prefered-interpreters once logs in, Interpreter , Interpreter2 and Interpreter1 exists
     And I go to the website
     And I sign in with valid Individual Client credentials
     And I am on the bookings page

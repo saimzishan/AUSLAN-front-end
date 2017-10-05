@@ -21,7 +21,6 @@ export class UserProfileComponent implements OnInit {
     userModel;
     selectedStatus = '';
     userStatusArray = GLOBAL.userStatusArray;
-    public selectedRole = '';
 
     constructor(public userDataService: UserService, public userNameService: UserNameService,
                 public notificationServiceBus: NotificationServiceBus,
@@ -58,7 +57,6 @@ export class UserProfileComponent implements OnInit {
         this.userModel.disabled = this.selectedStatus === 'Disabled';
         this.selectedStatus = '';
         this.spinnerService.requestInProcess(true);
-        console.log (this.userModel);
         this.userDataService.updateUser(this.userModel)
             .subscribe((res: any) => {
                     if (res.status === 200) {

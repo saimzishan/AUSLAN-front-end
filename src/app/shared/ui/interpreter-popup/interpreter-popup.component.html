@@ -5,12 +5,12 @@
       <button (click)="closeDialog()"><i class="icon-close"></i></button>
     </header>
     <main>
-      <section id="interpreters-list">
+      <section interpreter_id="interpreters-list">
         <section name="interpreters" *ngFor="let interpreter of interpreterList;"
-                 [ngClass]="{'selected': interpreter.id === checkedInterpreter,
-                 'added': isAlreadyAdded(interpreter.id)  }"
-                 (click)="isInterpreterSelectable(interpreter.id)">
-          <img (click)="checkedInterpreter = interpreter.id ;" src="{{interpreter.photo_url}}"  alt="">
+                 [ngClass]="{'selected': interpreter.interpreter_id === checkedInterpreter,
+                 'interpreter_added': isAlreadyAdded(interpreter.interpreter_id)  }"
+                 (click)="isInterpreterSelectable(interpreter.interpreter_id)">
+          <img (click)="checkedInterpreter = interpreter.interpreter_id ;" src="{{interpreter.photo_url}}"  alt="">
           <span>{{interpreter.first_name}} {{interpreter.last_name}}</span>
         </section>
       </section>

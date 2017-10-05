@@ -32,7 +32,7 @@ export class InterpreterPopupComponent implements OnInit {
     }
 
     isAlreadyAdded(interpreter_id) {
-        return this.selectedInterpreters.filter((i) => i.id === interpreter_id).length > 0;
+        return this.selectedInterpreters.filter((i) => i.interpreter_id === interpreter_id).length > 0;
     }
 
     isInterpreterSelectable(interpreter_id) {
@@ -70,10 +70,10 @@ export class InterpreterPopupComponent implements OnInit {
 
     addSelectedInterpreter() {
         let selectedInterpreter =
-            this.interpreterList.filter(i => i.id === this.checkedInterpreter)[0];
+            this.interpreterList.filter(i => i.interpreter_id === this.checkedInterpreter)[0];
         selectedInterpreter.preference = this.isPreffered ? 'preferred' : 'blocked';
-        selectedInterpreter.interpreter_id = selectedInterpreter.id;
         selectedInterpreter.is_confirmed = false;
+
         this.selectedInterpreters.push(selectedInterpreter);
         this.closeDialog();
     }
