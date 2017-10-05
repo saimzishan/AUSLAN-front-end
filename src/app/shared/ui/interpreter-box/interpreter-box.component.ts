@@ -1,6 +1,7 @@
 import {ChangeDetectionStrategy, Component, Input, OnInit, ViewContainerRef} from '@angular/core';
 import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
 import {InterpreterPopupComponent} from '../interpreter-popup/interpreter-popup.component';
+import {PreferedAllocationService} from '../../prefered-allocation.service';
 
 @Component({
     selector: 'app-interpreter-box',
@@ -18,12 +19,17 @@ export class InterpreterBoxComponent implements OnInit {
     title = '';
 
     constructor(public dialog: MdDialog,
-                public viewContainerRef: ViewContainerRef) {
+                public viewContainerRef: ViewContainerRef,
+                private _sharedPreferedAllocationService: PreferedAllocationService) {
     }
 
     ngOnInit() {
         this.title = this.isPreffered ?
             'ADD PREFFERED INTERPRETER' : 'ADD BLOCKED INTERPRETER';
+        this._sharedPreferedAllocationService.interpreterStream$.subscribe(
+            data => {
+                this.selectedInterpreters = data;
+            });
 
     }
 
@@ -47,5 +53,16 @@ export class InterpreterBoxComponent implements OnInit {
         this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
 
         });
+    }
+    removeInterpreter (selectedInterpreter) {
+        if (selectedInterpreter.is_confirmed === false) {
+            this.selectedInterpreters =
+                this.selectedInterpreters.filter( i => i.interpreter_id !== selectedInterpreter.interpreter_id);
+        } else {
+
+        }
+        this._sharedPreferedAllocationService.publishData(this.selectedInterpreters);
+
+
     }
 }

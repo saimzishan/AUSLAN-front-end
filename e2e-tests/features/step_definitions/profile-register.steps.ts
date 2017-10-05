@@ -29,6 +29,7 @@ defineSupportCode(({Then, When}) => {
     Then(/^I click on '(.*)' interpreter$/, profileRegisterPage.addInterpreter);
     Then(/^I verify '(.*)' interpreter is '(.*)'$/, profileRegisterPage.verifyInterpreterName);
     Then(/^I verify '(.*)' interpreter photo$/, profileRegisterPage.verifyInterpreterPhoto);
+    Then(/^I can remove '(.*)' , '(.*)' interpreter$/, profileRegisterPage.removeInterpreter);
     Then(/^I can see '(.*)' validated interpreters$/, profileRegisterPage.countInterpreter);
     Then(/^I can see interpreters in alphabetical order$/, profileRegisterPage.validateAlphabeticalOrder);
 

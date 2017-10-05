@@ -96,7 +96,11 @@ export class ProfileRegisterPage extends PageObject {
             expect(cnt).to.be.eq(1);
         });
     }
-
+    removeInterpreter = (index, preference) => {
+        let elementName = `btnRemoveInterpreter_${preference}_${(+index - 1)}`;
+        let elm = this.getElementByName(elementName);
+        return elm.click();
+    }
     countInterpreter = (count) => {
         return this.getAllElementByCSS('section[name="interpreters"]').count().then((cnt) => {
             expect(cnt).to.be.eq(+count);
@@ -120,11 +124,6 @@ export class ProfileRegisterPage extends PageObject {
             sorted.sort();
             expect(sorted.toString()).to.be.eq(unSorted.toString());
         });
-    }
-    removeInterpreter = (css, index) => {
-        let elm = this.getAllElementByCSS('div.interpreter-list > div.delete');
-        return elm.get(index - 1).click();
-
     }
     userCreated = (type: string) => {
         return NotificationObject.getNotificationContent('Congratulations');

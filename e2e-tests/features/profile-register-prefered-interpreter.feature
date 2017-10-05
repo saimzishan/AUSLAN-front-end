@@ -165,7 +165,7 @@ Feature: Create Profile with prefered or blocked interpreters
     Then 'ORGANISATIONALREPRESENTATIVE' will be created
 
   @runThis
-  Scenario: Selected Interpreter shows as unselectable in both prefered and blocked popups, Interpreter and Interpreter1 and Interpreter2 exists
+  Scenario: Selected Interpreter shows as unselectable in both prefered and blocked popups, Interpreter and Interpreter1 exists
     And I click on button 'Organisation'
     And I will be taken to the 'ORGANISATION Signup' page
     Then I wait for 2000 milli-seconds
@@ -180,11 +180,10 @@ Feature: Create Profile with prefered or blocked interpreters
     And  I click on BUTTON name 'btnManageInterpreter_blocked'
     Then I can see the element with css 'div.md-dialog' is 'visible'
     Then  I can see the element with css 'section#interpreters-list' is 'visible'
-    Then I can see '3' validated interpreters
+    Then I can see '2' validated interpreters
     And I can see interpreters in alphabetical order
     And I verify '1' interpreter is 'dragana'
     And I verify '2' interpreter is 'dragana_2'
-    And I verify '3' interpreter is 'dragana_3'
     Then I can see the element with css 'section[name="interpreters"]' is 'visible'
     When I click on '1' interpreter
     Then I can see the element with css 'section[name="interpreters"].selected' is 'visible'
@@ -216,6 +215,21 @@ Feature: Create Profile with prefered or blocked interpreters
     Then I click on BUTTON name 'noBtn'
     Then I wait for 2000 milli-seconds
     Then I can see the element with css 'div.md-dialog' is 'hidden'
+    Then I can remove '2' , 'prefered' interpreter
+    Then I can count the element with css 'section.interpreter_selected_prefered' to be '0'
+    Then I can remove '1' , 'blocked' interpreter
+    Then I can count the element with css 'section.interpreter_selected_blocked' to be '0'
+    Then I can see the element with css '.btnYes_prefered' is 'visible'
+    When I click on element with css '.btnYes_prefered'
+    And  I click on BUTTON name 'btnManageInterpreter_prefered'
+    Then I can see the element with css 'div.md-dialog' is 'visible'
+    Then I can count the element with css 'section[name="interpreters"].added' to be '0'
+    When I click on '1' interpreter
+    Then I can see the element with css 'section[name="interpreters"].selected' is 'visible'
+    Then I click on BUTTON name 'selectBtn'
+    Then I wait for 2000 milli-seconds
+    Then I can see the element with css 'div.md-dialog' is 'hidden'
+    Then I can count the element with css 'section.interpreter_selected_prefered' to be '1'
 
   @runThis
   Scenario: Individual Client sign up with prefered-interpreters can edit once logs in, Interpreter , Interpreter2 and Interpreter1 exists

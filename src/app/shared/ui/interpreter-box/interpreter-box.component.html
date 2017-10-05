@@ -21,12 +21,17 @@
                         'interpreter_selected_blocked' : isPreffered === false}"
                                  *ngIf="checkInterpreterPreference(interpreter)">
                             <strong>PREFERED INTERPTRETER {{i + 1}}</strong>
-                            <img src="{{interpreter.photo_url}}" alt="">
+                            <figure>
+                                <button name="{{'btnRemoveInterpreter_' + (isPreffered ? 'prefered_' : 'blocked_')+ i}}" (click)="removeInterpreter(interpreter)" type="button"><i class="icon-close"></i></button>
+                                <img src="{{interpreter.photo_url}}" alt="">
+                            </figure>
                             <span>{{interpreter.first_name}} {{interpreter.last_name}}</span>
                     </section>
                     </ng-container>
 
-                    <button md-button *ngIf="needInterpreter"  name="{{'btnManageInterpreter_' + (isPreffered ? 'prefered' : 'blocked')}}" (click)="manageInterpreter()">
+                    <button md-button *ngIf="needInterpreter"
+                            name="{{'btnManageInterpreter_' + (isPreffered ? 'prefered' : 'blocked')}}"
+                            (click)="manageInterpreter()">
                         <i class="inline-icon-add-file"></i>
                         ADD INTERPRETER
                     </button>

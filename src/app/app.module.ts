@@ -71,6 +71,7 @@ import {CalendarModule} from 'ap-angular2-fullcalendar';
 import { TermandconditionComponent } from './ui/termandcondition/termandcondition.component';
 import { InterpreterPopupComponent } from './shared/ui/interpreter-popup/interpreter-popup.component';
 import { InterpreterBoxComponent } from './shared/ui/interpreter-box/interpreter-box.component';
+import {PreferedAllocationService} from './shared/prefered-allocation.service';
 
 @NgModule({
   declarations: [
@@ -111,6 +112,7 @@ import { InterpreterBoxComponent } from './shared/ui/interpreter-box/interpreter
     MaterialModule, CalendarModule
   ],  providers: [DatePipe, LinkAuth, UserNameService, RolePermission, AuthGuard, NoAuthGuard, Title, LinkHelper,
     NotificationServiceBus, SpinnerService, BookingService, UserService,
+        PreferedAllocationService,
     { provide: APP_BASE_HREF, useValue : '/' },
     {
       provide: AuthHttp,
