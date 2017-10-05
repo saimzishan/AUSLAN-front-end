@@ -212,6 +212,22 @@ export class BookingManagementPage extends PageObject {
         bookingSuburbInput.sendKeys(suburb);
         return bookingSuburbForm.submit();
     }
+
+    filterBookingByDateRange = () => {
+        let currentDate = new Date();
+        let dateStart = new Date(new Date(currentDate).setDate(currentDate.getDate() + 13));
+        let dateEnd = new Date(new Date(dateStart).setDate(dateStart.getDate()+4));
+        let dateFrom = (dateStart.getMonth()+1) + '/' + dateStart.getDate() + '/' + dateStart.getFullYear();
+        let dateTo = (dateEnd.getMonth()+1) + '/' + dateEnd.getDate() + '/' + dateEnd.getFullYear();
+
+        this.getElementByName('date_from').sendKeys(dateFrom);
+        this.getElementByName('date_from').sendKeys(protractor.Key.TAB);
+        this.getElementByName('date_from').sendKeys('00:01AM');
+        this.getElementByName('date_to').sendKeys(dateTo);
+        this.getElementByName('date_to').sendKeys(protractor.Key.TAB);
+        return this.getElementByName('date_to').sendKeys('11:59PM');
+    }
+
     bookingExistsWithId = () => {
         let queriedID = this.queryIdBooking;
         let tblRows = this.getAllElementByCSS('table tbody tr');

@@ -115,3 +115,13 @@ Feature: Booking Filter
     When I query booking with suburb 'Terabithia'
     Then I am shown with 1 booking
     Then I see one row with suburb 'Terabithia'
+
+  @runThis
+  Scenario: Given 1 verified Booking Officer, I should be able to filter by date range
+    Given One booking has start and end dates as first and last days of next week
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    When I am on the bookings page
+    Then I will be shown with bookings
+    When I filter booking by date range first and last days of next week
+    Then I am shown with 2 booking

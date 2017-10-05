@@ -543,6 +543,13 @@ export class Heroku {
         Heroku.sendCommandToHeroku(command);
     }
 
+    static updateBookingStartAndEndDateTime() {
+        let command = 'start_date = DateTime.current + 2.week; end_date = start_date + 2.day;'
+        command += 'Booking.first.update(start_time: start_date, end_time: end_date);';
+        command += 'Booking.last.update(start_time: start_date, end_time: end_date)';
+        Heroku.sendCommandToHeroku(command);
+    }
+
     private static createBooking(int_required: number) {
         return new Object({
             'venue': 'Fed Square',

@@ -22,6 +22,7 @@ defineSupportCode(({Given, Then, When}) => {
     Given(/^One booking has client name as '(.*)'$/, Heroku.updateBookingWithClientName)
     Given(/^One booking has org name as '(.*)'$/, Heroku.updateBookingWithOrgName)
     Given(/^One booking has suburb as '(.*)'$/, Heroku.updateBookingWithSuburb)
+    Given(/^One booking has start and end dates as first and last days of next week$/, Heroku.updateBookingStartAndEndDateTime)
 //  BE ABLE TO VIEW BOOKING PAGE
     Then(/^I will be shown with bookings$/, bookingManagementPO.atleastABookingExists);
     Then(/^I store the booking count$/, bookingManagementPO.storeCurrentBookingCount);
@@ -82,6 +83,7 @@ defineSupportCode(({Given, Then, When}) => {
     When(/^I query booking with client name '(.*)'$/, bookingManagementPO.queryBookingByClientName)
     When(/^I query booking with org name '(.*)'$/, bookingManagementPO.queryBookingByOrgName);
     When(/^I query booking with suburb '(.*)'$/, bookingManagementPO.queryBookingBySuburb);
+    When(/^I filter booking by date range first and last days of next week$/, bookingManagementPO.filterBookingByDateRange);
     When(/^I hover on the (.*) dropdown and select '(.*)'$/, bookingManagementPO.hoverOnTableHeader)
 
     Then(/^The cell of (.*) will be populated with (.*)$/, createBookingPO.checkTheDropDown);
