@@ -5,7 +5,6 @@ import { MdDialog, MdDialogConfig, MdDialogRef, MdIconModule, OverlayContainer }
 import { CustomFormsModule } from 'ng2-validation';
 import { FormsModule } from '@angular/forms';
 import { MaterialModule } from '@angular/material';
-import { MdDialogModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 
