@@ -81,13 +81,13 @@
     <app-interpreter-box
             [isPreffered]="false"
             [selectedInterpreters]="userModel.prefferedInterpreters"
-            *ngIf="userModel.type === 'IndividualClient' || userModel.type === 'OrganisationalRepresentative'"
+            *ngIf="userModel.type === 'IndividualClient' || userModel.type === 'Organisation' || userModel.type === 'OrganisationalRepresentative'"
     ></app-interpreter-box>
     <br>
     <app-interpreter-box
             [isPreffered]="true"
             [selectedInterpreters]="userModel.prefferedInterpreters"
-            *ngIf="userModel.type === 'IndividualClient' || userModel.type === 'OrganisationalRepresentative'"
+            *ngIf="userModel.type === 'IndividualClient' || userModel.type === 'Organisation' || userModel.type === 'OrganisationalRepresentative'"
     ></app-interpreter-box>
     <br>
 

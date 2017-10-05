@@ -9,7 +9,7 @@ Feature: Create Profile with prefered or blocked interpreters
 
 # --------------------------------------- AUSLAN1-379 START ------------------------------------------------
   @runThis
-  Scenario: INDIVIDUAL-CLIENT sign up with prefered-interpreters, Interpreter and Interpreter1 and Interpreter2 exists
+  Scenario: INDIVIDUAL-CLIENT sign up with prefered-interpreters, Interpreter and Interpreter1  exists
     And I click on button 'Client'
     And I will be taken to the 'INDIVIDUALCLIENT Signup' page
     Then I wait for 2000 milli-seconds
@@ -24,11 +24,10 @@ Feature: Create Profile with prefered or blocked interpreters
     And  I click on BUTTON name 'btnManageInterpreter_prefered'
     Then I can see the element with css 'div.md-dialog' is 'visible'
     Then  I can see the element with css 'section#interpreters-list' is 'visible'
-    Then I can see '3' validated interpreters
+    Then I can see '2' validated interpreters
     And I can see interpreters in alphabetical order
     And I verify '1' interpreter is 'dragana'
     And I verify '2' interpreter is 'dragana_2'
-    And I verify '3' interpreter is 'dragana_3'
     Then I can see the element with css 'section[name="interpreters"]' is 'visible'
     When I click on '1' interpreter
     Then I can see the element with css 'section[name="interpreters"].selected' is 'visible'
@@ -48,7 +47,7 @@ Feature: Create Profile with prefered or blocked interpreters
     Then 'INDIVIDUALCLIENT' will be created
 
   @runThis
-  Scenario: An org rep can sign up with prefered-interpreters, Interpreter and Interpreter1 and Interpreter2 exists
+  Scenario: An org rep can sign up with prefered-interpreters, Interpreter and Interpreter1  exists
     And I click on button 'Organisation'
     And I will be taken to the 'ORGANISATION Signup' page
     Then I wait for 2000 milli-seconds
@@ -63,11 +62,10 @@ Feature: Create Profile with prefered or blocked interpreters
     And  I click on BUTTON name 'btnManageInterpreter_prefered'
     Then I can see the element with css 'div.md-dialog' is 'visible'
     Then  I can see the element with css 'section#interpreters-list' is 'visible'
-    Then I can see '3' validated interpreters
+    Then I can see '2' validated interpreters
     And I can see interpreters in alphabetical order
     And I verify '1' interpreter is 'dragana'
     And I verify '2' interpreter is 'dragana_2'
-    And I verify '3' interpreter is 'dragana_3'
     Then I can see the element with css 'section[name="interpreters"]' is 'visible'
     When I click on '1' interpreter
     Then I can see the element with css 'section[name="interpreters"].selected' is 'visible'
@@ -87,7 +85,7 @@ Feature: Create Profile with prefered or blocked interpreters
     Then 'ORGANISATIONALREPRESENTATIVE' will be created
 
   @runThis
-  Scenario: INDIVIDUAL-CLIENT can sign up with blocked-interpreters, Interpreter and Interpreter1 and Interpreter2 exists
+  Scenario: INDIVIDUAL-CLIENT can sign up with blocked-interpreters, Interpreter and Interpreter1  exists
     And I click on button 'Client'
     And I will be taken to the 'INDIVIDUALCLIENT Signup' page
     Then I wait for 2000 milli-seconds
@@ -102,11 +100,10 @@ Feature: Create Profile with prefered or blocked interpreters
     And  I click on BUTTON name 'btnManageInterpreter_blocked'
     Then I can see the element with css 'div.md-dialog' is 'visible'
     Then  I can see the element with css 'section#interpreters-list' is 'visible'
-    Then I can see '3' validated interpreters
+    Then I can see '2' validated interpreters
     And I can see interpreters in alphabetical order
     And I verify '1' interpreter is 'dragana'
     And I verify '2' interpreter is 'dragana_2'
-    And I verify '3' interpreter is 'dragana_3'
     Then I can see the element with css 'section[name="interpreters"]' is 'visible'
     When I click on '1' interpreter
     Then I can see the element with css 'section[name="interpreters"].selected' is 'visible'
@@ -126,7 +123,7 @@ Feature: Create Profile with prefered or blocked interpreters
     Then 'INDIVIDUALCLIENT' will be created
 
   @runThis
-  Scenario: An org rep can sign up with blocked-interpreters, Interpreter and Interpreter1 and Interpreter2 exists
+  Scenario: An org rep can sign up with blocked-interpreters, Interpreter and Interpreter1  exists
     And I click on button 'Organisation'
     And I will be taken to the 'ORGANISATION Signup' page
     Then I wait for 2000 milli-seconds
@@ -141,11 +138,10 @@ Feature: Create Profile with prefered or blocked interpreters
     And  I click on BUTTON name 'btnManageInterpreter_blocked'
     Then I can see the element with css 'div.md-dialog' is 'visible'
     Then  I can see the element with css 'section#interpreters-list' is 'visible'
-    Then I can see '3' validated interpreters
+    Then I can see '2' validated interpreters
     And I can see interpreters in alphabetical order
     And I verify '1' interpreter is 'dragana'
     And I verify '2' interpreter is 'dragana_2'
-    And I verify '3' interpreter is 'dragana_3'
     Then I can see the element with css 'section[name="interpreters"]' is 'visible'
     When I click on '1' interpreter
     Then I can see the element with css 'section[name="interpreters"].selected' is 'visible'
@@ -238,6 +234,9 @@ Feature: Create Profile with prefered or blocked interpreters
     And I am on the bookings page
     When I click on my name in the top corner
     Then I will be taken to my individual profile page
+    Then I can see the element with name 'interpreter_block_prefered' is 'visible'
+    Then I can see the element with css '.btnYes_prefered' is 'visible'
+    When I click on element with css '.btnYes_prefered'
     And  I click on BUTTON name 'btnManageInterpreter_prefered'
     Then I can see the element with css 'div.md-dialog' is 'visible'
     When I click on '2' interpreter
@@ -246,5 +245,128 @@ Feature: Create Profile with prefered or blocked interpreters
     Then I wait for 2000 milli-seconds
     Then I can see the element with css 'div.md-dialog' is 'hidden'
     Then I can count the element with css 'section.interpreter_selected_prefered' to be '1'
+    And I click on BUTTON 'SAVE'
+    Then I get valid message: 'User details updated Successfully'
+    Then I scroll to top
+    And I click on my name in the top corner
+    Then I click on logout
+    And I sign in with valid Individual Client credentials
+    And I am on the bookings page
+    When I click on my name in the top corner
+    Then I will be taken to my individual profile page
+    Then I can count the element with css 'section.interpreter_selected_prefered' to be '1'
+
+
+  @runThis
+  Scenario: Organisational Representative can edit prefered-interpreters once logs in, Interpreter , Interpreter2 and Interpreter1 exists
+    And I go to the website
+    And I sign in with valid Organisational Representative credentials
+    And I am on the bookings page
+    When I click on my name in the top corner
+    Then I will be taken to my individual profile page
+    Then I can see the element with name 'interpreter_block_prefered' is 'visible'
+    Then I can see the element with css '.btnYes_prefered' is 'visible'
+    When I click on element with css '.btnYes_prefered'
+    And  I click on BUTTON name 'btnManageInterpreter_prefered'
+    Then I can see the element with css 'div.md-dialog' is 'visible'
+    When I click on '2' interpreter
+    Then I can see the element with css 'section[name="interpreters"].selected' is 'visible'
+    Then I click on BUTTON name 'selectBtn'
+    Then I wait for 2000 milli-seconds
+    Then I can see the element with css 'div.md-dialog' is 'hidden'
+    Then I can count the element with css 'section.interpreter_selected_prefered' to be '1'
+    And I click on BUTTON 'SAVE'
+    Then I get valid message: 'User details updated Successfully'
+    Then I scroll to top
+    And I click on my name in the top corner
+    Then I click on logout
+    And I sign in with valid Organisational Representative credentials
+    And I am on the bookings page
+    When I click on my name in the top corner
+    Then I will be taken to my individual profile page
+    Then I can count the element with css 'section.interpreter_selected_prefered' to be '1'
+
+  @runThis
+  Scenario: Individual Client can delete their prefered-interpreters once logs in, Interpreter , Interpreter2 and Interpreter1 exists
+    And I go to the website
+    And I sign in with valid Individual Client credentials
+    And I am on the bookings page
+    When I click on my name in the top corner
+    Then I will be taken to my individual profile page
+    Then I can see the element with name 'interpreter_block_prefered' is 'visible'
+    Then I can see the element with css '.btnYes_prefered' is 'visible'
+    When I click on element with css '.btnYes_prefered'
+    And  I click on BUTTON name 'btnManageInterpreter_prefered'
+    Then I can see the element with css 'div.md-dialog' is 'visible'
+    When I click on '2' interpreter
+    Then I can see the element with css 'section[name="interpreters"].selected' is 'visible'
+    Then I click on BUTTON name 'selectBtn'
+    Then I wait for 2000 milli-seconds
+    Then I can see the element with css 'div.md-dialog' is 'hidden'
+    Then I can count the element with css 'section.interpreter_selected_prefered' to be '1'
+    And I click on BUTTON 'SAVE'
+    Then I get valid message: 'User details updated Successfully'
+    Then I scroll to top
+    And I click on my name in the top corner
+    Then I click on logout
+    And I sign in with valid Individual Client credentials
+    And I am on the bookings page
+    When I click on my name in the top corner
+    Then I will be taken to my individual profile page
+    Then I can count the element with css 'section.interpreter_selected_prefered' to be '1'
+    Then I can remove '1' , 'prefered' interpreter
+    And I click on BUTTON 'SAVE'
+    Then I get valid message: 'User details updated Successfully'
+    Then I scroll to top
+    And I click on my name in the top corner
+    Then I click on logout
+    And I sign in with valid Individual Client credentials
+    And I am on the bookings page
+    When I click on my name in the top corner
+    Then I will be taken to my individual profile page
+    Then I can count the element with css 'section.interpreter_selected_prefered' to be '0'
+
+
+  @runThis
+  Scenario: Organisational Representative can delete their prefered-interpreters once logs in, Interpreter , Interpreter2 and Interpreter1 exists
+    And I go to the website
+    And I sign in with valid Organisational Representative credentials
+    And I am on the bookings page
+    When I click on my name in the top corner
+    Then I will be taken to my individual profile page
+    Then I can see the element with name 'interpreter_block_prefered' is 'visible'
+    Then I can see the element with css '.btnYes_prefered' is 'visible'
+    When I click on element with css '.btnYes_prefered'
+    And  I click on BUTTON name 'btnManageInterpreter_prefered'
+    Then I can see the element with css 'div.md-dialog' is 'visible'
+    When I click on '2' interpreter
+    Then I can see the element with css 'section[name="interpreters"].selected' is 'visible'
+    Then I click on BUTTON name 'selectBtn'
+    Then I wait for 2000 milli-seconds
+    Then I can see the element with css 'div.md-dialog' is 'hidden'
+    Then I can count the element with css 'section.interpreter_selected_prefered' to be '1'
+    And I click on BUTTON 'SAVE'
+    Then I get valid message: 'User details updated Successfully'
+    Then I scroll to top
+    And I click on my name in the top corner
+    Then I click on logout
+    And I sign in with valid Organisational Representative credentials
+    And I am on the bookings page
+    When I click on my name in the top corner
+    Then I will be taken to my individual profile page
+    Then I can count the element with css 'section.interpreter_selected_prefered' to be '1'
+    Then I can remove '1' , 'prefered' interpreter
+    And I click on BUTTON 'SAVE'
+    Then I get valid message: 'User details updated Successfully'
+    Then I scroll to top
+    And I click on my name in the top corner
+    Then I click on logout
+    And I sign in with valid Individual Client credentials
+    And I am on the bookings page
+    When I click on my name in the top corner
+    Then I will be taken to my individual profile page
+    Then I can count the element with css 'section.interpreter_selected_prefered' to be '0'
+
+
 
 # --------------------------------------- AUSLAN1-379 END ------------------------------------------------

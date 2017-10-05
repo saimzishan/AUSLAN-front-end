@@ -2,6 +2,7 @@ import {ChangeDetectionStrategy, Component, Input, OnInit, ViewContainerRef} fro
 import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
 import {InterpreterPopupComponent} from '../interpreter-popup/interpreter-popup.component';
 import {PreferedAllocationService} from '../../prefered-allocation.service';
+import {AuthGuard} from '../../../auth/auth.guard';
 
 @Component({
     selector: 'app-interpreter-box',
@@ -33,7 +34,7 @@ export class InterpreterBoxComponent implements OnInit {
 
     }
 
-    checkInterpreterPreference (interpreter) {
+    checkInterpreterPreference(interpreter) {
         return interpreter.preference === (this.isPreffered ? 'preferred' : 'blocked');
     }
 
@@ -54,11 +55,13 @@ export class InterpreterBoxComponent implements OnInit {
 
         });
     }
-    removeInterpreter (selectedInterpreter) {
-        if (selectedInterpreter.is_confirmed === false) {
-            this.selectedInterpreters =
-                this.selectedInterpreters.filter( i => i.interpreter_id !== selectedInterpreter.interpreter_id);
+
+    removeInterpreter(selectedInterpreter) {
+        if (AuthGuard.isLoggedIn()) {
+            selectedInterpreter._destroy = 1;
         } else {
+            this.selectedInterpreters =
+                this.selectedInterpreters.filter(i => i.interpreter_id !== selectedInterpreter.interpreter_id);
 
         }
         this._sharedPreferedAllocationService.publishData(this.selectedInterpreters);

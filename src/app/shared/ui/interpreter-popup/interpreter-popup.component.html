@@ -5,7 +5,7 @@
       <button (click)="closeDialog()"><i class="icon-close"></i></button>
     </header>
     <main>
-      <section interpreter_id="interpreters-list">
+      <section id="interpreters-list">
         <section name="interpreters" *ngFor="let interpreter of interpreterList;"
                  [ngClass]="{'selected': interpreter.interpreter_id === checkedInterpreter,
                  'interpreter_added': isAlreadyAdded(interpreter.interpreter_id)  }"

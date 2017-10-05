@@ -63,6 +63,9 @@ export class UserProfileComponent implements OnInit {
                         // UI Notification
                         this.userModel.photo_url = res.json().photo_url || '';
                         this.userNameService.setLoggedInUser(this.userModel);
+                        this.userModel.prefferedInterpreters =
+                            this.userModel.prefferedInterpreters.filter(i => i._destory === -1);
+
                         this.notificationServiceBus.launchNotification(false, 'User details updated Successfully');
                         this.spinnerService.requestInProcess(false);
 
