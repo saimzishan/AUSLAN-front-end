@@ -361,7 +361,7 @@ Feature: Create Profile with prefered or blocked interpreters
     Then I scroll to top
     And I click on my name in the top corner
     Then I click on logout
-    And I sign in with valid Individual Client credentials
+    And I sign in with valid Organisational Representative credentials
     And I am on the bookings page
     When I click on my name in the top corner
     Then I will be taken to my individual profile page
