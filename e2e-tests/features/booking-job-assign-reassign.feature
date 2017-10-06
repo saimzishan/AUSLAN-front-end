@@ -206,7 +206,7 @@ Feature: Booking Admin Management
     Then I click on BUTTON 'Accept'
     Then I will be shown a popup message
     Then I click on BUTTON name 'yesBtn'
-    Then I wait for 1000 milli-seconds
+    Then I wait for 2000 milli-seconds
     Then I can see the booking state ' Allocated ' in booking job page
     Then I can see the button state 'Decline' is hidden
     Then I can see the button state 'Accept' is hidden
