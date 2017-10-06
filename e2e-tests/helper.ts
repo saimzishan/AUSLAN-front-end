@@ -550,6 +550,12 @@ export class Heroku {
         Heroku.sendCommandToHeroku(command);
     }
 
+
+    static assignExistingBooking(bookable: string) {
+        let command = 'Booking.update_all(bookable_id: '+ bookable.replace(' ', '') + '.first.id)'
+        Heroku.sendCommandToHeroku(command);
+    }
+
     private static createBooking(int_required: number) {
         return new Object({
             'venue': 'Fed Square',
