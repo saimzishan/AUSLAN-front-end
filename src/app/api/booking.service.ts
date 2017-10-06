@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Headers, RequestOptions} from '@angular/http';
+import {Headers, RequestOptions, URLSearchParams} from '@angular/http';
 import {Booking} from '../shared/model/booking.entity';
 import {GLOBAL} from '../shared/global';
 import { Observable } from 'rxjs/Observable';
@@ -58,14 +58,20 @@ export class BookingService extends ApiService {
         let headers = new Headers({'Accept': 'application/json',
             'Content-Type': 'application/json'});
         let options = new RequestOptions({ headers: headers });
-        let invite_url = GLOBAL.BOOKING_JOB_INVITE + bookingID + '/job-detail';
-        invite_url = invite_url.startsWith('http') === false ? 'http://' + invite_url : invite_url;
-        let obj = { 'invite_url': invite_url , 'interpreters' : interpreters};
+        let obj = this.getParamsForInviteOrAssign(bookingID, interpreters);
 
         return this.http.post(GLOBAL.BOOKING_API + '/' + bookingID + '/invite_interpreters' , JSON.stringify(obj), options)
             .map(this.extractData)
             .catch((err) => { return this.handleError(err); });
     }
+
+    private getParamsForInviteOrAssign(bookingID: number, interpreters: Array<Object>) {
+        let invite_url = GLOBAL.BOOKING_JOB_INVITE + bookingID + '/job-detail';
+        invite_url = invite_url.startsWith('http') === false ? 'http://' + invite_url : invite_url;
+        let obj = {'invite_url': invite_url, 'interpreters': interpreters};
+        return obj;
+    }
+
     /*
      The Api should be used to re assign interpreters
    */
@@ -74,7 +80,7 @@ export class BookingService extends ApiService {
         let headers = new Headers({'Accept': 'application/json',
             'Content-Type': 'application/json'});
         let options = new RequestOptions({ headers: headers });
-        let obj = { 'interpreters' : interpreters};
+        let obj = this.getParamsForInviteOrAssign(bookingID, interpreters);
 
         return this.http.put(GLOBAL.BOOKING_API + '/' + bookingID + '/assign_interpreters/' , JSON.stringify(obj), options)
             .map(this.extractData)
@@ -123,9 +129,9 @@ export class BookingService extends ApiService {
     /*
       The Api should be able to fetch all the bookings.
     */
-    fetchBookings(): Observable<Object> {
+    fetchBookings(search?: URLSearchParams): Observable<Object> {
         let headers = new Headers({'Accept': 'application/json'});
-        let options = new RequestOptions({ headers: headers });
+        let options = new RequestOptions({ headers: headers, search: search });
         return this.http.get(GLOBAL.BOOKING_API, options)
             .map(this.extractData)
             .catch((err) => { return this.handleError(err); });

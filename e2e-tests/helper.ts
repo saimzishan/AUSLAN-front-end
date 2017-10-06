@@ -442,6 +442,10 @@ export class Heroku {
         let command = 'Booking.create(' + JSON.stringify(data) + ')';
         Heroku.sendCommandToHeroku(command);
     }
+    static createBulkBookings(count: string) {
+        let command = 'FactoryGirl.create_list(:booking, ' + count + ', bookable: User.first)';
+        Heroku.sendCommandToHeroku(command);
+    }
 
     static createSingleUser(data) {
         let return_command = '';
@@ -520,6 +524,21 @@ export class Heroku {
         let daysToAdd = status === 'red' ? '2' : '4';
         let command = 'd = ' + daysToAdd + '.business_days.after(DateTime.now);'
         command += 'Booking.last.update(start_time: d, end_time: d + 1.hour);Booking.last.update_status';
+        Heroku.sendCommandToHeroku(command);
+    }
+
+    static updateBookingWithClientName(client_name: string) {
+        let command = 'Booking.last.update(deaf_persons_first_name: "' + client_name + '")';
+        Heroku.sendCommandToHeroku(command);
+    }
+
+    static updateBookingWithOrgName(org_name: string) {
+        let command = 'b = Booking.last;o = OrganisationalRepresentative.last;o.organisation.update(name: "' + org_name + '");o.save;b.bookable = o;b.save';
+        Heroku.sendCommandToHeroku(command);
+    }
+
+    static updateBookingWithSuburb(suburb: string) {
+        let command = 'Booking.last.address.update(suburb: "' + suburb + '")';
         Heroku.sendCommandToHeroku(command);
     }
 
