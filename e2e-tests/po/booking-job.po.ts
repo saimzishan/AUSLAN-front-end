@@ -69,7 +69,6 @@ export class BookingJobPage extends PageObject {
     }
 
     verifyPictureOfYourself = (src: string) => {
-        // browser.pause();
         let elm = this.getElementByCss('div.row.with-border > span.with-avatar > img');
         return browser.wait(protractor.ExpectedConditions.presenceOf(elm), 30000).then(() => {
             return elm.getAttribute('src').then((val) => {
@@ -86,10 +85,6 @@ export class BookingJobPage extends PageObject {
         return elm.get(index).getText().then( (txt) => {
             expect(txt).to.contain(expected_text);
          });
-        // check row 1 column 2 is 'Created by System System'
-        // check row 1 column 3 is ''
-        // check row 2 column 2 is 'Updated by Robin Administrator'
-        // check row 2 column 3 is 'State: Requested to In Progress'
     }
 
     didFinishedRendering = () => {

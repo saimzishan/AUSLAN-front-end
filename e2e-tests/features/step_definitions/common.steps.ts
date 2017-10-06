@@ -145,14 +145,13 @@ defineSupportCode(({Given, When, Then}) => {
         return browser.refresh();
     });
     When(/^I click on button '(.*)'$/, clickOnButton);
-
     function clickOnButton(btnLabel: string) {
         return page.getElementByCSSandText('.button', btnLabel).click();
     }
 
-    When(/^I click on button with css '(.*)'$/, clickOnButtonWithCSS);
-
-    function clickOnButtonWithCSS(css: string) {
+    When(/^I click on button with css '(.*)'$/, clickOnElementWithCSS);
+    When(/^I click on element with css '(.*)'$/, clickOnElementWithCSS);
+    function clickOnElementWithCSS(css: string) {
         return page.getElementByCss(css).click();
     }
 
@@ -187,16 +186,37 @@ defineSupportCode(({Given, When, Then}) => {
             expect(val).to.be.eq(isEnabled);
         });
     }
-
-    When(/^I can see the button state with css '(.*)' is (.*)$/, isButtonWithCSSVisible);
-
+    When(/^I can see the button state with css '(.*)' is '(.*)'$/, isButtonWithCSSVisible);
+    When(/^I can see the element with css '(.*)' is '(.*)'$/, isButtonWithCSSVisible);
     function isButtonWithCSSVisible(css: string, visible: string) {
         let isDisplayed = visible.toLowerCase() === 'visible';
-        return browser.sleep(1000).then(() => {
-            page.getElementByCss(css).isPresent().then(val => {
+        return page.getElementByCss(css).isPresent().then(val => {
                 expect(val).to.be.eq(isDisplayed);
-            });
         });
+    }
+    When(/^I can count the element with css '(.*)' to be '(.*)'$/, elementWithCSSCount);
+    function elementWithCSSCount(css: string, count: string) {
+        return page.getAllElementByCSS(css).count().then((cnt) => {
+            expect(cnt).to.be.eq(+count);
+        });
+    }
+    When(/^I can see the element with name '(.*)' is '(.*)'$/, isElementWithNameVisible);
+    function isElementWithNameVisible(text: string, visible: string) {
+        let isDisplayed = visible.toLowerCase() === 'visible';
+
+        return page.getElementByName(text).isPresent().then(val => {
+            expect(val).to.be.eq(isDisplayed);
+        });
+    }
+
+
+    When(/^I can see the element of type '(.*)'  with text '(.*)'$/, isElementWithTextVisible);
+    function isElementWithTextVisible(text: string, visible: string) {
+        let isDisplayed = visible.toLowerCase() === 'visible';
+
+        return page.getElementByCSSandText('', text).isPresent().then(val => {
+            expect(val).to.be.eq(isDisplayed);
+            });
     }
 
     When(/^I click on BUTTON '(.*)'$/, clickOnBtn);

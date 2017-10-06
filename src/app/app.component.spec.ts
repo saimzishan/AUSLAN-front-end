@@ -66,6 +66,9 @@ import {PreComponent} from './register/pre/pre.component';
 import {BlockoutComponent} from './user-management/user-profile/blockout/blockout.component';
 import {CalendarModule} from 'ap-angular2-fullcalendar';
 import {TermandconditionComponent} from './ui/termandcondition/termandcondition.component';
+import {InterpreterBoxComponent} from './shared/ui/interpreter-box/interpreter-box.component';
+import {InterpreterPopupComponent} from './shared/ui/interpreter-popup/interpreter-popup.component';
+import {PreferedAllocationService} from './shared/prefered-allocation.service';
 
 describe('AppComponent', () => {
   beforeEach(() => {
@@ -80,13 +83,15 @@ describe('AppComponent', () => {
         BookingComponent, PrettyIDPipe, TermandconditionComponent,
         BookingDetailComponent, BlockoutComponent,
         SpinnerComponent, OrgRepComponent, InterpreterComponent, AddressComponent,
-          IndClientComponent, BillingAccountComponent, AccountantComponent, PreComponent
+          IndClientComponent, BillingAccountComponent, AccountantComponent, PreComponent,
+          InterpreterBoxComponent, InterpreterPopupComponent
 
       ],
       imports: [CustomFormsModule, FileuploaderModule, RouterTestingModule, Md2Module.forRoot(),
       MaterialModule, FormsModule, SimpleNotificationsModule.forRoot(), MobileFooterModule,
         HttpModule, CalendarModule
       ],  providers: [ NotificationServiceBus,
+            PreferedAllocationService,
          UserNameService, Title, SpinnerService, UserService, {provide: APP_BASE_HREF, useValue : '/' }, {
           provide: AuthHttp,
           useFactory: authService,

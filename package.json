@@ -10,7 +10,7 @@
     "start": "gem install bundler && bundle install && ng serve",
     "build": "ng build --aot --env=stage",
     "test": "ng test",
-    "circle-test": "ng test --code-coverage --watch=false --singleRun=true --browser Chrome_without_security",
+    "circle-test": "ng test --browser Chrome_without_security --code-coverage --watch=false --singleRun=true ",
     "lint": "ng lint",
     "startwebdriver": "webdriver-manager update && webdriver-manager start ",
     "e2e": "protractor",

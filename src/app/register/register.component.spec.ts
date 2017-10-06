@@ -29,6 +29,9 @@ import {MaterialModule} from '@angular/material';
 import {IndividualClient, Interpreter, OrganisationalRepresentative, User} from '../shared/model/user.entity';
 import {CalendarModule} from 'ap-angular2-fullcalendar';
 import {TermandconditionComponent} from '../ui/termandcondition/termandcondition.component';
+import {InterpreterPopupComponent} from '../shared/ui/interpreter-popup/interpreter-popup.component';
+import {InterpreterBoxComponent} from '../shared/ui/interpreter-box/interpreter-box.component';
+import {PreferedAllocationService} from '../shared/prefered-allocation.service';
 
 
 describe('RegisterComponent', () => {
@@ -39,11 +42,12 @@ describe('RegisterComponent', () => {
         TestBed.configureTestingModule({
             declarations: [RegisterComponent, NotificationComponent,
                 OrgRepComponent, InterpreterComponent, AddressComponent, TermandconditionComponent,
-                IndClientComponent, BillingAccountComponent, AccountantComponent],
+                IndClientComponent, BillingAccountComponent, AccountantComponent,
+            InterpreterPopupComponent, InterpreterBoxComponent],
             imports: [FormsModule, MaterialModule, CalendarModule,
                 CustomFormsModule, SimpleNotificationsModule.forRoot(),
                 RouterTestingModule],
-            providers: [NotificationServiceBus,
+            providers: [NotificationServiceBus, PreferedAllocationService,
                 {provide: UserService, useClass: MockUserService}, {provide: AuthHttp, useClass: MockBackend}]
         }).compileComponents();
     }));

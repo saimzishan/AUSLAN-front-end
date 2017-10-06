@@ -23,6 +23,9 @@ import {AddressComponent} from '../../ui/address/address.component';
 import {OrgRepComponent} from '../../ui/org-rep/org-rep.component';
 import {IndClientComponent} from '../../ui/ind-client/ind-client.component';
 import {CalendarModule} from 'ap-angular2-fullcalendar';
+import {InterpreterPopupComponent} from '../../shared/ui/interpreter-popup/interpreter-popup.component';
+import {InterpreterBoxComponent} from '../../shared/ui/interpreter-box/interpreter-box.component';
+import {PreferedAllocationService} from '../../shared/prefered-allocation.service';
 
 describe('UserProfileComponent', () => {
   let component: UserProfileComponent;
@@ -32,8 +35,9 @@ describe('UserProfileComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ UserProfileComponent, UserHeaderComponent, InterpreterComponent,
         OrgRepComponent, InterpreterComponent, AddressComponent,
-        IndClientComponent, BillingAccountComponent, AccountantComponent],
-      providers: [UserNameService, LinkHelper, LinkAuth, RolePermission,
+        IndClientComponent, BillingAccountComponent, AccountantComponent,
+          InterpreterPopupComponent, InterpreterBoxComponent],
+      providers: [PreferedAllocationService, UserNameService, LinkHelper, LinkAuth, RolePermission,
          { provide: UserService, useClass: MockUserService}, { provide: AuthHttp, useClass: MockBackend},
         NotificationServiceBus,
         SpinnerService],

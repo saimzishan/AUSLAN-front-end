@@ -57,13 +57,17 @@ export class UserProfileComponent implements OnInit {
         this.userModel.disabled = this.selectedStatus === 'Disabled';
         this.selectedStatus = '';
         this.spinnerService.requestInProcess(true);
-        console.log (this.userModel);
         this.userDataService.updateUser(this.userModel)
             .subscribe((res: any) => {
                     if (res.status === 200) {
                         // UI Notification
                         this.userModel.photo_url = res.json().photo_url || '';
                         this.userNameService.setLoggedInUser(this.userModel);
+                        if ( this.userModel instanceof OrganisationalRepresentative
+                        || this.userModel instanceof IndividualClient) {
+                            this.userModel.prefferedInterpreters =
+                                this.userModel.prefferedInterpreters.filter(i => i._destory === -1);
+                        }
                         this.notificationServiceBus.launchNotification(false, 'User details updated Successfully');
                         this.spinnerService.requestInProcess(false);
 

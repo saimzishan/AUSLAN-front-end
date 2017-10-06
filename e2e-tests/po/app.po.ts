@@ -9,7 +9,9 @@ export class PageObject {
     getElementByCss(css: string) {
         return element(by.css(css));
     }
-
+    getElementByClassName( className: string ) {
+        return element(by.className(className));
+    }
     getText(ele) {
         return ele.getText();
     }
