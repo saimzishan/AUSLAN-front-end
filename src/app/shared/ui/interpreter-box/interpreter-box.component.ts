@@ -18,7 +18,6 @@ export class InterpreterBoxComponent implements OnInit {
     private dialogSub: any;
     dialogRef: MdDialogRef<any>;
     title = '';
-
     constructor(public dialog: MdDialog,
                 public viewContainerRef: ViewContainerRef,
                 private _sharedPreferedAllocationService: PreferedAllocationService) {
@@ -26,12 +25,17 @@ export class InterpreterBoxComponent implements OnInit {
 
     ngOnInit() {
         this.title = this.isPreffered ?
-            'ADD PREFFERED INTERPRETER' : 'ADD BLOCKED INTERPRETER';
+            'PREFFERED INTERPRETER' : 'BLOCKED INTERPRETER';
         this._sharedPreferedAllocationService.interpreterStream$.subscribe(
             data => {
                 this.selectedInterpreters = data;
             });
 
+    }
+
+    getIndex(interpreter) {
+        return this.selectedInterpreters
+            .filter(i => this.isPreffered ? i.preference ===  'preferred' :  i.preference ===  'blocked').indexOf(interpreter) + 1;
     }
 
     checkInterpreterPreference(interpreter) {
