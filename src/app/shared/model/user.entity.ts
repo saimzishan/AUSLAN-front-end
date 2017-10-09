@@ -90,7 +90,7 @@ export class Organisational extends User {
     public organisation_primary_contact: Contact = new Contact();
     public address_attributes: Address = new Address();
     public organisation_billing_account: Accountant = new Accountant();
-    public name = '';
+    public organisation_name = '';
     public group_email = '';
     public branch_office = '';
     public preferred_contact_method = 'email_only';
@@ -144,7 +144,7 @@ export class OrganisationalRepresentative extends Organisational {
                 {
                     'abn': this.abn,
                     'id': this.org_id,
-                    'name': this.name, 'group_email': this.group_email,
+                    'name': this.organisation_name, 'group_email': this.group_email,
                     'branch_office': this.branch_office,
                     'preferred_contact_method': this.organisation_billing_account.preferred_contact_method,
                     'address_attributes': this.address_attributes,
@@ -193,7 +193,7 @@ export class OrganisationalRepresentative extends Organisational {
             obj.organisation.billing_account_attributes;
         this.org_id = obj.organisation.id;
         this.abn = obj.organisation.abn;
-        this.name = obj.organisation.name;
+        this.organisation_name = obj.organisation.name;
         this.group_email = obj.organisation.group_email;
         this.special_instructions = obj.special_instructions;
         this.branch_office = obj.branch_office;
