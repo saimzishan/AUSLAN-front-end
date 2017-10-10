@@ -173,7 +173,6 @@ Feature: Booking Management
     Then I move to element name 'tnc'
     Then I click on checkbox name 'tnc'
     When I will upload a document 'ppt_not_sushi.ppt'
-    Then I wait for 500 milli-seconds
     And I will see attachment 'ppt_not_sushi.ppt'
     When I will upload a document 'docu_not_sushi.doc'
     And I will see attachment 'docu_not_sushi.doc'
@@ -195,7 +194,8 @@ Feature: Booking Management
     Then I see attachment 'sushi.pdf' does 'not exists'
 
 
-  @runThis
+  @ingoreThis
+    # https://github.com/valor-software/ng2-file-upload/issues/906
   Scenario: Administrator can remove booking documents
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
@@ -205,7 +205,6 @@ Feature: Booking Management
     Then I move to element name 'tnc'
     Then I click on checkbox name 'tnc'
     When I will upload a document 'ppt_not_sushi.ppt'
-    Then I wait for 500 milli-seconds
     And I will see attachment 'ppt_not_sushi.ppt'
     When I will upload a document 'docu_not_sushi.doc'
     And I will see attachment 'docu_not_sushi.doc'
