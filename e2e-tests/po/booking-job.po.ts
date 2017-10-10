@@ -67,6 +67,12 @@ export class BookingJobPage extends PageObject {
         });
 
     }
+    attachmentIsPresent = (attachmentName, exists) => {
+        let isPresent = exists.toLowerCase() === 'exists';
+        return element(by.cssContainingText('a', attachmentName)).isPresent().then((elm) => {
+            expect(elm).to.be.eq(isPresent);
+        });
+    }
 
     verifyPictureOfYourself = (src: string) => {
         let elm = this.getElementByCss('div.row.with-border > span.with-avatar > img');
