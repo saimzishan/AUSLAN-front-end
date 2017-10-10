@@ -213,6 +213,9 @@ export class Booking {
                 street_name: this.venue.street_name,
                 suburb: this.venue.suburb, state: this.venue.state, post_code: this.venue.post_code
             },
+            created_by: {
+                organisation: this.client.organisation_name
+            },
             documents_attributes: this.documents_attributes
         });
         return o;
