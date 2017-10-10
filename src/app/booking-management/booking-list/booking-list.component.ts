@@ -9,6 +9,7 @@ import {Interpreter, OrganisationalRepresentative} from '../../shared/model/user
 import {BookingInterpreter} from '../../shared/model/contact.entity';
 import {BookingFilter} from '../../shared/model/booking-filter.interface';
 import {FormGroup, NgForm} from '@angular/forms';
+import {BA, BOOKING_NATURE} from '../../shared/model/booking-nature.enum';
 
 @Component({
     selector: 'app-booking-list',
@@ -25,6 +26,7 @@ export class BookingListComponent {
     };
 
     constructor(public router: Router) {
+        BA.loadItems();
     }
 
     underScoreToSpaces(str: string) {
@@ -75,6 +77,9 @@ export class BookingListComponent {
         keys.splice(0, 1);
         return ['All', ...keys];
     }
+    assignmentCategoryList() {
+        return Object.keys(BA.DISSCUSSION_ITEM) as Array<string>;
+    }
     filterStatus() {
         return BOOKING_STATUS[this.bookingFilter.booking_status];
     }
@@ -91,6 +96,9 @@ export class BookingListComponent {
                     formattedValue = value;
                 }
                 break;
+            case 'booking_type':
+                formattedValue = BA.DISSCUSSION_ITEM[value].join(',');
+                break;
             default:
                 formattedValue = value;
         }
@@ -105,6 +113,9 @@ export class BookingListComponent {
             if (this.bookingFilter.hasOwnProperty(k)) {
                 params.set('filter[' + k + ']', this.bookingFilter[k]);
             }
+        }
+        if (field === 'booking_type') {
+            this.bookingFilter.booking_type = value;
         }
         this.onBookingFilter.emit(params);
     }
