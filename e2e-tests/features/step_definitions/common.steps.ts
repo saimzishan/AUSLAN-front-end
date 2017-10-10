@@ -91,11 +91,19 @@ defineSupportCode(({Given, When, Then}) => {
     Given(/^I will see attachment '(.*)'$/, verifyAttachment);
 
     function verifyAttachment(attachmentName: string) {
-        return element(by.partialButtonText(attachmentName)).isPresent().then((elm) => {
-            expect(elm).to.exist;
+        return element(by.cssContainingText('span',
+            attachmentName)).isPresent().then((elm) => {
+            expect(elm).to.be.eq(true);
         });
     }
 
+    Given(/^I will see attachment '(.*)' is removed$/, verifyAttachmentRemoved);
+
+    function verifyAttachmentRemoved(attachmentName: string) {
+        return element(by.cssContainingText('span', attachmentName)).isPresent().then((elm) => {
+            expect(elm).to.be.eq(false);
+        });
+    }
     Given(/^I will upload a document '(.*)'$/, documentUpload);
 
     function documentUpload(documentName: string) {
@@ -128,6 +136,8 @@ defineSupportCode(({Given, When, Then}) => {
     Given(/^I get a valid invite notification$/, bookingJob.getSuccessNotificationContentForInvite);
     Given(/^I select (.*) Interpreter$/, bookingJob.selectInterpreters);
     Given(/^I see (\d+) interpreter has accepted the booking$/, bookingJob.bookingAccepted);
+    Given(/^I see attachment '(.*)' does '(.*)'$/, bookingJob.attachmentIsPresent);
+
     Given(/^I am on a computer$/, onDesktopResolution);
 
     function onDesktopResolution() {
