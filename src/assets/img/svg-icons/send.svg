@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="29px" height="26px" viewBox="0 0 29 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 46.2 (44496) - http://www.bohemiancoding.com/sketch -->
+    <title>Send@3x</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="Send-Form/2" transform="translate(-721.000000, -18.000000)" stroke="#02B86E" stroke-width="1.25">
+            <path d="M722.47041,29.712371 C729.30379,27.0848083 749,19 749,19 L745.080856,41.8395834 C744.879874,42.9512446 743.573493,43.355485 742.769566,42.6480642 L736.639623,37.493999 L732.318516,41.5364031 L733.021952,34.7653762 L746.085765,22.3349834 L730.007226,32.4409938 L731.012134,38.2014197 L727.695936,32.8452342 L722.671392,31.2282725 C721.867465,30.9250922 721.766974,29.9144912 722.47041,29.712371 Z" id="Send"></path>
+        </g>
+    </g>
+</svg>
