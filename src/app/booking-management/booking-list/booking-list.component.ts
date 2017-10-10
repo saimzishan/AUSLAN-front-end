@@ -71,7 +71,9 @@ export class BookingListComponent {
     }
     stateList() {
         let keys = Object.keys(BOOKING_STATE);
-        return keys.slice(keys.length / 2);
+        keys = keys.slice(keys.length / 2);
+        keys.splice(0, 1);
+        return ['All', ...keys];
     }
     filterStatus() {
         return BOOKING_STATUS[this.bookingFilter.booking_status];
@@ -81,6 +83,13 @@ export class BookingListComponent {
         switch (field) {
             case 'booking_status':
                 formattedValue = BOOKING_STATUS[value];
+                break;
+            case 'state':
+                if (value === 'all') {
+                    formattedValue = undefined;
+                } else {
+                    formattedValue = value;
+                }
                 break;
             default:
                 formattedValue = value;
