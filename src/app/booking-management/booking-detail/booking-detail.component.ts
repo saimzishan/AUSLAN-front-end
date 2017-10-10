@@ -234,7 +234,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     handleFileSelect(evt) {
         let files = evt.target.files;
         let file = files[0];
-
+        // File uploader wont add a duplicate file
         if (files && file) {
             this.fileName = file.name;
 
@@ -246,5 +246,12 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
 
     _handleReaderLoaded(readerEvt) {
         this.bookingModel.documents_attributes.push({document: readerEvt.target.result, document_file_name: this.fileName});
+    }
+    removeDocuments(item) {
+        if (this.bookingModel.documents_attributes.filter( d => d.document_file_name === item.file.name).length > 0) {
+            item.remove();
+            this.bookingModel.documents_attributes =
+                this.bookingModel.documents_attributes.filter(d => d.document_file_name !== item.file.name);
+        }
     }
 }

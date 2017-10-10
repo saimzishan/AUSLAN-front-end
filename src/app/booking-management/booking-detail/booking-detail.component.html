@@ -461,7 +461,8 @@
             <div class="row">
                 <section id="job-documents">
                     <section>
-                        <section *ngFor="let item of uploader.queue">
+                        <section *ngFor="let item of uploader.queue; let i = index">
+                            <button name="{{'btnRemoveDocument_' + i}}" (click)="removeDocuments(item)" type="button"><i class="icon-close"></i></button>
                             <i class="icon-attachment"></i>
                             <span>{{ item?.file?.name }}</span>
                         </section>
