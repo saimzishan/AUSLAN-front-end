@@ -66,7 +66,8 @@ export class BookingListComponent {
     }
     statusList() {
         let keys = Object.keys(BOOKING_STATUS);
-        return keys.slice(keys.length / 2);
+        return ['All', ...keys.slice(keys.length / 2)];
+
     }
     stateList() {
         let keys = Object.keys(BOOKING_STATE);
