@@ -79,20 +79,16 @@ Feature: Booking Filter
     Then I am shown with 4 bookings
     Then I see 4 rows with state 'Requested'
 
-    # TODO: Org names have yet to be implemented
-    # Along with Individual Client and relevant details
-    # For bookings
-    # This test should be run when those changes are made
-    #  @runThis
-    #  Scenario: Given 1 verified Booking Officer, 1 verified Organisational Representative, I should be able to filter by org name
-    #    Given One booking has org name as 'Agen'
-    #    Given I exist as an Booking Officer
-    #    And I sign in with valid Booking Officer credentials
-    #    When I am on the bookings page
-    #    Then I will be shown with bookings
-    #    When I query booking with org name 'Agen'
-    #    Then I am shown with 1 booking
-    #    Then I see one row with org name 'Agen'
+  @runThis
+  Scenario: Given 1 verified Booking Officer, 1 verified Organisational Representative, I should be able to filter by org name
+    Given One booking has org name as 'Agen'
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    When I am on the bookings page
+    Then I will be shown with bookings
+    When I query booking with org name 'Agen'
+    Then I am shown with 1 booking
+    Then I see one row with org name 'Agen'
 
   @runThis
   Scenario: Given 1 verified Booking Officer, I should be able to filter by client name
