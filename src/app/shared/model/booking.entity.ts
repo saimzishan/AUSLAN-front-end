@@ -27,7 +27,6 @@ export class Booking {
     public client: OrganisationalRepresentative = new OrganisationalRepresentative({});
     public documents_attributes = [];
     public versions: Array<BookingVersion> = [];
-    public organisation_name: string;
     // Is it a limitation on interpreters invitation.
 
     constructor() {
@@ -38,6 +37,7 @@ export class Booking {
         this.venue.street_number = '';
         this.requested_by.first_name = '';
         this.requested_by.last_name = '';
+        this.client.organisation_name = '';
         this.client.organisation_primary_contact.first_name = '';
         this.client.organisation_primary_contact.last_name = '';
         this.client.organisation_primary_contact.phone_number = '';
@@ -98,6 +98,7 @@ export class Booking {
         this.primaryContact.last_name = data.contact_last_name;
         this.primaryContact.phone_number = data.contact_phone_number;
         this.primaryContact.mobile_number = data.contact_mobile_number;
+        this.client.organisation_name = data.created_by.organisation;
         this.client.organisation_billing_account.external_reference = '';
         this.special_instructions = data.special_instructions;
         this.deaf_person.first_name = data.deaf_persons_first_name;
@@ -211,6 +212,9 @@ export class Booking {
                 street_number: this.venue.street_number,
                 street_name: this.venue.street_name,
                 suburb: this.venue.suburb, state: this.venue.state, post_code: this.venue.post_code
+            },
+            created_by: {
+                organisation: this.client.organisation_name
             },
             documents_attributes: this.documents_attributes
         });

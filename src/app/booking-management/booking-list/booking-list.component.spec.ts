@@ -12,35 +12,40 @@ describe('BookingListComponent' ,  () => {
   let component:  BookingListComponent;
   let fixture:  ComponentFixture<BookingListComponent>;
 
-  let data = new Object({'id' : '5' , 'venue' : 'Location B' ,
-  'requested_by' : 'Person A' , 'nature_of_appointment' : 'Engagement' ,
-  'specific_nature_of_appointment' : 'Court' , 'contact_name' : 'Booking' ,
-  'contact_phone_number' : 'xxxx xxx xxx' ,
-  'contact_mobile_number' : 'xxxx xxx xxx' ,
-  'deaf_persons_name' : 'Person B' ,
-  'status' : 'Requested' ,
-  'deaf_persons_mobile' : '00000000000' ,
-  'deaf_persons_email' : 'person@b.com' ,
-  'deaf_persons_eaf_no' : '5555' , 'parking_availability' : 'None' ,
-  'number_of_people_attending' : -0 , 'start_time' : '2017-03-16T19:20+01:00' ,
-  'end_time' : '2017-03-16T19:22+01:00',
-  'address_attributes':
-  {'line_1': 'Curve Tomorrow',
-  'line_2': 'L4 West RCH',
-  'line_3': '50 Flemington Rd',
-  'suburb': 'Parkville',
-  'state' : ' Victoria',
-  'post_code': '3025'}
+  let data = new Object({
+    'id' : '5' , 'venue' : 'Location B' ,
+    'requested_by' : 'Person A' , 'nature_of_appointment' : 'Engagement' ,
+    'specific_nature_of_appointment' : 'Court' , 'contact_name' : 'Booking' ,
+    'contact_phone_number' : 'xxxx xxx xxx' ,
+    'contact_mobile_number' : 'xxxx xxx xxx' ,
+    'deaf_persons_name' : 'Person B' ,
+    'status' : 'Requested' ,
+    'deaf_persons_mobile' : '00000000000' ,
+    'deaf_persons_email' : 'person@b.com' ,
+    'deaf_persons_eaf_no' : '5555' ,
+    'parking_availability' : 'None' ,
+    'number_of_people_attending' : -0 ,
+    'start_time' : '2017-03-16T19:20+01:00' ,
+    'end_time' : '2017-03-16T19:22+01:00',
+    'address_attributes': {
+      'line_1': 'Curve Tomorrow',
+      'line_2': 'L4 West RCH',
+      'line_3': '50 Flemington Rd',
+      'suburb': 'Parkville',
+      'state' : ' Victoria',
+      'post_code': '3025'
+    },
+    'created_by': {
+      'organisation': 'Melb Uni'
+    }
   });
 
   let mock_booking_list: Array<Booking> = [];
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations :  [ BookingListComponent, PrettyIDPipe ],
-
       imports: [RouterTestingModule, FormsModule]
-    })
-    .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {
