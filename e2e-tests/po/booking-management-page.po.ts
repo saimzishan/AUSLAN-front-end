@@ -40,13 +40,13 @@ export class BookingManagementPage extends PageObject {
         });
     }
     hoverOnTableHeader = (headerTitle: string, selection: string) => {
-        let headerId = {
+        let headerCss = '.dropdown#' + {
             'Status': 'booking-status',
             'State': 'booking-state'
         }[headerTitle];
-        let el = this.getElementByCss('.dropdown#' + headerId);
+        let el = this.getElementByCss(headerCss);
         return browser.actions().mouseMove(el).perform().then(() => {
-            let listEl = this.getElementInsideByCSSandText(el, 'ul li a', selection);
+            let listEl = this.getElementByCSSandText(headerCss + ' ul li a', selection);
             this.currentPath().then((path) => {
                 browser.wait(protractor.ExpectedConditions.presenceOf(listEl), 10000).then(() => {
                     return listEl.click();

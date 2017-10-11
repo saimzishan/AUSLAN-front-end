@@ -85,32 +85,31 @@ export class BookingListComponent {
     }
     private formatterValueFor(field: string, value: string) {
         let formattedValue: string;
-        switch (field) {
-            case 'booking_status':
-                formattedValue = BOOKING_STATUS[value];
-                break;
-            case 'state':
-                if (value === 'all') {
-                    formattedValue = undefined;
-                } else {
+        let val: number;
+        if (value && value.length) {
+            value = value.trim();
+            value = value.replace(/,$/g, '');
+            switch (field) {
+                case 'booking_status':
+                    formattedValue = BOOKING_STATUS.hasOwnProperty(value) ? BOOKING_STATUS[value].toString() : '' ;
+                    break;
+                case 'state':
+                    formattedValue = value === 'all' ? '' : value;
+                    break;
+                case 'booking_type':
+                    formattedValue = BA.DISSCUSSION_ITEM[value].join(',');
+                    break;
+                default:
                     formattedValue = value;
-                }
-                break;
-            case 'booking_type':
-                formattedValue = BA.DISSCUSSION_ITEM[value].join(',');
-                break;
-            default:
-                formattedValue = value;
+            }
         }
-        return formattedValue;
+        return formattedValue.length ? formattedValue : undefined;
     }
     filter(field: string, value: string) {
-        value = value.trim();
-        value = value.replace(/,$/g, '');
         this.bookingFilter[field] = this.formatterValueFor(field, value);
         let params: URLSearchParams = new URLSearchParams();
         for (let k in this.bookingFilter) {
-            if (this.bookingFilter.hasOwnProperty(k)) {
+            if (this.bookingFilter.hasOwnProperty(k) && this.bookingFilter[k]) {
                 params.set('filter[' + k + ']', this.bookingFilter[k]);
             }
         }
