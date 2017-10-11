@@ -45,7 +45,11 @@ export class BookingManagementPage extends PageObject {
         let el = this.getElementByCss('.dropdown#' + headerId);
         return browser.actions().mouseMove(el).perform().then(() => {
             let listEl = this.getElementInsideByCSSandText(el, 'ul li a', selection);
-            return listEl.click();
+            this.currentPath().then((path) => {
+                browser.wait(protractor.ExpectedConditions.presenceOf(listEl), 10000).then(() => {
+                    return listEl.click();
+                });
+            });
         });
     }
 
