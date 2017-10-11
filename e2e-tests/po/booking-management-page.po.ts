@@ -232,6 +232,14 @@ export class BookingManagementPage extends PageObject {
             return expect(txt.split(' ')[0]).to.be.eq(client_name);
         });
     }
+    bookingExistsWithClientLastName = (client_name: string) => {
+        let tblRows = this.getAllElementByCSS('table tbody tr');
+        expect(tblRows.count()).to.eventually.be.equal(1);
+        let clientNameTd = this.getElementByCss('table tbody tr:first-child td:nth-child(7)');
+        return clientNameTd.getText().then((txt) => {
+            return expect(txt.split(' ')[1]).to.be.eq(client_name);
+        });
+    }
     bookingExistsWithOrgName = (org_name: string) => {
         let tblRows = this.getAllElementByCSS('table tbody tr');
         expect(tblRows.count()).to.eventually.be.equal(1);
