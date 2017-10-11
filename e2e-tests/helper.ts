@@ -22,7 +22,7 @@ export class User {
     public type: string;
 
     static user_type(type: string) {
-        return type.replace(/ /g, '').replace('1', '');
+        return type.replace(/ /g, '').replace(/[0-9]/g, '');
     }
 
     static returnValidUser(type: string) {
@@ -125,7 +125,6 @@ export class User {
             case 'Interpreter2':
                 data_to_sent['date_of_birth'] = '20/05/1987';
                 data_to_sent['naati_id'] = 12345;
-
                 data_to_sent['address_attributes'] = address_attributes_fields;
                 break;
             case 'Organisational Representative':

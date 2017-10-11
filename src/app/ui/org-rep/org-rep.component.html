@@ -20,7 +20,7 @@
             <div class="form-field">
                 <label>ORGANISATION'S NAME * </label>
                 <input type="text" class="valid" placeholder="Enter the name of the Organisation"
-                       [(ngModel)]="userModel.name" name="business_name" #business_name="ngModel" required>
+                       [(ngModel)]="userModel.organisation_name" name="business_name" #business_name="ngModel" required>
                 <span *ngIf="business_name.touched && !business_name.errors?.required"
                       class="inline-icon inline-icon-valid valid"></span>
                 <span *ngIf="business_name.touched && business_name.errors?.required" class="inline-icon error">

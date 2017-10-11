@@ -74,9 +74,11 @@
                     <span class="order asc">Booking Type</span>
                     <ul class="dropdown menu custom" data-dropdown-menu>
                         <li>
-                            <a href="javascript:void(0)">All</a>
+                          <a href="javascript:void(0)">{{bookingFilter.booking_type}}</a>
                             <ul class="menu smaller">
-                                <!-- li><a href="javascript:void(0)"><i></i> Option 1</a></li -->
+                                <li *ngFor="let booking_type of assignmentCategoryList()">
+                                    <a href="javascript:void(0)" (click)="filter('booking_type', booking_type)"><i></i>{{booking_type}}</a>
+                                </li>
                             </ul>
                         </li>
                     </ul>
@@ -137,7 +139,7 @@
                         <i *ngIf="isCurrentUserInvitedInterpreter(booking.interpreters)" class="icon-requested"></i>
                     </div>
                 </td>
-                <td>{{booking.client.name}}</td>
+                <td>{{booking.client.organisation_name}}</td>
                 <td>{{booking.deaf_person.first_name + ' ' +
                     booking.deaf_person.last_name}}
                 </td>

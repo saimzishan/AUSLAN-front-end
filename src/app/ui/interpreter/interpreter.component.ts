@@ -32,7 +32,6 @@ export class InterpreterComponent implements OnInit {
             month: {buttonText: 'Grid Month'}
         },
         eventRender: function (event, element, view) {
-            // console.log(event.start.format());
             return (event.ranges.filter(function (range) {
                     return (event.start.isBefore(range.end) &&
                     event.end.isAfter(range.start));

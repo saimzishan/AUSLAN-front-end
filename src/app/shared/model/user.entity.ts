@@ -83,14 +83,14 @@ export class User {
     }
 }
 
-
+/* This needs to be fixed*/
 export class Organisational extends User {
     public org_id: number;
     public abn: number;
     public organisation_primary_contact: Contact = new Contact();
     public address_attributes: Address = new Address();
     public organisation_billing_account: Accountant = new Accountant();
-    public name = '';
+    public organisation_name = '';
     public group_email = '';
     public branch_office = '';
     public preferred_contact_method = 'email_only';
@@ -101,6 +101,7 @@ export class Organisational extends User {
     public customer_ref: string;
     public special_instructions = '';
     public billingAddressIsSame = true;
+    public prefferedInterpreters = [];
 
     constructor(data) {
         super(data);
@@ -143,10 +144,11 @@ export class OrganisationalRepresentative extends Organisational {
                 {
                     'abn': this.abn,
                     'id': this.org_id,
-                    'name': this.name, 'group_email': this.group_email,
+                    'name': this.organisation_name, 'group_email': this.group_email,
                     'branch_office': this.branch_office,
                     'preferred_contact_method': this.organisation_billing_account.preferred_contact_method,
                     'address_attributes': this.address_attributes,
+                    'preference_allocations_attributes': this.prefferedInterpreters,
                     'billing_account_attributes': {
                         'id': this.organisation_billing_account.id,
                         'primary_contact_first_name': this.organisation_primary_contact.first_name,
@@ -191,7 +193,7 @@ export class OrganisationalRepresentative extends Organisational {
             obj.organisation.billing_account_attributes;
         this.org_id = obj.organisation.id;
         this.abn = obj.organisation.abn;
-        this.name = obj.organisation.name;
+        this.organisation_name = obj.organisation.name;
         this.group_email = obj.organisation.group_email;
         this.special_instructions = obj.special_instructions;
         this.branch_office = obj.branch_office;
@@ -200,6 +202,7 @@ export class OrganisationalRepresentative extends Organisational {
         this.reffered_other = this.reffered_by === 'OTHER' ?
             obj.discovery_of_auslan.replaceAll('O:') : '';
         this.customer_ref = obj.customer_reference;
+        this.prefferedInterpreters = obj.organisation.preference_allocations_attributes;
         this.preferred_contact_method = obj.communication_preference;
         this.address_attributes = obj.organisation.address_attributes;
         this.organisation_primary_contact.first_name = obj.organisation.billing_account.primary_contact_first_name || '';
@@ -248,6 +251,7 @@ export class IndividualClient extends User {
     public reffered_by: string;
     public billingAddressIsSame = true;
     public reffered_other: string;
+    public prefferedInterpreters = [];
 
     constructor(data) {
         super(data);
@@ -289,6 +293,7 @@ export class IndividualClient extends User {
             'business_hours_phone': this.phone,
             'address_attributes': this.address_attributes,
             'communication_preference': this.preferred_contact_method,
+            'preference_allocations_attributes': this.prefferedInterpreters,
             'billing_account_attributes': {
                 'id': this.individual_client_billing_account.id,
                 'primary_contact_first_name': this.individual_client_primary_contact.first_name,
@@ -322,6 +327,7 @@ export class IndividualClient extends User {
         this.eaf_end_date = obj.eaf_end_date;
         this.special_instructions = obj.special_instructions;
         this.preferred_contact_method = obj.communication_preference;
+        this.prefferedInterpreters = obj.preference_allocations_attributes;
         this.reffered_by = Boolean(obj.discovery_of_auslan) ? obj.discovery_of_auslan.startsWith('O:') ?
             'Other' : obj.discovery_of_auslan : '';
         this.reffered_other = this.reffered_by === 'OTHER' ?

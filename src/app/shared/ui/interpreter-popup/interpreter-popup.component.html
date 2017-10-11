@@ -1,0 +1,27 @@
+<div class="md-dialog add-interpreters">
+  <md-dialog-content>
+    <header>
+     <h1>All Interpreters</h1>
+      <button (click)="closeDialog()"><i class="icon-close"></i></button>
+    </header>
+    <main>
+      <section id="interpreters-list">
+        <section name="interpreters" *ngFor="let interpreter of interpreterList;"
+                 [ngClass]="{'selected': interpreter.interpreter_id === checkedInterpreter,
+                 'interpreter_added': isAlreadyAdded(interpreter.interpreter_id)  === true}"
+                 (click)="isInterpreterSelectable(interpreter.interpreter_id)">
+          <img (click)="checkedInterpreter = interpreter.interpreter_id ;" src="{{interpreter.photo_url}}"  alt="">
+          <span>{{interpreter.first_name}} {{interpreter.last_name}}</span>
+        </section>
+      </section>
+    </main>
+  </md-dialog-content>
+
+  <div>
+    <md-dialog-actions>
+      <button *ngIf="checkedInterpreter > -1" name="selectBtn" (click)="addSelectedInterpreter()" class="button"> SELECT </button>
+      <button name="noBtn"  (click)="closeDialog()" class="button red"> CANCEL </button>
+    </md-dialog-actions>
+  </div>
+</div>
+	

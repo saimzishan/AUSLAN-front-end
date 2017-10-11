@@ -1,8 +1,8 @@
 Feature: Create Profile
 
- Background: I as an all user should be able to see the profile page to create different
-    types of accounts
-   Given I go to the website
+  Background: I as an all user should be able to see the profile page to create different
+  types of accounts
+    Given I go to the website
     And I am shown the login screen, with picture and signup button
     When I click on button 'CREATE AN ACCOUNT'
     Then I will be taken to the 'Choose Profile' page
@@ -29,7 +29,7 @@ Feature: Create Profile
     Then I move to element name 'tnc'
     Then I click on checkbox name 'tnc'
     When I fill all the details correctly for -> 'INDIVIDUALCLIENT' with the pref communication is 'SMS AND EMAIL'
-   Then I will get an error notification saying "Unprocessable Entity "email":"has already been taken""
+    Then I will get an error notification saying "Unprocessable Entity "email":"has already been taken""
 
   @runThis
   Scenario: With An Interpreter created before, can't create another interp with same email
@@ -136,7 +136,7 @@ Feature: Create Profile
     Then I move to element name 'tnc'
     Then I click on checkbox name 'tnc'
     When I fill all the details correctly for -> 'INDIVIDUALCLIENT' with the pref communication is 'SMS'
-    Then 'INTERPRETER' will be created
+    Then 'INDIVIDUALCLIENT' will be created
 
   @runThis
   Scenario: interp sign up with prefer communication
@@ -145,5 +145,5 @@ Feature: Create Profile
     Then I move to element name 'tnc'
     Then I click on checkbox name 'tnc'
     When I fill all the details correctly for -> 'INDIVIDUALCLIENT' with the pref communication is 'SMS AND EMAIL'
-    Then 'INTERPRETER' will be created
+    Then 'INDIVIDUALCLIENT' will be created
 # --------------------------------------- AUSLAN1-53 END ------------------------------------------------

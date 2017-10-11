@@ -69,6 +69,9 @@ import {HashLocationStrategy, Location, LocationStrategy} from '@angular/common'
 import { BlockoutComponent } from './user-management/user-profile/blockout/blockout.component';
 import {CalendarModule} from 'ap-angular2-fullcalendar';
 import { TermandconditionComponent } from './ui/termandcondition/termandcondition.component';
+import { InterpreterPopupComponent } from './shared/ui/interpreter-popup/interpreter-popup.component';
+import { InterpreterBoxComponent } from './shared/ui/interpreter-box/interpreter-box.component';
+import {PreferedAllocationService} from './shared/prefered-allocation.service';
 
 @NgModule({
   declarations: [
@@ -97,9 +100,10 @@ import { TermandconditionComponent } from './ui/termandcondition/termandconditio
     BookingJobsComponent, PopupComponent, JobDetailComponent, OrgRepComponent, IndClientComponent,
     InterpreterComponent, BillingAccountComponent,
     SkillMatrixComponent, AddressComponent, AccountantComponent,
-      UserPasswordComponent, PreComponent, BlockoutComponent, TermandconditionComponent
+      UserPasswordComponent, PreComponent, BlockoutComponent, TermandconditionComponent,
+       InterpreterBoxComponent, InterpreterPopupComponent
   ],
-  entryComponents: [UserDetailComponent, PopupComponent],
+  entryComponents: [UserDetailComponent, PopupComponent, InterpreterPopupComponent],
   imports: [CustomFormsModule, routing, FileUploadModule,
     BrowserModule, RouterModule, CommonModule, MobileFooterModule,
     FormsModule, BrowserAnimationsModule,
@@ -108,6 +112,7 @@ import { TermandconditionComponent } from './ui/termandcondition/termandconditio
     MaterialModule, CalendarModule
   ],  providers: [DatePipe, LinkAuth, UserNameService, RolePermission, AuthGuard, NoAuthGuard, Title, LinkHelper,
     NotificationServiceBus, SpinnerService, BookingService, UserService,
+        PreferedAllocationService,
     { provide: APP_BASE_HREF, useValue : '/' },
     {
       provide: AuthHttp,

@@ -79,6 +79,18 @@
     <app-ind-client *ngIf="userModel.type === 'IndividualClient'" [userModel]="userModel"></app-ind-client>
     <app-org-rep *ngIf="userModel.type === 'Organisation' || userModel.type === 'OrganisationalRepresentative'" [userModel]="userModel"></app-org-rep>
 
+    <app-interpreter-box
+            [isPreffered]="true"
+            [selectedInterpreters]="userModel.prefferedInterpreters"
+            *ngIf="userModel.type === 'IndividualClient' || userModel.type === 'Organisation' || userModel.type === 'OrganisationalRepresentative'"
+    ></app-interpreter-box>
+    <br>
+    <app-interpreter-box
+            [isPreffered]="false"
+            [selectedInterpreters]="userModel.prefferedInterpreters"
+            *ngIf="userModel.type === 'IndividualClient' || userModel.type === 'Organisation' || userModel.type === 'OrganisationalRepresentative'"
+    ></app-interpreter-box>
+    <br>
     <section class="actions">
       <button name="edit_user" (click)="editUser(user_profile_form)"> SAVE </button>
     </section>

@@ -79,9 +79,52 @@ export class ProfileRegisterPage extends PageObject {
     }
 
     acceptTC = () => {
-        return  this.getElementByName('tnc').click();
+        return this.getElementByName('tnc').click();
     }
 
+    verifyInterpreterName = (index, expected_name) => {
+        let elm = this.getAllElementByCSS('section[name="interpreters"]');
+
+        return elm.get(index - 1).getText().then((txt) => {
+            expect(txt).to.contain(expected_name);
+        });
+    }
+
+    verifyInterpreterPhoto = (index) => {
+        let elm = this.getAllElementByCSS('section[name="interpreters"]');
+        return this.getElementInsideCSS(elm.get(index - 1), 'img').count().then((cnt) => {
+            expect(cnt).to.be.eq(1);
+        });
+    }
+    removeInterpreter = (index, preference) => {
+        let elementName = `btnRemoveInterpreter_${preference}_${(+index - 1)}`;
+        let elm = this.getElementByName(elementName);
+        return elm.click();
+    }
+    countInterpreter = (count) => {
+        return this.getAllElementByCSS('section[name="interpreters"]').count().then((cnt) => {
+            expect(cnt).to.be.eq(+count);
+        });
+    }
+
+    addInterpreter = (index) => {
+        let elm = this.getAllElementByCSS('section[name="interpreters"]');
+        return elm.get(index - 1).click();
+
+    }
+    validateAlphabeticalOrder = () => {
+    let  sorted = [] , unSorted = [];
+    let i = 0;
+    $$('section[name="interpreters"]').each((elem, idx) => {
+        elem.getText().then((name) => {
+                unSorted[i++] = name;
+            });
+        }).then(function(){
+            sorted = unSorted.slice();
+            sorted.sort();
+            expect(sorted.toString()).to.be.eq(unSorted.toString());
+        });
+    }
     userCreated = (type: string) => {
         return NotificationObject.getNotificationContent('Congratulations');
     }

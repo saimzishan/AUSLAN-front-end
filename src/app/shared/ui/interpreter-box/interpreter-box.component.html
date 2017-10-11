@@ -1,0 +1,47 @@
+<div class="separator"></div>
+<h4 class="text-center">{{title}}</h4>
+<section id="page-booking">
+    <main>
+        <form name="{{isPreffered ? 'interpreter_block_prefered' : 'interpreter_block_blocked'}}">
+            <div class="row ext">
+                <!-- div has no name property to bind -- big surprise -->
+                <div class="form-field">
+                    <label>DO YOU WANT TO ADD {{isPreffered ? 'PREFERED' : 'BLOCKED'}} INTERPRETERS?
+                        <span mdTooltip="You can add prefered or blocked interpreters in this section." ><i class="inline-icon-tip"></i></span>
+                    </label>
+
+                    <md-radio-group name="{{'rdNeedInterpreter_' + isPreffered}} "
+                                    [(ngModel)]="needInterpreter">
+                        <md-radio-button [ngClass]="{'btnYes_prefered' : isPreffered ,
+                         'btnYes_blocked' : !isPreffered}" [value]=true>YES</md-radio-button>
+                        <md-radio-button [ngClass]="{'btnNo_prefered' : isPreffered ,
+                         'btnNo_blocked' : !isPreffered}"  [value]=false>NO</md-radio-button>
+                    </md-radio-group>
+                </div>
+                <section id="booking-preferences" name="booking-preferences">
+                    <ng-container *ngFor="let interpreter of selectedInterpreters; let i = index">
+                        <section [ngClass]="{'interpreter_selected_prefered' : isPreffered === true,
+                        'interpreter_selected_blocked' : isPreffered === false}"
+                                 *ngIf="checkInterpreterPreference(interpreter)">
+                            <button name="{{'btnRemoveInterpreter_' + (isPreffered ? 'prefered_' : 'blocked_')+ i}}" (click)="removeInterpreter(interpreter)" type="button"><i class="icon-close"></i></button>
+                            <strong>INTERPRETER {{getIndex(interpreter)}}</strong>
+                            <figure>
+
+                                <img src="{{interpreter.photo_url}}" alt="">
+                            </figure>
+                            <span>{{interpreter.first_name}} {{interpreter.last_name}}</span>
+                    </section>
+                    </ng-container>
+
+                    <button md-button *ngIf="needInterpreter"
+                            name="{{'btnManageInterpreter_' + (isPreffered ? 'prefered' : 'blocked')}}"
+                            (click)="manageInterpreter()">
+                        <i class="inline-icon-add-file"></i>
+                        ADD INTERPRETER
+                    </button>
+
+                </section>
+            </div>
+        </form>
+    </main>
+</section>
