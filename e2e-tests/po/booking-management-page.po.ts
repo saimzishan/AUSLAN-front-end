@@ -47,7 +47,11 @@ export class BookingManagementPage extends PageObject {
         let el = this.getElementByCss('.dropdown#' + headerId);
         return browser.actions().mouseMove(el).perform().then(() => {
             let listEl = this.getElementInsideByCSSandText(el, 'ul li a', selection);
-            return listEl.click();
+            this.currentPath().then((path) => {
+                browser.wait(protractor.ExpectedConditions.presenceOf(listEl), 10000).then(() => {
+                    return listEl.click();
+                });
+            });
         });
     }
 
@@ -239,6 +243,14 @@ export class BookingManagementPage extends PageObject {
         let clientNameTd = this.getElementByCss('table tbody tr:first-child td:nth-child(7)');
         return clientNameTd.getText().then((txt) => {
             return expect(txt.split(' ')[0]).to.be.eq(client_name);
+        });
+    }
+    bookingExistsWithClientLastName = (client_name: string) => {
+        let tblRows = this.getAllElementByCSS('table tbody tr');
+        expect(tblRows.count()).to.eventually.be.equal(1);
+        let clientNameTd = this.getElementByCss('table tbody tr:first-child td:nth-child(7)');
+        return clientNameTd.getText().then((txt) => {
+            return expect(txt.split(' ')[1]).to.be.eq(client_name);
         });
     }
     bookingExistsWithOrgName = (org_name: string) => {

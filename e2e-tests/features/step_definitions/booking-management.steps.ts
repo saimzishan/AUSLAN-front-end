@@ -20,6 +20,7 @@ defineSupportCode(({Given, Then, When}) => {
     Given(/^The booking has status '(.*)'$/, Heroku.updateBookingWithStatus);
     Given(/^There exist (\d+) bookings$/, Heroku.createBulkBookings);
     Given(/^One booking has client name as '(.*)'$/, Heroku.updateBookingWithClientName)
+    Given(/^One booking has client last name as '(.*)'$/, Heroku.updateBookingWithLastClientName)
     Given(/^One booking has org name as '(.*)'$/, Heroku.updateBookingWithOrgName)
     Given(/^One booking has suburb as '(.*)'$/, Heroku.updateBookingWithSuburb)
     Given(/^One booking has start and end dates as first and last days of next week$/, Heroku.updateBookingStartAndEndDateTime)
@@ -97,6 +98,7 @@ defineSupportCode(({Given, Then, When}) => {
     Then(/^I (.*) see the (.*) field$/, createBookingPO.checkTheFieldExist);
     Then(/^I see one row with the booking id$/, bookingManagementPO.bookingExistsWithId);
     Then(/^I see one row with client name '(.*)'$/, bookingManagementPO.bookingExistsWithClientName);
+    Then(/^I see one row with client last name '(.*)'$/, bookingManagementPO.bookingExistsWithClientLastName);
     Then(/^I see one row with org name '(.*)'$/, bookingManagementPO.bookingExistsWithOrgName);
     Then(/^I see one row with suburb '(.*)'$/, bookingManagementPO.bookingExistsWithSuburb);
 
