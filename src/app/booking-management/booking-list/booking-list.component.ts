@@ -20,6 +20,8 @@ export class BookingListComponent {
     @Input('bookingList') bookingList: Array<Booking> = [];
     @Output() onBookingFilter = new EventEmitter<URLSearchParams>();
     bookingFilter: BookingFilter = {};
+    private filterParams = new URLSearchParams();
+    private currentSort = {'field': 'job', 'order': 'asc' };
     private validKeys(list): Array<string> {
         let keys = Object.keys(list);
         return keys.slice(keys.length / 2);
@@ -107,15 +109,34 @@ export class BookingListComponent {
     }
     filter(field: string, value: string) {
         this.bookingFilter[field] = this.formatterValueFor(field, value);
-        let params: URLSearchParams = new URLSearchParams();
         for (let k in this.bookingFilter) {
-            if (this.bookingFilter.hasOwnProperty(k) && this.bookingFilter[k]) {
-                params.set('filter[' + k + ']', this.bookingFilter[k]);
+            if (this.bookingFilter.hasOwnProperty(k)) {
+                this.filterParams.set('filter[' + k + ']', this.bookingFilter[k]);
             }
         }
         if (field === 'booking_type') {
             this.bookingFilter.booking_type = value;
         }
-        this.onBookingFilter.emit(params);
+        this.onBookingFilter.emit(this.filterParams);
+    }
+    private isCurrentSort(field: string) {
+        return this.currentSort.field === field;
+    }
+    private setCurrentSort(field: string) {
+        let order = 'asc';
+        if (this.isCurrentSort(field)) {
+            order = this.currentSort.order === 'asc' ? 'desc' : 'asc';
+        }
+        this.currentSort.field = field;
+        this.currentSort.order = order;
+    }
+    getSortOrder(field: string) {
+        return this.isCurrentSort(field) ? this.currentSort.order : '';
+    }
+    sort(field: string) {
+        this.setCurrentSort(field);
+        this.filterParams.set('sort', this.currentSort.field);
+        this.filterParams.set('direction', this.currentSort.order);
+        this.onBookingFilter.emit(this.filterParams);
     }
 }
