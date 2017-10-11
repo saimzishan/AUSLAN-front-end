@@ -140,7 +140,9 @@ export class BookingPage extends PageObject {
     setStartEndTime = (field: string, date: string, time: string) => {
         let elementName = {
             'start': 'dpEventDate',
-            'end': 'dpEventEndTime'
+            'end': 'dpEventEndTime',
+            'date_from': 'date_from',
+            'date_to': 'date_to'
         }[field];
         this.getElementByName(elementName).sendKeys(date);
         this.getElementByName(elementName).sendKeys(protractor.Key.TAB);

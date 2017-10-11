@@ -63,7 +63,7 @@ defineSupportCode(({Given, When, Then}) => {
         });
     });
     Given(/^I don't see any new New Booking link/, bookingManagementPage.newBookingDoesNotExists);
-
+    Given(/^Assigned all bookings to (.*)/, Heroku.assignExistingBooking);
     Given(/^I click on forgot my password$/, homePage.clickOnResetPassword);
     Given(/^I am at reset password page$/, resetPage.browse);
     Given(/^I enter valid (.*) email$/, resetPage.enterEmailAddress);

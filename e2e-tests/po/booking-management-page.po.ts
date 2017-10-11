@@ -2,6 +2,7 @@ import {PageObject} from './app.po';
 import {browser, by, element, $, $$, protractor} from 'protractor';
 import {expect} from '../config/helpers/chai-imports';
 import {User} from '../helper';
+import {BookingPage} from "./create-booking.po";
 
 export class BookingManagementPage extends PageObject {
     /*
@@ -14,6 +15,7 @@ export class BookingManagementPage extends PageObject {
      * */
     rowCount = 0;
     queryIdBooking = '';
+    booking = new BookingPage();
 
     verify = () => {
         return this.currentPath().then((currentPath) => {
@@ -212,6 +214,17 @@ export class BookingManagementPage extends PageObject {
         bookingSuburbInput.sendKeys(suburb);
         return bookingSuburbForm.submit();
     }
+
+    filterBookingByDateRange = () => {
+        let currentDate = new Date();
+        let dateStart = new Date(new Date(currentDate).setDate(currentDate.getDate() + 13));
+        let dateEnd = new Date(new Date(dateStart).setDate(dateStart.getDate()+4));
+        let dateFrom = (dateStart.getMonth()+1) + '/' + dateStart.getDate() + '/' + dateStart.getFullYear();
+        let dateTo = (dateEnd.getMonth()+1) + '/' + dateEnd.getDate() + '/' + dateEnd.getFullYear();
+        this.booking.setStartEndTime('date_from', dateFrom, '00:01AM');
+        return this.booking.setStartEndTime('date_to', dateTo, '11:59PM');
+    }
+
     bookingExistsWithId = () => {
         let queriedID = this.queryIdBooking;
         let tblRows = this.getAllElementByCSS('table tbody tr');
