@@ -2,7 +2,7 @@ import {PageObject} from './app.po';
 import {browser, by, element, $, $$, protractor} from 'protractor';
 import {expect} from '../config/helpers/chai-imports';
 import {User} from '../helper';
-import {BookingPage} from "./create-booking.po";
+import {BookingPage} from './create-booking.po';
 
 export class BookingManagementPage extends PageObject {
     /*
@@ -145,8 +145,8 @@ export class BookingManagementPage extends PageObject {
         if (count === 'one') { count = '1'; }
         let className = {
             'green': 'icon-check-green',
-            'red': 'status-allocated',
-            'orange': 'status-ready-to-process'
+            'red': 'status-ready-to-process',
+            'orange': 'status-allocated'
         }[booking_status];
         return this.getAllElementByCSS('i[class="status ' + className + '"]').count().then((cnt) => {
             expect(cnt.toString()).to.be.eq(count);
