@@ -77,7 +77,7 @@
 								<li>
 									<a href="#" class="icon-attach"></a>
 									<ul class="menu">
-										<li  align="left" *ngFor="let attachment of selectedBookingModel.documents_attributes"><a download href="{{attachment.url}}"><i class="icon-attach"></i> {{attachment.file_name}}</a></li>
+										<li  *ngFor="let attachment of selectedBookingModel.documents_attributes"><a download href="{{attachment.url}}"><i class="icon-attach"></i> {{attachment.file_name}}</a></li>
 									</ul>
 								</li>
 							</ul>

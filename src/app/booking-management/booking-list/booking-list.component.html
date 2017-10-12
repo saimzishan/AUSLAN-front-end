@@ -12,7 +12,8 @@
                 </th>
                 <th width="5%">
                     <span class="order asc">Job</span>
-                    <form #filterByBookingIds="ngForm" class="common-form compact" (ngSubmit)="filter('booking_ids', filterByBookingIds.value.booking_ids)" novalidate>
+                    <form #filterByBookingIds="ngForm" class="common-form compact"
+                          (ngSubmit)="filter('booking_ids', filterByBookingIds.value.booking_ids)" novalidate>
                         <input type="text" name="booking_ids" [(ngModel)]="bookingFilter.booking_ids">
                     </form>
                 </th>
@@ -42,36 +43,38 @@
                         </li>
                     </ul>
                 </th>
-                <th width="20%">
-                    <span class="order asc">Date</span>
-
-                    <div>
-                        <div style="float: left; width:23px;margin-top:6px;font-weight: 400">Fr:</div>
-                        <div><input style="width: 155px; display: inline-block;" type="date" name="date_from" [(ngModel)]="bookingFilter.date_from" (change)="filter('date_from', bookingFilter.date_from)" ></div>
+                <th width="23%">
+                    <span class="order desc">Date</span>
+                    <div class="oneRow">
+                        <span>From:</span>
+                        <input type="date" name="date_from" [(ngModel)]="bookingFilter.date_from"
+                               (change)="filter('date_from', bookingFilter.date_from)">
                     </div>
-                    <div style="float: none; padding-top: 3px;">
-                        <div style="float: left; width:23px;margin-top:6px; font-weight: 400">To:</div>
-                        <div>
-                            <input style="width: 155px; display: inline-block;" type="date" name="date_to" [(ngModel)]="bookingFilter.date_to" (change)="filter('date_to', bookingFilter.date_to)" >
-                        </div>
+                    <div class="oneRow">
+                        <span>To:</span>
+                        <input type="date" name="date_to" [(ngModel)]="bookingFilter.date_to"
+                               (change)="filter('date_to', bookingFilter.date_to)">
                     </div>
                 </th>
 
                 <th>
                     <span class="order asc">Org</span>
-                    <form #filterByOrg="ngForm" class="common-form compact" (ngSubmit)="filter('organisation', filterByOrg.value.organisation)" novalidate>
+                    <form #filterByOrg="ngForm" class="common-form compact"
+                          (ngSubmit)="filter('organisation', filterByOrg.value.organisation)" novalidate>
                         <input type="text" name="organisation" [(ngModel)]="bookingFilter.organisation">
                     </form>
                 </th>
                 <th>
                     <span class="order asc">Client</span>
-                    <form #filterByClientName="ngForm" class="common-form compact" (ngSubmit)="filter('client_name', filterByClientName.value.client_name)" novalidate>
+                    <form #filterByClientName="ngForm" class="common-form compact"
+                          (ngSubmit)="filter('client_name', filterByClientName.value.client_name)" novalidate>
                         <input type="text" name="client_name" [(ngModel)]="bookingFilter.client_name">
                     </form>
                 </th>
                 <th>
                     <span class="order asc">Suburb</span>
-                    <form #filterBySuburb="ngForm" class="common-form compact" (ngSubmit)="filter('suburb', filterBySuburb.value.suburb)" novalidate>
+                    <form #filterBySuburb="ngForm" class="common-form compact"
+                          (ngSubmit)="filter('suburb', filterBySuburb.value.suburb)" novalidate>
                         <input type="text" name="suburb" [(ngModel)]="bookingFilter.suburb">
                     </form>
                 </th>
@@ -83,7 +86,7 @@
                     <span class="order asc">Booking Type</span>
                     <ul class="dropdown menu custom" data-dropdown-menu>
                         <li>
-                          <a href="javascript:void(0)">{{bookingFilter.booking_type}}</a>
+                            <a href="javascript:void(0)">{{bookingFilter.booking_type}}</a>
                             <ul class="menu smaller">
                                 <li *ngFor="let booking_type of assignmentCategoryList()">
                                     <a href="javascript:void(0)" (click)="filter('booking_type', booking_type)"><i></i>{{booking_type}}</a>
