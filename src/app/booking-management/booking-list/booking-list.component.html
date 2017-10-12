@@ -44,8 +44,9 @@
                 </th>
                 <th width="20%">
                     <span class="order asc">Date</span>
-                    <input type="datetime-local" name="date_from" [(ngModel)]="bookingFilter.date_from" (change)="filter('date_from', bookingFilter.date_from)" >
-                    <input type="datetime-local" name="date_to" [(ngModel)]="bookingFilter.date_to" (change)="filter('date_to', bookingFilter.date_to)" >
+
+                    T: <input style="width: 155px; display: inline-block;" type="date" name="date_from" [(ngModel)]="bookingFilter.date_from" (change)="filter('date_from', bookingFilter.date_from)" >
+                    F: <input style="width: 155px; display: inline-block;" type="date" name="date_to" [(ngModel)]="bookingFilter.date_to" (change)="filter('date_to', bookingFilter.date_to)" >
                 </th>
 
                 <th>

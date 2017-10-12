@@ -148,7 +148,13 @@ export class BookingPage extends PageObject {
         this.getElementByName(elementName).sendKeys(protractor.Key.TAB);
         this.getElementByName(elementName).sendKeys(time);
     }
-
+    setDateOnly = (field: string, date: string) => {
+        let elementName = {
+            'date_from': 'date_from',
+            'date_to': 'date_to'
+        }[field];
+        this.getElementByName(elementName).sendKeys(date);
+    }
     createBooking = () => {
         return this.createBookingWithTimeAndInterpreter('standard', '10:15AM', '11:15AM', '2');
     }
