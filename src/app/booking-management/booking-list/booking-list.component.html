@@ -80,7 +80,10 @@
                 </th>
                 <th width="10%">
                     <span class="order asc">Interpreter</span>
-                    <input type="text" name="interpreter">
+                    <form #filterByInterpreter="ngForm" class="common-form compact"
+                          (ngSubmit)="filter('interpreter', filterByInterpreter.value.interpreter_name)" novalidate>
+                        <input type="text" name="interpreter_name" [(ngModel)]="bookingFilter.interpreter_name">
+                    </form>
                 </th>
                 <th width="12%">
                     <span class="order asc">Booking Type</span>
@@ -156,19 +159,19 @@
                     booking.deaf_person.last_name}}
                 </td>
                 <td>{{booking.venue.suburb}}</td>
-                <td class="text-center truncated">
+                <td class="truncated">
                     <ng-container *ngIf="booking.interpreters.length > 0;">
-                        <span *ngFor="let user of didInterpreterAccepted(booking.interpreters)">
+                        <span *ngFor="let user of booking.interpreters">
                                     <b *ngIf="isCurrentUser(user.id); else sim_user_Block">
-                                        {{user?.first_name  + ' ' + user?.last_name}}
+                                        {{user?.first_name  + ' ' + user?.last_name[0] + '.'}}
                                     </b>
                                     <ng-template
-                                            #sim_user_Block>{{user?.first_name  + ' ' + user?.last_name}}</ng-template>
+                                            #sim_user_Block>{{user?.first_name  + ' ' + user?.last_name[0] + '.'}}</ng-template>
 									<br/>
 								</span>
                     </ng-container>
 
-                    <span *ngIf="didInterpreterAccepted(booking.interpreters).length <1 ;">To be filled</span>
+                    <span *ngIf="booking.interpreters.length <1 ;">To be filled</span>
                 </td>
                 <td class="truncated"><a href="javascript:void(0)" class="attach"><i class="icon-attach"></i></a>
                     {{booking.raw_nature_of_appointment}}
