@@ -161,9 +161,9 @@
                 <td>{{booking.venue.suburb}}</td>
                 <td class="truncated">
                     <ng-container *ngIf="booking.interpreters.length > 0;">
-                        <span *ngFor="let user of booking.interpreters">
+                        <span *ngFor="let user of didInterpreterAccepted(booking.interpreters)">
                                     <b *ngIf="isCurrentUser(user.id); else sim_user_Block">
-                                        {{user?.first_name  + ' ' + user?.last_name[0] + '.'}}
+                                        {{user?.first_name  + ' ' + user?.last_name}}
                                     </b>
                                     <ng-template
                                             #sim_user_Block>{{user?.first_name  + ' ' + user?.last_name[0] + '.'}}</ng-template>
@@ -171,7 +171,7 @@
 								</span>
                     </ng-container>
 
-                    <span *ngIf="booking.interpreters.length <1 ;">To be filled</span>
+                    <span *ngIf="didInterpreterAccepted(booking.interpreters).length <1 ;">To be filled</span>
                 </td>
                 <td class="truncated"><a href="javascript:void(0)" class="attach"><i class="icon-attach"></i></a>
                     {{booking.raw_nature_of_appointment}}
