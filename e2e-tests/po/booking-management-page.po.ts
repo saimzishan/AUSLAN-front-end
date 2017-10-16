@@ -221,8 +221,8 @@ export class BookingManagementPage extends PageObject {
 
     filterBookingByDateRange = () => {
         let currentDate = new Date();
-        let dateStart = new Date(new Date(currentDate).setDate(currentDate.getDate() + 13));
-        let dateEnd = new Date(new Date(dateStart).setDate(dateStart.getDate() + 4));
+        let dateStart = new Date(new Date(currentDate).setDate(currentDate.getDate() + 10));
+        let dateEnd = new Date(new Date(dateStart).setDate(dateStart.getDate() + 10));
         let dateFrom = (dateStart.getMonth() + 1) + '/' + dateStart.getDate() + '/' + dateStart.getFullYear();
         let dateTo = (dateEnd.getMonth() + 1) + '/' + dateEnd.getDate() + '/' + dateEnd.getFullYear();
         this.booking.setDateOnly('date_from', dateFrom);

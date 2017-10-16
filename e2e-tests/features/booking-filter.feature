@@ -188,5 +188,6 @@ Feature: Booking Filter
     And I sign in with valid Organisational Representative credentials
     When I am on the bookings page
     Then I will be shown with bookings
+    Then I am shown with 5 booking
     When I filter booking by date range first and last days of next week
     Then I am shown with 2 booking
