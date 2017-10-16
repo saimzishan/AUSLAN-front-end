@@ -4,6 +4,11 @@ import {expect} from '../config/helpers/chai-imports';
 import {User} from '../helper';
 import {BookingPage} from './create-booking.po';
 
+enum BookingTableHeaders {
+    None, Empty, Job, Status, State, Date, Org,
+    Client, Suburb, Interpreter, 'Booking Type'
+}
+
 export class BookingManagementPage extends PageObject {
     /*
      * The Syntax below is mandatory, for TS to recognize the method from base class
@@ -247,7 +252,7 @@ export class BookingManagementPage extends PageObject {
     bookingExistsWithClientName = (client_name: string) => {
         let tblRows = this.getAllElementByCSS('table tbody tr');
         expect(tblRows.count()).to.eventually.be.equal(1);
-        let clientNameTd = this.getElementByCss('table tbody tr:first-child td:nth-child(7)');
+        let clientNameTd = this.getElementByCss('table tbody tr:first-child td:nth-child(' + BookingTableHeaders.Client + ')');
         return clientNameTd.getText().then((txt) => {
             return expect(txt.split(' ')[0]).to.be.eq(client_name);
         });
@@ -255,7 +260,7 @@ export class BookingManagementPage extends PageObject {
     bookingExistsWithClientLastName = (client_name: string) => {
         let tblRows = this.getAllElementByCSS('table tbody tr');
         expect(tblRows.count()).to.eventually.be.equal(1);
-        let clientNameTd = this.getElementByCss('table tbody tr:first-child td:nth-child(7)');
+        let clientNameTd = this.getElementByCss('table tbody tr:first-child td:nth-child(' + BookingTableHeaders.Client + ')');
         return clientNameTd.getText().then((txt) => {
             return expect(txt.split(' ')[1]).to.be.eq(client_name);
         });
@@ -279,7 +284,7 @@ export class BookingManagementPage extends PageObject {
     bookingExistsWithOrgName = (org_name: string) => {
         let tblRows = this.getAllElementByCSS('table tbody tr');
         expect(tblRows.count()).to.eventually.be.equal(1);
-        let orgNameTd = this.getElementByCss('table tbody tr:first-child td:nth-child(6)');
+        let orgNameTd = this.getElementByCss('table tbody tr:first-child td:nth-child(' + BookingTableHeaders.Org + ')');
         return orgNameTd.getText().then((txt) => {
             return expect(txt).to.be.eq(org_name);
         });
@@ -287,10 +292,74 @@ export class BookingManagementPage extends PageObject {
     bookingExistsWithSuburb = (suburb: string) => {
         let tblRows = this.getAllElementByCSS('table tbody tr');
         expect(tblRows.count()).to.eventually.be.equal(1);
-        let suburbTd = this.getElementByCss('table tbody tr:first-child td:nth-child(8)');
+        let suburbTd = this.getElementByCss('table tbody tr:first-child td:nth-child(' + BookingTableHeaders.Suburb + ')');
         return suburbTd.getText().then((txt) => {
             return expect(txt).to.be.eq(suburb);
         });
+    }
+    comparisonExpectation = (firstRowText: any, lastRowText: any, isAscending: boolean) => {
+        if (isAscending) {
+            return expect(lastRowText > firstRowText).to.be.eq(true);
+        } else {
+            return expect(lastRowText < firstRowText).to.be.eq(true);
+        }
+    }
+    compareByText = (firstEl, lastEl, isAscending) => {
+        return firstEl.getText().then((firstRowText) => {
+            return lastEl.getText().then((lastRowText) => {
+                console.log(firstRowText, lastRowText, isAscending);
+                return this.comparisonExpectation(firstRowText, lastRowText, isAscending);
+            });
+        });
+    }
+    compareByIconClass = (firstEl, lastEl, isAscending) => {
+        return firstEl.$$('i').get(0).getAttribute('class').then((firstRowText) => {
+            return lastEl.$$('i').get(0).getAttribute('class').then((lastRowText) => {
+                return this.comparisonExpectation(firstRowText, lastRowText, isAscending);
+            });
+        });
+    }
+    private extractDateFrom = (rawDate: string) => {
+        let startTime = rawDate.replace(
+                            rawDate.slice(
+                                rawDate.indexOf('-') - 1,
+                                rawDate.match(/[A-Z][a-z]{2}/).index - 1
+                            ), // ' - 6:50 PM '
+            ''); // 4:50 PM Mon 30 Oct 17
+        let matchData = startTime.match(/(\d+):(\d+)\s(AM|PM)\s[A-Z][a-z]{2}\s(\d+)\s([A-Z][a-z]{2})\s(\d+)/);
+        // Match Data [1-6] represents various parts of the extracted startTime
+        let hh = parseInt(matchData[1], 10),
+            mm = parseInt(matchData[2], 10),
+            am = matchData[3] === 'AM',
+            dd = parseInt(matchData[4], 10),
+            month = new Date(Date.parse(matchData[5] + ' 1, 2012')).getMonth() + 1,
+            yy = parseInt(matchData[6], 10) + 2000;
+        hh = am ? hh : hh + 12;
+        return new Date(yy, month, dd, hh, mm);
+    }
+    compareByDate = (firstEl, lastEl, isAscending) => {
+        let firstRowText: Date, lastRowText: Date;
+        return firstEl.getText().then((rawDate1) => {
+            firstRowText = this.extractDateFrom(rawDate1);
+            return lastEl.getText().then((rawDate2) => {
+                lastRowText = this.extractDateFrom(rawDate2);
+                return this.comparisonExpectation(firstRowText, lastRowText, isAscending);
+            });
+        });
+    }
+    checkBookingOrder = (ascending: string, tableHeader: string) => {
+        let firstEl = this.getElementByCss('table tbody tr:first-child td:nth-child(' + BookingTableHeaders[tableHeader] + ')');
+        let lastEl = this.getElementByCss('table tbody tr:last-child td:nth-child(' + BookingTableHeaders[tableHeader] + ')');
+        let isAscending = ascending === 'ascending';
+
+        let compareMethod = {
+            Job: 'compareByText',
+            Status: 'compareByIconClass', // red > green
+            State: 'compareByText', // In Progress < Requested
+            Date: 'compareByDate'
+        }[tableHeader];
+
+        return this[compareMethod].call(BookingManagementPage, firstEl, lastEl, isAscending);
     }
 }
 
