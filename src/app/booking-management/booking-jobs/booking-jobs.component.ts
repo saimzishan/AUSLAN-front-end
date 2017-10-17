@@ -158,6 +158,15 @@ export class BookingJobsComponent implements OnDestroy {
         this.router.navigate(['/booking-management', 'create-booking'], navigationExtras);
     }
 
+    editBooking() {
+        let navigationExtras: NavigationExtras = {
+            queryParams: {bookingModel: JSON.stringify(this.selectedBookingModel),
+                          crud: "edit"            
+            }
+        };
+        this.router.navigate(['/booking-management', 'edit-booking'], navigationExtras);
+    }
+
     onChange($event, user, ind) {
         let index = this.selectedInterpreterIDs.indexOf(user.id);
         if (index < 0) {

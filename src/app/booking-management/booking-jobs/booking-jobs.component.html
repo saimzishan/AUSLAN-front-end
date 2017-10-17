@@ -3,6 +3,7 @@
 		<section id="submenu">
 			<nav>
 				<a href="#" class="active">Booking info</a>
+				<a href="javascript:void(0);" (click)="editBooking()">Booking details</a>
 			</nav>
 			<div>
 				<button *ngIf='!isCancelledOrUnableToServe' (click)="showDialogBox(false)" class="button pink">Unable to Service</button>

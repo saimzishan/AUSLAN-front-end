@@ -51,6 +51,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     dialogRef: MdDialogRef<any>;
     fileName = '';
     termsAndConditionAccepted = false;
+    bookingHeading='';
 
     constructor(public bookingService: BookingService, private router: Router,
                 private route: ActivatedRoute, private rolePermission: RolePermission,
@@ -65,6 +66,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         /** http://stackoverflow.com/questions/38008334/angular2-rxjs-when-should-i-unsubscribe-from-subscription */
         this.sub = this.route.queryParams.subscribe(params => {
             let param = params['bookingModel'] || '';
+            let crud = params ['crud'] || '';
             if (param.length > 0) {
                 let jsonData = JSON.parse(param);
                 this.bookingModel.fromJSON(jsonData);
@@ -75,6 +77,11 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                     this.datePipe.transform(this.bookingModel.venue.end_time_iso, 'yyyy-MM-ddTHH:mm:ss');
                 this.natureOfApptChange(null);
             }
+            if(crud.length> 0 && crud ==='edit') 
+                this.bookingHeading = "Edit Booking" 
+            else
+                this.bookingHeading = "NEW BOOKING"
+
         });
     }
 
