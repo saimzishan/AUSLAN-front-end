@@ -52,6 +52,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     fileName = '';
     termsAndConditionAccepted = false;
     bookingHeading='';
+    crud='';
 
     constructor(public bookingService: BookingService, private router: Router,
                 private route: ActivatedRoute, private rolePermission: RolePermission,
@@ -66,7 +67,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         /** http://stackoverflow.com/questions/38008334/angular2-rxjs-when-should-i-unsubscribe-from-subscription */
         this.sub = this.route.queryParams.subscribe(params => {
             let param = params['bookingModel'] || '';
-            let crud = params ['crud'] || '';
+             this.crud = params ['crud'] || '';
             if (param.length > 0) {
                 let jsonData = JSON.parse(param);
                 this.bookingModel.fromJSON(jsonData);
@@ -77,7 +78,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                     this.datePipe.transform(this.bookingModel.venue.end_time_iso, 'yyyy-MM-ddTHH:mm:ss');
                 this.natureOfApptChange(null);
             }
-            if(crud.length> 0 && crud ==='edit') 
+            if(this.crud.length> 0 && this.crud ==='edit') 
                 this.bookingHeading = "Edit Booking" 
             else
                 this.bookingHeading = "NEW BOOKING"
@@ -191,11 +192,17 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
 
                 if (result) {
-                    this.createBooking();
+                    if(this.crud.length>0 && this.crud === 'edit') 
+                       this.updateBooking(); 
+                    else
+                     this.createBooking();
                 }
             });
         } else {
-            this.createBooking();
+            if (this.crud.length > 0 && this.crud === 'edit')
+                 this.updateBooking(); 
+            else
+                this.createBooking();
         }
     }
 
@@ -226,6 +233,26 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                     if (res.status === 201 && res.data.id && 0 < res.data.id) {
                         this.bookingModel.id = res.data.id;
                         this.notificationServiceBus.launchNotification(false, 'The Booking has been created.');
+                        let route = this.rolePermission.getDefaultRouteForCurrentUser();
+                        this.router.navigate([route]);
+                    }
+                    this.spinnerService.requestInProcess(false);
+                },
+                errors => {
+                    this.spinnerService.requestInProcess(false);
+                    let e = errors.json() || '';
+                    this.notificationServiceBus.launchNotification(true,
+                        'Error occured on server side. ' + errors.statusText + ' ' + JSON.stringify(e || e.errors));
+                });
+    }
+
+    updateBooking() {
+        this.spinnerService.requestInProcess(true);
+   //     this.bookingModel.clean(this.bookingModel.toJSON());
+        this.bookingService.updateBooking(this.bookingModel)
+            .subscribe((res: any) => {
+                    if (res.status === 201 && res.data.id && 0 < res.data.id) {
+                        this.notificationServiceBus.launchNotification(false, 'The Booking has been Updated.');
                         let route = this.rolePermission.getDefaultRouteForCurrentUser();
                         this.router.navigate([route]);
                     }
