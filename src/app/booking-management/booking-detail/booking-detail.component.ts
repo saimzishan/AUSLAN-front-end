@@ -248,10 +248,12 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
 
     updateBooking() {
         this.spinnerService.requestInProcess(true);
-   //     this.bookingModel.clean(this.bookingModel.toJSON());
-        this.bookingService.updateBooking(this.bookingModel)
+        let bookingID = this.bookingModel.id;
+        this.bookingModel.clean(this.bookingModel.toJSON()); 
+        this.bookingService.updateBooking(bookingID,this.bookingModel)
             .subscribe((res: any) => {
-                    if (res.status === 201 && res.data.id && 0 < res.data.id) {
+                    console.log("Update response: "+JSON.stringify(res));
+                    if (res.status === 204 && res.ok === true) {
                         this.notificationServiceBus.launchNotification(false, 'The Booking has been Updated.');
                         let route = this.rolePermission.getDefaultRouteForCurrentUser();
                         this.router.navigate([route]);
