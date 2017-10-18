@@ -69,7 +69,7 @@
 
                     </div>
                 </div>
-                <app-address [address]="bookingModel.venue"></app-address>
+                <app-address [address]="bookingModel.venue" #addressForm="ctAddressForm" ></app-address>
                 <div class="row-wrapper">
                     <div class="medium-6 columns">
                         <div class="form-field">
@@ -503,7 +503,7 @@
             </div>
 
             <div class="actions">
-                <button name="btnCreateBooking" (click)="onCreateBooking(booking_form, uploader);">SAVE</button>
+                <button name="btnCreateBooking" (click)="onCreateBooking(booking_form,addressForm, uploader);">SAVE</button>
                 <button name="btnCancelreateBooking" (click)="onCancelBooking();">CANCEL</button>
             </div>
         </form>
