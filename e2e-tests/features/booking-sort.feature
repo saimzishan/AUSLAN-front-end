@@ -51,7 +51,7 @@ Feature: Booking Sort
     Then I should see the bookings in descending order of State
 
   @runThis
-  Scenario: Given 1 verified Booking Officer, I should be able to filter by date range
+  Scenario: Given 1 verified Booking Officer, I should be able to sort by date range
     Given One booking has start and end dates as first and last days of next week
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
@@ -61,3 +61,39 @@ Feature: Booking Sort
     Then I should see the bookings in ascending order of Date
     When I click on table header 'Date'
     Then I should see the bookings in descending order of Date
+
+  @runThis
+  Scenario: Given 1 verified Booking Officer, I should be able to sort by client first name when last name is same
+    Given One booking has client name as 'John'
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    When I am on the bookings page
+    Then I will be shown with bookings
+    When I click on table header 'Client'
+    Then I should see the bookings in ascending order of Client
+    When I click on table header 'Client'
+    Then I should see the bookings in descending order of Client
+
+  @runThis
+  Scenario: Given 1 verified Booking Officer, I should be able to sort by client last name when first name is same
+    Given One booking has client last name as 'Jacobs'
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    When I am on the bookings page
+    Then I will be shown with bookings
+    When I click on table header 'Client'
+    Then I should see the bookings in ascending order of Client
+    When I click on table header 'Client'
+    Then I should see the bookings in descending order of Client
+
+  @runThis
+  Scenario: Given 1 verified Booking Officer, I should be able to sort by suburb name
+    Given One booking has suburb as 'Terabithia'
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    When I am on the bookings page
+    Then I will be shown with bookings
+    When I click on table header 'Suburb'
+    Then I should see the bookings in ascending order of Suburb
+    When I click on table header 'Suburb'
+    Then I should see the bookings in descending order of Suburb
