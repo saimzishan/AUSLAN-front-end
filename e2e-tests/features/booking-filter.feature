@@ -91,7 +91,7 @@ Feature: Booking Filter
     Then I see one row with org name 'Agen'
 
   @runThis
-  Scenario: Given 1 verified Booking Officer, I should be able to filter by client name
+  Scenario: Given 1 verified Booking Officer, I should be able to filter by client first name
     Given One booking has client name as 'Siyu'
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
@@ -111,6 +111,30 @@ Feature: Booking Filter
     When I query booking with client name 'Papu'
     Then I am shown with 1 booking
     Then I see one row with client last name 'Papu'
+
+  @runThis
+  Scenario: Given 1 verified Booking Officer, 1 verified Interpreter, I should be able to filter by interpreter first name
+    Given One booking has interpreter first name as 'Rebecca'
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    When I am on the bookings page
+    Then I will be shown with bookings
+    Then I am shown with 5 booking
+    When I query booking with interpreter name 'Rebecca'
+    Then I am shown with 1 booking
+    Then I see one row with interpreter first name 'Rebecca'
+
+  @runThis
+  Scenario: Given 1 verified Booking Officer, 1 verified Interpreter, I should be able to filter by interpreter last name
+    Given One booking has interpreter last name as 'Jones'
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    When I am on the bookings page
+    Then I will be shown with bookings
+    Then I am shown with 5 booking
+    When I query booking with interpreter name 'Jones'
+    Then I am shown with 1 booking
+    Then I see one row with interpreter last name 'J.'
 
   @runThis
   Scenario: Given 1 verified Booking Officer, I should be able to filter by suburb

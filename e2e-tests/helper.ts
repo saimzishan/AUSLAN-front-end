@@ -537,6 +537,20 @@ export class Heroku {
         Heroku.sendCommandToHeroku(command);
     }
 
+    static updateBookingWithInterpreterFirstName(interpreter_first_name: string) {
+        let command = 'Interpreter.last.update(first_name: "' + interpreter_first_name + '");'
+        command += 'Booking.last.interpreters << Interpreter.last;'
+        command += 'Interpreter.last.translation_allocations.first.accept!'
+        Heroku.sendCommandToHeroku(command);
+    }
+
+    static updateBookingWithInterpreterLastName(interpreter_last_name: string) {
+        let command = 'Interpreter.last.update(last_name: "' + interpreter_last_name + '");'
+        command += 'Booking.last.interpreters << Interpreter.last;'
+        command += 'Interpreter.last.translation_allocations.first.accept!'
+        Heroku.sendCommandToHeroku(command);
+    }
+
     static updateBookingWithOrgName(org_name: string) {
         let command = 'b = Booking.last;o = OrganisationalRepresentative.last;o.organisation.update(name: "' + org_name + '");o.save;b.bookable = o;b.save';
         Heroku.sendCommandToHeroku(command);
@@ -556,7 +570,7 @@ export class Heroku {
 
 
     static assignExistingBooking(bookable: string) {
-        let command = 'Booking.update_all(bookable_id: '+ bookable.replace(' ', '') + '.first.id)'
+        let command = 'Booking.update_all(bookable_id: ' + bookable.replace(' ', '') + '.first.id)'
         Heroku.sendCommandToHeroku(command);
     }
 
