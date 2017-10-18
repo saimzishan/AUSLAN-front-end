@@ -78,26 +78,25 @@ export class BookingListComponent {
         return ['All', ...keys];
     }
     assignmentCategoryList() {
-        return Object.keys(BA.DISSCUSSION_ITEM) as Array<string>;
+        let keys = Object.keys(BA.DISSCUSSION_ITEM) as Array<string>;
+        return ['All', ...keys];
     }
     filterStatus() {
         return BOOKING_STATUS[this.bookingFilter.booking_status];
     }
     private formatterValueFor(field: string, value: string) {
+        console.log(field + '-' + value);
+        if (value === 'All') { return ''; };
         let formattedValue: string;
         switch (field) {
             case 'booking_status':
                 formattedValue = BOOKING_STATUS[value];
                 break;
             case 'state':
-                if (value === 'all') {
-                    formattedValue = undefined;
-                } else {
-                    formattedValue = value;
-                }
+                formattedValue = value;
                 break;
             case 'booking_type':
-                formattedValue = BA.DISSCUSSION_ITEM[value].join(',');
+                formattedValue = BOOKING_NATURE[value];
                 break;
             default:
                 formattedValue = value;
@@ -108,15 +107,14 @@ export class BookingListComponent {
         value = value.trim();
         value = value.replace(/,$/g, '');
         this.bookingFilter[field] = this.formatterValueFor(field, value);
+
         let params: URLSearchParams = new URLSearchParams();
         for (let k in this.bookingFilter) {
             if (this.bookingFilter.hasOwnProperty(k)) {
                 params.set('filter[' + k + ']', this.bookingFilter[k]);
             }
         }
-        if (field === 'booking_type') {
-            this.bookingFilter.booking_type = value;
-        }
+        console.log(this.bookingFilter);
         this.onBookingFilter.emit(params);
     }
 }
