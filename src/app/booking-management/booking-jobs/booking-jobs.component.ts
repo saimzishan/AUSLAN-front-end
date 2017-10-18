@@ -293,7 +293,7 @@ export class BookingJobsComponent implements OnDestroy {
                     id: _id
                 }));
             }
-            this.selectedBookingModel.interpreters = selectedInt;
+            // this.selectedBookingModel.interpreters = selectedInt;
             this.selectedInterpreterIDs = [];
             this.invitePressed = false;
             this.sendInvite(selectedInt);
@@ -307,7 +307,7 @@ export class BookingJobsComponent implements OnDestroy {
                     id: _id
                 }));
             }
-            this.selectedBookingModel.interpreters = selectedInt;
+            // this.selectedBookingModel.interpreters = selectedInt;
             this.selectedInterpreterIDs = [];
             this.reAssignPressed = false;
             this.sendReAssign(selectedInt);

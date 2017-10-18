@@ -15,15 +15,15 @@
 
 		<section id="steps">
 			<nav>
-				<a href="javascript:void(0);" [ngClass]="{'active' : isActiveState('Requested'),
+				<a href="javascript:void(0);" style="cursor: default" [ngClass]="{'active' : isActiveState('Requested'),
                 'passed' : isPassedState('Requested')}">Requested</a>
-				<a href="javascript:void(0);" [ngClass]="{'active' : isActiveState('In_progress'),
+				<a href="javascript:void(0);" style="cursor: default"  [ngClass]="{'active' : isActiveState('In_progress'),
                 'passed' : isPassedState('In_progress')}">In Progress</a>
-				<a href="javascript:void(0);" [ngClass]="{'active' : isActiveState('Allocated'),
+				<a href="javascript:void(0);" style="cursor: default"  [ngClass]="{'active' : isActiveState('Allocated'),
                 'passed' : isPassedState('Allocated')}">Allocated</a>
-				<a href="javascript:void(0);" [ngClass]="{'active' : isActiveState('Completed'),
+				<a href="javascript:void(0);" style="cursor: default"  [ngClass]="{'active' : isActiveState('Completed'),
                 'passed' : isPassedState('Completed')}">Completed</a>
-				<a href="javascript:void(0);" [ngClass]="{'active' :  isActiveState('Unable_to_service') || isActiveState('Cancelled')}">
+				<a href="javascript:void(0);" style="cursor: default"  [ngClass]="{'active' :  isActiveState('Unable_to_service') || isActiveState('Cancelled')}">
 					{{isActiveState('Cancelled') ? 'Cancelled' :
 					isActiveState('Unable_to_service') ? 'Unable To Service' : 'Finished' }}
 				</a>
@@ -46,7 +46,7 @@
 						<th width="7%">Suburb</th>
 						<th width="5%">Type</th>
 						<!-- th width="7%">Language</th -->
-						<th width="7%">#People</th>
+						<th width="7%">People</th>
 						<th width="12%">Special Instructions</th>
 						<th width="4%">Attached</th>
 							<th width="7%">Date Added</th>
@@ -161,18 +161,18 @@
 			</ng-container>
 
 
-			<h2  *ngIf='!isCancelledOrUnableToServe' >Invite Interpreters <button class="sort desc outside"></button></h2>
+			<h2  *ngIf='!isCancelledOrUnableToServe' >Invite Interpreters <button class="outside"></button></h2>
 			<section *ngIf='!isCancelledOrUnableToServe' id="invite-interpreters">
 				<section id="filters">
-					<section class="search-bar">
-						<input type="text" name="search" placeholder="Search...">
-						<button><i class="icon-glass"></i></button>
+					<section class="search-bar" style="width:150%">
+						<!--<input type="text" name="search" placeholder="Search...">-->
+						<!--<button><i class="icon-glass"></i></button>-->
 					</section>
 
 					<section class="filters">
-						<button class="button">Select Top 10</button>
-						<button class="button">Select All Available</button>
-						<button class="button">Filter Only Available</button>
+						<!--<button class="button">Select Top 10</button>-->
+						<!--<button class="button">Select All Available</button>-->
+						<!--<button class="button">Filter Only Available</button>-->
 
 						<div class="separator"></div>
 
@@ -190,61 +190,61 @@
 								<!--md-checkbox></md-checkbox -->
 							</th>
 							<th width="7%">
-								<span class="order asc">#</span>
+								<span class="">#</span>
 							</th>
 							<th width="12%">
-								<span class="order asc">Status</span>
-								<ul class="dropdown menu custom" data-dropdown-menu>
-									<li>
-										<a href="#">All</a>
-										<ul class="menu smaller">
-											<li><a href="#"><i></i> Option 1</a></li>
-											<li><a href="#"><i></i> Option 2</a></li>
-											<li><a href="#"><i></i> Option 3</a></li>
-										</ul>
-									</li>
-								</ul>
+								<span class="">Status</span>
+								<!--<ul class="dropdown menu custom" data-dropdown-menu>-->
+									<!--<li>-->
+										<!--<a href="#">All</a>-->
+										<!--<ul class="menu smaller">-->
+											<!--<li><a href="#"><i></i> Option 1</a></li>-->
+											<!--<li><a href="#"><i></i> Option 2</a></li>-->
+											<!--<li><a href="#"><i></i> Option 3</a></li>-->
+										<!--</ul>-->
+									<!--</li>-->
+								<!--</ul>-->
 							</th>
 							<th width="17%">
-								<span class="order asc">First Name</span>
-								<input type="text" name="">
+								<span class="">First Name</span>
+								<!--<input type="text" name="">-->
 							</th>
 							<th width="17%">
-								<span class="order asc">Last Name</span>
-								<input type="text" name="">
+								<span class="">Last Name</span>
+								<!--<input type="text" name="">-->
 							</th>
 							<th width="9%">
-								<span class="order asc">Role</span>
-								<ul class="dropdown menu custom" data-dropdown-menu>
-									<li>
-										<a href="#">All</a>
-										<ul class="menu smaller">
-											<li><a href="#"><i></i> Option 1</a></li>
-											<li><a href="#"><i></i> Option 2</a></li>
-											<li><a href="#"><i></i> Option 3</a></li>
-										</ul>
-									</li>
-								</ul>
+								<span class="">Role</span>
+								<!--<ul class="dropdown menu custom" data-dropdown-menu>-->
+									<!--<li>-->
+										<!--<a href="#">All</a>-->
+										<!--<ul class="menu smaller">-->
+											<!--<li><a href="#"><i></i> Option 1</a></li>-->
+											<!--<li><a href="#"><i></i> Option 2</a></li>-->
+											<!--<li><a href="#"><i></i> Option 3</a></li>-->
+										<!--</ul>-->
+									<!--</li>-->
+								<!--</ul>-->
 							</th>
 							<th width="9%">
-								<span class="order asc">Lvl</span>
-								<ul class="dropdown menu custom" data-dropdown-menu>
-									<li>
-										<a href="#">All</a>
-										<ul class="menu smaller">
-											<li><a href="#"><i></i> Option 1</a></li>
-											<li><a href="#"><i></i> Option 2</a></li>
-											<li><a href="#"><i></i> Option 3</a></li>
-										</ul>
-									</li>
-								</ul>
+								<span class="">Lvl</span>
+								<!--<ul class="dropdown menu custom" data-dropdown-menu>-->
+									<!--<li>-->
+										<!--<a href="#">All</a>-->
+										<!--<ul class="menu smaller">-->
+											<!--<li><a href="#"><i></i> Option 1</a></li>-->
+											<!--<li><a href="#"><i></i> Option 2</a></li>-->
+											<!--<li><a href="#"><i></i> Option 3</a></li>-->
+										<!--</ul>-->
+									<!--</li>-->
+								<!--</ul>-->
 							</th>
 							<th width="15%">
-								<span class="order asc">Suburb</span>
-								<input type="text" name="">
+								<span class="">Suburb</span>
+								<!--<input type="text" name="">-->
 							</th>
 							<th width="9%">
-								<span class="order asc">KM</span>
+								<span class="">KM</span>
 							</th>
 						</tr>
 					</thead>
