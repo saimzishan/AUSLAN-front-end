@@ -98,9 +98,6 @@ export class BookingListComponent {
                 case 'state':
                     formattedValue = value === 'all' ? '' : value;
                     break;
-                case 'booking_type':
-                    formattedValue = BA.DISSCUSSION_ITEM[value].join(',');
-                    break;
                 default:
                     formattedValue = value;
             }
