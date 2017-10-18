@@ -160,6 +160,7 @@ export class BookingJobsComponent implements OnDestroy {
     }
 
     editBooking() {
+        
         let navigationExtras: NavigationExtras = {
             queryParams: {bookingModel: JSON.stringify(this.selectedBookingModel),
                           shouldEdit: "edit" , assignedInterpreter: this.selectedBookingModel.interpreters.filter( i => i.state === 'Accepted').length

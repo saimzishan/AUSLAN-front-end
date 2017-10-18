@@ -54,6 +54,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     bookingHeading='';
     shouldEdit='';
     assignedInterpreter =0;
+    oldDocuments =[];
+    deleteDocuments=[];
 
     constructor(public bookingService: BookingService, private router: Router,
                 private route: ActivatedRoute, private rolePermission: RolePermission,
@@ -74,6 +76,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             if (param.length > 0) {
                 let jsonData = JSON.parse(param);
                 this.bookingModel.fromJSON(jsonData);
+                this.oldDocuments = jsonData.documents_attributes;
                 this.bookingModel.documents_attributes = [];
                 this.bookingModel.venue.start_time_iso =
                     this.datePipe.transform(this.bookingModel.venue.start_time_iso, 'yyyy-MM-ddTHH:mm:ss');
@@ -81,7 +84,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                     this.datePipe.transform(this.bookingModel.venue.end_time_iso, 'yyyy-MM-ddTHH:mm:ss');
                 this.natureOfApptChange(null);
             } 
-            
+
           (this.shouldEdit.length > 0 && this.shouldEdit  === 'edit' ) ?  
                      this.bookingHeading = "Edit Booking"  : this.bookingHeading = "NEW BOOKING"
 
@@ -259,9 +262,15 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 `"Oops! Too many interpreters already allocated. Please unassign first.`;
         }
         else {
+           
             this.spinnerService.requestInProcess(true);
             let bookingID = this.bookingModel.id;
             this.bookingModel.clean(this.bookingModel.toJSON());
+
+            this.deleteDocuments.forEach(element => {
+                this.bookingModel.documents_attributes.push(element);
+            });
+            
             this.bookingService.updateBooking(bookingID, this.bookingModel)
                 .subscribe((res: any) => {
                     if (res.status === 204 && res.ok === true) {
@@ -314,4 +323,15 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 this.bookingModel.documents_attributes.filter(d => d.document_file_name !== item.file.name);
         }
     }
+
+    confirmDelete(docItem){
+          
+        let obj = {"id":docItem.id,"_destroy":"1"};
+        this.deleteDocuments.push(obj);
+
+        this.oldDocuments= this.oldDocuments.filter(d => d.id !== docItem.id);
+       // docItem.remove();
+    }
+
+    
 }
