@@ -51,7 +51,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     fileName = '';
     termsAndConditionAccepted = false;
     bookingHeading='';
-    crud='';
+    shouldEdit='';
+    assignedInterpreter =0;
 
     constructor(public bookingService: BookingService, private router: Router,
                 private route: ActivatedRoute, private rolePermission: RolePermission,
@@ -65,7 +66,9 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         /** http://stackoverflow.com/questions/38008334/angular2-rxjs-when-should-i-unsubscribe-from-subscription */
         this.sub = this.route.queryParams.subscribe(params => {
             let param = params['bookingModel'] || '';
-             this.crud = params ['crud'] || '';
+             this.shouldEdit = params ['shouldEdit'] || '';
+             this.assignedInterpreter = params ['assignedInterpreter'] || '';
+
             if (param.length > 0) {
                 let jsonData = JSON.parse(param);
                 this.bookingModel.fromJSON(jsonData);
@@ -76,12 +79,13 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                     this.datePipe.transform(this.bookingModel.venue.end_time_iso, 'yyyy-MM-ddTHH:mm:ss');
                 this.natureOfApptChange(null);
             }
-            if(this.crud.length> 0 && this.crud ==='edit') 
+            if(this.shouldEdit.length> 0 && this.shouldEdit ==='edit') 
                 this.bookingHeading = "Edit Booking" 
             else
                 this.bookingHeading = "NEW BOOKING"
 
         });
+        console.log("booking model "+JSON.stringify(this.bookingModel));
     }
 
     public fileOverBase(e: any) {
@@ -156,13 +160,13 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     /*
       Calling this method will create a new booking
     */
-    public onCreateBooking(form: FormGroup, uploader: FileUploader) {
+    public onCreateBooking(form: FormGroup, addressForm: any, uploader: FileUploader) {
         if (!this.termsAndConditionAccepted) {
             this.notificationServiceBus.
             launchNotification(true, 'Kindly accept Terms and Conditions');
             return;
         }
-        if (form.invalid) {
+        if (form.invalid || addressForm.form.invalid) {
             this.notificationServiceBus.launchNotification(true, 'Kindly fill all the required (*) fields');
             return;
         }
@@ -182,14 +186,14 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
 
                 if (result) {
-                    if(this.crud.length>0 && this.crud === 'edit') 
+                    if(this.shouldEdit.length>0 && this.shouldEdit === 'edit') 
                        this.updateBooking(); 
                     else
                      this.createBooking();
                 }
             });
         } else {
-            if (this.crud.length > 0 && this.crud === 'edit')
+            if (this.shouldEdit.length > 0 && this.shouldEdit === 'edit')
                  this.updateBooking(); 
             else
                 this.createBooking();
@@ -236,13 +240,26 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 });
     }
 
-    updateBooking() {
-        this.spinnerService.requestInProcess(true);
-        let bookingID = this.bookingModel.id;
-        this.bookingModel.clean(this.bookingModel.toJSON()); 
-        this.bookingService.updateBooking(bookingID,this.bookingModel)
-            .subscribe((res: any) => {
-                    console.log("Update response: "+JSON.stringify(res));
+    updateBooking() { 
+
+        if (this.assignedInterpreter > this.bookingModel.interpreters_required) {
+            let config: MdDialogConfig = {
+                disableClose: true
+            };
+            config.viewContainerRef = this.viewContainerRef;
+            this.dialogRef = this.dialog.open(PopupComponent, config);
+            this.dialogRef.componentInstance.title = 'Assigned Interpreter WARNING';
+            this.dialogRef.componentInstance.cancelTitle = 'BACK';
+            this.dialogRef.componentInstance.okTitle = 'Ok';
+            this.dialogRef.componentInstance.popupMessage =
+                `"Oops! Too many interpreters already allocated. Please unassign first.`;
+        }
+        else {
+            this.spinnerService.requestInProcess(true);
+            let bookingID = this.bookingModel.id;
+            this.bookingModel.clean(this.bookingModel.toJSON());
+            this.bookingService.updateBooking(bookingID, this.bookingModel)
+                .subscribe((res: any) => {
                     if (res.status === 204 && res.ok === true) {
                         this.notificationServiceBus.launchNotification(false, 'The Booking has been Updated.');
                         let route = this.rolePermission.getDefaultRouteForCurrentUser();
@@ -256,6 +273,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                     this.notificationServiceBus.launchNotification(true,
                         'Error occured on server side. ' + errors.statusText + ' ' + JSON.stringify(e || e.errors));
                 });
+        }
     }
 
     onCancelBooking() {

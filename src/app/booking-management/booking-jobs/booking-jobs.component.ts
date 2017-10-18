@@ -48,9 +48,10 @@ export class BookingJobsComponent implements OnDestroy {
         this.sub = this.route.params.subscribe(params => {
             let param_id = params['id'] || '';
             if (Boolean(param_id) && parseInt(param_id, 10) > 0) {
-                this.fetchBookingInterpreters(param_id);
+                this.fetchBookingInterpreters(param_id); 
             }
         });
+
     }
 
     counter(length) {
@@ -161,9 +162,10 @@ export class BookingJobsComponent implements OnDestroy {
     editBooking() {
         let navigationExtras: NavigationExtras = {
             queryParams: {bookingModel: JSON.stringify(this.selectedBookingModel),
-                          crud: "edit"            
+                          shouldEdit: "edit" , assignedInterpreter: this.selectedBookingModel.interpreters.filter( i => i.state === 'Accepted').length
             }
         };
+         console.log("job interpreters: " +JSON.stringify(this.selectedBookingModel.interpreters));
         this.router.navigate(['/booking-management', 'edit-booking'], navigationExtras);
     }
 
@@ -203,6 +205,7 @@ export class BookingJobsComponent implements OnDestroy {
                     if (res.status === 200) {
                         let data = res.data;
                         this.selectedBookingModel.fromJSON(data);
+                      
                         this.selectedBookingModel.interpreters.sort((i, j) =>
                             i.state === 'Accepted' ? -1 : j.state === 'Accepted' ? 1 : 0
                         );
