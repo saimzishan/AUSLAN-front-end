@@ -80,14 +80,12 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 this.bookingModel.venue.end_time_iso =
                     this.datePipe.transform(this.bookingModel.venue.end_time_iso, 'yyyy-MM-ddTHH:mm:ss');
                 this.natureOfApptChange(null);
-            }
-            if(this.shouldEdit.length> 0 && this.shouldEdit ==='edit') 
-                this.bookingHeading = "Edit Booking" 
-            else
-                this.bookingHeading = "NEW BOOKING"
+            } 
+            
+          (this.shouldEdit.length > 0 && this.shouldEdit  === 'edit' ) ?  
+                     this.bookingHeading = "Edit Booking"  : this.bookingHeading = "NEW BOOKING"
 
         });
-        console.log("booking model "+JSON.stringify(this.bookingModel));
     }
 
     public fileOverBase(e: any) {
@@ -170,13 +168,13 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     /*
       Calling this method will create a new booking
     */
-    public onCreateBooking(form: FormGroup, addressForm: any, uploader: FileUploader) {
+    public onCreateBooking(form: FormGroup, addressForm: any, billingForm: any, uploader: FileUploader) {
         if (!this.termsAndConditionAccepted) {
             this.notificationServiceBus.
             launchNotification(true, 'Kindly accept Terms and Conditions');
             return;
         }
-        if (form.invalid || addressForm.form.invalid) {
+        if (form.invalid || addressForm.form.invalid || billingForm.form.invalid) {
             this.notificationServiceBus.launchNotification(true, 'Kindly fill all the required (*) fields');
             return;
         }
@@ -196,17 +194,13 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
 
                 if (result) {
-                    if(this.shouldEdit.length>0 && this.shouldEdit === 'edit') 
-                       this.updateBooking(); 
-                    else
-                     this.createBooking();
+                    (this.shouldEdit.length > 0 && this.shouldEdit  === 'edit' ) ?  
+                        this.updateBooking() : this.createBooking();
                 }
             });
         } else {
-            if (this.shouldEdit.length > 0 && this.shouldEdit === 'edit')
-                 this.updateBooking(); 
-            else
-                this.createBooking();
+            (this.shouldEdit.length > 0 && this.shouldEdit  === 'edit' ) ?  
+                 this.updateBooking() : this.createBooking();
         }
     }
 

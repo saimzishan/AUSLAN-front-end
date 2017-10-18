@@ -1,7 +1,7 @@
 <header>
     <h4 class="text-center">BILLING DETAILS</h4>
 </header>
-<div class="row small-collapse">
+<div class="row small-collapse" ngForm="billingFields" #billingFields="ngForm">
     <div class="row-wrapper">
         <div class="medium-6 columns">
             <div class="form-field">
@@ -64,5 +64,5 @@
     </div>
 </div>
 <br>
-<app-address [prefix]="address_title" [address]="billingAddress"></app-address>
+<app-address [prefix]="address_title" [address]="billingAddress" ></app-address>
 
