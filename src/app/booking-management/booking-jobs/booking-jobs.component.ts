@@ -164,8 +164,7 @@ export class BookingJobsComponent implements OnDestroy {
             queryParams: {bookingModel: JSON.stringify(this.selectedBookingModel),
                           shouldEdit: "edit" , assignedInterpreter: this.selectedBookingModel.interpreters.filter( i => i.state === 'Accepted').length
             }
-        };
-         console.log("job interpreters: " +JSON.stringify(this.selectedBookingModel.interpreters));
+        }; 
         this.router.navigate(['/booking-management', 'edit-booking'], navigationExtras);
     }
 

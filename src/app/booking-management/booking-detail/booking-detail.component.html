@@ -395,7 +395,7 @@
                     </div>
                     <div class="medium-12 columns">
                         <div class="form-field">
-                            <app-billing-account
+                            <app-billing-account #billingForm="ctBillingForm"
                                     [billingAddressIsSame]="standardInvoice"
                                     [billingAddress]="bookingModel.client.organisation_billing_account.organisation_billing_address"
                                     [primaryContact]="bookingModel.client.organisation_primary_contact"></app-billing-account>
@@ -499,7 +499,7 @@
             <app-termandcondition  (termAndConditionStatusChange)="tocChanged($event)" [termsAndConditionAccepted]="termsAndConditionAccepted" ></app-termandcondition>
 
             <div class="actions">
-                <button name="btnCreateBooking" (click)="onCreateBooking(booking_form,addressForm, uploader);">SAVE</button>
+                <button name="btnCreateBooking" (click)="onCreateBooking(booking_form,addressForm,billingForm,uploader);">SAVE</button>
                 <button name="btnCancelreateBooking" (click)="onCancelBooking();">CANCEL</button>
             </div>
         </form>
