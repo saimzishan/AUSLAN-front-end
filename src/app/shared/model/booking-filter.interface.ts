@@ -3,7 +3,7 @@ export interface BookingFilter {
     state?: string;
     booking_status?: string;
     client_name?: string;
-    interpreter_ids?: string;
+    interpreter_name?: string;
     booking_type?: string;
     suburb?: string;
     organisation?: string;

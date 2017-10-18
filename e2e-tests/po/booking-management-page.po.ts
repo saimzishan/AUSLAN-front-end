@@ -216,6 +216,13 @@ export class BookingManagementPage extends PageObject {
         bookingClientNameInput.sendKeys(clientName);
         return bookingClientNameForm.submit();
     }
+    queryBookingByInterpreterName = (interpreterName: string) => {
+        let bookingInterpreterNameInput = this.getElementByCss('form input[name=interpreter_name]');
+        let bookingInterpreterNameForm = this.getParent(bookingInterpreterNameInput);
+        bookingInterpreterNameInput.sendKeys(interpreterName);
+        return bookingInterpreterNameForm.submit();
+    }
+
     queryBookingByOrgName = (org_name: string) => {
         let bookingOrgNameInput = this.getElementByCss('form input[name=organisation]');
         let bookingOrgNameForm = this.getParent(bookingOrgNameInput);
@@ -261,6 +268,22 @@ export class BookingManagementPage extends PageObject {
         let clientNameTd = this.getElementByCss('table tbody tr:first-child td:nth-child(7)');
         return clientNameTd.getText().then((txt) => {
             return expect(txt.split(' ')[1]).to.be.eq(client_name);
+        });
+    }
+    bookingExistsWithInterpreterFirstName = (interpreter_name: string) => {
+        let tblRows = this.getAllElementByCSS('table tbody tr');
+        expect(tblRows.count()).to.eventually.be.equal(1);
+        let clientNameTd = this.getElementByCss('table tbody tr:first-child td:nth-child(9)');
+        return clientNameTd.getText().then((txt) => {
+            return expect(txt.split(' ')[0]).to.be.eq(interpreter_name);
+        });
+    }
+    bookingExistsWithInterpreterLastName = (interpreter_name: string) => {
+        let tblRows = this.getAllElementByCSS('table tbody tr');
+        expect(tblRows.count()).to.eventually.be.equal(1);
+        let clientNameTd = this.getElementByCss('table tbody tr:first-child td:nth-child(9)');
+        return clientNameTd.getText().then((txt) => {
+            return expect(txt.split(' ')[1]).to.be.eq(interpreter_name);
         });
     }
     bookingExistsWithOrgName = (org_name: string) => {
