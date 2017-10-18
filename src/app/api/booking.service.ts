@@ -102,13 +102,13 @@ export class BookingService extends ApiService {
     /*
       The Api should be able to update already created bookings.
     */
-    updateBooking(booking: Booking): Observable<Object> {
+    updateBooking(booking_id: string, booking: Booking): Observable<Object> {
 
         let headers = new Headers({'Accept': 'application/json',
             'Content-Type': 'application/json'});
         let options = new RequestOptions({ headers: headers });
         let obj = { 'booking': booking.toJSON() };
-        return this.http.patch(GLOBAL.BOOKING_API + '/' + booking.id, JSON.stringify(obj), options)
+        return this.http.patch(GLOBAL.BOOKING_API + '/' + booking_id, JSON.stringify(obj), options)
             .catch((err) => { return this.handleError(err); });
 
     }
