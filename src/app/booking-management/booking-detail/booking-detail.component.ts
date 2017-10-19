@@ -36,6 +36,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     private sub: any;
     public uploader: FileUploader = new FileUploader({url: '', maxFileSize: 20 * 1024 * 1024});
     bookingModel: Booking;
+    oldBookingModel;
     standardInvoice = 'false';
     rdgSpecialInstruction = 'false';
     dialogSub;
@@ -64,6 +65,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         BA.loadItems();
 
         this.bookingModel = new Booking();
+        this.oldBookingModel = new Booking();
 
         /** http://stackoverflow.com/questions/38008334/angular2-rxjs-when-should-i-unsubscribe-from-subscription */
         this.sub = this.route.queryParams.subscribe(params => {
@@ -81,6 +83,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 this.bookingModel.venue.end_time_iso =
                     this.datePipe.transform(this.bookingModel.venue.end_time_iso, 'yyyy-MM-ddTHH:mm:ss');
                 this.natureOfApptChange(null);
+
+                this.oldBookingModel = this.deepCopy(this.bookingModel);
             } 
 
             this.bookingHeading = (this.shouldEdit.length > 0 && this.shouldEdit  === 'edit' ) ? "EDIT BOOKING" : "NEW BOOKING"
@@ -248,8 +252,32 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
 
     updateBooking() { 
 
-        if(this.bookingModel.state == 4 || this.bookingModel.state == 5)
-            //check for the specific field changes
+        if (this.bookingModel.state == 4 || this.bookingModel.state == 5) {
+            if (this.isImportantFieldsChanged()) {
+                let config: MdDialogConfig = {
+                    disableClose: true
+                };
+                config.viewContainerRef = this.viewContainerRef;
+                this.dialogRef = this.dialog.open(PopupComponent, config);
+                this.dialogRef.componentInstance.title = 'Important Fields Changed WARNING';
+                this.dialogRef.componentInstance.cancelTitle = 'BACK/YES';
+                this.dialogRef.componentInstance.okTitle = 'SAVE CHANGES';
+                this.dialogRef.componentInstance.popupMessage =
+                    `Interpreter(s) have been/is allocated for this job. Did you get confirmation from the interpreter(s) that these changes are OK?`;
+
+                this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
+                    this.saveBooking();
+                });
+            }
+           // else
+             //   this.saveBooking();
+        }
+        else
+            this.saveBooking();
+        
+    }
+
+    saveBooking(){
 
         if (this.assignedInterpreter > this.bookingModel.interpreters_required) {
             let config: MdDialogConfig = {
@@ -264,30 +292,30 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 `"Oops! Too many interpreters already allocated. Please unassign first.`;
         }
         else {
-           
-            this.spinnerService.requestInProcess(true);
-            let bookingID = this.bookingModel.id;
-            this.bookingModel.clean(this.bookingModel.toJSON());
-
-            this.deleteDocuments.forEach(element => {
-                this.bookingModel.documents_attributes.push(element);
-            });
             
-            this.bookingService.updateBooking(bookingID, this.bookingModel)
-                .subscribe((res: any) => {
-                    if (res.status === 204 && res.ok === true) {
-                        this.notificationServiceBus.launchNotification(false, 'The Booking has been Updated.');
-                        let route = this.rolePermission.getDefaultRouteForCurrentUser();
-                        this.router.navigate([route]);
-                    }
-                    this.spinnerService.requestInProcess(false);
-                },
-                errors => {
-                    this.spinnerService.requestInProcess(false);
-                    let e = errors.json() || '';
-                    this.notificationServiceBus.launchNotification(true,
-                        'Error occured on server side. ' + errors.statusText + ' ' + JSON.stringify(e || e.errors));
-                });
+        this.spinnerService.requestInProcess(true);
+        let bookingID = this.bookingModel.id;
+        this.bookingModel.clean(this.bookingModel.toJSON());
+
+        this.deleteDocuments.forEach(element => {
+            this.bookingModel.documents_attributes.push(element);
+        });
+        
+        this.bookingService.updateBooking(bookingID, this.bookingModel)
+            .subscribe((res: any) => {
+                if (res.status === 204 && res.ok === true) {
+                    this.notificationServiceBus.launchNotification(false, 'The Booking has been Updated.');
+                    let route = this.rolePermission.getDefaultRouteForCurrentUser();
+                    this.router.navigate([route]);
+                }
+                this.spinnerService.requestInProcess(false);
+            },
+            errors => {
+                this.spinnerService.requestInProcess(false);
+                let e = errors.json() || '';
+                this.notificationServiceBus.launchNotification(true,
+                    'Error occured on server side. ' + errors.statusText + ' ' + JSON.stringify(e || e.errors));
+            });
         }
     }
 
@@ -333,4 +361,29 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         this.oldDocuments= this.oldDocuments.filter(d => d.id !== docID);
     }
 
+    isImportantFieldsChanged()
+    {
+           console.log("checking "+this.bookingModel.venue.suburb+"old "+this.oldBookingModel.venue.suburb+"end");
+
+        if ((this.bookingModel.venue.start_time_iso != this.oldBookingModel.venue.start_time_iso) || (this.bookingModel.venue.end_time_iso != this.oldBookingModel.venue.end_time_iso)
+            || (this.bookingModel.raw_nature_of_appointment != this.oldBookingModel.raw_nature_of_appointment) || (this.bookingModel.specific_nature_of_appointment != this.oldBookingModel.specific_nature_of_appointment)
+            || (this.bookingModel.venue.street_name != this.oldBookingModel.venue.street_name) || (this.bookingModel.venue.state != this.oldBookingModel.venue.state)
+            || (this.bookingModel.venue.suburb != this.oldBookingModel.venue.suburb) || (this.bookingModel.venue.post_code != this.oldBookingModel.venue.post_code)
+        )
+            return true;
+        else
+            return false;
+    }
+
+ //   https://stackoverflow.com/questions/36124363/deep-copying-objects-in-angular2
+    deepCopy(oldObj: any) {
+        var newObj = oldObj;
+        if (oldObj && typeof oldObj === "object") {
+            newObj = Object.prototype.toString.call(oldObj) === "[object Array]" ? [] : {};
+            for (var i in oldObj) {
+                newObj[i] = this.deepCopy(oldObj[i]);
+            }
+        }
+        return newObj;
+    }
 }
