@@ -85,8 +85,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 this.natureOfApptChange(null);
             } 
 
-          (this.shouldEdit.length > 0 && this.shouldEdit  === 'edit' ) ?  
-                     this.bookingHeading = "Edit Booking"  : this.bookingHeading = "NEW BOOKING"
+            this.bookingHeading = (this.shouldEdit.length > 0 && this.shouldEdit  === 'edit' ) ? "EDIT BOOKING" : "NEW BOOKING"
 
         });
     }
@@ -197,13 +196,17 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
 
                 if (result) {
-                    (this.shouldEdit.length > 0 && this.shouldEdit  === 'edit' ) ?  
-                        this.updateBooking() : this.createBooking();
+                    if (this.shouldEdit.length > 0 && this.shouldEdit === 'edit')
+                        this.updateBooking()
+                    else
+                        this.createBooking();
                 }
             });
         } else {
-            (this.shouldEdit.length > 0 && this.shouldEdit  === 'edit' ) ?  
-                 this.updateBooking() : this.createBooking();
+            if (this.shouldEdit.length > 0 && this.shouldEdit === 'edit')
+                this.updateBooking()
+            else
+                this.createBooking();
         }
     }
 
@@ -324,14 +327,11 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         }
     }
 
-    confirmDelete(docItem){
+    confirmDelete(docID){
           
-        let obj = {"id":docItem.id,"_destroy":"1"};
-        this.deleteDocuments.push(obj);
-
-        this.oldDocuments= this.oldDocuments.filter(d => d.id !== docItem.id);
-       // docItem.remove();
+        let obj = {"id":docID,"_destroy":"1"};
+        this.deleteDocuments.push(obj); 
+        this.oldDocuments= this.oldDocuments.filter(d => d.id !== docID);
     }
 
-    
 }

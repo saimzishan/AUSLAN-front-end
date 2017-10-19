@@ -464,8 +464,8 @@
                             <i class="icon-attachment"></i>
                             <span>{{ item?.file?.name }}</span>
                         </section>
-                        <section *ngFor="let docItem of oldDocuments; let i = index ">
-                            <button type="button" class="bg-green"><i class="icon-close" (click)="confirmDelete(docItem)"></i></button> 
+                        <section *ngFor="let docItem of oldDocuments;">
+                            <button type="button" class="bg-green"><i class="icon-close" (click)="confirmDelete(docItem.id)"></i></button> 
                             <i class="icon-attachment"></i>
                             <span><a download href="{{docItem.url}}">{{docItem.file_name}}</a></span>
 
