@@ -93,6 +93,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
 
         });
  
+        
     }
 
     public fileOverBase(e: any) {
