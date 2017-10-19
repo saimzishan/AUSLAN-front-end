@@ -88,6 +88,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.bookingHeading = (this.shouldEdit.length > 0 && this.shouldEdit  === 'edit' ) ? "EDIT BOOKING" : "NEW BOOKING"
 
         });
+
+        console.log("booking state "+this.bookingModel.state.toString());
     }
 
     public fileOverBase(e: any) {
@@ -102,6 +104,10 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
+      
+        if(this.dialogSub != null)
+            this.dialogSub.unsubscribe();
+
         return this.sub && this.sub.unsubscribe();
     }
 
@@ -251,6 +257,9 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     updateBooking() { 
+
+        if(this.bookingModel.state == 4 || this.bookingModel.state == 5)
+            //check for the specific field changes
 
         if (this.assignedInterpreter > this.bookingModel.interpreters_required) {
             let config: MdDialogConfig = {
