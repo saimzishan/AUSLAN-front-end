@@ -90,8 +90,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.bookingHeading = (this.shouldEdit.length > 0 && this.shouldEdit  === 'edit' ) ? "EDIT BOOKING" : "NEW BOOKING"
 
         });
-
-        console.log("booking state "+this.bookingModel.state.toString());
+ 
     }
 
     public fileOverBase(e: any) {
@@ -269,8 +268,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                     this.saveBooking();
                 });
             }
-           // else
-             //   this.saveBooking();
+            else
+                this.saveBooking();
         }
         else
             this.saveBooking();
@@ -362,9 +361,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     isImportantFieldsChanged()
-    {
-           console.log("checking "+this.bookingModel.venue.suburb+"old "+this.oldBookingModel.venue.suburb+"end");
-
+    { 
         if ((this.bookingModel.venue.start_time_iso != this.oldBookingModel.venue.start_time_iso) || (this.bookingModel.venue.end_time_iso != this.oldBookingModel.venue.end_time_iso)
             || (this.bookingModel.raw_nature_of_appointment != this.oldBookingModel.raw_nature_of_appointment) || (this.bookingModel.specific_nature_of_appointment != this.oldBookingModel.specific_nature_of_appointment)
             || (this.bookingModel.venue.street_name != this.oldBookingModel.venue.street_name) || (this.bookingModel.venue.state != this.oldBookingModel.venue.state)
