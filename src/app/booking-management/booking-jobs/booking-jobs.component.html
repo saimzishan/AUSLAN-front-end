@@ -1,36 +1,7 @@
 <section id="page-common">
-	<section id="static-flow">
-		<section id="submenu">
-			<nav>
-				<a href="#" class="active">Booking info</a>
-				<a href="javascript:void(0);" (click)="editBooking()">Booking details</a>
-			</nav>
-			<div>
-				<button *ngIf='!isCancelledOrUnableToServe' (click)="showDialogBox(false)" class="button pink">Unable to Service</button>
-				<button *ngIf='!isCancelledOrUnableToServe' (click)="showDialogBox(true)" class="button pink">Cancel Booking</button>
-				<button name="dupBtn" (click)="duplicateBooking()" class="button inverse">Duplicate</button>
-				<div class="sep"></div>
-				<button (click)="saveChanges()" name="saveBtn" [disabled]="!invitePressed && !unAssignPressed && !reAssignPressed " class="button inverse">Save</button>
-			</div>
-		</section>
-
-		<section id="steps">
-			<nav>
-				<a href="javascript:void(0);" style="cursor: default" [ngClass]="{'active' : isActiveState('Requested'),
-                'passed' : isPassedState('Requested')}">Requested</a>
-				<a href="javascript:void(0);" style="cursor: default"  [ngClass]="{'active' : isActiveState('In_progress'),
-                'passed' : isPassedState('In_progress')}">In Progress</a>
-				<a href="javascript:void(0);" style="cursor: default"  [ngClass]="{'active' : isActiveState('Allocated'),
-                'passed' : isPassedState('Allocated')}">Allocated</a>
-				<a href="javascript:void(0);" style="cursor: default"  [ngClass]="{'active' : isActiveState('Completed'),
-                'passed' : isPassedState('Completed')}">Completed</a>
-				<a href="javascript:void(0);" style="cursor: default"  [ngClass]="{'active' :  isActiveState('Unable_to_service') || isActiveState('Cancelled')}">
-					{{isActiveState('Cancelled') ? 'Cancelled' :
-					isActiveState('Unable_to_service') ? 'Unable To Service' : 'Finished' }}
-				</a>
-			</nav>
-		</section>
-	</section>
+	
+	 <app-booking-header [bookingState]="selectedBookingModel.state" [isCancelOrUnable]="isCancelledOrUnableToServe" [invitePress]="invitePressed"
+						[unAssignPress]="unAssignPressed" [reAssignPress]="reAssignPressed" [showButtons]='true' [bookingModel]='selectedBookingModel'></app-booking-header>
 
 	<section id="job-booking">
 		<main>

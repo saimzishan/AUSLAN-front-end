@@ -1,0 +1,32 @@
+<section id="static-flow">
+    <section id="submenu">
+        <nav>
+            <a href="javascript:void(0);" (click)="infoClick()" [ngClass]="{'active' : isActive('booking-job')}">Booking info</a>
+            <a href="javascript:void(0);" (click)="bookingDetailClick()" [ngClass]="{'active' : isActive('edit-booking')}">Booking details</a>
+        </nav>
+        <div *ngIf='showButtons'>
+            <button *ngIf='!isCancelOrUnable' (click)="showDialogBoxClick(false)" class="button pink">Unable to Service</button>
+            <button *ngIf='!isCancelOrUnable' (click)="showDialogBoxClick(true)" class="button pink">Cancel Booking</button>
+            <button name="dupBtn" (click)="duplicateClick()" class="button inverse">Duplicate</button>
+            <div class="sep"></div>
+            <button (click)="saveClick()" name="saveBtn" [disabled]="!invitePress && !unAssignPress && !reAssignPress " class="button inverse">Save</button>
+        </div>
+    </section>
+
+    <section id="steps">
+        <nav>
+            <a href="javascript:void(0);" [ngClass]="{'active' : isActiveState('Requested'),
+                     'passed' : isPassedState('Requested')}">Requested</a>
+            <a href="javascript:void(0);" [ngClass]="{'active' : isActiveState('In_progress'),
+                    'passed' : isPassedState('In_progress')}">In Progress</a>
+            <a href="javascript:void(0);" [ngClass]="{'active' : isActiveState('Allocated'),
+                    'passed' : isPassedState('Allocated')}">Allocated</a>
+            <a href="javascript:void(0);" [ngClass]="{'active' : isActiveState('Completed'),
+                    'passed' : isPassedState('Completed')}">Completed</a>
+            <a href="javascript:void(0);" [ngClass]="{'active' :  isActiveState('Unable_to_service') || isActiveState('Cancelled')}">
+                {{isActiveState('Cancelled') ? 'Cancelled' :
+                isActiveState('Unable_to_service') ? 'Unable To Service' : 'Finished' }}
+            </a>
+        </nav>
+    </section>
+</section>
