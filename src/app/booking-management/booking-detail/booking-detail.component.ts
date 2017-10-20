@@ -157,6 +157,11 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         this.bookingModel.special_instructions =
             this.rdgSpecialInstruction === 'true' ? special_instructions : '';
     }
+    forEdit() {
+
+        return (this.shouldEdit.length > 0 && this.shouldEdit  === 'edit' ) ? true :false ;
+    }
+
     public onStandardInvoice() {
         if ( GLOBAL.currentUser instanceof OrganisationalRepresentative) {
             let currentUser = <OrganisationalRepresentative>GLOBAL.currentUser;

@@ -12,4 +12,5 @@ export class AddressComponent {
   @Input() address: Address;
   @Input() prefix = '';
   @ViewChild('addressFields') public form: NgForm;
+  @Input() canEdit=false;
 }
