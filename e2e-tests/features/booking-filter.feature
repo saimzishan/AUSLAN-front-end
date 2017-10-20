@@ -162,13 +162,16 @@ Feature: Booking Filter
 
 
     # Problem with the first Given is not setting the category correctly, will fix in future card
-  @ignoreThis
+  @runThis
   Scenario: Given 1 verified Booking Officer, I should be able to filter by booking type
     Given The booking has assignment category 'Police'
+    Then I wait for 5000 milli-seconds
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
     When I am on the bookings page
     Then I will be shown with bookings
+    When I hover on the Type dropdown and select 'Medical'
+    Then I am shown with 5 booking
     When I hover on the Type dropdown and select 'Police'
     Then I am shown with 1 booking
     Then I see one row with type 'Police'
