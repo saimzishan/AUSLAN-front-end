@@ -173,7 +173,10 @@
 
                     <span *ngIf="didInterpreterAccepted(booking.interpreters).length <1 ;">To be filled</span>
                 </td>
-                <td class="truncated"><a href="javascript:void(0)" class="attach"><i class="icon-attach"></i></a>
+                <td class="truncated">
+                    <ng-container *ngIf="booking.documents_attributes.length > 0">
+                    <a href="javascript:void(0)" class="attach"><i class="icon-attach"></i></a>
+                    </ng-container>
                     {{booking.raw_nature_of_appointment}}
                 </td>
                 <!-- td><span class="underline">02-06 TS<br>7:15 A</span></td -->

@@ -49,7 +49,7 @@ export class Booking {
         this.deaf_person.last_name = '';
         this.deaf_person.email = '';
         this.deaf_person.mobile_number = '';
-        this.deaf_person.eaf = 0;
+        this.deaf_person.eaf = '';
         this.nature_of_appointment = BOOKING_NATURE.None;
         this.raw_nature_of_appointment = '';
         this.specific_nature_of_appointment = '';

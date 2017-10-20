@@ -36,8 +36,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     private sub: any;
     public uploader: FileUploader = new FileUploader({url: '', maxFileSize: 20 * 1024 * 1024});
     bookingModel: Booking;
-    standardInvoice = 'false';
-    rdgSpecialInstruction = 'false';
+    standardInvoice = 'true';
+    rdgSpecialInstruction = 'true';
     dialogSub;
     appointment_types = Object.keys(BOOKING_NATURE).filter(value => value === BOOKING_NATURE[value]
         || BOOKING_NATURE[value].startsWith(value)).map(v => BOOKING_NATURE[v]) as string[];
@@ -79,6 +79,9 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     public fileOverBase(e: any) {
     }
 
+    onStartTimeChanged() {
+        this.bookingModel.venue.end_time_iso = this.bookingModel.venue.start_time_iso;
+    }
     natureOfApptChange($event) {
         let val: BOOKING_NATURE = <BOOKING_NATURE> BOOKING_NATURE[this.bookingModel.raw_nature_of_appointment];
         this.specific_appointment_types = BA.DISSCUSSION_ITEM[BOOKING_NATURE[val]];

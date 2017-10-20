@@ -78,7 +78,7 @@ export class BookingListComponent {
         return ['All', ...keys];
     }
     assignmentCategoryList() {
-        return Object.keys(BA.DISSCUSSION_ITEM) as Array<string>;
+        return ['All', ...Object.keys(BA.DISSCUSSION_ITEM)];
     }
     filterStatus() {
         return BOOKING_STATUS[this.bookingFilter.booking_status];
