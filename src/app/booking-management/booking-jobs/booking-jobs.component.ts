@@ -18,14 +18,13 @@ import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
 import {PrettyIDPipe} from '../../shared/pipe/pretty-id.pipe';
 import {GLOBAL} from '../../shared/global';
 
-
 @Component({
     selector: 'app-booking-jobs',
     templateUrl: './booking-jobs.component.html',
     styleUrls: ['./booking-jobs.component.css']
 })
 
-export class BookingJobsComponent implements OnDestroy {
+export class BookingJobsComponent implements OnInit,OnDestroy {
     selectedBookingModel: Booking = new Booking();
     invitePressed = false;
     unAssignPressed = false;
@@ -38,6 +37,8 @@ export class BookingJobsComponent implements OnDestroy {
     private dialogSub: any;
     dialogRef: MdDialogRef<any>;
     checkList = {};
+    private headerSubscription;
+
     constructor(public dialog: MdDialog,
                 public viewContainerRef: ViewContainerRef, public spinnerService: SpinnerService,
                 public notificationServiceBus: NotificationServiceBus,
@@ -51,6 +52,30 @@ export class BookingJobsComponent implements OnDestroy {
                 this.fetchBookingInterpreters(param_id); 
             }
         });
+
+    }
+
+    ngOnInit() {
+
+        this.headerSubscription = this.bookingService.notifyObservable$.subscribe((res) => { 
+                  this.callRelatedFunctions(res); 
+        });
+    }
+
+    callRelatedFunctions(res) {
+
+        if (res.hasOwnProperty('option')) {
+
+            if (res.option === 'showDialogBox')
+                this.showDialogBox(res.value);
+            else if (res.option === 'editBooking')
+                this.editBooking();
+            else if (res.option === 'duplicateBooking')
+                this.duplicateBooking();
+            else if (res.option === 'saveChanges')
+                this.saveChanges();
+
+        }
 
     }
 
@@ -69,7 +94,7 @@ export class BookingJobsComponent implements OnDestroy {
     }
 
     ngOnDestroy() {
-        return this.sub && this.sub.unsubscribe()
+        return this.sub && this.sub.unsubscribe() && this.headerSubscription && this.headerSubscription.unsubscribe()
             && this.dialogSub && this.dialogSub.unsubscribe();
     }
 
