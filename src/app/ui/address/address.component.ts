@@ -1,6 +1,7 @@
 import { Component, Input, ViewChild, AfterViewInit } from '@angular/core';
 import { Address } from '../../shared/model/venue.entity';
 import { NgForm } from '@angular/forms';
+import {NotificationServiceBus} from '../../notification/notification.service';
 
 @Component({
   selector: 'app-address',
@@ -16,6 +17,8 @@ export class AddressComponent {
   @Input() canEdit = false;
   @Input() parentForm: NgForm;
 
+constructor(public notificationServiceBus: NotificationServiceBus){}
+
   ngAfterViewInit() {
     if (this.parentForm != null) {
 
@@ -23,6 +26,12 @@ export class AddressComponent {
         this.parentForm.form.addControl("billAddressFields", this.form.form);
       }
     }
+  }
+
+  fieldClick(evnt)
+  {
+      if((evnt.target as Element).hasAttribute("readonly"))
+          this.notificationServiceBus.launchNotification(true, 'In order to change this field, please contact the booking office.');
   }
 
 }

@@ -176,6 +176,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
       Calling this method will create a new booking
     */
     public onCreateBooking(form: FormGroup, addressForm: any, billingForm: any, uploader: FileUploader) {
+      
         if (!this.termsAndConditionAccepted) {
             this.notificationServiceBus.
             launchNotification(true, 'Kindly accept Terms and Conditions');
@@ -346,6 +347,12 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 reader.onload = this._handleReaderLoaded.bind(this);
                 reader.readAsDataURL(file);
         }
+    }
+
+    fieldClick(evnt)
+    {
+        if((evnt.target as Element).hasAttribute("readonly"))
+            this.notificationServiceBus.launchNotification(true, 'In order to change this field, please contact the booking office.');
     }
 
     _handleReaderLoaded(readerEvt) {
