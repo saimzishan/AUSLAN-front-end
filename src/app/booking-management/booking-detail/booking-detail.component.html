@@ -44,8 +44,10 @@
                         <div class="form-field">
                             <label>START DATE & TIME *</label>
 
-                            <input type='datetime-local' (change)="onStartTimeChanged()" [disabled]="isUserOrgRepORIndClientTemp() && forEdit()"
-                                   name='dpEventDate' placeholder="DATE & Time OF APPOINTMENT *"
+                            <input type='datetime-local'
+                                   [readonly]="isUserOrgRepORIndClientTemp() && forEdit()"
+                                   (change)="onStartTimeChanged()"
+                                   name='dpEventDate' placeholder="DATE & Time OF APPOINTMENT *" (click)="fieldClick($event)"
                                    [(ngModel)]="bookingModel.venue.start_time_iso" required #dpEventDate="ngModel"/>
                         </div>
                     </div>
@@ -53,8 +55,9 @@
                     <div class="medium-5 columns">
                         <div class="form-field">
                             <label>END DATE & TIME *</label>
-                            <input type='datetime-local' name='dpEventEndTime' [disabled]="isUserOrgRepORIndClientTemp() && forEdit()"
-                                   placeholder="ENDING TIME *" #dpEventEndTime="ngModel"
+
+                            <input type='datetime-local' name='dpEventEndTime' [readonly]="isUserOrgRepORIndClientTemp() && forEdit()"
+                                   placeholder="ENDING TIME *" #dpEventEndTime="ngModel" (click)="fieldClick($event)"
                                    [(ngModel)]="bookingModel.venue.end_time_iso"
                                    required/>
                         </div>
@@ -78,7 +81,7 @@
                             <label>NATURE OF APPOINTMENT * <span mdTooltip="Select nature of Appointment"><i
                                     class="inline-icon-tip"></i></span></label>
                             <select (change)="natureOfApptChange($event)" [disabled]="isUserOrgRepORIndClientTemp() && forEdit()"
-                                    [(ngModel)]="bookingModel.raw_nature_of_appointment"
+                                    [(ngModel)]="bookingModel.raw_nature_of_appointment" 
                                     #nature_of_appointment="ngModel" name="nature_of_appointment"
                                     aria-label="A" required>
                                 <option *ngFor="let item of appointment_types | enumVal " [value]="item.value">
@@ -97,7 +100,7 @@
                             <label>WHAT WILL BE DISCUSSED * <span mdTooltip="Select specific nature of Appointment"><i
                                     class="inline-icon-tip"></i></span></label>
                             <select [(ngModel)]="bookingModel.specific_nature_of_appointment" [disabled]="isUserOrgRepORIndClientTemp() && forEdit()"
-                                    #specific_nature_of_appointment="ngModel" required
+                                    #specific_nature_of_appointment="ngModel" required 
                                     name="specific_nature_of_appointment" aria-label="A">
                                 <option *ngFor="let item of specific_appointment_types | enumVal" [value]="item.value">
                                     {{item.value.toUpperCase()}}
@@ -114,8 +117,8 @@
                         <div class="form-field">
                             <label>REQUESTED BY FIRST NAME * <span mdTooltip="Enter the First Name"><i
                                     class="inline-icon-tip"></i></span></label>
-                            <input type="text" placeholder="Enter the Request By Name" [disabled]="isUserOrgRepORIndClientTemp() && forEdit()"
-                                   [(ngModel)]="bookingModel.requested_by.first_name" name="raw_booking_requested_by"
+                            <input type="text" placeholder="Enter the Request By Name" [readonly]="isUserOrgRepORIndClientTemp() && forEdit()"
+                                   [(ngModel)]="bookingModel.requested_by.first_name" name="raw_booking_requested_by" (click)="fieldClick($event)"
                                    #raw_booking_requested_by="ngModel" [rangeLength]="[2,20]" required>
                             <span *ngIf="raw_booking_requested_by.touched && !raw_booking_requested_by.errors?.required && !raw_booking_requested_by.errors?.rangeLength;"
                                   class="inline-icon inline-icon-valid valid"></span>
@@ -129,8 +132,8 @@
                         <div class="form-field">
                             <label>REQUESTED BY LAST NAME * <span mdTooltip="Enter the Last Name"><i
                                     class="inline-icon-tip"></i></span></label>
-                            <input type="text" placeholder="Enter the Request By Name" [disabled]="isUserOrgRepORIndClientTemp() && forEdit()"
-                                   [(ngModel)]="bookingModel.requested_by.last_name" name="raw_booking_requested_by_ln"
+                            <input type="text" placeholder="Enter the Request By Name" [readonly]="isUserOrgRepORIndClientTemp() && forEdit()"
+                                   [(ngModel)]="bookingModel.requested_by.last_name" name="raw_booking_requested_by_ln" (click)="fieldClick($event)"
                                    #raw_booking_requested_by_ln="ngModel" [rangeLength]="[2,20]" required>
                             <span *ngIf="raw_booking_requested_by_ln.touched && !raw_booking_requested_by_ln.errors?.required && !raw_booking_requested_by_ln.errors?.rangeLength;"
                                   class="inline-icon inline-icon-valid valid"></span>
@@ -160,8 +163,8 @@
                         <div class="form-field">
                             <label>NUMB. OF INTERPRETERS NEEDED * <span
                                     mdTooltip="Enter the Number of Interpreters needed"><i class="inline-icon-tip"></i></span></label>
-                            <input [(ngModel)]="bookingModel.interpreters_required" name="interpreters_count" [disabled]="isUserOrgRepORIndClientTemp() && forEdit()"
-                                   #interpreters_count="ngModel" placeholder="Enter the Number of Interpreters needed"
+                            <input [(ngModel)]="bookingModel.interpreters_required" name="interpreters_count" [readonly]="isUserOrgRepORIndClientTemp() && forEdit()"
+                                   #interpreters_count="ngModel" placeholder="Enter the Number of Interpreters needed" (click)="fieldClick($event)"
                                    type="tel" digits>
                             <span *ngIf="interpreters_count.touched && !interpreters_count.errors?.required && !interpreters_count.errors?.digits;"
                                   class="inline-icon inline-icon-valid valid"></span>
@@ -242,7 +245,8 @@
                         <div class="form-field">
                             <label>CONTACT FIRST NAME * <span mdTooltip="Enter Contact First Name"><i
                                     class="inline-icon-tip"></i></span></label>
-                            <input type="text" placeholder="Enter Contact First Name"
+                            <input [readonly]='currentUserIsContact' (click)="fieldClick($event)"
+                                   type="text" placeholder="Enter Contact First Name"
                                    [(ngModel)]="bookingModel.primaryContact.first_name"
                                    name="contact_first_name"
                                    #contact_first_name="ngModel" [rangeLength]="[2,20]" required>
@@ -258,8 +262,8 @@
                         <div class="form-field">
                             <label>CONTACT LAST NAME <span mdTooltip="Enter Contact Last Name"><i
                                     class="inline-icon-tip"></i></span></label>
-                            <input type="text" placeholder="Enter Contact Last Name"
-                                   [(ngModel)]="bookingModel.primaryContact.last_name" name="contact_last_name"
+                            <input [readonly]='currentUserIsContact' type="text" placeholder="Enter Contact Last Name"
+                                   [(ngModel)]="bookingModel.primaryContact.last_name" name="contact_last_name" (click)="fieldClick($event)"
                                    #contact_last_name="ngModel" [rangeLength]="[2,20]" required>
                             <span *ngIf="contact_last_name.touched && !contact_last_name.errors?.required && !contact_last_name.errors?.rangeLength;"
                                   class="inline-icon inline-icon-valid valid"></span>
@@ -326,8 +330,8 @@
                         <div class="form-field">
                             <label>EAF/NDISID<span mdTooltip="Enter deaf person EAF number!"><i
                                     class="inline-icon-tip"></i></span></label>
-                            <input type="tel" placeholder="Enter deaf person EAF number" [disabled]="isUserOrgRepORIndClientTemp() && forEdit()"
-                                   [(ngModel)]="bookingModel.deaf_person.eaf" name="deaf_person_eaf"
+                            <input type="tel" placeholder="Enter deaf person EAF number" [readonly]="isUserOrgRepORIndClientTemp() && forEdit()"
+                                   [(ngModel)]="bookingModel.deaf_person.eaf" name="deaf_person_eaf" (click)="fieldClick($event)"
                                    #deaf_person_eaf="ngModel">
                         </div>
                     </div>
@@ -346,8 +350,8 @@
                         <div class="form-field">
                             <label>DEAF PERSON'S FIRST NAME * <span mdTooltip="Enter deaf person first name"><i
                                     class="inline-icon-tip"></i></span></label>
-                            <input type="text" placeholder="Enter deaf person first name" [disabled]="isUserOrgRepORIndClientTemp() && forEdit()"
-                                   [(ngModel)]="bookingModel.deaf_person.first_name" name="deaf_person_name"
+                            <input type="text" placeholder="Enter deaf person first name" [readonly]="isUserOrgRepORIndClientTemp() && forEdit()"
+                                   [(ngModel)]="bookingModel.deaf_person.first_name" name="deaf_person_name" (click)="fieldClick($event)"
                                    #deaf_person_name="ngModel" [rangeLength]="[2,20]" required>
                             <span *ngIf="deaf_person_name.touched && !deaf_person_name.errors?.required && !deaf_person_name.errors?.rangeLength;"
                                   class="inline-icon inline-icon-valid valid"></span>
@@ -361,8 +365,8 @@
                         <div class="form-field">
                             <label>DEAF PERSON'S LAST NAME * <span mdTooltip="Enter deaf person last name"><i
                                     class="inline-icon-tip"></i></span></label>
-                            <input type="text" placeholder="Enter deaf person last name" [disabled]="isUserOrgRepORIndClientTemp() && forEdit()"
-                                   [(ngModel)]="bookingModel.deaf_person.last_name" name="deaf_person_last_name"
+                            <input type="text" placeholder="Enter deaf person last name" [readonly]="isUserOrgRepORIndClientTemp() && forEdit()"
+                                   [(ngModel)]="bookingModel.deaf_person.last_name" name="deaf_person_last_name" (click)="fieldClick($event)"
                                    #deaf_person_last_name="ngModel" [rangeLength]="[2,20]" required>
                             <span *ngIf="deaf_person_last_name.touched && !deaf_person_last_name.errors?.required && !deaf_person_last_name.errors?.rangeLength;"
                                   class="inline-icon inline-icon-valid valid"></span>
@@ -450,17 +454,16 @@
                   </div>
                   <div class="row-wrapper">
                     <div class="medium-12 columns">
-                      <div class="form-field">
-                        <label>Special instructions
-                          <span mdTooltip="Enter Special instructions!">
-                            <i class="inline-icon-tip"></i>
-                          </span>
-                        </label>
-                        <input [(ngModel)]="bookingModel.special_instructions"
-                               name="txtSpecialInstruction" type="text"
-                                                            [disabled]="isUserOrgRepORIndClientTemp() && forEdit()" placeholder="Enter Special instructions">
+                        <div class="form-field">
+                            <label>Special instructions
+                              <span mdTooltip="Enter Special instructions!">
+                                <i class="inline-icon-tip"></i>
+                              </span>
+                            </label>
+                            <input [(ngModel)]="bookingModel.special_instructions"  name= 'txtSpecialInstruction' type='text' 
+                                    [readonly]="isUserOrgRepORIndClientTemp() && forEdit()" (click)="fieldClick($event)" placeholder="Enter Special instructions">
 
-                      </div>
+                        </div>
                     </div>
                   </div>
                 </div>
@@ -470,12 +473,11 @@
             <h4 class="text-center">JOB DOCUMENTS</h4>
             <div class="row">
                 <section class="file-uploader">
-                    <button md-button [disabled]="isUserOrgRepORIndClientTemp() && forEdit()" >
+                    <button md-button>
                         <i class="icon-add-file"></i>
                         <b>CHOOSE FILES TO UPLOAD</b>
                         <!-- span>or drag &amp; drop them here</span -->
-                        <input type="file" ng2FileSelect (change)="handleFileSelect($event)" [uploader]="uploader"
-                              [disabled]="isUserOrgRepORIndClientTemp() && forEdit()" name="uploader"/>
+                        <input type="file" ng2FileSelect (change)="handleFileSelect($event)" [uploader]="uploader" name="uploader"/>
                     </button>
                     <!-- section ng2FileDrop
                              [ngClass]="{
