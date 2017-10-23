@@ -118,20 +118,20 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     public onClientSelectionChange() {
-        this.bookingModel.deaf_person.first_name = this.currentUserIsClient === 'true' ? GLOBAL.currentUser.first_name : '';
-        this.bookingModel.deaf_person.last_name = this.currentUserIsClient === 'true' ? GLOBAL.currentUser.last_name : '';
-        this.bookingModel.deaf_person.email = this.currentUserIsClient === 'true' ? GLOBAL.currentUser.email : '';
-        this.bookingModel.deaf_person.mobile_number = this.currentUserIsClient === 'true' ? GLOBAL.currentUser.mobile : '';
+        this.bookingModel.deaf_person.first_name = this.oldBookingModel.deaf_person.first_name = this.currentUserIsClient === 'true' ? GLOBAL.currentUser.first_name : '';
+        this.bookingModel.deaf_person.last_name = this.oldBookingModel.deaf_person.last_name = this.currentUserIsClient === 'true' ? GLOBAL.currentUser.last_name : '';
+        this.bookingModel.deaf_person.email = this.oldBookingModel.deaf_person.email = this.currentUserIsClient === 'true' ? GLOBAL.currentUser.email : '';
+        this.bookingModel.deaf_person.mobile_number = this.oldBookingModel.deaf_person.mobile_number = this.currentUserIsClient === 'true' ? GLOBAL.currentUser.mobile : '';
     }
 
     public onSelectionChange() {
-        this.bookingModel.primaryContact.first_name =
+        this.bookingModel.primaryContact.first_name = this.oldBookingModel.primaryContact.first_name =
             this.currentUserIsContact === 'true' ? GLOBAL.currentUser.first_name : '';
-        this.bookingModel.primaryContact.last_name =
+        this.bookingModel.primaryContact.last_name = this.oldBookingModel.primaryContact.last_name =
             this.currentUserIsContact === 'true' ? GLOBAL.currentUser.last_name : '';
-        this.bookingModel.primaryContact.email =
+        this.bookingModel.primaryContact.email = this.oldBookingModel.primaryContact.email =
             this.currentUserIsContact === 'true' ? GLOBAL.currentUser.email : '';
-        this.bookingModel.primaryContact.mobile_number =
+        this.bookingModel.primaryContact.mobile_number = this.oldBookingModel.primaryContact.mobile_number =
             this.currentUserIsContact === 'true' ? GLOBAL.currentUser.mobile : '';
     }
 
