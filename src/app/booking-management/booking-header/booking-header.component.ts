@@ -1,4 +1,4 @@
-import { Component, Input, ViewContainerRef } from '@angular/core';
+import { Component, Input, ViewContainerRef,OnDestroy } from '@angular/core';
 import { BookingService } from '../../api/booking.service';
 import { BOOKING_STATE } from '../../shared/model/booking-state.enum';
 import { Booking } from '../../shared/model/booking.entity';
@@ -13,7 +13,7 @@ import {PopupComponent} from '../../shared/popup/popup.component';
   templateUrl: './booking-header.component.html',
   styleUrls: ['./booking-header.component.css']
 })
-export class BookingHeaderComponent {
+export class BookingHeaderComponent implements OnDestroy{
 
   @Input() bookingModel: Booking = new Booking();
   @Input() oldBookingModel: Booking = new Booking();
@@ -28,6 +28,10 @@ export class BookingHeaderComponent {
 
   constructor(private bookingService: BookingService, private router: Router,  public dialog: MdDialog ,public viewContainerRef: ViewContainerRef) { }
 
+  ngOnDestroy() {
+       return this.dialogSub && this.dialogSub.unsubscribe();
+  }
+  
   showDialogBoxClick(data) {
 
     this.bookingService.notifyOther({ option: 'showDialogBox', value: data });
