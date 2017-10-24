@@ -106,6 +106,7 @@ defineSupportCode(({Given, Then, When}) => {
     Then(/^I see one row with interpreter last name '(.*)'$/, bookingManagementPO.bookingExistsWithInterpreterLastName);
     Then(/^I see one row with org name '(.*)'$/, bookingManagementPO.bookingExistsWithOrgName);
     Then(/^I see one row with suburb '(.*)'$/, bookingManagementPO.bookingExistsWithSuburb);
+    Then(/^I should see the bookings in (ascending|descending) order of (.*)$/, bookingManagementPO.checkBookingOrder);
 
     // Then(/^I get the popup warning that is the non-standard booking$/, createBookingPO.popupForNonStandard)
 
