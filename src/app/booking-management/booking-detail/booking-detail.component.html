@@ -470,6 +470,39 @@
                 </section>
             </div>
 
+            <br>
+            <div class="separator"></div>
+
+            <h4 class="text-center">Preferred interpreters</h4>
+
+            <div class="row">
+                <div class="medium-12 columns">
+                    <div class="form-field">
+                        <label>Do you have preferred interpreters for this booking? </label>
+                        <md-radio-group name="rdPreferredInterpreters"
+                                        [(ngModel)]="showPreffered">
+                            <md-radio-button value=true>YES</md-radio-button>
+                            <md-radio-button value=false>NO</md-radio-button>
+                        </md-radio-group>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" *ngIf="showPreffered === 'true'">
+                    <div class="medium-12 columns">
+                        <div class="form-field">
+                            <label>Do you want to set the preferred interpreters that you have set in your profile? </label>
+                            <md-radio-group name="rdProfilePreferredInterpreters" (change)='onProfilePreferredSelectionChange()'
+                                            [(ngModel)]="showProfilePreffered">
+                                <md-radio-button value=true>YES</md-radio-button>
+                                <md-radio-button value=false>NO</md-radio-button>
+                            </md-radio-group>
+                        </div>
+                    </div>
+            </div>
+
+             <app-interpreter-box *ngIf="showProfilePreffered === 'true'" [isPreffered]="true" [selectedInterpreters]="userModel.prefferedInterpreters">
+             </app-interpreter-box> 
 
             <div [hidden]='true'>
                 <div class="separator"></div>

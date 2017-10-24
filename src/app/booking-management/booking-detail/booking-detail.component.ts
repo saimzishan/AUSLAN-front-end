@@ -15,10 +15,10 @@ import {FileUploader, FileUploaderOptions} from 'ng2-file-upload';
 
 import {Address} from '../../shared/model/venue.entity';
 import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
-import {IndividualClient, OrganisationalRepresentative} from '../../shared/model/user.entity';
+import {IndividualClient, OrganisationalRepresentative, BookingOfficer} from '../../shared/model/user.entity';
 import {PopupComponent} from '../../shared/popup/popup.component';
 import {Contact} from '../../shared/model/contact.entity';
-
+import {PreferedAllocationService} from '../../shared/prefered-allocation.service';
 
 const _ONE_HOUR = 1000 /*milliseconds*/
     * 60 /*seconds*/
@@ -50,12 +50,15 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     dialogRef: MdDialogRef<any>;
     fileName = '';
     termsAndConditionAccepted = false;
+    showPreffered = 'false';
+    showProfilePreffered = 'false';
+    userModel;
 
     constructor(public bookingService: BookingService, private router: Router,
                 private route: ActivatedRoute, private rolePermission: RolePermission,
                 public notificationServiceBus: NotificationServiceBus, public spinnerService: SpinnerService,
                 private datePipe: DatePipe, public dialog: MdDialog,
-                public viewContainerRef: ViewContainerRef) {
+                public viewContainerRef: ViewContainerRef,private _sharedPreferedAllocationService: PreferedAllocationService) {
         BA.loadItems();
 
         this.bookingModel = new Booking();
@@ -92,6 +95,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         if (GLOBAL.currentUser !== undefined) {
             this.onSelectionChange();
             this.onClientSelectionChange();
+            this.getUser();
         }
     }
 
@@ -111,6 +115,15 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.currentUserIsContact === 'true' ? GLOBAL.currentUser.email : '';
         this.bookingModel.primaryContact.mobile_number =
             this.currentUserIsContact === 'true' ? GLOBAL.currentUser.mobile : '';
+    }
+
+    public onProfilePreferredSelectionChange() { 
+        if(this.showProfilePreffered === 'true')
+            this.filterUserPreference(this.userModel.prefferedInterpreters);
+        else
+            this.bookingModel.preference_allocations_attributes = [];
+      //    this.showPreffered = (this.showProfilePreffered === 'true' ? 'false':'true');
+      
     }
 
     isNotIndClient() {
@@ -255,5 +268,30 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.bookingModel.documents_attributes =
                 this.bookingModel.documents_attributes.filter(d => d.document_file_name !== item.file.name);
         }
+    }
+
+    getUser()
+    {
+        this.userModel = Boolean(GLOBAL.currentUser) &&
+        GLOBAL.currentUser instanceof OrganisationalRepresentative ?
+            (<OrganisationalRepresentative>GLOBAL.currentUser) :
+            Boolean(GLOBAL.currentUser) && GLOBAL.currentUser instanceof IndividualClient ?
+                (<IndividualClient>GLOBAL.currentUser) :
+                        Boolean(GLOBAL.currentUser) && GLOBAL.currentUser instanceof BookingOfficer ?
+                            (<BookingOfficer>GLOBAL.currentUser) :
+                                 GLOBAL.currentUser;
+
+                                 this._sharedPreferedAllocationService.interpreterStream$.subscribe(
+                                    data => { 
+                                       this.filterUserPreference(data);
+                                    });
+    }
+
+    filterUserPreference(interpreters){
+
+        this.bookingModel.preference_allocations_attributes=[];
+        interpreters.forEach(i => {
+            this.bookingModel.preference_allocations_attributes.push({"interpreter_id":i.interpreter_id,"preference":i.preference});
+        });
     }
 }
