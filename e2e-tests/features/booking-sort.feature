@@ -97,3 +97,15 @@ Feature: Booking Sort
     Then I should see the bookings in ascending order of Suburb
     When I click on table header 'Suburb'
     Then I should see the bookings in descending order of Suburb
+
+  @runThis
+  Scenario: Given 1 verified Booking Officer, 1 verified Interpreter, I should be able to sort by interpreter names
+    Given One booking has interpreter first name as 'Dragana'
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    When I am on the bookings page
+    Then I will be shown with bookings
+    When I click on table header 'Interpreter'
+    Then I should see the bookings in ascending order of Interpreter
+    When I click on table header 'Interpreter'
+    Then I should see the bookings in descending order of Interpreter

@@ -306,7 +306,10 @@ export class BookingManagementPage extends PageObject {
     }
     compareByText = (firstEl, lastEl, isAscending) => {
         return firstEl.getText().then((firstRowText) => {
+            // zzzz > any other text
+            firstRowText = firstRowText === 'To be filled' ? 'zzzz' : firstRowText;
             return lastEl.getText().then((lastRowText) => {
+                lastRowText = lastRowText === 'To be filled' ? 'zzzz' : lastRowText;
                 return this.comparisonExpectation(firstRowText, lastRowText, isAscending);
             });
         });
@@ -355,9 +358,10 @@ export class BookingManagementPage extends PageObject {
             Job: 'compareByText',
             Status: 'compareByIconClass', // red > green
             State: 'compareByText', // In Progress < Requested
-            Date: 'compareByDate',
+            Date: 'compareByDate', // comparing only start times
             Client: 'compareByText', // John > Charles
-            Suburb: 'compareByText' // Terabithia > Parkville
+            Suburb: 'compareByText', // Terabithia > Parkville
+            Interpreter: 'compareByText' // Dragana < 'To be filled' - default text
         }[tableHeader];
 
         return this[compareMethod].call(BookingManagementPage, firstEl, lastEl, isAscending);
