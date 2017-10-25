@@ -27,6 +27,7 @@ export class Booking {
     public client: OrganisationalRepresentative = new OrganisationalRepresentative({});
     public documents_attributes = [];
     public versions: Array<BookingVersion> = [];
+    public preference_allocations_attributes = [];
     // Is it a limitation on interpreters invitation.
 
     constructor() {
@@ -152,6 +153,9 @@ export class Booking {
         if (Boolean(data.documents_attributes)) {
             this.documents_attributes = data.documents_attributes;
         }
+        if (Boolean(data.preference_allocations_attributes)) {
+            this.preference_allocations_attributes = data.preference_allocations_attributes;
+        }
         this.versions = [];
         if (Boolean(data.versions_attributes)) {
             for (let version_attributr of data.versions_attributes) {
@@ -216,7 +220,8 @@ export class Booking {
             created_by: {
                 organisation: this.client.organisation_name
             },
-            documents_attributes: this.documents_attributes
+            documents_attributes: this.documents_attributes,
+            preference_allocations_attributes:this.preference_allocations_attributes
         });
         return o;
     }
