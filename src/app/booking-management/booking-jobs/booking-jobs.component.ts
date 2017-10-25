@@ -210,16 +210,6 @@ export class BookingJobsComponent implements OnDestroy {
                 });
     }
 
-    isInvited(id: number) {
-        let res = this.selectedBookingModel.interpreters.filter(i => i.id === id);
-        return (res.length > 0);
-    }
-
-    isNotConfirmed(id: number) {
-        let res = this.selectedBookingModel.interpreters.filter(i => i.id === id && i.state !== 'Accepted');
-        return (res.length > 0);
-    }
-
     inviteInterpreters() {
         this.unAssignPressed = this.reAssignPressed = false;
         this.invitePressed = this.selectedInterpreterIDs.length > 0;
@@ -293,7 +283,6 @@ export class BookingJobsComponent implements OnDestroy {
                     id: _id
                 }));
             }
-            // this.selectedBookingModel.interpreters = selectedInt;
             this.selectedInterpreterIDs = [];
             this.invitePressed = false;
             this.sendInvite(selectedInt);
@@ -307,7 +296,6 @@ export class BookingJobsComponent implements OnDestroy {
                     id: _id
                 }));
             }
-            // this.selectedBookingModel.interpreters = selectedInt;
             this.selectedInterpreterIDs = [];
             this.reAssignPressed = false;
             this.sendReAssign(selectedInt);

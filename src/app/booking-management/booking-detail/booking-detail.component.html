@@ -205,7 +205,8 @@
                         <div class="form-field">
                             <label>Do you want to use your standard special instructions? <span mdTooltip="Tooltip!"><i
                                     class="inline-icon-tip"></i></span></label>
-                            <md-radio-group name="rdSpecialInstruction" [(ngModel)]="rdgSpecialInstruction" (change)='onSpecialInstruction()'>
+                            <md-radio-group name="rdSpecialInstruction" [(ngModel)]="rdgSpecialInstruction"
+                                            (change)='onSpecialInstruction()'>
                                 <md-radio-button value=true>YES</md-radio-button>
                                 <md-radio-button value=false>NO</md-radio-button>
                             </md-radio-group>
@@ -216,7 +217,8 @@
                             <div class="form-field">
                                 <label>Special instructions <span mdTooltip="Enter Special instructions!"><i
                                         class="inline-icon-tip"></i></span></label>
-                                <input [(ngModel)]="bookingModel.special_instructions"  name= 'txtSpecialInstruction' type='text' placeholder="Enter Special instructions">
+                                <input [(ngModel)]="bookingModel.special_instructions" name='txtSpecialInstruction'
+                                       type='text' placeholder="Enter Special instructions">
 
                             </div>
                         </div>
@@ -296,11 +298,13 @@
                                     class="inline-icon-tip"></i></span></label>
                             <input [disabled]='currentUserIsContact' type="tel"
                                    placeholder="Enter Contact Mobile Number"
-                                   [(ngModel)]="bookingModel.primaryContact.mobile_number" name="mobile" [rangeLength]="[2,20]"
+                                   [(ngModel)]="bookingModel.primaryContact.mobile_number" name="mobile"
+                                   [rangeLength]="[2,20]"
                                    #mobile="ngModel">
                             <span *ngIf="mobile.touched && !mobile.errors?.required && !mobile.errors?.rangeLength;"
                                   class="inline-icon inline-icon-valid valid"></span>
-                            <span *ngIf="mobile.touched && mobile.errors?.required || mobile.errors?.rangeLength;" class="inline-icon error">
+                            <span *ngIf="mobile.touched && mobile.errors?.required || mobile.errors?.rangeLength;"
+                                  class="inline-icon error">
               <span>Minimum 6 digits required.</span>!
             </span>
                         </div>
@@ -342,7 +346,7 @@
                             <input type="email" class="inline-icon-user-email" id="deaf_person_email"
                                    placeholder="Enter deaf person email address"
                                    [(ngModel)]="bookingModel.deaf_person.email" name="deaf_person_email"
-                                   #deaf_person_email="ngModel" email >
+                                   #deaf_person_email="ngModel" email>
 
                         </div>
                     </div>
@@ -404,11 +408,12 @@
                     <div class="form-field">
                         <label>Do you want to use standard invoice details? * <span mdTooltip="Tooltip!"><i
                                 class="inline-icon-tip"></i></span></label>
-                        <md-radio-group name="rdStandardInvoice"[(ngModel)]="standardInvoice" (change)='onStandardInvoice()'>
+                        <md-radio-group name="rdStandardInvoice" [(ngModel)]="standardInvoice"
+                                        (change)='onStandardInvoice()'>
                             <md-radio-button value=true>YES</md-radio-button>
                             <md-radio-button value=false>NO</md-radio-button>
                         </md-radio-group>
-                               
+
                     </div>
                 </div>
                 <div class="row-wrapper">
@@ -418,7 +423,7 @@
                                     class="inline-icon-tip"></i></span></label>
                             <input type="tel" placeholder="Enter External Reference Number"
                                    [(ngModel)]="bookingModel.client.organisation_billing_account.external_reference"
-                                   name="ext_ref_num"  digits>
+                                   name="ext_ref_num" digits>
 
                         </div>
                     </div>
@@ -464,7 +469,8 @@
                 <section id="job-documents">
                     <section>
                         <section *ngFor="let item of uploader.queue; let i = index ">
-                            <button name="{{'btnRemoveDocument_' + (i + 1)}}" (click)="removeDocuments(item)" type="button"><i class="icon-close"></i></button>
+                            <button name="{{'btnRemoveDocument_' + (i + 1)}}" (click)="removeDocuments(item)"
+                                    type="button"><i class="icon-close"></i></button>
                             <i class="icon-attachment"></i>
                             <span>{{ item?.file?.name }}</span>
                         </section>
@@ -498,7 +504,13 @@
                     </section>
                 </div>
             </div>
-            <app-termandcondition  (termAndConditionStatusChange)="tocChanged($event)" [termsAndConditionAccepted]="termsAndConditionAccepted" ></app-termandcondition>
+
+            <div class="row">
+                <section>
+                    <app-termandcondition (termAndConditionStatusChange)="tocChanged($event)"
+                                          [termsAndConditionAccepted]="termsAndConditionAccepted"></app-termandcondition>
+                </section>
+            </div>
 
             <div class="actions">
                 <button name="btnCreateBooking" (click)="onCreateBooking(booking_form, uploader);">SAVE</button>

@@ -12,6 +12,7 @@ import {NavigationExtras} from '@angular/router';
 import {Address} from '../shared/model/venue.entity';
 import {Contact} from '../shared/model/contact.entity';
 import {FormGroup} from '@angular/forms';
+import {SpinnerService} from '../spinner/spinner.service';
 
 @Component({
     selector: 'app-register',
@@ -28,6 +29,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     termsAndConditionAccepted = false;
     constructor(public userService: UserService,
                 public notificationServiceBus: NotificationServiceBus,
+                public spinnerService: SpinnerService,
                 public routes: ActivatedRoute, public router: Router) {
     }
 
@@ -82,15 +84,17 @@ export class RegisterComponent implements OnInit, OnDestroy {
             launchNotification(true, 'Kindly fill all the required (*) fields');
             return;
         }
+        this.spinnerService.requestInProcess(true);
 
         this.userService.createUser(this.model)
             .subscribe((res: any) => {
                 this.model.id = res.data.id;
                 this.router.navigate(['/']);
+                this.spinnerService.requestInProcess(false);
                 this.notificationServiceBus.launchNotification(false, this.successMessage);
 
-
             }, errors => {
+                this.spinnerService.requestInProcess(false);
                 let e = errors.json();
                 this.notificationServiceBus.launchNotification(true, errors.statusText + ' '
                     + JSON.stringify(e.errors).replace(/]|[[]/g, '').replace(/({|})/g, ''));

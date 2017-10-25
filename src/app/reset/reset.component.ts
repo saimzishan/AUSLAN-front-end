@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NotificationServiceBus } from '../notification/notification.service';
 import { UserService } from '../api/user.service';
+import {SpinnerService} from '../spinner/spinner.service';
 
 @Component({
   selector: 'app-reset',
@@ -9,21 +10,24 @@ import { UserService } from '../api/user.service';
 })
 export class ResetComponent {
   public emailAddress = '';
-  constructor(public service: UserService, public notificationServiceBus: NotificationServiceBus) { }
+  constructor(public service: UserService,
+              public spinnerService: SpinnerService, public notificationServiceBus: NotificationServiceBus) { }
 
   resetUser() {
-    this.service.resetUser(this.emailAddress)
+      this.spinnerService.requestInProcess(true);
+      this.service.resetUser(this.emailAddress)
       .subscribe((res: any) => {
         if (res.status === 200) {
-          let msg = 'The password has been reset for ' + this.emailAddress;
+            this.spinnerService.requestInProcess(false);
+
+            let msg = 'The password has been reset for ' + this.emailAddress;
           this.notificationServiceBus.launchNotification(false, msg);
         }
       },
       err => {
-        console.log(err);
+          this.spinnerService.requestInProcess(true);
         this.notificationServiceBus.launchNotification(true, 'The email address is not registered with us.');
-      },
-      () => { });
+      });
   }
 
 }

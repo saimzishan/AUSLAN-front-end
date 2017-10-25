@@ -1,5 +1,4 @@
 /* tslint:disable:no-unused-variable */
-/* tslint:disable:no-unused-variable */
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { AuthComponent } from '../auth/auth.component';
@@ -36,6 +35,7 @@ import {MockUserService} from '../shared/test/Mock';
 import { RouterTestingModule } from '@angular/router/testing';
 import {NotificationServiceBus} from '../notification/notification.service';
 import {SimpleNotificationsModule} from 'angular2-notifications';
+import {SpinnerService} from '../spinner/spinner.service';
 
 describe('ResetComponent', () => {
   let component: ResetComponent;
@@ -45,7 +45,8 @@ describe('ResetComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ResetComponent, NotificationComponent],
       imports: [FormsModule, RouterTestingModule, CustomFormsModule, SimpleNotificationsModule.forRoot()],
-      providers: [NotificationServiceBus, { provide: UserService, useClass: MockUserService}, { provide: AuthHttp, useClass: MockBackend} ]
+      providers: [NotificationServiceBus, SpinnerService,
+          { provide: UserService, useClass: MockUserService}, { provide: AuthHttp, useClass: MockBackend} ]
     })
     .compileComponents();
   }));

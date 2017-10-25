@@ -360,7 +360,7 @@ export class Administrator extends User {
 * "location_pref":"QLD","comm_pref":"SMS and Email","role":6,"first_name":"Nauman","last_name":"Interpreter",
 * "password":"Abcd#1234","confirm_password":"Abcd#1234","email":"nauman+int@curvetomorrow.com.au","phone":"0490398821",
 * "mobile":"xxxx xxx xxx","naati_id":"NA-234","naati_validity_start_date":"2017-06-30",
-* "naati_validity_end_date":"2017-07-31","after_hours_phone":"0490221122",
+* "naati_validity_end_date":"2017-07-31",
 * "date_of_birth":"2017-08-31"}}
  */
 export class Interpreter extends User {
@@ -370,7 +370,6 @@ export class Interpreter extends User {
     public naati_validity_start_date: string;
     public naati_validity_end_date: string;
     public business_hours_phone: string;
-    public after_hours_phone: string;
     public date_of_birth: string;
     public address_attributes: Address = new Address();
     public long_term_availability: interpreter_avalability;
