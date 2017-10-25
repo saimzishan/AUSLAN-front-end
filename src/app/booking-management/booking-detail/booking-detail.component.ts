@@ -123,7 +123,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         if (this.showPreffered === 'false') {
             this.showProfilePreffered = 'false';
             this.bookingModel.preference_allocations_attributes = this.bookingModel.preference_allocations_attributes.filter(a=> a.preference !='preferred');
-            console.log("after selecting no "+JSON.stringify(this.bookingModel.preference_allocations_attributes));
         }
 
     }
@@ -131,17 +130,14 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     public onProfilePreferredSelectionChange() {
         if (this.showProfilePreffered === 'true')
             this.filterUserPreference(this.userModel.prefferedInterpreters);
-        else {
+        else
             this.bookingModel.preference_allocations_attributes = this.bookingModel.preference_allocations_attributes.filter(a => a.preference != 'preferred');
-            console.log("after selecting no " + JSON.stringify(this.bookingModel.preference_allocations_attributes));
-        }
     }
 
     public onBlockedSelectionChange() {
         if (this.showBlocked === 'false') {
             this.showProfileBlocked = 'false';
             this.bookingModel.preference_allocations_attributes = this.bookingModel.preference_allocations_attributes.filter(a=> a.preference !='blocked');
-            console.log("after selecting no "+JSON.stringify(this.bookingModel.preference_allocations_attributes));
         }
     }
 
@@ -149,10 +145,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         if(this.showProfileBlocked === 'true')
             this.filterUserPreference(this.userModel.prefferedInterpreters);
         else
-           { 
-               this.bookingModel.preference_allocations_attributes = this.bookingModel.preference_allocations_attributes.filter(a=> a.preference !='blocked');
-               console.log("after selecting no "+JSON.stringify(this.bookingModel.preference_allocations_attributes));
-            }
+             this.bookingModel.preference_allocations_attributes = this.bookingModel.preference_allocations_attributes.filter(a=> a.preference !='blocked');
     }
 
     isNotIndClient() {
@@ -246,7 +239,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         this.spinnerService.requestInProcess(true);
         this.bookingModel.state = BOOKING_STATE.Requested; // res.data.state;
         this.bookingModel.clean(this.bookingModel.toJSON());
-        console.log("final booking model "+JSON.stringify(this.bookingModel));
         this.bookingService.createBooking(this.bookingModel)
             .subscribe((res: any) => {
                     if (res.status === 201 && res.data.id && 0 < res.data.id) {
@@ -313,11 +305,9 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
 
                                  this._sharedPreferedAllocationService.interpreterStream$.subscribe(
                                     data => { 
-                                        console.log("subscribed data "+JSON.stringify(data));
                                        this.filterUserPreference(data);
                                     });
 
-     console.log("user model prefference "+ JSON.stringify(this.userModel.prefferedInterpreters));
     }
 
     filterUserPreference(interpreters) {
@@ -334,8 +324,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 }
             }
 
-            if(this.showProfileBlocked === 'true')
-            {
+            if (this.showProfileBlocked === 'true') {
                 if (i.preference === 'blocked' && !i.hasOwnProperty("_destroy")) {
                     this.bookingModel.preference_allocations_attributes.push({ "interpreter_id": i.interpreter_id, "preference": i.preference });
 
@@ -344,8 +333,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                     this.userModel.prefferedInterpreters = this.userModel.prefferedInterpreters.filter(itm => itm.interpreter_id !== i.interpreter_id);
                 }
             }
-           
+
         });
-        console.log("after filter prefference "+ JSON.stringify(this.bookingModel.preference_allocations_attributes));
     }
 }
