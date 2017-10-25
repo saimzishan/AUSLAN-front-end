@@ -156,7 +156,6 @@ export class OrganisationalRepresentative extends Organisational {
                         'primary_contact_email': this.organisation_primary_contact.email,
                         'primary_contact_phone_number': this.organisation_primary_contact.phone_number,
                         'account_number': 'ABCD-1234',
-                        'preferred_billing_method_email': this.organisation_billing_account.preferred_billing_method_email,
                         'external_reference': this.organisation_billing_account.external_reference,
                         'address_attributes': this.organisation_billing_account.organisation_billing_address
                     }
@@ -209,8 +208,6 @@ export class OrganisationalRepresentative extends Organisational {
         this.organisation_primary_contact.last_name = obj.organisation.billing_account.primary_contact_last_name || '';
         this.organisation_primary_contact.email = obj.organisation.billing_account.primary_contact_email || '';
         this.organisation_primary_contact.phone_number = obj.organisation.billing_account.primary_contact_phone_number || '';
-        this.organisation_billing_account.preferred_billing_method_email =
-            obj.organisation.billing_account.preferred_billing_method_email;
         this.organisation_billing_account.organisation_billing_address = obj.organisation.billing_account.address_attributes;
         this.organisation_billing_account.external_reference = obj.organisation.billing_account.external_reference;
         this.organisation_billing_account.id = obj.organisation.billing_account.id;
@@ -274,7 +271,7 @@ export class IndividualClient extends User {
     * "suburb":"CRAIGIEBURN","state":"VIC","post_code":"3064"},
     * "billing_account_attributes":{"id":2,"account_number":"ABCD-1234",
     * "primary_contact_first_name":"Thijs","primary_contact_last_name":"Song",
-    * "preferred_billing_method_email":true,"external_reference":"Curve and Sanj",
+    * "external_reference":"Curve and Sanj",
     * "address_attributes":{"id":5,"unit_number":"22","street_number":"62",
     * "street_name":"DIANNE AVE","suburb":"CRAIGIEBURN","state":"VIC","post_code":"3064"}}}
     * */
@@ -300,9 +297,8 @@ export class IndividualClient extends User {
                 'primary_contact_last_name': this.individual_client_primary_contact.last_name,
                 'primary_contact_email': this.individual_client_primary_contact.email,
                 'primary_contact_phone_number': this.individual_client_primary_contact.phone_number,
-                'account_number': 'ABCD-1234',
-                'preferred_billing_method_email': this.individual_client_billing_account.preferred_billing_method_email,
-                'external_reference': 'Curve and Sanji',
+                'account_number': '',
+                'external_reference': '',
                 'address_attributes': this.individual_client_billing_account.organisation_billing_address
             }
         };
@@ -341,8 +337,6 @@ export class IndividualClient extends User {
         this.individual_client_primary_contact.phone_number = obj.billing_account_attributes.primary_contact_phone_number;
         this.individual_client_billing_account.organisation_billing_address = obj.billing_account_attributes.address_attributes;
         this.individual_client_billing_account.id = obj.billing_account_attributes.id;
-        this.individual_client_billing_account.preferred_billing_method_email =
-            obj.billing_account_attributes.preferred_billing_method_email;
     }
 }
 

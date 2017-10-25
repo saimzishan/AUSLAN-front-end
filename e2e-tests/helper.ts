@@ -115,7 +115,6 @@ export class User {
                 billing_account_attributes_fields['primary_contact_email'] = 'mohjay_client@auslan.com.au';
                 billing_account_attributes_fields['primary_contact_phone_number'] = ' 0490000001';
                 billing_account_attributes_fields['account_number'] = (12345).toString();
-                billing_account_attributes_fields['preferred_billing_method_email'] = true;
                 billing_account_attributes_fields['address_attributes'] = address_attributes_fields;
                 data_to_sent['address_attributes'] = address_attributes_fields;
                 data_to_sent['billing_account_attributes'] = billing_account_attributes_fields;
@@ -600,7 +599,6 @@ export class Heroku {
                 'primary_contact_email': 'a@a.com',
                 'primary_contact_phone_number': '0482 232 232',
                 'account_number': 'ABCD-1234',
-                'preferred_billing_method_email': false,
                 'external_reference': '3421',
                 'address_attributes': {
                     'unit_number': '02',

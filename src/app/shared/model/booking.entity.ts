@@ -202,7 +202,6 @@ export class Booking {
                 primary_contact_email: this.client.organisation_primary_contact.email,
                 primary_contact_phone_number: this.client.organisation_primary_contact.phone_number,
                 account_number: 'ABCD-1234',
-                preferred_billing_method_email: false,
                 external_reference: this.client.organisation_billing_account.external_reference,
                 address_attributes: this.client.organisation_billing_account.organisation_billing_address
             },

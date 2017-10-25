@@ -124,6 +124,9 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     return GLOBAL.currentUser instanceof OrganisationalRepresentative ||
         GLOBAL.currentUser instanceof IndividualClient;
     }
+    isUserOrgRep() {
+        return GLOBAL.currentUser instanceof OrganisationalRepresentative;
+    }
     onSpecialInstruction () {
         this.bookingModel.special_instructions =
             this.rdgSpecialInstruction === 'true' ? (<OrganisationalRepresentative>GLOBAL.currentUser).special_instructions : '';
