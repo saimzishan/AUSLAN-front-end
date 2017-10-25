@@ -38,6 +38,7 @@ export class InterpreterPopupComponent implements OnInit {
     isInterpreterSelectable(interpreter_id) {
         this.checkedInterpreter =
             this.isAlreadyAdded(interpreter_id) ? -1 : interpreter_id;
+            this.checkForNotification(this.isAlreadyAdded(interpreter_id),interpreter_id);
     }
 
     /* Hmm need a class as an api wrapper to throw in all such method, its anti-DRY*/
@@ -74,6 +75,18 @@ export class InterpreterPopupComponent implements OnInit {
         selectedInterpreter.preference = this.isPreffered ? 'preferred' : 'blocked';
         this.selectedInterpreters.push(selectedInterpreter);
         this.closeDialog();
+    }
+
+    checkForNotification(showError, interpreter_id) {
+        if (showError) {
+            let tmp = this.selectedInterpreters.filter((i) => i.interpreter_id === interpreter_id)[0]
+            if (tmp.preference === 'preferred')
+                this.notificationServiceBus.launchNotification(true, 'This interpreter is already selected as a preffered interpreter. Please remove first.');
+            else
+                this.notificationServiceBus.launchNotification(true, 'This interpreter is already selected as a blocked interpreter. Please remove first.');
+
+        }
+
     }
 
 }
