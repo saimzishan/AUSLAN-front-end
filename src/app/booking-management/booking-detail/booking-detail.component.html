@@ -479,7 +479,7 @@
                 <div class="medium-12 columns">
                     <div class="form-field">
                         <label>Do you have preferred interpreters for this booking? </label>
-                        <md-radio-group name="rdPreferredInterpreters"
+                        <md-radio-group name="rdPreferredInterpreters" (change)='onPreferredSelectionChange()'
                                         [(ngModel)]="showPreffered">
                             <md-radio-button value=true>YES</md-radio-button>
                             <md-radio-button value=false>NO</md-radio-button>
@@ -501,8 +501,10 @@
                     </div>
             </div>
 
-             <app-interpreter-box *ngIf="showProfilePreffered === 'true'" [isPreffered]="true" [selectedInterpreters]="userModel.prefferedInterpreters">
+             <app-interpreter-box *ngIf="showProfilePreffered === 'true'" [isPreffered]="true"
+                                  [isHidden]="true" [selectedInterpreters]="userModel.prefferedInterpreters">
              </app-interpreter-box> 
+
 
             <div [hidden]='true'>
                 <div class="separator"></div>

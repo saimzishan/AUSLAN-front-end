@@ -18,6 +18,8 @@ export class InterpreterBoxComponent implements OnInit {
     private dialogSub: any;
     dialogRef: MdDialogRef<any>;
     title = '';
+    @Input() isHidden = 'false';
+
     constructor(public dialog: MdDialog,
                 public viewContainerRef: ViewContainerRef,
                 private _sharedPreferedAllocationService: PreferedAllocationService) {

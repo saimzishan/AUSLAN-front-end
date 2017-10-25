@@ -1,5 +1,5 @@
-<div class="separator"></div>
-<h4 class="text-center">{{title}}</h4>
+<div class="separator" *ngIf="isHidden === 'false'"></div>
+<h4 class="text-center" *ngIf="isHidden ==='false'">{{title}}</h4>
 <section id="page-booking">
     <main>
         <form name="{{isPreffered ? 'interpreter_block_prefered' : 'interpreter_block_blocked'}}">

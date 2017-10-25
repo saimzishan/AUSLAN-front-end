@@ -117,6 +117,14 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.currentUserIsContact === 'true' ? GLOBAL.currentUser.mobile : '';
     }
 
+    public onPreferredSelectionChange() {
+        if (this.showPreffered === 'false') {
+            this.showProfilePreffered = 'false';
+            this.bookingModel.preference_allocations_attributes = [];
+        }
+
+    }
+
     public onProfilePreferredSelectionChange() { 
         if(this.showProfilePreffered === 'true')
             this.filterUserPreference(this.userModel.prefferedInterpreters);
@@ -217,6 +225,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         this.spinnerService.requestInProcess(true);
         this.bookingModel.state = BOOKING_STATE.Requested; // res.data.state;
         this.bookingModel.clean(this.bookingModel.toJSON());
+        console.log("final booking model "+JSON.stringify(this.bookingModel));
         this.bookingService.createBooking(this.bookingModel)
             .subscribe((res: any) => {
                     if (res.status === 201 && res.data.id && 0 < res.data.id) {
@@ -283,15 +292,35 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
 
                                  this._sharedPreferedAllocationService.interpreterStream$.subscribe(
                                     data => { 
+                                        console.log("subscribed data "+JSON.stringify(data));
                                        this.filterUserPreference(data);
                                     });
+
+     console.log("user model prefference "+ JSON.stringify(this.userModel.prefferedInterpreters));
     }
 
-    filterUserPreference(interpreters){
+    filterUserPreference(interpreters) {
 
-        this.bookingModel.preference_allocations_attributes=[];
+        this.bookingModel.preference_allocations_attributes = [];
+     //   this.userModel.prefferedInterpreters = [];
         interpreters.forEach(i => {
-            this.bookingModel.preference_allocations_attributes.push({"interpreter_id":i.interpreter_id,"preference":i.preference});
+            if (this.showProfilePreffered === 'true')
+            {
+                if (i.preference === 'preferred' && !i.hasOwnProperty("_destroy")) {
+                    this.bookingModel.preference_allocations_attributes.push({ "interpreter_id": i.interpreter_id, "preference": i.preference });
+
+                }
+                else if (i.hasOwnProperty("_destroy")) {
+                    this.userModel.prefferedInterpreters = this.userModel.prefferedInterpreters.filter(itm => itm.interpreter_id !== i.interpreter_id);
+                }
+            }
+
+           /* if(this.showProfilePreffered === 'true')
+                {
+
+                }
+           */
         });
+        console.log("after filter prefference "+ JSON.stringify(this.bookingModel.preference_allocations_attributes));
     }
 }
