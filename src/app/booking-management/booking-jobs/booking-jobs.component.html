@@ -87,35 +87,6 @@
 					</tr>
 				</tbody>
 			</table>
-
-			<!-- div class="manage-interpreters-wrapper">
-					<section class="manage-interpreters">
-						<section>
-							<div>
-								<b>Interpreter 1:</b> <span>Tim Johnson</span>
-								<button>Unassign</button>
-							</div>
-							<div>
-								<b>Interpreter 2:</b> <span>Josef Gray</span>
-								<button>Unassign</button>
-							</div>
-						</section>
-					</section>
-				</div>
-
-				<div class="manage-interpreters-wrapper">
-					<section class="manage-interpreters">
-						<section>
-							<div>
-								<b>Interpreter 1:</b> <span>To be filled</span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<b>Interpreter 2:</b> <span>To be filled</span>
-							</div>
-						</section>
-					</section>
-				</div>
-
-				<div align="center">
-					<button class="button inverse higher">PROCESS TO INVOICE</button>
-				</div -->
 			<ng-container *ngIf="anyInterpreterAccepted()">
 				<div class="manage-interpreters-wrapper">
 					<section class="manage-interpreters">
@@ -125,7 +96,9 @@
 									<b>Interpreter {{i + 1}} :</b>
 									<span *ngIf="interpreter.state === 'Accepted'" class='interpreter-accepted'>{{interpreter.first_name}} {{interpreter.last_name}}</span>
 									<span *ngIf="interpreter.state !== 'Accepted'">To be filled</span>
-									<button name="{{'unassingBtn_' + +(i + 1)}}" (click)="unAssignInterpreters(interpreter.id)" *ngIf="!isCurrentUserInterpreter() && interpreter.state === 'Accepted'">
+									<button name="{{'unassingBtn_' + +(i + 1)}}" (click)="unAssignInterpreters(interpreter.id)" *ngIf="!isCurrentUserInterpreter() &&
+									(false === isActiveState('Unable_to_service') && false === isActiveState('Cancelled')) &&
+									interpreter.state === 'Accepted'">
 										Unassign
 									</button>
 
