@@ -36,9 +36,7 @@
                 </section>
             </div>
             <div class="separator"></div>
-
             <h4 class="text-center">BOOKING DETAILS</h4>
-
             <div class="row small-collapse">
                 <div class="row-wrapper">
                     <div class=" medium-7 columns">
@@ -54,8 +52,6 @@
                         <div class="form-field">
                             <label>END DATE & TIME *</label>
                             <input type='datetime-local' name='dpEventEndTime'
-                                   min="2001-01-01T00:00:00"
-                                   max="2020-12-31T00:00:00"
                                    placeholder="ENDING TIME *" #dpEventEndTime="ngModel"
                                    [(ngModel)]="bookingModel.venue.end_time_iso"
                                    required/>
