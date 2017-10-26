@@ -14,7 +14,7 @@ import {Interpreter} from '../../shared/model/user.entity';
 export class SkillMatrixComponent implements OnInit {
     raw_nature_of_appointment: string;
     appointment_types = Object.keys(BOOKING_NATURE).filter(value => value === BOOKING_NATURE[value]
-    || BOOKING_NATURE[value].startsWith(value)).map(v => BOOKING_NATURE[v]) as string[];
+        || BOOKING_NATURE[value].startsWith(value)).map(v => BOOKING_NATURE[v]) as string[];
     levels = ['1', '2', '3', 'n/a'];
     specific_appointment_types = [];
     doSave = false;
@@ -58,9 +58,11 @@ export class SkillMatrixComponent implements OnInit {
 
     skillChanged(level: string, raw_specific_booking_type: string) {
 
+        this.current_level = level !== this.current_level ? '' : this.current_level;
+
         let assignment = this.userModel.assignments_attributes.filter(a => a.assignment_type_category_name
-        === this.raw_nature_of_appointment
-        && a.assignment_type_name === raw_specific_booking_type);
+            === this.raw_nature_of_appointment
+            && a.assignment_type_name === raw_specific_booking_type);
         if (Boolean(assignment) && assignment.length > 0) {
             assignment[0].level = level === 'n/a' ? 0 : parseInt(level, 10);
             this.doSave = true;
@@ -70,7 +72,7 @@ export class SkillMatrixComponent implements OnInit {
     aokChanged(level: string) {
 
         let assignments = this.userModel.assignments_attributes.filter(a => a.assignment_type_category_name
-        === this.raw_nature_of_appointment);
+            === this.raw_nature_of_appointment);
         if (Boolean(assignments) && assignments.length > 0) {
             for (let ass of assignments) {
                 ass.level = level === 'n/a' ? 0 : parseInt(level, 10);
@@ -82,15 +84,15 @@ export class SkillMatrixComponent implements OnInit {
 
     isAOKChecked(level: string) {
 
-        return         this.current_level === level;
+        return this.current_level === level;
     }
 
     isChecked(level: string, raw_specific_booking_type: string) {
         if (Boolean(this.userModel.assignments_attributes)) {
 
             let assignment = this.userModel.assignments_attributes.filter(a => a.assignment_type_category_name
-            === this.raw_nature_of_appointment
-            && a.assignment_type_name === raw_specific_booking_type);
+                === this.raw_nature_of_appointment
+                && a.assignment_type_name === raw_specific_booking_type);
             return (Boolean(assignment) && assignment.length > 0 ) && (assignment[0].level.toString() === level
                 || (level === 'n/a' && assignment[0].level === 0));
         }

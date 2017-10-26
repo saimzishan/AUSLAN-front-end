@@ -44,9 +44,7 @@
                     <div class=" medium-7 columns">
                         <div class="form-field">
                             <label>START DATE & TIME *</label>
-
                             <input type='datetime-local' (change)="onStartTimeChanged()"
-                                   min="1900-01-01T00:00:00" max="3000-01-01T00:00:00"
                                    name='dpEventDate' placeholder="DATE & Time OF APPOINTMENT *"
                                    [(ngModel)]="bookingModel.venue.start_time_iso" required #dpEventDate="ngModel"/>
                         </div>
@@ -55,9 +53,9 @@
                     <div class="medium-5 columns">
                         <div class="form-field">
                             <label>END DATE & TIME *</label>
-
                             <input type='datetime-local' name='dpEventEndTime'
-                                   min="1900-01-01T00:00:00" max="3000-01-01T00:00:00"
+                                   min="2001-01-01T00:00:00"
+                                   max="2020-12-31T00:00:00"
                                    placeholder="ENDING TIME *" #dpEventEndTime="ngModel"
                                    [(ngModel)]="bookingModel.venue.end_time_iso"
                                    required/>
@@ -248,8 +246,7 @@
                         <div class="form-field">
                             <label>CONTACT FIRST NAME * <span mdTooltip="Enter Contact First Name"><i
                                     class="inline-icon-tip"></i></span></label>
-                            <input [disabled]='currentUserIsContact'
-                                   type="text" placeholder="Enter Contact First Name"
+                            <input type="text" placeholder="Enter Contact First Name"
                                    [(ngModel)]="bookingModel.primaryContact.first_name"
                                    name="contact_first_name"
                                    #contact_first_name="ngModel" [rangeLength]="[2,20]" required>
@@ -265,7 +262,7 @@
                         <div class="form-field">
                             <label>CONTACT LAST NAME <span mdTooltip="Enter Contact Last Name"><i
                                     class="inline-icon-tip"></i></span></label>
-                            <input [disabled]='currentUserIsContact' type="text" placeholder="Enter Contact Last Name"
+                            <input type="text" placeholder="Enter Contact Last Name"
                                    [(ngModel)]="bookingModel.primaryContact.last_name" name="contact_last_name"
                                    #contact_last_name="ngModel" [rangeLength]="[2,20]" required>
                             <span *ngIf="contact_last_name.touched && !contact_last_name.errors?.required && !contact_last_name.errors?.rangeLength;"
@@ -280,8 +277,7 @@
                         <div class="form-field">
                             <label>CONTACT EMAIL * <span mdTooltip="Enter contact email address"><i
                                     class="inline-icon-tip"></i></span></label>
-                            <input [disabled]='currentUserIsContact'
-                                   type="email" class="inline-icon-user-email" id="email"
+                            <input type="email" class="inline-icon-user-email" id="email"
                                    placeholder="Enter contact email address"
                                    [(ngModel)]="bookingModel.primaryContact.email" name="email"
                                    #email="ngModel" email required>
@@ -296,9 +292,9 @@
                         <div class="form-field">
                             <label>CONTACT MOBILE <span mdTooltip="Enter Contact Mobile Number!"><i
                                     class="inline-icon-tip"></i></span></label>
-                            <input [disabled]='currentUserIsContact' type="tel"
+                            <input type="tel"
                                    placeholder="Enter Contact Mobile Number"
-                                   [(ngModel)]="bookingModel.primaryContact.mobile_number" name="mobile"
+                                   [(ngModel)]="bookingModel.primaryContact .mobile_number" name="mobile"
                                    [rangeLength]="[2,20]"
                                    #mobile="ngModel">
                             <span *ngIf="mobile.touched && !mobile.errors?.required && !mobile.errors?.rangeLength;"
@@ -423,7 +419,7 @@
                                     class="inline-icon-tip"></i></span></label>
                             <input type="tel" placeholder="Enter External Reference Number"
                                    [(ngModel)]="bookingModel.client.organisation_billing_account.external_reference"
-                                   name="ext_ref_num" digits>
+                                   name="ext_ref_num">
 
                         </div>
                     </div>

@@ -130,6 +130,7 @@ export class OrganisationalRepresentative extends Organisational {
             'last_name': this.last_name,
             'type': this.type,
             'email': this.email,
+            'avatar': this.avatar,
             'password': this.password,
             'business_hours_phone': this.phone,
             'mobile': this.mobile,
@@ -281,6 +282,7 @@ export class IndividualClient extends User {
             'type': this.type, 'send_email_on_receipt_of_request': this.email_receipt,
             'email_confirmation_on_interpreter_allocation': this.email_confirmation,
             'special_instructions': this.special_instructions,
+            'avatar': this.avatar,
             'discovery_of_auslan': this.reffered_by === 'OTHER' ?
                 'O:' + this.reffered_other : this.reffered_by,
             'mobile': this.mobile, 'ndis_id': this.ndis_id, 'ndis_budget_limit': this.ndis_budget_limit,
