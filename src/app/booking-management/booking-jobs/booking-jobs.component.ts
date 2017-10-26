@@ -18,14 +18,13 @@ import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
 import {PrettyIDPipe} from '../../shared/pipe/pretty-id.pipe';
 import {GLOBAL} from '../../shared/global';
 
-
 @Component({
     selector: 'app-booking-jobs',
     templateUrl: './booking-jobs.component.html',
     styleUrls: ['./booking-jobs.component.css']
 })
 
-export class BookingJobsComponent implements OnDestroy {
+export class BookingJobsComponent implements OnInit,OnDestroy {
     selectedBookingModel: Booking = new Booking();
     invitePressed = false;
     unAssignPressed = false;
@@ -38,6 +37,8 @@ export class BookingJobsComponent implements OnDestroy {
     private dialogSub: any;
     dialogRef: MdDialogRef<any>;
     checkList = {};
+    private headerSubscription;
+
     constructor(public dialog: MdDialog,
                 public viewContainerRef: ViewContainerRef, public spinnerService: SpinnerService,
                 public notificationServiceBus: NotificationServiceBus,
@@ -48,9 +49,34 @@ export class BookingJobsComponent implements OnDestroy {
         this.sub = this.route.params.subscribe(params => {
             let param_id = params['id'] || '';
             if (Boolean(param_id) && parseInt(param_id, 10) > 0) {
-                this.fetchBookingInterpreters(param_id);
+                this.fetchBookingInterpreters(param_id); 
             }
         });
+
+    }
+
+    ngOnInit() {
+
+        this.headerSubscription = this.bookingService.notifyObservable$.subscribe((res) => { 
+                  this.callRelatedFunctions(res); 
+        });
+    }
+
+    callRelatedFunctions(res) {
+
+        if (res.hasOwnProperty('option')) {
+
+            if (res.option === 'showDialogBox')
+                this.showDialogBox(res.value);
+            else if (res.option === 'editBooking')
+                this.editBooking();
+            else if (res.option === 'duplicateBooking')
+                this.duplicateBooking();
+            else if (res.option === 'saveChanges')
+                this.saveChanges();
+
+        }
+
     }
 
     counter(length) {
@@ -68,7 +94,7 @@ export class BookingJobsComponent implements OnDestroy {
     }
 
     ngOnDestroy() {
-        return this.sub && this.sub.unsubscribe()
+        return this.sub && this.sub.unsubscribe() && this.headerSubscription && this.headerSubscription.unsubscribe()
             && this.dialogSub && this.dialogSub.unsubscribe();
     }
 
@@ -158,6 +184,16 @@ export class BookingJobsComponent implements OnDestroy {
         this.router.navigate(['/booking-management', 'create-booking'], navigationExtras);
     }
 
+    editBooking() {
+        
+        let navigationExtras: NavigationExtras = {
+            queryParams: {bookingModel: JSON.stringify(this.selectedBookingModel),
+                          shouldEdit: "edit" , assignedInterpreter: this.selectedBookingModel.interpreters.filter( i => i.state === 'Accepted').length
+            }
+        }; 
+        this.router.navigate(['/booking-management', 'edit-booking'], navigationExtras);
+    }
+
     onChange($event, user, ind) {
         let index = this.selectedInterpreterIDs.indexOf(user.id);
         if (index < 0) {
@@ -194,6 +230,7 @@ export class BookingJobsComponent implements OnDestroy {
                     if (res.status === 200) {
                         let data = res.data;
                         this.selectedBookingModel.fromJSON(data);
+                      
                         this.selectedBookingModel.interpreters.sort((i, j) =>
                             i.state === 'Accepted' ? -1 : j.state === 'Accepted' ? 1 : 0
                         );

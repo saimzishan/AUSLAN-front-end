@@ -4,6 +4,7 @@ import {Booking} from '../shared/model/booking.entity';
 import {GLOBAL} from '../shared/global';
 import { Observable } from 'rxjs/Observable';
 import { ApiService } from './api.service';
+import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
@@ -16,6 +17,8 @@ import 'rxjs/add/observable/throw';
 export class BookingService extends ApiService {
     public token: string;
     bookings: Booking[] = [];
+    notify = new Subject<any>();
+    notifyObservable$ = this.notify.asObservable();
     /*
       While this method seems to have no significance, Most of the method below would fail, if DI fails.
       Also when running test cases, mocking backend needs to ensure the HTTP is in provider and injector
@@ -102,13 +105,13 @@ export class BookingService extends ApiService {
     /*
       The Api should be able to update already created bookings.
     */
-    updateBooking(booking: Booking): Observable<Object> {
-
+    updateBooking(booking_id: string, booking: Booking): Observable<Object> {
+ 
         let headers = new Headers({'Accept': 'application/json',
             'Content-Type': 'application/json'});
         let options = new RequestOptions({ headers: headers });
         let obj = { 'booking': booking.toJSON() };
-        return this.http.patch(GLOBAL.BOOKING_API + '/' + booking.id, JSON.stringify(obj), options)
+        return this.http.patch(GLOBAL.BOOKING_API + '/' + booking_id, JSON.stringify(obj), options)
             .catch((err) => { return this.handleError(err); });
 
     }
@@ -166,5 +169,11 @@ export class BookingService extends ApiService {
             .catch((err) => { return Observable.throw(err); });
 
     }
+
+    public notifyOther(data: any) {
+        if (data) {
+          this.notify.next(data);
+        }
+      }
 
 }
