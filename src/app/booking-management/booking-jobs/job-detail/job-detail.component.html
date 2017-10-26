@@ -6,6 +6,9 @@
     <ng-container *ngIf="!jobAccessError">
         <section id="page-common">
 
+            <app-booking-header [bookingState]="selectedBookingModel.state"  [showButtons]='false'
+            [disableReject]="disableReject" [disableAccept]="disableAccept" ></app-booking-header>
+<!-- 
     <section id="static-flow">
         <section id="submenu">
             <nav>
@@ -38,7 +41,7 @@
                 </a>
             </nav>
         </section>
-    </section>
+    </section>  -->
     <div class="job-status">
     <span [ngClass]="{
     'status-accepted': stateStr === 'IN_PROGRESS - Accepted',

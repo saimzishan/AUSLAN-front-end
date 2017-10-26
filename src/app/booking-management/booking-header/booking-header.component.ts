@@ -25,6 +25,8 @@ export class BookingHeaderComponent implements OnDestroy{
   @Input() showButtons = false;
   dialogRef: MdDialogRef<any>;
   dialogSub;
+  @Input() disableAccept = false;
+  @Input() disableReject = false;
 
   constructor(private bookingService: BookingService, private router: Router,  public dialog: MdDialog ,public viewContainerRef: ViewContainerRef) { }
 
@@ -35,6 +37,11 @@ export class BookingHeaderComponent implements OnDestroy{
   showDialogBoxClick(data) {
 
     this.bookingService.notifyOther({ option: 'showDialogBox', value: data });
+  }
+
+  showDialogBoxInterpreter(data) {
+
+    this.bookingService.notifyOther({ option: 'showDialogBoxInterpreter', value: data });
   }
 
   bookingDetailClick() {
@@ -111,4 +118,9 @@ export class BookingHeaderComponent implements OnDestroy{
     this.router.navigate(['/booking-management/' + GLOBAL.selBookingID, route]);
 
   }
+
+  isCurrentUserInterpreter() {
+    return GLOBAL.currentUser instanceof Interpreter;
+  }
+
 } 

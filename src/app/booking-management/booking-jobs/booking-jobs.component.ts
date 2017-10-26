@@ -38,6 +38,11 @@ export class BookingJobsComponent implements OnInit,OnDestroy {
     dialogRef: MdDialogRef<any>;
     checkList = {};
     private headerSubscription;
+    jobAccessError = false;
+    disableAccept = false;
+    disableReject = false;
+    private currentStatus = 'Invited';
+    stateStr = '';
 
     constructor(public dialog: MdDialog,
                 public viewContainerRef: ViewContainerRef, public spinnerService: SpinnerService,
@@ -74,6 +79,8 @@ export class BookingJobsComponent implements OnInit,OnDestroy {
                 this.duplicateBooking();
             else if (res.option === 'saveChanges')
                 this.saveChanges();
+            else if (res.option === 'showDialogBoxInterpreter')
+                this.showDialogBoxInterpreter(res.value);
 
         }
 
@@ -227,20 +234,52 @@ export class BookingJobsComponent implements OnInit,OnDestroy {
         this.spinnerService.requestInProcess(true);
         this.bookingService.getBooking(param_id)
             .subscribe((res: any) => {
-                    if (res.status === 200) {
+                if (res.status === 404) {
+                    this.jobAccessError = true;
+                } else if (res.status === 200) {
+                        this.jobAccessError = false;
                         let data = res.data;
                         this.selectedBookingModel.fromJSON(data);
                       
                         this.selectedBookingModel.interpreters.sort((i, j) =>
                             i.state === 'Accepted' ? -1 : j.state === 'Accepted' ? 1 : 0
                         );
+
                         this.fetchAllInterpreters();
                         this.isCancelledOrUnableToServe = this.isActiveState('Cancelled')
                             || this.isActiveState('Unable_to_service');
+
+                        if (this.isCurrentUserInterpreter()) {
+                            this.selectedBookingModel.interpreters.filter(i => i.id === GLOBAL.currentUser.id)
+                                .map(i => this.currentStatus = i.state || 'Invited');
+
+                            if (this.currentStatus === 'Accepted' && this.isCurrentUserInterpreter() &&
+                                this.selectedBookingModel.state === BOOKING_STATE.In_progress) {
+                                this.disableReject = false;
+                                this.disableAccept = true;
+                            } else if (this.currentStatus === 'Accepted' && this.isCurrentUserInterpreter() &&
+                                this.selectedBookingModel.state === BOOKING_STATE.Allocated) {
+                                this.disableReject = true;
+                                this.disableAccept = true;
+                            } else if (this.currentStatus === 'Rejected' && this.isCurrentUserInterpreter() &&
+                                this.selectedBookingModel.state === BOOKING_STATE.In_progress) {
+                                this.disableReject = true;
+                                this.disableAccept = false;
+                            } else if (this.currentStatus !== 'Accepted' && this.isCurrentUserInterpreter() &&
+                                this.selectedBookingModel.state === BOOKING_STATE.Allocated) {
+                                this.disableReject = true;
+                                this.disableAccept = true;
+                                /* Also Redirects */
+                                this.router.navigate(['/booking-management']);
+                            }
+
+                            this.getStateString();
+                        }
                     }
                     // this.spinnerService.requestInProcess(false);
                 },
                 err => {
+                    this.jobAccessError = true;
                     this.spinnerService.requestInProcess(false);
                     let e = err.json() || 'There is some error on server side';
                     this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
@@ -350,5 +389,63 @@ export class BookingJobsComponent implements OnInit,OnDestroy {
             this.sendReAssign(selectedInt);
             this.selectedActionableInterpreterID = -1;
         }
+    }
+
+    // BOOKING_STATE comparison is a mess, need to fix later
+    getStateString() {
+        this.stateStr =
+            parseInt(this.selectedBookingModel.state.toString(), 10) ===
+                parseInt(BOOKING_STATE.In_progress.toString(), 10) ? ' - ' + this.currentStatus : '';
+        this.stateStr = BOOKING_STATE[this.selectedBookingModel.state].toUpperCase() + this.stateStr;
+        this.stateStr = this.stateStr.trim();
+
+    }
+
+    public showDialogBoxInterpreter(isCancel: Boolean) {
+        if (this.dialogSub) {
+            this.dialogSub.unsubscribe();
+        }
+
+        let config: MdDialogConfig = {
+            disableClose: true
+        };
+        let reachoutWarning = (this.currentStatus === 'Accepted' && this.isCurrentUserInterpreter() &&
+            this.selectedBookingModel.state === BOOKING_STATE.In_progress);
+        config.viewContainerRef = this.viewContainerRef;
+        this.dialogRef = this.dialog.open(PopupComponent, config);
+        this.dialogRef.componentInstance.title = isCancel ? 'Decline Booking' : 'Accept Booking';
+        this.dialogRef.componentInstance.cancelTitle = 'Back to job';
+        this.dialogRef.componentInstance.okTitle = reachoutWarning ? 'OK' :
+            isCancel ? `Decline` : 'Accept';
+        this.dialogRef.componentInstance.popupMessage =
+            reachoutWarning ? 'Please contact the booking office to cancel this booking.' :
+                isCancel ? `Do you want to decline the invitation?`
+                    :
+                    `Do you want to accept the invitation?`;
+
+        this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
+
+            if (result && !reachoutWarning) {
+                this.spinnerService.requestInProcess(true);
+
+
+                this.currentStatus =
+                    (result && !isCancel) ? 'accept' : (result && isCancel) ? 'reject' : 'tentative';
+                this.bookingService.interpreterAction(this.selectedBookingModel.id,
+                    GLOBAL.currentUser.id, this.currentStatus)
+                    .subscribe((res: any) => {
+
+                            this.disableAccept = true;
+                            this.disableReject = true;
+                            this.spinnerService.requestInProcess(false);
+                            this.fetchBookingInterpreters(this.selectedBookingModel.id);
+                        },
+                        err => {
+                            this.spinnerService.requestInProcess(false);
+                            let e = err.json() || 'There is some error on server side';
+                            this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
+                        });
+            }
+        });
     }
 }

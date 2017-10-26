@@ -1,7 +1,25 @@
+<header id="header-mobile">
+    <button [routerLink]="['/booking-management']" class="icon-back"></button>
+    <h1 *ngIf="!jobAccessError">JOB #{{selectedBookingModel.id | PrettyID}}</h1>
+</header>
+
+<ng-container *ngIf="!jobAccessError">
 <section id="page-common">
 	
 	 <app-booking-header [bookingState]="selectedBookingModel.state" [isCancelOrUnable]="isCancelledOrUnableToServe" [invitePress]="invitePressed"
-						[unAssignPress]="unAssignPressed" [reAssignPress]="reAssignPressed" [showButtons]='true'></app-booking-header>
+						[unAssignPress]="unAssignPressed" [reAssignPress]="reAssignPressed" [showButtons]='true'
+						 [disableReject]="disableReject" [disableAccept]="disableAccept"></app-booking-header>
+
+						<div class="job-status">
+							<span [ngClass]="{
+							'status-accepted': stateStr === 'IN_PROGRESS - Accepted',
+						   'status-invited': stateStr === 'IN_PROGRESS - Invited',
+						   'status-declined': stateStr === 'IN_PROGRESS - Rejected',
+						   'status-tentative': stateStr === 'IN_PROGRESS - Tentative',
+						   'status-allocated': stateStr === 'ALLOCATED'}">
+										{{stateStr}} <i class="icon-requested"></i>
+									</span>
+							</div>
 
 	<section id="job-booking">
 		<main>
@@ -278,7 +296,7 @@
 						<td><img height="40px" width="40px" src="{{version.photo_url}}" alt="">
 							<span name="data_action">{{version.booking_event_formatted()}}<br/>{{version.full_name()}}
 							</span>
-							
+
 						</td>
 						<td>
 							<div name="data_changes">
@@ -293,3 +311,21 @@
 		</main>
 	</section>
 </section>
+</ng-container>
+
+<ng-container *ngIf="jobAccessError">
+    <div class="error" style="
+    text-align: center;
+    padding-top: 100px;
+">
+        <span>
+        <img  src="../../../../assets/img/error-redcross.svg" />
+        <p>
+            Sorry, you don't have access to this job.
+        </p>
+        <p>
+            Contact Auslan if you think this is not right.
+        </p>
+    </span>
+    </div>
+</ng-container>

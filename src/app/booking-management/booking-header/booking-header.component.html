@@ -1,8 +1,8 @@
 <section id="static-flow">
     <section id="submenu">
         <nav>
-            <a href="javascript:void(0);" (click)="infoClick()" [ngClass]="{'active' : isActive('booking-job')}">Booking info</a>
-            <a href="javascript:void(0);" (click)="bookingDetailClick()" [ngClass]="{'active' : isActive('edit-booking')}">Booking details</a>
+            <a href="javascript:void(0);" (click)="infoClick()" [ngClass]="{'active' : isActive('booking-job') || isActive('job-detail')}">Booking info</a>
+            <a href="javascript:void(0);" *ngIf="!isCurrentUserInterpreter()" (click)="bookingDetailClick()" [ngClass]="{'active' : isActive('edit-booking')}">Booking details</a>
         </nav>
         <div *ngIf='showButtons'>
             <button *ngIf='!isCancelOrUnable' (click)="showDialogBoxClick(false)" class="button pink">Unable to Service</button>
@@ -10,6 +10,15 @@
             <button name="dupBtn" (click)="duplicateClick()" class="button inverse">Duplicate</button>
             <div class="sep"></div>
             <button (click)="saveClick()" name="saveBtn" [disabled]="!invitePress && !unAssignPress && !reAssignPress " class="button inverse">Save</button>
+        </div>
+        <div *ngIf="isCurrentUserInterpreter()">
+            <button *ngIf="!disableReject" (click)="showDialogBoxInterpreter(true)"
+                    class="button pink">Decline
+            </button>
+            <div class="sep"></div>
+            <button *ngIf="!disableAccept" (click)="showDialogBoxInterpreter(false)"
+                    class="button inverse">Accept
+            </button>
         </div>
     </section>
 
