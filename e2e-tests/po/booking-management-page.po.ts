@@ -47,7 +47,8 @@ export class BookingManagementPage extends PageObject {
     hoverOnTableHeader = (headerTitle: string, selection: string) => {
         let headerCss = '.dropdown#' + {
             'Status': 'booking-status',
-            'State': 'booking-state'
+            'State': 'booking-state',
+            'Type': 'booking-type'
         }[headerTitle];
         let el = this.getElementByCss(headerCss);
         return browser.actions().mouseMove(el).perform().then(() => {
@@ -155,6 +156,15 @@ export class BookingManagementPage extends PageObject {
         }[booking_status];
         return this.getAllElementByCSS('i[class="status ' + className + '"]').count().then((cnt) => {
             expect(cnt.toString()).to.be.eq(count);
+        });
+    }
+
+    bookingWithTypeExists = (count: string, booking_type: string) => {
+        let tblRows = this.getAllElementByCSS('table tbody tr');
+        expect(tblRows.count()).to.eventually.be.equal(1);
+        let orgNameTd = this.getElementByCss('table tbody tr:first-child td:nth-child(10)');
+        return orgNameTd.getText().then((txt) => {
+            return expect(txt).to.be.eq(booking_type);
         });
     }
 

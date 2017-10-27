@@ -80,7 +80,8 @@ export class BookingListComponent {
         return ['All', ...keys];
     }
     assignmentCategoryList() {
-        return Object.keys(BA.DISSCUSSION_ITEM) as Array<string>;
+        let keys = Object.keys(BA.DISSCUSSION_ITEM) as Array<string>;
+        return ['All', ...keys];
     }
     filterStatus() {
         return BOOKING_STATUS[this.bookingFilter.booking_status];
@@ -97,6 +98,9 @@ export class BookingListComponent {
                     break;
                 case 'state':
                     formattedValue = value === 'all' ? '' : value;
+                    break;
+                case 'booking_type':
+                    formattedValue = BOOKING_NATURE.hasOwnProperty(value) ? BOOKING_NATURE[value].toString() : '' ;
                     break;
                 default:
                     formattedValue = value;

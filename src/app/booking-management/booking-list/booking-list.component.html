@@ -37,7 +37,7 @@
                             <a href="javascript:void(0)">{{underScoreToSpaces(bookingFilter.state)}}</a>
                             <ul class="menu smaller">
                                 <li *ngFor="let state of stateList()">
-                                    <a href="javascript:void(0)" (click)="filter('state', state.toLowerCase())"><i></i>{{underScoreToSpaces(state)}}</a>
+                                    <a href="javascript:void(0)" (click)="filter('state', state)"><i></i>{{underScoreToSpaces(state)}}</a>
                                 </li>
                             </ul>
                         </li>
@@ -93,12 +93,12 @@
                 </th>
                 <th width="12%">
                     <span class="order" [ngClass]="getSortOrder('booking_type')" (click)="sort('booking_type')">Booking Type</span>
-                    <ul class="dropdown menu custom" data-dropdown-menu>
+                    <ul class="dropdown menu custom" id="booking-type" data-dropdown-menu>
                         <li>
-                            <a href="javascript:void(0)">{{bookingFilter.booking_type}}</a>
+                            <a href="javascript:void(0)">{{underScoreToSpaces(bookingFilter.booking_type)}}</a>
                             <ul class="menu smaller">
                                 <li *ngFor="let booking_type of assignmentCategoryList()">
-                                    <a href="javascript:void(0)" (click)="filter('booking_type', booking_type)"><i></i>{{booking_type}}</a>
+                                    <a href="javascript:void(0)" (click)="filter('booking_type', booking_type)"><i></i>{{underScoreToSpaces(booking_type)}}</a>
                                 </li>
                             </ul>
                         </li>
