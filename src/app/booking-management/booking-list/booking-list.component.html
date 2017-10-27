@@ -11,14 +11,14 @@
                     </div>
                 </th>
                 <th width="5%">
-                    <span class="order asc">Job</span>
+                    <span class="order" [ngClass]="getSortOrder('job')" (click)="sort('job')">Job</span>
                     <form #filterByBookingIds="ngForm" class="common-form compact"
                           (ngSubmit)="filter('booking_ids', filterByBookingIds.value.booking_ids)" novalidate>
                         <input type="text" name="booking_ids" [(ngModel)]="bookingFilter.booking_ids">
                     </form>
                 </th>
                 <th width="7%">
-                    <span class="order asc">Status</span>
+                    <span class="order" [ngClass]="getSortOrder('booking_status')" (click)="sort('booking_status')">Status</span>
                     <ul class="dropdown menu custom" id="booking-status" data-dropdown-menu>
                         <li>
                             <a href="javascript:void(0)">{{underScoreToSpaces(filterStatus())}}</a>
@@ -31,7 +31,7 @@
                     </ul>
                 </th>
                 <th>
-                    <span class="order asc">State</span>
+                    <span class="order" [ngClass]="getSortOrder('state')" (click)="sort('state')">State</span>
                     <ul class="dropdown menu custom" id="booking-state" data-dropdown-menu>
                         <li>
                             <a href="javascript:void(0)">{{underScoreToSpaces(bookingFilter.state)}}</a>
@@ -44,7 +44,9 @@
                     </ul>
                 </th>
                 <th width="23%">
-                    <span class="order desc">Date</span>
+                    <span class="order"
+                          [ngClass]="getSortOrder('start_time')"
+                          (click)="sort('start_time')">Date</span>
                     <div class="oneRow">
                         <span>From:</span>
                         <input type="date" name="date_from" [(ngModel)]="bookingFilter.date_from"
@@ -65,28 +67,32 @@
                     </form>
                 </th>
                 <th>
-                    <span class="order asc">Client</span>
+                    <span class="order"
+                          [ngClass]="getSortOrder('booking_client')"
+                          (click)="sort('booking_client')">Client</span>
                     <form #filterByClientName="ngForm" class="common-form compact"
                           (ngSubmit)="filter('client_name', filterByClientName.value.client_name)" novalidate>
                         <input type="text" name="client_name" [(ngModel)]="bookingFilter.client_name">
                     </form>
                 </th>
                 <th>
-                    <span class="order asc">Suburb</span>
+                    <span class="order"
+                          [ngClass]="getSortOrder('suburb')"
+                          (click)="sort('suburb')">Suburb</span>
                     <form #filterBySuburb="ngForm" class="common-form compact"
                           (ngSubmit)="filter('suburb', filterBySuburb.value.suburb)" novalidate>
                         <input type="text" name="suburb" [(ngModel)]="bookingFilter.suburb">
                     </form>
                 </th>
                 <th width="10%">
-                    <span class="order asc">Interpreter</span>
+                    <span class="order" [ngClass]="getSortOrder('interpreter')" (click)="sort('interpreter')">Interpreter</span>
                     <form #filterByInterpreter="ngForm" class="common-form compact"
                           (ngSubmit)="filter('interpreter', filterByInterpreter.value.interpreter_name)" novalidate>
                         <input type="text" name="interpreter_name" [(ngModel)]="bookingFilter.interpreter_name">
                     </form>
                 </th>
                 <th width="12%">
-                    <span class="order asc">Booking Type</span>
+                    <span class="order" [ngClass]="getSortOrder('booking_type')" (click)="sort('booking_type')">Booking Type</span>
                     <ul class="dropdown menu custom" id="booking-type" data-dropdown-menu>
                         <li>
                             <a href="javascript:void(0)">{{underScoreToSpaces(bookingFilter.booking_type)}}</a>
@@ -116,8 +122,7 @@
                 </td>
                 <td class="bookingID">
                     <div class="actions-container">
-		<span>	{{booking.id | PrettyID}}
-</span>
+		                <span>{{booking.id | PrettyID}}</span>
                         <ul class="dropdown menu custom actions hidden-desktop" data-dropdown-menu>
                             <li>
                                 <a href="javascript:void(0)"><i class="icon-more-icon"></i></a>
