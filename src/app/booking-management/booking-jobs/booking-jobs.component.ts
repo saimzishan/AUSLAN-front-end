@@ -448,4 +448,14 @@ export class BookingJobsComponent implements OnInit,OnDestroy {
             }
         });
     }
+
+    isCurrentUserState(state: string) {
+        let currUser = this.selectedBookingModel.interpreters.filter(i => i.id === GLOBAL.currentUser.id);
+        if (Boolean(currUser) && currUser.length > 0) {
+            return state === currUser[0].state;
+        }
+
+        return false;
+    }
+    
 }
