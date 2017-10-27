@@ -123,6 +123,7 @@ export class BookingJobPage extends PageObject {
     }
 
     isBookingStateText = (booking_state_text: string) => {
+        booking_state_text = booking_state_text.replace(/_/g, ' ');
         return this.getElementByCss('div.job-status > span').getText().then((txt) => {
             expect(txt.trim()).to.be.eq(booking_state_text.trim());
         });
