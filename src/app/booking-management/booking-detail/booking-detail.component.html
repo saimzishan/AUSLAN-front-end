@@ -1,5 +1,5 @@
 <section id="page-booking">
-   <app-booking-header [bookingState]="bookingModel.state" [showButtons]='false' [bookingModel]='bookingModel' [oldBookingModel]='oldBookingModel'></app-booking-header>
+   <app-booking-header *ngIf="!isNewBooking()" [bookingState]="bookingModel.state" [showButtons]='false' [bookingModel]='bookingModel' [oldBookingModel]='oldBookingModel'></app-booking-header>
     <h1>{{bookingHeading}}</h1>
 
     <main>
@@ -47,7 +47,7 @@
                             <label>START DATE & TIME *</label>
 
                             <input type='datetime-local' [readonly]="isUserOrgRepORIndClientTemp() && forEdit()"
-                                   name='dpEventDate' placeholder="DATE & Time OF APPOINTMENT *" (click)="fieldClick($event)"
+                                   name='dpEventDate' placeholder="DATE & Time OF APPOINTMENT *" (click)="fireNotification($event)"
                                    [(ngModel)]="bookingModel.venue.start_time_iso" required #dpEventDate="ngModel"/>
                         </div>
                     </div>
@@ -57,7 +57,7 @@
                             <label>END DATE & TIME *</label>
 
                             <input type='datetime-local' name='dpEventEndTime' [readonly]="isUserOrgRepORIndClientTemp() && forEdit()"
-                                   placeholder="ENDING TIME *" #dpEventEndTime="ngModel" (click)="fieldClick($event)"
+                                   placeholder="ENDING TIME *" #dpEventEndTime="ngModel" (click)="fireNotification($event)"
                                    [(ngModel)]="bookingModel.venue.end_time_iso"
                                    required/>
                         </div>
@@ -118,7 +118,7 @@
                             <label>REQUESTED BY FIRST NAME * <span mdTooltip="Enter the First Name"><i
                                     class="inline-icon-tip"></i></span></label>
                             <input type="text" placeholder="Enter the Request By Name" [readonly]="isUserOrgRepORIndClientTemp() && forEdit()"
-                                   [(ngModel)]="bookingModel.requested_by.first_name" name="raw_booking_requested_by" (click)="fieldClick($event)"
+                                   [(ngModel)]="bookingModel.requested_by.first_name" name="raw_booking_requested_by" (click)="fireNotification($event)"
                                    #raw_booking_requested_by="ngModel" [rangeLength]="[2,20]" required>
                             <span *ngIf="raw_booking_requested_by.touched && !raw_booking_requested_by.errors?.required && !raw_booking_requested_by.errors?.rangeLength;"
                                   class="inline-icon inline-icon-valid valid"></span>
@@ -133,7 +133,7 @@
                             <label>REQUESTED BY LAST NAME * <span mdTooltip="Enter the Last Name"><i
                                     class="inline-icon-tip"></i></span></label>
                             <input type="text" placeholder="Enter the Request By Name" [readonly]="isUserOrgRepORIndClientTemp() && forEdit()"
-                                   [(ngModel)]="bookingModel.requested_by.last_name" name="raw_booking_requested_by_ln" (click)="fieldClick($event)"
+                                   [(ngModel)]="bookingModel.requested_by.last_name" name="raw_booking_requested_by_ln" (click)="fireNotification($event)"
                                    #raw_booking_requested_by_ln="ngModel" [rangeLength]="[2,20]" required>
                             <span *ngIf="raw_booking_requested_by_ln.touched && !raw_booking_requested_by_ln.errors?.required && !raw_booking_requested_by_ln.errors?.rangeLength;"
                                   class="inline-icon inline-icon-valid valid"></span>
@@ -164,7 +164,7 @@
                             <label>NUMB. OF INTERPRETERS NEEDED * <span
                                     mdTooltip="Enter the Number of Interpreters needed"><i class="inline-icon-tip"></i></span></label>
                             <input [(ngModel)]="bookingModel.interpreters_required" name="interpreters_count" [readonly]="isUserOrgRepORIndClientTemp() && forEdit()"
-                                   #interpreters_count="ngModel" placeholder="Enter the Number of Interpreters needed" (click)="fieldClick($event)"
+                                   #interpreters_count="ngModel" placeholder="Enter the Number of Interpreters needed" (click)="fireNotification($event)"
                                    type="tel" digits>
                             <span *ngIf="interpreters_count.touched && !interpreters_count.errors?.required && !interpreters_count.errors?.digits;"
                                   class="inline-icon inline-icon-valid valid"></span>
@@ -218,7 +218,7 @@
                         <div class="form-field">
                             <label>CONTACT FIRST NAME * <span mdTooltip="Enter Contact First Name"><i
                                     class="inline-icon-tip"></i></span></label>
-                            <input [readonly]='currentUserIsContact' (click)="fieldClick($event)"
+                            <input [readonly]='currentUserIsContact' (click)="fireNotification($event)"
                                    type="text" placeholder="Enter Contact First Name"
                                    [(ngModel)]="bookingModel.primaryContact.first_name"
                                    name="contact_first_name"
@@ -236,7 +236,7 @@
                             <label>CONTACT LAST NAME <span mdTooltip="Enter Contact Last Name"><i
                                     class="inline-icon-tip"></i></span></label>
                             <input [readonly]='currentUserIsContact' type="text" placeholder="Enter Contact Last Name"
-                                   [(ngModel)]="bookingModel.primaryContact.last_name" name="contact_last_name" (click)="fieldClick($event)"
+                                   [(ngModel)]="bookingModel.primaryContact.last_name" name="contact_last_name" (click)="fireNotification($event)"
                                    #contact_last_name="ngModel" [rangeLength]="[2,20]" required>
                             <span *ngIf="contact_last_name.touched && !contact_last_name.errors?.required && !contact_last_name.errors?.rangeLength;"
                                   class="inline-icon inline-icon-valid valid"></span>
@@ -303,7 +303,7 @@
                             <label>EAF/NDISID<span mdTooltip="Enter deaf person EAF number!"><i
                                     class="inline-icon-tip"></i></span></label>
                             <input type="tel" placeholder="Enter deaf person EAF number" [readonly]="isUserOrgRepORIndClientTemp() && forEdit()"
-                                   [(ngModel)]="bookingModel.deaf_person.eaf" name="deaf_person_eaf" (click)="fieldClick($event)"
+                                   [(ngModel)]="bookingModel.deaf_person.eaf" name="deaf_person_eaf" (click)="fireNotification($event)"
                                    #deaf_person_eaf="ngModel">
                         </div>
                     </div>
@@ -323,7 +323,7 @@
                             <label>DEAF PERSON'S FIRST NAME * <span mdTooltip="Enter deaf person first name"><i
                                     class="inline-icon-tip"></i></span></label>
                             <input type="text" placeholder="Enter deaf person first name" [readonly]="isUserOrgRepORIndClientTemp() && forEdit()"
-                                   [(ngModel)]="bookingModel.deaf_person.first_name" name="deaf_person_name" (click)="fieldClick($event)"
+                                   [(ngModel)]="bookingModel.deaf_person.first_name" name="deaf_person_name" (click)="fireNotification($event)"
                                    #deaf_person_name="ngModel" [rangeLength]="[2,20]" required>
                             <span *ngIf="deaf_person_name.touched && !deaf_person_name.errors?.required && !deaf_person_name.errors?.rangeLength;"
                                   class="inline-icon inline-icon-valid valid"></span>
@@ -338,7 +338,7 @@
                             <label>DEAF PERSON'S LAST NAME * <span mdTooltip="Enter deaf person last name"><i
                                     class="inline-icon-tip"></i></span></label>
                             <input type="text" placeholder="Enter deaf person last name" [readonly]="isUserOrgRepORIndClientTemp() && forEdit()"
-                                   [(ngModel)]="bookingModel.deaf_person.last_name" name="deaf_person_last_name" (click)="fieldClick($event)"
+                                   [(ngModel)]="bookingModel.deaf_person.last_name" name="deaf_person_last_name" (click)="fireNotification($event)"
                                    #deaf_person_last_name="ngModel" [rangeLength]="[2,20]" required>
                             <span *ngIf="deaf_person_last_name.touched && !deaf_person_last_name.errors?.required && !deaf_person_last_name.errors?.rangeLength;"
                                   class="inline-icon inline-icon-valid valid"></span>
@@ -428,7 +428,7 @@
                             <label>Special instructions <span mdTooltip="Enter Special instructions!"><i
                                     class="inline-icon-tip"></i></span></label>
                             <input [(ngModel)]="bookingModel.special_instructions"  name= 'txtSpecialInstruction' type='text' 
-                                    [readonly]="isUserOrgRepORIndClientTemp() && forEdit()" (click)="fieldClick($event)" placeholder="Enter Special instructions">
+                                    [readonly]="isUserOrgRepORIndClientTemp() && forEdit()" (click)="fireNotification($event)" placeholder="Enter Special instructions">
 
                         </div>
                     </div>

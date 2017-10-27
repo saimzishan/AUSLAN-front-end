@@ -1,5 +1,5 @@
 import { Component, Input, ViewContainerRef, OnInit ,OnDestroy } from '@angular/core';
-import { BookingService } from '../../api/booking.service';
+import { BookingHeaderService } from '../booking-header/booking-header.service';
 import { BOOKING_STATE } from '../../shared/model/booking-state.enum';
 import { Booking } from '../../shared/model/booking.entity';
 import { GLOBAL } from '../../shared/global';
@@ -28,7 +28,7 @@ export class BookingHeaderComponent implements OnInit, OnDestroy{
   @Input() disableAccept = false;
   @Input() disableReject = false;
 
-  constructor(private bookingService: BookingService, private router: Router,  public dialog: MdDialog ,public viewContainerRef: ViewContainerRef) { }
+  constructor(private bookingHeaderService: BookingHeaderService, private router: Router,  public dialog: MdDialog ,public viewContainerRef: ViewContainerRef) { }
 
   ngOnInit() {
     if(this.isCurrentUserInterpreter())
@@ -41,27 +41,27 @@ export class BookingHeaderComponent implements OnInit, OnDestroy{
   
   showDialogBoxClick(data) {
 
-    this.bookingService.notifyOther({ option: 'showDialogBox', value: data });
+    this.bookingHeaderService.notifyOther({ option: 'showDialogBox', value: data });
   }
 
   showDialogBoxInterpreter(data) {
 
-    this.bookingService.notifyOther({ option: 'showDialogBoxInterpreter', value: data });
+    this.bookingHeaderService.notifyOther({ option: 'showDialogBoxInterpreter', value: data });
   }
 
   bookingDetailClick() {
 
-    this.bookingService.notifyOther({ option: 'editBooking', value: '' });
+    this.bookingHeaderService.notifyOther({ option: 'editBooking', value: '' });
   }
 
   duplicateClick() {
 
-    this.bookingService.notifyOther({ option: 'duplicateBooking', value: '' });
+    this.bookingHeaderService.notifyOther({ option: 'duplicateBooking', value: '' });
   }
 
   saveClick() {
 
-    this.bookingService.notifyOther({ option: 'saveChanges', value: '' });
+    this.bookingHeaderService.notifyOther({ option: 'saveChanges', value: '' });
   }
 
   isActiveState(bookingStatus: string) {
@@ -74,7 +74,7 @@ export class BookingHeaderComponent implements OnInit, OnDestroy{
   }
 
   infoClick() {
-    if (this.isActive('booking-job'))
+    if (this.isActive('booking-job') || this.isActive('job-detail'))
       return;
     else {
       if (this.isModelChanged(this.oldBookingModel, this.bookingModel)) {
@@ -113,7 +113,7 @@ export class BookingHeaderComponent implements OnInit, OnDestroy{
 
   isModelChanged(oldModel, currentModel) {
   
-    return (JSON.stringify(oldModel) === JSON.stringify(currentModel)) ? false: true ;
+    return !(JSON.stringify(oldModel) === JSON.stringify(currentModel))  ;
   }
 
   gotoBookingInfo() {

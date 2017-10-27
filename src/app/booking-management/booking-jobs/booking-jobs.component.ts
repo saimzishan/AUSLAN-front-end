@@ -17,6 +17,7 @@ import {PopupComponent} from '../../shared/popup/popup.component';
 import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
 import {PrettyIDPipe} from '../../shared/pipe/pretty-id.pipe';
 import {GLOBAL} from '../../shared/global';
+import {BookingHeaderService} from '../booking-header/booking-header.service';
 
 @Component({
     selector: 'app-booking-jobs',
@@ -47,7 +48,7 @@ export class BookingJobsComponent implements OnInit,OnDestroy {
     constructor(public dialog: MdDialog,
                 public viewContainerRef: ViewContainerRef, public spinnerService: SpinnerService,
                 public notificationServiceBus: NotificationServiceBus,
-                public userDataService: UserService, public bookingService: BookingService,
+                public userDataService: UserService, public bookingService: BookingService,  public bookingHeaderService: BookingHeaderService,
                 private router: Router, private route: ActivatedRoute) {
 
         /** http://stackoverflow.com/questions/38008334/angular2-rxjs-when-should-i-unsubscribe-from-subscription */
@@ -62,7 +63,7 @@ export class BookingJobsComponent implements OnInit,OnDestroy {
 
     ngOnInit() {
 
-        this.headerSubscription = this.bookingService.notifyObservable$.subscribe((res) => { 
+        this.headerSubscription = this.bookingHeaderService.notifyObservable$.subscribe((res) => { 
                   this.callRelatedFunctions(res); 
         });
     }

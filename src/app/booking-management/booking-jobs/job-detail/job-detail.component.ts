@@ -20,7 +20,7 @@ import {Interpreter, OrganisationalRepresentative} from '../../../shared/model/u
     styleUrls: ['./job-detail.component.css']
 })
 
-export class JobDetailComponent implements OnInit, OnDestroy {
+export class JobDetailComponent implements OnDestroy {
     selectedBookingModel: Booking = new Booking();
     private sub: any;
     private currentStatus = 'Invited';
@@ -45,24 +45,6 @@ export class JobDetailComponent implements OnInit, OnDestroy {
                 this.getJobDetail(param_id);
             }
         });
-    }
-
-    ngOnInit() {
-        this.headerSubscription = this.bookingService.notifyObservable$.subscribe((res) => {
-            this.callRelatedFunctions(res);
-        });
-    }
-
-
-    callRelatedFunctions(res) {
-
-        if (res.hasOwnProperty('option')) {
-
-            if (res.option === 'showDialogBoxInterpreter')
-                    this.showDialogBox(res.value);
-
-        }
-
     }
 
     isCurrentUserState(state: string) {

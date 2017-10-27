@@ -72,6 +72,7 @@ import { TermandconditionComponent } from './ui/termandcondition/termandconditio
 import { InterpreterPopupComponent } from './shared/ui/interpreter-popup/interpreter-popup.component';
 import { InterpreterBoxComponent } from './shared/ui/interpreter-box/interpreter-box.component';
 import {PreferedAllocationService} from './shared/prefered-allocation.service';
+import { BookingHeaderService } from './booking-management/booking-header/booking-header.service';
 
 @NgModule({
   declarations: [
@@ -112,7 +113,7 @@ import {PreferedAllocationService} from './shared/prefered-allocation.service';
     MaterialModule, CalendarModule
   ],  providers: [DatePipe, LinkAuth, UserNameService, RolePermission, AuthGuard, NoAuthGuard, Title, LinkHelper,
     NotificationServiceBus, SpinnerService, BookingService, UserService,
-        PreferedAllocationService,
+        PreferedAllocationService, BookingHeaderService,
     { provide: APP_BASE_HREF, useValue : '/' },
     {
       provide: AuthHttp,

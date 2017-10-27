@@ -184,7 +184,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
     forEdit() {
 
-        return (this.shouldEdit.length > 0 && this.shouldEdit  === 'edit' ) ? true :false ;
+        return (this.shouldEdit.length > 0 && this.shouldEdit  === 'edit' ) ;
     }
 
     public onStandardInvoice() {
@@ -293,25 +293,24 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
 
     updateBooking() { 
 
-        if (this.bookingModel.state == 4 || this.bookingModel.state == 5) {
-            if (this.isImportantFieldsChanged()) {
+        if ((this.bookingModel.state == BOOKING_STATE.In_progress || this.bookingModel.state == BOOKING_STATE.Allocated) && this.isImportantFieldsChanged() ) {
+        
                 let config: MdDialogConfig = {
                     disableClose: true
                 };
                 config.viewContainerRef = this.viewContainerRef;
                 this.dialogRef = this.dialog.open(PopupComponent, config);
                 this.dialogRef.componentInstance.title = 'Important Fields Changed WARNING';
-                this.dialogRef.componentInstance.cancelTitle = 'BACK/YES';
-                this.dialogRef.componentInstance.okTitle = 'SAVE CHANGES';
+                this.dialogRef.componentInstance.cancelTitle = 'BACK';
+                this.dialogRef.componentInstance.okTitle = 'Yes';
                 this.dialogRef.componentInstance.popupMessage =
                     `Interpreter(s) have been/is allocated for this job. Did you get confirmation from the interpreter(s) that these changes are OK?`;
 
                 this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
-                    this.saveBooking();
-                });
-            }
-            else
-                this.saveBooking();
+
+                    if (result)
+                        this.saveBooking();
+                }); 
         }
         else
             this.saveBooking();
@@ -384,7 +383,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         }
     }
 
-    fieldClick(evnt)
+    fireNotification(evnt)
     {
         if((evnt.target as Element).hasAttribute("readonly"))
             this.notificationServiceBus.launchNotification(true, 'In order to change this field, please contact the booking office.');
@@ -455,14 +454,12 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
 
     isImportantFieldsChanged()
     { 
-        if ((this.bookingModel.venue.start_time_iso != this.oldBookingModel.venue.start_time_iso) || (this.bookingModel.venue.end_time_iso != this.oldBookingModel.venue.end_time_iso)
+        return ((this.bookingModel.venue.start_time_iso != this.oldBookingModel.venue.start_time_iso) || (this.bookingModel.venue.end_time_iso != this.oldBookingModel.venue.end_time_iso)
             || (this.bookingModel.raw_nature_of_appointment != this.oldBookingModel.raw_nature_of_appointment) || (this.bookingModel.specific_nature_of_appointment != this.oldBookingModel.specific_nature_of_appointment)
             || (this.bookingModel.venue.street_name != this.oldBookingModel.venue.street_name) || (this.bookingModel.venue.state != this.oldBookingModel.venue.state)
             || (this.bookingModel.venue.suburb != this.oldBookingModel.venue.suburb) || (this.bookingModel.venue.post_code != this.oldBookingModel.venue.post_code)
         )
-            return true;
-        else
-            return false;
+          
     }
 
  //   https://stackoverflow.com/questions/36124363/deep-copying-objects-in-angular2
@@ -475,5 +472,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             }
         }
         return newObj;
+    }
+    isNewBooking(){
+      return this.router.url.includes("create-booking");
     }
 }
