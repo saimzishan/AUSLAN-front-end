@@ -18,7 +18,7 @@ import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
 import {IndividualClient, OrganisationalRepresentative} from '../../shared/model/user.entity';
 import {PopupComponent} from '../../shared/popup/popup.component';
 import {Contact} from '../../shared/model/contact.entity';
-
+import {UserService} from '../../api/user.service';
 
 const _ONE_HOUR = 1000 /*milliseconds*/
     * 60 /*seconds*/
@@ -50,12 +50,15 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     dialogRef: MdDialogRef<any>;
     fileName = '';
     termsAndConditionAccepted = false;
+    bookingFor = 'IndividualClient';
+    allClientsOrg = [];
+    bookingForItems =[] ;
 
     constructor(public bookingService: BookingService, private router: Router,
                 private route: ActivatedRoute, private rolePermission: RolePermission,
                 public notificationServiceBus: NotificationServiceBus, public spinnerService: SpinnerService,
                 private datePipe: DatePipe, public dialog: MdDialog,
-                public viewContainerRef: ViewContainerRef) {
+                public viewContainerRef: ViewContainerRef, public userService: UserService, ) {
         BA.loadItems();
 
         this.bookingModel = new Booking();
@@ -92,6 +95,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         if (GLOBAL.currentUser !== undefined) {
             this.onSelectionChange();
             this.onClientSelectionChange();
+            this.getAllUsers();
         }
     }
 
@@ -111,6 +115,15 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.currentUserIsContact === 'true' ? GLOBAL.currentUser.email : '';
         this.bookingModel.primaryContact.mobile_number =
             this.currentUserIsContact === 'true' ? GLOBAL.currentUser.mobile : '';
+    }
+
+    public onBookingForChange(){
+        this.bookingForItems =  this.bookingFor === 'IndividualClient' ? this.allClientsOrg.filter(u => u.type === "IndividualClient") 
+                                                             : this.allClientsOrg.filter(u => u.type === "OrganisationalRepresentative");
+    }
+
+    ddlBookingForChange($event) {
+     
     }
 
     isNotIndClient() {
@@ -255,5 +268,26 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.bookingModel.documents_attributes =
                 this.bookingModel.documents_attributes.filter(d => d.document_file_name !== item.file.name);
         }
+    }
+
+    getAllUsers()
+    {
+        this.spinnerService.requestInProcess(true);
+        this.userService.fetchUsers()
+            .subscribe((res: any) => {
+                    if (res.status === 200 ) {
+                        
+                        this.allClientsOrg = res.data.users;
+                        this.bookingForItems = this.allClientsOrg.filter(u => u.type === 'IndividualClient');
+                        this.bookingModel.bookable_type = this.bookingFor;
+                    }
+                    this.spinnerService.requestInProcess(false);
+                },
+                errors => {
+                    this.spinnerService.requestInProcess(false);
+                    let e = errors.json() || '';
+                    this.notificationServiceBus.launchNotification(true,
+                        'Error occured on server side. ' + errors.statusText + ' ' + JSON.stringify(e || e.errors));
+                });
     }
 }
