@@ -49,7 +49,7 @@ export class Booking {
         this.deaf_person.last_name = '';
         this.deaf_person.email = '';
         this.deaf_person.mobile_number = '';
-        this.deaf_person.eaf = 0;
+        this.deaf_person.eaf = '';
         this.nature_of_appointment = BOOKING_NATURE.None;
         this.raw_nature_of_appointment = '';
         this.specific_nature_of_appointment = '';
@@ -202,7 +202,6 @@ export class Booking {
                 primary_contact_email: this.client.organisation_primary_contact.email,
                 primary_contact_phone_number: this.client.organisation_primary_contact.phone_number,
                 account_number: 'ABCD-1234',
-                preferred_billing_method_email: false,
                 external_reference: this.client.organisation_billing_account.external_reference,
                 address_attributes: this.client.organisation_billing_account.organisation_billing_address
             },

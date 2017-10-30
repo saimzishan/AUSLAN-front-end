@@ -130,6 +130,7 @@ export class OrganisationalRepresentative extends Organisational {
             'last_name': this.last_name,
             'type': this.type,
             'email': this.email,
+            'avatar': this.avatar,
             'password': this.password,
             'business_hours_phone': this.phone,
             'mobile': this.mobile,
@@ -156,7 +157,6 @@ export class OrganisationalRepresentative extends Organisational {
                         'primary_contact_email': this.organisation_primary_contact.email,
                         'primary_contact_phone_number': this.organisation_primary_contact.phone_number,
                         'account_number': 'ABCD-1234',
-                        'preferred_billing_method_email': this.organisation_billing_account.preferred_billing_method_email,
                         'external_reference': this.organisation_billing_account.external_reference,
                         'address_attributes': this.organisation_billing_account.organisation_billing_address
                     }
@@ -209,8 +209,6 @@ export class OrganisationalRepresentative extends Organisational {
         this.organisation_primary_contact.last_name = obj.organisation.billing_account.primary_contact_last_name || '';
         this.organisation_primary_contact.email = obj.organisation.billing_account.primary_contact_email || '';
         this.organisation_primary_contact.phone_number = obj.organisation.billing_account.primary_contact_phone_number || '';
-        this.organisation_billing_account.preferred_billing_method_email =
-            obj.organisation.billing_account.preferred_billing_method_email;
         this.organisation_billing_account.organisation_billing_address = obj.organisation.billing_account.address_attributes;
         this.organisation_billing_account.external_reference = obj.organisation.billing_account.external_reference;
         this.organisation_billing_account.id = obj.organisation.billing_account.id;
@@ -274,7 +272,7 @@ export class IndividualClient extends User {
     * "suburb":"CRAIGIEBURN","state":"VIC","post_code":"3064"},
     * "billing_account_attributes":{"id":2,"account_number":"ABCD-1234",
     * "primary_contact_first_name":"Thijs","primary_contact_last_name":"Song",
-    * "preferred_billing_method_email":true,"external_reference":"Curve and Sanj",
+    * "external_reference":"Curve and Sanj",
     * "address_attributes":{"id":5,"unit_number":"22","street_number":"62",
     * "street_name":"DIANNE AVE","suburb":"CRAIGIEBURN","state":"VIC","post_code":"3064"}}}
     * */
@@ -284,6 +282,7 @@ export class IndividualClient extends User {
             'type': this.type, 'send_email_on_receipt_of_request': this.email_receipt,
             'email_confirmation_on_interpreter_allocation': this.email_confirmation,
             'special_instructions': this.special_instructions,
+            'avatar': this.avatar,
             'discovery_of_auslan': this.reffered_by === 'OTHER' ?
                 'O:' + this.reffered_other : this.reffered_by,
             'mobile': this.mobile, 'ndis_id': this.ndis_id, 'ndis_budget_limit': this.ndis_budget_limit,
@@ -300,9 +299,8 @@ export class IndividualClient extends User {
                 'primary_contact_last_name': this.individual_client_primary_contact.last_name,
                 'primary_contact_email': this.individual_client_primary_contact.email,
                 'primary_contact_phone_number': this.individual_client_primary_contact.phone_number,
-                'account_number': 'ABCD-1234',
-                'preferred_billing_method_email': this.individual_client_billing_account.preferred_billing_method_email,
-                'external_reference': 'Curve and Sanji',
+                'account_number': '',
+                'external_reference': '',
                 'address_attributes': this.individual_client_billing_account.organisation_billing_address
             }
         };
@@ -341,8 +339,6 @@ export class IndividualClient extends User {
         this.individual_client_primary_contact.phone_number = obj.billing_account_attributes.primary_contact_phone_number;
         this.individual_client_billing_account.organisation_billing_address = obj.billing_account_attributes.address_attributes;
         this.individual_client_billing_account.id = obj.billing_account_attributes.id;
-        this.individual_client_billing_account.preferred_billing_method_email =
-            obj.billing_account_attributes.preferred_billing_method_email;
     }
 }
 
@@ -366,7 +362,7 @@ export class Administrator extends User {
 * "location_pref":"QLD","comm_pref":"SMS and Email","role":6,"first_name":"Nauman","last_name":"Interpreter",
 * "password":"Abcd#1234","confirm_password":"Abcd#1234","email":"nauman+int@curvetomorrow.com.au","phone":"0490398821",
 * "mobile":"xxxx xxx xxx","naati_id":"NA-234","naati_validity_start_date":"2017-06-30",
-* "naati_validity_end_date":"2017-07-31","after_hours_phone":"0490221122",
+* "naati_validity_end_date":"2017-07-31",
 * "date_of_birth":"2017-08-31"}}
  */
 export class Interpreter extends User {
@@ -376,7 +372,6 @@ export class Interpreter extends User {
     public naati_validity_start_date: string;
     public naati_validity_end_date: string;
     public business_hours_phone: string;
-    public after_hours_phone: string;
     public date_of_birth: string;
     public address_attributes: Address = new Address();
     public long_term_availability: interpreter_avalability;

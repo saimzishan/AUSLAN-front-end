@@ -18,6 +18,7 @@ import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
 import {IndividualClient, OrganisationalRepresentative} from '../../shared/model/user.entity';
 import {PopupComponent} from '../../shared/popup/popup.component';
 import {Contact} from '../../shared/model/contact.entity';
+import {isNullOrUndefined} from 'util';
 
 
 const _ONE_HOUR = 1000 /*milliseconds*/
@@ -36,8 +37,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     private sub: any;
     public uploader: FileUploader = new FileUploader({url: '', maxFileSize: 20 * 1024 * 1024});
     bookingModel: Booking;
-    standardInvoice = 'false';
-    rdgSpecialInstruction = 'false';
+    standardInvoice = 'true';
+    rdgSpecialInstruction = 'true';
     dialogSub;
     appointment_types = Object.keys(BOOKING_NATURE).filter(value => value === BOOKING_NATURE[value]
         || BOOKING_NATURE[value].startsWith(value)).map(v => BOOKING_NATURE[v]) as string[];
@@ -59,6 +60,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         BA.loadItems();
 
         this.bookingModel = new Booking();
+        this.onSpecialInstruction();
 
         /** http://stackoverflow.com/questions/38008334/angular2-rxjs-when-should-i-unsubscribe-from-subscription */
         this.sub = this.route.queryParams.subscribe(params => {
@@ -79,6 +81,9 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     public fileOverBase(e: any) {
     }
 
+    onStartTimeChanged() {
+        this.bookingModel.venue.end_time_iso = this.bookingModel.venue.start_time_iso;
+    }
     natureOfApptChange($event) {
         let val: BOOKING_NATURE = <BOOKING_NATURE> BOOKING_NATURE[this.bookingModel.raw_nature_of_appointment];
         this.specific_appointment_types = BA.DISSCUSSION_ITEM[BOOKING_NATURE[val]];
@@ -121,9 +126,14 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     return GLOBAL.currentUser instanceof OrganisationalRepresentative ||
         GLOBAL.currentUser instanceof IndividualClient;
     }
+    isUserOrgRep() {
+        return GLOBAL.currentUser instanceof OrganisationalRepresentative;
+    }
     onSpecialInstruction () {
+        let special_instructions =
+            isNullOrUndefined(<OrganisationalRepresentative>GLOBAL.currentUser) ? '' : (<OrganisationalRepresentative>GLOBAL.currentUser).special_instructions;
         this.bookingModel.special_instructions =
-            this.rdgSpecialInstruction === 'true' ? (<OrganisationalRepresentative>GLOBAL.currentUser).special_instructions : '';
+            this.rdgSpecialInstruction === 'true' ? special_instructions : '';
     }
     public onStandardInvoice() {
         if ( GLOBAL.currentUser instanceof OrganisationalRepresentative) {

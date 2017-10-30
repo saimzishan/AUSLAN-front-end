@@ -32,6 +32,7 @@ import {TermandconditionComponent} from '../ui/termandcondition/termandcondition
 import {InterpreterPopupComponent} from '../shared/ui/interpreter-popup/interpreter-popup.component';
 import {InterpreterBoxComponent} from '../shared/ui/interpreter-box/interpreter-box.component';
 import {PreferedAllocationService} from '../shared/prefered-allocation.service';
+import {SpinnerService} from '../spinner/spinner.service';
 
 
 describe('RegisterComponent', () => {
@@ -47,7 +48,7 @@ describe('RegisterComponent', () => {
             imports: [FormsModule, MaterialModule, CalendarModule,
                 CustomFormsModule, SimpleNotificationsModule.forRoot(),
                 RouterTestingModule],
-            providers: [NotificationServiceBus, PreferedAllocationService,
+            providers: [NotificationServiceBus, PreferedAllocationService, SpinnerService,
                 {provide: UserService, useClass: MockUserService}, {provide: AuthHttp, useClass: MockBackend}]
         }).compileComponents();
     }));

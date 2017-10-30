@@ -618,8 +618,6 @@ Feature: User Profile Management
       And I am on the bookings page
       And I click on my name in the top corner
       And I will be taken to my individual profile page
-      When I click on checkbox name 'preferred_billing_method_email'
-      Then I verify checkbox name 'preferred_billing_method_email' and is checked 'false'
       And I click on BUTTON 'SAVE'
       Then I get valid message: 'User details updated Successfully'
       Then I scroll to top
@@ -629,7 +627,6 @@ Feature: User Profile Management
       And I am on the bookings page
       And I click on my name in the top corner
       And I will be taken to my individual profile page
-      Then I verify checkbox name 'preferred_billing_method_email' and is checked 'false'
 
 
   @runThis
@@ -680,8 +677,6 @@ Feature: User Profile Management
       And I am on the bookings page
       And I click on my name in the top corner
       And I will be taken to my individual profile page
-      When I click on checkbox name 'preferred_billing_method_email'
-      Then I verify checkbox name 'preferred_billing_method_email' and is checked 'false'
       And I click on BUTTON 'SAVE'
       Then I get valid message: 'User details updated Successfully'
       Then I scroll to top
@@ -691,7 +686,6 @@ Feature: User Profile Management
       And I am on the bookings page
       And I click on my name in the top corner
       And I will be taken to my individual profile page
-      Then I verify checkbox name 'preferred_billing_method_email' and is checked 'false'
 # ---------------------------------------- AUSLAN1-53 -> End ----------------------------------------
 
 
