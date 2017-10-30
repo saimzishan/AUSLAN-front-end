@@ -18,6 +18,7 @@ import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
 import {IndividualClient, OrganisationalRepresentative} from '../../shared/model/user.entity';
 import {PopupComponent} from '../../shared/popup/popup.component';
 import {Contact} from '../../shared/model/contact.entity';
+import {isNullOrUndefined} from 'util';
 
 
 const _ONE_HOUR = 1000 /*milliseconds*/
@@ -129,8 +130,10 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         return GLOBAL.currentUser instanceof OrganisationalRepresentative;
     }
     onSpecialInstruction () {
+        let special_instructions =
+            isNullOrUndefined(<OrganisationalRepresentative>GLOBAL.currentUser) ? '' : (<OrganisationalRepresentative>GLOBAL.currentUser).special_instructions;
         this.bookingModel.special_instructions =
-            this.rdgSpecialInstruction === 'true' ? (<OrganisationalRepresentative>GLOBAL.currentUser).special_instructions : '';
+            this.rdgSpecialInstruction === 'true' ? special_instructions : '';
     }
     public onStandardInvoice() {
         if ( GLOBAL.currentUser instanceof OrganisationalRepresentative) {
