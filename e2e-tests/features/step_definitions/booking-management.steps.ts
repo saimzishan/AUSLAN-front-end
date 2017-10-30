@@ -18,6 +18,7 @@ defineSupportCode(({Given, Then, When}) => {
     let bookingJobPO = new BookingJobPage();
 
     Given(/^The booking has status '(.*)'$/, Heroku.updateBookingWithStatus);
+    Given(/^The booking has assignment category '(.*)'$/, Heroku.updateBookingWithCategory);
     Given(/^There exist (\d+) bookings$/, Heroku.createBulkBookings);
     Given(/^One booking has client name as '(.*)'$/, Heroku.updateBookingWithClientName)
     Given(/^One booking has client last name as '(.*)'$/, Heroku.updateBookingWithLastClientName)
@@ -42,6 +43,7 @@ defineSupportCode(({Given, Then, When}) => {
     // When(/^I click on Bookings$/, bookingManagementPO.clickOnBookings);
     When(/^I see (one|\d+) rows? with state '(.*)'$/, bookingManagementPO.bookingWithStateExists);
     When(/^I see (one|\d+) rows? with status '(.*)'$/, bookingManagementPO.bookingWithStatusExists);
+    When(/^I see (one|\d+) rows? with type '(.*)'$/, bookingManagementPO.bookingWithTypeExists);
     When(/^I do not see any row with state '(.*)'$/, bookingManagementPO.noBookingWithStateExists);
 
     When(/^I click on an individual booking of type '(.*)'$/, bookingManagementPO.clickOnIndividualBookingOfType);
@@ -106,6 +108,7 @@ defineSupportCode(({Given, Then, When}) => {
     Then(/^I see one row with interpreter last name '(.*)'$/, bookingManagementPO.bookingExistsWithInterpreterLastName);
     Then(/^I see one row with org name '(.*)'$/, bookingManagementPO.bookingExistsWithOrgName);
     Then(/^I see one row with suburb '(.*)'$/, bookingManagementPO.bookingExistsWithSuburb);
+    Then(/^I should see the bookings in (ascending|descending) order of (.*)$/, bookingManagementPO.checkBookingOrder);
 
     // Then(/^I get the popup warning that is the non-standard booking$/, createBookingPO.popupForNonStandard)
 

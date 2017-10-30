@@ -519,6 +519,12 @@ export class Heroku {
         }
     }
 
+    static updateBookingWithCategory(category: string) {
+        let command = 'AssignmentCategory.create(name: \'' + category + '\'); AssignmentType.create(name: \'Cleveland\', assignment_category: AssignmentCategory.last);'
+        command += 'Booking.last.update(assignment_type: AssignmentType.last);';
+        Heroku.sendCommandToHeroku(command);
+    }
+
     static updateBookingWithStatus(status: string) {
         let daysToAdd = status === 'red' ? '2' : '4';
         let command = 'd = ' + daysToAdd + '.business_days.after(DateTime.now);'
