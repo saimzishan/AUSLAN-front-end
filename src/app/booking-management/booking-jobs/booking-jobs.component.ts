@@ -25,7 +25,7 @@ import {BookingHeaderService} from '../booking-header/booking-header.service';
     styleUrls: ['./booking-jobs.component.css']
 })
 
-export class BookingJobsComponent implements OnInit,OnDestroy {
+export class BookingJobsComponent implements OnInit, OnDestroy {
     selectedBookingModel: Booking = new Booking();
     invitePressed = false;
     unAssignPressed = false;
@@ -55,7 +55,7 @@ export class BookingJobsComponent implements OnInit,OnDestroy {
         this.sub = this.route.params.subscribe(params => {
             let param_id = params['id'] || '';
             if (Boolean(param_id) && parseInt(param_id, 10) > 0) {
-                this.fetchBookingInterpreters(param_id); 
+                this.fetchBookingInterpreters(param_id);
             }
         });
 
@@ -63,8 +63,8 @@ export class BookingJobsComponent implements OnInit,OnDestroy {
 
     ngOnInit() {
 
-        this.headerSubscription = this.bookingHeaderService.notifyObservable$.subscribe((res) => { 
-                  this.callRelatedFunctions(res); 
+        this.headerSubscription = this.bookingHeaderService.notifyObservable$.subscribe((res) => {
+                  this.callRelatedFunctions(res);
         });
     }
 
@@ -193,12 +193,12 @@ export class BookingJobsComponent implements OnInit,OnDestroy {
     }
 
     editBooking() {
-        
+
         let navigationExtras: NavigationExtras = {
             queryParams: {bookingModel: JSON.stringify(this.selectedBookingModel),
-                          shouldEdit: "edit" , assignedInterpreter: this.selectedBookingModel.interpreters.filter( i => i.state === 'Accepted').length
+                          shouldEdit: 'edit' , assignedInterpreter: this.selectedBookingModel.interpreters.filter( i => i.state === 'Accepted').length
             }
-        }; 
+        };
         this.router.navigate(['/booking-management', 'edit-booking'], navigationExtras);
     }
 
@@ -241,7 +241,7 @@ export class BookingJobsComponent implements OnInit,OnDestroy {
                         this.jobAccessError = false;
                         let data = res.data;
                         this.selectedBookingModel.fromJSON(data);
-                      
+
                         this.selectedBookingModel.interpreters.sort((i, j) =>
                             i.state === 'Accepted' ? -1 : j.state === 'Accepted' ? 1 : 0
                         );
@@ -458,5 +458,5 @@ export class BookingJobsComponent implements OnInit,OnDestroy {
 
         return false;
     }
-    
+
 }

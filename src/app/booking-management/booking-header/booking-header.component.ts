@@ -1,4 +1,4 @@
-import { Component, Input, ViewContainerRef, OnInit ,OnDestroy } from '@angular/core';
+import { Component, Input, ViewContainerRef, OnInit , OnDestroy } from '@angular/core';
 import { BookingHeaderService } from '../booking-header/booking-header.service';
 import { BOOKING_STATE } from '../../shared/model/booking-state.enum';
 import { Booking } from '../../shared/model/booking.entity';
@@ -28,17 +28,17 @@ export class BookingHeaderComponent implements OnInit, OnDestroy{
   @Input() disableAccept = false;
   @Input() disableReject = false;
 
-  constructor(private bookingHeaderService: BookingHeaderService, private router: Router,  public dialog: MdDialog ,public viewContainerRef: ViewContainerRef) { }
+  constructor(private bookingHeaderService: BookingHeaderService, private router: Router,  public dialog: MdDialog , public viewContainerRef: ViewContainerRef) { }
 
   ngOnInit() {
-    if(this.isCurrentUserInterpreter())
+    if (this.isCurrentUserInterpreter())
         this.showButtons = false;
   }
 
   ngOnDestroy() {
     return this.dialogSub && this.dialogSub.unsubscribe();
   }
-  
+
   showDialogBoxClick(data) {
 
     this.bookingHeaderService.notifyOther({ option: 'showDialogBox', value: data });
@@ -112,7 +112,7 @@ export class BookingHeaderComponent implements OnInit, OnDestroy{
   }
 
   isModelChanged(oldModel, currentModel) {
-  
+
     return !(JSON.stringify(oldModel) === JSON.stringify(currentModel))  ;
   }
 
@@ -128,4 +128,4 @@ export class BookingHeaderComponent implements OnInit, OnDestroy{
     return GLOBAL.currentUser instanceof Interpreter;
   }
 
-} 
+}

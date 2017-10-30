@@ -22,15 +22,15 @@ constructor(public notificationServiceBus: NotificationServiceBus){}
   ngAfterViewInit() {
     if (this.parentForm != null) {
 
-      if (!this.parentForm.form.contains("billAddressFields")) {
-        this.parentForm.form.addControl("billAddressFields", this.form.form);
+      if (!this.parentForm.form.contains('billAddressFields')) {
+        this.parentForm.form.addControl('billAddressFields', this.form.form);
       }
     }
   }
 
   fieldClick(evnt)
   {
-      if((evnt.target as Element).hasAttribute("readonly"))
+      if ((evnt.target as Element).hasAttribute('readonly'))
           this.notificationServiceBus.launchNotification(true, 'In order to change this field, please contact the booking office.');
   }
 

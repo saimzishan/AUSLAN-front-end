@@ -221,7 +221,7 @@ export class Booking {
                 organisation: this.client.organisation_name
             },
             documents_attributes: this.documents_attributes,
-            preference_allocations_attributes:this.preference_allocations_attributes
+            preference_allocations_attributes: this.preference_allocations_attributes
         });
         return o;
     }

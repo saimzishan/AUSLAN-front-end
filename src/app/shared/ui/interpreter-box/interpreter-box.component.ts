@@ -60,7 +60,7 @@ export class InterpreterBoxComponent implements OnInit {
         this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
 
             this._sharedPreferedAllocationService.publishData(this.selectedInterpreters);
-            
+
         });
     }
 
