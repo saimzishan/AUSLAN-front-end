@@ -199,8 +199,7 @@
                         <div class="form-field">
                             <label>Do you want to use your standard special instructions? <span mdTooltip="Tooltip!"><i
                                     class="inline-icon-tip"></i></span></label>
-                            <md-radio-group name="rdSpecialInstruction" [(ngModel)]="rdgSpecialInstruction"
-                                            (change)='onSpecialInstruction()'>
+                            <md-radio-group name="rdSpecialInstruction" [(ngModel)]="rdgSpecialInstruction" (change)='onSpecialInstruction()'>
                                 <md-radio-button value=true>YES</md-radio-button>
                                 <md-radio-button value=false>NO</md-radio-button>
                             </md-radio-group>
@@ -211,8 +210,7 @@
                             <div class="form-field">
                                 <label>Special instructions <span mdTooltip="Enter Special instructions!"><i
                                         class="inline-icon-tip"></i></span></label>
-                                <input [(ngModel)]="bookingModel.special_instructions" name='txtSpecialInstruction'
-                                       type='text' placeholder="Enter Special instructions">
+                                <input [(ngModel)]="bookingModel.special_instructions" name='txtSpecialInstruction' type='text' placeholder="Enter Special instructions">
 
                             </div>
                         </div>

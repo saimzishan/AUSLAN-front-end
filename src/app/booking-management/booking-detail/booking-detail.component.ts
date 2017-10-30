@@ -59,6 +59,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         BA.loadItems();
 
         this.bookingModel = new Booking();
+        this.onSpecialInstruction();
 
         /** http://stackoverflow.com/questions/38008334/angular2-rxjs-when-should-i-unsubscribe-from-subscription */
         this.sub = this.route.queryParams.subscribe(params => {
