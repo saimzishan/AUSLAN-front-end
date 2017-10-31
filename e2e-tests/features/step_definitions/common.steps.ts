@@ -109,7 +109,7 @@ defineSupportCode(({Given, When, Then}) => {
     function documentUpload(documentName: string) {
         let fileToUpload = '../../data/' + documentName;
         let p = path.resolve(__dirname, fileToUpload);
-        let elm = element(by.css('input[type="file"]'));
+        let elm = element(by.css('input[name="uploader"]'));
         return elm.sendKeys(p);
     }
 
