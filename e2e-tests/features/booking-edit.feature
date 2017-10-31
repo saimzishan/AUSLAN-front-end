@@ -26,7 +26,7 @@ Feature: Edit Booking
     Then I should be on the edit booking page
     And All required booking fields should be filled
 
-  @runThis
+  @ignoreThis
   Scenario: Given 1 verified Booking Officer, I should see the booking details filled in
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
@@ -39,3 +39,4 @@ Feature: Edit Booking
     When I change the street number to 154
     Then I click on checkbox name 'tnc'
     And I click on BUTTON 'SAVE'
+    Then I should get a valid booking update notification

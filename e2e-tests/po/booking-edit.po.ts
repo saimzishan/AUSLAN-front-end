@@ -1,5 +1,7 @@
+import {browser} from 'protractor';
 import {PageObject} from './app.po';
 import {expect} from '../config/helpers/chai-imports';
+import {NotificationObject} from './notification';
 
 export class BookingEditPage extends PageObject {
     verify = () => {
@@ -24,6 +26,11 @@ export class BookingEditPage extends PageObject {
             });
         }, true).then((condition) => {
             return expect(condition).to.eq(true);
+        });
+    }
+    getSuccessNotificationContent = () => {
+        return browser.sleep(2500).then(() => {
+            NotificationObject.getNotificationContent('The Booking has been Updated.');
         });
     }
 }
