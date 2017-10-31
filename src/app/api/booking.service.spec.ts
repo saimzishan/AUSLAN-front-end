@@ -188,6 +188,36 @@ describe('BookingService', () => {
         })();
     });
 
+    fit('should bulk upload Bookings', function (done) {
+        inject([BookingService], (service: BookingService) => {
+
+            bookingProvider
+                .given('booking does not exists in database')
+                .uponReceiving('a request to bulk upload bookings')
+                .withRequest('POST', '/api/v1/bookings/bulk_upload', {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+
+                }, {'bulk_upload_excel_file': Pact.Match.somethingLike('data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,AABB')})
+
+                .willRespondWith(204, {
+                    'Content-Type': 'application/json; charset=utf-8'
+                }, Pact.Match.somethingLike(new Object({})));
+
+            bookingProvider.run(done, function (runComplete) {
+
+                service.bulkUploadBookings('data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,AABB')
+                    .subscribe((res: any) => {
+                        service.bookings.push(res.data);
+                        expect(res.status).toEqual(204);
+                        done();
+                    }, err => done.fail(err), () => {
+                        runComplete();
+                    });
+            });
+        })();
+    });
+
 
     it('should invite a bulk of interpreters', function (done) {
         inject([BookingService], (service: BookingService) => {
