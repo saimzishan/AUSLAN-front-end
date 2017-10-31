@@ -12,18 +12,14 @@ export class BookingEditPage extends PageObject {
     checkValueInAllRequiredFields = () => {
         let flag = false;
         this.getAllElementByCSS('input[required]').reduce(function (acc, ele) {
-            ele.getAttribute('name').then((name) => { console.log(name) });
             return ele.getAttribute('value').then((value) => {
-                console.log(value);
                 return acc && !!value;
             });
         }, true).then((condition) => {
             expect(condition).to.eq(true);
         });
         return this.getAllElementByCSS('select[required]').reduce(function (acc, ele) {
-            ele.getAttribute('name').then((name) => { console.log(name) });
             return ele.getAttribute('value').then((value) => {
-                console.log(value);
                 return acc && !!value;
             });
         }, true).then((condition) => {
