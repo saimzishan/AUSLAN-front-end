@@ -116,7 +116,9 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
 
     public onClientSelectionChange() {
         ['first_name', 'last_name', 'email', 'mobile_number'].forEach((field) => {
-            let value = this.currentUserIsClient === 'true' ? GLOBAL.currentUser[field] : '';
+            let currentUserFieldMap = { mobile_number: 'mobile' };
+            let currentUserField = currentUserFieldMap[field] || field;
+            let value = this.currentUserIsClient === 'true' ? GLOBAL.currentUser[currentUserField] : '';
             this.bookingModel.deaf_person[field] = value;
             this.oldBookingModel.deaf_person[field] = value;
         });
@@ -124,9 +126,11 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
 
     public onSelectionChange() {
         ['first_name', 'last_name', 'email', 'mobile_number'].forEach((field) => {
-            let value = this.currentUserIsContact === 'true' ? GLOBAL.currentUser[field] : '';
-            this.bookingModel.deaf_person[field] = value;
-            this.oldBookingModel.deaf_person[field] = value;
+            let currentUserFieldMap = { mobile_number: 'mobile' };
+            let currentUserField = currentUserFieldMap[field] || field;
+            let value = this.currentUserIsContact === 'true' ? GLOBAL.currentUser[currentUserField] : '';
+            this.bookingModel.primaryContact[field] = value;
+            this.oldBookingModel.primaryContact[field] = value;
         });
     }
 
@@ -363,7 +367,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     confirmDelete(docID) {
-        let obj = { id: docID, destroy: '1' };
+        let obj = { id: docID, '_destroy': '1' };
         this.deleteDocuments.push(obj);
         this.oldDocuments = this.oldDocuments.filter(d => d.id !== docID);
     }

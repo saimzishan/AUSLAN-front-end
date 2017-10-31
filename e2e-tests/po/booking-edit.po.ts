@@ -6,9 +6,9 @@ import {NotificationObject} from './notification';
 export class BookingEditPage extends PageObject {
     verify = () => {
         return this.currentPath().then((url) => {
-           let paths = url.split('/');
-           let len = paths.length;
-           return expect(paths[len - 1]).to.contain('edit-booking');
+            let paths = url.split('/');
+            let len = paths.length;
+            return expect(paths[len - 1]).to.contain('edit-booking');
         });
     }
     checkValueInAllRequiredFields = () => {
