@@ -25,3 +25,17 @@ Feature: Edit Booking
     When I click on link 'Booking details'
     Then I should be on the edit booking page
     And All required booking fields should be filled
+
+  @runThis
+  Scenario: Given 1 verified Booking Officer, I should see the booking details filled in
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    And I am on the bookings page
+    When I click on an individual booking
+    Then I am on the individual booking page
+    When I click on link 'Booking details'
+    Then I should be on the edit booking page
+    And All required booking fields should be filled
+    When I change the street number to 154
+    Then I click on checkbox name 'tnc'
+    And I click on BUTTON 'SAVE'

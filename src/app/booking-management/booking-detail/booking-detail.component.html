@@ -294,13 +294,11 @@
                                     class="inline-icon-tip"></i></span></label>
                             <input type="tel"
                                    placeholder="Enter Contact Mobile Number"
-                                   [(ngModel)]="bookingModel.primaryContact .mobile_number" name="mobile"
-                                   [rangeLength]="[2,20]"
+                                   [(ngModel)]="bookingModel.primaryContact.mobile_number" name="mobile" [rangeLength]="[6,20]"
                                    #mobile="ngModel">
-                            <span *ngIf="mobile.touched && !mobile.errors?.required && !mobile.errors?.rangeLength;"
+                            <span *ngIf="mobile.touched && !mobile.errors?.rangeLength;"
                                   class="inline-icon inline-icon-valid valid"></span>
-                            <span *ngIf="mobile.touched && mobile.errors?.required || mobile.errors?.rangeLength;"
-                                  class="inline-icon error">
+                            <span *ngIf="mobile.touched || mobile.errors?.rangeLength;" class="inline-icon error">
               <span>Minimum 6 digits required.</span>!
             </span>
                         </div>
@@ -382,12 +380,12 @@
                         <div class="form-field">
                             <label>DEAF PERSON'S MOBILE <span mdTooltip="Enter deaf person Mobile Number"><i
                                     class="inline-icon-tip"></i></span></label>
-                            <input type="tel" placeholder="Enter deaf person Mobile Number"
+                            <input type="tel" placeholder="Enter deaf person Mobile Number" id="deaf_person_mobile"
                                    [(ngModel)]="bookingModel.deaf_person.mobile_number" name="deaf_person_mobile"
-                                   #deaf_person_mobile="ngModel" [rangeLength]="[10,11]" required>
-                            <span *ngIf="deaf_person_mobile.touched && !deaf_person_mobile.errors?.required && !deaf_person_mobile.errors?.rangeLength;"
+                                   #deaf_person_mobile="ngModel" digits [rangeLength]="[10,11]">
+                            <span *ngIf="deaf_person_mobile.touched && !deaf_person_mobile.errors?.rangeLength;"
                                   class="inline-icon inline-icon-valid valid"></span>
-                            <span *ngIf="deaf_person_mobile.touched && deaf_person_mobile.errors?.required || deaf_person_mobile.errors?.rangeLength;"
+                            <span *ngIf="deaf_person_mobile.touched || deaf_person_mobile.errors?.rangeLength;"
                                   class="inline-icon error">
               <span>Minimum 10 digits required.</span>!
             </span>
