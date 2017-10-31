@@ -167,4 +167,15 @@ export class BookingService extends ApiService {
 
     }
 
+    bulkUploadBookings(base64encodedUploadFile: String): Observable<Object> {
+
+        let headers = new Headers({'Accept': 'application/json',
+            'Content-Type': 'application/json'});
+        let options = new RequestOptions({ headers: headers });
+        let obj = { 'bulk_upload_excel_file': base64encodedUploadFile };
+
+        return this.http.post(GLOBAL.BOOKING_API + '/bulk_upload' , JSON.stringify(obj), options)
+            .map(this.extractData)
+            .catch((err) => { return this.handleError(err); });
+    }
 }
