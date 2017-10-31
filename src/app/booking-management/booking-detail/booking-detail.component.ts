@@ -15,7 +15,7 @@ import {FileUploader, FileUploaderOptions} from 'ng2-file-upload';
 
 import {Address} from '../../shared/model/venue.entity';
 import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
-import {IndividualClient, OrganisationalRepresentative} from '../../shared/model/user.entity';
+import {IndividualClient, OrganisationalRepresentative ,BookingOfficer ,Administrator} from '../../shared/model/user.entity';
 import {PopupComponent} from '../../shared/popup/popup.component';
 import {Contact} from '../../shared/model/contact.entity';
 import {UserService} from '../../api/user.service';
@@ -134,6 +134,12 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     return GLOBAL.currentUser instanceof OrganisationalRepresentative ||
         GLOBAL.currentUser instanceof IndividualClient;
     }
+
+    isUserAdminORBookOfficer() {
+        return GLOBAL.currentUser instanceof Administrator ||
+            GLOBAL.currentUser instanceof BookingOfficer ;
+        }
+
     onSpecialInstruction () {
         this.bookingModel.special_instructions =
             this.rdgSpecialInstruction === 'true' ? (<OrganisationalRepresentative>GLOBAL.currentUser).special_instructions : '';

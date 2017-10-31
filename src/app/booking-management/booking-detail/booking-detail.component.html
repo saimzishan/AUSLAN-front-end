@@ -7,7 +7,7 @@
         </section>
 
         <form #booking_form="ngForm" class="common-form compact">
-            <div class="row">
+            <div class="row" *ngIf="isUserAdminORBookOfficer()">
                 <h2>CUSTOMER</h2>
                 <div class="medium-12 columns">
                     <div class="form-field">
@@ -20,10 +20,10 @@
                 </div> 
             </div>
 
-            <div class="row">
+            <div class="row" *ngIf="isUserAdminORBookOfficer()">
                     <div class="medium-6 columns"> 
                             <div class="form-field">
-                                   <label>PLEASE SELECT THE {{bookingFor ==='client' ? "CLIENT":"ORGANIZATION"}}*
+                                   <label>PLEASE SELECT THE {{bookingFor ==='IndividualClient' ? "CLIENT":"ORGANIZATION"}}*
                                        <span mdTooltip="Select the client/Org"><i class="inline-icon-tip"></i></span>
                                    </label>
                                <select (change)="ddlBookingForChange($event)"
