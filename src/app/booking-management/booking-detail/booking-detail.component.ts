@@ -313,6 +313,24 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.notificationServiceBus.launchNotification(true, 'Kindly fill all the required (*) fields');
             return;
         }
+
+        if (this.bookingModel.interpreters_required < 2 && this.isMoreInterpreterNeeded()) {
+           this.moreInterpreterModal();
+
+            this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
+
+                if (result) {
+                    this.proceedWithBooking();
+                } 
+            });
+        }
+        else {
+            this.proceedWithBooking();
+        }
+    }
+
+    // have to merge this with save booking later.
+    proceedWithBooking() {
         if (this.isBookingTimeInNonStandardHours()) {
             let config: MdDialogConfig = {
                 disableClose: true
@@ -324,7 +342,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.dialogRef.componentInstance.okTitle = 'CREATE';
             this.dialogRef.componentInstance.popupMessage =
                 `This booking is not within the standard booking hours (8AM - 6PM).
-                 Do you still want to create booking?`;
+             Do you still want to create booking?`;
 
             this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
 
@@ -352,6 +370,21 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
 
         return timeDiff > _ONE_HOUR;
         /* One hour */
+    }
+
+    moreInterpreterModal(){
+        let config: MdDialogConfig = {
+            disableClose: true
+        };
+        config.viewContainerRef = this.viewContainerRef;
+        this.dialogRef = this.dialog.open(PopupComponent, config);
+        this.dialogRef.componentInstance.title = 'More Interpreter WARNING';
+        this.dialogRef.componentInstance.cancelTitle = 'BACK';
+        this.dialogRef.componentInstance.okTitle = 'CREATE';
+        this.dialogRef.componentInstance.popupMessage =
+            `This booking might require more than 1 interpreter. You've only requested 1 interpreter.
+             Are you sure you want to create this booking?`;
+
     }
 
     private isBookingTimeInNonStandardHours() {
