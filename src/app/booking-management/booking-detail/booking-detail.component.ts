@@ -135,7 +135,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     isNotIndClient() {
-        return GLOBAL.currentUser instanceof IndividualClient === false;
+        return !(GLOBAL.currentUser instanceof IndividualClient);
     }
 
     isUserOrgRepORIndClientTemp() {
