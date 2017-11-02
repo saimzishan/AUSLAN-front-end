@@ -18,6 +18,18 @@ Feature: Booking Management with bulk upload
     And I will be shown with bookings
 
   @runThis
+  Scenario: Booking Officer can bulk upload with an excel file for Individual Client and Organisational Representative
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    And I am on the bookings page
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    When I will upload a bulk upload spreadsheet 'bulk_booking_upload_with_wrong_bookable.xlsx'
+    Then I get a valid create bulk upload booking notification
+    And I am on the bookings page
+    And I will be shown with bookings
+
+  @runThis
   Scenario: Organisational Representative can bulk upload with an excel file only for themselves
     Given I exist as an Organisational Representative
     And I sign in with valid Organisational Representative credentials
@@ -59,5 +71,5 @@ Feature: Booking Management with bulk upload
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
     When I will upload a bulk upload spreadsheet 'bulk_booking_upload_with_error_in_one_row.xlsx'
-    Then I get an booking error notification with Error occured on server side. Unprocessable Entity {"errors":"Error on row 4. Address post code can\'t be blank, Billing account address street name can\'t be blank, Start time can\'t be blank, End time can\'t be blank, Number of people attending is not a number"}
+    Then I get an booking error notification with Error occured on server side. Unprocessable Entity {"errors":"Error on row 4. Address post code can't be blank, Billing account address street name can't be blank, Start time can't be blank, End time can't be blank, Number of people attending is not a number"}
     And I will be taken to the 'New Booking' form
