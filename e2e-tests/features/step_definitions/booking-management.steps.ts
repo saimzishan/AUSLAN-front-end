@@ -9,6 +9,7 @@ import {BookingManagementPage} from '../../po/booking-management-page.po';
 import {CONSTANT, Booking, Heroku} from '../../helper';
 import {BookingPage} from '../../po/create-booking.po';
 import {BookingJobPage} from '../../po/booking-job.po';
+import {BookingEditPage} from "../../po/booking-edit.po";
 
 defineSupportCode(({Given, Then, When}) => {
 
@@ -16,8 +17,10 @@ defineSupportCode(({Given, Then, When}) => {
     let bookingManagementPO = new BookingManagementPage();
     let createBookingPO = new BookingPage();
     let bookingJobPO = new BookingJobPage();
+    let bookingEditPO = new BookingEditPage();
 
     Given(/^The booking has status '(.*)'$/, Heroku.updateBookingWithStatus);
+    Given(/^The booking has assignment category '(.*)'$/, Heroku.updateBookingWithCategory);
     Given(/^There exist (\d+) bookings$/, Heroku.createBulkBookings);
     Given(/^One booking has client name as '(.*)'$/, Heroku.updateBookingWithClientName)
     Given(/^One booking has client last name as '(.*)'$/, Heroku.updateBookingWithLastClientName)
@@ -42,6 +45,7 @@ defineSupportCode(({Given, Then, When}) => {
     // When(/^I click on Bookings$/, bookingManagementPO.clickOnBookings);
     When(/^I see (one|\d+) rows? with state '(.*)'$/, bookingManagementPO.bookingWithStateExists);
     When(/^I see (one|\d+) rows? with status '(.*)'$/, bookingManagementPO.bookingWithStatusExists);
+    When(/^I see (one|\d+) rows? with type '(.*)'$/, bookingManagementPO.bookingWithTypeExists);
     When(/^I do not see any row with state '(.*)'$/, bookingManagementPO.noBookingWithStateExists);
 
     When(/^I click on an individual booking of type '(.*)'$/, bookingManagementPO.clickOnIndividualBookingOfType);
@@ -82,13 +86,16 @@ defineSupportCode(({Given, Then, When}) => {
     When(/^I click dropdown (.*)$/, createBookingPO.clickOnDropDown);
 
     When(/^I click on option (.*) of (.*) for (.*)/, createBookingPO.clickOnOption);
-    When(/^I query booking with booking id$/, bookingManagementPO.queryBookingWithID)
-    When(/^I query booking with client name '(.*)'$/, bookingManagementPO.queryBookingByClientName)
-    When(/^I query booking with interpreter name '(.*)'$/, bookingManagementPO.queryBookingByInterpreterName)
+    When(/^I query booking with booking id$/, bookingManagementPO.queryBookingWithID);
+    When(/^I query booking with client name '(.*)'$/, bookingManagementPO.queryBookingByClientName);
+    When(/^I query booking with interpreter name '(.*)'$/, bookingManagementPO.queryBookingByInterpreterName);
     When(/^I query booking with org name '(.*)'$/, bookingManagementPO.queryBookingByOrgName);
     When(/^I query booking with suburb '(.*)'$/, bookingManagementPO.queryBookingBySuburb);
     When(/^I filter booking by date range first and last days of next week$/, bookingManagementPO.filterBookingByDateRange);
-    When(/^I hover on the (.*) dropdown and select '(.*)'$/, bookingManagementPO.hoverOnTableHeader)
+    When(/^I hover on the (.*) dropdown and select '(.*)'$/, bookingManagementPO.hoverOnTableHeader);
+    When(/^I change the street number to (\d+)$/, createBookingPO.setStreetNumber);
+
+    Then(/^All required booking fields should be filled$/, bookingEditPO.checkValueInAllRequiredFields);
 
     Then(/^The cell of (.*) will be populated with (.*)$/, createBookingPO.checkTheDropDown);
 
@@ -98,7 +105,7 @@ defineSupportCode(({Given, Then, When}) => {
     // Click the create booking button
     Then(/^I click the create booking button$/, createBookingPO.clickCreateBtn);
 
-    Then(/^I (.*) see the (.*) field$/, createBookingPO.checkTheFieldExist);
+    Then(/^I (.*)\s?see the (.*) field$/, createBookingPO.checkTheFieldExist);
     Then(/^I see one row with the booking id$/, bookingManagementPO.bookingExistsWithId);
     Then(/^I see one row with client name '(.*)'$/, bookingManagementPO.bookingExistsWithClientName);
     Then(/^I see one row with client last name '(.*)'$/, bookingManagementPO.bookingExistsWithClientLastName);
@@ -106,6 +113,9 @@ defineSupportCode(({Given, Then, When}) => {
     Then(/^I see one row with interpreter last name '(.*)'$/, bookingManagementPO.bookingExistsWithInterpreterLastName);
     Then(/^I see one row with org name '(.*)'$/, bookingManagementPO.bookingExistsWithOrgName);
     Then(/^I see one row with suburb '(.*)'$/, bookingManagementPO.bookingExistsWithSuburb);
+    Then(/^I should see the bookings in (ascending|descending) order of (.*)$/, bookingManagementPO.checkBookingOrder);
+    Then(/^I should be on the edit booking page$/, bookingEditPO.verify);
+    Then(/^I should get a valid booking update notification$/, bookingEditPO.getSuccessNotificationContent);
 
     // Then(/^I get the popup warning that is the non-standard booking$/, createBookingPO.popupForNonStandard)
 

@@ -14,7 +14,7 @@ export class Contact {
 }
 
 export class DEAFContact extends Contact {
-  public eaf: number;
+  public eaf;
 }
 
 export class BookingInterpreter extends Contact {

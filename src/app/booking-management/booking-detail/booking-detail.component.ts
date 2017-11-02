@@ -19,6 +19,7 @@ import {IndividualClient, OrganisationalRepresentative, BookingOfficer} from '..
 import {PopupComponent} from '../../shared/popup/popup.component';
 import {Contact} from '../../shared/model/contact.entity';
 import {PreferedAllocationService} from '../../shared/prefered-allocation.service';
+import {isNullOrUndefined} from 'util';
 
 const _ONE_HOUR = 1000 /*milliseconds*/
     * 60 /*seconds*/
@@ -36,9 +37,9 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     private sub: any;
     public uploader: FileUploader = new FileUploader({url: '', maxFileSize: 20 * 1024 * 1024});
     bookingModel: Booking;
+    standardInvoice = 'true';
+    rdgSpecialInstruction = 'true';
     oldBookingModel;
-    standardInvoice = 'false';
-    rdgSpecialInstruction = 'false';
     dialogSub;
     appointment_types = Object.keys(BOOKING_NATURE).filter(value => value === BOOKING_NATURE[value]
         || BOOKING_NATURE[value].startsWith(value)).map(v => BOOKING_NATURE[v]) as string[];
@@ -56,11 +57,11 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     userModel;
     showBlocked = 'false';
     showProfileBlocked = 'false';
-    bookingHeading= '';
-    shouldEdit= '';
+    bookingHeading = '';
+    shouldEdit = '';
     assignedInterpreter = 0;
     oldDocuments = [];
-    deleteDocuments= [];
+    deleteDocuments = [];
 
     constructor(public bookingService: BookingService, private router: Router,
                 private route: ActivatedRoute, private rolePermission: RolePermission,
@@ -70,13 +71,14 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         BA.loadItems();
 
         this.bookingModel = new Booking();
+        this.onSpecialInstruction();
         this.oldBookingModel = new Booking();
 
         /** http://stackoverflow.com/questions/38008334/angular2-rxjs-when-should-i-unsubscribe-from-subscription */
         this.sub = this.route.queryParams.subscribe(params => {
             let param = params['bookingModel'] || '';
-             this.shouldEdit = params ['shouldEdit'] || '';
-             this.assignedInterpreter = params ['assignedInterpreter'] || '';
+            this.shouldEdit = params ['shouldEdit'] || '';
+            this.assignedInterpreter = params ['assignedInterpreter'] || '';
 
             if (param.length > 0) {
                 let jsonData = JSON.parse(param);
@@ -91,27 +93,24 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
 
                 this.oldBookingModel = this.deepCopy(this.bookingModel);
             }
-
-            this.bookingHeading = (this.shouldEdit.length > 0 && this.shouldEdit  === 'edit' ) ? 'EDIT BOOKING' : 'NEW BOOKING';
-
+            this.bookingHeading = (this.shouldEdit.length > 0 && this.shouldEdit === 'edit' ) ? 'EDIT BOOKING' : 'NEW BOOKING';
         });
 
 
     }
 
-    public fileOverBase(e: any) {
+    onStartTimeChanged() {
+        this.bookingModel.venue.end_time_iso = this.bookingModel.venue.start_time_iso;
     }
-
     natureOfApptChange($event) {
         let val: BOOKING_NATURE = <BOOKING_NATURE> BOOKING_NATURE[this.bookingModel.raw_nature_of_appointment];
         this.specific_appointment_types = BA.DISSCUSSION_ITEM[BOOKING_NATURE[val]];
     }
 
     ngOnDestroy() {
-
-        if (this.dialogSub != null)
+        if (this.dialogSub != null) {
             this.dialogSub.unsubscribe();
-
+        }
         return this.sub && this.sub.unsubscribe();
     }
 
@@ -124,21 +123,23 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     public onClientSelectionChange() {
-        this.bookingModel.deaf_person.first_name = this.oldBookingModel.deaf_person.first_name = this.currentUserIsClient === 'true' ? GLOBAL.currentUser.first_name : '';
-        this.bookingModel.deaf_person.last_name = this.oldBookingModel.deaf_person.last_name = this.currentUserIsClient === 'true' ? GLOBAL.currentUser.last_name : '';
-        this.bookingModel.deaf_person.email = this.oldBookingModel.deaf_person.email = this.currentUserIsClient === 'true' ? GLOBAL.currentUser.email : '';
-        this.bookingModel.deaf_person.mobile_number = this.oldBookingModel.deaf_person.mobile_number = this.currentUserIsClient === 'true' ? GLOBAL.currentUser.mobile : '';
+        ['first_name', 'last_name', 'email', 'mobile_number'].forEach((field) => {
+            let currentUserFieldMap = { mobile_number: 'mobile' };
+            let currentUserField = currentUserFieldMap[field] || field;
+            let value = this.currentUserIsClient === 'true' ? GLOBAL.currentUser[currentUserField] : '';
+            this.bookingModel.deaf_person[field] = value;
+            this.oldBookingModel.deaf_person[field] = value;
+        });
     }
 
     public onSelectionChange() {
-        this.bookingModel.primaryContact.first_name = this.oldBookingModel.primaryContact.first_name =
-            this.currentUserIsContact === 'true' ? GLOBAL.currentUser.first_name : '';
-        this.bookingModel.primaryContact.last_name = this.oldBookingModel.primaryContact.last_name =
-            this.currentUserIsContact === 'true' ? GLOBAL.currentUser.last_name : '';
-        this.bookingModel.primaryContact.email = this.oldBookingModel.primaryContact.email =
-            this.currentUserIsContact === 'true' ? GLOBAL.currentUser.email : '';
-        this.bookingModel.primaryContact.mobile_number = this.oldBookingModel.primaryContact.mobile_number =
-            this.currentUserIsContact === 'true' ? GLOBAL.currentUser.mobile : '';
+        ['first_name', 'last_name', 'email', 'mobile_number'].forEach((field) => {
+            let currentUserFieldMap = { mobile_number: 'mobile' };
+            let currentUserField = currentUserFieldMap[field] || field;
+            let value = this.currentUserIsContact === 'true' ? GLOBAL.currentUser[currentUserField] : '';
+            this.bookingModel.primaryContact[field] = value;
+            this.oldBookingModel.primaryContact[field] = value;
+        });
     }
 
     public onPreferredSelectionChange() {
@@ -171,24 +172,29 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     isNotIndClient() {
-        return GLOBAL.currentUser instanceof IndividualClient === false;
+        return !(GLOBAL.currentUser instanceof IndividualClient);
     }
 
     isUserOrgRepORIndClientTemp() {
-    return GLOBAL.currentUser instanceof OrganisationalRepresentative ||
-        GLOBAL.currentUser instanceof IndividualClient;
+        return GLOBAL.currentUser instanceof OrganisationalRepresentative ||
+            GLOBAL.currentUser instanceof IndividualClient;
     }
-    onSpecialInstruction () {
+    isUserOrgRep() {
+        return GLOBAL.currentUser instanceof OrganisationalRepresentative;
+    }
+    onSpecialInstruction() {
+        let special_instructions =
+            isNullOrUndefined(<OrganisationalRepresentative>GLOBAL.currentUser) ? '' : (<OrganisationalRepresentative>GLOBAL.currentUser).special_instructions;
         this.bookingModel.special_instructions =
-            this.rdgSpecialInstruction === 'true' ? (<OrganisationalRepresentative>GLOBAL.currentUser).special_instructions : '';
+            this.rdgSpecialInstruction === 'true' ? special_instructions : '';
     }
-    forEdit() {
 
+    forEdit() {
         return (this.shouldEdit.length > 0 && this.shouldEdit  === 'edit' ) ;
     }
 
     public onStandardInvoice() {
-        if ( GLOBAL.currentUser instanceof OrganisationalRepresentative) {
+        if (GLOBAL.currentUser instanceof OrganisationalRepresentative) {
             let currentUser = <OrganisationalRepresentative>GLOBAL.currentUser;
 
             this.bookingModel.client.organisation_primary_contact = this.standardInvoice === 'true' ?
@@ -213,8 +219,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     public onCreateBooking(form: FormGroup, addressForm: any, billingForm: any, uploader: FileUploader) {
 
         if (!this.termsAndConditionAccepted) {
-            this.notificationServiceBus.
-            launchNotification(true, 'Kindly accept Terms and Conditions');
+            this.notificationServiceBus.launchNotification(true, 'Kindly accept Terms and Conditions');
             return;
         }
         if (form.invalid || addressForm.form.invalid || billingForm.form.invalid) {
@@ -237,17 +242,19 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
 
                 if (result) {
-                    if (this.shouldEdit.length > 0 && this.shouldEdit === 'edit')
+                    if (this.shouldEdit.length > 0 && this.shouldEdit === 'edit') {
                         this.updateBooking();
-                    else
+                    } else {
                         this.createBooking();
+                    }
                 }
             });
         } else {
-            if (this.shouldEdit.length > 0 && this.shouldEdit === 'edit')
+            if (this.shouldEdit.length > 0 && this.shouldEdit === 'edit') {
                 this.updateBooking();
-            else
+            } else {
                 this.createBooking();
+            }
         }
     }
 
@@ -292,33 +299,27 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     updateBooking() {
-
         if ((this.bookingModel.state == BOOKING_STATE.In_progress || this.bookingModel.state == BOOKING_STATE.Allocated) && this.isImportantFieldsChanged() ) {
+            let config: MdDialogConfig = {
+                disableClose: true
+            };
+            config.viewContainerRef = this.viewContainerRef;
+            this.dialogRef = this.dialog.open(PopupComponent, config);
+            this.dialogRef.componentInstance.title = 'Important Fields Changed WARNING';
+            this.dialogRef.componentInstance.cancelTitle = 'BACK';
+            this.dialogRef.componentInstance.okTitle = 'Yes';
+            this.dialogRef.componentInstance.popupMessage =
+                `Interpreter(s) have been/is allocated for this job. Did you get confirmation from the interpreter(s) that these changes are OK?`;
 
-                let config: MdDialogConfig = {
-                    disableClose: true
-                };
-                config.viewContainerRef = this.viewContainerRef;
-                this.dialogRef = this.dialog.open(PopupComponent, config);
-                this.dialogRef.componentInstance.title = 'Important Fields Changed WARNING';
-                this.dialogRef.componentInstance.cancelTitle = 'BACK';
-                this.dialogRef.componentInstance.okTitle = 'Yes';
-                this.dialogRef.componentInstance.popupMessage =
-                    `Interpreter(s) have been/is allocated for this job. Did you get confirmation from the interpreter(s) that these changes are OK?`;
-
-                this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
-
-                    if (result)
-                        this.saveBooking();
-                });
-        }
-        else
+            this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
+                this.saveBooking();
+            });
+        } else {
             this.saveBooking();
-
+        }
     }
 
-    saveBooking(){
-
+    saveBooking() {
         if (this.assignedInterpreter > this.bookingModel.interpreters_required) {
             let config: MdDialogConfig = {
                 disableClose: true
@@ -330,32 +331,30 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.dialogRef.componentInstance.okTitle = 'Ok';
             this.dialogRef.componentInstance.popupMessage =
                 `"Oops! Too many interpreters already allocated. Please unassign first.`;
-        }
-        else {
+        } else {
+            this.spinnerService.requestInProcess(true);
+            let bookingID = this.bookingModel.id;
+            this.bookingModel.clean(this.bookingModel.toJSON());
 
-        this.spinnerService.requestInProcess(true);
-        let bookingID = this.bookingModel.id;
-        this.bookingModel.clean(this.bookingModel.toJSON());
-
-        this.deleteDocuments.forEach(element => {
-            this.bookingModel.documents_attributes.push(element);
-        });
-
-        this.bookingService.updateBooking(bookingID, this.bookingModel)
-            .subscribe((res: any) => {
-                if (res.status === 204 && res.ok === true) {
-                    this.notificationServiceBus.launchNotification(false, 'The Booking has been Updated.');
-                    let route = this.rolePermission.getDefaultRouteForCurrentUser();
-                    this.router.navigate([route]);
-                }
-                this.spinnerService.requestInProcess(false);
-            },
-            errors => {
-                this.spinnerService.requestInProcess(false);
-                let e = errors.json() || '';
-                this.notificationServiceBus.launchNotification(true,
-                    'Error occured on server side. ' + errors.statusText + ' ' + JSON.stringify(e || e.errors));
+            this.deleteDocuments.forEach(element => {
+                this.bookingModel.documents_attributes.push(element);
             });
+
+            this.bookingService.updateBooking(bookingID, this.bookingModel)
+                .subscribe((res: any) => {
+                        if (res.status === 204 && res.ok === true) {
+                            this.notificationServiceBus.launchNotification(false, 'The Booking has been Updated.');
+                            let route = this.rolePermission.getDefaultRouteForCurrentUser();
+                            this.router.navigate([route]);
+                        }
+                        this.spinnerService.requestInProcess(false);
+                    },
+                    errors => {
+                        this.spinnerService.requestInProcess(false);
+                        let e = errors.json() || '';
+                        this.notificationServiceBus.launchNotification(true,
+                            'Error occurred on server side. ' + errors.statusText + ' ' + JSON.stringify(e || e.errors));
+                    });
         }
     }
 
@@ -383,10 +382,10 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         }
     }
 
-    fireNotification(evnt)
-    {
-        if ((evnt.target as Element).hasAttribute('readonly'))
+    fireNotification(evnt) {
+        if ((evnt.target as Element).hasAttribute('readonly')) {
             this.notificationServiceBus.launchNotification(true, 'In order to change this field, please contact the booking office.');
+        }
     }
 
     _handleReaderLoaded(readerEvt) {
@@ -452,17 +451,18 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         this.oldDocuments = this.oldDocuments.filter(d => d.id !== docID);
     }
 
-    isImportantFieldsChanged()
-    {
-        return ((this.bookingModel.venue.start_time_iso != this.oldBookingModel.venue.start_time_iso) || (this.bookingModel.venue.end_time_iso != this.oldBookingModel.venue.end_time_iso)
-            || (this.bookingModel.raw_nature_of_appointment != this.oldBookingModel.raw_nature_of_appointment) || (this.bookingModel.specific_nature_of_appointment != this.oldBookingModel.specific_nature_of_appointment)
-            || (this.bookingModel.venue.street_name != this.oldBookingModel.venue.street_name) || (this.bookingModel.venue.state != this.oldBookingModel.venue.state)
-            || (this.bookingModel.venue.suburb != this.oldBookingModel.venue.suburb) || (this.bookingModel.venue.post_code != this.oldBookingModel.venue.post_code)
-        );
-
+    isImportantFieldsChanged() {
+        return (this.bookingModel.venue.start_time_iso !== this.oldBookingModel.venue.start_time_iso)
+            || (this.bookingModel.venue.end_time_iso !== this.oldBookingModel.venue.end_time_iso)
+            || (this.bookingModel.raw_nature_of_appointment !== this.oldBookingModel.raw_nature_of_appointment)
+            || (this.bookingModel.specific_nature_of_appointment !== this.oldBookingModel.specific_nature_of_appointment)
+            || (this.bookingModel.venue.street_name !== this.oldBookingModel.venue.street_name)
+            || (this.bookingModel.venue.state !== this.oldBookingModel.venue.state)
+            || (this.bookingModel.venue.suburb !== this.oldBookingModel.venue.suburb)
+            || (this.bookingModel.venue.post_code !== this.oldBookingModel.venue.post_code);
     }
 
- //   https://stackoverflow.com/questions/36124363/deep-copying-objects-in-angular2
+    //  https://stackoverflow.com/questions/36124363/deep-copying-objects-in-angular2
     deepCopy(oldObj: any) {
         let newObj = oldObj;
         if (oldObj && typeof oldObj === 'object') {

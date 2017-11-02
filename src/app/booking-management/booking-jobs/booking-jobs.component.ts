@@ -62,7 +62,6 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-
         this.headerSubscription = this.bookingHeaderService.notifyObservable$.subscribe((res) => {
                   this.callRelatedFunctions(res);
         });
@@ -82,7 +81,6 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                 this.saveChanges();
             else if (res.option === 'showDialogBoxInterpreter')
                 this.showDialogBoxInterpreter(res.value);
-
         }
 
     }
@@ -193,7 +191,6 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     }
 
     editBooking() {
-
         let navigationExtras: NavigationExtras = {
             queryParams: {bookingModel: JSON.stringify(this.selectedBookingModel),
                           shouldEdit: 'edit' , assignedInterpreter: this.selectedBookingModel.interpreters.filter( i => i.state === 'Accepted').length
@@ -241,7 +238,6 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                         this.jobAccessError = false;
                         let data = res.data;
                         this.selectedBookingModel.fromJSON(data);
-
                         this.selectedBookingModel.interpreters.sort((i, j) =>
                             i.state === 'Accepted' ? -1 : j.state === 'Accepted' ? 1 : 0
                         );
@@ -285,16 +281,6 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                     let e = err.json() || 'There is some error on server side';
                     this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
                 });
-    }
-
-    isInvited(id: number) {
-        let res = this.selectedBookingModel.interpreters.filter(i => i.id === id);
-        return (res.length > 0);
-    }
-
-    isNotConfirmed(id: number) {
-        let res = this.selectedBookingModel.interpreters.filter(i => i.id === id && i.state !== 'Accepted');
-        return (res.length > 0);
     }
 
     inviteInterpreters() {
@@ -370,7 +356,6 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                     id: _id
                 }));
             }
-            // this.selectedBookingModel.interpreters = selectedInt;
             this.selectedInterpreterIDs = [];
             this.invitePressed = false;
             this.sendInvite(selectedInt);
@@ -384,7 +369,6 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                     id: _id
                 }));
             }
-            // this.selectedBookingModel.interpreters = selectedInt;
             this.selectedInterpreterIDs = [];
             this.reAssignPressed = false;
             this.sendReAssign(selectedInt);

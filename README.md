@@ -1,4 +1,4 @@
-# AUSLAN BOOKING SYSTEM - FRONTEND
+ # AUSLAN BOOKING SYSTEM - FRONTEND
 
 [![CircleCI](https://circleci.com/bb/curvetomorrow/booking-system-frontend/tree/master.svg?style=svg)](https://circleci.com/bb/curvetomorrow/booking-system-frontend/tree/master)
 [![Code Climate](https://codeclimate.com/repos/5858b42d43c09c72c3000c29/badges/c9005dc4d8c9a34aaa8d/gpa.svg)](https://codeclimate.com/repos/5858b42d43c09c72c3000c29/feed)
@@ -70,8 +70,8 @@ Check docker instructions. Just run them locally in your terminal
         * `./setup_ci.sh`
    1. Create the input file with all files to test
         * `ls -d -1 e2e-tests/features/* > test_features_for_split_container.txt`
-   1. Run the e2e tests
-        * `./run-e2e-test.sh`
+   1. Run the ui tests
+        * `ng test --browser Chrome_without_security`
 
 ## Use Docker to run E2E tests
 

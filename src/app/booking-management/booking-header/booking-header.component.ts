@@ -60,7 +60,6 @@ export class BookingHeaderComponent implements OnInit, OnDestroy{
   }
 
   saveClick() {
-
     this.bookingHeaderService.notifyOther({ option: 'saveChanges', value: '' });
   }
 
@@ -112,7 +111,6 @@ export class BookingHeaderComponent implements OnInit, OnDestroy{
   }
 
   isModelChanged(oldModel, currentModel) {
-
     return !(JSON.stringify(oldModel) === JSON.stringify(currentModel))  ;
   }
 

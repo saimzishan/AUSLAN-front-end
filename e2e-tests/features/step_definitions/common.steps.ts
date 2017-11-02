@@ -148,6 +148,72 @@ defineSupportCode(({Given, When, Then}) => {
          */
     }
 
+    Given(/^I wait for (.*) milli-seconds/, (seconds: string) => {
+        return browser.sleep(parseInt(seconds, 10));
+    });
+
+    Given(/^I fill the field '(.*)' with value '(.*)'/, fillCorrectlyField);
+
+    function fillCorrectlyField(lblString: string, value: string) {
+        let input = page.getElementByName(lblString);
+        expect(input).to.exist;
+        input.clear();
+        return page.setValue(input, value);
+    }
+
+    Given(/^I jump to '(.*)' element$/, toNextElement);
+
+    function toNextElement(element_tag: string) {
+        return page.getElementByName(element_tag).click();
+    }
+
+    Given(/^(.*) belongs to (.*)/, (entity: string, dependant: string) => {
+        Heroku.assignEntityToDependant(entity, dependant);
+    });
+
+    Given(/^I click on Bookings$/, clickOnBookings);
+
+    function clickOnBookings() {
+        return page.getElementByID('lnkBooking').click();
+    }
+
+    Given(/^I will be shown a popup message$/, showPopup);
+
+    function showPopup() {
+        return browser.wait(protractor.ExpectedConditions.presenceOf(page.getElementByCss('app-popup')), 30000).then(() => {
+        });
+    }
+
+    Given(/^I will be shown a popup message '(.*)'$/, showPopupWithMessage);
+
+    function showPopupWithMessage(message) {
+        return browser.wait(protractor.ExpectedConditions.presenceOf(page.getElementByCss('app-popup')), 30000).then(() => {
+            let elm = page.getElementByCss('main > div > p');
+            expect(elm.getText()).to.be.eventually.eq(message);
+        });
+    }
+
+    Given(/^I am shown a validation error$/, showValidationError);
+
+    function showValidationError() {
+        let errs = page.getAll('.inline-icon.error');
+        return errs.count().then((count) => {
+            // expect(count).to.be.greaterThan(0);
+            expect(count).to.be.greaterThan(0);
+        });
+    }
+
+    Given(/^I am shown a validation error with the text '(.*)'$/, showValidationErrorWithText);
+
+    function showValidationErrorWithText(errText: string) {
+        // browser.explore();
+        let errs = page.getAll('.inline-icon.error');
+        return errs.count().then((count) => {
+            // expect(count).to.be.greaterThan(0);
+            expect(count).to.be.greaterThan(0);
+        });
+    }
+
     When(/^I debug$/, () => {
         return browser.pause();
     });
@@ -157,6 +223,11 @@ defineSupportCode(({Given, When, Then}) => {
     When(/^I click on button '(.*)'$/, clickOnButton);
     function clickOnButton(btnLabel: string) {
         return page.getElementByCSSandText('.button', btnLabel).click();
+    }
+
+    When(/^I click on link '(.*)'$/, clickOnLink);
+    function clickOnLink(label: string) {
+        return page.getElementByCSSandText('a', label).click();
     }
 
     When(/^I click on button with css '(.*)'$/, clickOnElementWithCSS);
@@ -270,70 +341,11 @@ defineSupportCode(({Given, When, Then}) => {
         });
     }
 
-    Given(/^I wait for (.*) milli-seconds/, (seconds: string) => {
-        return browser.sleep(parseInt(seconds, 10));
-    });
+    When(/^I click on table header '(.*)'$/, clickOnTableHeader);
 
-    Given(/^I fill the field '(.*)' with value '(.*)'/, fillCorrectlyField);
-
-    function fillCorrectlyField(lblString: string, value: string) {
-        let input = page.getElementByName(lblString);
-        expect(input).to.exist;
-        input.clear();
-        return page.setValue(input, value);
-    }
-
-    Given(/^I jump to '(.*)' element$/, toNextElement);
-
-    function toNextElement(element_tag: string) {
-        return page.getElementByName(element_tag).click();
-    }
-
-    Given(/^(.*) belongs to (.*)/, (entity: string, dependant: string) => {
-        Heroku.assignEntityToDependant(entity, dependant);
-    });
-
-    Given(/^I click on Bookings$/, clickOnBookings);
-
-    function clickOnBookings() {
-        return page.getElementByID('lnkBooking').click();
-    }
-
-    Given(/^I will be shown a popup message$/, showPopup);
-
-    function showPopup() {
-        return browser.wait(protractor.ExpectedConditions.presenceOf(page.getElementByCss('app-popup')), 30000).then(() => {
-        });
-    }
-
-    Given(/^I will be shown a popup message '(.*)'$/, showPopupWithMessage);
-
-    function showPopupWithMessage(message) {
-        return browser.wait(protractor.ExpectedConditions.presenceOf(page.getElementByCss('app-popup')), 30000).then(() => {
-            let elm = page.getElementByCss('main > div > p');
-            expect(elm.getText()).to.be.eventually.eq(message);
-        });
-    }
-
-    Given(/^I am shown a validation error$/, showValidationError);
-
-    function showValidationError() {
-        let errs = page.getAll('.inline-icon.error');
-        return errs.count().then((count) => {
-            // expect(count).to.be.greaterThan(0);
-            expect(count).to.be.greaterThan(0);
-        });
-    }
-
-    Given(/^I am shown a validation error with the text '(.*)'$/, showValidationErrorWithText);
-
-    function showValidationErrorWithText(errText: string) {
-        // browser.explore();
-        let errs = page.getAll('.inline-icon.error');
-        return errs.count().then((count) => {
-            // expect(count).to.be.greaterThan(0);
-            expect(count).to.be.greaterThan(0);
-        });
+    function clickOnTableHeader(text: string) {
+        let el = page.getElementByCSSandText('table thead tr th > span', text);
+        return el.click();
     }
 
     Then(/^I should not be able to navigate to '(.*)'$/, notNavigateToUrl);

@@ -20,6 +20,8 @@ export class BookingListComponent {
     @Input('bookingList') bookingList: Array<Booking> = [];
     @Output() onBookingFilter = new EventEmitter<URLSearchParams>();
     bookingFilter: BookingFilter = {};
+    private filterParams = new URLSearchParams();
+    private currentSort = {'field': 'job', 'order': 'asc' };
     private validKeys(list): Array<string> {
         let keys = Object.keys(list);
         return keys.slice(keys.length / 2);
@@ -78,45 +80,64 @@ export class BookingListComponent {
         return ['All', ...keys];
     }
     assignmentCategoryList() {
-        return Object.keys(BA.DISSCUSSION_ITEM) as Array<string>;
+        let keys = Object.keys(BA.DISSCUSSION_ITEM) as Array<string>;
+        return ['All', ...keys];
     }
     filterStatus() {
         return BOOKING_STATUS[this.bookingFilter.booking_status];
     }
     private formatterValueFor(field: string, value: string) {
         let formattedValue: string;
-        switch (field) {
-            case 'booking_status':
-                formattedValue = BOOKING_STATUS[value];
-                break;
-            case 'state':
-                if (value === 'all') {
-                    formattedValue = undefined;
-                } else {
+        let val: number;
+        if (value && value.length) {
+            value = value.trim();
+            value = value.replace(/,$/g, '');
+            switch (field) {
+                case 'booking_status':
+                    formattedValue = BOOKING_STATUS.hasOwnProperty(value) ? BOOKING_STATUS[value].toString() : '' ;
+                    break;
+                case 'state':
+                    formattedValue = value === 'all' ? '' : value;
+                    break;
+                case 'booking_type':
+                    formattedValue = BOOKING_NATURE.hasOwnProperty(value) ? BOOKING_NATURE[value].toString() : '' ;
+                    break;
+                default:
                     formattedValue = value;
-                }
-                break;
-            case 'booking_type':
-                formattedValue = BA.DISSCUSSION_ITEM[value].join(',');
-                break;
-            default:
-                formattedValue = value;
+            }
         }
-        return formattedValue;
+        return formattedValue.length ? formattedValue : undefined;
     }
     filter(field: string, value: string) {
-        value = value.trim();
-        value = value.replace(/,$/g, '');
         this.bookingFilter[field] = this.formatterValueFor(field, value);
-        let params: URLSearchParams = new URLSearchParams();
         for (let k in this.bookingFilter) {
             if (this.bookingFilter.hasOwnProperty(k)) {
-                params.set('filter[' + k + ']', this.bookingFilter[k]);
+                this.filterParams.set('filter[' + k + ']', this.bookingFilter[k]);
             }
         }
         if (field === 'booking_type') {
             this.bookingFilter.booking_type = value;
         }
-        this.onBookingFilter.emit(params);
+        this.onBookingFilter.emit(this.filterParams);
+    }
+    private isCurrentSort(field: string) {
+        return this.currentSort.field === field;
+    }
+    private setCurrentSort(field: string) {
+        let order = 'asc';
+        if (this.isCurrentSort(field)) {
+            order = this.currentSort.order === 'asc' ? 'desc' : 'asc';
+        }
+        this.currentSort.field = field;
+        this.currentSort.order = order;
+    }
+    getSortOrder(field: string) {
+        return this.isCurrentSort(field) ? this.currentSort.order : '';
+    }
+    sort(field: string) {
+        this.setCurrentSort(field);
+        this.filterParams.set('sort', this.currentSort.field);
+        this.filterParams.set('direction', this.currentSort.order);
+        this.onBookingFilter.emit(this.filterParams);
     }
 }
