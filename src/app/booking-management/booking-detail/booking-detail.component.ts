@@ -41,8 +41,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     rdgSpecialInstruction = 'true';
     oldBookingModel;
     dialogSub;
-    appointment_types = Object.keys(BOOKING_NATURE).filter(value => value === BOOKING_NATURE[value]
-        || BOOKING_NATURE[value].startsWith(value)).map(v => BOOKING_NATURE[v]) as string[];
+    appointment_types = Object.keys(BOOKING_NATURE).filter(value => (value === BOOKING_NATURE[value]
+        || BOOKING_NATURE[value].startsWith(value)) && value !== BOOKING_NATURE[BOOKING_NATURE.None]).map(v => BOOKING_NATURE[v]) as string[];
 
     specific_appointment_types = [];
     currentUserIsContact = 'true';
