@@ -169,11 +169,13 @@ export class BookingPage extends PageObject {
             expect(this.getElementByName(fieldName)).to.exist;
         });
     }
-
+    setStreetNumber = (stNumber: string) => {
+        this.setElementsValueByName('address_street_number', stNumber);
+    }
     createBookingWithTimeAndInterpreter = (standard: string, startTime: string, endTime: string, interpreterNum: string) => {
         this.setStartEndTime('start', '12/12/2017', startTime);
         this.setStartEndTime('end', '12/12/2017', endTime);
-        this.setElementsValueByName('address_street_number', '162');
+        this.setStreetNumber('162');
         this.setElementsValueByName('address_street', 'Dave');
         this.setElementsValueByName('address_post_code', '3064');
         this.setElementsValueByName('address_suburb', 'Parkville');

@@ -82,10 +82,6 @@ export class BookingManagementPage extends PageObject {
     clickOnNewBooking = () => {
         return this.getElementByID('lnkNewBooking').click();
     }
-    //
-    // clickOnBookings = () => {
-    //     return this.getElementByID('lnkBooking').click();
-    // }
     showPopup = () => {
         return browser.wait(protractor.ExpectedConditions.presenceOf(this.getElementByCss('app-popup')), 30000).then(() => {
 
@@ -95,9 +91,7 @@ export class BookingManagementPage extends PageObject {
     clickOnIndividualBooking = () => {
         const bookingRows = $$('tbody tr');
         return bookingRows.then((bookingR) => {
-            // if (bookingR.length > 1) {
             return bookingR[0].click();
-            // }
         });
     }
     clickOnIndividualBookingOfType = (booking_type: string) => {
