@@ -300,6 +300,11 @@
             </span>
           </label>
           <textarea placeholder="Important Notes" name="important_notes" [(ngModel)]="bookingModel.notes"></textarea>
+
+          <span *ngIf="bookingModel.raw_nature_of_appointment ==='Other' && bookingModel.notes.length < 2 ;"
+                class="inline-icon error">
+            <span>Please specify what the appointment is about</span>!
+          </span>
         </div>
       </div>
     </div>
