@@ -6,8 +6,7 @@
   <div class="medium-3 columns">
     <div class="form-field">
       <label>UNIT NUMBER <span mdTooltip="Enter the Unit Number"><i class="inline-icon-tip"></i></span></label>
-      <input type="text" [readonly]="canEdit" (click)="fieldClick($event)" placeholder="Enter the Unit Number" [(ngModel)]="address.unit_number" name="address_unit_num" #address_unit_num="ngModel" [rangeLength]="[1, 6]" digit>
-
+      <input type="text" [readonly]="canEdit" (click)="fieldClick($event)" placeholder="Enter the Unit Number" [(ngModel)]="address.unit_number" name="address_unit_num" #address_unit_num="ngModel" digit>
     </div>
   </div>
   <div class="medium-3 columns">

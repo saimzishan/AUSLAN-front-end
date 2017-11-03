@@ -51,6 +51,12 @@
                (click)="fireNotification($event)"
                [(ngModel)]="bookingModel.venue.start_time_iso"
                required #dpEventDate="ngModel"/>
+            <span *ngIf="dpEventDate.touched && !dpEventDate.errors?.required;"
+                  class="inline-icon inline-icon-valid valid"></span>
+            <span *ngIf="dpEventDate.touched && (dpEventDate.errors?.required);"
+                  class="inline-icon error">
+              <span>Start Date is required</span>!
+            </span>
           </div>
         </div>
 
@@ -61,6 +67,12 @@
                placeholder="ENDING TIME *" #dpEventEndTime="ngModel" (click)="fireNotification($event)"
                [(ngModel)]="bookingModel.venue.end_time_iso"
                required/>
+            <span *ngIf="dpEventEndTime.touched && !dpEventEndTime.errors?.required;"
+                  class="inline-icon inline-icon-valid valid"></span>
+            <span *ngIf="dpEventEndTime.touched && (dpEventEndTime.errors?.required);"
+                  class="inline-icon error">
+              <span>End Date is required</span>!
+            </span>
           </div>
         </div>
       </div>
@@ -179,7 +191,7 @@
                    name="attendee_count"
                    #attendee_count="ngModel"
                    placeholder="Enter the Number of people attending the meeting"
-                   type="tel" digits>
+                   type="tel" required digits>
             <span *ngIf="attendee_count.touched && !attendee_count.errors?.required && !attendee_count.errors?.digits;"
                   class="inline-icon inline-icon-valid valid"></span>
             <span *ngIf="attendee_count.touched && (attendee_count.errors?.required || attendee_count.errors?.digits);"
@@ -200,7 +212,7 @@
                    #interpreters_count="ngModel"
                    placeholder="Enter the Number of Interpreters needed"
                    (click)="fireNotification($event)"
-                   type="tel" digits>
+                   type="tel" required digits>
             <span *ngIf="interpreters_count.touched && !interpreters_count.errors?.required && !interpreters_count.errors?.digits;"
                   class="inline-icon inline-icon-valid valid"></span>
             <span *ngIf="interpreters_count.touched && (interpreters_count.errors?.required || interpreters_count.errors?.digits);"
@@ -351,11 +363,12 @@
                    [(ngModel)]="bookingModel.primaryContact.email"
                    name="email"
                    #email="ngModel" email required>
-            <span *ngIf="email.touched && !email.errors?.email;"
+            <span *ngIf="email.touched && !email.errors?.email && !email.errors?.required;"
                   class="inline-icon inline-icon-valid valid"></span>
             <span *ngIf="(email.dirty || email.touched) && (email.errors?.required || email.errors?.email);"
                   class="inline-icon error">
-              <span>Email is required</span>!</span>
+              <span>Email is required</span>!
+            </span>
           </div>
         </div>
         <div class="medium-6 columns">
@@ -372,7 +385,7 @@
                    #mobile="ngModel">
             <span *ngIf="mobile.touched && !mobile.errors?.rangeLength;"
                   class="inline-icon inline-icon-valid valid"></span>
-            <span *ngIf="mobile.touched || mobile.errors?.rangeLength;" class="inline-icon error">
+            <span *ngIf="mobile.touched && mobile.errors?.rangeLength;" class="inline-icon error">
               <span>Minimum 6 digits required.</span>!
             </span>
           </div>
@@ -418,7 +431,7 @@
         </div>
         <div class="medium-9 columns">
           <div class="form-field">
-            <label>DEAF PERSON'S EMAIL
+            <label>DEAF PERSON'S EMAIL *
               <span mdTooltip="Enter deaf person name!">
                 <i class="inline-icon-tip"></i>
               </span>
@@ -430,7 +443,13 @@
                    [(ngModel)]="bookingModel.deaf_person.email"
                    name="deaf_person_email"
                    #deaf_person_email="ngModel"
-                   email>
+                   email required>
+            <span *ngIf="deaf_person_email.touched && !deaf_person_email.errors?.email && !deaf_person_email.errors?.required;"
+                  class="inline-icon inline-icon-valid valid"></span>
+            <span *ngIf="(deaf_person_email.dirty || deaf_person_email.touched) && (deaf_person_email.errors?.required || deaf_person_email.errors?.email);"
+                  class="inline-icon error">
+              <span>Email is required</span>!
+            </span>
           </div>
         </div>
         <div class="medium-6 columns">
@@ -496,10 +515,10 @@
                    [(ngModel)]="bookingModel.deaf_person.mobile_number"
                    name="deaf_person_mobile"
                    #deaf_person_mobile="ngModel"
-                   digits [rangeLength]="[10,11]">
+                   digits [rangeLength]="[6,11]">
             <span *ngIf="deaf_person_mobile.touched && !deaf_person_mobile.errors?.rangeLength;"
                   class="inline-icon inline-icon-valid valid"></span>
-            <span *ngIf="deaf_person_mobile.touched || deaf_person_mobile.errors?.rangeLength;"
+            <span *ngIf="deaf_person_mobile.touched && deaf_person_mobile.errors?.rangeLength;"
                   class="inline-icon error">
               <span>Minimum 10 digits required.</span>!
             </span>

@@ -10,7 +10,7 @@ import {NotificationServiceBus} from '../../notification/notification.service';
   exportAs: 'ctAddressForm'
 })
 
-export class AddressComponent {
+export class AddressComponent implements AfterViewInit {
   @Input() address: Address;
   @Input() prefix = '';
   @ViewChild('addressFields') public form: NgForm;
@@ -28,10 +28,11 @@ constructor(public notificationServiceBus: NotificationServiceBus){}
     }
   }
 
-  fieldClick(evnt)
-  {
-      if ((evnt.target as Element).hasAttribute('readonly'))
-          this.notificationServiceBus.launchNotification(true, 'In order to change this field, please contact the booking office.');
+  fieldClick(evnt) {
+      if ((evnt.target as Element).hasAttribute('readonly')) {
+          this.notificationServiceBus
+              .launchNotification(true, 'In order to change this field, please contact the booking office.');
+      }
   }
 
 }
