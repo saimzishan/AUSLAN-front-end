@@ -55,7 +55,7 @@ Feature: Edit Booking
     Then I should be able to edit only specific fields
     And I should not be able to edit other fields
 
-  @runThis
+  @ignoreThis
   Scenario: Given 1 verified Organisational Representative, I should be able to only change certain fields
     Given Assigned all bookings to Organisational Representative
     Given I exist as an Organisational Representative
