@@ -180,8 +180,7 @@ defineSupportCode(({Given, When, Then}) => {
     Given(/^I will be shown a popup message$/, showPopup);
 
     function showPopup() {
-        return browser.wait(protractor.ExpectedConditions.presenceOf(page.getElementByCss('app-popup')), 30000).then(() => {
-        });
+        return browser.wait(protractor.ExpectedConditions.presenceOf(page.getElementByCss('app-popup')), 30000);
     }
 
     Given(/^I will be shown a popup message '(.*)'$/, showPopupWithMessage);
@@ -309,7 +308,14 @@ defineSupportCode(({Given, When, Then}) => {
     When(/^I click on BUTTON name '(.*)'$/, clickOnBtnByName);
 
     function clickOnBtnByName(btnName: string) {
-        return page.getElementByName(btnName).click();
+        return page.getAllElementByName(btnName)
+            .each((btn) => {
+                btn.getText().then(btnText => {
+                    if (btnText) {
+                        btn.click();
+                    }
+                });
+            });
     }
 
     When(/^I click on checkbox name '(.*)'$/, clickOnCBByName);
