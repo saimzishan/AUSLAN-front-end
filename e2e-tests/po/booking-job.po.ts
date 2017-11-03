@@ -28,7 +28,10 @@ export class BookingJobPage extends PageObject {
     browse = () => {
         return this.currentPath().then((currentPath) => {
             this.didFinishedRendering();
-            expect(currentPath).to.contain('booking-job');
+            let EC = protractor.ExpectedConditions;
+            let urlContainsBookingJob = EC.urlContains('booking-job');
+            let urlContainsJobDetail = EC.urlContains('job-detail');
+            return EC.or(urlContainsBookingJob, urlContainsJobDetail);
         });
     }
 

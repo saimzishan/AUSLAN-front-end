@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import { Component, Input, ViewChild } from '@angular/core';
-=======
-import { Component, Input,ViewChild } from '@angular/core';
->>>>>>> origin/master
 import {Contact} from '../../shared/model/contact.entity';
 import {Address} from '../../shared/model/venue.entity';
 import { NgForm } from '@angular/forms';

@@ -116,6 +116,8 @@ defineSupportCode(({Given, Then, When}) => {
     Then(/^I should see the bookings in (ascending|descending) order of (.*)$/, bookingManagementPO.checkBookingOrder);
     Then(/^I should be on the edit booking page$/, bookingEditPO.verify);
     Then(/^I should get a valid booking update notification$/, bookingEditPO.getSuccessNotificationContent);
+    Then(/^I should be able to edit only specific fields$/, bookingEditPO.checkEditableFields);
+    Then(/^I should not be able to edit other fields$/, bookingEditPO.checkNonEditableFields);
 
     // Then(/^I get the popup warning that is the non-standard booking$/, createBookingPO.popupForNonStandard)
 

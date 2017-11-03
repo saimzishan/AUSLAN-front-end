@@ -110,7 +110,7 @@
                 <i class="inline-icon-tip"></i>
               </span>
             </label>
-            <select [(ngModel)]="bookingModel.specific_nature_of_appointment"s
+            <select [(ngModel)]="bookingModel.specific_nature_of_appointment"
                    [disabled]="isUserOrgRepORIndClientTemp() && forEdit()"
                    #specific_nature_of_appointment="ngModel" required 
                    name="specific_nature_of_appointment" aria-label="A">
@@ -152,13 +152,18 @@
                 <i class="inline-icon-tip"></i>
               </span>
             </label>
-            <input type="text" placeholder="Enter the Request By Name" [readonly]="isUserOrgRepORIndClientTemp() && forEdit()"
-                               [(ngModel)]="bookingModel.requested_by.last_name" name="raw_booking_requested_by_ln" (click)="fireNotification($event)"
-                                                                                 #raw_booking_requested_by_ln="ngModel" [rangeLength]="[2,20]" required>
+            <input type="text"
+                   placeholder="Enter the Request By Name"
+                   [readonly]="isUserOrgRepORIndClientTemp() && forEdit()"
+                   [(ngModel)]="bookingModel.requested_by.last_name"
+                   name="raw_booking_requested_by_ln"
+                   (click)="fireNotification($event)"
+                   #raw_booking_requested_by_ln="ngModel"
+                   [rangeLength]="[2,20]" required>
             <span *ngIf="raw_booking_requested_by_ln.touched && !raw_booking_requested_by_ln.errors?.required && !raw_booking_requested_by_ln.errors?.rangeLength;"
-                                                                                 class="inline-icon inline-icon-valid valid"></span>
+                  class="inline-icon inline-icon-valid valid"></span>
             <span *ngIf="raw_booking_requested_by_ln.touched && (raw_booking_requested_by_ln.errors?.required || raw_booking_requested_by_ln.errors?.rangeLength);"
-                                                                                 class="inline-icon error">
+                  class="inline-icon error">
               <span>Minimum 2 characters required.</span>!
             </span>
           </div>
@@ -176,9 +181,9 @@
                    placeholder="Enter the Number of people attending the meeting"
                    type="tel" digits>
             <span *ngIf="attendee_count.touched && !attendee_count.errors?.required && !attendee_count.errors?.digits;"
-                   class="inline-icon inline-icon-valid valid"></span>
+                  class="inline-icon inline-icon-valid valid"></span>
             <span *ngIf="attendee_count.touched && (attendee_count.errors?.required || attendee_count.errors?.digits);"
-                   class="inline-icon error">
+                  class="inline-icon error">
               <span>Minimum 1 digit required.</span>!
             </span>
           </div>
@@ -197,13 +202,13 @@
                    (click)="fireNotification($event)"
                    type="tel" digits>
             <span *ngIf="interpreters_count.touched && !interpreters_count.errors?.required && !interpreters_count.errors?.digits;"
-                   class="inline-icon inline-icon-valid valid"></span>
+                  class="inline-icon inline-icon-valid valid"></span>
             <span *ngIf="interpreters_count.touched && (interpreters_count.errors?.required || interpreters_count.errors?.digits);"
-                   class="inline-icon error">
+                  class="inline-icon error">
               <span>Minimum 1 digit required.</span>!
             </span>
             <span *ngIf="bookingModel.interpreters_required < 2  && isMoreInterpreterNeeded()"
-                   class="inline-icon error">
+                  class="inline-icon error">
               <span>You may require more than 1 interpreter for this booking.</span>!
             </span>
           </div>
@@ -227,7 +232,7 @@
               <i class="inline-icon-tip"></i>
             </span>
           </label>
-          <textarea placeholder="Important Notes"></textarea>
+          <textarea placeholder="Important Notes" name="important_notes" [(ngModel)]="bookingModel.notes"></textarea>
         </div>
       </div>
     </div>
@@ -259,7 +264,8 @@
               </label>
               <input [(ngModel)]="bookingModel.special_instructions"
                      name='txtSpecialInstruction'
-                     [readonly]="isUserOrgRepORIndClientTemp() && forEdit()" (click)="fireNotification($event)"
+                     [readonly]="isUserOrgRepORIndClientTemp() && forEdit()"
+                     (click)="fireNotification($event)"
                      type='text' placeholder="Enter Special instructions">
             </div>
           </div>
@@ -296,14 +302,16 @@
             </label>
             <input [readonly]='currentUserIsContact'
                    (click)="fireNotification($event)"
-                   type="text" placeholder="Enter Contact First Name"
-                               [(ngModel)]="bookingModel.primaryContact.first_name"
-                               name="contact_first_name"
-                               #contact_first_name="ngModel" [rangeLength]="[2,20]" required>
+                   type="text"
+                   placeholder="Enter Contact First Name"
+                   [(ngModel)]="bookingModel.primaryContact.first_name"
+                   name="contact_first_name"
+                   #contact_first_name="ngModel"
+                   [rangeLength]="[2,20]" required>
             <span *ngIf="contact_first_name.touched && !contact_first_name.errors?.required && !contact_first_name.errors?.rangeLength;"
-                               class="inline-icon inline-icon-valid valid"></span>
+                  class="inline-icon inline-icon-valid valid"></span>
             <span *ngIf="contact_first_name.touched && (contact_first_name.errors?.required || contact_first_name.errors?.rangeLength);"
-                               class="inline-icon error">
+                  class="inline-icon error">
               <span>Minimum 2 character required.</span>!</span>
           </div>
         </div>
@@ -315,14 +323,16 @@
               </span>
             </label>
             <input [readonly]='currentUserIsContact'
-                   type="text" placeholder="Enter Contact Last Name"
-                               [(ngModel)]="bookingModel.primaryContact.last_name"
-                               name="contact_last_name" (click)="fireNotification($event)"
-                               #contact_last_name="ngModel" [rangeLength]="[2,20]" required>
+                   type="text"
+                   placeholder="Enter Contact Last Name"
+                   [(ngModel)]="bookingModel.primaryContact.last_name"
+                   name="contact_last_name"
+                   (click)="fireNotification($event)"
+                   #contact_last_name="ngModel" [rangeLength]="[2,20]" required>
             <span *ngIf="contact_last_name.touched && !contact_last_name.errors?.required && !contact_last_name.errors?.rangeLength;"
-                               class="inline-icon inline-icon-valid valid"></span>
+                  class="inline-icon inline-icon-valid valid"></span>
             <span *ngIf="contact_last_name.touched && (contact_last_name.errors?.required || contact_last_name.errors?.rangeLength);"
-                               class="inline-icon error">
+                  class="inline-icon error">
               <span>Minimum 2 character required.</span>!
             </span>
           </div>
@@ -334,14 +344,17 @@
                 <i class="inline-icon-tip"></i>
               </span>
             </label>
-            <input type="email" class="inline-icon-user-email" id="email"
-                                                               placeholder="Enter contact email address"
-                                                               [(ngModel)]="bookingModel.primaryContact.email" name="email"
-                                                                                                               #email="ngModel" email required>
+            <input type="email"
+                   class="inline-icon-user-email"
+                   id="email"
+                   placeholder="Enter contact email address"
+                   [(ngModel)]="bookingModel.primaryContact.email"
+                   name="email"
+                   #email="ngModel" email required>
             <span *ngIf="email.touched && !email.errors?.email;"
-                                                                                                               class="inline-icon inline-icon-valid valid"></span>
+                  class="inline-icon inline-icon-valid valid"></span>
             <span *ngIf="(email.dirty || email.touched) && (email.errors?.required || email.errors?.email);"
-                                                                                                               class="inline-icon error">
+                  class="inline-icon error">
               <span>Email is required</span>!</span>
           </div>
         </div>
@@ -358,7 +371,7 @@
                    name="mobile" [rangeLength]="[6,20]"
                    #mobile="ngModel">
             <span *ngIf="mobile.touched && !mobile.errors?.rangeLength;"
-                   class="inline-icon inline-icon-valid valid"></span>
+                  class="inline-icon inline-icon-valid valid"></span>
             <span *ngIf="mobile.touched || mobile.errors?.rangeLength;" class="inline-icon error">
               <span>Minimum 6 digits required.</span>!
             </span>
@@ -477,13 +490,17 @@
                 <i class="inline-icon-tip"></i>
               </span>
             </label>
-            <input type="tel" placeholder="Enter deaf person Mobile Number" id="deaf_person_mobile"
-                                                                            [(ngModel)]="bookingModel.deaf_person.mobile_number" name="deaf_person_mobile"
-                                                                                                                                 #deaf_person_mobile="ngModel" digits [rangeLength]="[10,11]">
+            <input type="tel"
+                   placeholder="Enter deaf person Mobile Number"
+                   id="deaf_person_mobile"
+                   [(ngModel)]="bookingModel.deaf_person.mobile_number"
+                   name="deaf_person_mobile"
+                   #deaf_person_mobile="ngModel"
+                   digits [rangeLength]="[10,11]">
             <span *ngIf="deaf_person_mobile.touched && !deaf_person_mobile.errors?.rangeLength;"
-                                                                                                                                 class="inline-icon inline-icon-valid valid"></span>
+                  class="inline-icon inline-icon-valid valid"></span>
             <span *ngIf="deaf_person_mobile.touched || deaf_person_mobile.errors?.rangeLength;"
-                                                                                                                                 class="inline-icon error">
+                  class="inline-icon error">
               <span>Minimum 10 digits required.</span>!
             </span>
           </div>
@@ -503,8 +520,8 @@
             </span>
           </label>
           <md-radio-group name="rdStandardInvoice"[(ngModel)]="standardInvoice" (change)='onStandardInvoice()'
-                          [disabled]="isUserOrgRepORIndClientTemp() && forEdit()" >
-                          <md-radio-button value=true>YES</md-radio-button>
+                          [disabled]="isUserOrgRepORIndClientTemp() && forEdit()">
+            <md-radio-button value=true>YES</md-radio-button>
             <md-radio-button value=false>NO</md-radio-button>
           </md-radio-group>
         </div>
@@ -560,7 +577,6 @@
             <button type="button" class="bg-green"><i class="icon-close" (click)="confirmDelete(docItem.id)"></i></button> 
             <i class="icon-attachment"></i>
             <span><a download href="{{docItem.url}}">{{docItem.file_name}}</a></span>
-
           </section>
         </section>
       </section>

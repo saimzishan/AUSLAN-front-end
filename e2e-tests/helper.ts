@@ -575,7 +575,7 @@ export class Heroku {
 
 
     static assignExistingBooking(bookable: string) {
-        let command = 'Booking.update_all(bookable_id: ' + bookable.replace(' ', '') + '.first.id)'
+        let command = 'Booking.update_all(bookable_id: ' + bookable.replace(' ', '') + '.first.id)';
         Heroku.sendCommandToHeroku(command);
     }
 
