@@ -15,7 +15,7 @@ export class BookingPage extends PageObject {
 
     didFinishedRendering = () => {
         expect(this.getElementByName('btnCreateBooking').isPresent()).to.eventually.be.true;
-        return expect(this.getElementByName('btnCancelreateBooking').isPresent()).to.eventually.be.true;
+        return expect(this.getElementByName('btnCancelBooking').isPresent()).to.eventually.be.true;
     }
 
     getSuccessNotificationContent = () => {
@@ -29,7 +29,7 @@ export class BookingPage extends PageObject {
     }
 
     clickOnCancel = () => {
-        return this.getElementByName('btnCancelreateBooking').click();
+        return this.getElementByName('btnCancelBooking').click();
     }
 
     clickOnButton = (type: string) => {
