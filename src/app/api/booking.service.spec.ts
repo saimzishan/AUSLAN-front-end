@@ -188,7 +188,7 @@ describe('BookingService', () => {
         })();
     });
 
-    fit('should bulk upload Bookings', function (done) {
+    it('should bulk upload Bookings', function (done) {
         inject([BookingService], (service: BookingService) => {
 
             bookingProvider
