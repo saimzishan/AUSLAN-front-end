@@ -316,14 +316,29 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         }
 
         if (this.bookingModel.interpreters_required < 2 && this.isMoreInterpreterNeeded()) {
-           this.moreInterpreterModal();
 
+            let message = `This booking might require more than 1 interpreter. You've only requested 1 interpreter.
+                            Are you sure you want to create this booking?` ;
+            let title   = 'More Interpreter WARNING';
+            this.createModal(title, message); 
             this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
 
                 if (result) {
                     this.proceedWithBooking();
                 } 
             });
+        }
+        else if (this.isLongBooking()){
+            let message = `This booking will take 12 hours or more. Are you sure you want to submit this booking?` ;
+            let title   = 'Long Booking WARNING';
+            this.createModal(title, message); 
+            this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
+
+                if (result) {
+                    this.proceedWithBooking();
+                } 
+            });
+
         }
         else {
             this.proceedWithBooking();
@@ -333,17 +348,10 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     // have to merge this with save booking later.
     proceedWithBooking() {
         if (this.isBookingTimeInNonStandardHours()) {
-            let config: MdDialogConfig = {
-                disableClose: true
-            };
-            config.viewContainerRef = this.viewContainerRef;
-            this.dialogRef = this.dialog.open(PopupComponent, config);
-            this.dialogRef.componentInstance.title = 'NON-STANDARD HOURS WARNING';
-            this.dialogRef.componentInstance.cancelTitle = 'BACK';
-            this.dialogRef.componentInstance.okTitle = 'CREATE';
-            this.dialogRef.componentInstance.popupMessage =
-                `This booking is not within the standard booking hours (8AM - 6PM).
-             Do you still want to create booking?`;
+            let message = `This booking is not within the standard booking hours (8AM - 6PM).
+                            Do you still want to create booking?` ;
+            let title   = 'NON-STANDARD HOURS WARNING';
+            this.createModal(title, message);
 
             this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
 
@@ -365,26 +373,32 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     isMoreInterpreterNeeded() {
+        return this.calculateTimeDiff() > _ONE_HOUR;
+        /* One hour */
+    }
+
+    calculateTimeDiff() {
         let startDate = new Date(this.bookingModel.venue.start_time_iso);
         let endDate = new Date(this.bookingModel.venue.end_time_iso);
         let timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
 
-        return timeDiff > _ONE_HOUR;
-        /* One hour */
+        return timeDiff;
     }
 
-    moreInterpreterModal(){
+    isLongBooking(){
+          return this.calculateTimeDiff() >= _ONE_HOUR*12; 
+    }
+
+    createModal(title:any , message:any){
         let config: MdDialogConfig = {
             disableClose: true
         };
         config.viewContainerRef = this.viewContainerRef;
         this.dialogRef = this.dialog.open(PopupComponent, config);
-        this.dialogRef.componentInstance.title = 'More Interpreter WARNING';
+        this.dialogRef.componentInstance.title = title;
         this.dialogRef.componentInstance.cancelTitle = 'BACK';
         this.dialogRef.componentInstance.okTitle = 'CREATE';
-        this.dialogRef.componentInstance.popupMessage =
-            `This booking might require more than 1 interpreter. You've only requested 1 interpreter.
-             Are you sure you want to create this booking?`;
+        this.dialogRef.componentInstance.popupMessage = message;
 
     }
 
