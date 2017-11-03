@@ -105,7 +105,7 @@ defineSupportCode(({Given, Then, When}) => {
     // Click the create booking button
     Then(/^I click the create booking button$/, createBookingPO.clickCreateBtn);
 
-    Then(/^I (.*)\s?see the (.*) field$/, createBookingPO.checkTheFieldExist);
+    Then(/^I (.*) see the (.*) field$/, createBookingPO.checkTheFieldExist);
     Then(/^I see one row with the booking id$/, bookingManagementPO.bookingExistsWithId);
     Then(/^I see one row with client name '(.*)'$/, bookingManagementPO.bookingExistsWithClientName);
     Then(/^I see one row with client last name '(.*)'$/, bookingManagementPO.bookingExistsWithClientLastName);

@@ -68,21 +68,25 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     }
 
     callRelatedFunctions(res) {
-
         if (res.hasOwnProperty('option')) {
-
-            if (res.option === 'showDialogBox')
-                this.showDialogBox(res.value);
-            else if (res.option === 'editBooking')
-                this.editBooking();
-            else if (res.option === 'duplicateBooking')
-                this.duplicateBooking();
-            else if (res.option === 'saveChanges')
-                this.saveChanges();
-            else if (res.option === 'showDialogBoxInterpreter')
-                this.showDialogBoxInterpreter(res.value);
+            switch (res.option) {
+                case 'showDialogBox':
+                    this.showDialogBox(res.value);
+                    break;
+                case 'showDialogBoxInterpreter':
+                    this.showDialogBoxInterpreter(res.value);
+                    break;
+                case 'editBooking':
+                    this.editBooking();
+                    break;
+                case 'duplicateBooking':
+                    this.duplicateBooking();
+                    break;
+                case 'saveChanges':
+                    this.saveChanges();
+                    break;
+            }
         }
-
     }
 
     counter(length) {
@@ -100,8 +104,10 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        return this.sub && this.sub.unsubscribe() && this.headerSubscription && this.headerSubscription.unsubscribe()
-            && this.dialogSub && this.dialogSub.unsubscribe();
+        let sub = this.sub && this.sub.unsubscribe();
+        let headerSub = this.headerSubscription && this.headerSubscription.unsubscribe();
+        let dialSub = this.dialogSub && this.dialogSub.unsubscribe();
+        return sub && headerSub && dialSub;
     }
 
     isActiveState(bookingStatus: string) {
