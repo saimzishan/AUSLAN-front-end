@@ -136,6 +136,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.isUserAdminORBookOfficer = <boolean> this.checkUserAdminORBookOfficer();
             this.isDisabledForAdmin = (this.forEdit() && !this.bookingModel.created_by_admin);
             this.onSelectionChange();
+            this.currentUserIsClient = this.isUserOrgRep()? 'false': 'true';  
             this.onClientSelectionChange();
             this.getUser();
             this.bookingModel.bookable_type = this.bookingModel.bookable_type || 'IndividualClient';
