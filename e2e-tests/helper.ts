@@ -433,17 +433,17 @@ export class Heroku {
 
     static createSingleBooking() {
         const data = Heroku.createBooking(1);
-        let command = 'Booking.create(' + JSON.stringify(data) + ')';
+        let command = 'b = Booking.new(' + JSON.stringify(data) + '); b.bookable = IndividualClient.first; b.save';
         Heroku.sendCommandToHeroku(command);
     }
 
     static createSingleBookingWithMoreInterpreter() {
         const data = Heroku.createBooking(2);
-        let command = 'Booking.create(' + JSON.stringify(data) + ')';
+        let command = 'b = Booking.new(' + JSON.stringify(data) + '); b.bookable = IndividualClient.first; b.save';
         Heroku.sendCommandToHeroku(command);
     }
     static createBulkBookings(count: string) {
-        let command = 'FactoryGirl.create_list(:booking, ' + count + ', bookable: User.first)';
+        let command = 'FactoryGirl.create :ted_individual_client; FactoryGirl.create_list(:booking, ' + count + ', bookable: IndividualClient.first)';
         Heroku.sendCommandToHeroku(command);
     }
 
@@ -627,7 +627,7 @@ export class Heroku {
             },
             'parking_availability': 'None - Use the Tram',
             'bookable_id': 1,
-            'bookable_type': 'Administrator'
+            'bookable_type': 'OrganisationalRepresentative'
         });
     }
 }

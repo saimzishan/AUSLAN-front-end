@@ -37,11 +37,13 @@ defineSupportCode(({Before}) => {
             Heroku.addVerifiedUser(currentlyLoggedInUser, pn);
         }
 
-        if (scenario.scenario.name.toUpperCase().indexOf('a booking is created'.toUpperCase()) >= 0) {
+        if (scenario.scenario.name.toUpperCase().indexOf('booking is created'.toUpperCase()) >= 0) {
+            Heroku.sendCommandToHeroku('FactoryGirl.create :ted_individual_client')
             Heroku.createSingleBooking();
         }
 
-        if (scenario.scenario.name.toUpperCase().indexOf('a booking with two interpreters is created'.toUpperCase()) >= 0) {
+        if (scenario.scenario.name.toUpperCase().indexOf('booking with two interpreters is created'.toUpperCase()) >= 0) {
+            Heroku.sendCommandToHeroku('FactoryGirl.create :ted_individual_client')
             Heroku.createSingleBookingWithMoreInterpreter();
         }
 
