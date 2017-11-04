@@ -388,8 +388,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
             parseInt(this.selectedBookingModel.state.toString(), 10) ===
                 parseInt(BOOKING_STATE.In_progress.toString(), 10) ? ' - ' + this.currentStatus : '';
         this.stateStr = BOOKING_STATE[this.selectedBookingModel.state].toUpperCase() + this.stateStr;
-        this.stateStr = this.stateStr.trim();
-
+        this.stateStr = this.stateStr.replace(/_/g, ' ').trim();
     }
 
     public showDialogBoxInterpreter(isCancel: Boolean) {

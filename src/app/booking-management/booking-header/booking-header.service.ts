@@ -11,8 +11,7 @@ export class BookingHeaderService {
 
     public notifyOther(data: any) {
         if (data) {
-          this.notify.next(data);
+            this.notify.next(data);
         }
-      }
-
+    }
 }

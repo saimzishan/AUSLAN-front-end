@@ -13,7 +13,7 @@ import {PopupComponent} from '../../shared/popup/popup.component';
   templateUrl: './booking-header.component.html',
   styleUrls: ['./booking-header.component.css']
 })
-export class BookingHeaderComponent implements OnInit, OnDestroy{
+export class BookingHeaderComponent implements OnInit, OnDestroy {
 
   @Input() bookingModel: Booking = new Booking();
   @Input() oldBookingModel: Booking = new Booking();
@@ -31,8 +31,9 @@ export class BookingHeaderComponent implements OnInit, OnDestroy{
   constructor(private bookingHeaderService: BookingHeaderService, private router: Router,  public dialog: MdDialog , public viewContainerRef: ViewContainerRef) { }
 
   ngOnInit() {
-    if (this.isCurrentUserInterpreter())
+    if (this.isCurrentUserInterpreter()) {
         this.showButtons = false;
+    }
   }
 
   ngOnDestroy() {
@@ -40,22 +41,18 @@ export class BookingHeaderComponent implements OnInit, OnDestroy{
   }
 
   showDialogBoxClick(data) {
-
     this.bookingHeaderService.notifyOther({ option: 'showDialogBox', value: data });
   }
 
   showDialogBoxInterpreter(data) {
-
     this.bookingHeaderService.notifyOther({ option: 'showDialogBoxInterpreter', value: data });
   }
 
   bookingDetailClick() {
-
     this.bookingHeaderService.notifyOther({ option: 'editBooking', value: '' });
   }
 
   duplicateClick() {
-
     this.bookingHeaderService.notifyOther({ option: 'duplicateBooking', value: '' });
   }
 
@@ -73,11 +70,10 @@ export class BookingHeaderComponent implements OnInit, OnDestroy{
   }
 
   infoClick() {
-    if (this.isActive('booking-job') || this.isActive('job-detail'))
+    if (this.isActive('booking-job') || this.isActive('job-detail')) {
       return;
-    else {
+    } else {
       if (this.isModelChanged(this.oldBookingModel, this.bookingModel)) {
-
         let config: MdDialogConfig = {
           disableClose: true
         };
@@ -90,23 +86,19 @@ export class BookingHeaderComponent implements OnInit, OnDestroy{
           `There are unsaved changes on this page. Are you sure you want to leave?`;
 
         this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
-
-          if (result)
+          if (result) {
             return;
-          else
+          } else {
             this.gotoBookingInfo();
+          }
         });
-
-      }
-      else {
+      } else {
         this.gotoBookingInfo();
-
       }
     }
   }
 
   isActive(route: string) {
-
     return this.router.url.includes(route);
   }
 
@@ -115,11 +107,9 @@ export class BookingHeaderComponent implements OnInit, OnDestroy{
   }
 
   gotoBookingInfo() {
-
     let route = GLOBAL.currentUser instanceof Interpreter || GLOBAL.currentUser instanceof OrganisationalRepresentative
       ? 'job-detail' : 'booking-job';
     this.router.navigate(['/booking-management/' + GLOBAL.selBookingID, route]);
-
   }
 
   isCurrentUserInterpreter() {

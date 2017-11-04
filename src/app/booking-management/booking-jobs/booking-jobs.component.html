@@ -13,10 +13,10 @@
 
     <div class="job-status">
       <span [ngClass]="{
-      'status-accepted': stateStr === 'IN_PROGRESS - Accepted',
-      'status-invited': stateStr === 'IN_PROGRESS - Invited',
-      'status-declined': stateStr === 'IN_PROGRESS - Rejected',
-      'status-tentative': stateStr === 'IN_PROGRESS - Tentative',
+      'status-accepted': stateStr === 'IN PROGRESS - Accepted',
+      'status-invited': stateStr === 'IN PROGRESS - Invited',
+      'status-declined': stateStr === 'IN PROGRESS - Rejected',
+      'status-tentative': stateStr === 'IN PROGRESS - Tentative',
       'status-allocated': stateStr === 'ALLOCATED'}">
         {{stateStr}} <i class="icon-requested"></i>
       </span>
