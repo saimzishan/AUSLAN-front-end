@@ -153,6 +153,17 @@ export class BookingPage extends PageObject {
         return this.createBookingWithTimeAndInterpreter('standard', '10:15AM', '11:15AM', '2');
     }
 
+    selectClientAsBookbable = () => {
+        this.getElementByName('booking_for').sendKeys('ted');
+    }
+
+    selectOrgRepAsBookbable = () => {
+        this.getElementByName('orgRepBookable').click();
+        browser.sleep(1000);
+        element(by.id('rdBookingFor')).all(by.tagName('md-radio-button')).get(1).click();
+        this.getElementByName('booking_for').sendKeys('alana');
+    }
+
     checkTheFieldExist = (cant: string, fieldName: string) => {
         let canSee = cant !== 'can\'t';
         return expect(this.getElementByName(fieldName).isPresent()).to.eventually.be.eq(canSee);

@@ -37,19 +37,19 @@ defineSupportCode(({Before}) => {
             Heroku.addVerifiedUser(currentlyLoggedInUser, pn);
         }
 
-        if (scenario.scenario.name.toUpperCase().indexOf('a booking is created'.toUpperCase()) >= 0) {
+        if (scenario.scenario.name.toUpperCase().indexOf('booking is created'.toUpperCase()) >= 0) {
             Heroku.createSingleBooking();
         }
 
-        if (scenario.scenario.name.toUpperCase().indexOf('a booking with two interpreters is created'.toUpperCase()) >= 0) {
+        if (scenario.scenario.name.toUpperCase().indexOf('a booking with two Interpreters is created'.toUpperCase()) >= 0) {
             Heroku.createSingleBookingWithMoreInterpreter();
         }
 
-        if (scenario.scenario.name.toUpperCase().indexOf('INTERPRETER Invited'.toUpperCase()) >= 0) {
+        if (scenario.scenario.name.toUpperCase().indexOf('Interpreter Invited'.toUpperCase()) >= 0) {
             Heroku.inviteInterpreter();
         }
 
-        if (scenario.scenario.name.toUpperCase().indexOf('INTERPRETER_ALL Invited'.toUpperCase()) >= 0) {
+        if (scenario.scenario.name.toUpperCase().indexOf('Interpreter_ALL Invited'.toUpperCase()) >= 0) {
             Heroku.inviteAllInterpreter();
         }
 

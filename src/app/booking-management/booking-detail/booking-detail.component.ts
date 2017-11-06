@@ -15,11 +15,12 @@ import {FileUploader, FileUploaderOptions} from 'ng2-file-upload';
 
 import {Address} from '../../shared/model/venue.entity';
 import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
-import {IndividualClient, OrganisationalRepresentative, BookingOfficer} from '../../shared/model/user.entity';
-import {PopupComponent} from '../../shared/popup/popup.component';
-import {Contact} from '../../shared/model/contact.entity';
 import {PreferedAllocationService} from '../../shared/prefered-allocation.service';
 import {isNullOrUndefined} from 'util';
+import {IndividualClient, OrganisationalRepresentative, BookingOfficer, Administrator} from '../../shared/model/user.entity';
+import {PopupComponent} from '../../shared/popup/popup.component';
+import {Contact} from '../../shared/model/contact.entity';
+import {UserService} from '../../api/user.service';
 
 const _ONE_HOUR = 1000 /*milliseconds*/
     * 60 /*seconds*/
@@ -62,12 +63,15 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     assignedInterpreter = 0;
     oldDocuments = [];
     deleteDocuments = [];
+    bookingFor = 'IndividualClient';
+    allClientsOrg = [];
+    bookingForItems = [];
 
     constructor(public bookingService: BookingService, private router: Router,
                 private route: ActivatedRoute, private rolePermission: RolePermission,
                 public notificationServiceBus: NotificationServiceBus, public spinnerService: SpinnerService,
                 private datePipe: DatePipe, public dialog: MdDialog,
-                public viewContainerRef: ViewContainerRef, private _sharedPreferedAllocationService: PreferedAllocationService) {
+                public viewContainerRef: ViewContainerRef, public userService: UserService, private _sharedPreferedAllocationService: PreferedAllocationService) {
         BA.loadItems();
 
         this.bookingModel = new Booking();
@@ -119,6 +123,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.onSelectionChange();
             this.onClientSelectionChange();
             this.getUser();
+            this.getAllUsers();
         }
     }
 
@@ -169,8 +174,14 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         if (this.showProfileBlocked === 'true') {
             this.filterUserPreference(this.userModel.prefferedInterpreters);
         } else {
-             this.bookingModel.preference_allocations_attributes = this.bookingModel.preference_allocations_attributes.filter(a => a.preference !== 'blocked');
+            this.bookingModel.preference_allocations_attributes = this.bookingModel.preference_allocations_attributes.filter(a => a.preference !== 'blocked');
         }
+    }
+
+    public onBookingForChange() {
+        this.bookingForItems =  this.bookingFor === 'IndividualClient' ?
+            this.allClientsOrg.filter(u => u.type === 'IndividualClient') :
+            this.allClientsOrg.filter(u => u.type === 'OrganisationalRepresentative');
     }
 
     isNotIndClient() {
@@ -189,6 +200,11 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             isNullOrUndefined(<OrganisationalRepresentative>GLOBAL.currentUser) ? '' : (<OrganisationalRepresentative>GLOBAL.currentUser).special_instructions;
         this.bookingModel.special_instructions =
             this.rdgSpecialInstruction === 'true' ? special_instructions : '';
+    }
+
+    isUserAdminORBookOfficer() {
+        return GLOBAL.currentUser instanceof Administrator ||
+            GLOBAL.currentUser instanceof BookingOfficer ;
     }
 
     forEdit() {
@@ -407,15 +423,13 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             (<OrganisationalRepresentative>GLOBAL.currentUser) :
             Boolean(GLOBAL.currentUser) && GLOBAL.currentUser instanceof IndividualClient ?
                 (<IndividualClient>GLOBAL.currentUser) :
-                        Boolean(GLOBAL.currentUser) && GLOBAL.currentUser instanceof BookingOfficer ?
-                            (<BookingOfficer>GLOBAL.currentUser) :
-                                 GLOBAL.currentUser;
+                Boolean(GLOBAL.currentUser) && GLOBAL.currentUser instanceof BookingOfficer ?
+                    (<BookingOfficer>GLOBAL.currentUser) :
+                    GLOBAL.currentUser;
 
-                                 this._sharedPreferedAllocationService.interpreterStream$.subscribe(
-                                    data => {
-                                       this.filterUserPreference(data);
-                                    });
-
+        this._sharedPreferedAllocationService.interpreterStream$.subscribe(data => {
+            this.filterUserPreference(data);
+        });
     }
 
     filterUserPreference(interpreters) {
@@ -468,6 +482,25 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         return newObj;
     }
     isNewBooking() {
-      return this.router.url.includes('create-booking');
+        return this.router.url.includes('create-booking');
+    }
+
+    getAllUsers() {
+        this.spinnerService.requestInProcess(true);
+        this.userService.fetchUsers()
+            .subscribe((res: any) => {
+                    if (res.status === 200 ) {
+                        this.allClientsOrg = res.data.users;
+                        this.bookingForItems = this.allClientsOrg.filter(u => u.type === 'IndividualClient');
+                        this.bookingModel.bookable_type = this.bookingFor;
+                    }
+                    this.spinnerService.requestInProcess(false);
+                },
+                errors => {
+                    this.spinnerService.requestInProcess(false);
+                    let e = errors.json() || '';
+                    this.notificationServiceBus.launchNotification(true,
+                        'Error occured on server side. ' + errors.statusText + ' ' + JSON.stringify(e || e.errors));
+                });
     }
 }
