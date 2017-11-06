@@ -50,7 +50,6 @@ import { HyphenPipe } from './shared/pipe/hyphen.pipe';
 import { NoAuthGuard } from './auth/no-auth.guard';
 import { Store, provideStore } from '@ngrx/store';
 import { PopupComponent } from './shared/popup/popup.component';
-import { JobDetailComponent } from './booking-management/booking-jobs/job-detail/job-detail.component';
 import { DatePipe } from '@angular/common';
 import { PrettyIDPipe } from './shared/pipe/pretty-id.pipe';
 import { MobileFooterModule } from './ui/mobile-footer/mobile-footer.module';
@@ -98,7 +97,7 @@ import { BookingHeaderService } from './booking-management/booking-header/bookin
     UserHeaderComponent,
     UserDetailComponent,
     UserProfileComponent, HyphenPipe, PrettyIDPipe, SpacerPipe,
-    BookingJobsComponent, PopupComponent, JobDetailComponent, OrgRepComponent, IndClientComponent,
+    BookingJobsComponent, PopupComponent, OrgRepComponent, IndClientComponent,
     InterpreterComponent, BillingAccountComponent,
     SkillMatrixComponent, AddressComponent, AccountantComponent,
       UserPasswordComponent, PreComponent, BlockoutComponent, TermandconditionComponent,
