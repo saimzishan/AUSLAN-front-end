@@ -38,6 +38,8 @@ defineSupportCode(({Before}) => {
         }
 
         if (scenario.scenario.name.toUpperCase().indexOf('booking is created'.toUpperCase()) >= 0) {
+            let currentlyLoggedInUser = User.returnTypeAndUser('Individual Client').user;
+            Heroku.addVerifiedUser(currentlyLoggedInUser, 'Individual Client');
             Heroku.createSingleBooking();
         }
 
