@@ -37,7 +37,7 @@ defineSupportCode(({Before}) => {
             Heroku.addVerifiedUser(currentlyLoggedInUser, pn);
         }
 
-        if (scenario.scenario.name.toUpperCase().indexOf('a booking is created'.toUpperCase()) >= 0) {
+        if (scenario.scenario.name.toUpperCase().indexOf('booking is created'.toUpperCase()) >= 0) {
             Heroku.createSingleBooking();
         }
 

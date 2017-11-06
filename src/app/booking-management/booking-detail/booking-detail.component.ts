@@ -15,11 +15,12 @@ import {FileUploader, FileUploaderOptions} from 'ng2-file-upload';
 
 import {Address} from '../../shared/model/venue.entity';
 import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
-import {IndividualClient, OrganisationalRepresentative, BookingOfficer} from '../../shared/model/user.entity';
-import {PopupComponent} from '../../shared/popup/popup.component';
-import {Contact} from '../../shared/model/contact.entity';
 import {PreferedAllocationService} from '../../shared/prefered-allocation.service';
 import {isNullOrUndefined} from 'util';
+import {IndividualClient, OrganisationalRepresentative, BookingOfficer, Administrator} from '../../shared/model/user.entity';
+import {PopupComponent} from '../../shared/popup/popup.component';
+import {Contact} from '../../shared/model/contact.entity';
+import {UserService} from '../../api/user.service';
 
 const _ONE_HOUR = 1000 /*milliseconds*/
     * 60 /*seconds*/
@@ -62,12 +63,15 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     assignedInterpreter = 0;
     oldDocuments = [];
     deleteDocuments = [];
+    bookingFor = 'IndividualClient';
+    allClientsOrg = [];
+    bookingForItems = [];
 
     constructor(public bookingService: BookingService, private router: Router,
                 private route: ActivatedRoute, private rolePermission: RolePermission,
                 public notificationServiceBus: NotificationServiceBus, public spinnerService: SpinnerService,
                 private datePipe: DatePipe, public dialog: MdDialog,
-                public viewContainerRef: ViewContainerRef, private _sharedPreferedAllocationService: PreferedAllocationService) {
+                public viewContainerRef: ViewContainerRef, public userService: UserService, private _sharedPreferedAllocationService: PreferedAllocationService) {
         BA.loadItems();
 
         this.bookingModel = new Booking();
@@ -119,6 +123,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.onSelectionChange();
             this.onClientSelectionChange();
             this.getUser();
+            this.getAllUsers();
         }
     }
 
@@ -145,30 +150,38 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     public onPreferredSelectionChange() {
         if (this.showPreffered === 'false') {
             this.showProfilePreffered = 'false';
-            this.bookingModel.preference_allocations_attributes = this.bookingModel.preference_allocations_attributes.filter(a => a.preference != 'preferred');
+            this.bookingModel.preference_allocations_attributes = this.bookingModel.preference_allocations_attributes.filter(a => a.preference !== 'preferred');
         }
 
     }
 
     public onProfilePreferredSelectionChange() {
-        if (this.showProfilePreffered === 'true')
+        if (this.showProfilePreffered === 'true') {
             this.filterUserPreference(this.userModel.prefferedInterpreters);
-        else
-            this.bookingModel.preference_allocations_attributes = this.bookingModel.preference_allocations_attributes.filter(a => a.preference != 'preferred');
+        } else {
+            this.bookingModel.preference_allocations_attributes = this.bookingModel.preference_allocations_attributes.filter(a => a.preference !== 'preferred');
+        }
     }
 
     public onBlockedSelectionChange() {
         if (this.showBlocked === 'false') {
             this.showProfileBlocked = 'false';
-            this.bookingModel.preference_allocations_attributes = this.bookingModel.preference_allocations_attributes.filter(a => a.preference != 'blocked');
+            this.bookingModel.preference_allocations_attributes = this.bookingModel.preference_allocations_attributes.filter(a => a.preference !== 'blocked');
         }
     }
 
     public onProfileBlockedSelectionChange() {
-        if (this.showProfileBlocked === 'true')
+        if (this.showProfileBlocked === 'true') {
             this.filterUserPreference(this.userModel.prefferedInterpreters);
-        else
-             this.bookingModel.preference_allocations_attributes = this.bookingModel.preference_allocations_attributes.filter(a => a.preference != 'blocked');
+        } else {
+            this.bookingModel.preference_allocations_attributes = this.bookingModel.preference_allocations_attributes.filter(a => a.preference !== 'blocked');
+        }
+    }
+
+    public onBookingForChange() {
+        this.bookingForItems =  this.bookingFor === 'IndividualClient' ?
+            this.allClientsOrg.filter(u => u.type === 'IndividualClient') :
+            this.allClientsOrg.filter(u => u.type === 'OrganisationalRepresentative');
     }
 
     isNotIndClient() {
@@ -187,6 +200,11 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             isNullOrUndefined(<OrganisationalRepresentative>GLOBAL.currentUser) ? '' : (<OrganisationalRepresentative>GLOBAL.currentUser).special_instructions;
         this.bookingModel.special_instructions =
             this.rdgSpecialInstruction === 'true' ? special_instructions : '';
+    }
+
+    isUserAdminORBookOfficer() {
+        return GLOBAL.currentUser instanceof Administrator ||
+            GLOBAL.currentUser instanceof BookingOfficer ;
     }
 
     forEdit() {
@@ -299,7 +317,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     updateBooking() {
-        if ((this.bookingModel.state == BOOKING_STATE.In_progress || this.bookingModel.state == BOOKING_STATE.Allocated) && this.isImportantFieldsChanged() ) {
+        if ((this.bookingModel.state === BOOKING_STATE.In_progress || this.bookingModel.state === BOOKING_STATE.Allocated) && this.isImportantFieldsChanged() ) {
             let config: MdDialogConfig = {
                 disableClose: true
             };
@@ -399,22 +417,19 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         }
     }
 
-    getUser()
-    {
+    getUser() {
         this.userModel = Boolean(GLOBAL.currentUser) &&
         GLOBAL.currentUser instanceof OrganisationalRepresentative ?
             (<OrganisationalRepresentative>GLOBAL.currentUser) :
             Boolean(GLOBAL.currentUser) && GLOBAL.currentUser instanceof IndividualClient ?
                 (<IndividualClient>GLOBAL.currentUser) :
-                        Boolean(GLOBAL.currentUser) && GLOBAL.currentUser instanceof BookingOfficer ?
-                            (<BookingOfficer>GLOBAL.currentUser) :
-                                 GLOBAL.currentUser;
+                Boolean(GLOBAL.currentUser) && GLOBAL.currentUser instanceof BookingOfficer ?
+                    (<BookingOfficer>GLOBAL.currentUser) :
+                    GLOBAL.currentUser;
 
-                                 this._sharedPreferedAllocationService.interpreterStream$.subscribe(
-                                    data => {
-                                       this.filterUserPreference(data);
-                                    });
-
+        this._sharedPreferedAllocationService.interpreterStream$.subscribe(data => {
+            this.filterUserPreference(data);
+        });
     }
 
     filterUserPreference(interpreters) {
@@ -425,8 +440,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 if (i.preference === 'preferred' && !i.hasOwnProperty('_destroy')) {
                     this.bookingModel.preference_allocations_attributes.push({ 'interpreter_id': i.interpreter_id, 'preference': i.preference });
 
-                }
-                else if (i.hasOwnProperty('_destroy')) {
+                } else if (i.hasOwnProperty('_destroy')) {
                     this.userModel.prefferedInterpreters = this.userModel.prefferedInterpreters.filter(itm => itm.interpreter_id !== i.interpreter_id);
                 }
             }
@@ -435,8 +449,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 if (i.preference === 'blocked' && !i.hasOwnProperty('_destroy')) {
                     this.bookingModel.preference_allocations_attributes.push({ 'interpreter_id': i.interpreter_id, 'preference': i.preference });
 
-                }
-                else if (i.hasOwnProperty('_destroy')) {
+                } else if (i.hasOwnProperty('_destroy')) {
                     this.userModel.prefferedInterpreters = this.userModel.prefferedInterpreters.filter(itm => itm.interpreter_id !== i.interpreter_id);
                 }
             }
@@ -444,7 +457,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         });
     }
 
-    confirmDelete(docID){
+    confirmDelete(docID) {
 
         let obj = {'id': docID, '_destroy': '1'};
         this.deleteDocuments.push(obj);
@@ -467,13 +480,32 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         let newObj = oldObj;
         if (oldObj && typeof oldObj === 'object') {
             newObj = Object.prototype.toString.call(oldObj) === '[object Array]' ? [] : {};
-            for (let i in oldObj) {
+            for (let i of Object.keys(oldObj)) {
                 newObj[i] = this.deepCopy(oldObj[i]);
             }
         }
         return newObj;
     }
-    isNewBooking(){
-      return this.router.url.includes('create-booking');
+    isNewBooking() {
+        return this.router.url.includes('create-booking');
+    }
+
+    getAllUsers() {
+        this.spinnerService.requestInProcess(true);
+        this.userService.fetchUsers()
+            .subscribe((res: any) => {
+                    if (res.status === 200 ) {
+                        this.allClientsOrg = res.data.users;
+                        this.bookingForItems = this.allClientsOrg.filter(u => u.type === 'IndividualClient');
+                        this.bookingModel.bookable_type = this.bookingFor;
+                    }
+                    this.spinnerService.requestInProcess(false);
+                },
+                errors => {
+                    this.spinnerService.requestInProcess(false);
+                    let e = errors.json() || '';
+                    this.notificationServiceBus.launchNotification(true,
+                        'Error occured on server side. ' + errors.statusText + ' ' + JSON.stringify(e || e.errors));
+                });
     }
 }
