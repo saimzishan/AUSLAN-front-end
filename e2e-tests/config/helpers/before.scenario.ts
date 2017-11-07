@@ -44,6 +44,8 @@ defineSupportCode(({Before}) => {
         }
 
         if (scenario.scenario.name.toUpperCase().indexOf('a booking with two Interpreters is created'.toUpperCase()) >= 0) {
+            let currentlyLoggedInUser = User.returnTypeAndUser('Individual Client').user;
+            Heroku.addVerifiedUser(currentlyLoggedInUser, 'Individual Client');
             Heroku.createSingleBookingWithMoreInterpreter();
         }
 
