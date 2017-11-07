@@ -368,7 +368,8 @@ Feature: User Role and Permissions Management
     Then I do not see any booking rows
 
   @runThis
-  Scenario: Given 1 verified Interpreter, 1 verified Administrator, 1 verified Individual Client and a booking is created, as an Individual Client I should not be able to see bookings of Interpreter
+  Scenario: Given 1 verified Organisational Representative, 1 verified Interpreter, 1 verified Administrator, 1 verified Individual Client and a booking is created, as an Individual Client I should not be able to see bookings of Interpreter
+    Given Assigned all bookings to Organisational Representative
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
     And I am on the bookings page
