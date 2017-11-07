@@ -102,9 +102,7 @@ defineSupportCode(({Given, When, Then}) => {
     Given(/^I will see attachment '(.*)' is removed$/, verifyAttachmentRemoved);
 
     function verifyAttachmentRemoved(attachmentName: string) {
-        return element(by.cssContainingText('span', attachmentName)).isPresent().then((elm) => {
-            expect(elm).to.be.eq(false);
-        });
+        return expect(page.getElementByCSSandText('span', attachmentName).isPresent()).to.eventually.be.false;
     }
     Given(/^I will upload a document '(.*)'$/, documentUpload);
 
@@ -312,11 +310,7 @@ defineSupportCode(({Given, When, Then}) => {
     function clickOnBtnByName(btnName: string) {
         return page.getAllElementByName(btnName)
             .each((btn) => {
-                btn.getText().then(btnText => {
-                    if (btnText) {
-                        btn.click();
-                    }
-                });
+                btn.click();
             });
     }
 
