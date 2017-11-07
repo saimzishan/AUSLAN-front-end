@@ -24,6 +24,7 @@ Feature: Edit Booking
     Then I am on the individual booking page
     When I click on link 'Booking details'
     Then I should be on the edit booking page
+    And I select the bookable for client
     And All required booking fields should be filled
 
   @ignoreThis
@@ -35,6 +36,7 @@ Feature: Edit Booking
     Then I am on the individual booking page
     When I click on link 'Booking details'
     Then I should be on the edit booking page
+    And I select the bookable for client
     And All required booking fields should be filled
     When I change the street number to 154
     Then I click on checkbox name 'tnc'
@@ -52,6 +54,7 @@ Feature: Edit Booking
     Then I am on the individual booking page
     When I click on link 'Booking details'
     Then I should be on the edit booking page
+    And I select the bookable for client
     Then I should be able to edit only specific fields
     And I should not be able to edit other fields
 
@@ -66,5 +69,6 @@ Feature: Edit Booking
     Then I am on the individual booking page
     When I click on link 'Booking details'
     Then I should be on the edit booking page
+    And I select the bookable for client
     Then I should be able to edit only specific fields
     And I should not be able to edit other fields

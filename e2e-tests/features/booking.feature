@@ -100,6 +100,7 @@ Feature: Booking Management
     Then I can see the button 'Save' is disabled
     And I click on BUTTON 'Duplicate'
     Then I will be taken to the 'New Booking' form
+    And I select the bookable for client
     When I click on BUTTON 'SAVE'
     Then I will get an error notification saying "Kindly accept Terms and Conditions"
     Then I move to element name 'lnkTC'
