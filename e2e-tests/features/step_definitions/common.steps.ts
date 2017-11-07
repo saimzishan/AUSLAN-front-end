@@ -180,15 +180,17 @@ defineSupportCode(({Given, When, Then}) => {
     Given(/^I will be shown a popup message$/, showPopup);
 
     function showPopup() {
-        return browser.wait(protractor.ExpectedConditions.presenceOf(page.getElementByCss('app-popup')), 30000);
+        return expect(page.getElementByCss('app-popup').isPresent()).to.eventually.be.true;
     }
 
     Given(/^I will be shown a popup message '(.*)'$/, showPopupWithMessage);
 
     function showPopupWithMessage(message) {
-        return browser.wait(protractor.ExpectedConditions.presenceOf(page.getElementByCss('app-popup')), 30000).then(() => {
-            let elm = page.getElementByCss('main > div > p');
-            expect(elm.getText()).to.be.eventually.eq(message);
+        return page.getElementByCss('app-popup').isPresent().then(() => {
+            let elm = page.getElementByCss('app-popup main > div > p');
+            return elm.getText().then((text) => {
+                return expect(text).to.eq(message);
+            });
         });
     }
 

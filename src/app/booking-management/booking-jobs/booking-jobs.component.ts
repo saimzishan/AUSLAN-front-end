@@ -134,8 +134,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         this.dialogRef.componentInstance.okTitle = isCancel ? `Cancel this job` : 'Unable to service this job';
         this.dialogRef.componentInstance.popupMessage =
             isCancel ? `Are you sure you want to cancel the booking?
-          The client will be notified of this. This is a permanent action.`
-                :
+          The client will be notified of this. This is a permanent action.` :
                 `Are you sure you want to mark this booking as unable to service?
           The client will be notified of this. This is a permanent action.`;
 
@@ -409,8 +408,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
             isCancel ? `Decline` : 'Accept';
         this.dialogRef.componentInstance.popupMessage =
             reachoutWarning ? 'Please contact the booking office to cancel this booking.' :
-                isCancel ? `Do you want to decline the invitation?`
-                    :
+                isCancel ? `Do you want to decline the invitation?` :
                     `Do you want to accept the invitation?`;
 
         this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
