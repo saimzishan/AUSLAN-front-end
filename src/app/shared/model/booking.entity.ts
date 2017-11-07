@@ -28,7 +28,7 @@ export class Booking {
     public documents_attributes = [];
     public versions: Array<BookingVersion> = [];
     public preference_allocations_attributes = [];
-    public bookable_id: any;
+    public bookable_id: number;
     public bookable_type: string;
     // Is it a limitation on interpreters invitation.
 
@@ -57,7 +57,6 @@ export class Booking {
         this.raw_nature_of_appointment = '';
         this.specific_nature_of_appointment = '';
         this.state = BOOKING_STATE.None;
-        this.bookable_id = '0';
         this.bookable_type = '';
     }
 

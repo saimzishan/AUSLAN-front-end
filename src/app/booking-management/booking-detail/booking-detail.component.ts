@@ -295,6 +295,10 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     createBooking() {
+        if (!this.bookingModel.bookable_id) {
+            this.bookingModel.bookable_id = GLOBAL.currentUser.id;
+            this.bookingModel.bookable_type = GLOBAL.currentUser.type;
+        }
         this.spinnerService.requestInProcess(true);
         this.bookingModel.state = BOOKING_STATE.Requested; // res.data.state;
         this.bookingModel.clean(this.bookingModel.toJSON());

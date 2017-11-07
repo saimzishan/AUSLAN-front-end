@@ -9,7 +9,7 @@ export class NotificationObject {
     static getNotificationContent = (message) => {
         let elm = $('div.sn-content');
         return browser.wait(protractor.ExpectedConditions.presenceOf(elm), 30000).then(() => {
-            expect(elm.getText()).to.eventually.contain(message);
+            return expect(elm.getText()).to.eventually.contain(message);
         });
     }
 }

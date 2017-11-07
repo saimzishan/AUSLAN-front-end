@@ -22,18 +22,24 @@
     </div>
 
     <div class="row" *ngIf="isUserAdminORBookOfficer()">
-      <div class="medium-6 columns"> 
+      <div class="medium-6 columns">
         <div class="form-field">
           <label>PLEASE SELECT THE {{bookingFor ==='IndividualClient' ? "CLIENT":"ORGANIZATION"}}*
             <span mdTooltip="Select the Client/Org"><i class="inline-icon-tip"></i></span>
           </label>
           <select (change)="ddlBookingForChange($event)"
-                                                       [(ngModel)]="bookingModel.bookable_id"
-                                                       #booking_for="ngModel" name="booking_for" aria-label="A" required>
-            <option *ngFor="let item of bookingForItems " [value]="item.id">
+                  [(ngModel)]="bookingModel.bookable_id"
+                  #booking_for="ngModel" name="booking_for"
+                  aria-label="A" required>
+            <option *ngFor="let item of bookingForItems" [value]="item.id">
             {{ item.first_name.toUpperCase() }} {{ item.last_name.toUpperCase() }}
             </option>
           </select>
+            <span *ngIf="booking_for.touched && !booking_for.errors?.required;"
+                  class="inline-icon inline-icon-valid valid"></span>
+            <span *ngIf="booking_for.touched && (booking_for.errors?.required);"
+                  class="inline-icon error">!
+            </span>
         </div>
       </div>
     </div>
@@ -140,7 +146,7 @@
             <span *ngIf="nature_of_appointment.touched && !nature_of_appointment.errors?.required;"
                   class="inline-icon inline-icon-valid valid"></span>
             <span *ngIf="nature_of_appointment.touched && (nature_of_appointment.errors?.required);"
-                  class="inline-icon error">
+                  class="inline-icon error">!
             </span>
           </div>
         </div>
@@ -162,7 +168,7 @@
             <span *ngIf="specific_nature_of_appointment.touched && !specific_nature_of_appointment.errors?.required;"
                    class="inline-icon inline-icon-valid valid"></span>
             <span *ngIf="specific_nature_of_appointment.touched && (specific_nature_of_appointment.errors?.required);"
-                   class="inline-icon error">
+                   class="inline-icon error">!
             </span>
           </div>
         </div>
