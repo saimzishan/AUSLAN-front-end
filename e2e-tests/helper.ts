@@ -83,7 +83,6 @@ export class User {
             lastName = user.last_name;
             mobileNum = user.mobile_num;
         }
-        console.log(email);
 
         // Similar for every user
         let data_to_sent = {};
@@ -395,12 +394,10 @@ export class Heroku {
 
     static sendCommandToHeroku(command) {
         const exec = require('child_process').execSync;
-        command += ';nil;exit';
+        command = 'ActiveRecord::Base.logger.level = Logger::INFO;' + command + ';nil;exit';
         let herokuCommand = browser.params.env === 'localhost' ?
             'cd ../booking-system-api/ && echo  \'' + command + '\' | bundle exec rails c && cd ../booking-system-frontend/' :
             'echo  \'' + command + '\' | heroku run console --app auslan-e2e-testing';
-        console.log(browser.params.env,
-            herokuCommand);
 
         exec(herokuCommand
             , (o1, o2, o3) => {
@@ -442,7 +439,7 @@ export class Heroku {
         Heroku.sendCommandToHeroku(command);
     }
     static createBulkBookings(count: string) {
-        let command = 'FactoryGirl.create :ted_individual_client; FactoryGirl.create_list(:booking, ' + count + ', bookable: IndividualClient.first)';
+        let command = 'FactoryGirl.create(:ted_individual_client); FactoryGirl.create_list(:booking, ' + count + ', bookable: IndividualClient.first)';
         Heroku.sendCommandToHeroku(command);
     }
 
