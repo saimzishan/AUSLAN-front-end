@@ -74,7 +74,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         BA.loadItems();
 
         this.bookingModel = new Booking();
-        this.bookingModel.bookable_type = 'IndividualClient';
         this.onSpecialInstruction();
         this.oldBookingModel = new Booking();
 
@@ -124,6 +123,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.onClientSelectionChange();
             this.getUser();
             this.getAllUsers();
+            this.bookingModel.bookable_type = 'IndividualClient';
         }
     }
 
