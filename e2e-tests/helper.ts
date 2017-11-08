@@ -408,6 +408,21 @@ export class Heroku {
             });
     }
 
+    static sendTaskToHeroku(task) {
+        const exec = require('child_process').execSync;
+        let herokuCommand = browser.params.env === 'localhost' ?
+            'cd ../booking-system-api/ && bundle exec rails ' + task + ' && cd ../booking-system-frontend/' :
+            'heroku run bundle exec rails ' + task + ' --app auslan-e2e-testing';
+
+        exec(herokuCommand
+            , (o1, o2, o3) => {
+                console.log('Heroku Command => Output', o1);
+                console.log('Heroku Command => StdError', o2);
+                console.log('Heroku Command => Error', o3);
+
+            });
+    }
+
     static getOutputFromHeroku (command) {
         let sync = require('child_process').spawn;
         let herokuCommand = browser.params.env === 'localhost' ?
@@ -442,6 +457,11 @@ export class Heroku {
         let command = 'i=IndividualClient.first;FactoryGirl.create(:ted_individual_client) if !i;';
         command += 'FactoryGirl.create_list(:booking, ' + count + ', bookable: IndividualClient.first)';
         Heroku.sendCommandToHeroku(command);
+    }
+
+    static preloadOrgBookings(count: string) {
+        let task = 'seed:test_data:preloaded_org_bookings';
+        Heroku.sendTaskToHeroku(task);
     }
 
     static createSingleUser(data) {
