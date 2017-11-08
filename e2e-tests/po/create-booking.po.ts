@@ -162,9 +162,7 @@ export class BookingPage extends PageObject {
     }
 
     selectOrgRepAsBookbable = () => {
-        this.getElementByName('orgRepBookable').click();
-        browser.sleep(1000);
-        element(by.id('rdBookingFor')).all(by.tagName('md-radio-button')).get(1).click();
+        element(by.name('rdBookingFor')).all(by.tagName('md-radio-button')).get(1).click();
         this.getElementByName('booking_for').sendKeys('alana');
     }
 
