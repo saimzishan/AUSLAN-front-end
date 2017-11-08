@@ -94,7 +94,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                     this.datePipe.transform(this.bookingModel.venue.end_time_iso, 'yyyy-MM-ddTHH:mm:ss');
                 this.natureOfApptChange(null);
 
-                this.oldBookingModel = this.deepCopy(this.bookingModel);
             }
             this.bookingHeading = (this.shouldEdit.length > 0 && this.shouldEdit === 'edit' ) ? 'EDIT BOOKING' : 'NEW BOOKING';
         });
@@ -122,8 +121,13 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.onSelectionChange();
             this.onClientSelectionChange();
             this.getUser();
-            this.getAllUsers();
+
             this.bookingModel.bookable_type = 'IndividualClient';
+            if (this.isUserAdminORBookOfficer()){ 
+                this.getAllUsers();
+            } else {
+                this.oldBookingModel = this.deepCopy(this.bookingModel);
+            }
         }
     }
 
@@ -181,7 +185,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     public onBookingForChange() {
         this.bookingForItems =  this.bookingModel.bookable_type === 'IndividualClient' ?
             this.allClientsOrg.filter(u => u.type === 'IndividualClient') :
-            this.allClientsOrg.filter(u => u.type === 'OrganisationalRepresentative');
+            this.allClientsOrg.filter(u => u.type === 'OrganisationalRepresentative'); 
     }
 
     isNotIndClient() {
@@ -479,7 +483,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         let newObj = oldObj;
         if (oldObj && typeof oldObj === 'object') {
             newObj = Object.prototype.toString.call(oldObj) === '[object Array]' ? [] : {};
-            for (const i of Object.keys(oldObj)) {
+            for (var i in oldObj) {
                 newObj[i] = this.deepCopy(oldObj[i]);
             }
         }
@@ -496,6 +500,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                     if (res.status === 200 ) {
                         this.allClientsOrg = res.data.users;
                         this.bookingForItems = this.allClientsOrg.filter(u => u.type === 'IndividualClient');
+                        this.oldBookingModel = this.deepCopy(this.bookingModel);
                     }
                     this.spinnerService.requestInProcess(false);
                 },
