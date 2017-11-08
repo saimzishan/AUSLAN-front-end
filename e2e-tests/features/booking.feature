@@ -135,13 +135,14 @@ Feature: Booking Management
 
 # ---------------------------------------- AUSLAN1-252 -> START ----------------------------------------
   @runThis
-  Scenario: Booking Officer can create a non-standard booking
+  Scenario: Given 1 verified Individual Client, Booking Officer can create a non-standard booking
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
     And I am on the bookings page
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
     When I fill New Booking form fields correctly with non-standard time from 04:00AM to 05:00AM with 1 interpreters
+    And I select the bookable for client
     And I click the create booking button
     Then I will get an error notification saying "Kindly accept Terms and Conditions"
     Then I move to element name 'lnkTC'
@@ -152,13 +153,14 @@ Feature: Booking Management
     Then I will be shown a popup message
 
   @runThis
-  Scenario: Administrator can create a non-standard booking
+  Scenario: Given 1 verified Individual Client, Administrator can create a non-standard booking
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
     And I am on the bookings page
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
     When I fill New Booking form fields correctly with non-standard time from 04:00AM to 05:00AM with 1 interpreters
+    And I select the bookable for client
     And I click the create booking button
     Then I will get an error notification saying "Kindly accept Terms and Conditions"
     Then I move to element name 'lnkTC'
