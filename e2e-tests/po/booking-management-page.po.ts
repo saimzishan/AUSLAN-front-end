@@ -107,7 +107,7 @@ export class BookingManagementPage extends PageObject {
             allTypeBooking = this.getAllElementByCSS('tbody tr');
         }
         return allTypeBooking.count().then((countNum) => {
-            expect(countNum).to.equal(numBooking);
+            return expect(countNum).to.equal(numBooking);
         });
     }
 
@@ -188,9 +188,9 @@ export class BookingManagementPage extends PageObject {
     }
 
     atleastABookingExists = () => {
-        this.getFirstBookingID().then(txt => {
+        return this.getFirstBookingID().then(txt => {
             let len = txt[0].length;
-            expect(len).to.be.eq(4);
+            return expect(len).to.be.eq(4);
         });
     }
 
@@ -239,8 +239,16 @@ export class BookingManagementPage extends PageObject {
         let currentDate = new Date();
         let dateStart = new Date(new Date(currentDate).setDate(currentDate.getDate() + 12));
         let dateEnd = new Date(new Date(dateStart).setDate(dateStart.getDate() + 4));
-        let dateFrom = (dateStart.getMonth() + 1) + '/' + dateStart.getDate() + '/' + dateStart.getFullYear();
-        let dateTo = (dateEnd.getMonth() + 1) + '/' + dateEnd.getDate() + '/' + dateEnd.getFullYear();
+        let dateFrom = {
+            mm: (dateStart.getMonth() + 1).toString(),
+            dd: dateStart.getDate().toString(),
+            yy: dateStart.getFullYear().toString()
+        };
+        let dateTo = {
+            mm: (dateEnd.getMonth() + 1).toString(),
+            dd: dateEnd.getDate().toString(),
+            yy: dateEnd.getFullYear().toString()
+        };
         this.booking.setDateOnly('date_from', dateFrom);
         return this.booking.setDateOnly('date_to', dateTo);
     }

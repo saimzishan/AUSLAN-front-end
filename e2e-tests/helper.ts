@@ -439,7 +439,8 @@ export class Heroku {
         Heroku.sendCommandToHeroku(command);
     }
     static createBulkBookings(count: string) {
-        let command = 'FactoryGirl.create(:ted_individual_client); FactoryGirl.create_list(:booking, ' + count + ', bookable: IndividualClient.first)';
+        let command = 'i=IndividualClient.first;FactoryGirl.create(:ted_individual_client) if !i;';
+        command += 'FactoryGirl.create_list(:booking, ' + count + ', bookable: IndividualClient.first)';
         Heroku.sendCommandToHeroku(command);
     }
 
@@ -564,7 +565,7 @@ export class Heroku {
     }
 
     static updateBookingStartAndEndDateTime() {
-        let command = 'start_date = DateTime.current + 2.week; end_date = start_date + 2.day;'
+        let command = 'start_date = DateTime.current + 2.week; end_date = start_date + 2.day;';
         command += 'Booking.first.update(start_time: start_date, end_time: end_date);';
         command += 'Booking.last.update(start_time: start_date, end_time: end_date)';
         Heroku.sendCommandToHeroku(command);

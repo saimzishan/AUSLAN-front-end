@@ -4,6 +4,12 @@ import {expect} from '../config/helpers/chai-imports';
 import {CONSTANT, Booking} from '../helper';
 import {NotificationObject} from './notification';
 
+interface TestDateFormat {
+    mm: string;
+    dd: string;
+    yy: string;
+}
+
 export class BookingPage extends PageObject {
     list_of_object = {};
     browse = () => {
@@ -142,12 +148,10 @@ export class BookingPage extends PageObject {
         this.getElementByName(elementName).sendKeys(protractor.Key.TAB);
         this.getElementByName(elementName).sendKeys(time);
     }
-    setDateOnly = (field: string, date: string) => {
-        let elementName = {
-            'date_from': 'date_from',
-            'date_to': 'date_to'
-        }[field];
-        this.getElementByName(elementName).sendKeys(date);
+    setDateOnly = (field: string, date: TestDateFormat) => {
+        this.getElementByName(field).sendKeys(date.mm);
+        this.getElementByName(field).sendKeys(date.dd);
+        this.getElementByName(field).sendKeys(date.yy);
     }
     createBooking = () => {
         return this.createBookingWithTimeAndInterpreter('standard', '10:15AM', '11:15AM', '2');
