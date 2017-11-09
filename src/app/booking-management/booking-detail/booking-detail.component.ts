@@ -122,7 +122,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.onClientSelectionChange();
             this.getUser();
             this.bookingModel.bookable_type = 'IndividualClient';
-            if (this.isUserAdminORBookOfficer()){ 
+            if (this.isUserAdminORBookOfficer()) {
                 this.getAllUsers();
             } else {
                 this.oldBookingModel = this.deepCopy(this.bookingModel);
