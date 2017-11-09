@@ -5,6 +5,8 @@ import {FormsModule} from '@angular/forms';
 import { CustomFormsModule } from 'ng2-validation';
 import {AddressComponent} from '../address/address.component';
 import {Accountant} from '../../shared/model/user.entity';
+import {SimpleNotificationsModule} from 'angular2-notifications/src/simple-notifications.module';
+import {NotificationServiceBus} from '../../notification/notification.service';
 
 describe('AccountantComponent', () => {
   let component: AccountantComponent;
@@ -13,7 +15,8 @@ describe('AccountantComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ AccountantComponent, AddressComponent ],
-      imports: [FormsModule, CustomFormsModule]
+        providers: [NotificationServiceBus],
+      imports: [FormsModule, CustomFormsModule, SimpleNotificationsModule]
     })
     .compileComponents();
   }));

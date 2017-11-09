@@ -23,6 +23,8 @@ import { CustomFormsModule } from 'ng2-validation';
 import { ViewContainerRef } from '@angular/core';
 import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
 import { PrettyIDPipe } from '../../shared/pipe/pretty-id.pipe';
+import {BookingHeaderService} from '../booking-header/booking-header.service';
+import {BookingHeaderComponent} from '../booking-header/booking-header.component';
 
 describe('BookingJobsComponent', () => {
   let component: BookingJobsComponent;
@@ -30,9 +32,9 @@ describe('BookingJobsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [BookingJobsComponent, PrettyIDPipe],
+      declarations: [BookingJobsComponent, BookingHeaderComponent, PrettyIDPipe],
       providers: [MdDialog,
-        ViewContainerRef, SpinnerService, NotificationServiceBus,
+        ViewContainerRef, SpinnerService, NotificationServiceBus, BookingHeaderService,
         {
           provide: ActivatedRoute,
           useValue: {

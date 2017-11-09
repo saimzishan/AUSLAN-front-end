@@ -5,6 +5,8 @@ import { AddressComponent } from './address.component';
 import {FormsModule} from '@angular/forms';
 import { CustomFormsModule } from 'ng2-validation';
 import {Address} from '../../shared/model/venue.entity';
+import {NotificationServiceBus} from '../../notification/notification.service';
+import {SimpleNotificationsModule} from 'angular2-notifications/src/simple-notifications.module';
 
 describe('AddressComponent', () => {
   let component: AddressComponent;
@@ -13,7 +15,8 @@ describe('AddressComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ AddressComponent ],
-      imports: [FormsModule, CustomFormsModule]
+        providers: [NotificationServiceBus],
+      imports: [FormsModule, CustomFormsModule, SimpleNotificationsModule]
     })
     .compileComponents();
   }));

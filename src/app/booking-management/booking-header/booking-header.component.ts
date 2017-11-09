@@ -21,7 +21,7 @@ export class BookingHeaderComponent implements OnInit, OnDestroy {
   @Input() invitePress = false;
   @Input() unAssignPress = false;
   @Input() reAssignPress = false;
-  @Input() bookingState;
+  @Input() bookingState = BOOKING_STATE.None;
   @Input() showButtons = false;
   dialogRef: MdDialogRef<any>;
   dialogSub;

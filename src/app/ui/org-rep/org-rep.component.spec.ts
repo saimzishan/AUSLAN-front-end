@@ -8,6 +8,8 @@ import {MaterialModule} from '@angular/material';
 import {AddressComponent} from '../address/address.component';
 import {OrganisationalRepresentative} from '../../shared/model/user.entity';
 import {BillingAccountComponent} from '../billing-account/billing-account.component';
+import {NotificationServiceBus} from '../../notification/notification.service';
+import {SimpleNotificationsModule} from 'angular2-notifications/src/simple-notifications.module';
 
 describe('OrgRepComponent', () => {
   let component: OrgRepComponent;
@@ -16,7 +18,8 @@ describe('OrgRepComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ OrgRepComponent, AddressComponent, BillingAccountComponent ],
-        imports: [CustomFormsModule,
+        providers: [NotificationServiceBus],
+        imports: [CustomFormsModule, SimpleNotificationsModule,
             FormsModule, Md2Module.forRoot(),
             MaterialModule
         ]
