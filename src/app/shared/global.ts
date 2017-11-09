@@ -33,6 +33,9 @@ export class GLOBAL {
         'zgyMTAsImF1ZCI6Ind3dy5wYWN0LmNvbSIsInN1YiI6Imthcm1hQHBhY3QuY29tIn0.lVWLJAYQRZcQTMtdDrxTHMwboSOqNQPISLDAKDkPy58';
     public static userStatusArray = [{name: 'Active'}, {name: 'Disabled'}];
 
+    public static GOP_ADDRESS_ONE = '350 Bourke Street, Melbourne VIC, 3000, Australia';
+    public static GOP_ADDRESS_TWO = '261 Queens Street, Brisbane City QLD, 4000, Australia';
+
     public static get currentUser(): any {
         return this._currentUser;
     }
