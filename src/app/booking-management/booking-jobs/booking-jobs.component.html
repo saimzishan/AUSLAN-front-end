@@ -5,8 +5,6 @@
 
 <ng-container *ngIf="!jobAccessError">
     <section id="page-common">
-
-
         <app-booking-header [bookingState]="selectedBookingModel.state" [isCancelOrUnable]="isCancelledOrUnableToServe"
                             [invitePress]="invitePressed"
                             [unAssignPress]="unAssignPressed" [reAssignPress]="reAssignPressed" [showButtons]='true'
@@ -14,16 +12,15 @@
         </app-booking-header>
 
         <div class="job-status">
-<span [ngClass]="{
-'status-accepted': stateStr === 'IN PROGRESS - Accepted',
-'status-invited': stateStr === 'IN PROGRESS - Invited',
-'status-declined': stateStr === 'IN PROGRESS - Rejected',
-'status-tentative': stateStr === 'IN PROGRESS - Tentative',
-'status-allocated': stateStr === 'ALLOCATED'}">
-{{stateStr}} <i class="icon-requested"></i>
-</span>
+            <span [ngClass]="{'status-accepted': stateStr === 'IN PROGRESS - Accepted',
+                             'status-invited': stateStr === 'IN PROGRESS - Invited',
+                             'status-declined': stateStr === 'IN PROGRESS - Rejected',
+                             'status-tentative': stateStr === 'IN PROGRESS - Tentative',
+                             'status-allocated': stateStr === 'ALLOCATED'}">
+                {{stateStr}}
+                <i class="icon-requested"></i>
+            </span>
         </div>
-
 
         <section id="job-booking">
             <main>
@@ -50,11 +47,10 @@
                     <tbody>
                     <tr>
                         <td data-title="JOB NUMBER">{{selectedBookingModel.id | PrettyID}}</td>
-
-                        <td data-title="TIME"><span>{{selectedBookingModel.venue.start_time_iso | date:'shortTime'}} - {{selectedBookingModel.venue.end_time_iso | date:'shortTime'}}</span>
+                        <td data-title="TIME">
+                            <span>{{selectedBookingModel.venue.start_time_iso | date:'shortTime'}} - {{selectedBookingModel.venue.end_time_iso | date:'shortTime'}}</span>
                         </td>
-                        <td data-title="DATE"><span>{{selectedBookingModel.venue.start_time_iso | date:'EEE d MMM yy'}}
-</span></td>
+                        <td data-title="DATE"><span>{{selectedBookingModel.venue.start_time_iso | date:'EEE d MMM yy'}}</span></td>
                         <td data-title="ORGANISATION">AUSLAN</td>
                         <td data-title="CLIENT">{{selectedBookingModel.client.organisation_primary_contact.first_name +
                             ' '
@@ -63,11 +59,16 @@
                         <td data-title="VENUE">{{selectedBookingModel.venue.title}}</td>
                         <td data-title="ADDRESS">
                             <a target="_blank"
-                               href="{{'https://www.google.com.au/maps/place/' + selectedBookingModel.venue.street_number + ' ' + selectedBookingModel.venue.street_name + ' ' + selectedBookingModel.venue.suburb}}">{{selectedBookingModel.venue.street_number
-                                + ' ' + selectedBookingModel.venue.street_name}}</a></td>
+                               href="{{'https://www.google.com.au/maps/place/' + selectedBookingModel.venue.street_number + ' ' + selectedBookingModel.venue.street_name + ' ' + selectedBookingModel.venue.suburb}}">
+                                {{selectedBookingModel.venue.street_number
+                                + ' ' + selectedBookingModel.venue.street_name}}
+                            </a>
+                        </td>
                         <td data-title="SUBURB">
                             <a target="_blank"
-                               href="{{'https://www.google.com.au/maps/place/' +selectedBookingModel.venue.suburb}}">{{selectedBookingModel.venue.suburb}}</a>
+                               href="{{'https://www.google.com.au/maps/place/' +selectedBookingModel.venue.suburb}}">
+                                {{selectedBookingModel.venue.suburb}}
+                            </a>
                         </td>
                         <td data-title="TYPE OF JOB">{{selectedBookingModel.nature_of_appointment}}</td>
                         <td data-title="PEOPLE">{{selectedBookingModel.venue.expected_attendance}}</td>
@@ -81,10 +82,12 @@
                                 <li>
                                     <a href="#" class="icon-attach"></a>
                                     <ul class="menu">
-                                        <li *ngFor="let attachment of selectedBookingModel.documents_attributes"><a
-                                                download
-                                                href="{{attachment.url}}"><i
-                                                class="icon-attach"></i> {{attachment.file_name}}</a></li>
+                                        <li *ngFor="let attachment of selectedBookingModel.documents_attributes">
+                                            <a  download
+                                                href="{{attachment.url}}">
+                                                <i class="icon-attach"></i> {{attachment.file_name}}
+                                            </a>
+                                        </li>
                                     </ul>
                                 </li>
                             </ul>
@@ -105,23 +108,19 @@
                                         <span *ngIf="interpreter.state === 'Accepted'" class='interpreter-accepted'>{{interpreter.first_name}} {{interpreter.last_name}}</span>
                                         <span *ngIf="interpreter.state !== 'Accepted'">To be filled</span>
                                         <button name="{{'unassingBtn_' + +(i + 1)}}"
-                                                (click)="unAssignInterpreters(interpreter.id)" *ngIf="!isCurrentUserInterpreter() &&
-                  (false === isActiveState('Unable_to_service') && false === isActiveState('Cancelled')) &&
-                  interpreter.state === 'Accepted'">
+                                                (click)="unAssignInterpreters(interpreter.id)"
+                                                *ngIf="!isCurrentUserInterpreter() && (false === isActiveState('Unable_to_service') && false === isActiveState('Cancelled')) && interpreter.state === 'Accepted'">
                                             Unassign
                                         </button>
                                     </div>
-
                                 </ng-container>
-                                <ng-container
-                                        *ngIf="(selectedBookingModel.interpreters_required - selectedBookingModel.interpreters.length) > 0">
-                                    <ng-container
-                                            *ngFor="let numb of counter(selectedBookingModel.interpreters_required - selectedBookingModel.interpreters.length ); let ii=index">
-                                        <ng-container
-                                                *ngIf="ii < (selectedBookingModel.interpreters_required - selectedBookingModel.interpreters.length)">
+                                <ng-container *ngIf="(selectedBookingModel.interpreters_required - selectedBookingModel.interpreters.length) > 0">
+                                    <ng-container *ngFor="let numb of counter(selectedBookingModel.interpreters_required - selectedBookingModel.interpreters.length ); let ii=index">
+                                        <ng-container *ngIf="ii < (selectedBookingModel.interpreters_required - selectedBookingModel.interpreters.length)">
                                             <div>
-                                                <b>Interpreter {{selectedBookingModel.interpreters.length + ii + 1}}
-                                                    : </b>
+                                                <strong>
+                                                    Interpreter {{selectedBookingModel.interpreters.length + ii + 1}} :
+                                                </strong>
                                                 <span>To be filled</span>
                                             </div>
                                         </ng-container>
@@ -138,7 +137,6 @@
                                 <div *ngFor="let numb of counter(selectedBookingModel.interpreters_required); let i=index">
                                     <b>Interpreter {{i + 1}} :</b>
                                     <span>To be filled</span>
-
                                 </div>
                             </section>
                         </section>
@@ -150,20 +148,18 @@
                             <ng-container *ngIf="i < selectedBookingModel.interpreters_required">
                                 <div *ngIf="interpreter.state === 'Accepted'"
                                      class="row with-border">
-
-                                    <div> INTERPRETER {{i + 1}}
+                                    <div>
+                                        INTERPRETER {{i + 1}}
                                     </div>
                                     <span class="with-avatar">
-<img class="img-circle" src="{{interpreter.photo_url}}" alt="">
-{{interpreter.first_name}} {{interpreter.last_name}}
-</span>
-
+                                        <img class="img-circle" src="{{interpreter.photo_url}}" alt="">
+                                        {{interpreter.first_name}} {{interpreter.last_name}}
+                                    </span>
                                 </div>
                                 <div *ngIf="interpreter.state !== 'Accepted'"
                                      class="row with-border">
                                     <div> INTERPRETER {{i + 1}}</div>
                                     <span>To be filled</span>
-
                                 </div>
                             </ng-container>
                         </ng-container>
@@ -188,7 +184,6 @@
                                 <div class="row with-border">
                                     <div> INTERPRETER {{i + 1}}</div>
                                     <span>To be filled</span>
-
                                 </div>
                             </ng-container>
                         </ng-container>
@@ -219,19 +214,22 @@
                     <div class="manage-job-buttons" *ngIf="isCurrentUserInterpreter()">
                         <button class="button button-accept"
                                 [ngClass]="isCurrentUserState('Accepted') ? 'button pushed button-accept' : 'button button-accept'"
-                                (click)="!disableAccept && showDialogBoxInterpreter(false)"><i
-                                class="icon-check-mobile"></i></button>
+                                (click)="!disableAccept && showDialogBoxInterpreter(false)">
+                            <i class="icon-check-mobile"></i>
+                        </button>
 
                         <button [disabled]="disableAccept" class="button button-help"><i class="icon-help"></i></button>
 
                         <button class="button button-decline"
                                 [ngClass]="isCurrentUserState('Rejected') ? 'button pushed button-decline' : 'button button-decline'"
-                                (click)="!disableReject && showDialogBoxInterpreter(true)"><i
-                                class="icon-decline"></i></button>
+                                (click)="!disableReject && showDialogBoxInterpreter(true)">
+                            <i class="icon-decline"></i>
+                        </button>
                     </div>
                 </section>
 
-                <h2 *ngIf='!isCancelledOrUnableToServe && !isCurrentUserInterpreter()'>Invite Interpreters
+                <h2 *ngIf='!isCancelledOrUnableToServe && !isCurrentUserInterpreter()'>
+                    Invite Interpreters
                     <button class="outside"></button>
                 </h2>
                 <section *ngIf='!isCancelledOrUnableToServe && !isCurrentUserInterpreter()' id="invite-interpreters">
@@ -247,11 +245,11 @@
 
                             <div class="separator"></div>
 
-                            <button class="button active" name='inviteBtn' (click)="inviteInterpreters()"><i
-                                    class="icon-shape"></i> Invite
+                            <button class="button active" name='inviteBtn' (click)="inviteInterpreters()">
+                                <i class="icon-shape"></i> Invite
                             </button>
-                            <button class="button red" (click)="reAssignInterpreters()" name="reassingBtn"><i
-                                    class="icon-assign"></i> Assign
+                            <button class="button red" (click)="reAssignInterpreters()" name="reassingBtn">
+                                <i class="icon-assign"></i> Assign
                             </button>
                         </section>
                     </section>
@@ -326,12 +324,15 @@
                         <tbody>
                         <tr *ngFor="let user of interpreterList; let ind = index">
                             <td width="10%">
-                                <md-checkbox name='{{"Check" + ind}}' [checked]="checkList[ind]===true"
-                                             (change)="onChange($event,user, ind)"></md-checkbox>
+                                <md-checkbox name='{{"Check" + ind}}'
+                                             [checked]="checkList[ind]===true"
+                                             (change)="onChange($event,user, ind)">
+                                </md-checkbox>
                             </td>
                             <td>{{user.id}}</td>
-                            <td align="center"><!-- i [ngClass]="{'icon-check-green' :
-              isInvited(user.id), 'icon-check-yellow' : !isInvited(user.id)}"><i --></td>
+                            <td align="center">
+                                <!-- i [ngClass]="{'icon-check-green' : isInvited(user.id), 'icon-check-yellow' : !isInvited(user.id)}"><i -->
+                            </td>
                             <td><!-- i [ngClass]="{'icon-check-yellow' : isNotConfirmed(user.id)}"></i -->
                                 {{user.first_name}}
                             </td>
@@ -380,13 +381,17 @@
                         </thead>
                         <tbody>
                         <tr *ngFor="let version of selectedBookingModel.versions; let i=index">
-                            <td name="data_created_at">{{version.created_at_iso | date:'shortTime'}} on
+                            <td name="data_created_at">
+                                {{version.created_at_iso | date:'shortTime'}} on
                                 {{version.created_at_iso | date:'EEE d MMM yy'}}
                             </td>
-                            <td><img height="40px" width="40px" src="{{version.photo_url}}" alt="">
-                                <span name="data_action">{{version.booking_event_formatted()}}<br/>{{version.full_name()}}
-              </span>
-
+                            <td>
+                                <img height="40px" width="40px" src="{{version.photo_url}}" alt="">
+                                <span name="data_action">
+                                    {{version.booking_event_formatted()}}
+                                    <br/>
+                                    {{version.full_name()}}
+                                </span>
                             </td>
                             <td>
                                 <div name="data_changes">
@@ -402,24 +407,18 @@
             </main>
         </section>
     </section>
-
 </ng-container>
 <!-- Make this as a class-->
 <ng-container *ngIf="jobAccessError">
-    <div class="error" style="
-text-align: center;
-padding-top: 100px;
-">
-<span>
-<img src="../../../../assets/img/error-redcross.svg"/>
-<p>
-Sorry, you don't have access to this job.
-</p>
-<p>
-Contact Auslan if you think this is not right.
-</p>
-</span>
+    <div class="error" style="text-align: center;padding-top: 100px;">
+        <span>
+            <img src="../../../../assets/img/error-redcross.svg"/>
+            <p>
+                Sorry, you don't have access to this job.
+            </p>
+            <p>
+                Contact Auslan if you think this is not right.
+            </p>
+        </span>
     </div>
 </ng-container>
-
-
