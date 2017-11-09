@@ -176,13 +176,14 @@ Feature: User Role and Permissions Management
     Then The valid Administrator should not be in the list
 
   @runThis
-  Scenario: As an Interpreter I should not be able to see bookings created by Administrators
+  Scenario: Given an Individual Client, As an Interpreter I should not be able to see bookings created by Administrators
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
     Then I am on the bookings page
     When I click on 'New Booking'
     Then I will be taken to the 'New Booking' form
     When I fill New Booking form fields correctly
+    And I select the bookable for client
     When I specify i am the client of this booking
     Then The booking form will be automatically populated with the details.
     Then I move to element name 'tnc'
@@ -200,13 +201,14 @@ Feature: User Role and Permissions Management
     Then I do not see any booking rows
 
   @runThis
-  Scenario: As an Interpreter I should not be able to see bookings created by Booking Officers
+  Scenario: Given an Individual Client, As an Interpreter I should not be able to see bookings created by Booking Officers
     Given I exist as a Booking Officer
     And I sign in with valid Booking Officer credentials
     Then I am on the bookings page
     When I click on 'New Booking'
     Then I will be taken to the 'New Booking' form
     When I fill New Booking form fields correctly
+    And I select the bookable for client
     When I specify i am the client of this booking
     Then The booking form will be automatically populated with the details.
     Then I move to element name 'tnc'
@@ -248,13 +250,14 @@ Feature: User Role and Permissions Management
     Then I do not see any booking rows
 
   @runThis
-  Scenario: As an Organisational Representative I should not be able to see bookings created by Administrator
+  Scenario: Given an Individual Client, As an Organisational Representative I should not be able to see bookings created by Administrator
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
     Then I am on the bookings page
     When I click on 'New Booking'
     Then I will be taken to the 'New Booking' form
     When I fill New Booking form fields correctly
+    And I select the bookable for client
     When I specify i am the client of this booking
     Then The booking form will be automatically populated with the details.
     Then I move to element name 'tnc'
@@ -272,13 +275,14 @@ Feature: User Role and Permissions Management
     Then I do not see any booking rows
 
   @runThis
-  Scenario: As an Organisational Representative I should not be able to see bookings created by Booking Officer
+  Scenario: Given an Individual Client, As an Organisational Representative I should not be able to see bookings created by Booking Officer
     Given I exist as a Booking Officer
     And I sign in with valid Booking Officer credentials
     Then I am on the bookings page
     When I click on 'New Booking'
     Then I will be taken to the 'New Booking' form
     When I fill New Booking form fields correctly
+    And I select the bookable for client
     When I specify i am the client of this booking
     Then The booking form will be automatically populated with the details.
     Then I move to element name 'tnc'
@@ -320,14 +324,15 @@ Feature: User Role and Permissions Management
     Then I do not see any booking rows
 
   @runThis
-  Scenario: Given 1 verified Individual Client, as an Individual Client I should not be able to see bookings created by Administrator
+  Scenario: Given an Organisational Representative, As an Individual Client I should not be able to see bookings created by Administrator
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
     Then I am on the bookings page
     When I click on 'New Booking'
     Then I will be taken to the 'New Booking' form
     When I fill New Booking form fields correctly
-    When I specify i am the client of this booking
+    And I select the bookable for org rep
+    And I specify i am the client of this booking
     Then The booking form will be automatically populated with the details.
     Then I move to element name 'tnc'
     Then I click on checkbox name 'tnc'
@@ -344,13 +349,14 @@ Feature: User Role and Permissions Management
     Then I do not see any booking rows
 
   @runThis
-  Scenario: Given 1 verified Individual Client, As an Individual Client I should not be able to see bookings created by Booking Officer
+  Scenario: Given an Organisational Representative, As an Individual Client I should not be able to see bookings created by Booking Officer
     Given I exist as a Booking Officer
     And I sign in with valid Booking Officer credentials
     Then I am on the bookings page
     When I click on 'New Booking'
     Then I will be taken to the 'New Booking' form
     When I fill New Booking form fields correctly
+    And I select the bookable for org rep
     When I specify i am the client of this booking
     Then The booking form will be automatically populated with the details.
     Then I move to element name 'tnc'

@@ -63,7 +63,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     assignedInterpreter = 0;
     oldDocuments = [];
     deleteDocuments = [];
-    bookingFor = 'IndividualClient';
     allClientsOrg = [];
     bookingForItems = [];
 
@@ -124,6 +123,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.onClientSelectionChange();
             this.getUser();
             this.getAllUsers();
+            this.bookingModel.bookable_type = 'IndividualClient';
         }
     }
 
@@ -179,7 +179,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     public onBookingForChange() {
-        this.bookingForItems =  this.bookingFor === 'IndividualClient' ?
+        this.bookingForItems =  this.bookingModel.bookable_type === 'IndividualClient' ?
             this.allClientsOrg.filter(u => u.type === 'IndividualClient') :
             this.allClientsOrg.filter(u => u.type === 'OrganisationalRepresentative');
     }
@@ -496,7 +496,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                     if (res.status === 200 ) {
                         this.allClientsOrg = res.data.users;
                         this.bookingForItems = this.allClientsOrg.filter(u => u.type === 'IndividualClient');
-                        this.bookingModel.bookable_type = this.bookingFor;
                     }
                     this.spinnerService.requestInProcess(false);
                 },
