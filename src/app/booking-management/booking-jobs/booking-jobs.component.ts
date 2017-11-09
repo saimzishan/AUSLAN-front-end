@@ -48,7 +48,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     constructor(public dialog: MdDialog,
                 public viewContainerRef: ViewContainerRef, public spinnerService: SpinnerService,
                 public notificationServiceBus: NotificationServiceBus,
-                public userDataService: UserService, public bookingService: BookingService,  public bookingHeaderService: BookingHeaderService,
+                public userDataService: UserService, public bookingService: BookingService, public bookingHeaderService: BookingHeaderService,
                 private router: Router, private route: ActivatedRoute) {
 
         /** http://stackoverflow.com/questions/38008334/angular2-rxjs-when-should-i-unsubscribe-from-subscription */
@@ -63,7 +63,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.headerSubscription = this.bookingHeaderService.notifyObservable$.subscribe((res) => {
-                  this.callRelatedFunctions(res);
+            this.callRelatedFunctions(res);
         });
     }
 
@@ -95,7 +95,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
 
     getSpecialInstruction() {
         return (GLOBAL.currentUser instanceof OrganisationalRepresentative)
-           ? GLOBAL.currentUser.special_instructions : '';
+            ? GLOBAL.currentUser.special_instructions : '';
 
     }
 
@@ -158,8 +158,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                     if (res.status === 204) {
                         this.selectedBookingModel.state = BOOKING_STATE.Unable_to_service;
                         this.isCancelledOrUnableToServe = true;
-                        this.notificationServiceBus.
-                        launchNotification(false, 'The booking has been transitioned to \"Unable to Service\" state');
+                        this.notificationServiceBus.launchNotification(false, 'The booking has been transitioned to \"Unable to Service\" state');
                     }
                     this.spinnerService.requestInProcess(false);
                 },
@@ -197,8 +196,9 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
 
     editBooking() {
         let navigationExtras: NavigationExtras = {
-            queryParams: {bookingModel: JSON.stringify(this.selectedBookingModel),
-                          shouldEdit: 'edit' , assignedInterpreter: this.selectedBookingModel.interpreters.filter( i => i.state === 'Accepted').length
+            queryParams: {
+                bookingModel: JSON.stringify(this.selectedBookingModel),
+                shouldEdit: 'edit', assignedInterpreter: this.selectedBookingModel.interpreters.filter(i => i.state === 'Accepted').length
             }
         };
         this.router.navigate(['/booking-management', 'edit-booking'], navigationExtras);
@@ -222,7 +222,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         this.userDataService.fetchUsersOfType('interpreters')
             .subscribe((res: any) => {
                     if (res.status === 200) {
-                        this.interpreterList = res.data.users.filter( i => i.verified === true);
+                        this.interpreterList = res.data.users.filter(i => i.verified === true);
                     }
                     this.spinnerService.requestInProcess(false);
                 },
@@ -237,9 +237,9 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         this.spinnerService.requestInProcess(true);
         this.bookingService.getBooking(param_id)
             .subscribe((res: any) => {
-                if (res.status === 404) {
-                    this.jobAccessError = true;
-                } else if (res.status === 200) {
+                    if (res.status === 404) {
+                        this.jobAccessError = true;
+                    } else if (res.status === 200) {
                         this.jobAccessError = false;
                         let data = res.data;
                         this.selectedBookingModel.fromJSON(data);
@@ -385,7 +385,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     getStateString() {
         this.stateStr =
             parseInt(this.selectedBookingModel.state.toString(), 10) ===
-                parseInt(BOOKING_STATE.In_progress.toString(), 10) ? ' - ' + this.currentStatus : '';
+            parseInt(BOOKING_STATE.In_progress.toString(), 10) ? ' - ' + this.currentStatus : '';
         this.stateStr = BOOKING_STATE[this.selectedBookingModel.state].toUpperCase() + this.stateStr;
         this.stateStr = this.stateStr.replace(/_/g, ' ').trim();
     }

@@ -11,7 +11,7 @@ import { EnumValPipe } from '../../shared/pipe/enum-val.pipe';
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
 import {MaterialModule, MdDialog} from '@angular/material';
 import { MockBackend, MockConnection } from '@angular/http/testing';
-import {DummyComponent, MockBookingService} from '../../shared/test/Mock';
+import {DummyComponent, MockBookingService, MockUserService} from '../../shared/test/Mock';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BookingComponent } from '../booking.component';
 import { CustomFormsModule } from 'ng2-validation';
@@ -29,6 +29,12 @@ import {FileuploaderModule} from '../../shared/fileuploader/fileuploader.module'
 import {AddressComponent} from '../../ui/address/address.component';
 import {BillingAccountComponent} from '../../ui/billing-account/billing-account.component';
 import {TermandconditionComponent} from '../../ui/termandcondition/termandcondition.component';
+import {BookingHeaderComponent} from '../booking-header/booking-header.component';
+import {InterpreterBoxComponent} from '../../shared/ui/interpreter-box/interpreter-box.component';
+import {InterpreterPopupComponent} from '../../shared/ui/interpreter-popup/interpreter-popup.component';
+import {UserService} from '../../api/user.service';
+import {PreferedAllocationService} from '../../shared/prefered-allocation.service';
+import {BookingHeaderService} from '../booking-header/booking-header.service';
 
 describe('BookingDetailComponent', () => {
   let component: BookingDetailComponent;
@@ -37,7 +43,8 @@ describe('BookingDetailComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ BookingDetailComponent, EnumValPipe, AddressComponent,
-          BillingAccountComponent, TermandconditionComponent
+          BillingAccountComponent, TermandconditionComponent, BookingHeaderComponent,
+          InterpreterBoxComponent, InterpreterPopupComponent
       ],
       imports: [CustomFormsModule, FileuploaderModule,
         FormsModule, BrowserAnimationsModule, RouterTestingModule, HttpModule,
@@ -45,8 +52,9 @@ describe('BookingDetailComponent', () => {
         MaterialModule
       ],  providers: [MdDialog,
             ViewContainerRef,
-            DatePipe, RolePermission,
+            DatePipe, RolePermission, PreferedAllocationService, BookingHeaderService,
             NotificationServiceBus, { provide: BookingService, useClass: MockBookingService },
+            { provide: UserService, useClass: MockUserService },
           SpinnerService, { provide: AuthHttp, useClass: MockBackend },
           {
                     provide: ActivatedRoute,

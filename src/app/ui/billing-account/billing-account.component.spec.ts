@@ -8,6 +8,8 @@ import {FormsModule} from '@angular/forms';
 import { CustomFormsModule } from 'ng2-validation';
 import {AddressComponent} from '../address/address.component';
 import {MaterialModule} from '@angular/material';
+import {SimpleNotificationsModule} from 'angular2-notifications/src/simple-notifications.module';
+import {NotificationServiceBus} from '../../notification/notification.service';
 
 describe('BillingAccountComponent', () => {
   let component: BillingAccountComponent;
@@ -16,8 +18,8 @@ describe('BillingAccountComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ BillingAccountComponent, AddressComponent ],
-      imports: [FormsModule, CustomFormsModule, MaterialModule]
-    })
+        providers: [NotificationServiceBus],
+        imports: [FormsModule, CustomFormsModule, SimpleNotificationsModule, MaterialModule]    })
     .compileComponents();
   }));
 
