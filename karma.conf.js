@@ -91,6 +91,10 @@ module.exports = function(config) {
             Chrome_without_security: {
                 base: 'Chrome',
                 flags: ['--disable-web-security', '--headless','--disable-gpu', '--remote-debugging-port=9222', '--no-sandbox']
+            },
+            Chrome_with_ui: {
+                base: 'Chrome',
+                flags: ['--disable-web-security']
             }
         },
         browserNoActivityTimeout: 30000,
