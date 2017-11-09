@@ -121,7 +121,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.onSelectionChange();
             this.onClientSelectionChange();
             this.getUser();
-
             this.bookingModel.bookable_type = 'IndividualClient';
             if (this.isUserAdminORBookOfficer()){ 
                 this.getAllUsers();
@@ -185,7 +184,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     public onBookingForChange() {
         this.bookingForItems =  this.bookingModel.bookable_type === 'IndividualClient' ?
             this.allClientsOrg.filter(u => u.type === 'IndividualClient') :
-            this.allClientsOrg.filter(u => u.type === 'OrganisationalRepresentative'); 
+            this.allClientsOrg.filter(u => u.type === 'OrganisationalRepresentative');
     }
 
     isNotIndClient() {
@@ -478,15 +477,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             || (this.bookingModel.venue.post_code !== this.oldBookingModel.venue.post_code);
     }
 
-    //  https://stackoverflow.com/questions/36124363/deep-copying-objects-in-angular2
     deepCopy(oldObj: any) {
-        let newObj = oldObj;
-        if (oldObj && typeof oldObj === 'object') {
-            newObj = Object.prototype.toString.call(oldObj) === '[object Array]' ? [] : {};
-            for (var i in oldObj) {
-                newObj[i] = this.deepCopy(oldObj[i]);
-            }
-        }
+        let newObj = JSON.parse(JSON.stringify(oldObj));
         return newObj;
     }
     isNewBooking() {
