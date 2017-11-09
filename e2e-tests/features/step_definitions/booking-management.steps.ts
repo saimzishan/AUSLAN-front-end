@@ -105,7 +105,7 @@ defineSupportCode(({Given, Then, When}) => {
     // Click the create booking button
     Then(/^I click the create booking button$/, createBookingPO.clickCreateBtn);
 
-    Then(/^I (.*)\s?see the (.*) field$/, createBookingPO.checkTheFieldExist);
+    Then(/^I (.*) see the (.*) field$/, createBookingPO.checkTheFieldExist);
     Then(/^I see one row with the booking id$/, bookingManagementPO.bookingExistsWithId);
     Then(/^I see one row with client name '(.*)'$/, bookingManagementPO.bookingExistsWithClientName);
     Then(/^I see one row with client last name '(.*)'$/, bookingManagementPO.bookingExistsWithClientLastName);
@@ -116,6 +116,8 @@ defineSupportCode(({Given, Then, When}) => {
     Then(/^I should see the bookings in (ascending|descending) order of (.*)$/, bookingManagementPO.checkBookingOrder);
     Then(/^I should be on the edit booking page$/, bookingEditPO.verify);
     Then(/^I should get a valid booking update notification$/, bookingEditPO.getSuccessNotificationContent);
+    Then(/^I should be able to edit only specific fields$/, bookingEditPO.checkEditableFields);
+    Then(/^I should not be able to edit other fields$/, bookingEditPO.checkNonEditableFields);
 
     // Then(/^I get the popup warning that is the non-standard booking$/, createBookingPO.popupForNonStandard)
 

@@ -1,14 +1,13 @@
-	<!-- <app-booking-header></app-booking-header> -->
-	<header id="header-mobile">
-		<h1>BOOKINGS</h1>
-	</header>
-	<section id="page-jobs">
-		<app-booking-filter></app-booking-filter>
-		<app-booking-list [bookingList]='bookings' (onBookingFilter)="fetchBookings($event)"></app-booking-list>
+<header id="header-mobile">
+  <h1>BOOKINGS</h1>
+</header>
+<section id="page-jobs">
+  <app-booking-filter></app-booking-filter>
+  <app-booking-list [bookingList]='bookings' (onBookingFilter)="fetchBookings($event)"></app-booking-list>
 </section>
 
-	<nav id="footer-mobile">
-		<button (click)="setActiveFilter('Allocated')" [ngClass]="{'active' : isActiveFilter('Allocated')}">Allocated</button>
-		<button (click)="setActiveFilter('Invited')" [ngClass]="{'active' : isActiveFilter('Invited')}">Invited <span class="badge"><i>0</i></span></button>
-		<button (click)="setActiveFilter('Service_Completed')" [ngClass]="{'active' : isActiveFilter('Service_Completed ')}">Service<br>completed</button>
-	</nav>
+<nav id="footer-mobile">
+  <button (click)="setActiveFilter('Allocated')" [ngClass]="{'active' : isActiveFilter('Allocated')}">Allocated</button>
+  <button (click)="setActiveFilter('Invited')" [ngClass]="{'active' : isActiveFilter('Invited')}">Invited <span class="badge"><i>0</i></span></button>
+  <button (click)="setActiveFilter('Service_Completed')" [ngClass]="{'active' : isActiveFilter('Service_Completed ')}">Service<br>completed</button>
+</nav>

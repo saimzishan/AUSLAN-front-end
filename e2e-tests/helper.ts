@@ -83,7 +83,6 @@ export class User {
             lastName = user.last_name;
             mobileNum = user.mobile_num;
         }
-        console.log(email);
 
         // Similar for every user
         let data_to_sent = {};
@@ -395,12 +394,10 @@ export class Heroku {
 
     static sendCommandToHeroku(command) {
         const exec = require('child_process').execSync;
-        command += ';nil;exit';
+        command = 'ActiveRecord::Base.logger.level = Logger::INFO;' + command + ';nil;exit';
         let herokuCommand = browser.params.env === 'localhost' ?
             'cd ../booking-system-api/ && echo  \'' + command + '\' | bundle exec rails c && cd ../booking-system-frontend/' :
             'echo  \'' + command + '\' | heroku run console --app auslan-e2e-testing';
-        console.log(browser.params.env,
-            herokuCommand);
 
         exec(herokuCommand
             , (o1, o2, o3) => {
@@ -432,17 +429,18 @@ export class Heroku {
 
     static createSingleBooking() {
         const data = Heroku.createBooking(1);
-        let command = 'Booking.create(' + JSON.stringify(data) + ')';
+        let command = 'b = Booking.new(' + JSON.stringify(data) + '); b.bookable = IndividualClient.first; b.save';
         Heroku.sendCommandToHeroku(command);
     }
 
     static createSingleBookingWithMoreInterpreter() {
         const data = Heroku.createBooking(2);
-        let command = 'Booking.create(' + JSON.stringify(data) + ')';
+        let command = 'b = Booking.new(' + JSON.stringify(data) + '); b.bookable = IndividualClient.first; b.save';
         Heroku.sendCommandToHeroku(command);
     }
     static createBulkBookings(count: string) {
-        let command = 'FactoryGirl.create_list(:booking, ' + count + ', bookable: User.first)';
+        let command = 'i=IndividualClient.first;FactoryGirl.create(:ted_individual_client) if !i;';
+        command += 'FactoryGirl.create_list(:booking, ' + count + ', bookable: IndividualClient.first)';
         Heroku.sendCommandToHeroku(command);
     }
 
@@ -567,7 +565,7 @@ export class Heroku {
     }
 
     static updateBookingStartAndEndDateTime() {
-        let command = 'start_date = DateTime.current + 2.week; end_date = start_date + 2.day;'
+        let command = 'start_date = DateTime.current + 2.week; end_date = start_date + 2.day;';
         command += 'Booking.first.update(start_time: start_date, end_time: end_date);';
         command += 'Booking.last.update(start_time: start_date, end_time: end_date)';
         Heroku.sendCommandToHeroku(command);
@@ -575,7 +573,7 @@ export class Heroku {
 
 
     static assignExistingBooking(bookable: string) {
-        let command = 'Booking.update_all(bookable_id: ' + bookable.replace(' ', '') + '.first.id)'
+        let command = 'Booking.update_all(bookable_id: ' + bookable.replace(' ', '') + '.first.id)';
         Heroku.sendCommandToHeroku(command);
     }
 
@@ -589,10 +587,10 @@ export class Heroku {
             'contact_first_name': 'Hadrian',
             'contact_last_name': 'French',
             'contact_email': 'a@a.com',
-            'contact_phone_number': '03 2342 2343',
+            'contact_phone_number': '0323422343',
             'deaf_persons_first_name': 'Clifford',
             'deaf_persons_last_name': 'Waz',
-            'deaf_persons_mobile': '0444 555 666',
+            'deaf_persons_mobile': '0444555666',
             'deaf_persons_email': 'clifford@vicdeaf.org.au',
             'deaf_persons_eaf_no': '124',
             'number_of_people_attending': 1,
@@ -603,7 +601,7 @@ export class Heroku {
                 'primary_contact_first_name': 'Paul',
                 'primary_contact_last_name': 'Biller',
                 'primary_contact_email': 'a@a.com',
-                'primary_contact_phone_number': '0482 232 232',
+                'primary_contact_phone_number': '0482232232',
                 'account_number': 'ABCD-1234',
                 'external_reference': '3421',
                 'address_attributes': {
@@ -625,7 +623,7 @@ export class Heroku {
             },
             'parking_availability': 'None - Use the Tram',
             'bookable_id': 1,
-            'bookable_type': 'Administrator'
+            'bookable_type': 'OrganisationalRepresentative'
         });
     }
 }

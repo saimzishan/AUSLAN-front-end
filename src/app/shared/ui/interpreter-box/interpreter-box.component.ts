@@ -18,6 +18,8 @@ export class InterpreterBoxComponent implements OnInit {
     private dialogSub: any;
     dialogRef: MdDialogRef<any>;
     title = '';
+    @Input() isHidden = 'false';
+
     constructor(public dialog: MdDialog,
                 public viewContainerRef: ViewContainerRef,
                 private _sharedPreferedAllocationService: PreferedAllocationService) {
@@ -56,6 +58,8 @@ export class InterpreterBoxComponent implements OnInit {
         this.dialogRef.componentInstance.selectedInterpreters = this.selectedInterpreters;
         this.dialogRef.componentInstance.isPreffered = this.isPreffered;
         this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
+
+            this._sharedPreferedAllocationService.publishData(this.selectedInterpreters);
 
         });
     }

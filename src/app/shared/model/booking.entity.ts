@@ -27,6 +27,9 @@ export class Booking {
     public client: OrganisationalRepresentative = new OrganisationalRepresentative({});
     public documents_attributes = [];
     public versions: Array<BookingVersion> = [];
+    public preference_allocations_attributes = [];
+    public bookable_id: number;
+    public bookable_type: string;
     // Is it a limitation on interpreters invitation.
 
     constructor() {
@@ -54,6 +57,7 @@ export class Booking {
         this.raw_nature_of_appointment = '';
         this.specific_nature_of_appointment = '';
         this.state = BOOKING_STATE.None;
+        this.bookable_type = '';
     }
 
     clean(theObject) {
@@ -111,6 +115,8 @@ export class Booking {
         this.specific_nature_of_appointment = data.specific_nature_of_appointment;
         let state: string = data.state;
         this.state = BOOKING_STATE[state];
+        this.bookable_id = data.bookable_id;
+        this.bookable_type = data.bookable_type;
 
         if (Boolean(data.billing_account_attributes)) {
             this.client.organisation_primary_contact.first_name =
@@ -151,6 +157,9 @@ export class Booking {
         }
         if (Boolean(data.documents_attributes)) {
             this.documents_attributes = data.documents_attributes;
+        }
+        if (Boolean(data.preference_allocations_attributes)) {
+            this.preference_allocations_attributes = data.preference_allocations_attributes;
         }
         this.versions = [];
         if (Boolean(data.versions_attributes)) {
@@ -215,7 +224,10 @@ export class Booking {
             created_by: {
                 organisation: this.client.organisation_name
             },
-            documents_attributes: this.documents_attributes
+            documents_attributes: this.documents_attributes,
+            preference_allocations_attributes: this.preference_allocations_attributes,
+            bookable_id: this.bookable_id,
+            bookable_type: this.bookable_type
         });
         return o;
     }

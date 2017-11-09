@@ -50,7 +50,6 @@ import { HyphenPipe } from './shared/pipe/hyphen.pipe';
 import { NoAuthGuard } from './auth/no-auth.guard';
 import { Store, provideStore } from '@ngrx/store';
 import { PopupComponent } from './shared/popup/popup.component';
-import { JobDetailComponent } from './booking-management/booking-jobs/job-detail/job-detail.component';
 import { DatePipe } from '@angular/common';
 import { PrettyIDPipe } from './shared/pipe/pretty-id.pipe';
 import { MobileFooterModule } from './ui/mobile-footer/mobile-footer.module';
@@ -72,6 +71,7 @@ import { TermandconditionComponent } from './ui/termandcondition/termandconditio
 import { InterpreterPopupComponent } from './shared/ui/interpreter-popup/interpreter-popup.component';
 import { InterpreterBoxComponent } from './shared/ui/interpreter-box/interpreter-box.component';
 import {PreferedAllocationService} from './shared/prefered-allocation.service';
+import { BookingHeaderService } from './booking-management/booking-header/booking-header.service';
 
 @NgModule({
   declarations: [
@@ -97,7 +97,7 @@ import {PreferedAllocationService} from './shared/prefered-allocation.service';
     UserHeaderComponent,
     UserDetailComponent,
     UserProfileComponent, HyphenPipe, PrettyIDPipe, SpacerPipe,
-    BookingJobsComponent, PopupComponent, JobDetailComponent, OrgRepComponent, IndClientComponent,
+    BookingJobsComponent, PopupComponent, OrgRepComponent, IndClientComponent,
     InterpreterComponent, BillingAccountComponent,
     SkillMatrixComponent, AddressComponent, AccountantComponent,
       UserPasswordComponent, PreComponent, BlockoutComponent, TermandconditionComponent,
@@ -112,7 +112,7 @@ import {PreferedAllocationService} from './shared/prefered-allocation.service';
     MaterialModule, CalendarModule
   ],  providers: [DatePipe, LinkAuth, UserNameService, RolePermission, AuthGuard, NoAuthGuard, Title, LinkHelper,
     NotificationServiceBus, SpinnerService, BookingService, UserService,
-        PreferedAllocationService,
+        PreferedAllocationService, BookingHeaderService,
     { provide: APP_BASE_HREF, useValue : '/' },
     {
       provide: AuthHttp,

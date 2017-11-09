@@ -211,9 +211,8 @@ Feature: Booking Filter
     Then I am shown with 2 booking
 
   @runThis
-  Scenario: As a Individual Client, I should be able to filter by date range
-    Given Assigned all bookings to Individual Client
-    And One booking has start and end dates as first and last days of next week
+  Scenario: As an Individual Client, I should be able to filter by date range
+    Given One booking has start and end dates as first and last days of next week
     And I exist as an Individual Client
     And I sign in with valid Individual Client credentials
     When I am on the bookings page

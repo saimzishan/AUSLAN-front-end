@@ -57,7 +57,7 @@ defineSupportCode(({Given, When, Then}) => {
     });
     Given(/^I sign in with valid (.*) credentials$/, (type: string) => {
         return homePage.signInWithValidCredential(type).then(() => {
-            browser.sleep(7000).then(() => {
+            browser.sleep(3000).then(() => {
                 bookingManagementPage.onBookingListPage();
             });
         });
@@ -78,6 +78,8 @@ defineSupportCode(({Given, When, Then}) => {
     Given(/^I am on the bookings page$/, bookingManagementPage.verify);
     Given(/^I am on my admin home screen$/, bookingManagementPage.verify);
     Given(/^I fill New Booking form fields correctly$/, bookingPage.createBooking);
+    Given(/^I select the bookable for client$/, bookingPage.selectClientAsBookbable);
+    Given(/^I select the bookable for org rep/, bookingPage.selectOrgRepAsBookbable);
     Given(/^I fill New Booking form fields correctly with (.*) time from (.*) to (.*) with (.*) interpreters$/,
         bookingPage.createBookingWithTimeAndInterpreter);
 
@@ -100,9 +102,7 @@ defineSupportCode(({Given, When, Then}) => {
     Given(/^I will see attachment '(.*)' is removed$/, verifyAttachmentRemoved);
 
     function verifyAttachmentRemoved(attachmentName: string) {
-        return element(by.cssContainingText('span', attachmentName)).isPresent().then((elm) => {
-            expect(elm).to.be.eq(false);
-        });
+        return expect(page.getElementByCSSandText('span', attachmentName).isPresent()).to.eventually.be.false;
     }
     Given(/^I will upload a document '(.*)'$/, documentUpload);
 
@@ -180,16 +180,17 @@ defineSupportCode(({Given, When, Then}) => {
     Given(/^I will be shown a popup message$/, showPopup);
 
     function showPopup() {
-        return browser.wait(protractor.ExpectedConditions.presenceOf(page.getElementByCss('app-popup')), 30000).then(() => {
-        });
+        return expect(page.getElementByCss('app-popup').isPresent()).to.eventually.be.true;
     }
 
     Given(/^I will be shown a popup message '(.*)'$/, showPopupWithMessage);
 
     function showPopupWithMessage(message) {
-        return browser.wait(protractor.ExpectedConditions.presenceOf(page.getElementByCss('app-popup')), 30000).then(() => {
-            let elm = page.getElementByCss('main > div > p');
-            expect(elm.getText()).to.be.eventually.eq(message);
+        return page.getElementByCss('app-popup').isPresent().then(() => {
+            let elm = page.getElementByCss('app-popup main > div > p');
+            return elm.getText().then((text) => {
+                return expect(text).to.eq(message);
+            });
         });
     }
 
@@ -309,7 +310,10 @@ defineSupportCode(({Given, When, Then}) => {
     When(/^I click on BUTTON name '(.*)'$/, clickOnBtnByName);
 
     function clickOnBtnByName(btnName: string) {
-        return page.getElementByName(btnName).click();
+        return page.getAllElementByName(btnName)
+            .each((btn) => {
+                btn.click();
+            });
     }
 
     When(/^I click on checkbox name '(.*)'$/, clickOnCBByName);

@@ -4,24 +4,24 @@ import {expect} from '../config/helpers/chai-imports';
 import {CONSTANT, Booking} from '../helper';
 import {NotificationObject} from './notification';
 
+interface TestDateFormat {
+    mm: string;
+    dd: string;
+    yy: string;
+}
+
 export class BookingPage extends PageObject {
     list_of_object = {};
-    createBookingBtn;
-    cancelCreateBooking;
     browse = () => {
         return this.currentPath().then((currentPath) => {
             this.didFinishedRendering();
-            expect(currentPath).to.contain('create-booking');
+            return expect(currentPath).to.contain('create-booking');
         });
     }
 
     didFinishedRendering = () => {
-        this.createBookingBtn = this.getButtonByText('SAVE');
-        this.cancelCreateBooking = this.getButtonByText('CANCEL');
-        return browser.wait(protractor.ExpectedConditions.presenceOf(this.createBookingBtn), 5000).then(() => {
-            expect(this.createBookingBtn).to.exist;
-            expect(this.cancelCreateBooking).to.exist;
-        });
+        expect(this.getElementByName('btnCreateBooking').isPresent()).to.eventually.be.true;
+        return expect(this.getElementByName('btnCancelBooking').isPresent()).to.eventually.be.true;
     }
 
     getSuccessNotificationContent = () => {
@@ -31,11 +31,11 @@ export class BookingPage extends PageObject {
     }
 
     clickOnSave = () => {
-        return this.createBookingBtn.click();
+        return this.getElementByName('btnCreateBooking').click();
     }
 
     clickOnCancel = () => {
-        return this.cancelCreateBooking.click();
+        return this.getElementByName('btnCancelBooking').click();
     }
 
     clickOnButton = (type: string) => {
@@ -148,26 +148,27 @@ export class BookingPage extends PageObject {
         this.getElementByName(elementName).sendKeys(protractor.Key.TAB);
         this.getElementByName(elementName).sendKeys(time);
     }
-    setDateOnly = (field: string, date: string) => {
-        let elementName = {
-            'date_from': 'date_from',
-            'date_to': 'date_to'
-        }[field];
-        this.getElementByName(elementName).sendKeys(date);
+    setDateOnly = (field: string, date: TestDateFormat) => {
+        this.getElementByName(field).sendKeys(date.mm);
+        this.getElementByName(field).sendKeys(date.dd);
+        this.getElementByName(field).sendKeys(date.yy);
     }
     createBooking = () => {
         return this.createBookingWithTimeAndInterpreter('standard', '10:15AM', '11:15AM', '2');
     }
 
+    selectClientAsBookbable = () => {
+        this.getElementByName('booking_for').sendKeys('ted');
+    }
+
+    selectOrgRepAsBookbable = () => {
+        element(by.name('rdBookingFor')).all(by.tagName('md-radio-button')).get(1).click();
+        this.getElementByName('booking_for').sendKeys('alana');
+    }
+
     checkTheFieldExist = (cant: string, fieldName: string) => {
-        if (cant === 'can\'t') {
-            return this.getElementByCss(fieldName).isPresent().then((val) => {
-                expect(val).to.false;
-            });
-        }
-        return browser.wait(protractor.ExpectedConditions.presenceOf(this.getElementByName(fieldName)), 5000).then(() => {
-            expect(this.getElementByName(fieldName)).to.exist;
-        });
+        let canSee = cant !== 'can\'t';
+        return expect(this.getElementByName(fieldName).isPresent()).to.eventually.be.eq(canSee);
     }
     setStreetNumber = (stNumber: string) => {
         this.setElementsValueByName('address_street_number', stNumber);

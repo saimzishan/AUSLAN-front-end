@@ -17,6 +17,7 @@ import {PopupComponent} from '../../shared/popup/popup.component';
 import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
 import {PrettyIDPipe} from '../../shared/pipe/pretty-id.pipe';
 import {GLOBAL} from '../../shared/global';
+import {BookingHeaderService} from '../booking-header/booking-header.service';
 
 @Component({
     selector: 'app-booking-jobs',
@@ -24,7 +25,7 @@ import {GLOBAL} from '../../shared/global';
     styleUrls: ['./booking-jobs.component.css']
 })
 
-export class BookingJobsComponent implements OnInit,OnDestroy {
+export class BookingJobsComponent implements OnInit, OnDestroy {
     selectedBookingModel: Booking = new Booking();
     invitePressed = false;
     unAssignPressed = false;
@@ -38,45 +39,54 @@ export class BookingJobsComponent implements OnInit,OnDestroy {
     dialogRef: MdDialogRef<any>;
     checkList = {};
     private headerSubscription;
+    jobAccessError = false;
+    disableAccept = false;
+    disableReject = false;
+    private currentStatus = 'Invited';
+    stateStr = '';
 
     constructor(public dialog: MdDialog,
                 public viewContainerRef: ViewContainerRef, public spinnerService: SpinnerService,
                 public notificationServiceBus: NotificationServiceBus,
-                public userDataService: UserService, public bookingService: BookingService,
+                public userDataService: UserService, public bookingService: BookingService, public bookingHeaderService: BookingHeaderService,
                 private router: Router, private route: ActivatedRoute) {
 
         /** http://stackoverflow.com/questions/38008334/angular2-rxjs-when-should-i-unsubscribe-from-subscription */
         this.sub = this.route.params.subscribe(params => {
             let param_id = params['id'] || '';
             if (Boolean(param_id) && parseInt(param_id, 10) > 0) {
-                this.fetchBookingInterpreters(param_id); 
+                this.fetchBookingInterpreters(param_id);
             }
         });
 
     }
 
     ngOnInit() {
-
-        this.headerSubscription = this.bookingService.notifyObservable$.subscribe((res) => { 
-                  this.callRelatedFunctions(res); 
+        this.headerSubscription = this.bookingHeaderService.notifyObservable$.subscribe((res) => {
+            this.callRelatedFunctions(res);
         });
     }
 
     callRelatedFunctions(res) {
-
         if (res.hasOwnProperty('option')) {
-
-            if (res.option === 'showDialogBox')
-                this.showDialogBox(res.value);
-            else if (res.option === 'editBooking')
-                this.editBooking();
-            else if (res.option === 'duplicateBooking')
-                this.duplicateBooking();
-            else if (res.option === 'saveChanges')
-                this.saveChanges();
-
+            switch (res.option) {
+                case 'showDialogBox':
+                    this.showDialogBox(res.value);
+                    break;
+                case 'showDialogBoxInterpreter':
+                    this.showDialogBoxInterpreter(res.value);
+                    break;
+                case 'editBooking':
+                    this.editBooking();
+                    break;
+                case 'duplicateBooking':
+                    this.duplicateBooking();
+                    break;
+                case 'saveChanges':
+                    this.saveChanges();
+                    break;
+            }
         }
-
     }
 
     counter(length) {
@@ -85,7 +95,7 @@ export class BookingJobsComponent implements OnInit,OnDestroy {
 
     getSpecialInstruction() {
         return (GLOBAL.currentUser instanceof OrganisationalRepresentative)
-           ? GLOBAL.currentUser.special_instructions : '';
+            ? GLOBAL.currentUser.special_instructions : '';
 
     }
 
@@ -94,8 +104,10 @@ export class BookingJobsComponent implements OnInit,OnDestroy {
     }
 
     ngOnDestroy() {
-        return this.sub && this.sub.unsubscribe() && this.headerSubscription && this.headerSubscription.unsubscribe()
-            && this.dialogSub && this.dialogSub.unsubscribe();
+        let sub = this.sub && this.sub.unsubscribe();
+        let headerSub = this.headerSubscription && this.headerSubscription.unsubscribe();
+        let dialSub = this.dialogSub && this.dialogSub.unsubscribe();
+        return sub && headerSub && dialSub;
     }
 
     isActiveState(bookingStatus: string) {
@@ -122,8 +134,7 @@ export class BookingJobsComponent implements OnInit,OnDestroy {
         this.dialogRef.componentInstance.okTitle = isCancel ? `Cancel this job` : 'Unable to service this job';
         this.dialogRef.componentInstance.popupMessage =
             isCancel ? `Are you sure you want to cancel the booking?
-          The client will be notified of this. This is a permanent action.`
-                :
+          The client will be notified of this. This is a permanent action.` :
                 `Are you sure you want to mark this booking as unable to service?
           The client will be notified of this. This is a permanent action.`;
 
@@ -147,8 +158,7 @@ export class BookingJobsComponent implements OnInit,OnDestroy {
                     if (res.status === 204) {
                         this.selectedBookingModel.state = BOOKING_STATE.Unable_to_service;
                         this.isCancelledOrUnableToServe = true;
-                        this.notificationServiceBus.
-                        launchNotification(false, 'The booking has been transitioned to \"Unable to Service\" state');
+                        this.notificationServiceBus.launchNotification(false, 'The booking has been transitioned to \"Unable to Service\" state');
                     }
                     this.spinnerService.requestInProcess(false);
                 },
@@ -185,12 +195,12 @@ export class BookingJobsComponent implements OnInit,OnDestroy {
     }
 
     editBooking() {
-        
         let navigationExtras: NavigationExtras = {
-            queryParams: {bookingModel: JSON.stringify(this.selectedBookingModel),
-                          shouldEdit: "edit" , assignedInterpreter: this.selectedBookingModel.interpreters.filter( i => i.state === 'Accepted').length
+            queryParams: {
+                bookingModel: JSON.stringify(this.selectedBookingModel),
+                shouldEdit: 'edit', assignedInterpreter: this.selectedBookingModel.interpreters.filter(i => i.state === 'Accepted').length
             }
-        }; 
+        };
         this.router.navigate(['/booking-management', 'edit-booking'], navigationExtras);
     }
 
@@ -212,7 +222,7 @@ export class BookingJobsComponent implements OnInit,OnDestroy {
         this.userDataService.fetchUsersOfType('interpreters')
             .subscribe((res: any) => {
                     if (res.status === 200) {
-                        this.interpreterList = res.data.users.filter( i => i.verified === true);
+                        this.interpreterList = res.data.users.filter(i => i.verified === true);
                     }
                     this.spinnerService.requestInProcess(false);
                 },
@@ -227,20 +237,51 @@ export class BookingJobsComponent implements OnInit,OnDestroy {
         this.spinnerService.requestInProcess(true);
         this.bookingService.getBooking(param_id)
             .subscribe((res: any) => {
-                    if (res.status === 200) {
+                    if (res.status === 404) {
+                        this.jobAccessError = true;
+                    } else if (res.status === 200) {
+                        this.jobAccessError = false;
                         let data = res.data;
                         this.selectedBookingModel.fromJSON(data);
-                      
                         this.selectedBookingModel.interpreters.sort((i, j) =>
                             i.state === 'Accepted' ? -1 : j.state === 'Accepted' ? 1 : 0
                         );
+
                         this.fetchAllInterpreters();
                         this.isCancelledOrUnableToServe = this.isActiveState('Cancelled')
                             || this.isActiveState('Unable_to_service');
+
+                        if (this.isCurrentUserInterpreter()) {
+                            this.selectedBookingModel.interpreters.filter(i => i.id === GLOBAL.currentUser.id)
+                                .map(i => this.currentStatus = i.state || 'Invited');
+
+                            if (this.currentStatus === 'Accepted' && this.isCurrentUserInterpreter() &&
+                                this.selectedBookingModel.state === BOOKING_STATE.In_progress) {
+                                this.disableReject = false;
+                                this.disableAccept = true;
+                            } else if (this.currentStatus === 'Accepted' && this.isCurrentUserInterpreter() &&
+                                this.selectedBookingModel.state === BOOKING_STATE.Allocated) {
+                                this.disableReject = true;
+                                this.disableAccept = true;
+                            } else if (this.currentStatus === 'Rejected' && this.isCurrentUserInterpreter() &&
+                                this.selectedBookingModel.state === BOOKING_STATE.In_progress) {
+                                this.disableReject = true;
+                                this.disableAccept = false;
+                            } else if (this.currentStatus !== 'Accepted' && this.isCurrentUserInterpreter() &&
+                                this.selectedBookingModel.state === BOOKING_STATE.Allocated) {
+                                this.disableReject = true;
+                                this.disableAccept = true;
+                                /* Also Redirects */
+                                this.router.navigate(['/booking-management']);
+                            }
+
+                            this.getStateString();
+                        }
                     }
                     // this.spinnerService.requestInProcess(false);
                 },
                 err => {
+                    this.jobAccessError = true;
                     this.spinnerService.requestInProcess(false);
                     let e = err.json() || 'There is some error on server side';
                     this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
@@ -339,4 +380,70 @@ export class BookingJobsComponent implements OnInit,OnDestroy {
             this.selectedActionableInterpreterID = -1;
         }
     }
+
+    // BOOKING_STATE comparison is a mess, need to fix later
+    getStateString() {
+        this.stateStr =
+            parseInt(this.selectedBookingModel.state.toString(), 10) ===
+            parseInt(BOOKING_STATE.In_progress.toString(), 10) ? ' - ' + this.currentStatus : '';
+        this.stateStr = BOOKING_STATE[this.selectedBookingModel.state].toUpperCase() + this.stateStr;
+        this.stateStr = this.stateStr.replace(/_/g, ' ').trim();
+    }
+
+    public showDialogBoxInterpreter(isCancel: Boolean) {
+        if (this.dialogSub) {
+            this.dialogSub.unsubscribe();
+        }
+
+        let config: MdDialogConfig = {
+            disableClose: true
+        };
+        let reachoutWarning = (this.currentStatus === 'Accepted' && this.isCurrentUserInterpreter() &&
+            this.selectedBookingModel.state === BOOKING_STATE.In_progress);
+        config.viewContainerRef = this.viewContainerRef;
+        this.dialogRef = this.dialog.open(PopupComponent, config);
+        this.dialogRef.componentInstance.title = isCancel ? 'Decline Booking' : 'Accept Booking';
+        this.dialogRef.componentInstance.cancelTitle = 'Back to job';
+        this.dialogRef.componentInstance.okTitle = reachoutWarning ? 'OK' :
+            isCancel ? `Decline` : 'Accept';
+        this.dialogRef.componentInstance.popupMessage =
+            reachoutWarning ? 'Please contact the booking office to cancel this booking.' :
+                isCancel ? `Do you want to decline the invitation?` :
+                    `Do you want to accept the invitation?`;
+
+        this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
+
+            if (result && !reachoutWarning) {
+                this.spinnerService.requestInProcess(true);
+
+
+                this.currentStatus =
+                    (result && !isCancel) ? 'accept' : (result && isCancel) ? 'reject' : 'tentative';
+                this.bookingService.interpreterAction(this.selectedBookingModel.id,
+                    GLOBAL.currentUser.id, this.currentStatus)
+                    .subscribe((res: any) => {
+
+                            this.disableAccept = true;
+                            this.disableReject = true;
+                            this.spinnerService.requestInProcess(false);
+                            this.fetchBookingInterpreters(this.selectedBookingModel.id);
+                        },
+                        err => {
+                            this.spinnerService.requestInProcess(false);
+                            let e = err.json() || 'There is some error on server side';
+                            this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
+                        });
+            }
+        });
+    }
+
+    isCurrentUserState(state: string) {
+        let currUser = this.selectedBookingModel.interpreters.filter(i => i.id === GLOBAL.currentUser.id);
+        if (Boolean(currUser) && currUser.length > 0) {
+            return state === currUser[0].state;
+        }
+
+        return false;
+    }
+
 }

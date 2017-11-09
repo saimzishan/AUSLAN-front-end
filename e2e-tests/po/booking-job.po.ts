@@ -13,7 +13,6 @@ export class BookingJobPage extends PageObject {
      * The jasmine and cuccumberjs does not work, so use chai.expect with chai-as-promised
      * Look at chai-import.ts for further details
      * */
-    unableToServeBtn;
     bookingID = 0;
     _currentPath = '';
 
@@ -28,7 +27,10 @@ export class BookingJobPage extends PageObject {
     browse = () => {
         return this.currentPath().then((currentPath) => {
             this.didFinishedRendering();
-            expect(currentPath).to.contain('booking-job');
+            let EC = protractor.ExpectedConditions;
+            let urlContainsBookingJob = EC.urlContains('booking-job');
+            let urlContainsJobDetail = EC.urlContains('job-detail');
+            return EC.or(urlContainsBookingJob, urlContainsJobDetail);
         });
     }
 
@@ -78,7 +80,6 @@ export class BookingJobPage extends PageObject {
         let elm = this.getElementByCss('div.row.with-border > span.with-avatar > img');
         return browser.wait(protractor.ExpectedConditions.presenceOf(elm), 30000).then(() => {
             return elm.getAttribute('src').then((val) => {
-                console.log(val);
                 expect(val.startsWith(src)).to.be.true;
             });
         });
@@ -94,10 +95,10 @@ export class BookingJobPage extends PageObject {
     }
 
     didFinishedRendering = () => {
-        this.unableToServeBtn = this.getElementByCSSandText('button.pink', 'Unable to Service');
-        return browser.wait(protractor.ExpectedConditions.presenceOf(this.unableToServeBtn), 30000).then(() => {
-            expect(this.unableToServeBtn).to.exist;
-        });
+        return expect(
+            this.getElementByCSSandText('button.pink', 'Unable to Service')
+            .isPresent()
+        ).to.eventually.be.true;
     }
     onBookingJobDetails = () => {
         return this.navigateTo(browser.baseUrl + '/#/booking-management/1/job-detail');
