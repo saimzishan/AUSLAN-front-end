@@ -478,8 +478,10 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     deepCopy(oldObj: any) {
-        let newObj = JSON.parse(JSON.stringify(oldObj));
-        return newObj;
+        if (this.forEdit()) {
+            let newObj = JSON.parse(JSON.stringify(oldObj));
+            return newObj;
+        }
     }
     isNewBooking() {
         return this.router.url.includes('create-booking');
@@ -489,12 +491,12 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         this.spinnerService.requestInProcess(true);
         this.userService.fetchUsers()
             .subscribe((res: any) => {
+                    this.spinnerService.requestInProcess(false);
                     if (res.status === 200 ) {
                         this.allClientsOrg = res.data.users;
                         this.bookingForItems = this.allClientsOrg.filter(u => u.type === 'IndividualClient');
                         this.oldBookingModel = this.deepCopy(this.bookingModel);
                     }
-                    this.spinnerService.requestInProcess(false);
                 },
                 errors => {
                     this.spinnerService.requestInProcess(false);
