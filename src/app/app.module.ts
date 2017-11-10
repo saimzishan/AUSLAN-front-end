@@ -72,7 +72,7 @@ import { InterpreterPopupComponent } from './shared/ui/interpreter-popup/interpr
 import { InterpreterBoxComponent } from './shared/ui/interpreter-box/interpreter-box.component';
 import {PreferedAllocationService} from './shared/prefered-allocation.service';
 import { BookingHeaderService } from './booking-management/booking-header/booking-header.service';
-import {GmapsApiService} from "./api/gmaps-api.service";
+import {GmapsApiService} from './api/gmaps-api.service';
 
 @NgModule({
   declarations: [

@@ -1,30 +1,30 @@
 import {Injectable} from '@angular/core';
-import {ApiService} from "./api.service";
+import {ApiService} from './api.service';
 import 'rxjs/add/operator/toPromise';
 declare var google: any;
 
 @Injectable()
 export class GmapsApiService extends ApiService {
 
-    getDistance(origin: Array<string>, destination: Array<string>, units: string = 'km'): Promise<any> {
-        return this.distanceWithLocation(origin, destination, units).then(data => {
+    getDistance(origin: Array<string>, destination: Array<string>, unit = 'km'): Promise<any> {
+        return this.distanceWithLocation(origin, destination, unit).then(data => {
             return data[0].elements[0].distance;
         }, error => {
             return error;
         });
     }
 
-    getMinDistance(origin: Array<string>, destination: Array<string>, units: string = 'km'): Promise<any> {
+    getMinDistance(origin: Array<string>, destination: Array<string>, unit = 'km'): Promise<any> {
         return new Promise((resolve, reject) => {
-            return this.distanceWithLocation(origin, destination, units).then((data) => {
-                resolve(Math.min.apply(Math, data[0].elements.map(function(e) { return e.distance && e.distance.value; })));
-            }, (error) => {
+            return this.distanceWithLocation(origin, destination, unit).then(data => {
+                resolve(Math.min.apply(Math, data[0].elements.map(e => { return e.distance && e.distance.value; })));
+            }, error => {
                 reject(error);
             });
         });
     }
 
-    distanceWithLocation(origin: Array<string>, destination: Array<string>, units: string = 'km'): Promise<any> {
+    distanceWithLocation(origin: Array<string>, destination: Array<string>, unit = 'km'): Promise<any> {
         let promise = new Promise((resolve, reject) => {
             let distanceMatrixObject = new google.maps.DistanceMatrixService();
             return distanceMatrixObject.getDistanceMatrix(
@@ -32,7 +32,7 @@ export class GmapsApiService extends ApiService {
                     origins: origin,
                     destinations: destination,
                     travelMode: 'DRIVING',
-                    unitSystem: google.maps.UnitSystem.METRIC,
+                    unitSystem: this.setDistanceUnit(unit),
                     avoidHighways: false,
                     avoidTolls: false,
                 }, (response, status) => {
@@ -44,5 +44,9 @@ export class GmapsApiService extends ApiService {
                 });
         });
         return promise;
+    }
+
+    private setDistanceUnit(unit: string): number {
+        return {'km': 0, 'mi': 1}[unit];
     }
 }
