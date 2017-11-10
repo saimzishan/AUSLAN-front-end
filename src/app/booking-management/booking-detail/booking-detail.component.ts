@@ -140,18 +140,33 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             let currentUserField = currentUserFieldMap[field] || field;
             let value = this.currentUserIsClient === 'true' ? GLOBAL.currentUser[currentUserField] : '';
             this.bookingModel.deaf_person[field] = value;
-            this.oldBookingModel.deaf_person[field] = value;
         });
     }
 
     public onSelectionChange() {
-        ['first_name', 'last_name', 'email', 'mobile_number'].forEach((field) => {
-            let currentUserFieldMap = { mobile_number: 'mobile' };
-            let currentUserField = currentUserFieldMap[field] || field;
-            let value = this.currentUserIsContact === 'true' ? GLOBAL.currentUser[currentUserField] : '';
-            this.bookingModel.primaryContact[field] = value;
-            this.oldBookingModel.primaryContact[field] = value;
-        });
+        if (this.isUserAdminORBookOfficer()) {
+            this.setFieldForSpecificUser();
+        } else {
+            ['first_name', 'last_name', 'email', 'mobile_number'].forEach((field) => {
+                let currentUserFieldMap = { mobile_number: 'mobile' };
+                let currentUserField = currentUserFieldMap[field] || field;
+                let value = this.currentUserIsContact === 'true' ? GLOBAL.currentUser[currentUserField] : '';
+                this.bookingModel.primaryContact[field] = value;
+            });
+        }
+    }
+
+    public setFieldForSpecificUser() {
+        let user = this.allClientsOrg.find(u => u.type === this.bookingModel.bookable_type && +u.id === +this.bookingModel.bookable_id);
+        if (user) {
+            ['first_name', 'last_name', 'email', 'mobile_number'].forEach((field) => {
+                let currentUserFieldMap = { mobile_number: 'mobile' };
+                let currentUserField = currentUserFieldMap[field] || field;
+                let value = this.currentUserIsContact === 'true' ? user[currentUserField] : '';
+                this.bookingModel.primaryContact[field] = value;
+            });
+        }
+
     }
 
     public onPreferredSelectionChange() {

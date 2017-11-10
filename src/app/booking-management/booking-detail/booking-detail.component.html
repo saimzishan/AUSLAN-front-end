@@ -45,10 +45,10 @@
     <div class="row" *ngIf="isUserAdminORBookOfficer()">
       <div class="medium-6 columns">
         <div class="form-field">
-          <label>PLEASE SELECT THE {{bookingFor ==='IndividualClient' ? "CLIENT":"ORGANIZATION"}}*
+          <label>PLEASE SELECT THE {{bookingModel.bookable_type ==='IndividualClient' ? "CLIENT":"ORGANIZATION"}}*
             <span mdTooltip="Select the Client/Org"><i class="inline-icon-tip"></i></span>
           </label>
-          <select [(ngModel)]="bookingModel.bookable_id"
+          <select [(ngModel)]="bookingModel.bookable_id" (change)='onSelectionChange()'
                   #booking_for="ngModel" name="booking_for"
                   aria-label="A" required>
             <option *ngFor="let item of bookingForItems" [value]="item.id">
@@ -65,7 +65,7 @@
     </div>
     <div class="row">
       <h2>Type of Booking</h2>
-      <p>What kind of services do you need? Select multiple if relevant</p>
+      <p>What kind of services {{isUserAdminORBookOfficer() ? bookingModel.bookable_type ==='IndividualClient' ? "does the client":"does the organization" :"do you"}} need? Select multiple if relevant</p>
       <section id="services">
         <button md-button class="active">
           <i class="icon-service-interpreting"></i>
@@ -84,7 +84,7 @@
           <span>Notetaking</span>
         </button>
       </section>
-      <p>What kind of interpreter(s) do you need? Select multiple if relevant</p>
+      <p>What kind of interpreter(s) {{isUserAdminORBookOfficer() ? bookingModel.bookable_type ==='IndividualClient' ? "does the client":"does the organization" :"do you"}} need? Select multiple if relevant</p>
       <section id="interpreters-kind">
         <md-checkbox [checked]="true" [disabled]="isUserOrgRepORIndClientTemp() && forEdit()">AUSLAN</md-checkbox>
         <md-checkbox [disabled]="isUserOrgRepORIndClientTemp() && forEdit()">DEAF INTERPRETER</md-checkbox>
@@ -347,7 +347,7 @@
     <div class="row">
       <div class="medium-12 columns">
         <div class="form-field">
-          <label>ARE YOU THE CONTACT PERSON FOR THIS BOOKING? *
+          <label>{{isUserAdminORBookOfficer() ? "DO YOU WANT TO USE THE STANDARD": "ARE YOU THE"}} CONTACT PERSON FOR THIS BOOKING? *
             <span mdTooltip="Tooltip!">
               <i class="inline-icon-tip"></i>
             </span>
