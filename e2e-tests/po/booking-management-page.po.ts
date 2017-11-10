@@ -371,6 +371,7 @@ export class BookingManagementPage extends PageObject {
             Status: 'compareByIconClass', // red > green
             State: 'compareByText', // In Progress < Requested
             Date: 'compareByDate', // comparing only start times
+            Org: 'compareByText', // Ted Bear > Adam Jones
             Client: 'compareByText', // John > Charles
             Suburb: 'compareByText', // Terabithia > Parkville
             Interpreter: 'compareByText' // Dragana < 'To be filled' - default text
