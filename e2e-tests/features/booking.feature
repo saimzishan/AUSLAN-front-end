@@ -108,7 +108,7 @@ Feature: Booking Management
     And I don't see any new New Booking link
 
   @runThis
-  Scenario: Booking Officer can create duplicate booking, a booking is created
+  Scenario: Given an Individual Client and a booking is created, A Booking Officer can create duplicate booking
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
     And I am on the bookings page

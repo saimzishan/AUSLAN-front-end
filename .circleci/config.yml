@@ -24,22 +24,22 @@ jobs:
             circleci tests glob "/var/www/booking-system-frontend/e2e-tests/features/*.feature" | circleci tests split > /var/www/booking-system-frontend/test_features_for_split_container.txt
             cat /var/www/booking-system-frontend/test_features_for_split_container.txt
       - run:
-          name: Setup the server and run E2E tests
+          name: Running the unit tests
           environment:
             E2E_ENV: "localhost"
           shell: /bin/bash -l
           command: |
             npm install
             npm install codeclimate-test-reporter -g
-            ./setup_ci.sh
-            ./run-e2e-test.sh
+            ./run-unit-test.sh
       - run:
-          name: Running the unit tests
+          name: Setup the server and run E2E tests
           environment:
             E2E_ENV: "localhost"
           shell: /bin/bash -l
           command: |
-            ./run-unit-test.sh
+            ./setup_ci.sh
+            ./run-e2e-test.sh
       - deploy:
           name: Deploy to S3 if tests pass and branch is Master
           command: |

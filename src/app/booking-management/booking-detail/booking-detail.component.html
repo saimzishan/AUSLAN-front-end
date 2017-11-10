@@ -13,9 +13,9 @@
       <div class="medium-12 columns">
         <div class="form-field">
           <label>ARE YOU MAKING A BOOKING FOR AN INDIVIDUAL CLIENT OR ORGANIZATION?*</label>
-          <md-radio-group name="rdBookingFor" (change)='onBookingForChange()' [(ngModel)]="bookingFor">
-            <md-radio-button value=IndividualClient>CLIENT</md-radio-button>
-            <md-radio-button value=OrganisationalRepresentative>ORGANIZATION</md-radio-button>
+          <md-radio-group name="rdBookingFor" (change)='onBookingForChange()' [(ngModel)]="bookingModel.bookable_type">
+            <md-radio-button value="IndividualClient">CLIENT</md-radio-button>
+            <md-radio-button value="OrganisationalRepresentative">ORGANISATION</md-radio-button>
           </md-radio-group>
         </div>
       </div> 
@@ -27,8 +27,7 @@
           <label>PLEASE SELECT THE {{bookingFor ==='IndividualClient' ? "CLIENT":"ORGANIZATION"}}*
             <span mdTooltip="Select the Client/Org"><i class="inline-icon-tip"></i></span>
           </label>
-          <select (change)="ddlBookingForChange($event)"
-                  [(ngModel)]="bookingModel.bookable_id"
+          <select [(ngModel)]="bookingModel.bookable_id"
                   #booking_for="ngModel" name="booking_for"
                   aria-label="A" required>
             <option *ngFor="let item of bookingForItems" [value]="item.id">
