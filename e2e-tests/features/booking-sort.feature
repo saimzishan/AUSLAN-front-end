@@ -111,7 +111,7 @@ Feature: Booking Sort
     Then I should see the bookings in descending order of Interpreter
 
   @runThis
-  Scenario: As a Booking Officer in user I can sort the bookings by Org column
+  Scenario: As a Booking Officer, I can sort the bookings by Org column
     Given I have preloaded 4 bookings with different org values
     Then I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials

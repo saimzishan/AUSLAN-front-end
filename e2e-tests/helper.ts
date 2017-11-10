@@ -414,12 +414,10 @@ export class Heroku {
             'cd ../booking-system-api/ && bundle exec rails ' + task + ' && cd ../booking-system-frontend/' :
             'heroku run bundle exec rails ' + task + ' --app auslan-e2e-testing';
 
-        exec(herokuCommand
-            , (o1, o2, o3) => {
+        exec(herokuCommand , (o1, o2, o3) => {
                 console.log('Heroku Command => Output', o1);
                 console.log('Heroku Command => StdError', o2);
                 console.log('Heroku Command => Error', o3);
-
             });
     }
 
