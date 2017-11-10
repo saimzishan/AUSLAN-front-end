@@ -61,6 +61,25 @@ Feature: Booking Management
     When I query booking with org name 'Curve'
     Then I am shown with 1 booking
     Then I see one row with org name 'CurveTomorrow'
+    Then I click on an individual booking of type 'Requested'
+    Then I will be shown the booking job page
+    Then I can see the button 'Save' is disabled
+    And I click on BUTTON 'Duplicate'
+    Then I will be taken to the 'New Booking' form
+    Then I verify radiobutton name 'OrganisationalRepresentative' and is checked
+    And I click on my name
+    And I click on logout
+    And I go to the website
+    And I am shown the login screen, with picture and signup button
+    And I exist as an Organisational Representative
+    And I sign in with valid Organisational Representative credentials
+    And I am on the bookings page
+    And I will be shown with bookings
+    Then I am shown with 1 booking
+    When I query booking with org name 'Curve'
+    Then I am shown with 1 booking
+    Then I see one row with org name 'CurveTomorrow'
+
 
   @runThis
   Scenario: Given 1 verified Individual Client, Booking Officer can create a booking
@@ -81,6 +100,15 @@ Feature: Booking Management
     Then I get a valid create booking notification
     And I am on the bookings page
     And I will be shown with bookings
+    And I click on my name
+    And I click on logout
+    And I go to the website
+    And I am shown the login screen, with picture and signup button
+    And I exist as an Individual Client
+    And I sign in with valid Individual Client credentials
+    And I am on the bookings page
+    And I will be shown with bookings
+    Then I am shown with 1 booking
 
   @runThis
   Scenario: Organisational Representative can create a booking

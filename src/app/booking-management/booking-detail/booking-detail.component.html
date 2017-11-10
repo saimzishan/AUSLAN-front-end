@@ -14,8 +14,8 @@
         <div class="form-field">
           <label>ARE YOU MAKING A BOOKING FOR AN INDIVIDUAL CLIENT OR ORGANIZATION?*</label>
           <md-radio-group name="rdBookingFor" (change)='onBookingForChange()' [(ngModel)]="bookingModel.bookable_type">
-            <md-radio-button name ="IndividualClient" value="IndividualClient">CLIENT</md-radio-button>
-            <md-radio-button name="OrganisationalRepresentative" value="OrganisationalRepresentative">ORGANISATION</md-radio-button>
+            <md-radio-button id ="IndividualClient" name ="IndividualClient" value="IndividualClient">CLIENT</md-radio-button>
+            <md-radio-button id="OrganisationalRepresentative" name="OrganisationalRepresentative" value="OrganisationalRepresentative">ORGANISATION</md-radio-button>
           </md-radio-group>
         </div>
       </div> 

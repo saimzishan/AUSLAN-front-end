@@ -125,7 +125,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.onSelectionChange();
             this.onClientSelectionChange();
             this.getUser();
-            this.bookingModel.bookable_type = 'IndividualClient';
+            this.bookingModel.bookable_type = this.bookingModel.bookable_type || 'IndividualClient';
             if (this.isUserAdminORBookOfficer()) {
                 this.getAllUsers();
             } else {
@@ -498,7 +498,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                     this.spinnerService.requestInProcess(false);
                     if (res.status === 200 ) {
                         this.allClientsOrg = res.data.users.map( u => UserFactory.createUser(u));
-                        this.bookingForItems = this.allClientsOrg.filter(u => u instanceof IndividualClient);
+                        this.onBookingForChange();
                         this.oldBookingModel = this.deepCopy(this.bookingModel);
                     }
                 },

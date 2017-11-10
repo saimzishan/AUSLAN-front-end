@@ -337,11 +337,17 @@ defineSupportCode(({Given, When, Then}) => {
     }
 
     When(/^I verify checkbox name '(.*)' and is checked '(.*)'$/, verifyOnCBByName);
-
     function verifyOnCBByName(btnName: string, checkedState: string) {
         let bVal = ((checkedState === 'True') || (checkedState === 'true'));
         return page.getElementByName(btnName).isSelected().then(val => {
             expect(val).to.be.eq(bVal);
+        });
+    }
+    When(/^I verify radiobutton name '(.*)' and is checked$/, verifyOnRBByName);
+    function verifyOnRBByName(name: string) {
+        let elm = page.getElementByName(name);
+        return elm.isPresent().then( (v) => {
+            expect(elm.getAttribute('class')).to.eventually.contain('mat-radio-checked');
         });
     }
 
