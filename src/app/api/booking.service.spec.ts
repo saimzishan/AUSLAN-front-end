@@ -68,7 +68,6 @@ let mock_request_with_interpreters = new Object({
 
 describe('BookingService', () => {
     let bookingProvider;
-    let val = '';
     let mock_booking = new Booking();
     mock_booking.fromJSON(mock_request_with_interpreters);
     let mock_db: Booking[] = [mock_booking];
@@ -414,7 +413,7 @@ describe('BookingService', () => {
                 let u: Booking = mock_db[0];
                 u.venue.street_number = 'updated';
 
-                let status_code = service.updateBooking(u)
+                let status_code = service.updateBooking('2', u)
                     .subscribe((res: any) => {
                         expect(res.status).toEqual(204);
                         done();

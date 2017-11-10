@@ -15,7 +15,6 @@ import {BookingDetailComponent} from './booking-management/booking-detail/bookin
 import {UserProfileComponent} from './user-management/user-profile/user-profile.component';
 import {BookingJobsComponent} from './booking-management/booking-jobs/booking-jobs.component';
 import { NoAuthGuard } from './auth/no-auth.guard';
-import {JobDetailComponent} from './booking-management/booking-jobs/job-detail/job-detail.component';
 import {OrgRepComponent} from './ui/org-rep/org-rep.component';
 import {SkillMatrixComponent} from './user-management/skill-matrix/skill-matrix.component';
 import { InterpreterComponent } from './ui/interpreter/interpreter.component';
@@ -35,7 +34,7 @@ const appRoutes: Routes = [
   { path: 'booking-management/:id/create-booking', component: BookingDetailComponent, canActivate: [AuthGuard]},
   { path: 'booking-management/create-booking', component: BookingDetailComponent, canActivate: [AuthGuard]},
   { path: 'booking-management/:id/booking-job', component: BookingJobsComponent, canActivate: [AuthGuard]},
-  { path: 'booking-management/:id/job-detail', component: JobDetailComponent, canActivate: [AuthGuard]},
+  { path: 'booking-management/:id/job-detail', component: BookingJobsComponent, canActivate: [AuthGuard]},
   { path: 'booking-management/edit-booking', component: BookingDetailComponent, canActivate: [AuthGuard]},
   { path: 'authenticate', component: AuthComponent , canActivate: [NoAuthGuard] },
   { path: 'authenticate/logout', component: AuthComponent },

@@ -75,13 +75,14 @@ Check docker instructions. Just run them locally in your terminal
 
 ## Use Docker to run E2E tests
 
+Change into the project directory and run the following commands
    1. Run docker and get a bash terminal
-        * `docker run -i -t --rm -v path/to/booking-system-frontend:/usr/src/app curvetomorrow/auslan-dev-image:v7.8 /bin/bash -l`
-   1. Install gems
+        * `docker run -i -t --rm -v "$PWD":/usr/src/booking-system-frontend curvetomorrow/auslan-dev-image:v7.8 /bin/bash -l`
+   2. Install gems
         * `bundle install`
-   1. Download and run the latest rails server
+   3. Download and run the latest rails server
         * `./setup_ci.sh`
-   1. Create the input file with all files to test
+   4. Create the input file with all files to test
         * `ls -d -1 e2e-tests/features/* > test_features_for_split_container.txt`
-   1. Run the e2e tests
+   5. Run the e2e tests
         * `./run-e2e-test.sh`

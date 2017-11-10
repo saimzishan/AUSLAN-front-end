@@ -11,7 +11,6 @@ Feature: As INTERPRETER, I can login on mobile
     Then I will be shown the bookings page
     Then I see one row with state 'In progress'
     And  I click on an individual booking of type 'In progress'
-    Then I wait for 2000 milli-seconds
     Then I will be shown the booking detail page with id -1
     Then I can see the booking state ' In Progress ' in booking job page
     Then I can see the button state 'Accept' is visible
@@ -19,7 +18,6 @@ Feature: As INTERPRETER, I can login on mobile
     Then I click on BUTTON 'Accept'
     Then I will be shown a popup message
     Then I click on BUTTON name 'yesBtn'
-    Then I wait for 1000 milli-seconds
     Then I can see the booking state ' In Progress ' in booking job page
     Then I can see the button state 'Decline' is visible
     Then I can see the button state 'Accept' is hidden

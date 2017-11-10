@@ -106,7 +106,6 @@ export class BookingService extends ApiService {
       The Api should be able to update already created bookings.
     */
     updateBooking(booking_id: string, booking: Booking): Observable<Object> {
- 
         let headers = new Headers({'Accept': 'application/json',
             'Content-Type': 'application/json'});
         let options = new RequestOptions({ headers: headers });

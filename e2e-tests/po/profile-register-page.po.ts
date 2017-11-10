@@ -136,7 +136,7 @@ export class ProfileRegisterPage extends PageObject {
     getValidation = (validType: string) => {
         let elm = this.getElementByCss('span.' + validType);
         return browser.wait(protractor.ExpectedConditions.presenceOf(elm), 30000).then(() => {
-            expect(elm).to.exist;
+            return expect(elm).to.exist;
         });
     }
 }

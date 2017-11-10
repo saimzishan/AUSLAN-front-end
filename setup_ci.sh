@@ -4,7 +4,7 @@ set -eo pipefail
 export CHROME_BIN=$(which google-chrome)
 service postgresql restart
 gem install bundler
-git clone  --verbose git@bitbucket.org:curvetomorrow/booking-system-api.git ../booking-system-api
+git clone  --depth 1 --branch master --verbose git@bitbucket.org:curvetomorrow/booking-system-api.git ../booking-system-api
 cd ../booking-system-api
 bundle install --path vendor/cache
 bundle exec rake db:migrate
