@@ -43,6 +43,26 @@ Feature: Booking Management
     And I will be shown with bookings
 
   @runThis
+  Scenario: Given 1 verified Organisational Representative, Administrator can create a booking
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on the bookings page
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    When I fill New Booking form fields correctly
+    And I select the bookable for org rep
+    Then I move to element name 'tnc'
+    Then I click on checkbox name 'tnc'
+    And I click the create booking button
+    Then I get a valid create booking notification
+    And I am on the bookings page
+    And I will be shown with bookings
+    Then I am shown with 1 booking
+    When I query booking with org name 'Curve'
+    Then I am shown with 1 booking
+    Then I see one row with org name 'CurveTomorrow'
+
+  @runThis
   Scenario: Given 1 verified Individual Client, Booking Officer can create a booking
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
@@ -361,3 +381,29 @@ Feature: Booking Management
 #    And I will be taken to the 'New Booking' form
 #    Then I can't see the txtSpecialInstruction field
 # ---------------------------------------- AUSLAN1-40 -> END ----------------------------------------
+# ---------------------------------------- AUSLAN1-727 -> START ----------------------------------------
+  @runThis
+  Scenario: Administrator can see  list of org reps, when making a booking, Organisational Representative , Individual Client exists
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on the bookings page
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    Then I can see the booking_for field
+    And I see an option 'ted Individual Client' in 'booking_for' dropdown
+    Then I click on element by name 'OrganisationalRepresentative'
+    And I see an option 'CURVETOMORROW - alana Organisational' in 'booking_for' dropdown
+
+  @runThis
+  Scenario: Booking Officer can see  list of org reps, when making a booking, Organisational Representative , Individual Client exists
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    And I am on the bookings page
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    Then I can see the booking_for field
+    And I see an option 'ted Individual Client' in 'booking_for' dropdown
+    Then I click on element by name 'OrganisationalRepresentative'
+    And I see an option 'CURVETOMORROW - alana Organisational' in 'booking_for' dropdown
+
+# ---------------------------------------- AUSLAN1-727 -> END ----------------------------------------

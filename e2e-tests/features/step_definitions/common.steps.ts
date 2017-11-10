@@ -317,7 +317,7 @@ defineSupportCode(({Given, When, Then}) => {
     }
 
     When(/^I click on checkbox name '(.*)'$/, clickOnCBByName);
-
+    When(/^I click on element by name '(.*)'$/, clickOnCBByName);
     function clickOnCBByName(btnName: string) {
         return page.getElementByName(btnName).click();
     }

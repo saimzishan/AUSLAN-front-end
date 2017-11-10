@@ -51,7 +51,7 @@
                             <span>{{selectedBookingModel.venue.start_time_iso | date:'shortTime'}} - {{selectedBookingModel.venue.end_time_iso | date:'shortTime'}}</span>
                         </td>
                         <td data-title="DATE"><span>{{selectedBookingModel.venue.start_time_iso | date:'EEE d MMM yy'}}</span></td>
-                        <td data-title="ORGANISATION">AUSLAN</td>
+                        <td data-title="ORGANISATION">{{selectedBookingModel.client.organisation_name}}</td>
                         <td data-title="CLIENT">{{selectedBookingModel.client.organisation_primary_contact.first_name +
                             ' '
                             + selectedBookingModel.client.organisation_primary_contact.last_name}}

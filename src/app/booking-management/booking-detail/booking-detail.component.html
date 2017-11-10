@@ -14,8 +14,8 @@
         <div class="form-field">
           <label>ARE YOU MAKING A BOOKING FOR AN INDIVIDUAL CLIENT OR ORGANIZATION?*</label>
           <md-radio-group name="rdBookingFor" (change)='onBookingForChange()' [(ngModel)]="bookingModel.bookable_type">
-            <md-radio-button value="IndividualClient">CLIENT</md-radio-button>
-            <md-radio-button value="OrganisationalRepresentative">ORGANISATION</md-radio-button>
+            <md-radio-button name ="IndividualClient" value="IndividualClient">CLIENT</md-radio-button>
+            <md-radio-button name="OrganisationalRepresentative" value="OrganisationalRepresentative">ORGANISATION</md-radio-button>
           </md-radio-group>
         </div>
       </div> 
@@ -31,7 +31,7 @@
                   #booking_for="ngModel" name="booking_for"
                   aria-label="A" required>
             <option *ngFor="let item of bookingForItems" [value]="item.id">
-            {{ item.first_name.toUpperCase() }} {{ item.last_name.toUpperCase() }}
+            {{ getOrgName(item) }}
             </option>
           </select>
             <span *ngIf="booking_for.touched && !booking_for.errors?.required;"

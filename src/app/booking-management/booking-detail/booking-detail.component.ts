@@ -17,7 +17,7 @@ import {Address} from '../../shared/model/venue.entity';
 import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
 import {PreferedAllocationService} from '../../shared/prefered-allocation.service';
 import {isNullOrUndefined} from 'util';
-import {IndividualClient, OrganisationalRepresentative, BookingOfficer, Administrator} from '../../shared/model/user.entity';
+import {IndividualClient, OrganisationalRepresentative, BookingOfficer, Administrator, UserFactory} from '../../shared/model/user.entity';
 import {PopupComponent} from '../../shared/popup/popup.component';
 import {Contact} from '../../shared/model/contact.entity';
 import {UserService} from '../../api/user.service';
@@ -101,6 +101,10 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
 
     }
 
+    getOrgName (item ) {
+        return ( item instanceof OrganisationalRepresentative ?
+            (item.organisation_name.toUpperCase()  + ' - '  ) : '' ) + item.first_name + ' ' + item.last_name;
+    }
     onStartTimeChanged() {
         this.bookingModel.venue.end_time_iso = this.bookingModel.venue.start_time_iso;
     }
@@ -183,8 +187,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
 
     public onBookingForChange() {
         this.bookingForItems =  this.bookingModel.bookable_type === 'IndividualClient' ?
-            this.allClientsOrg.filter(u => u.type === 'IndividualClient') :
-            this.allClientsOrg.filter(u => u.type === 'OrganisationalRepresentative');
+            this.allClientsOrg.filter(u => u instanceof IndividualClient) :
+            this.allClientsOrg.filter(u => u instanceof OrganisationalRepresentative);
     }
 
     isNotIndClient() {
@@ -493,8 +497,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             .subscribe((res: any) => {
                     this.spinnerService.requestInProcess(false);
                     if (res.status === 200 ) {
-                        this.allClientsOrg = res.data.users;
-                        this.bookingForItems = this.allClientsOrg.filter(u => u.type === 'IndividualClient');
+                        this.allClientsOrg = res.data.users.map( u => UserFactory.createUser(u));
+                        this.bookingForItems = this.allClientsOrg.filter(u => u instanceof IndividualClient);
                         this.oldBookingModel = this.deepCopy(this.bookingModel);
                     }
                 },
