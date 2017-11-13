@@ -461,3 +461,14 @@ Feature: Booking Admin Management
     Then I click on Bookings
     And I am on the bookings page
     Then I see one row with state 'In progress'
+
+    @runThis
+    Scenario: As an Organisational Representative, I should see the correct details of the booking
+      Given There exist 1 bookings
+      And Assigned all bookings to Organisational Representative
+      Given I exist as an Organisational Representative
+      When I sign in with valid Organisational Representative credentials
+      Then I am on the bookings page
+      When I click on an individual booking
+      Then I will be shown the booking job page
+      Then I should see the Org as 'Curve Tomorrow'

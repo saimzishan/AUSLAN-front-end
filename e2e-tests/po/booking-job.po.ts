@@ -1,8 +1,15 @@
 import {PageObject} from './app.po';
 import {browser, by, element, $, $$, protractor} from 'protractor';
 import {expect} from '../config/helpers/chai-imports';
-import {CONSTANT, User} from '../helper';
 import {NotificationObject} from './notification';
+
+enum BookingDetailTableHeaders {
+    Job, Time, Date, Org,
+    Client, Venue, Address,
+    Suburb, Type, People,
+    'Special Instructions', Attached,
+    'Date Added', Updated
+}
 
 export class BookingJobPage extends PageObject {
     /*
@@ -162,6 +169,11 @@ export class BookingJobPage extends PageObject {
                     expect(val).to.be.true;
                 });
             });
+    }
+    checkTableDetails = (tableHeader: string, value: string) => {
+        let bookingDetails = this.getAllElementByCSS('table#job-details-responsive tbody tr td');
+        let el = bookingDetails.get(BookingDetailTableHeaders[tableHeader]);
+        return expect(el.getText()).to.eventually.eq(value);
     }
 }
 
