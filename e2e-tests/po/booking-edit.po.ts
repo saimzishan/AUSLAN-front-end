@@ -88,4 +88,7 @@ export class BookingEditPage extends PageObject {
             });
         });
     }
+    clickOnNonEditableField = () => {
+        return this.getElementByName(READONLY_FIELDS[2]).click();
+    }
 }

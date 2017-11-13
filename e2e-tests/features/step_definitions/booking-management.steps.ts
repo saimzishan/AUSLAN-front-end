@@ -93,6 +93,7 @@ defineSupportCode(({Given, Then, When}) => {
     When(/^I filter booking by date range first and last days of next week$/, bookingManagementPO.filterBookingByDateRange);
     When(/^I hover on the (.*) dropdown and select '(.*)'$/, bookingManagementPO.hoverOnTableHeader);
     When(/^I change the street number to (\d+)$/, createBookingPO.setStreetNumber);
+    When(/^I click on one non-editable field$/, bookingEditPO.clickOnNonEditableField);
 
     Then(/^All required booking fields should be filled$/, bookingEditPO.checkValueInAllRequiredFields);
 

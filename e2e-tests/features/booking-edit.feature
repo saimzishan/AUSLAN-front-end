@@ -102,3 +102,17 @@ Feature: Edit Booking
     When I click on BUTTON name 'noBtn'
     And I wait for 2000 milli-seconds
     Then I am on the individual booking page
+
+  @runThis
+  Scenario: As an Organisational Representative, I should see an error notification when I click a non-editable field
+    Given Assigned all bookings to Organisational Representative
+    Given I exist as an Organisational Representative
+    And I sign in with valid Organisational Representative credentials
+    And I am on the bookings page
+    Then I am shown with 1 booking
+    When I click on an individual booking
+    Then I am on the individual booking page
+    When I click on link 'Booking details'
+    Then I should be on the edit booking page
+    When I click on one non-editable field
+    Then I will get an error notification saying "In order to change this field, please contact the booking office"
