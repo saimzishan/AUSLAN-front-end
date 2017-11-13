@@ -48,7 +48,7 @@
           <label>PLEASE SELECT THE {{bookingModel.bookable_type ==='IndividualClient' ? "CLIENT":"ORGANIZATION"}}*
             <span mdTooltip="Select the Client/Org"><i class="inline-icon-tip"></i></span>
           </label>
-          <select [(ngModel)]="bookingModel.bookable_id" (change)='onSelectionChange()'
+          <select [(ngModel)]="bookingModel.bookable_id" (change)='onBookingForSelectionChange()'
                   #booking_for="ngModel" name="booking_for"
                   aria-label="A" required>
             <option *ngFor="let item of bookingForItems" [value]="item.id">
@@ -586,7 +586,7 @@
 
     <h4 class="text-center">INVOICE DETAILS</h4>
     <div class="row">
-      <div class="medium-12 columns" *ngIf="isUserOrgRepORIndClientTemp()">
+      <div class="medium-12 columns" *ngIf="isUserOrgRepORIndClientTemp() || isUserAdminORBookOfficer()">
         <div class="form-field">
           <label>Do you want to use standard invoice details? *
             <span mdTooltip="Tooltip!">
