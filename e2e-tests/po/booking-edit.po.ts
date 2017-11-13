@@ -78,11 +78,8 @@ export class BookingEditPage extends PageObject {
     checkNonEditableFields = () => {
         READONLY_FIELDS.forEach((fieldName) => {
             let ele = this.getElementByName(fieldName);
-            ele.getAttribute('name').then(name => console.log(name));
             return ele.getAttribute('readonly').then(readonly => {
                 return ele.getAttribute('disabled').then(disabled => {
-                    console.log(disabled, typeof disabled);
-                    console.log(readonly, typeof readonly);
                     return expect(disabled === 'true' || readonly === 'true').to.be.true;
                 });
             });
