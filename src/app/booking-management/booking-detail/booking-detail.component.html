@@ -440,7 +440,7 @@
             </span>
           </label>
           <md-radio-group name="rdcurrentUserIsClient" (change)='onClientSelectionChange()' 
-                          [disabled]="isUserOrgRepORIndClientTemp() && forEdit()" [(ngModel)]="currentUserIsClient">
+                          disabled="isUserOrgRepORIndClientTemp() && forEdit()" [(ngModel)]="currentUserIsClient">
             <md-radio-button value=true>YES</md-radio-button>
             <md-radio-button value=false>NO</md-radio-button>
           </md-radio-group>
@@ -573,7 +573,7 @@
             </span>
           </label>
           <md-radio-group name="rdStandardInvoice"[(ngModel)]="standardInvoice" (change)='onStandardInvoice()'
-                          [disabled]="isUserOrgRepORIndClientTemp() && forEdit()">
+                          disabled="isUserOrgRepORIndClientTemp() && forEdit()">
             <md-radio-button value=true>YES</md-radio-button>
             <md-radio-button value=false>NO</md-radio-button>
           </md-radio-group>

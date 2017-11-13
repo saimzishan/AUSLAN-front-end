@@ -1,18 +1,40 @@
-import {browser} from 'protractor';
 import {PageObject} from './app.po';
 import {expect} from '../config/helpers/chai-imports';
 import {NotificationObject} from './notification';
 
+// Editable and Readonly is only applicable for Org Rep
+// when they are editing a booking
 const EDITABLE_FIELDS = [
     'raw_venue_address',
     'attendee_count',
     'parking_type',
     'important_notes',
     'rdcurrentUserIsContact',
+    'email',
+    'mobile',
+    'deaf_person_email',
+    'deaf_person_mobile',
+    'ext_ref_num',
+    'uploader'
+];
+
+const READONLY_FIELDS = [
+    'dpEventDate',
+    'dpEventEndTime',
+    'interpreters_count',
+    'nature_of_appointment',
+    'specific_nature_of_appointment',
+    'rdcurrentUserIsClient',
+    'rdStandardInvoice',
+    'raw_booking_requested_by',
+    'raw_booking_requested_by_ln',
+    'interpreters_count',
+    'txtSpecialInstruction',
     'contact_first_name',
     'contact_last_name',
-    'contact_email',
-    'contact_mobile'
+    'deaf_person_eaf',
+    'deaf_person_name',
+    'deaf_person_last_name'
 ];
 export class BookingEditPage extends PageObject {
     verify = () => {
@@ -40,20 +62,30 @@ export class BookingEditPage extends PageObject {
         });
     }
     getSuccessNotificationContent = () => {
-        return browser.sleep(2500).then(() => {
-            NotificationObject.getNotificationContent('The Booking has been Updated.');
-        });
+        return NotificationObject.getNotificationContent('The Booking has been Updated.');
     }
     checkEditableFields = () => {
         EDITABLE_FIELDS.forEach((fieldName) => {
             let ele = this.getElementByName(fieldName);
-            ele.getAttribute('readonly').then(readonly => {
-                expect(readonly).to.be.null;
-            });
-            ele.getAttribute('disabled').then(disabled => {
-                expect(disabled).to.be.null;
+            return ele.getAttribute('readonly').then(readonly => {
+                return ele.getAttribute('disabled').then(disabled => {
+                    expect(readonly).to.be.null;
+                    return expect(disabled).to.be.null;
+                });
             });
         });
     }
-    checkNonEditableFields = () => {}
+    checkNonEditableFields = () => {
+        READONLY_FIELDS.forEach((fieldName) => {
+            let ele = this.getElementByName(fieldName);
+            ele.getAttribute('name').then(name => console.log(name));
+            return ele.getAttribute('readonly').then(readonly => {
+                return ele.getAttribute('disabled').then(disabled => {
+                    console.log(disabled, typeof disabled);
+                    console.log(readonly, typeof readonly);
+                    return expect(disabled === 'true' || readonly === 'true').to.be.true;
+                });
+            });
+        });
+    }
 }

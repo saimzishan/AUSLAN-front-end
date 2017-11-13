@@ -32,11 +32,9 @@ defineSupportCode(({Given, Then, When}) => {
     Given(/^One booking has start and end dates as first and last days of next week$/, Heroku.updateBookingStartAndEndDateTime)
 //  BE ABLE TO VIEW BOOKING PAGE
     Then(/^I will be shown with bookings$/, bookingManagementPO.atleastABookingExists);
-    Then(/^I store the booking count$/, bookingManagementPO.storeCurrentBookingCount);
     Then(/^I store the current url$/, bookingJobPO.storePath);
     Then(/^I go to stored url$/, bookingJobPO.gotoStorePath);
     Then(/^I see the error page$/, bookingJobPO.errorPage);
-    Then(/^I expect the booking count to be greater then before$/, bookingManagementPO.isCurrentBookingCountGreaterThanStoredCount);
 //    CLick on Request bookings
     Then(/^I am shown with (\d+) (.*[^\s])?\s?[bB]ookings?$/, bookingManagementPO.showTheNumberofBooking);
 

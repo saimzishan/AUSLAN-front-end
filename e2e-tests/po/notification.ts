@@ -1,14 +1,10 @@
-import {PageObject} from './app.po';
-import {browser, by, element, $, $$, protractor} from 'protractor';
+import {$} from 'protractor';
 import {expect} from '../config/helpers/chai-imports';
-import {User} from '../helper';
 
 export class NotificationObject {
-
-
     static getNotificationContent = (message) => {
         let elm = $('div.sn-content');
-        return browser.wait(protractor.ExpectedConditions.presenceOf(elm), 30000).then(() => {
+        return elm.isPresent().then(() => {
             return expect(elm.getText()).to.eventually.contain(message);
         });
     }

@@ -191,12 +191,12 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         return !(GLOBAL.currentUser instanceof IndividualClient);
     }
 
-    isUserOrgRepORIndClientTemp() {
-        return GLOBAL.currentUser instanceof OrganisationalRepresentative ||
-            GLOBAL.currentUser instanceof IndividualClient;
+    isUserOrgRepORIndClientTemp(): Boolean {
+        return Boolean(GLOBAL.currentUser instanceof OrganisationalRepresentative ||
+            GLOBAL.currentUser instanceof IndividualClient);
     }
-    isUserOrgRep() {
-        return GLOBAL.currentUser instanceof OrganisationalRepresentative;
+    isUserOrgRep(): Boolean {
+        return Boolean(GLOBAL.currentUser instanceof OrganisationalRepresentative);
     }
     onSpecialInstruction() {
         let special_instructions =
@@ -205,13 +205,13 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.rdgSpecialInstruction === 'true' ? special_instructions : '';
     }
 
-    isUserAdminORBookOfficer() {
-        return GLOBAL.currentUser instanceof Administrator ||
-            GLOBAL.currentUser instanceof BookingOfficer ;
+    isUserAdminORBookOfficer(): Boolean {
+        return Boolean(GLOBAL.currentUser instanceof Administrator ||
+            GLOBAL.currentUser instanceof BookingOfficer) ;
     }
 
-    forEdit() {
-        return (this.shouldEdit.length > 0 && this.shouldEdit  === 'edit' ) ;
+    forEdit(): Boolean {
+        return Boolean(this.shouldEdit.length > 0 && this.shouldEdit  === 'edit' ) ;
     }
 
     public onStandardInvoice() {
