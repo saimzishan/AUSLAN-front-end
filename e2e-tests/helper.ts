@@ -457,7 +457,7 @@ export class Heroku {
         Heroku.sendCommandToHeroku(command);
     }
 
-    static preloadOrgBookings(count: string) {
+    static preloadOrgBookings() {
         let task = 'seed:test_data:preloaded_org_bookings';
         Heroku.sendTaskToHeroku(task);
     }
