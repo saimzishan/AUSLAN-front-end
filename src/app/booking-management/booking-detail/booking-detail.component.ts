@@ -17,7 +17,7 @@ import {Address} from '../../shared/model/venue.entity';
 import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
 import {PreferedAllocationService} from '../../shared/prefered-allocation.service';
 import {isNullOrUndefined} from 'util';
-import {IndividualClient, OrganisationalRepresentative, BookingOfficer, Administrator} from '../../shared/model/user.entity';
+import {IndividualClient, OrganisationalRepresentative, BookingOfficer, Administrator , UserFactory} from '../../shared/model/user.entity';
 import {PopupComponent} from '../../shared/popup/popup.component';
 import {Contact} from '../../shared/model/contact.entity';
 import {UserService} from '../../api/user.service';
@@ -95,10 +95,17 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 this.natureOfApptChange(null);
 
             }
-            this.bookingHeading = (this.shouldEdit.length > 0 && this.shouldEdit === 'edit' ) ? 'EDIT BOOKING' : 'NEW BOOKING';
+
+            if (this.forEdit()) {
+                this.bookingHeading = 'EDIT BOOKING';
+            } else {
+                this.bookingHeading = 'NEW BOOKING';
+                this.bookingModel.bookable_type = 'IndividualClient';
+            }
+
         });
 
-
+     //   console.log("model "+JSON.stringify(this.bookingModel));
     }
 
     onStartTimeChanged() {
@@ -121,7 +128,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.onSelectionChange();
             this.onClientSelectionChange();
             this.getUser();
-            this.bookingModel.bookable_type = 'IndividualClient';
             if (this.isUserAdminORBookOfficer()) {
                 this.getAllUsers();
             } else {
@@ -131,29 +137,23 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     public onClientSelectionChange() {
-        ['first_name', 'last_name', 'email', 'mobile_number'].forEach((field) => {
-            let currentUserFieldMap = { mobile_number: 'mobile' };
-            let currentUserField = currentUserFieldMap[field] || field;
-            let value = this.currentUserIsClient === 'true' ? GLOBAL.currentUser[currentUserField] : '';
-            this.bookingModel.deaf_person[field] = value;
-        });
-    }
-
-    public onSelectionChange() {
-        if (this.isUserAdminORBookOfficer()) {
-            this.setFieldForSpecificUser();
-        } else {
+        let user;
+        user = this.isUserAdminORBookOfficer() ? this.allClientsOrg.find(u => u.type === this.bookingModel.bookable_type && +u.id === +this.bookingModel.bookable_id)
+                                               : GLOBAL.currentUser;
+        if (user) {
             ['first_name', 'last_name', 'email', 'mobile_number'].forEach((field) => {
                 let currentUserFieldMap = { mobile_number: 'mobile' };
                 let currentUserField = currentUserFieldMap[field] || field;
-                let value = this.currentUserIsContact === 'true' ? GLOBAL.currentUser[currentUserField] : '';
-                this.bookingModel.primaryContact[field] = value;
+                let value = this.currentUserIsClient === 'true' ? user[currentUserField] : '';
+                this.bookingModel.deaf_person[field] = value;
             });
         }
     }
 
-    public setFieldForSpecificUser() {
-        let user = this.allClientsOrg.find(u => u.type === this.bookingModel.bookable_type && +u.id === +this.bookingModel.bookable_id);
+    public onSelectionChange() {
+        let user;
+        user = this.isUserAdminORBookOfficer() ? this.allClientsOrg.find(u => u.type === this.bookingModel.bookable_type && +u.id === +this.bookingModel.bookable_id)
+                                               : GLOBAL.currentUser;
         if (user) {
             ['first_name', 'last_name', 'email', 'mobile_number'].forEach((field) => {
                 let currentUserFieldMap = { mobile_number: 'mobile' };
@@ -162,7 +162,37 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 this.bookingModel.primaryContact[field] = value;
             });
         }
+    }
 
+    public setInvoiceField() {
+        let user = this.allClientsOrg.find(u => u.type === this.bookingModel.bookable_type && +u.id === +this.bookingModel.bookable_id);
+        if (user) {
+                    if (user['type'] === 'IndividualClient') {
+                        let selectedUser = <IndividualClient>UserFactory.createUser(user);
+                        this.bookingModel.client.organisation_primary_contact = this.standardInvoice === 'true' ?
+                                                  selectedUser.individual_client_primary_contact : new Contact();
+                        this.bookingModel.client.organisation_billing_account.organisation_billing_address = this.standardInvoice === 'true' ?
+                                                  selectedUser.individual_client_billing_account.organisation_billing_address : new Address();
+                        this.bookingModel.client.organisation_billing_account.external_reference = this.standardInvoice === 'true' ?
+                                                  selectedUser.individual_client_billing_account.external_reference : '';
+                        this.bookingModel.deaf_person.eaf = this.standardInvoice === 'true' ? selectedUser.ndis_id : '';
+                    } else {
+                        let selectedUser = <OrganisationalRepresentative>UserFactory.createUser(user);
+                        this.bookingModel.client.organisation_primary_contact = this.standardInvoice === 'true' ?
+                                                  selectedUser.organisation_primary_contact : new Contact();
+                        this.bookingModel.client.organisation_billing_account.organisation_billing_address = this.standardInvoice === 'true' ?
+                                                  selectedUser.organisation_billing_account.organisation_billing_address : new Address();
+                        this.bookingModel.client.organisation_billing_account.external_reference = this.standardInvoice === 'true' ?
+                                                  selectedUser.organisation_billing_account.external_reference : '';
+                        this.bookingModel.deaf_person.eaf = '';
+                    }
+                }
+    }
+
+    public onBookingForSelectionChange() {
+        this.onSelectionChange();
+        this.onClientSelectionChange();
+        this.setInvoiceField();
     }
 
     public onPreferredSelectionChange() {
@@ -238,6 +268,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
 
             this.bookingModel.client.organisation_billing_account.organisation_billing_address = this.standardInvoice === 'true' ?
                 currentUser.organisation_billing_account.organisation_billing_address : new Address();
+        } else if (this.isUserAdminORBookOfficer()) {
+            this.setInvoiceField();
         } else {
             let currentUser = <IndividualClient>GLOBAL.currentUser;
 
@@ -511,6 +543,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                         this.allClientsOrg = res.data.users;
                         this.bookingForItems = this.allClientsOrg.filter(u => u.type === 'IndividualClient');
                         this.oldBookingModel = this.deepCopy(this.bookingModel);
+                        this.onBookingForChange();
                     }
                 },
                 errors => {
