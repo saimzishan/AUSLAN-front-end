@@ -72,6 +72,7 @@ import { InterpreterPopupComponent } from './shared/ui/interpreter-popup/interpr
 import { InterpreterBoxComponent } from './shared/ui/interpreter-box/interpreter-box.component';
 import {PreferedAllocationService} from './shared/prefered-allocation.service';
 import { BookingHeaderService } from './booking-management/booking-header/booking-header.service';
+import {GmapsApiService} from './api/gmaps-api.service';
 
 @NgModule({
   declarations: [
@@ -112,7 +113,7 @@ import { BookingHeaderService } from './booking-management/booking-header/bookin
     MaterialModule, CalendarModule
   ],  providers: [DatePipe, LinkAuth, UserNameService, RolePermission, AuthGuard, NoAuthGuard, Title, LinkHelper,
     NotificationServiceBus, SpinnerService, BookingService, UserService,
-        PreferedAllocationService, BookingHeaderService,
+        PreferedAllocationService, BookingHeaderService, GmapsApiService,
     { provide: APP_BASE_HREF, useValue : '/' },
     {
       provide: AuthHttp,
