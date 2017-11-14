@@ -162,18 +162,6 @@ export class BookingManagementPage extends PageObject {
         });
     }
 
-    storeCurrentBookingCount = () => {
-        return this.getElementByID('jobs-responsive').$$('tr').count().then(cnt => {
-            this.rowCount = cnt;
-        });
-    }
-
-    isCurrentBookingCountGreaterThanStoredCount = () => {
-        return this.getElementByID('jobs-responsive').$$('tr').count().then(cnt => {
-            expect(cnt).to.be.greaterThan(this.rowCount);
-        });
-    }
-
     private getFirstBookingID = () => {
         let table = this.getElementByID('jobs-responsive');
         return table.isPresent().then(res => {

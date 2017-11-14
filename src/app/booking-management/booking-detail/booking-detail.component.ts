@@ -17,7 +17,7 @@ import {Address} from '../../shared/model/venue.entity';
 import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
 import {PreferedAllocationService} from '../../shared/prefered-allocation.service';
 import {isNullOrUndefined} from 'util';
-import {IndividualClient, OrganisationalRepresentative, BookingOfficer, Administrator} from '../../shared/model/user.entity';
+import {IndividualClient, OrganisationalRepresentative, BookingOfficer, Administrator, UserFactory} from '../../shared/model/user.entity';
 import {PopupComponent} from '../../shared/popup/popup.component';
 import {Contact} from '../../shared/model/contact.entity';
 import {UserService} from '../../api/user.service';
@@ -101,6 +101,10 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
 
     }
 
+    getOrgName(item) {
+        return (item instanceof OrganisationalRepresentative ?
+            (item.organisation_name.toUpperCase()  + ' - ') : '') + item.first_name + ' ' + item.last_name;
+    }
     onStartTimeChanged() {
         this.bookingModel.venue.end_time_iso = this.bookingModel.venue.start_time_iso;
     }
@@ -121,7 +125,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.onSelectionChange();
             this.onClientSelectionChange();
             this.getUser();
-            this.bookingModel.bookable_type = 'IndividualClient';
+            this.bookingModel.bookable_type = this.bookingModel.bookable_type || 'IndividualClient';
             if (this.isUserAdminORBookOfficer()) {
                 this.getAllUsers();
             } else {
@@ -191,12 +195,12 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         return !(GLOBAL.currentUser instanceof IndividualClient);
     }
 
-    isUserOrgRepORIndClientTemp() {
-        return GLOBAL.currentUser instanceof OrganisationalRepresentative ||
-            GLOBAL.currentUser instanceof IndividualClient;
+    isUserOrgRepORIndClientTemp(): Boolean {
+        return Boolean(GLOBAL.currentUser instanceof OrganisationalRepresentative ||
+            GLOBAL.currentUser instanceof IndividualClient);
     }
-    isUserOrgRep() {
-        return GLOBAL.currentUser instanceof OrganisationalRepresentative;
+    isUserOrgRep(): Boolean {
+        return Boolean(GLOBAL.currentUser instanceof OrganisationalRepresentative);
     }
     onSpecialInstruction() {
         let special_instructions =
@@ -205,13 +209,13 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.rdgSpecialInstruction === 'true' ? special_instructions : '';
     }
 
-    isUserAdminORBookOfficer() {
-        return GLOBAL.currentUser instanceof Administrator ||
-            GLOBAL.currentUser instanceof BookingOfficer ;
+    isUserAdminORBookOfficer(): Boolean {
+        return Boolean(GLOBAL.currentUser instanceof Administrator ||
+            GLOBAL.currentUser instanceof BookingOfficer) ;
     }
 
-    forEdit() {
-        return (this.shouldEdit.length > 0 && this.shouldEdit  === 'edit' ) ;
+    forEdit(): Boolean {
+        return Boolean(this.shouldEdit.length > 0 && this.shouldEdit  === 'edit' ) ;
     }
 
     public onStandardInvoice() {
@@ -493,8 +497,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             .subscribe((res: any) => {
                     this.spinnerService.requestInProcess(false);
                     if (res.status === 200 ) {
-                        this.allClientsOrg = res.data.users;
-                        this.bookingForItems = this.allClientsOrg.filter(u => u.type === 'IndividualClient');
+                        this.allClientsOrg = res.data.users.map( u => UserFactory.createUser(u));
+                        this.onBookingForChange();
                         this.oldBookingModel = this.deepCopy(this.bookingModel);
                     }
                 },
