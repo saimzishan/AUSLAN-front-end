@@ -60,7 +60,9 @@
                 </th>
 
                 <th>
-                    <span class="order asc">Org</span>
+                    <span class="order"
+                          [ngClass]="getSortOrder('organisation')"
+                          (click)="sort('organisation')">Org</span>
                     <form #filterByOrg="ngForm" class="common-form compact"
                           (ngSubmit)="filter('organisation', filterByOrg.value.organisation)" novalidate>
                         <input type="text" name="organisation" [(ngModel)]="bookingFilter.organisation">

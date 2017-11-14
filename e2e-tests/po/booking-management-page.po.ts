@@ -162,18 +162,6 @@ export class BookingManagementPage extends PageObject {
         });
     }
 
-    storeCurrentBookingCount = () => {
-        return this.getElementByID('jobs-responsive').$$('tr').count().then(cnt => {
-            this.rowCount = cnt;
-        });
-    }
-
-    isCurrentBookingCountGreaterThanStoredCount = () => {
-        return this.getElementByID('jobs-responsive').$$('tr').count().then(cnt => {
-            expect(cnt).to.be.greaterThan(this.rowCount);
-        });
-    }
-
     private getFirstBookingID = () => {
         let table = this.getElementByID('jobs-responsive');
         return table.isPresent().then(res => {
@@ -371,6 +359,7 @@ export class BookingManagementPage extends PageObject {
             Status: 'compareByIconClass', // red > green
             State: 'compareByText', // In Progress < Requested
             Date: 'compareByDate', // comparing only start times
+            Org: 'compareByText', // Ted Bear > Adam Jones
             Client: 'compareByText', // John > Charles
             Suburb: 'compareByText', // Terabithia > Parkville
             Interpreter: 'compareByText' // Dragana < 'To be filled' - default text

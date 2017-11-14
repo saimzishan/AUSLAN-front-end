@@ -22,6 +22,7 @@ defineSupportCode(({Given, Then, When}) => {
     Given(/^The booking has status '(.*)'$/, Heroku.updateBookingWithStatus);
     Given(/^The booking has assignment category '(.*)'$/, Heroku.updateBookingWithCategory);
     Given(/^There exist (\d+) bookings$/, Heroku.createBulkBookings);
+    Given(/^I have preloaded (\d+) bookings with different org values$/, Heroku.preloadOrgBookings);
     Given(/^One booking has client name as '(.*)'$/, Heroku.updateBookingWithClientName)
     Given(/^One booking has client last name as '(.*)'$/, Heroku.updateBookingWithLastClientName)
     Given(/^One booking has interpreter first name as '(.*)'$/, Heroku.updateBookingWithInterpreterFirstName)
@@ -31,11 +32,9 @@ defineSupportCode(({Given, Then, When}) => {
     Given(/^One booking has start and end dates as first and last days of next week$/, Heroku.updateBookingStartAndEndDateTime)
 //  BE ABLE TO VIEW BOOKING PAGE
     Then(/^I will be shown with bookings$/, bookingManagementPO.atleastABookingExists);
-    Then(/^I store the booking count$/, bookingManagementPO.storeCurrentBookingCount);
     Then(/^I store the current url$/, bookingJobPO.storePath);
     Then(/^I go to stored url$/, bookingJobPO.gotoStorePath);
     Then(/^I see the error page$/, bookingJobPO.errorPage);
-    Then(/^I expect the booking count to be greater then before$/, bookingManagementPO.isCurrentBookingCountGreaterThanStoredCount);
 //    CLick on Request bookings
     Then(/^I am shown with (\d+) (.*[^\s])?\s?[bB]ookings?$/, bookingManagementPO.showTheNumberofBooking);
 
@@ -94,6 +93,7 @@ defineSupportCode(({Given, Then, When}) => {
     When(/^I filter booking by date range first and last days of next week$/, bookingManagementPO.filterBookingByDateRange);
     When(/^I hover on the (.*) dropdown and select '(.*)'$/, bookingManagementPO.hoverOnTableHeader);
     When(/^I change the street number to (\d+)$/, createBookingPO.setStreetNumber);
+    When(/^I click on one non-editable field$/, bookingEditPO.clickOnNonEditableField);
 
     Then(/^All required booking fields should be filled$/, bookingEditPO.checkValueInAllRequiredFields);
 

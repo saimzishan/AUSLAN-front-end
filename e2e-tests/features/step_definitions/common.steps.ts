@@ -194,6 +194,40 @@ defineSupportCode(({Given, When, Then}) => {
         });
     }
 
+    When(/^If I am shown a popup message '(.*)', I approve it$/, approveIfPopupWithMessage);
+
+    function approveIfPopupWithMessage(message) {
+        return page.getElementByCss('app-popup')
+            .isPresent()
+            .then((presence: boolean) => {
+                if (presence) {
+                    return showPopupWithMessage(message)
+                        .then((popup) => {
+                            if (popup) {
+                                clickOnBtnByName('yesBtn');
+                            }
+                        });
+                }
+            });
+    }
+
+    When(/^If I am shown a popup, I approve it$/, approveIfPopup);
+
+    function approveIfPopup() {
+        return page.getElementByCss('app-popup')
+            .isPresent()
+            .then((presence: boolean) => {
+                if (presence) {
+                    return showPopup()
+                        .then((popup) => {
+                            if (popup) {
+                                clickOnBtnByName('yesBtn');
+                            }
+                        });
+                }
+            });
+    }
+
     Given(/^I am shown a validation error$/, showValidationError);
 
     function showValidationError() {
@@ -310,10 +344,11 @@ defineSupportCode(({Given, When, Then}) => {
     When(/^I click on BUTTON name '(.*)'$/, clickOnBtnByName);
 
     function clickOnBtnByName(btnName: string) {
-        return page.getAllElementByName(btnName)
-            .each((btn) => {
-                btn.click();
-            });
+        let btn = page.getElementByName(btnName);
+        return btn.isPresent().then(presence => {
+            expect(presence).to.be.true;
+            btn.click();
+        });
     }
 
     When(/^I click on checkbox name '(.*)'$/, clickOnCBByName);

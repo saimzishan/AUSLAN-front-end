@@ -27,8 +27,8 @@ Feature: Edit Booking
     And I select the bookable for client
     And All required booking fields should be filled
 
-  @ignoreThis
-  Scenario: Given 1 verified Booking Officer, I should see the booking details filled in
+  @runThis
+  Scenario: Given an Individual Client, As a Booking Officer I should be able to edit bookings
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
     And I am on the bookings page
@@ -36,30 +36,26 @@ Feature: Edit Booking
     Then I am on the individual booking page
     When I click on link 'Booking details'
     Then I should be on the edit booking page
-    And I select the bookable for client
-    And All required booking fields should be filled
+    When I select the bookable for client
+    Then All required booking fields should be filled
     When I change the street number to 154
-    Then I click on checkbox name 'tnc'
+    And I click on checkbox name 'tnc'
     And I click on BUTTON 'SAVE'
+    And If I am shown a popup message 'This booking is not within the standard booking hours (8AM - 6PM). Do you still want to create booking?', I approve it
     Then I should get a valid booking update notification
 
-  @ignoreThis
-  Scenario: Given 1 verified Individual Client, I should be able to only change certain fields
+  @runThis
+  Scenario: As an Individual Client, I should not be able to go to booking detail page
     Given Assigned all bookings to Individual Client
     Given I exist as an Individual Client
     And I sign in with valid Individual Client credentials
     And I am on the bookings page
     Then I am shown with 1 booking
     When I click on an individual booking
-    Then I am on the individual booking page
-    When I click on link 'Booking details'
-    Then I should be on the edit booking page
-    And I select the bookable for client
-    Then I should be able to edit only specific fields
-    And I should not be able to edit other fields
+    Then I am on the bookings page
 
-  @ignoreThis
-  Scenario: Given 1 verified Organisational Representative, I should be able to only change certain fields
+  @runThis
+  Scenario: As an Organisational Representative, I should be able to only change certain fields
     Given Assigned all bookings to Organisational Representative
     Given I exist as an Organisational Representative
     And I sign in with valid Organisational Representative credentials
@@ -69,7 +65,6 @@ Feature: Edit Booking
     Then I am on the individual booking page
     When I click on link 'Booking details'
     Then I should be on the edit booking page
-    And I select the bookable for client
     Then I should be able to edit only specific fields
     And I should not be able to edit other fields
 
@@ -107,3 +102,17 @@ Feature: Edit Booking
     When I click on BUTTON name 'noBtn'
     And I wait for 2000 milli-seconds
     Then I am on the individual booking page
+
+  @runThis
+  Scenario: As an Organisational Representative, I should see an error notification when I click a non-editable field
+    Given Assigned all bookings to Organisational Representative
+    Given I exist as an Organisational Representative
+    And I sign in with valid Organisational Representative credentials
+    And I am on the bookings page
+    Then I am shown with 1 booking
+    When I click on an individual booking
+    Then I am on the individual booking page
+    When I click on link 'Booking details'
+    Then I should be on the edit booking page
+    When I click on one non-editable field
+    Then I will get an error notification saying "In order to change this field, please contact the booking office"

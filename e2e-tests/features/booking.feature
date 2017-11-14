@@ -156,29 +156,27 @@ Feature: Booking Management
     And I don't see any new New Booking link
 
   @runThis
-  Scenario: Given an Individual Client and a booking is created, A Booking Officer can create duplicate booking
+  Scenario: Given an Individual Client, A Booking Officer can create duplicate booking
+    Given There exist 1 bookings
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
     And I am on the bookings page
     Then I will be shown with bookings
-    Then I store the booking count
     Then I click on an individual booking of type 'Requested'
     Then I will be shown the booking job page
     Then I can see the button 'Save' is disabled
     And I click on BUTTON 'Duplicate'
     Then I will be taken to the 'New Booking' form
     And I select the bookable for client
-    When I click on BUTTON 'SAVE'
+    When I click the create booking button
     Then I will get an error notification saying "Kindly accept Terms and Conditions"
-    Then I move to element name 'lnkTC'
     Then I verify that the link with name 'lnkTC' href is 'https://s3-ap-southeast-2.amazonaws.com/auslan-public-bucket/Auslan_Online_Terms_And_Conditions.pdf'
-    Then I move to element name 'tnc'
     Then I click on checkbox name 'tnc'
     And I click the create booking button
+    And If I am shown a popup, I approve it
     Then I get a valid create booking notification
     Then I am on the bookings page
-    Then I will be shown with bookings
-    Then I expect the booking count to be greater then before
+    Then I am shown with 2 bookings
 
 
 # ---------------------------------------- AUSLAN1-252 -> START ----------------------------------------
