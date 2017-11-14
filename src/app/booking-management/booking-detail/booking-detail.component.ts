@@ -101,9 +101,9 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
 
     }
 
-    getOrgName (item ) {
-        return ( item instanceof OrganisationalRepresentative ?
-            (item.organisation_name.toUpperCase()  + ' - '  ) : '' ) + item.first_name + ' ' + item.last_name;
+    getOrgName(item) {
+        return (item instanceof OrganisationalRepresentative ?
+            (item.organisation_name.toUpperCase()  + ' - ') : '') + item.first_name + ' ' + item.last_name;
     }
     onStartTimeChanged() {
         this.bookingModel.venue.end_time_iso = this.bookingModel.venue.start_time_iso;
@@ -187,8 +187,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
 
     public onBookingForChange() {
         this.bookingForItems =  this.bookingModel.bookable_type === 'IndividualClient' ?
-            this.allClientsOrg.filter(u => u instanceof IndividualClient) :
-            this.allClientsOrg.filter(u => u instanceof OrganisationalRepresentative);
+            this.allClientsOrg.filter(u => u.type === 'IndividualClient') :
+            this.allClientsOrg.filter(u => u.type === 'OrganisationalRepresentative');
     }
 
     isNotIndClient() {

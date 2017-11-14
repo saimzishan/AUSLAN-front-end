@@ -57,7 +57,7 @@ export class Booking {
         this.raw_nature_of_appointment = '';
         this.specific_nature_of_appointment = '';
         this.state = BOOKING_STATE.None;
-        this.bookable_type = '';
+        this.bookable_type = 'IndividualClient';
     }
 
     clean(theObject) {
@@ -115,8 +115,8 @@ export class Booking {
         this.specific_nature_of_appointment = data.specific_nature_of_appointment;
         let state: string = data.state;
         this.state = BOOKING_STATE[state];
-        this.bookable_id = data.bookable_id;
-        this.bookable_type = data.bookable_type;
+        this.bookable_id = data.bookable_id || data.created_by.id;
+        this.bookable_type = data.bookable_type === 'User' ? data.created_by.type : data.bookable_type;
 
         if (Boolean(data.billing_account_attributes)) {
             this.client.organisation_primary_contact.first_name =
