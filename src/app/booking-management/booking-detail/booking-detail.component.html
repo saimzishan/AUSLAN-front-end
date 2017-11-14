@@ -588,7 +588,7 @@
     <div class="row">
       <div class="medium-12 columns" *ngIf="isUserOrgRepORIndClientTemp() || isUserAdminORBookOfficer()">
         <div class="form-field">
-          <label>Do you want to use standard invoice details? *
+          <label>Do you want to use standard invoice details{{isUserAdminORBookOfficer() ? " for this booking": ""}}? *
             <span mdTooltip="Tooltip!">
               <i class="inline-icon-tip"></i>
             </span>

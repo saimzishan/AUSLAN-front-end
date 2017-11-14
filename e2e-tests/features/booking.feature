@@ -407,6 +407,7 @@ Feature: Booking Management
 #    And I will be taken to the 'New Booking' form
 #    Then I can't see the txtSpecialInstruction field
 # ---------------------------------------- AUSLAN1-40 -> END ----------------------------------------
+<<<<<<< HEAD
 # ---------------------------------------- AUSLAN1-727 -> START ----------------------------------------
   @runThis
   Scenario: Given an Organisational Representative and an Individual Client, Administrator can see list of org reps, when making a booking
@@ -433,3 +434,45 @@ Feature: Booking Management
     And I see an option 'CURVE TOMORROW - alana Organisational' in 'booking_for' dropdown
 
 # ---------------------------------------- AUSLAN1-727 -> END ----------------------------------------
+=======
+
+
+  @runThis
+  Scenario: As a Booking Officer, Given that I opened new booking page and select a Individual Client for booking then I can see the auto populate changes
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    Then I am on the bookings page
+    And I click on 'New Booking'
+    Then I will be taken to the 'New Booking' form
+    And I can see the rdBookingFor field
+    And I can see the booking_for field
+    Then I click dropdown PLEASE SELECT THE CLIENT*
+    And I click on option TED INDIVIDUAL CLIENT of PLEASE SELECT THE CLIENT*
+    Then I can see the 'CONTACT DETAILS' auto populated
+    And I can see the 'CLIENT DETAILS' auto populated
+    And I can see the 'INVOICE DETAILS' auto populated
+    And I can see the element of type '.row p' with text 'What kind of services does the client need? Select multiple if relevant'
+    And I can see the element of type '.row p' with text 'What kind of interpreter(s) does the client need? Select multiple if relevant'
+    And I can see the element of type '.row label' with text 'DO YOU WANT TO USE THE STANDARD CONTACT PERSON FOR THIS BOOKING? *'
+    And I can see the element of type '.row label' with text 'Do you want to use standard invoice details for this booking? *'
+
+  @runThis
+  Scenario: As a Booking Officer, Given that I opened new booking page and select a Organisational Representative for booking then I can see the auto populate changes
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    Then I am on the bookings page
+    And I click on 'New Booking'
+    Then I will be taken to the 'New Booking' form
+    And I can see the rdBookingFor field
+    And I can see the booking_for field
+    Then I change the booking for to 'OrganisationalRepresentative'
+    Then I click dropdown PLEASE SELECT THE ORGANIZATION*
+    And I click on option ALANA ORGANISATIONAL REPRESENTATIVE of PLEASE SELECT THE ORGANIZATION*
+    Then I can see the 'CONTACT DETAILS' auto populated
+    And I can see the 'CLIENT DETAILS' auto populated
+    And I can see the 'INVOICE DETAILS' auto populated
+    And I can see the element of type '.row p' with text 'What kind of services does the organization need? Select multiple if relevant'
+    And I can see the element of type '.row p' with text 'What kind of interpreter(s) does the organization need? Select multiple if relevant'
+    And I can see the element of type '.row label' with text 'DO YOU WANT TO USE THE STANDARD CONTACT PERSON FOR THIS BOOKING? *'
+    And I can see the element of type '.row label' with text 'Do you want to use standard invoice details for this booking? *'
+>>>>>>> test for auto populate (in progress)

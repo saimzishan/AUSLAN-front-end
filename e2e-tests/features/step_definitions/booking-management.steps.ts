@@ -58,13 +58,15 @@ defineSupportCode(({Given, Then, When}) => {
 
     When(/^I specify i am the client of this booking$/, createBookingPO.specifyAsClientOfBooking);
     When(/^I specify i have special instruction$/, createBookingPO.specifyAsHavingSepcialInstruction);
-
+    
+    When(/^I change the booking for to '(.*)'$/, createBookingPO.specifyBookingFor);
     Then(/^The field '(.*)' will be populated with '(.*)'$/, createBookingPO.theFieldWillBePopulated);
 
     Then(/^I can verify the field '(.*)' will have the value '(.*)'$/, createBookingPO.theFieldInBookingWillHaveValue);
 
     Then(/^The booking form will be automatically populated with the details.$/, createBookingPO.populatedUserDetails);
-
+    
+    Given(/^I can see the '(.*)' auto populated$/, createBookingPO.sectionAutoPopulated);
     // Filling in specific fields in the booking form
     Then(/^I set the (\w+) time as (\d+) days (?:(\d+) hours?)?\s?from now$/, createBookingPO.setTime)
 
@@ -98,6 +100,7 @@ defineSupportCode(({Given, Then, When}) => {
     Then(/^All required booking fields should be filled$/, bookingEditPO.checkValueInAllRequiredFields);
 
     Then(/^The cell of (.*) will be populated with (.*)$/, createBookingPO.checkTheDropDown);
+    When(/^I click on option (.*) of (.*)$/, createBookingPO.clickOnDesiredOption);
 
     // Can't click on drop down
     Then(/^The dropdown (.*) will have (.*) item$/, createBookingPO.listTheIteminDropDown);
