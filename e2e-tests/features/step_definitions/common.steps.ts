@@ -292,11 +292,11 @@ defineSupportCode(({Given, When, Then}) => {
     }
 
 
-    When(/^I can see the element of type '(.*)'  with text '(.*)'$/, isElementWithTextVisible);
-    function isElementWithTextVisible(text: string, visible: string) {
-        let isDisplayed = visible.toLowerCase() === 'visible';
+    When(/^I can see the element of type '(.*)' with text '(.*)'$/, isElementWithTextVisible);
+    function isElementWithTextVisible(typ: string, text: string) {
+        let isDisplayed = true;
 
-        return page.getElementByCSSandText('', text).isPresent().then(val => {
+        return page.getElementByCSSandText(typ, text).isPresent().then(val => {
             expect(val).to.be.eq(isDisplayed);
             });
     }

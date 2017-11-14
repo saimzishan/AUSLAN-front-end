@@ -61,6 +61,13 @@ export class BookingPage extends PageObject {
         return option_selected.click();
     }
 
+    clickOnDesiredOption = (option_text: string, drop_down: string) => {
+        const selected_label = this.getElementByCSSandText('label', drop_down);
+        const div = this.getParent(selected_label);
+        const option_selected = this.getElementInsideByCSSandText(div, 'option', option_text);
+        return option_selected.click();
+    }
+    
     checkTheDropDown = (label_text: string, option_text: string) => {
         const selected_label = this.getElementByCSSandText('label', label_text);
         const div = this.getParent(selected_label);
@@ -100,6 +107,14 @@ export class BookingPage extends PageObject {
         });
     }
 
+    specifyBookingFor = (bookingFor: string) => {
+        const radioGroup = this.getElementByName('rdBookingFor');
+        let all_radio_btn_in_group = this.getAllByTagNameInElement(radioGroup, 'md-radio-button');
+        return all_radio_btn_in_group.then((all_radio) => {
+            return all_radio[bookingFor].click();
+        });
+    }
+
     specifyAsHavingSepcialInstruction = () => {
         const clientRadioGroup = this.getElementByName('rdSpecialInstruction');
         let all_radio_btn_in_group = this.getAllByTagNameInElement(clientRadioGroup, 'md-radio-button');
@@ -127,6 +142,20 @@ export class BookingPage extends PageObject {
         const clientOptionLabel = this.getElementByCSSandText('.text-center', 'CLIENT DETAILS');
         const divClientDetails = this.getNextSibling(clientOptionLabel, 'div');
         const all_input_in_div = this.getAllByTagNameInElement(divClientDetails, 'input');
+        return all_input_in_div.then((inputDiv) => {
+            for (let i = 0; i < inputDiv.length; i++) {
+                const single_input = inputDiv[i];
+                return single_input.getAttribute('value').then((val) => {
+                    expect(val).to.not.equal('');
+                });
+            }
+        });
+    }
+
+    sectionAutoPopulated = (sectionName: string) => {
+        const optionLabel = this.getElementByCSSandText('.text-center', sectionName);
+        const divDetails = this.getNextSibling(optionLabel, 'div');
+        const all_input_in_div = this.getAllByTagNameInElement(divDetails, 'input');
         return all_input_in_div.then((inputDiv) => {
             for (let i = 0; i < inputDiv.length; i++) {
                 const single_input = inputDiv[i];
