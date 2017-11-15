@@ -43,6 +43,45 @@ Feature: Booking Management
     And I will be shown with bookings
 
   @runThis
+  Scenario: Given 1 verified Organisational Representative, Administrator can create a booking
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on the bookings page
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    When I fill New Booking form fields correctly
+    And I select the bookable for org rep
+    Then I move to element name 'tnc'
+    Then I click on checkbox name 'tnc'
+    And I click the create booking button
+    Then I get a valid create booking notification
+    And I am on the bookings page
+    And I will be shown with bookings
+    Then I am shown with 1 booking
+    When I query booking with org name 'Curve'
+    Then I am shown with 1 booking
+    Then I see one row with org name 'CurveTomorrow'
+    Then I click on an individual booking of type 'Requested'
+    Then I will be shown the booking job page
+    Then I can see the button 'Save' is disabled
+    And I click on BUTTON 'Duplicate'
+    Then I will be taken to the 'New Booking' form
+    Then I verify radiobutton name 'OrganisationalRepresentative' and is checked
+    And I click on my name
+    And I click on logout
+    And I go to the website
+    And I am shown the login screen, with picture and signup button
+    And I exist as an Organisational Representative
+    And I sign in with valid Organisational Representative credentials
+    And I am on the bookings page
+    And I will be shown with bookings
+    Then I am shown with 1 booking
+    When I query booking with org name 'Curve'
+    Then I am shown with 1 booking
+    Then I see one row with org name 'CurveTomorrow'
+
+
+  @runThis
   Scenario: Given 1 verified Individual Client, Booking Officer can create a booking
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
@@ -61,6 +100,15 @@ Feature: Booking Management
     Then I get a valid create booking notification
     And I am on the bookings page
     And I will be shown with bookings
+    And I click on my name
+    And I click on logout
+    And I go to the website
+    And I am shown the login screen, with picture and signup button
+    And I exist as an Individual Client
+    And I sign in with valid Individual Client credentials
+    And I am on the bookings page
+    And I will be shown with bookings
+    Then I am shown with 1 booking
 
   @runThis
   Scenario: Organisational Representative can create a booking
@@ -108,29 +156,27 @@ Feature: Booking Management
     And I don't see any new New Booking link
 
   @runThis
-  Scenario: Given an Individual Client and a booking is created, A Booking Officer can create duplicate booking
+  Scenario: Given an Individual Client, A Booking Officer can create duplicate booking
+    Given There exist 1 bookings
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
     And I am on the bookings page
     Then I will be shown with bookings
-    Then I store the booking count
     Then I click on an individual booking of type 'Requested'
     Then I will be shown the booking job page
     Then I can see the button 'Save' is disabled
     And I click on BUTTON 'Duplicate'
     Then I will be taken to the 'New Booking' form
     And I select the bookable for client
-    When I click on BUTTON 'SAVE'
+    When I click the create booking button
     Then I will get an error notification saying "Kindly accept Terms and Conditions"
-    Then I move to element name 'lnkTC'
     Then I verify that the link with name 'lnkTC' href is 'https://s3-ap-southeast-2.amazonaws.com/auslan-public-bucket/Auslan_Online_Terms_And_Conditions.pdf'
-    Then I move to element name 'tnc'
     Then I click on checkbox name 'tnc'
     And I click the create booking button
+    And If I am shown a popup, I approve it
     Then I get a valid create booking notification
     Then I am on the bookings page
-    Then I will be shown with bookings
-    Then I expect the booking count to be greater then before
+    Then I am shown with 2 bookings
 
 
 # ---------------------------------------- AUSLAN1-252 -> START ----------------------------------------
@@ -362,7 +408,6 @@ Feature: Booking Management
 #    Then I can't see the txtSpecialInstruction field
 # ---------------------------------------- AUSLAN1-40 -> END ----------------------------------------
 
-
   @runThis
   Scenario: As a Booking Officer, Given that I opened new booking page and select a Individual Client for booking then I can see the auto populate changes
     Given I exist as an Booking Officer
@@ -401,3 +446,30 @@ Feature: Booking Management
     And I can see the element of type '.row p' with text 'What kind of interpreter(s) does the organization need? Select multiple if relevant'
     And I can see the element of type '.row label' with text 'DO YOU WANT TO USE THE STANDARD CONTACT PERSON FOR THIS BOOKING? *'
     And I can see the element of type '.row label' with text 'Do you want to use standard invoice details for this booking? *'
+
+# ---------------------------------------- AUSLAN1-727 -> START ----------------------------------------
+  @runThis
+  Scenario: Administrator can see  list of org reps, when making a booking, Organisational Representative , Individual Client exists
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on the bookings page
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    Then I can see the booking_for field
+    And I see an option 'ted Individual Client' in 'booking_for' dropdown
+    Then I click on element by name 'OrganisationalRepresentative'
+    And I see an option 'CURVETOMORROW - alana Organisational' in 'booking_for' dropdown
+
+  @runThis
+  Scenario: Booking Officer can see  list of org reps, when making a booking, Organisational Representative , Individual Client exists
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    And I am on the bookings page
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    Then I can see the booking_for field
+    And I see an option 'ted Individual Client' in 'booking_for' dropdown
+    Then I click on element by name 'OrganisationalRepresentative'
+    And I see an option 'CURVETOMORROW - alana Organisational' in 'booking_for' dropdown
+
+# ---------------------------------------- AUSLAN1-727 -> END ----------------------------------------

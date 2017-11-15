@@ -52,7 +52,12 @@ export class BookingPage extends PageObject {
         const select_dropdown = this.getElementInsideByTag(div, 'select');
         return select_dropdown.click();
     }
-
+    optionExistsInDropDown = ( option_text: string, dropdown_name: string ) => {
+        let sel = this.getElementByName(dropdown_name);
+        return sel.element(by.cssContainingText('option', option_text)).isPresent().then( (val) => {
+            expect(val).to.be.eq(true);
+        });
+    }
     clickOnOption = (option_text: string, drop_down: string, for_type: string) => {
         const selected_label = this.getElementByCSSandText('label', drop_down);
         const div = this.getParent(selected_label);
@@ -187,12 +192,12 @@ export class BookingPage extends PageObject {
     }
 
     selectClientAsBookbable = () => {
-        this.getElementByName('booking_for').sendKeys('ted');
+        return this.getElementByName('booking_for').sendKeys('ted');
     }
 
     selectOrgRepAsBookbable = () => {
         element(by.name('rdBookingFor')).all(by.tagName('md-radio-button')).get(1).click();
-        this.getElementByName('booking_for').sendKeys('alana');
+        return this.getElementByName('booking_for').sendKeys('Curve');
     }
 
     checkTheFieldExist = (cant: string, fieldName: string) => {

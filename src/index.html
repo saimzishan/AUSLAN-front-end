@@ -41,18 +41,16 @@
    <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.1/js/foundation.js"></script>
 
    <script>
-    $(document).ready(
-        function () {
-        console.log('in ready');
-    function storageChange (event) {
-            if(event.key === 'token') {
-                if(!event.newValue) {
-                    window.location.href = '/'
-				}
-            }
-        }
-    window.addEventListener('storage', storageChange, false)
-        } );
+	   $(document).ready(function () {
+	       console.log('in ready');
+	       function storageChange (event) {
+	           if(event.key === 'token') {
+	               if(!event.newValue) { window.location.href = '/' }
+	           }
+	       }
+	       window.addEventListener('storage', storageChange, false)
+	   });
    </script>
+   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD6AdcxpDfXs_UN2BrOn70oVXeWh7VnxOY"></script>
 </body>
 </html>

@@ -14,8 +14,8 @@
         <div class="form-field">
           <label>ARE YOU MAKING A BOOKING FOR AN INDIVIDUAL CLIENT OR ORGANIZATION?*</label>
           <md-radio-group name="rdBookingFor" (change)='onBookingForChange()' [(ngModel)]="bookingModel.bookable_type">
-            <md-radio-button value="IndividualClient">CLIENT</md-radio-button>
-            <md-radio-button value="OrganisationalRepresentative">ORGANISATION</md-radio-button>
+            <md-radio-button id ="IndividualClient" name ="IndividualClient" value="IndividualClient">CLIENT</md-radio-button>
+            <md-radio-button id="OrganisationalRepresentative" name="OrganisationalRepresentative" value="OrganisationalRepresentative">ORGANISATION</md-radio-button>
           </md-radio-group>
         </div>
       </div> 
@@ -31,7 +31,7 @@
                   #booking_for="ngModel" name="booking_for"
                   aria-label="A" required>
             <option *ngFor="let item of bookingForItems" [value]="item.id">
-            {{ item.first_name.toUpperCase() }} {{ item.last_name.toUpperCase() }}
+            {{ getOrgName(item) }}
             </option>
           </select>
             <span *ngIf="booking_for.touched && !booking_for.errors?.required;"
@@ -440,7 +440,7 @@
             </span>
           </label>
           <md-radio-group name="rdcurrentUserIsClient" (change)='onClientSelectionChange()' 
-                          [disabled]="isUserOrgRepORIndClientTemp() && forEdit()" [(ngModel)]="currentUserIsClient">
+                          disabled="isUserOrgRepORIndClientTemp() && forEdit()" [(ngModel)]="currentUserIsClient">
             <md-radio-button value=true>YES</md-radio-button>
             <md-radio-button value=false>NO</md-radio-button>
           </md-radio-group>
@@ -573,7 +573,7 @@
             </span>
           </label>
           <md-radio-group name="rdStandardInvoice"[(ngModel)]="standardInvoice" (change)='onStandardInvoice()'
-                          [disabled]="isUserOrgRepORIndClientTemp() && forEdit()">
+                          disabled="isUserOrgRepORIndClientTemp() && forEdit()">
             <md-radio-button value=true>YES</md-radio-button>
             <md-radio-button value=false>NO</md-radio-button>
           </md-radio-group>
