@@ -97,8 +97,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             }
             this.bookingHeading = (this.shouldEdit.length > 0 && this.shouldEdit === 'edit' ) ? 'EDIT BOOKING' : 'NEW BOOKING';
         });
-
-
     }
 
     onStartTimeChanged() {
@@ -239,7 +237,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     */
     public onCreateBooking(form: FormGroup, addressForm: any, billingForm: any, uploader: FileUploader) {
 
-        if (!this.termsAndConditionAccepted) {
+        if (!this.termsAndConditionAccepted && !this.forEdit()) {
             this.notificationServiceBus.launchNotification(true, 'Kindly accept Terms and Conditions');
             return;
         }
