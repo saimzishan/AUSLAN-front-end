@@ -97,7 +97,6 @@ export class BookingPage extends PageObject {
             return expect(expected).to.be.true;
         } else {
             return select_dropdown.getAttribute('ng-reflect-model').then((val) => {
-                // console.log(val);
                 expect(val.toUpperCase()).to.equal(option_text);
             });
         }
@@ -119,14 +118,6 @@ export class BookingPage extends PageObject {
         let all_radio_btn_in_group = this.getAllByTagNameInElement(clientRadioGroup, 'md-radio-button');
         return all_radio_btn_in_group.then((all_radio) => {
             return all_radio[CONSTANT.YES].click();
-        });
-    }
-
-    specifyBookingFor = (bookingFor: string) => {
-        const radioGroup = this.getElementByName('rdBookingFor');
-        let all_radio_btn_in_group = this.getAllByTagNameInElement(radioGroup, 'md-radio-button');
-        return all_radio_btn_in_group.then((all_radio) => {
-            return all_radio[bookingFor].click();
         });
     }
 
@@ -171,13 +162,18 @@ export class BookingPage extends PageObject {
         const optionLabel = this.getElementByCSSandText('.text-center', sectionName);
         const divDetails = this.getNextSibling(optionLabel, 'div');
         const all_input_in_div = this.getAllByTagNameInElement(divDetails, 'input');
-        return all_input_in_div.then((inputDiv) => {
-            for (let i = 0; i < inputDiv.length; i++) {
-                const single_input = inputDiv[i];
-                return single_input.getAttribute('value').then((val) => {
-                    expect(val).to.not.equal('');
-                });
-            }
+        return all_input_in_div.each(function (single_input, index) {
+            return single_input.getAttribute('value').then((val) => {
+                if (!val) {
+                    let nam = single_input.getAttribute('name');
+                    if (nam === "ext_ref_num" || nam === "deaf_person_eaf") {
+                        expect(true).to.be.true
+                    }
+                }
+                else {
+                    expect(!!val).to.be.true;
+                }
+            });
         });
     }
 
