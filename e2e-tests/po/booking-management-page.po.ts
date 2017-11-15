@@ -223,18 +223,24 @@ export class BookingManagementPage extends PageObject {
         return bookingSuburbForm.submit();
     }
 
+    // Adds a '0' in the start if the date < 10
+    private prettyDate = (date: number|string): string => {
+        date = date.toString();
+        return ('00' + date).slice(date.length);
+    }
+
     filterBookingByDateRange = () => {
         let currentDate = new Date();
         let dateStart = new Date(new Date(currentDate).setDate(currentDate.getDate() + 12));
         let dateEnd = new Date(new Date(dateStart).setDate(dateStart.getDate() + 4));
         let dateFrom = {
-            mm: (dateStart.getMonth() + 1).toString(),
-            dd: dateStart.getDate().toString(),
+            mm: this.prettyDate(dateStart.getMonth() + 1),
+            dd: this.prettyDate(dateStart.getDate()),
             yy: dateStart.getFullYear().toString()
         };
         let dateTo = {
-            mm: (dateEnd.getMonth() + 1).toString(),
-            dd: dateEnd.getDate().toString(),
+            mm: this.prettyDate(dateEnd.getMonth() + 1),
+            dd: this.prettyDate(dateEnd.getDate()),
             yy: dateEnd.getFullYear().toString()
         };
         this.booking.setDateOnly('date_from', dateFrom);
