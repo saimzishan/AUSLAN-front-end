@@ -293,7 +293,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     */
     public onCreateBooking(form: FormGroup, addressForm: any, billingForm: any, uploader: FileUploader) {
 
-        if (!this.termsAndConditionAccepted) {
+        if (!this.termsAndConditionAccepted && !this.forEdit()) {
             this.notificationServiceBus.launchNotification(true, 'Kindly accept Terms and Conditions');
             return;
         }

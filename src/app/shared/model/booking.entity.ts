@@ -58,6 +58,7 @@ export class Booking {
         this.specific_nature_of_appointment = '';
         this.state = BOOKING_STATE.None;
         this.bookable_type = 'IndividualClient';
+        this.notes = '';
     }
 
     clean(theObject) {
@@ -117,6 +118,7 @@ export class Booking {
         this.state = BOOKING_STATE[state];
         this.bookable_id = data.bookable_id || data.created_by.id;
         this.bookable_type = data.bookable_type === 'User' ? data.created_by.type : data.bookable_type;
+        this.notes = data.notes;
 
         if (Boolean(data.billing_account_attributes)) {
             this.client.organisation_primary_contact.first_name =
@@ -227,7 +229,8 @@ export class Booking {
             documents_attributes: this.documents_attributes,
             preference_allocations_attributes: this.preference_allocations_attributes,
             bookable_id: this.bookable_id,
-            bookable_type: this.bookable_type
+            bookable_type: this.bookable_type,
+            notes: this.notes
         });
         return o;
     }
