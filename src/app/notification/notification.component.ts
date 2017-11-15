@@ -1,6 +1,6 @@
-import {Component, OnDestroy} from '@angular/core';
-import {NotificationsService} from 'angular2-notifications';
+import {Component, OnDestroy, ViewContainerRef} from '@angular/core';
 import {NotificationServiceBus} from './notification.service';
+import {Md2Toast} from 'md2';
 
 @Component({
     selector: 'app-notification',
@@ -9,32 +9,27 @@ import {NotificationServiceBus} from './notification.service';
 })
 export class NotificationComponent implements OnDestroy {
     private sub: any;
-    public options = {
-        position: ['bottom', 'left'],
-        timeOut: 1200,
-        lastOnBottom: true,
-        maximumLength: 200,
-        preventDuplicates: true,
-        maxStack: 0,
-        pauseOnHover: false,
-        animate: 'scale'
-    };
+    title = '';
+    mesg = '';
 
-    constructor(public notificationService: NotificationServiceBus, private _service: NotificationsService) {
+    constructor(private toast: Md2Toast,
+                public notificationService: NotificationServiceBus) {
         this.sub = this.notificationService.launchNotification$.subscribe(
             notificationContainer => {
                 if (notificationContainer && notificationContainer.message.length > 0) {
+                    this.mesg = notificationContainer.message;
                     if (!notificationContainer.isError) {
-                        this._service.success('Hurray! ', notificationContainer.message);
+                        this.title = 'Hurray! ';
                     } else {
-                        this._service.error('Oops! ', notificationContainer.message);
+                        this.title = 'Oops! ';
                     }
+                    this.toast.show(this.mesg, 3000);
                 }
             });
     }
 
     ngOnDestroy() {
-        this.sub.unsubscribe();
+        return this.sub.unsubscribe();
     }
 
 }

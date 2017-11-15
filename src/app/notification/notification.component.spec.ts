@@ -7,6 +7,7 @@ import {SimpleNotificationsModule} from 'angular2-notifications';
 import { NotificationComponent } from './notification.component';
 import { NotificationsService } from 'angular2-notifications';
 import { NotificationServiceBus, NotificationContainer } from './notification.service';
+import {Md2Module} from 'md2';
 
 describe('NotificationComponent', () => {
   let component: NotificationComponent;
@@ -15,7 +16,7 @@ describe('NotificationComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ NotificationComponent ],
-        imports: [SimpleNotificationsModule.forRoot()],
+        imports: [SimpleNotificationsModule.forRoot(),  Md2Module.forRoot()],
       providers: [ NotificationServiceBus, NotificationsService, NotificationContainer ]
     })
     .compileComponents();

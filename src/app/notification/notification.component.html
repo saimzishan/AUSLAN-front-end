@@ -1,4 +1,5 @@
-<!--   div *ngIf="shouldShow" [ngClass]="{'alert': isError , 'msg': !isError}">
-<span class="closebtn" (click)="hide()">&times;</span>
-{{notification}}</div -->
-<simple-notifications [options]="options"></simple-notifications>
+<div [hidden]="true">
+    <div class="sn-title">{{title}}</div>
+    <div class="sn-content">{{mesg}}</div>
+
+</div>
