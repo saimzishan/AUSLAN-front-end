@@ -59,7 +59,6 @@ defineSupportCode(({Given, Then, When}) => {
     When(/^I specify i am the client of this booking$/, createBookingPO.specifyAsClientOfBooking);
     When(/^I specify i have special instruction$/, createBookingPO.specifyAsHavingSepcialInstruction);
     
-    When(/^I change the booking for to '(.*)'$/, createBookingPO.specifyBookingFor);
     Then(/^The field '(.*)' will be populated with '(.*)'$/, createBookingPO.theFieldWillBePopulated);
 
     Then(/^I can verify the field '(.*)' will have the value '(.*)'$/, createBookingPO.theFieldInBookingWillHaveValue);
