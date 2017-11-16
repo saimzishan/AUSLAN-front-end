@@ -60,7 +60,7 @@ Feature: Booking Management
     Then I am shown with 1 booking
     When I query booking with org name 'Curve'
     Then I am shown with 1 booking
-    Then I see one row with org name 'CurveTomorrow'
+    Then I see one row with org name 'Curve Tomorrow'
     Then I click on an individual booking of type 'Requested'
     Then I will be shown the booking job page
     Then I can see the button 'Save' is disabled
@@ -78,7 +78,7 @@ Feature: Booking Management
     Then I am shown with 1 booking
     When I query booking with org name 'Curve'
     Then I am shown with 1 booking
-    Then I see one row with org name 'CurveTomorrow'
+    Then I see one row with org name 'Curve Tomorrow'
 
 
   @runThis
@@ -409,7 +409,7 @@ Feature: Booking Management
 # ---------------------------------------- AUSLAN1-40 -> END ----------------------------------------
 # ---------------------------------------- AUSLAN1-727 -> START ----------------------------------------
   @runThis
-  Scenario: Administrator can see  list of org reps, when making a booking, Organisational Representative , Individual Client exists
+  Scenario: Given an Organisational Representative and an Individual Client, Administrator can see list of org reps, when making a booking
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
     And I am on the bookings page
@@ -418,7 +418,7 @@ Feature: Booking Management
     Then I can see the booking_for field
     And I see an option 'ted Individual Client' in 'booking_for' dropdown
     Then I click on element by name 'OrganisationalRepresentative'
-    And I see an option 'CURVETOMORROW - alana Organisational' in 'booking_for' dropdown
+    And I see an option 'CURVE TOMORROW - alana Organisational' in 'booking_for' dropdown
 
   @runThis
   Scenario: Booking Officer can see  list of org reps, when making a booking, Organisational Representative , Individual Client exists
@@ -430,6 +430,6 @@ Feature: Booking Management
     Then I can see the booking_for field
     And I see an option 'ted Individual Client' in 'booking_for' dropdown
     Then I click on element by name 'OrganisationalRepresentative'
-    And I see an option 'CURVETOMORROW - alana Organisational' in 'booking_for' dropdown
+    And I see an option 'CURVE TOMORROW - alana Organisational' in 'booking_for' dropdown
 
 # ---------------------------------------- AUSLAN1-727 -> END ----------------------------------------
