@@ -23,7 +23,7 @@ export class NotificationComponent implements OnDestroy {
                     } else {
                         this.title = 'Oops! ';
                     }
-                    this.toast.show(this.mesg, 3000);
+                    this.toast.show(this.mesg, 3200);
                 }
             });
     }
