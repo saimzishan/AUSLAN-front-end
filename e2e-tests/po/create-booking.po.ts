@@ -62,9 +62,9 @@ export class BookingPage extends PageObject {
         const select_dropdown = this.getElementInsideByTag(div, 'select');
         return select_dropdown.click();
     }
-    optionExistsInDropDown = ( option_text: string, dropdown_name: string ) => {
+    optionExistsInDropDown = (option_text: string, dropdown_name: string) => {
         let sel = this.getElementByName(dropdown_name);
-        return sel.element(by.cssContainingText('option', option_text)).isPresent().then( (val) => {
+        return sel.element(by.cssContainingText('option', option_text)).isPresent().then(val => {
             expect(val).to.be.eq(true);
         });
     }
