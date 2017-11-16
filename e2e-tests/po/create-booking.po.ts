@@ -24,6 +24,16 @@ export class BookingPage extends PageObject {
         return expect(this.getElementByName('btnCancelBooking').isPresent()).to.eventually.be.true;
     }
 
+    getSuccessNotificationForBulkUploadContent = () => {
+        return browser.sleep(2500).then(() => {
+            NotificationObject.getNotificationContent('The Bookings in your bulk upload file have been created.');
+        });
+    }
+
+    getErrorNotificationContentForBulkUpload = (message: string) => {
+        return NotificationObject.getNotificationContent(message);
+    }
+
     getSuccessNotificationContent = () => {
         return browser.sleep(2500).then(() => {
             NotificationObject.getNotificationContent('The Booking has been created.');

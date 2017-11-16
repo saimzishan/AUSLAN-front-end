@@ -6,7 +6,28 @@
   <section>
     <span>Fields with * are required</span>
   </section>
-
+    <div class="common-form">
+      <div style="float:right;">
+        <section class="file-uploader bulk-upload">
+          <button md-button>
+            <b>Batch Upload</b>
+            <!-- span>or drag &amp; drop them here</span -->
+            <input type="file" ng2FileSelect (change)="handleBulkUploadSelect($event)" [uploader]="uploader"
+                   name="bulk-uploader"/>
+          </button>
+          <!-- section ng2FileDrop
+                   [ngClass]="{
+                   'nv-file-over': hasBaseDropZoneOver,
+                   'well my-drop-zone' : !hasBaseDropZoneOver
+                   }"
+                   (onFileDrop)="handleFileSelect($event)"
+                   (fileOver)="fileOverBase($event)"
+                   [uploader]="uploader">
+              <span></span>
+          </section -->
+        </section>
+      </div>
+    </div>
   <form #booking_form="ngForm" class="common-form compact">
     <div class="row" *ngIf="isUserAdminORBookOfficer()">
       <h2>CUSTOMER</h2>

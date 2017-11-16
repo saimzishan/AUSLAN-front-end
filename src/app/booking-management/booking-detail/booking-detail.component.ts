@@ -428,6 +428,38 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         }
     }
 
+    handleBulkUploadSelect(evt) {
+        let files = evt.target.files;
+
+        let file = files[0];
+        // File uploader wont add a duplicate file
+        if (files && file) {
+            this.fileName = file.name;
+
+            let reader = new FileReader();
+            reader.onload = this._handleBulkUploadReaderLoaded.bind(this);
+            reader.readAsDataURL(file);
+        }
+    }
+
+    _handleBulkUploadReaderLoaded(readerEvt) {
+        this.spinnerService.requestInProcess(true);
+        this.bookingService.bulkUploadBookings(readerEvt.target.result)
+            .subscribe((res: any) => {
+                    if (res.status === 204) {
+                        this.notificationServiceBus.launchNotification(false, 'The Bookings in your bulk upload file have been created.');
+                        let route = this.rolePermission.getDefaultRouteForCurrentUser();
+                        this.router.navigate([route]);
+                    }
+                    this.spinnerService.requestInProcess(false);
+                },
+                errors => {
+                    this.spinnerService.requestInProcess(false);
+                    let e = errors.json() || '';
+                    this.notificationServiceBus.launchNotification(true,
+                        'Error occured on server side. ' + errors.statusText + ' ' + JSON.stringify(e || e.errors));
+                });
+    }
     getUser() {
         this.userModel = Boolean(GLOBAL.currentUser) &&
         GLOBAL.currentUser instanceof OrganisationalRepresentative ?
