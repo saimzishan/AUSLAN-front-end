@@ -471,7 +471,7 @@ Feature: Booking Admin Management
       Then I am on the bookings page
       When I click on an individual booking
       Then I will be shown the booking job page
-      Then I should see the value under the Org column as 'Curve Tomorrow'
+      Then I should see the value under Org column as 'Curve Tomorrow'
 
     @runThis
     Scenario: As a Booking Officer I should see the correct org name of the booking
@@ -481,7 +481,7 @@ Feature: Booking Admin Management
       Then I am on the bookings page
       When I click on an individual booking
       Then I will be shown the booking job page
-      Then I should see the value under the Org column as 'Ted Bear'
+      Then I should see the value under Org column as 'Ted Bear'
 
     @runThis
     Scenario: As a Booking Officer I should see the correct suburb of the booking
@@ -491,7 +491,7 @@ Feature: Booking Admin Management
       Then I am on the bookings page
       When I click on an individual booking
       Then I will be shown the booking job page
-      Then I should see the value under the Suburb column as 'Parkville'
+      Then I should see the value under Suburb column as 'Parkville'
 
     @runThis
     Scenario: As a Booking Officer I should see the correct suburb of the booking
