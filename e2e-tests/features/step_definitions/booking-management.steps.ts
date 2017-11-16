@@ -99,7 +99,6 @@ defineSupportCode(({Given, Then, When}) => {
     Then(/^All required booking fields should be filled$/, bookingEditPO.checkValueInAllRequiredFields);
 
     Then(/^The cell of (.*) will be populated with (.*)$/, createBookingPO.checkTheDropDown);
-    When(/^I click on option (.*) of (.*)$/, createBookingPO.clickOnDesiredOption);
 
     // Can't click on drop down
     Then(/^The dropdown (.*) will have (.*) item$/, createBookingPO.listTheIteminDropDown);

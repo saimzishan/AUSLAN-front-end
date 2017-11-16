@@ -75,13 +75,6 @@ export class BookingPage extends PageObject {
         this.list_of_object[for_type] = Booking.getWhatWillBeDiscussed(option_text);
         return option_selected.click();
     }
-
-    clickOnDesiredOption = (option_text: string, drop_down: string) => {
-        const selected_label = this.getElementByCSSandText('label', drop_down);
-        const div = this.getParent(selected_label);
-        const option_selected = this.getElementInsideByCSSandText(div, 'option', option_text);
-        return option_selected.click();
-    }
     
     checkTheDropDown = (label_text: string, option_text: string) => {
         const selected_label = this.getElementByCSSandText('label', label_text);
@@ -159,20 +152,20 @@ export class BookingPage extends PageObject {
     }
 
     sectionAutoPopulated = (sectionName: string) => {
+        
         const optionLabel = this.getElementByCSSandText('.text-center', sectionName);
         const divDetails = this.getNextSibling(optionLabel, 'div');
         const all_input_in_div = this.getAllByTagNameInElement(divDetails, 'input');
         return all_input_in_div.each(function (single_input, index) {
             return single_input.getAttribute('value').then((val) => {
-                if (!val) {
-                    let nam = single_input.getAttribute('name');
-                    if (nam === "ext_ref_num" || nam === "deaf_person_eaf") {
-                        expect(true).to.be.true
+
+               return single_input.getAttribute('name').then((nam) => {
+                    if (['ext_ref_num', 'deaf_person_eaf'].indexOf(nam) === -1) {
+                        expect(!!val).to.be.true;
                     }
-                }
-                else {
-                    expect(!!val).to.be.true;
-                }
+
+                }); 
+                
             });
         });
     }

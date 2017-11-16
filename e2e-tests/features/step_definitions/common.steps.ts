@@ -338,12 +338,11 @@ defineSupportCode(({Given, When, Then}) => {
     }
 
 
-    When(/^I can see the element of type '(.*)' with text '(.*)'$/, isElementWithTextVisible);
-    function isElementWithTextVisible(typ: string, text: string) {
-        let isDisplayed = true;
-
-        return page.getElementByCSSandText(typ, text).isPresent().then(val => {
-            expect(val).to.be.eq(isDisplayed);
+    When(/^I can see the element with name '(.*)' has text '(.*)'$/, isElementHasText);
+    function isElementHasText(nam: string, txt: string) {
+        
+        return page.getElementByName(nam).getText().then(elmTxt => {
+                return expect(elmTxt).to.be.eq(txt);
             });
     }
 
