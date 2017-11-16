@@ -474,11 +474,21 @@ Feature: Booking Admin Management
       Then I should see the Org as 'Curve Tomorrow'
 
     @runThis
-    Scenario: Given 1 Individual Client, As a Booking Officer I should see the correct org name of the booking
+    Scenario: As a Booking Officer I should see the correct org name of the booking
       Given There exist 1 bookings
       Given I exist as a Booking Officer
       When I sign in with valid Booking Officer credentials
       Then I am on the bookings page
       When I click on an individual booking
       Then I will be shown the booking job page
-      Then I should see the Org as 'ted Individual Client'
+      Then I should see the Org as 'Ted Bear'
+
+    @runThis
+    Scenario: As a Booking Officer I should see the correct suburb of the booking
+      Given There exist 1 bookings
+      Given I exist as a Booking Officer
+      When I sign in with valid Booking Officer credentials
+      Then I am on the bookings page
+      When I click on an individual booking
+      Then I will be shown the booking job page
+      Then I should see the Suburb as 'Parkville'
