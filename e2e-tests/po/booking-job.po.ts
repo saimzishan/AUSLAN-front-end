@@ -175,5 +175,14 @@ export class BookingJobPage extends PageObject {
         let el = bookingDetails.get(BookingDetailTableHeaders[tableHeader]);
         return expect(el.getText()).to.eventually.eq(value);
     }
+    checkAttachmentIcons = (negate: string) => {
+        let shouldSee = !(negate === 'not');
+        let bookingDetails = this.getAllElementByCSS('table#job-details-responsive tbody tr td');
+        let el = bookingDetails.get(BookingDetailTableHeaders.Attached);
+        return this.getAllByCSSInElement(el, 'i.icon-attach').isPresent()
+            .then(presence => {
+                return expect(presence).to.be.eq(shouldSee);
+            });
+    }
 }
 
