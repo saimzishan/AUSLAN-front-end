@@ -222,7 +222,7 @@ Feature: Booking Management
     Then I see attachment 'sushi.pdf' does 'not exists'
 
 
-  @ingoreThis
+  @ignoreThis
     # https://github.com/valor-software/ng2-file-upload/issues/906
   Scenario: Administrator can remove booking documents for Individual Client
     Given I exist as an Administrator
