@@ -75,7 +75,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
 
         this.bookingModel = new Booking();
         this.onSpecialInstruction();
-        this.oldBookingModel = new Booking();
 
         /** http://stackoverflow.com/questions/38008334/angular2-rxjs-when-should-i-unsubscribe-from-subscription */
         this.sub = this.route.queryParams.subscribe(params => {
@@ -384,14 +383,17 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             };
             config.viewContainerRef = this.viewContainerRef;
             this.dialogRef = this.dialog.open(PopupComponent, config);
-            this.dialogRef.componentInstance.title = 'Important Fields Changed WARNING';
+            this.dialogRef.componentInstance.title = 'Important Fields Changed';
             this.dialogRef.componentInstance.cancelTitle = 'BACK';
             this.dialogRef.componentInstance.okTitle = 'Yes';
             this.dialogRef.componentInstance.popupMessage =
-                `Interpreter(s) have been/is allocated for this job. Did you get confirmation from the interpreter(s) that these changes are OK?`;
+                `Interpreter(s) have been/is allocated for this job. You're charging important fields of the booking.
+                 Do you have confirmation from the interpreter(s) that these changes are OK?`;
 
             this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
-                this.saveBooking();
+                if (result) {
+                    this.saveBooking();
+                }
             });
         } else {
             this.saveBooking();
@@ -400,16 +402,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
 
     saveBooking() {
         if (this.assignedInterpreter > this.bookingModel.interpreters_required) {
-            let config: MdDialogConfig = {
-                disableClose: true
-            };
-            config.viewContainerRef = this.viewContainerRef;
-            this.dialogRef = this.dialog.open(PopupComponent, config);
-            this.dialogRef.componentInstance.title = 'Assigned Interpreter WARNING';
-            this.dialogRef.componentInstance.cancelTitle = 'BACK';
-            this.dialogRef.componentInstance.okTitle = 'Ok';
-            this.dialogRef.componentInstance.popupMessage =
-                `"Oops! Too many interpreters already allocated. Please unassign first.`;
+            this.notificationServiceBus.launchNotification(true, 'Oops! Too many interpreters already allocated. Please unassign first.');
+            return;
         } else {
             this.spinnerService.requestInProcess(true);
             let bookingID = this.bookingModel.id;
@@ -553,14 +547,14 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     isImportantFieldsChanged() {
-        return (this.bookingModel.venue.start_time_iso !== this.oldBookingModel.venue.start_time_iso)
-            || (this.bookingModel.venue.end_time_iso !== this.oldBookingModel.venue.end_time_iso)
-            || (this.bookingModel.raw_nature_of_appointment !== this.oldBookingModel.raw_nature_of_appointment)
+        return (this.bookingModel.venue.start_time_iso !== this.datePipe.transform(this.oldBookingModel.start_time, 'yyyy-MM-ddTHH:mm:ss'))
+            || (this.bookingModel.venue.end_time_iso !== this.datePipe.transform(this.oldBookingModel.end_time, 'yyyy-MM-ddTHH:mm:ss'))
+            || (this.bookingModel.raw_nature_of_appointment !== this.oldBookingModel.nature_of_appointment)
             || (this.bookingModel.specific_nature_of_appointment !== this.oldBookingModel.specific_nature_of_appointment)
-            || (this.bookingModel.venue.street_name !== this.oldBookingModel.venue.street_name)
-            || (this.bookingModel.venue.state !== this.oldBookingModel.venue.state)
-            || (this.bookingModel.venue.suburb !== this.oldBookingModel.venue.suburb)
-            || (this.bookingModel.venue.post_code !== this.oldBookingModel.venue.post_code);
+            || (this.bookingModel.venue.street_name !== this.oldBookingModel.address_attributes.street_name)
+            || (this.bookingModel.venue.state !== this.oldBookingModel.address_attributes.state)
+            || (this.bookingModel.venue.suburb !== this.oldBookingModel.address_attributes.suburb)
+            || (this.bookingModel.venue.post_code !== this.oldBookingModel.address_attributes.post_code);
     }
 
     deepCopy(oldObj: any) {
