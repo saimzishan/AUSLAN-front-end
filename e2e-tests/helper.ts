@@ -131,7 +131,7 @@ export class User {
                 data_to_sent['business_hours_phone'] = data_to_sent['mobile'];
                 let organisation_attributes_fields = {};
                 organisation_attributes_fields['abn'] = 12345;
-                organisation_attributes_fields['name'] = 'CurveTomorrow';
+                organisation_attributes_fields['name'] = 'Curve Tomorrow';
                 organisation_attributes_fields['group_email'] = 'group@ct.com.au';
                 organisation_attributes_fields['branch_office'] = 'Melbourne';
                 organisation_attributes_fields['phone_number'] = '049090001';
@@ -457,7 +457,7 @@ export class Heroku {
         Heroku.sendCommandToHeroku(command);
     }
 
-    static preloadOrgBookings(count: string) {
+    static preloadOrgBookings() {
         let task = 'seed:test_data:preloaded_org_bookings';
         Heroku.sendTaskToHeroku(task);
     }
