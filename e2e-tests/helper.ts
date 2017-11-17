@@ -112,7 +112,7 @@ export class User {
                 billing_account_attributes_fields['primary_contact_first_name'] = 'MOH';
                 billing_account_attributes_fields['primary_contact_last_name'] = 'JAY';
                 billing_account_attributes_fields['primary_contact_email'] = 'mohjay_client@auslan.com.au';
-                billing_account_attributes_fields['primary_contact_phone_number'] = ' 0490000001';
+                billing_account_attributes_fields['primary_contact_phone_number'] = '0490000001';
                 billing_account_attributes_fields['account_number'] = (12345).toString();
                 billing_account_attributes_fields['address_attributes'] = address_attributes_fields;
                 data_to_sent['address_attributes'] = address_attributes_fields;
@@ -143,7 +143,7 @@ export class User {
                 org_billing_account_attributes_fields['primary_contact_first_name'] = 'MOH';
                 org_billing_account_attributes_fields['primary_contact_last_name'] = 'JAY';
                 org_billing_account_attributes_fields['primary_contact_email'] = 'mohjay_client@auslan.com.au';
-                org_billing_account_attributes_fields['primary_contact_phone_number'] = ' 0490000001';
+                org_billing_account_attributes_fields['primary_contact_phone_number'] = '0490000001';
                 org_billing_account_attributes_fields['account_number'] = (12346).toString();
                 org_billing_account_attributes_fields['preferred_billing_method_email'] = true;
                 org_billing_account_attributes_fields['external_reference'] = 1233;
