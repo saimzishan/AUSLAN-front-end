@@ -95,6 +95,7 @@ export class Booking {
         this.venue.post_code = data.address_attributes.post_code;
         this.venue.start_time_iso = new Date(data.start_time).toISOString();
         this.venue.end_time_iso = new Date(data.end_time).toISOString();
+        this.venue.parking_type = data.parking_availability;
         this.interpreters_required = data.number_of_interpreters_required;
         this.requested_by.first_name = data.requested_by_first_name;
         this.requested_by.last_name = data.requested_by_last_name;
