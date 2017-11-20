@@ -24,6 +24,16 @@ export class BookingPage extends PageObject {
         return expect(this.getElementByName('btnCancelBooking').isPresent()).to.eventually.be.true;
     }
 
+    getSuccessNotificationForBulkUploadContent = () => {
+        return browser.sleep(2500).then(() => {
+            NotificationObject.getNotificationContent('The Bookings in your bulk upload file have been created.');
+        });
+    }
+
+    getErrorNotificationContentForBulkUpload = (message: string) => {
+        return NotificationObject.getNotificationContent(message);
+    }
+
     getSuccessNotificationContent = () => {
         return browser.sleep(2500).then(() => {
             NotificationObject.getNotificationContent('The Booking has been created.');
@@ -52,9 +62,9 @@ export class BookingPage extends PageObject {
         const select_dropdown = this.getElementInsideByTag(div, 'select');
         return select_dropdown.click();
     }
-    optionExistsInDropDown = ( option_text: string, dropdown_name: string ) => {
+    optionExistsInDropDown = (option_text: string, dropdown_name: string) => {
         let sel = this.getElementByName(dropdown_name);
-        return sel.element(by.cssContainingText('option', option_text)).isPresent().then( (val) => {
+        return sel.element(by.cssContainingText('option', option_text)).isPresent().then(val => {
             expect(val).to.be.eq(true);
         });
     }
@@ -65,7 +75,7 @@ export class BookingPage extends PageObject {
         this.list_of_object[for_type] = Booking.getWhatWillBeDiscussed(option_text);
         return option_selected.click();
     }
-    
+
     checkTheDropDown = (label_text: string, option_text: string) => {
         const selected_label = this.getElementByCSSandText('label', label_text);
         const div = this.getParent(selected_label);
@@ -142,7 +152,7 @@ export class BookingPage extends PageObject {
     }
 
     sectionAutoPopulated = (sectionName: string) => {
-        
+
         const optionLabel = this.getElementByCSSandText('.text-center', sectionName);
         const divDetails = this.getNextSibling(optionLabel, 'div');
         const all_input_in_div = this.getAllByTagNameInElement(divDetails, 'input');
@@ -154,8 +164,8 @@ export class BookingPage extends PageObject {
                         expect(!!val).to.be.true;
                     }
 
-                }); 
-                
+                });
+
             });
         });
     }

@@ -112,7 +112,7 @@ export class User {
                 billing_account_attributes_fields['primary_contact_first_name'] = 'MOH';
                 billing_account_attributes_fields['primary_contact_last_name'] = 'JAY';
                 billing_account_attributes_fields['primary_contact_email'] = 'mohjay_client@auslan.com.au';
-                billing_account_attributes_fields['primary_contact_phone_number'] = ' 0490000001';
+                billing_account_attributes_fields['primary_contact_phone_number'] = '0490000001';
                 billing_account_attributes_fields['account_number'] = (12345).toString();
                 billing_account_attributes_fields['address_attributes'] = address_attributes_fields;
                 data_to_sent['address_attributes'] = address_attributes_fields;
@@ -131,7 +131,7 @@ export class User {
                 data_to_sent['business_hours_phone'] = data_to_sent['mobile'];
                 let organisation_attributes_fields = {};
                 organisation_attributes_fields['abn'] = 12345;
-                organisation_attributes_fields['name'] = 'CurveTomorrow';
+                organisation_attributes_fields['name'] = 'Curve Tomorrow';
                 organisation_attributes_fields['group_email'] = 'group@ct.com.au';
                 organisation_attributes_fields['branch_office'] = 'Melbourne';
                 organisation_attributes_fields['phone_number'] = '049090001';
@@ -143,7 +143,7 @@ export class User {
                 org_billing_account_attributes_fields['primary_contact_first_name'] = 'MOH';
                 org_billing_account_attributes_fields['primary_contact_last_name'] = 'JAY';
                 org_billing_account_attributes_fields['primary_contact_email'] = 'mohjay_client@auslan.com.au';
-                org_billing_account_attributes_fields['primary_contact_phone_number'] = ' 0490000001';
+                org_billing_account_attributes_fields['primary_contact_phone_number'] = '0490000001';
                 org_billing_account_attributes_fields['account_number'] = (12346).toString();
                 org_billing_account_attributes_fields['preferred_billing_method_email'] = true;
                 org_billing_account_attributes_fields['external_reference'] = 1233;
@@ -457,7 +457,7 @@ export class Heroku {
         Heroku.sendCommandToHeroku(command);
     }
 
-    static preloadOrgBookings(count: string) {
+    static preloadOrgBookings() {
         let task = 'seed:test_data:preloaded_org_bookings';
         Heroku.sendTaskToHeroku(task);
     }

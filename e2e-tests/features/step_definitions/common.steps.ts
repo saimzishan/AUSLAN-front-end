@@ -70,6 +70,8 @@ defineSupportCode(({Given, When, Then}) => {
     Given(/^I enter invalid (.*) email$/, resetPage.enterInValidEmailAddress);
     Given(/^I press Submit$/, resetPage.pressSubmit);
     Given(/^I get a valid create booking notification$/, bookingPage.getSuccessNotificationContent);
+    Given(/^I get a valid create bulk upload booking notification$/, bookingPage.getSuccessNotificationForBulkUploadContent);
+    Given(/^I get an booking error notification with (.*)$/, bookingPage.getErrorNotificationContentForBulkUpload);
     Given(/^I get a valid reset password notification$/, resetPage.getSuccessNotificationContent);
     Given(/^I get an error reset password notification$/, resetPage.getErrorNotificationContent);
     Given(/^I sign in with invalid (.*) credentials$/, homePage.signInWithInValidCredential);
@@ -109,9 +111,19 @@ defineSupportCode(({Given, When, Then}) => {
     function documentUpload(documentName: string) {
         let fileToUpload = '../../data/' + documentName;
         let p = path.resolve(__dirname, fileToUpload);
-        let elm = element(by.css('input[type="file"]'));
+        let elm = element(by.css('input[name="uploader"]'));
         return elm.sendKeys(p);
     }
+
+    Given(/^I will upload a bulk upload spreadsheet '(.*)'$/, excelUpload);
+
+    function excelUpload(documentName: string) {
+        let fileToUpload = '../../data/' + documentName;
+        let p = path.resolve(__dirname, fileToUpload);
+        let elm = element(by.css('input[name="bulk-uploader"]'));
+        return elm.sendKeys(p);
+    }
+
 
     Given(/^I will close the file upload$/, documentUploadClose);
 
@@ -328,7 +340,7 @@ defineSupportCode(({Given, When, Then}) => {
 
     When(/^I can see the element with name '(.*)' has text '(.*)'$/, isElementHasText);
     function isElementHasText(nam: string, txt: string) {
-        
+
         return page.getElementByName(nam).getText().then(elmTxt => {
                 return expect(elmTxt).to.be.eq(txt);
             });
@@ -380,8 +392,8 @@ defineSupportCode(({Given, When, Then}) => {
     When(/^I verify radiobutton name '(.*)' and is checked$/, verifyOnRBByName);
     function verifyOnRBByName(name: string) {
         let elm = page.getElementByName(name);
-        return elm.isPresent().then( (v) => {
-            expect(elm.getAttribute('class')).to.eventually.contain('mat-radio-checked');
+        return elm.isPresent().then(presence => {
+            return expect(elm.getAttribute('class')).to.eventually.contain('mat-radio-checked');
         });
     }
 

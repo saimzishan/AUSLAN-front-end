@@ -43,24 +43,16 @@ Feature: Booking Management
     And I will be shown with bookings
 
   @runThis
-  Scenario: Given 1 verified Organisational Representative, Administrator can create a booking
+  Scenario: Given 1 verified Organisational Representative, Administrator can duplicate a booking
+    Given There exist 1 bookings
+    Given Assigned all bookings to Organisational Representative
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
     And I am on the bookings page
-    And I click on 'New Booking'
-    And I will be taken to the 'New Booking' form
-    When I fill New Booking form fields correctly
-    And I select the bookable for org rep
-    Then I move to element name 'tnc'
-    Then I click on checkbox name 'tnc'
-    And I click the create booking button
-    Then I get a valid create booking notification
-    And I am on the bookings page
-    And I will be shown with bookings
     Then I am shown with 1 booking
     When I query booking with org name 'Curve'
     Then I am shown with 1 booking
-    Then I see one row with org name 'CurveTomorrow'
+    Then I see one row with org name 'Curve Tomorrow'
     Then I click on an individual booking of type 'Requested'
     Then I will be shown the booking job page
     Then I can see the button 'Save' is disabled
@@ -78,7 +70,7 @@ Feature: Booking Management
     Then I am shown with 1 booking
     When I query booking with org name 'Curve'
     Then I am shown with 1 booking
-    Then I see one row with org name 'CurveTomorrow'
+    Then I see one row with org name 'Curve Tomorrow'
 
 
   @runThis
@@ -482,7 +474,7 @@ Feature: Booking Management
     And I can see the element with name 'invoiceMsg' has text 'Do you want to use standard invoice details for this booking? *'
 # ---------------------------------------- AUSLAN1-727 -> START ----------------------------------------
   @runThis
-  Scenario: Administrator can see  list of org reps, when making a booking, Organisational Representative , Individual Client exists
+  Scenario: Given an Organisational Representative and an Individual Client, Administrator can see list of org reps, when making a booking
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
     And I am on the bookings page
@@ -491,7 +483,7 @@ Feature: Booking Management
     Then I can see the booking_for field
     And I see an option 'ted Individual Client' in 'booking_for' dropdown
     Then I click on element by name 'OrganisationalRepresentative'
-    And I see an option 'CURVETOMORROW - alana Organisational' in 'booking_for' dropdown
+    And I see an option 'CURVE TOMORROW - alana Organisational' in 'booking_for' dropdown
 
   @runThis
   Scenario: Booking Officer can see  list of org reps, when making a booking, Organisational Representative , Individual Client exists
@@ -503,6 +495,6 @@ Feature: Booking Management
     Then I can see the booking_for field
     And I see an option 'ted Individual Client' in 'booking_for' dropdown
     Then I click on element by name 'OrganisationalRepresentative'
-    And I see an option 'CURVETOMORROW - alana Organisational' in 'booking_for' dropdown
+    And I see an option 'CURVE TOMORROW - alana Organisational' in 'booking_for' dropdown
 
 # ---------------------------------------- AUSLAN1-727 -> END ----------------------------------------

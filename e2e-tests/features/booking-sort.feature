@@ -112,7 +112,7 @@ Feature: Booking Sort
 
   @runThis
   Scenario: As a Booking Officer, I can sort the bookings by Org column
-    Given I have preloaded 4 bookings with different org values
+    Given I have preloaded bookings with different org values
     Then I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
     When I am on the bookings page

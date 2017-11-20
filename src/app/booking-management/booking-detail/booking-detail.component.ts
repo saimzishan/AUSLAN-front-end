@@ -82,8 +82,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         /** http://stackoverflow.com/questions/38008334/angular2-rxjs-when-should-i-unsubscribe-from-subscription */
         this.sub = this.route.queryParams.subscribe(params => {
             let param = params['bookingModel'] || '';
-            this.shouldEdit = params ['shouldEdit'] || '';
-            this.assignedInterpreter = params ['assignedInterpreter'] || '';
+            this.shouldEdit = params['shouldEdit'] || '';
+            this.assignedInterpreter = params['assignedInterpreter'] || '';
 
             if (param.length > 0) {
                 let jsonData = JSON.parse(param);
@@ -102,7 +102,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 this.bookingHeading = 'EDIT BOOKING';
             } else {
                 this.bookingHeading = 'NEW BOOKING';
-                this.bookingModel.bookable_type = 'IndividualClient';
+                this.bookingModel.bookable_type = this.bookingModel.bookable_type || 'IndividualClient';
             }
 
         });
@@ -479,6 +479,38 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         }
     }
 
+    handleBulkUploadSelect(evt) {
+        let files = evt.target.files;
+
+        let file = files[0];
+        // File uploader wont add a duplicate file
+        if (files && file) {
+            this.fileName = file.name;
+
+            let reader = new FileReader();
+            reader.onload = this._handleBulkUploadReaderLoaded.bind(this);
+            reader.readAsDataURL(file);
+        }
+    }
+
+    _handleBulkUploadReaderLoaded(readerEvt) {
+        this.spinnerService.requestInProcess(true);
+        this.bookingService.bulkUploadBookings(readerEvt.target.result)
+            .subscribe((res: any) => {
+                    if (res.status === 204) {
+                        this.notificationServiceBus.launchNotification(false, 'The Bookings in your bulk upload file have been created.');
+                        let route = this.rolePermission.getDefaultRouteForCurrentUser();
+                        this.router.navigate([route]);
+                    }
+                    this.spinnerService.requestInProcess(false);
+                },
+                errors => {
+                    this.spinnerService.requestInProcess(false);
+                    let e = errors.json() || '';
+                    this.notificationServiceBus.launchNotification(true,
+                        'Error occured on server side. ' + errors.statusText + ' ' + JSON.stringify(e || e.errors));
+                });
+    }
     getUser() {
         this.userModel = Boolean(GLOBAL.currentUser) &&
         GLOBAL.currentUser instanceof OrganisationalRepresentative ?

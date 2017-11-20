@@ -461,3 +461,67 @@ Feature: Booking Admin Management
     Then I click on Bookings
     And I am on the bookings page
     Then I see one row with state 'In progress'
+
+    @runThis
+    Scenario: As an Organisational Representative, I should see the correct details of the booking
+      Given There exist 1 bookings
+      And Assigned all bookings to Organisational Representative
+      Given I exist as an Organisational Representative
+      When I sign in with valid Organisational Representative credentials
+      Then I am on the bookings page
+      When I click on an individual booking
+      Then I will be shown the booking job page
+      Then I should see the value under Org column as 'Curve Tomorrow'
+
+    @runThis
+    Scenario: As a Booking Officer I should see the correct org name of the booking
+      Given There exist 1 bookings
+      Given I exist as a Booking Officer
+      When I sign in with valid Booking Officer credentials
+      Then I am on the bookings page
+      When I click on an individual booking
+      Then I will be shown the booking job page
+      Then I should see the value under Org column as 'Ted Bear'
+
+    @runThis
+    Scenario: As a Booking Officer I should see the correct suburb of the booking
+      Given There exist 1 bookings
+      Given I exist as a Booking Officer
+      When I sign in with valid Booking Officer credentials
+      Then I am on the bookings page
+      When I click on an individual booking
+      Then I will be shown the booking job page
+      Then I should see the value under Suburb column as 'Parkville'
+
+    @runThis
+    Scenario: As a Booking Officer I should see the correct suburb of the booking
+      Given There exist 1 bookings
+      Given I exist as a Booking Officer
+      When I sign in with valid Booking Officer credentials
+      Then I am on the bookings page
+      When I click on an individual booking
+      Then I will be shown the booking job page
+      Then I should see the value under Type column as 'Medical'
+
+    @runThis
+    Scenario: As a Booking Officer I should see an attchment icon if the booking has attachment
+      Given There exist 1 bookings
+      Given I exist as a Booking Officer
+      When I sign in with valid Booking Officer credentials
+      Then I am on the bookings page
+      When I click on an individual booking
+      Then I am on the individual booking page
+      And I should not see the attachment icons under Attached column
+      When I click on link 'Booking details'
+      Then I should be on the edit booking page
+      And I will upload a document 'sushi.pdf'
+      When I will see attachment 'sushi.pdf'
+      Then I will close the file upload
+      And I click on checkbox name 'tnc'
+      And I click the create booking button
+      And If I am shown a popup message 'This booking is not within the standard booking hours (8AM - 6PM). Do you still want to create booking?', I approve it
+      Then I should get a valid booking update notification
+      And I am on the bookings page
+      When I click on an individual booking
+      Then I am on the individual booking page
+      Then I should see the attachment icons under Attached column
