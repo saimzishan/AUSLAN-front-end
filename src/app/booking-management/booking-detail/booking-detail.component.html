@@ -29,7 +29,7 @@
       </div>
     </div>
   <form #booking_form="ngForm" class="common-form compact">
-    <div class="row" *ngIf="isUserAdminORBookOfficer()">
+    <div class="row" *ngIf="isUserAdminORBookOfficer">
       <h2>CUSTOMER</h2>
       <div class="medium-12 columns">
         <div class="form-field">
@@ -42,13 +42,13 @@
       </div> 
     </div>
 
-    <div class="row" *ngIf="isUserAdminORBookOfficer()">
+    <div class="row" *ngIf="isUserAdminORBookOfficer">
       <div class="medium-6 columns">
         <div class="form-field">
-          <label>PLEASE SELECT THE {{bookingFor ==='IndividualClient' ? "CLIENT":"ORGANIZATION"}}*
+          <label>PLEASE SELECT THE {{bookingModel.bookable_type ==='IndividualClient' ? "CLIENT":"ORGANIZATION"}}*
             <span mdTooltip="Select the Client/Org"><i class="inline-icon-tip"></i></span>
           </label>
-          <select [(ngModel)]="bookingModel.bookable_id"
+          <select [(ngModel)]="bookingModel.bookable_id" (change)='onBookingForSelectionChange()'
                   #booking_for="ngModel" name="booking_for"
                   aria-label="A" required>
             <option *ngFor="let item of bookingForItems" [value]="item.id">
@@ -65,7 +65,7 @@
     </div>
     <div class="row">
       <h2>Type of Booking</h2>
-      <p>What kind of services do you need? Select multiple if relevant</p>
+      <p name="serviceMsg">What kind of services {{isUserAdminORBookOfficer ? (bookingModel.bookable_type ==='IndividualClient' ? "does the client":"does the organization") :"do you"}} need? Select multiple if relevant</p>
       <section id="services">
         <button md-button class="active">
           <i class="icon-service-interpreting"></i>
@@ -84,11 +84,11 @@
           <span>Notetaking</span>
         </button>
       </section>
-      <p>What kind of interpreter(s) do you need? Select multiple if relevant</p>
+      <p name="interpreterMsg">What kind of interpreter(s) {{isUserAdminORBookOfficer ? (bookingModel.bookable_type ==='IndividualClient' ? "does the client":"does the organization") :"do you"}} need? Select multiple if relevant</p>
       <section id="interpreters-kind">
-        <md-checkbox [checked]="true" [disabled]="isUserOrgRepORIndClientTemp() && forEdit()">AUSLAN</md-checkbox>
-        <md-checkbox [disabled]="isUserOrgRepORIndClientTemp() && forEdit()">DEAF INTERPRETER</md-checkbox>
-        <md-checkbox [disabled]="isUserOrgRepORIndClientTemp() && forEdit()">DEAF BLIND</md-checkbox>
+        <md-checkbox [checked]="true" [disabled]="isEditableForOrgRepIndClient">AUSLAN</md-checkbox>
+        <md-checkbox [disabled]="isEditableForOrgRepIndClient">DEAF INTERPRETER</md-checkbox>
+        <md-checkbox [disabled]="isEditableForOrgRepIndClient">DEAF BLIND</md-checkbox>
       </section>
     </div>
     <div class="separator"></div>
@@ -99,7 +99,7 @@
           <div class="form-field">
             <label>START DATE & TIME *</label>
             <input type='datetime-local'
-               [readonly]="isUserOrgRepORIndClientTemp() && forEdit()"
+               [readonly]="isEditableForOrgRepIndClient"
                (change)="onStartTimeChanged()"
                name='dpEventDate'
                placeholder="DATE & Time OF APPOINTMENT *"
@@ -118,7 +118,7 @@
         <div class="medium-5 columns">
           <div class="form-field">
             <label>END DATE & TIME *</label>
-            <input type='datetime-local' name='dpEventEndTime' [readonly]="isUserOrgRepORIndClientTemp() && forEdit()"
+            <input type='datetime-local' name='dpEventEndTime' [readonly]="isEditableForOrgRepIndClient"
                placeholder="ENDING TIME *" #dpEventEndTime="ngModel" (click)="fireNotification($event)"
                [(ngModel)]="bookingModel.venue.end_time_iso"
                required/>
@@ -145,7 +145,7 @@
 
         </div>
       </div>
-      <app-address [address]="bookingModel.venue" [canEdit]="isUserOrgRepORIndClientTemp() && forEdit()" #addressForm="ctAddressForm" ></app-address>
+      <app-address [address]="bookingModel.venue" [canEdit]="isEditableForOrgRepIndClient" #addressForm="ctAddressForm" ></app-address>
       <div class="row-wrapper">
         <div class="medium-6 columns">
           <div class="form-field">
@@ -155,7 +155,7 @@
               </span>
             </label>
             <select (change)="natureOfApptChange($event)"
-                    [disabled]="isUserOrgRepORIndClientTemp() && forEdit()"
+                    [disabled]="isEditableForOrgRepIndClient"
                     [(ngModel)]="bookingModel.raw_nature_of_appointment" 
                     #nature_of_appointment="ngModel" name="nature_of_appointment"
                     aria-label="A" required>
@@ -178,7 +178,7 @@
               </span>
             </label>
             <select [(ngModel)]="bookingModel.specific_nature_of_appointment"
-                   [disabled]="isUserOrgRepORIndClientTemp() && forEdit()"
+                   [disabled]="isEditableForOrgRepIndClient"
                    #specific_nature_of_appointment="ngModel" required 
                    name="specific_nature_of_appointment" aria-label="A">
               <option *ngFor="let item of specific_appointment_types | enumVal" [value]="item.value">
@@ -200,7 +200,7 @@
               </span>
             </label>
             <input type="text" placeholder="Enter the Request By Name"
-                               [readonly]="isUserOrgRepORIndClientTemp() && forEdit()"
+                               [readonly]="isEditableForOrgRepIndClient"
                                [(ngModel)]="bookingModel.requested_by.first_name"
                                name="raw_booking_requested_by" (click)="fireNotification($event)"
                                #raw_booking_requested_by="ngModel" [rangeLength]="[2,20]" required>
@@ -221,7 +221,7 @@
             </label>
             <input type="text"
                    placeholder="Enter the Request By Name"
-                   [readonly]="isUserOrgRepORIndClientTemp() && forEdit()"
+                   [readonly]="isEditableForOrgRepIndClient"
                    [(ngModel)]="bookingModel.requested_by.last_name"
                    name="raw_booking_requested_by_ln"
                    (click)="fireNotification($event)"
@@ -263,7 +263,7 @@
               </span>
             </label>
             <input [(ngModel)]="bookingModel.interpreters_required"
-                   name="interpreters_count" [readonly]="isUserOrgRepORIndClientTemp() && forEdit()"
+                   name="interpreters_count" [readonly]="isEditableForOrgRepIndClient"
                    #interpreters_count="ngModel"
                    placeholder="Enter the Number of Interpreters needed"
                    (click)="fireNotification($event)"
@@ -331,7 +331,7 @@
               </label>
               <input [(ngModel)]="bookingModel.special_instructions"
                      name='txtSpecialInstruction'
-                     [readonly]="isUserOrgRepORIndClientTemp() && forEdit()"
+                     [readonly]="isEditableForOrgRepIndClient"
                      (click)="fireNotification($event)"
                      type='text' placeholder="Enter Special instructions">
             </div>
@@ -347,7 +347,7 @@
     <div class="row">
       <div class="medium-12 columns">
         <div class="form-field">
-          <label>ARE YOU THE CONTACT PERSON FOR THIS BOOKING? *
+          <label name="contactMsg">{{isUserAdminORBookOfficer ? "DO YOU WANT TO USE THE STANDARD": "ARE YOU THE"}} CONTACT PERSON FOR THIS BOOKING? *
             <span mdTooltip="Tooltip!">
               <i class="inline-icon-tip"></i>
             </span>
@@ -461,7 +461,7 @@
             </span>
           </label>
           <md-radio-group name="rdcurrentUserIsClient" (change)='onClientSelectionChange()' 
-                          disabled="isUserOrgRepORIndClientTemp() && forEdit()" [(ngModel)]="currentUserIsClient">
+                          disabled="isEditableForOrgRepIndClient" [(ngModel)]="currentUserIsClient">
             <md-radio-button value=true>YES</md-radio-button>
             <md-radio-button value=false>NO</md-radio-button>
           </md-radio-group>
@@ -477,7 +477,7 @@
             </label>
             <input type="tel"
                    placeholder="Enter deaf person EAF number"
-                   [readonly]="isUserOrgRepORIndClientTemp() && forEdit()"
+                   [readonly]="isEditableForOrgRepIndClient"
                    [(ngModel)]="bookingModel.deaf_person.eaf"
                    name="deaf_person_eaf"
                    (click)="fireNotification($event)"
@@ -516,7 +516,7 @@
             </label>
             <input type="text"
                    placeholder="Enter deaf person first name"
-                   [readonly]="isUserOrgRepORIndClientTemp() && forEdit()"
+                   [readonly]="isEditableForOrgRepIndClient"
                    [(ngModel)]="bookingModel.deaf_person.first_name"
                    name="deaf_person_name"
                    (click)="fireNotification($event)"
@@ -540,7 +540,7 @@
             </label>
             <input type="text"
                    placeholder="Enter deaf person last name"
-                   [readonly]="isUserOrgRepORIndClientTemp() && forEdit()"
+                   [readonly]="isEditableForOrgRepIndClient"
                    [(ngModel)]="bookingModel.deaf_person.last_name"
                    name="deaf_person_last_name"
                    (click)="fireNotification($event)"
@@ -586,15 +586,15 @@
 
     <h4 class="text-center">INVOICE DETAILS</h4>
     <div class="row">
-      <div class="medium-12 columns" *ngIf="isUserOrgRepORIndClientTemp()">
+      <div class="medium-12 columns" *ngIf="isUserOrgRepORIndClientTemp() || isUserAdminORBookOfficer">
         <div class="form-field">
-          <label>Do you want to use standard invoice details? *
+          <label name="invoiceMsg">Do you want to use standard invoice details{{isUserAdminORBookOfficer ? " for this booking": ""}}? *
             <span mdTooltip="Tooltip!">
               <i class="inline-icon-tip"></i>
             </span>
           </label>
           <md-radio-group name="rdStandardInvoice"[(ngModel)]="standardInvoice" (change)='onStandardInvoice()'
-                          disabled="isUserOrgRepORIndClientTemp() && forEdit()">
+                          disabled="isEditableForOrgRepIndClient">
             <md-radio-button value=true>YES</md-radio-button>
             <md-radio-button value=false>NO</md-radio-button>
           </md-radio-group>
