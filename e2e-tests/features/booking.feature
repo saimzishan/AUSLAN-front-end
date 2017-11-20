@@ -43,20 +43,12 @@ Feature: Booking Management
     And I will be shown with bookings
 
   @runThis
-  Scenario: Given 1 verified Organisational Representative, Administrator can create a booking
+  Scenario: Given 1 verified Organisational Representative, Administrator can duplicate a booking
+    Given There exist 1 bookings
+    Given Assigned all bookings to Organisational Representative
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
     And I am on the bookings page
-    And I click on 'New Booking'
-    And I will be taken to the 'New Booking' form
-    When I fill New Booking form fields correctly
-    And I select the bookable for org rep
-    Then I move to element name 'tnc'
-    Then I click on checkbox name 'tnc'
-    And I click the create booking button
-    Then I get a valid create booking notification
-    And I am on the bookings page
-    And I will be shown with bookings
     Then I am shown with 1 booking
     When I query booking with org name 'Curve'
     Then I am shown with 1 booking
@@ -407,33 +399,6 @@ Feature: Booking Management
 #    And I will be taken to the 'New Booking' form
 #    Then I can't see the txtSpecialInstruction field
 # ---------------------------------------- AUSLAN1-40 -> END ----------------------------------------
-# ---------------------------------------- AUSLAN1-727 -> START ----------------------------------------
-  @runThis
-  Scenario: Given an Organisational Representative and an Individual Client, Administrator can see list of org reps, when making a booking
-    Given I exist as an Administrator
-    And I sign in with valid Administrator credentials
-    And I am on the bookings page
-    And I click on 'New Booking'
-    And I will be taken to the 'New Booking' form
-    Then I can see the booking_for field
-    And I see an option 'ted Individual Client' in 'booking_for' dropdown
-    Then I click on element by name 'OrganisationalRepresentative'
-    And I see an option 'CURVE TOMORROW - alana Organisational' in 'booking_for' dropdown
-
-  @runThis
-  Scenario: Booking Officer can see  list of org reps, when making a booking, Organisational Representative , Individual Client exists
-    Given I exist as an Booking Officer
-    And I sign in with valid Booking Officer credentials
-    And I am on the bookings page
-    And I click on 'New Booking'
-    And I will be taken to the 'New Booking' form
-    Then I can see the booking_for field
-    And I see an option 'ted Individual Client' in 'booking_for' dropdown
-    Then I click on element by name 'OrganisationalRepresentative'
-    And I see an option 'CURVE TOMORROW - alana Organisational' in 'booking_for' dropdown
-
-# ---------------------------------------- AUSLAN1-727 -> END ----------------------------------------
-
 
   @runThis
   Scenario: As a Booking Officer, Given that I opened new booking page and select a Individual Client for booking then I can see the auto populate changes
@@ -499,21 +464,17 @@ Feature: Booking Management
     And I can see the rdBookingFor field
     And I can see the booking_for field
     And I select the bookable for org rep
-    And I click on option CURVETOMORROW - alana Organisational of PLEASE SELECT THE ORGANIZATION*
+    And I see an option 'CURVE TOMORROW - alana Organisational' in 'booking_for' dropdown
     Then I can see the 'CONTACT DETAILS' auto populated
     And I can see the 'CLIENT DETAILS' auto populated
     And I can see the 'INVOICE DETAILS' auto populated
-    And I can see the element of type '.row p' with text 'What kind of services does the organization need? Select multiple if relevant'
-    And I can see the element of type '.row p' with text 'What kind of interpreter(s) does the organization need? Select multiple if relevant'
-    And I can see the element of type '.row label' with text 'DO YOU WANT TO USE THE STANDARD CONTACT PERSON FOR THIS BOOKING? *'
-    And I can see the element of type '.row label' with text 'Do you want to use standard invoice details for this booking? *'
     And I can see the element with name 'serviceMsg' has text 'What kind of services does the organization need? Select multiple if relevant'
     And I can see the element with name 'interpreterMsg' has text 'What kind of interpreter(s) does the organization need? Select multiple if relevant'
     And I can see the element with name 'contactMsg' has text 'DO YOU WANT TO USE THE STANDARD CONTACT PERSON FOR THIS BOOKING? *'
     And I can see the element with name 'invoiceMsg' has text 'Do you want to use standard invoice details for this booking? *'
 # ---------------------------------------- AUSLAN1-727 -> START ----------------------------------------
   @runThis
-  Scenario: Administrator can see  list of org reps, when making a booking, Organisational Representative , Individual Client exists
+  Scenario: Given an Organisational Representative and an Individual Client, Administrator can see list of org reps, when making a booking
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
     And I am on the bookings page
@@ -522,7 +483,7 @@ Feature: Booking Management
     Then I can see the booking_for field
     And I see an option 'ted Individual Client' in 'booking_for' dropdown
     Then I click on element by name 'OrganisationalRepresentative'
-    And I see an option 'CURVETOMORROW - alana Organisational' in 'booking_for' dropdown
+    And I see an option 'CURVE TOMORROW - alana Organisational' in 'booking_for' dropdown
 
   @runThis
   Scenario: Booking Officer can see  list of org reps, when making a booking, Organisational Representative , Individual Client exists
@@ -534,7 +495,6 @@ Feature: Booking Management
     Then I can see the booking_for field
     And I see an option 'ted Individual Client' in 'booking_for' dropdown
     Then I click on element by name 'OrganisationalRepresentative'
-    And I see an option 'CURVETOMORROW - alana Organisational' in 'booking_for' dropdown
+    And I see an option 'CURVE TOMORROW - alana Organisational' in 'booking_for' dropdown
 
 # ---------------------------------------- AUSLAN1-727 -> END ----------------------------------------
->>>>>>> nomi/manu recommended changes

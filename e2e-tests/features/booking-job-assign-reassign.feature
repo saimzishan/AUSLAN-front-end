@@ -149,7 +149,7 @@ Feature: Booking Admin Management
     Then I wait for 1000 milli-seconds
     Then I can see the button 'Save' is enabled
     And I click on BUTTON 'Save'
-    Then I wait for 1000 milli-seconds
+    Then I wait for 100 milli-seconds
     Then I get valid message: 'The interpreter have been unassigned'
     Then I wait for 5000 milli-seconds
     Then I see 0 interpreter has accepted the booking
@@ -163,7 +163,7 @@ Feature: Booking Admin Management
     And I click on BUTTON name 'reassingBtn'
     Then I can see the button 'Save' is enabled
     And I click on BUTTON 'Save'
-    Then I wait for 1000 milli-seconds
+    Then I wait for 100 milli-seconds
     Then I get valid message: 'The interpreter have been assigned'
     Then I can see the booking state 'Allocated'
     Then I wait for 5000 milli-seconds

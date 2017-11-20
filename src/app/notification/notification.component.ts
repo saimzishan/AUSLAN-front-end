@@ -15,8 +15,6 @@ export class NotificationComponent implements OnDestroy, OnInit {
     show = false;
     isError = false;
     subscription;
-    _timer;
-    ticks = 0;
 
     constructor(private ngZone: NgZone,
                 public notificationService: NotificationServiceBus) {
@@ -28,6 +26,8 @@ export class NotificationComponent implements OnDestroy, OnInit {
         this.sub = this.notificationService.launchNotification$.subscribe(
             notificationContainer => {
                 if (notificationContainer && notificationContainer.message.length > 0) {
+                    this.show = false;
+                    this.isError = false;
                     this.mesg = notificationContainer.message;
                     if (!notificationContainer.isError) {
                         this.title = 'Hurray! ';
@@ -36,24 +36,28 @@ export class NotificationComponent implements OnDestroy, OnInit {
                         this.title = 'Oops! ';
                     }
                     this.show = true;
+                    this.ngZone.runOutsideAngular(() => {
+                        if (this.subscription) {
+                            clearTimeout(this.subscription);
+                        }
+                        this.subscription = setTimeout(() => {
+                            this.show = false;
+                            this.isError = false;
+                            this.ngZone.run(() => {});
+
+                        }, 3000);
+                    });
 
                 }
             });
-        this.ngZone.runOutsideAngular(() => {
-            this._timer = timer(3000, 3000);
-            // subscribing to a observable returns a subscription object
-            this.subscription = this._timer.subscribe(t => {
-                this.ticks = t;
-                this.show = false;
-                this.isError = false;
 
-            });
-        });
 
     }
 
     ngOnDestroy() {
-        this.subscription.unsubscribe();
+        if (this.subscription) {
+            clearTimeout(this.subscription);
+        }
         return this.sub.unsubscribe();
     }
 
