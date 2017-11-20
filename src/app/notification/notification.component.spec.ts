@@ -16,7 +16,7 @@ describe('NotificationComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ NotificationComponent ],
-        imports: [SimpleNotificationsModule.forRoot(),  Md2Module.forRoot()],
+        imports: [],
       providers: [ NotificationServiceBus, NotificationsService, NotificationContainer ]
     })
     .compileComponents();
