@@ -58,7 +58,6 @@ export class NotificationComponent implements OnDestroy, OnInit {
         if (this.subscription) {
             clearTimeout(this.subscription);
         }
-        this.subscription.unsubscribe();
         return this.sub.unsubscribe();
     }
 
