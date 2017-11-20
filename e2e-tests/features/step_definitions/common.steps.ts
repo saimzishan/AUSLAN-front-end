@@ -340,7 +340,7 @@ defineSupportCode(({Given, When, Then}) => {
 
     When(/^I can see the element with name '(.*)' has text '(.*)'$/, isElementHasText);
     function isElementHasText(nam: string, txt: string) {
-        
+
         return page.getElementByName(nam).getText().then(elmTxt => {
                 return expect(elmTxt).to.be.eq(txt);
             });
@@ -392,8 +392,8 @@ defineSupportCode(({Given, When, Then}) => {
     When(/^I verify radiobutton name '(.*)' and is checked$/, verifyOnRBByName);
     function verifyOnRBByName(name: string) {
         let elm = page.getElementByName(name);
-        return elm.isPresent().then( (v) => {
-            expect(elm.getAttribute('class')).to.eventually.contain('mat-radio-checked');
+        return elm.isPresent().then(presence => {
+            return expect(elm.getAttribute('class')).to.eventually.contain('mat-radio-checked');
         });
     }
 

@@ -43,20 +43,12 @@ Feature: Booking Management
     And I will be shown with bookings
 
   @runThis
-  Scenario: Given 1 verified Organisational Representative, Administrator can create a booking
+  Scenario: Given 1 verified Organisational Representative, Administrator can duplicate a booking
+    Given There exist 1 bookings
+    Given Assigned all bookings to Organisational Representative
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
     And I am on the bookings page
-    And I click on 'New Booking'
-    And I will be taken to the 'New Booking' form
-    When I fill New Booking form fields correctly
-    And I select the bookable for org rep
-    Then I move to element name 'tnc'
-    Then I click on checkbox name 'tnc'
-    And I click the create booking button
-    Then I get a valid create booking notification
-    And I am on the bookings page
-    And I will be shown with bookings
     Then I am shown with 1 booking
     When I query booking with org name 'Curve'
     Then I am shown with 1 booking
