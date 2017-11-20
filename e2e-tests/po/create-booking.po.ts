@@ -75,7 +75,7 @@ export class BookingPage extends PageObject {
         this.list_of_object[for_type] = Booking.getWhatWillBeDiscussed(option_text);
         return option_selected.click();
     }
-    
+
     checkTheDropDown = (label_text: string, option_text: string) => {
         const selected_label = this.getElementByCSSandText('label', label_text);
         const div = this.getParent(selected_label);
@@ -152,20 +152,19 @@ export class BookingPage extends PageObject {
     }
 
     sectionAutoPopulated = (sectionName: string) => {
-        
         const optionLabel = this.getElementByCSSandText('.text-center', sectionName);
         const divDetails = this.getNextSibling(optionLabel, 'div');
         const all_input_in_div = this.getAllByTagNameInElement(divDetails, 'input');
         return all_input_in_div.each(function (single_input, index) {
             return single_input.getAttribute('value').then((val) => {
 
-               return single_input.getAttribute('name').then((nam) => {
+                return single_input.getAttribute('name').then((nam) => {
                     if (['ext_ref_num', 'deaf_person_eaf'].indexOf(nam) === -1) {
                         expect(!!val).to.be.true;
                     }
 
-                }); 
-                
+                });
+
             });
         });
     }

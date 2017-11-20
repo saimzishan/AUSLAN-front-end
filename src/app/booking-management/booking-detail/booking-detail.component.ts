@@ -80,8 +80,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         /** http://stackoverflow.com/questions/38008334/angular2-rxjs-when-should-i-unsubscribe-from-subscription */
         this.sub = this.route.queryParams.subscribe(params => {
             let param = params['bookingModel'] || '';
-            this.shouldEdit = params ['shouldEdit'] || '';
-            this.assignedInterpreter = params ['assignedInterpreter'] || '';
+            this.shouldEdit = params['shouldEdit'] || '';
+            this.assignedInterpreter = params['assignedInterpreter'] || '';
 
             if (param.length > 0) {
                 let jsonData = JSON.parse(param);
@@ -100,7 +100,9 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 this.bookingHeading = 'EDIT BOOKING';
             } else {
                 this.bookingHeading = 'NEW BOOKING';
-                this.bookingModel.bookable_type = this.bookingModel.bookable_type || 'IndividualClient';            }
+
+                this.bookingModel.bookable_type = this.bookingModel.bookable_type || 'IndividualClient';
+            }
 
         });
 
