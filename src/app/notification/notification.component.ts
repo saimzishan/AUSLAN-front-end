@@ -43,7 +43,8 @@ export class NotificationComponent implements OnDestroy, OnInit {
                         this.subscription = setTimeout(() => {
                             this.show = false;
                             this.isError = false;
-                            this.ngZone.run(() => {});
+                            this.ngZone.run(() => {
+                            });
 
                         }, 3000);
                     });
@@ -51,13 +52,13 @@ export class NotificationComponent implements OnDestroy, OnInit {
                 }
             });
 
-
     }
 
     ngOnDestroy() {
         if (this.subscription) {
             clearTimeout(this.subscription);
         }
+        this.subscription.unsubscribe();
         return this.sub.unsubscribe();
     }
 

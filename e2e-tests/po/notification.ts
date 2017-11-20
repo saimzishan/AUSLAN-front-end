@@ -24,7 +24,6 @@ export class NotificationObject {
        return browser.wait(protractor.ExpectedConditions.presenceOf($('div.notification__title')), 10000).then(() => {
             return expect($('div.notification__title').getText()).to.eventually.contain(message);
         });
-
     }
 }
 
