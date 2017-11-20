@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Input, OnInit, ViewContainerRef} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnInit, OnDestroy, ViewContainerRef ,AfterContentInit} from '@angular/core';
 import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
 import {InterpreterPopupComponent} from '../interpreter-popup/interpreter-popup.component';
 import {PreferedAllocationService} from '../../prefered-allocation.service';
@@ -10,7 +10,7 @@ import {AuthGuard} from '../../../auth/auth.guard';
     styleUrls: ['./interpreter-box.component.css']
 
 })
-export class InterpreterBoxComponent implements OnInit {
+export class InterpreterBoxComponent implements OnInit, AfterContentInit {
 
     @Input() isPreffered = false;
     @Input() selectedInterpreters = [];
@@ -18,7 +18,8 @@ export class InterpreterBoxComponent implements OnInit {
     private dialogSub: any;
     dialogRef: MdDialogRef<any>;
     title = '';
-    @Input() isHidden = 'false';
+    @Input() isHidden = false;
+    preferAllocSub: any;
 
     constructor(public dialog: MdDialog,
                 public viewContainerRef: ViewContainerRef,
@@ -28,11 +29,31 @@ export class InterpreterBoxComponent implements OnInit {
     ngOnInit() {
         this.title = this.isPreffered ?
             'PREFFERED INTERPRETER' : 'BLOCKED INTERPRETER';
-        this._sharedPreferedAllocationService.interpreterStream$.subscribe(
-            data => {
-                this.selectedInterpreters = data;
-            });
+            if(this.preferAllocSub != null) {
+                this.preferAllocSub = this._sharedPreferedAllocationService.interpreterStream$.subscribe(
+                    data => {
+                        this.addData(data);
+                    });
+            }
+       
+    }
 
+    ngOndestroy() {
+        let sub = this.preferAllocSub && this.preferAllocSub.unsubscribe();
+
+        return sub ;
+    }
+
+    ngAfterContentInit() {
+        console.log("in content init "+JSON.stringify(this.selectedInterpreters));
+        this.needInterpreter = this.isHidden ? true : false ;
+    }
+
+    addData(data) {
+        data.forEach((interpreter) => {
+            this.selectedInterpreters.push(interpreter);
+            console.log("all data"+JSON.stringify(this.selectedInterpreters));
+        });
     }
 
     getIndex(interpreter) {
@@ -45,7 +66,7 @@ export class InterpreterBoxComponent implements OnInit {
     }
 
     manageInterpreter() {
-
+        console.log("mang int func "+JSON.stringify(this.selectedInterpreters));
         if (this.dialogSub) {
             this.dialogSub.unsubscribe();
         }
@@ -58,7 +79,7 @@ export class InterpreterBoxComponent implements OnInit {
         this.dialogRef.componentInstance.selectedInterpreters = this.selectedInterpreters;
         this.dialogRef.componentInstance.isPreffered = this.isPreffered;
         this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
-
+            console.log("mang int func subsc "+JSON.stringify(this.selectedInterpreters));
             this._sharedPreferedAllocationService.publishData(this.selectedInterpreters);
 
         });

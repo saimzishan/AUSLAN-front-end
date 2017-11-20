@@ -242,6 +242,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                     } else if (res.status === 200) {
                         this.jobAccessError = false;
                         let data = res.data;
+                        console.log("booking model "+JSON.stringify(data));
                         this.selectedBookingModel.fromJSON(data);
                         this.selectedBookingModel.interpreters.sort((i, j) =>
                             i.state === 'Accepted' ? -1 : j.state === 'Accepted' ? 1 : 0

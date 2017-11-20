@@ -688,7 +688,7 @@
     </div>
 
     <app-interpreter-box *ngIf="showProfilePreffered === 'true'" [isPreffered]="true"
-                          [isHidden]="true" [selectedInterpreters]="userModel.prefferedInterpreters">
+                          [isHidden]="true" [selectedInterpreters]="bookingModel.preference_allocations_attributes">
     </app-interpreter-box> 
 
     <br>
@@ -723,7 +723,7 @@
     </div>
 
     <app-interpreter-box *ngIf="showProfileBlocked === 'true'" [isPreffered]="false"
-                          [isHidden]="true" [selectedInterpreters]="userModel.prefferedInterpreters">
+                          [isHidden]="true" [selectedInterpreters]="bookingModel.preference_allocations_attributes">
     </app-interpreter-box> 
     <div [hidden]='true'>
       <div class="separator"></div>

@@ -110,6 +110,7 @@ export class BookingService extends ApiService {
             'Content-Type': 'application/json'});
         let options = new RequestOptions({ headers: headers });
         let obj = { 'booking': booking.toJSON() };
+        console.log("update model "+JSON.stringify(obj));
         return this.http.patch(GLOBAL.BOOKING_API + '/' + booking_id, JSON.stringify(obj), options)
             .catch((err) => { return this.handleError(err); });
 
