@@ -65,6 +65,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     deleteDocuments = [];
     allClientsOrg = [];
     bookingForItems = [];
+    preferAllocSub: any;
 
     constructor(public bookingService: BookingService, private router: Router,
                 private route: ActivatedRoute, private rolePermission: RolePermission,
@@ -96,6 +97,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             }
             this.bookingHeading = (this.shouldEdit.length > 0 && this.shouldEdit === 'edit' ) ? 'EDIT BOOKING' : 'NEW BOOKING';
         });
+        console.log("old prefer"+JSON.stringify(this.bookingModel.preference_allocations_attributes));
     }
 
     onStartTimeChanged() {
@@ -110,7 +112,9 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         if (this.dialogSub != null) {
             this.dialogSub.unsubscribe();
         }
-        return this.sub && this.sub.unsubscribe();
+
+        let prefSub = this.preferAllocSub && this.preferAllocSub.unsubscribe();
+        return prefSub && this.sub && this.sub.unsubscribe();
     }
 
     ngOnInit() {
@@ -154,10 +158,12 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     public onProfilePreferredSelectionChange() {
-        if (this.showProfilePreffered === 'true') {
-            this.filterUserPreference(this.userModel.prefferedInterpreters);
-        } else {
-            this.bookingModel.preference_allocations_attributes = this.bookingModel.preference_allocations_attributes.filter(a => a.preference !== 'preferred');
+        if (!this.forEdit()) {
+            if (this.showProfilePreffered === 'true') {
+                this.filterUserPreference(this.userModel.prefferedInterpreters);
+            } else {
+                this.bookingModel.preference_allocations_attributes = this.bookingModel.preference_allocations_attributes.filter(a => a.preference !== 'preferred');
+            }
         }
     }
 
@@ -169,10 +175,12 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     public onProfileBlockedSelectionChange() {
-        if (this.showProfileBlocked === 'true') {
-            this.filterUserPreference(this.userModel.prefferedInterpreters);
-        } else {
-            this.bookingModel.preference_allocations_attributes = this.bookingModel.preference_allocations_attributes.filter(a => a.preference !== 'blocked');
+        if (!this.forEdit()) {
+            if (this.showProfileBlocked === 'true') {
+                this.filterUserPreference(this.userModel.prefferedInterpreters);
+            } else {
+                this.bookingModel.preference_allocations_attributes = this.bookingModel.preference_allocations_attributes.filter(a => a.preference !== 'blocked');
+            }
         }
     }
 
@@ -415,6 +423,17 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     getUser() {
+
+        if(this.bookingModel.preference_allocations_attributes.filter(itm=> itm.preference === 'preferred').length >0) {
+            this.showPreffered = 'true';
+            this.showProfilePreffered = 'true';
+        }
+
+        if(this.bookingModel.preference_allocations_attributes.filter(itm=> itm.preference === 'blocked').length >0) {
+            this.showBlocked = 'true';
+            this.showProfileBlocked = 'true';
+        }
+
         this.userModel = Boolean(GLOBAL.currentUser) &&
         GLOBAL.currentUser instanceof OrganisationalRepresentative ?
             (<OrganisationalRepresentative>GLOBAL.currentUser) :
@@ -424,7 +443,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                     (<BookingOfficer>GLOBAL.currentUser) :
                     GLOBAL.currentUser;
 
-        this._sharedPreferedAllocationService.interpreterStream$.subscribe(data => {
+       this.preferAllocSub = this._sharedPreferedAllocationService.interpreterStream$.subscribe(data => {
             this.filterUserPreference(data);
         });
     }
@@ -448,6 +467,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 }
             }
         });
+        console.log("final prefrenece"+JSON.stringify(this.bookingModel.preference_allocations_attributes));
     }
 
     confirmDelete(docID) {
