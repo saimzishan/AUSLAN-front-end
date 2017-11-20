@@ -2,6 +2,7 @@ import {PageObject} from './app.po';
 import {browser, by, element, $, $$, protractor} from 'protractor';
 import {expect} from '../config/helpers/chai-imports';
 import {User, Administrator, BookingOfficer, Interpreter, Client, Organisation} from '../helper';
+import {NotificationObject} from './notification';
 
 export class UserManagementPage extends PageObject {
     /*
@@ -285,10 +286,8 @@ export class UserManagementPage extends PageObject {
     }
 
     shouldShowTheValidNotification = (type: string) => {
-        let elm = $('div.sn-title');
-        return browser.wait(protractor.ExpectedConditions.presenceOf(elm), 10000).then(() => {
-            expect(elm.getText()).to.eventually.contain('Hurray');
-        });
+
+        return NotificationObject.getNotificationContent('The password has been reset');
     }
 
     hoverOnActions = (type: string) => {
