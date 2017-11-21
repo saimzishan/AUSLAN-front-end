@@ -27,6 +27,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
      Please login with your credentials. `;
     private sub_param: any;
     public selectedRole = '';
+    isEdit = false;
     termsAndConditionAccepted = false;
 
     constructor(public userService: UserService,
@@ -44,49 +45,50 @@ export class RegisterComponent implements OnInit, OnDestroy {
         this.sub_param = this.routes.queryParams.subscribe(params => {
             let p = params['selectedRole'] || '';
             this.selectedRole = Boolean(p && p.length > 1) ? p : this.selectedRole;
-
+            let jsonData = params['edit_user'] !== null ?
+                JSON.parse(params['edit_user']) : {};
             switch (this.selectedRole) {
                 case 'Interpreter'.toUpperCase():
-                    let int = new Interpreter();
+                    let int = new Interpreter(jsonData);
                     this.model = int;
                     this.model.role = ROLE.Interpreter;
 
                     break;
 
                 case 'IndividualClient'.toUpperCase():
-                    let ic = new IndividualClient({});
+                    let ic = new IndividualClient(jsonData);
                     this.model = ic;
                     this.model.role = ROLE.IndividualClient;
 
                     break;
                 case 'OrganisationalRepresentative'.toUpperCase():
-                    let orgr = new OrganisationalRepresentative({});
+                    let orgr = new OrganisationalRepresentative(jsonData);
                     this.model = orgr;
                     this.model.role = ROLE.OrganisationalRepresentative;
 
                     break;
                 case 'Organisation'.toUpperCase():
-                    let org = new OrganisationalRepresentative({});
+                    let org = new OrganisationalRepresentative(jsonData);
                     this.model = org;
                     this.model.role = ROLE.Organisation;
 
                     break;
 
                 case 'Administrator'.toUpperCase():
-                    let admin = new Administrator({});
+                    let admin = new Administrator(jsonData);
                     this.model = admin;
                     this.model.role = ROLE.Administrator;
 
                     break;
 
                 case 'BookingOfficer'.toUpperCase():
-                    let bo = new BookingOfficer({});
+                    let bo = new BookingOfficer(jsonData);
                     this.model = bo;
                     this.model.role = ROLE.BookingOfficer;
 
                     break;
                 case 'Accountant'.toUpperCase():
-                    let acc = new BookingOfficer({});
+                    let acc = new BookingOfficer(jsonData);
                     this.model = acc;
                     this.model.role = ROLE.Accountant;
 
