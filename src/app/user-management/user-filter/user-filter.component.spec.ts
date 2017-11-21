@@ -10,6 +10,7 @@ import { UserFilterComponent } from './user-filter.component';
 import { CustomFormsModule } from 'ng2-validation';
 import { FormsModule } from '@angular/forms';
 import { MaterialModule } from '@angular/material';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('UserFilterComponent', () => {
   let component: UserFilterComponent;
@@ -17,9 +18,8 @@ describe('UserFilterComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UserFilterComponent, UserDetailComponent ],
-      imports: [FormsModule, CustomFormsModule, MaterialModule],
-      providers: [MdDialog, ViewContainerRef]
+      declarations: [ UserFilterComponent ],
+      imports: [FormsModule, RouterTestingModule, CustomFormsModule, MaterialModule],
     })
     .compileComponents();
   }));
