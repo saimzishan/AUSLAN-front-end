@@ -29,6 +29,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
     public selectedRole = '';
     isEdit = false;
     termsAndConditionAccepted = false;
+    selectedStatus = '';
+    userStatusArray = GLOBAL.userStatusArray;
 
     constructor(public userService: UserService,
                 public notificationServiceBus: NotificationServiceBus,
@@ -44,8 +46,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
         this.sub_param = this.routes.queryParams.subscribe(params => {
             let p = params['selectedRole'] || '';
+            this.isEdit = Boolean(params['edit_user']);
             this.selectedRole = Boolean(p && p.length > 1) ? p : this.selectedRole;
-            let jsonData = params['edit_user'] !== null ?
+            let jsonData = this.isEdit ?
                 JSON.parse(params['edit_user']) : {};
             switch (this.selectedRole) {
                 case 'Interpreter'.toUpperCase():
@@ -95,6 +98,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
                     break;
 
             }
+            this.selectedStatus = Boolean(this.model && this.model.disabled === false) ?
+                this.userStatusArray[0].name : this.userStatusArray[1].name;
         });
         this.termsAndConditionAccepted = this.isUserLogin();
 
@@ -108,7 +113,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
         return this.sub_param && this.sub_param.unsubscribe();
     }
 
-    addUser(form: FormGroup) {
+    applyChanges(form: FormGroup) {
         if (!this.termsAndConditionAccepted) {
             this.notificationServiceBus.launchNotification(true, 'Kindly accept Terms and Conditions');
             return;
@@ -118,7 +123,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
             return;
         }
         this.spinnerService.requestInProcess(true);
+        this.isEdit ? this.editUser() : this.addUser();
+    }
 
+    addUser() {
         this.userService.createUser(this.model)
             .subscribe((res: any) => {
                 if (res.data.id && 0 < res.data.id) {
@@ -135,6 +143,24 @@ export class RegisterComponent implements OnInit, OnDestroy {
                 this.notificationServiceBus.launchNotification(true, errors.statusText + ' '
                     + JSON.stringify(e.errors).replace(/]|[[]/g, '').replace(/({|})/g, ''));
             });
+    }
+
+    editUser() {
+
+        this.model.disabled = this.selectedStatus === 'Disabled';
+        this.selectedStatus = '';
+        this.userService.createUser(this.model)
+            .subscribe((res: any) => {
+                    if (res.status === 204) {
+                        // UI Notification
+                        this.notificationServiceBus.launchNotification(false, 'User details updated Successfully');
+                    }
+                },
+                (err) => {
+                    this.spinnerService.requestInProcess(false);
+                    let e = err.json();
+                    this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
+                });
     }
 
     handleFileSelect(evt) {
