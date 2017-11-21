@@ -7,21 +7,26 @@ Feature: Create, read, update and delete a User
   Background: List of users you can create  OrganisationalRepresentative= 1, Accountant= 2, Client= 3, BookingOfficer= 4, Administrator= 5, Interpreter= 6
     Given I go to the website
     And I am shown the login screen, with picture and signup button
+
+
+
+############################## New Admin ##############################
+  @runThis
+  Scenario: Administrator should be able to add a new Admin
     And I exist as an Administrator
     And I sign in with valid Administrator credentials
     And I am on my admin home screen
     And I hover on the 'Profile'
     And I go to the 'User Management' list page
     Then I click on element by name 'user-roles'
+    When I hover on the userlist dropdown and select 'Administrator'
+    And I will be taken to the 'ADMINISTRATOR Signup' page
+    And I fill in all the details correctly for -> 'ADMINISTRATOR'
+    Then 'ADMINISTRATOR' will be created
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then The 2 valid Administrator should be in the list
 
-
-############################## New Admin ##############################
-  @ignoreThis
-  Scenario: Administrator should be able to add a new Administrator
-    And I add a valid Administrator
-    And I click on 'Create'
-    Then I am on the 'User Management' list page
-    And the valid Administrator should be in the list
 #  @ignoreThis
 #  Scenario: Administrator should be able to update an Administrator
 #    Given There is 1 inactive Administrator
@@ -50,13 +55,21 @@ Feature: Create, read, update and delete a User
 #    And the valid Administrator should be in the list
 #
 ############################### New Booking Officer ##############################
-#  Scenario: Administrator should be able to add a new Booking Officer
-#    When I click on 'Create New User'
-#    And I add a valid Booking Officer
-#    And I click on 'Create'
-#    Then I am on the 'User Management' list page
-#    And the valid Booking Officer should be in the list
-#
+  @runThis
+  Scenario: Administrator should be able to add a new Booking-Officer
+    And I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on my admin home screen
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then I click on element by name 'user-roles'
+    When I hover on the userlist dropdown and select 'Booking Officer'
+    And I will be taken to the 'BOOKINGOFFICER Signup' page
+    And I fill in all the details correctly for -> 'BOOKINGOFFICER'
+    Then 'BOOKINGOFFICER' will be created
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then The 1 valid BOOKING OFFICER should be in the list
 #  Scenario: Administrator should be able to update an Booking Officer
 #    Given There is 1 inactive Booking Officer
 #    When I click on edit for an existing Booking Officer
@@ -83,13 +96,21 @@ Feature: Create, read, update and delete a User
 #    And the valid Booking Officer should be in the list
 #
 ############################### New Interpreter ##############################
-#  Scenario: Administrator should be able to add a new Interpreter
-#    When I click on 'Create New User'
-#    And I add a valid Interpreter
-#    And I click on 'Create'
-#    Then I am on the 'User Management' list page
-#    And the valid Interpreter should be in the list
-#
+  @runThis
+  Scenario: Administrator should be able to add a new Interp.
+    And I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on my admin home screen
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then I click on element by name 'user-roles'
+    When I hover on the userlist dropdown and select 'Interpreter'
+    And I will be taken to the 'INTERPRETER Signup' page
+    And I fill all the details correctly for -> 'INTERPRETER' with the pref communication is 'SMS AND EMAIL'
+    Then 'INTERPRETER' will be created
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then The 1 valid INTERPRETER should be in the list
 #  @ignoreThis
 #  Scenario: Administrator should be able to update an Interpreter
 #    Given There is 1 inactive Interpreter
@@ -117,12 +138,21 @@ Feature: Create, read, update and delete a User
 #    And the valid Interpreter should be in the list
 #
 ############################### New Client ##############################
-#  Scenario: Administrator should be able to add a new Client
-#    When I click on 'Create New User'
-#    And I add a valid Client
-#    And I click on 'Create'
-#    Then I am on the 'User Management' list page
-#    And the valid Client should be in the list
+  @runThis
+  Scenario: Administrator should be able to add a new Client
+    And I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on my admin home screen
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then I click on element by name 'user-roles'
+    When I hover on the userlist dropdown and select 'Individual Client'
+    And I will be taken to the 'INDIVIDUALCLIENT Signup' page
+    And I fill all the details correctly for -> 'INDIVIDUALCLIENT' with the pref communication is 'SMS AND EMAIL'
+    Then 'INDIVIDUALCLIENT' will be created
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then The 1 valid INDIVIDUAL CLIENT should be in the list
 #  @ignoreThis
 #  Scenario: Administrator should be able to update an Client
 #    Given There is 1 inactive Client
@@ -150,12 +180,21 @@ Feature: Create, read, update and delete a User
 #    And the valid Client should be in the list
 #
 ############################### New Organisational Representative ##############################
-#  Scenario: Administrator should be able to add a new Organisational Representative
-#    When I click on 'Create New User'
-#    And I add a valid Organisational Representative
-#    And I click on 'Create'
-#    Then I am on the 'User Management' list page
-#    And the valid Organisational Representative should be in the list
+  @runThis
+  Scenario: Administrator should be able to add a new orgrep
+    And I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on my admin home screen
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then I click on element by name 'user-roles'
+    When I hover on the userlist dropdown and select 'Organisation'
+    And I will be taken to the 'ORGANISATION Signup' page
+    When I fill all the details correctly for -> 'ORGANISATIONALREPRESENTATIVE' with the pref communication is 'SMS AND EMAIL'
+    Then 'ORGANISATIONALREPRESENTATIVE' will be created
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then The 1 valid ORGANISATIONAL REPRESENTATIVE should be in the list
 #
 #  Scenario: Administrator should be able to update an Organisational Representative
 #    Given There is 1 inactive Organisational Representative
@@ -185,22 +224,48 @@ Feature: Create, read, update and delete a User
 # Trigger
   @runThis
   Scenario: Administrator should be able to trigger password reset for Interpreter
+    And I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on my admin home screen
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
     Then The valid Interpreter should be in the list
     When I hover on the 'Actions' of the Interpreter
     When I click on reset password for an active existing Interpreter
     Then The password for the user should be reset
 
-#  @runThis
-#  Scenario: Administrator should be able to trigger password reset for Individual Client
-#    When I click on reset password for an active existing Individual Client
-#    Then The password for the user should be reset
-#
-#  @runThis
-#  Scenario: Administrator should be able to trigger password reset for Organisational Representative
-#    When I click on reset password for an active existing Organisational Representative
-#    Then The password for the user should be reset
-#
-#  @runThis
-#  Scenario: Administrator should be able to trigger password reset for Booking Officer
-#    When I click on reset password for an active existing Booking Officer
-#    Then The password for the user should be reset
+  @runThis
+  Scenario: Administrator should be able to trigger password reset for Individual Client
+    And I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on my admin home screen
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then The valid Individual Client should be in the list
+    When I hover on the 'Actions' of the Individual Client
+    When I click on reset password for an active existing Individual Client
+    Then The password for the user should be reset
+
+  @runThis
+  Scenario: Administrator should be able to trigger password reset for Organisational Representative
+    And I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on my admin home screen
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then The valid Organisational Representative should be in the list
+    When I hover on the 'Actions' of the Organisational Representative
+    When I click on reset password for an active existing Organisational Representative
+    Then The password for the user should be reset
+
+  @runThis
+  Scenario: Administrator should be able to trigger password reset for Booking Officer
+    And I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on my admin home screen
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then The valid Booking Officer should be in the list
+    When I hover on the 'Actions' of the Booking Officer
+    When I click on reset password for an active existing Booking Officer
+    Then The password for the user should be reset

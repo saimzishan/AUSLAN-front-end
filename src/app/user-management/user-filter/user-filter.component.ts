@@ -1,7 +1,4 @@
-import {Component, Input, Output, EventEmitter, OnChanges, OnDestroy, SimpleChange, ViewContainerRef, OnInit} from '@angular/core';
-import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
-import {UserDetailComponent} from '../user-detail/user-detail.component';
-import {User} from '../../shared/model/user.entity';
+import {Component, OnInit} from '@angular/core';
 import {SpacerPipe} from '../../shared/pipe/spacer.pipe';
 import {ROLE} from '../../shared/model/role.enum';
 import {GLOBAL} from '../../shared/global';

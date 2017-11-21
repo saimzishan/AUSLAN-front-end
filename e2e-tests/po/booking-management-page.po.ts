@@ -48,7 +48,8 @@ export class BookingManagementPage extends PageObject {
         let headerCss = '.dropdown#' + {
             'Status': 'booking-status',
             'State': 'booking-state',
-            'Type': 'booking-type'
+            'Type': 'booking-type',
+            'userlist': 'user-roles'
         }[headerTitle];
         let el = this.getElementByCss(headerCss);
         return browser.actions().mouseMove(el).perform().then(() => {
