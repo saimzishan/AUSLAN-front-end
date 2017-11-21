@@ -158,7 +158,7 @@
                 <app-termandcondition  (termAndConditionStatusChange)="tocChanged($event)" [termsAndConditionAccepted]="termsAndConditionAccepted" ></app-termandcondition>
                 <div align="center">
                     <button class="login button" name="register_user" type="submit"
-                            (click)="addUser(registerForm)" class="button">{{isUserLogin() === true ? isEdit ? 'Edit' : 'Create' : 'Register'}}
+                            (click)="applyChanges(registerForm)" class="button">{{isUserLogin() === true ? isEdit ? 'Edit' : 'Create' : 'Register'}}
                     </button>
                 </div>
 
