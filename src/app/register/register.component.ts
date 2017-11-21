@@ -39,7 +39,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     }
 
     isUserLogin() {
-        return GLOBAL.currentUser !== null;
+        return Boolean(GLOBAL.currentUser);
     }
 
     ngOnInit() {
