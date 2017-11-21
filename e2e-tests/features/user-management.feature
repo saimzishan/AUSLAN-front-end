@@ -25,7 +25,7 @@ Feature: Create, read, update and delete a User
     Then 'ADMINISTRATOR' will be created
     And I hover on the 'Profile'
     And I go to the 'User Management' list page
-    Then The 2 valid Administrator should be in the list
+    Then The 3 valid Administrator should be in the list
 
 #  @ignoreThis
 #  Scenario: Administrator should be able to update an Administrator
