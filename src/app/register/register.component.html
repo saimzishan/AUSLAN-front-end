@@ -1,11 +1,11 @@
 <div>
-    <header id="header">
+    <header *ngIf="false === isUserLogin()" id="header">
         <a href="/"><i class="icons icons-logo"></i></a>
     </header>
     <section id="page-signup-organisation">
         <section>
             <header>
-                <h1>SIGN UP AS {{ selectedRole === 'INDIVIDUALCLIENT' ? 'INDIVIDUAL CLIENT' :  selectedRole}}</h1>
+                <h1>{{isUserLogin() === true ? 'CREATE' : 'SIGN UP AS'}} {{ selectedRole === 'INDIVIDUALCLIENT' ? 'INDIVIDUAL CLIENT' :  selectedRole}}</h1>
                 <p>Fields with * are required</p>
             </header>
 
@@ -150,7 +150,7 @@
                 <app-termandcondition  (termAndConditionStatusChange)="tocChanged($event)" [termsAndConditionAccepted]="termsAndConditionAccepted" ></app-termandcondition>
                 <div align="center">
                     <button class="login button" name="register_user" type="submit"
-                            (click)="addUser(registerForm)" class="button">Register
+                            (click)="addUser(registerForm)" class="button">{{isUserLogin() === true ? 'Create' : 'Register'}}
                     </button>
                 </div>
 

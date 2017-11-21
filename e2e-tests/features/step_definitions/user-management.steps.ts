@@ -11,7 +11,7 @@ defineSupportCode(({Given, Then, When}) => {
     // ================================== CREATING USER ========================================
     Then(/^I am on the 'User Management' list page$/, userManagementPO.browse);
 
-    When(/^I click on 'Create New User'$/, userManagementPO.createUserClick);
+    When(/^I click on 'New User'$/, userManagementPO.createUserClick);
 
     When(/^I add a valid (.*)/, userManagementPO.addValidUser);
 

@@ -12,17 +12,15 @@ Feature: Create, read, update and delete a User
     And I am on my admin home screen
     And I hover on the 'Profile'
     And I go to the 'User Management' list page
-    Then The valid Interpreter should be in the list
-    When I hover on the 'Actions' of the Interpreter
+    Then I click dropdown <string>
 
 ############################## New Admin ##############################
-#  @ignoreThis
-#  Scenario: Administrator should be able to add a new Administrator
-#    When I click on 'Create New User'
-#    And I add a valid Administrator
-#    And I click on 'Create'
-#    Then I am on the 'User Management' list page
-#    And the valid Administrator should be in the list
+  @ignoreThis
+  Scenario: Administrator should be able to add a new Administrator
+    And I add a valid Administrator
+    And I click on 'Create'
+    Then I am on the 'User Management' list page
+    And the valid Administrator should be in the list
 #  @ignoreThis
 #  Scenario: Administrator should be able to update an Administrator
 #    Given There is 1 inactive Administrator
@@ -186,6 +184,8 @@ Feature: Create, read, update and delete a User
 # Trigger
   @runThis
   Scenario: Administrator should be able to trigger password reset for Interpreter
+    Then The valid Interpreter should be in the list
+    When I hover on the 'Actions' of the Interpreter
     When I click on reset password for an active existing Interpreter
     Then The password for the user should be reset
 
