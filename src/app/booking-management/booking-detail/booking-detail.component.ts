@@ -103,7 +103,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
 
                 this.bookingModel.bookable_type = this.bookingModel.bookable_type || 'IndividualClient';
             }
-
         });
         console.log("old prefer"+JSON.stringify(this.bookingModel.preference_allocations_attributes));
     }
