@@ -34,7 +34,7 @@
       <div class="medium-12 columns">
         <div class="form-field">
           <label>ARE YOU MAKING A BOOKING FOR AN INDIVIDUAL CLIENT OR ORGANIZATION?*</label>
-          <md-radio-group name="rdBookingFor" (change)='onBookingForChange()' [(ngModel)]="bookingModel.bookable_type">
+          <md-radio-group name="rdBookingFor" (change)='onBookingForChange()' [(ngModel)]="bookingModel.bookable_type" [disabled]="isDisabledForAdmin">
             <md-radio-button id ="IndividualClient" name ="IndividualClient" value="IndividualClient">CLIENT</md-radio-button>
             <md-radio-button id="OrganisationalRepresentative" name="OrganisationalRepresentative" value="OrganisationalRepresentative">ORGANISATION</md-radio-button>
           </md-radio-group>
@@ -49,7 +49,7 @@
             <span mdTooltip="Select the Client/Org"><i class="inline-icon-tip"></i></span>
           </label>
           <select [(ngModel)]="bookingModel.bookable_id" (change)='onBookingForSelectionChange()'
-                  #booking_for="ngModel" name="booking_for"
+                  #booking_for="ngModel" name="booking_for" [disabled]="isDisabledForAdmin"
                   aria-label="A" required>
             <option *ngFor="let item of bookingForItems" [value]="item.id">
             {{ getOrgName(item) }}
@@ -688,7 +688,7 @@
     </div>
 
     <app-interpreter-box *ngIf="showProfilePreffered === 'true'" [isPreffered]="true"
-                          [isHidden]="true" [selectedInterpreters]="bookingModel.preference_allocations_attributes">
+                          [isHidden]="true" [selectedInterpreters]="forEdit() ? oldInterpreterPreference : userModel.prefferedInterpreters">
     </app-interpreter-box> 
 
     <br>
@@ -723,7 +723,7 @@
     </div>
 
     <app-interpreter-box *ngIf="showProfileBlocked === 'true'" [isPreffered]="false"
-                          [isHidden]="true" [selectedInterpreters]="bookingModel.preference_allocations_attributes">
+                          [isHidden]="true" [selectedInterpreters]="forEdit() ? oldInterpreterPreference : userModel.prefferedInterpreters">
     </app-interpreter-box> 
     <div [hidden]='true'>
       <div class="separator"></div>

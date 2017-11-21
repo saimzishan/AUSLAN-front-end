@@ -66,6 +66,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     isEditableForOrgRepIndClient: boolean;
     isUserAdminORBookOfficer: boolean;
     preferAllocSub: any;
+    oldInterpreterPreference = [];
+    isDisabledForAdmin: boolean;
 
     constructor(public bookingService: BookingService, private router: Router,
                 private route: ActivatedRoute, private rolePermission: RolePermission,
@@ -87,6 +89,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 let jsonData = JSON.parse(param);
                 this.bookingModel.fromJSON(jsonData);
                 this.oldDocuments = jsonData.documents_attributes;
+                this.oldInterpreterPreference = jsonData.preference_allocations_attributes;
                 this.bookingModel.documents_attributes = [];
                 this.bookingModel.venue.start_time_iso =
                     this.datePipe.transform(this.bookingModel.venue.start_time_iso, 'yyyy-MM-ddTHH:mm:ss');
@@ -104,7 +107,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 this.bookingModel.bookable_type = this.bookingModel.bookable_type || 'IndividualClient';
             }
         });
-        console.log("old prefer"+JSON.stringify(this.bookingModel.preference_allocations_attributes));
     }
 
     getOrgName(item) {
@@ -132,6 +134,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         if (GLOBAL.currentUser !== undefined) {
             this.isEditableForOrgRepIndClient = <boolean> (this.isUserOrgRepORIndClientTemp() && this.forEdit()) ;
             this.isUserAdminORBookOfficer = <boolean> this.checkUserAdminORBookOfficer();
+            this.isDisabledForAdmin = (this.forEdit() && !this.bookingModel.created_by_admin);
             this.onSelectionChange();
             this.onClientSelectionChange();
             this.getUser();
@@ -512,12 +515,12 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
     getUser() {
 
-        if(this.bookingModel.preference_allocations_attributes.filter(itm=> itm.preference === 'preferred').length >0) {
+        if (this.bookingModel.preference_allocations_attributes.filter(itm => itm.preference === 'preferred').length > 0) {
             this.showPreffered = 'true';
             this.showProfilePreffered = 'true';
         }
 
-        if(this.bookingModel.preference_allocations_attributes.filter(itm=> itm.preference === 'blocked').length >0) {
+        if (this.bookingModel.preference_allocations_attributes.filter(itm => itm.preference === 'blocked').length > 0) {
             this.showBlocked = 'true';
             this.showProfileBlocked = 'true';
         }
@@ -531,31 +534,41 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                     (<BookingOfficer>GLOBAL.currentUser) :
                     GLOBAL.currentUser;
 
-       this.preferAllocSub = this._sharedPreferedAllocationService.interpreterStream$.subscribe(data => {
+        this.bookingModel.preference_allocations_attributes = [];
+        this.preferAllocSub = this._sharedPreferedAllocationService.interpreterStream$.subscribe(data => {
             this.filterUserPreference(data);
         });
     }
 
     filterUserPreference(interpreters) {
-        this.bookingModel.preference_allocations_attributes = [];
-        interpreters.forEach(i => {
-            if (this.showProfilePreffered === 'true') {
-                if (i.preference === 'preferred' && !i.hasOwnProperty('_destroy')) {
-                    this.bookingModel.preference_allocations_attributes.push({ 'interpreter_id': i.interpreter_id, 'preference': i.preference });
-                } else if (i.hasOwnProperty('_destroy')) {
-                    this.userModel.prefferedInterpreters = this.userModel.prefferedInterpreters.filter(itm => itm.interpreter_id !== i.interpreter_id);
-                }
-            }
 
-            if (this.showProfileBlocked === 'true') {
-                if (i.preference === 'blocked' && !i.hasOwnProperty('_destroy')) {
-                    this.bookingModel.preference_allocations_attributes.push({ 'interpreter_id': i.interpreter_id, 'preference': i.preference });
-                } else if (i.hasOwnProperty('_destroy')) {
-                    this.userModel.prefferedInterpreters = this.userModel.prefferedInterpreters.filter(itm => itm.interpreter_id !== i.interpreter_id);
+        if (this.forEdit()) {
+            interpreters.forEach(i => {
+                if (i.hasOwnProperty('_destroy')) {
+                    this.bookingModel.preference_allocations_attributes.push({ 'id': i.interpreter_id, '_destroy': '1' });
+                    this.oldInterpreterPreference = this.oldInterpreterPreference.filter(old => old.interpreter_id !== i.interpreter_id);
                 }
-            }
-        });
-        console.log("final prefrenece"+JSON.stringify(this.bookingModel.preference_allocations_attributes));
+            });
+        } else {
+            this.bookingModel.preference_allocations_attributes = [];
+            interpreters.forEach(i => {
+                if (this.showProfilePreffered === 'true') {
+                    if (i.preference === 'preferred' && !i.hasOwnProperty('_destroy')) {
+                        this.bookingModel.preference_allocations_attributes.push({ 'interpreter_id': i.interpreter_id, 'preference': i.preference });
+                    } else if (i.hasOwnProperty('_destroy')) {
+                        this.userModel.prefferedInterpreters = this.userModel.prefferedInterpreters.filter(itm => itm.interpreter_id !== i.interpreter_id);
+                    }
+                }
+
+                if (this.showProfileBlocked === 'true') {
+                    if (i.preference === 'blocked' && !i.hasOwnProperty('_destroy')) {
+                        this.bookingModel.preference_allocations_attributes.push({ 'interpreter_id': i.interpreter_id, 'preference': i.preference });
+                    } else if (i.hasOwnProperty('_destroy')) {
+                        this.userModel.prefferedInterpreters = this.userModel.prefferedInterpreters.filter(itm => itm.interpreter_id !== i.interpreter_id);
+                    }
+                }
+            });
+        }
     }
 
     confirmDelete(docID) {
