@@ -30,6 +30,7 @@ export class Booking {
     public preference_allocations_attributes = [];
     public bookable_id: number;
     public bookable_type: string;
+    public travel_cost_applicable: boolean;
     // Is it a limitation on interpreters invitation.
 
     constructor() {
@@ -58,6 +59,7 @@ export class Booking {
         this.specific_nature_of_appointment = '';
         this.state = BOOKING_STATE.None;
         this.bookable_type = 'IndividualClient';
+        this.travel_cost_applicable = false;
     }
 
     clean(theObject) {

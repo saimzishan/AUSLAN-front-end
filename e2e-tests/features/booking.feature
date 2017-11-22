@@ -397,6 +397,25 @@ Feature: Booking Management
     Then I am on the individual booking page
     And I can verify the field 'Special Instruction' will have the value 'I am special'
 
+  @runThis
+  Scenario: Given 1 verified Individual Client, Booking Officer can create a booking
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    And I am on the bookings page
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    When I fill New Booking form fields with address greater than 40 kilometers
+    And I select the bookable for client
+    And I click the create booking button
+    Then I will get an error notification saying "Kindly accept Terms and Conditions"
+    Then I move to element name 'lnkTC'
+    Then I verify that the link with name 'lnkTC' href is 'https://s3-ap-southeast-2.amazonaws.com/auslan-public-bucket/Auslan_Online_Terms_And_Conditions.pdf'
+    Then I move to element name 'tnc'
+    Then I click on checkbox name 'tnc'
+    And I click the create booking button
+    Then I get a valid create booking notification
+    And I am on the bookings page
+    And I will be shown with bookings
 
 #  @runThis
 #  Scenario: Individual Client can't have special instruction fields
