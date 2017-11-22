@@ -1,4 +1,17 @@
-<!--   div *ngIf="shouldShow" [ngClass]="{'alert': isError , 'msg': !isError}">
-<span class="closebtn" (click)="hide()">&times;</span>
-{{notification}}</div -->
-<simple-notifications [options]="options"></simple-notifications>
+<section *ngIf="show" class="notification notification_visible"
+         [class.notification_success]="isError"
+         [class.notification_failure]="isError === false"
+>
+    <div class="notification__wrapper">
+        <div class="notifications__message">
+            <div class="notification__title">{{title}}</div>
+            <div id="sn-content" class="notification__text">{{mesg}}</div>
+        </div>
+        <figure class="notification__icon">
+            <svg class="notification__svg" xmlns="http://www.w3.org/2000/svg" fill="#ffffff" height="24" viewBox="0 0 24 24" width="24">
+                <path d="M0 0h24v24H0z" fill="none"></path>
+                <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"></path>
+            </svg>
+        </figure>
+    </div>
+</section>

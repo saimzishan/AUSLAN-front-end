@@ -12,12 +12,11 @@ import {RolePermission} from '../../shared/role-permission/role-permission';
 import {DatePipe} from '@angular/common';
 import {FormGroup, NgForm} from '@angular/forms';
 import {FileUploader, FileUploaderOptions} from 'ng2-file-upload';
-
 import {Address} from '../../shared/model/venue.entity';
 import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
 import {PreferedAllocationService} from '../../shared/prefered-allocation.service';
 import {isNullOrUndefined} from 'util';
-import {IndividualClient, OrganisationalRepresentative, BookingOfficer, Administrator, UserFactory} from '../../shared/model/user.entity';
+import {IndividualClient, OrganisationalRepresentative, BookingOfficer, Administrator , UserFactory} from '../../shared/model/user.entity';
 import {PopupComponent} from '../../shared/popup/popup.component';
 import {Contact} from '../../shared/model/contact.entity';
 import {UserService} from '../../api/user.service';
@@ -46,7 +45,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         || BOOKING_NATURE[value].startsWith(value)).map(v => BOOKING_NATURE[v]) as string[];
 
     specific_appointment_types = [];
-    parking_types = PARKING;
     currentUserIsContact = 'true';
     currentUserIsClient = 'true';
     prefInterpreter: boolean;
@@ -65,6 +63,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     deleteDocuments = [];
     allClientsOrg = [];
     bookingForItems = [];
+    isEditableForOrgRepIndClient: boolean;
+    isUserAdminORBookOfficer: boolean;
 
     constructor(public bookingService: BookingService, private router: Router,
                 private route: ActivatedRoute, private rolePermission: RolePermission,
@@ -80,8 +80,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         /** http://stackoverflow.com/questions/38008334/angular2-rxjs-when-should-i-unsubscribe-from-subscription */
         this.sub = this.route.queryParams.subscribe(params => {
             let param = params['bookingModel'] || '';
-            this.shouldEdit = params ['shouldEdit'] || '';
-            this.assignedInterpreter = params ['assignedInterpreter'] || '';
+            this.shouldEdit = params['shouldEdit'] || '';
+            this.assignedInterpreter = params['assignedInterpreter'] || '';
 
             if (param.length > 0) {
                 let jsonData = JSON.parse(param);
@@ -95,9 +95,16 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 this.natureOfApptChange(null);
 
             }
-            this.bookingHeading = (this.shouldEdit.length > 0 && this.shouldEdit === 'edit' ) ? 'EDIT BOOKING' : 'NEW BOOKING';
-        });
 
+            if (this.forEdit()) {
+                this.bookingHeading = 'EDIT BOOKING';
+            } else {
+                this.bookingHeading = 'NEW BOOKING';
+
+                this.bookingModel.bookable_type = this.bookingModel.bookable_type || 'IndividualClient';
+            }
+
+        });
 
     }
 
@@ -122,11 +129,13 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         if (GLOBAL.currentUser !== undefined) {
+            this.isEditableForOrgRepIndClient = <boolean> (this.isUserOrgRepORIndClientTemp() && this.forEdit()) ;
+            this.isUserAdminORBookOfficer = <boolean> this.checkUserAdminORBookOfficer();
             this.onSelectionChange();
             this.onClientSelectionChange();
             this.getUser();
             this.bookingModel.bookable_type = this.bookingModel.bookable_type || 'IndividualClient';
-            if (this.isUserAdminORBookOfficer()) {
+            if (this.isUserAdminORBookOfficer) {
                 this.getAllUsers();
             } else {
                 this.oldBookingModel = this.deepCopy(this.bookingModel);
@@ -135,23 +144,62 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     public onClientSelectionChange() {
-        ['first_name', 'last_name', 'email', 'mobile_number'].forEach((field) => {
-            let currentUserFieldMap = { mobile_number: 'mobile' };
-            let currentUserField = currentUserFieldMap[field] || field;
-            let value = this.currentUserIsClient === 'true' ? GLOBAL.currentUser[currentUserField] : '';
-            this.bookingModel.deaf_person[field] = value;
-            this.oldBookingModel.deaf_person[field] = value;
-        });
+        let user = this.isUserAdminORBookOfficer ? this.getBookableUser() : GLOBAL.currentUser;
+        if (user) {
+            ['first_name', 'last_name', 'email', 'mobile_number', 'ndis_id'].forEach((field) => {
+                let currentUserFieldMap = { mobile_number: 'mobile' };
+                let currentUserField = currentUserFieldMap[field] || field;
+                let value = this.currentUserIsClient === 'true' ? user[currentUserField] : '';
+                let mapForNsid = { ndis_id: 'eaf' };
+                field = mapForNsid[field] || field;
+                this.bookingModel.deaf_person[field] = value;
+            });
+        }
     }
 
     public onSelectionChange() {
-        ['first_name', 'last_name', 'email', 'mobile_number'].forEach((field) => {
-            let currentUserFieldMap = { mobile_number: 'mobile' };
-            let currentUserField = currentUserFieldMap[field] || field;
-            let value = this.currentUserIsContact === 'true' ? GLOBAL.currentUser[currentUserField] : '';
-            this.bookingModel.primaryContact[field] = value;
-            this.oldBookingModel.primaryContact[field] = value;
-        });
+        let user = this.isUserAdminORBookOfficer ? this.getBookableUser() : GLOBAL.currentUser;
+        if (user) {
+            ['first_name', 'last_name', 'email', 'mobile_number'].forEach((field) => {
+                let currentUserFieldMap = { mobile_number: 'mobile' };
+                let currentUserField = currentUserFieldMap[field] || field;
+                let value = this.currentUserIsContact === 'true' ? user[currentUserField] : '';
+                this.bookingModel.primaryContact[field] = value;
+            });
+        }
+    }
+
+    public setInvoiceField() {
+        let user = this.getBookableUser();
+        if (user) {
+                    if (user['type'] === 'IndividualClient') {
+                        this.bookingModel.client.organisation_primary_contact = this.standardInvoice === 'true' ?
+                                                  user.individual_client_primary_contact : new Contact();
+                        this.bookingModel.client.organisation_billing_account.organisation_billing_address = this.standardInvoice === 'true' ?
+                                                  user.individual_client_billing_account.organisation_billing_address : new Address();
+                        this.bookingModel.client.organisation_billing_account.external_reference = this.standardInvoice === 'true' ?
+                                                  user.individual_client_billing_account.external_reference : '';
+                        this.bookingModel.deaf_person.eaf = this.standardInvoice === 'true' ? user.ndis_id : '';
+                    } else {
+                        this.bookingModel.client.organisation_primary_contact = this.standardInvoice === 'true' ?
+                                                  user.organisation_primary_contact : new Contact();
+                        this.bookingModel.client.organisation_billing_account.organisation_billing_address = this.standardInvoice === 'true' ?
+                                                  user.organisation_billing_account.organisation_billing_address : new Address();
+                        this.bookingModel.client.organisation_billing_account.external_reference = this.standardInvoice === 'true' ?
+                                                  user.organisation_billing_account.external_reference : '';
+                        this.bookingModel.deaf_person.eaf = '';
+                    }
+                }
+    }
+
+    private getBookableUser() {
+        return this.allClientsOrg.find( u => u.type === this.bookingModel.bookable_type && +u.id === +this.bookingModel.bookable_id);
+    }
+
+    public onBookingForSelectionChange() {
+        this.onSelectionChange();
+        this.onClientSelectionChange();
+        this.setInvoiceField();
     }
 
     public onPreferredSelectionChange() {
@@ -209,7 +257,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.rdgSpecialInstruction === 'true' ? special_instructions : '';
     }
 
-    isUserAdminORBookOfficer(): Boolean {
+    checkUserAdminORBookOfficer(): Boolean {
         return Boolean(GLOBAL.currentUser instanceof Administrator ||
             GLOBAL.currentUser instanceof BookingOfficer) ;
     }
@@ -227,6 +275,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
 
             this.bookingModel.client.organisation_billing_account.organisation_billing_address = this.standardInvoice === 'true' ?
                 currentUser.organisation_billing_account.organisation_billing_address : new Address();
+        } else if (this.isUserAdminORBookOfficer) {
+            this.setInvoiceField();
         } else {
             let currentUser = <IndividualClient>GLOBAL.currentUser;
 
@@ -530,8 +580,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                     this.spinnerService.requestInProcess(false);
                     if (res.status === 200 ) {
                         this.allClientsOrg = res.data.users.map( u => UserFactory.createUser(u));
-                        this.onBookingForChange();
                         this.oldBookingModel = this.deepCopy(this.bookingModel);
+                        this.onBookingForChange();
                     }
                 },
                 errors => {

@@ -1,6 +1,6 @@
-import { Component, AfterViewChecked, ChangeDetectionStrategy } from '@angular/core';
+import {Component, AfterViewChecked, ChangeDetectionStrategy} from '@angular/core';
 import {UserService} from '../api/user.service';
-import {User} from '../shared/model/user.entity';
+import {User, UserFactory} from '../shared/model/user.entity';
 import {ROLE} from '../shared/model/role.enum';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/debounceTime';
@@ -10,10 +10,10 @@ import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/observable/throw';
 import {SpinnerService} from '../spinner/spinner.service';
-import { NotificationServiceBus } from '../notification/notification.service';
+import {NotificationServiceBus} from '../notification/notification.service';
 import {GLOBAL} from '../shared/global';
 import {tokenNotExpired} from 'angular2-jwt/angular2-jwt';
-import { RolePermission } from '../shared/role-permission/role-permission';
+import {RolePermission} from '../shared/role-permission/role-permission';
 
 @Component({
     selector: 'app-admin',
@@ -23,7 +23,7 @@ import { RolePermission } from '../shared/role-permission/role-permission';
 
 })
 
-export class UserManagementComponent  {
+export class UserManagementComponent {
     newUser: User = null;
     roles: any;
     users: Array<User> = [];
@@ -32,53 +32,50 @@ export class UserManagementComponent  {
 
 
     constructor(public spinnerService: SpinnerService,
-    public notificationServiceBus: NotificationServiceBus,
-      public userDataService: UserService,
-      private rolePermission: RolePermission) {
-      this.roles = ROLE;
-      this.fetchUsers();
-      this.userName = '';
-    }
-
-    onEditUser(u: User) {
-        this.newUser = u;
+                public notificationServiceBus: NotificationServiceBus,
+                public userDataService: UserService,
+                private rolePermission: RolePermission) {
+        this.roles = ROLE;
+        this.fetchUsers();
+        this.userName = '';
     }
 
     onResetPassword(u: User) {
-      this.userName = u.first_name + ' ' + u.last_name;
-      this.userDataService.resetUser(u.email)
-      .subscribe((res: any) => {
-        if (res.status === 200) {
-          let msg = 'The password has been reset for ' + this.userName;
-          this.notificationServiceBus.launchNotification(false, msg);
-        }
-      },
-      err => {
-        console.log(err);
-        this.notificationServiceBus.launchNotification(true, 'The email address is not registered with us.');
-      },
-      () => { });
+        this.userName = u.first_name + ' ' + u.last_name;
+        this.userDataService.resetUser(u.email)
+            .subscribe((res: any) => {
+                    if (res.status === 200) {
+                        let msg = 'The password has been reset for ' + this.userName;
+                        this.notificationServiceBus.launchNotification(false, msg);
+                    }
+                },
+                err => {
+                    console.log(err);
+                    this.notificationServiceBus.launchNotification(true, 'The email address is not registered with us.');
+                },
+                () => {
+                });
     }
 
     fetchUsers() {
-      this.newUser = null;
-      this.spinnerService.requestInProcess(true);
-      this.userDataService.fetchUsers()
-      .subscribe((res: any) => {
-        if ( res.status === 200 ) {
-          let userList = res.data.users.filter( (u) => {
-            let result = Boolean(false === this.rolePermission.isDataRestrictedForCurrentUser('user-management', u.type));
-            return result;
-          });
-          this.users = userList;
-      }
-      this.spinnerService.requestInProcess(false);
-      },
-       err => {
-         this.spinnerService.requestInProcess(false);
+        this.newUser = null;
+        this.spinnerService.requestInProcess(true);
+        this.userDataService.fetchUsers()
+            .subscribe((res: any) => {
+                    if (res.status === 200) {
+                        let userList = res.data.users.filter((u) => {
+                            let result = Boolean(false === this.rolePermission.isDataRestrictedForCurrentUser('user-management', u.type));
+                            return result;
+                        }).map(u => UserFactory.createUser(u));
+                        this.users = userList;
+                    }
+                    this.spinnerService.requestInProcess(false);
+                },
+                err => {
+                    this.spinnerService.requestInProcess(false);
 
-         console.log(err);
-       });
+                    console.log(err);
+                });
     }
 
 }

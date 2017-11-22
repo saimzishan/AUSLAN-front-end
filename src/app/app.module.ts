@@ -30,7 +30,6 @@ import { BookingListComponent } from './booking-management/booking-list/booking-
 import { UserListComponent } from './user-management/user-list/user-list.component';
 import { UserFilterComponent } from './user-management/user-filter/user-filter.component';
 import { UserHeaderComponent } from './user-management/user-header/user-header.component';
-import { UserDetailComponent } from './user-management/user-detail/user-detail.component';
 import { BookingHeaderComponent } from './booking-management/booking-header/booking-header.component';
 import { MaterialModule } from '@angular/material';
 import { UserNameService } from './shared/user-name.service';
@@ -96,7 +95,6 @@ import {GmapsApiService} from './api/gmaps-api.service';
     UserFilterComponent,
     UserListComponent,
     UserHeaderComponent,
-    UserDetailComponent,
     UserProfileComponent, HyphenPipe, PrettyIDPipe, SpacerPipe,
     BookingJobsComponent, PopupComponent, OrgRepComponent, IndClientComponent,
     InterpreterComponent, BillingAccountComponent,
@@ -104,7 +102,7 @@ import {GmapsApiService} from './api/gmaps-api.service';
       UserPasswordComponent, PreComponent, BlockoutComponent, TermandconditionComponent,
        InterpreterBoxComponent, InterpreterPopupComponent
   ],
-  entryComponents: [UserDetailComponent, PopupComponent, InterpreterPopupComponent],
+  entryComponents: [PopupComponent, InterpreterPopupComponent],
   imports: [CustomFormsModule, routing, FileUploadModule,
     BrowserModule, RouterModule, CommonModule, MobileFooterModule,
     FormsModule, BrowserAnimationsModule,

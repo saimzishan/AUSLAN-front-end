@@ -20,6 +20,9 @@ export class ProfileRegisterPage extends PageObject {
         });
     }
 
+    fillAllDataForAdmin = (type: string) => {
+        this.fillAllDataForRegister(type, '');
+    }
     fillAllDataForRegister = (type: string, prefComm: string) => {
         this.getElementByName('first_name').sendKeys('George');
         this.getElementByName('last_name').sendKeys('Charalambous');
@@ -66,15 +69,16 @@ export class ProfileRegisterPage extends PageObject {
             this.getElementByName('cn_phone').sendKeys('0490394517');
             // this.getElementByName('preferred_contact_method').sendKeys(prefComm);
         }
+        if (type !== 'ADMINISTRATOR' && type !== 'BOOKINGOFFICER' ) {
 
-        this.getElementByName('comm_pref').sendKeys(prefComm);
-        this.getElementByName('address_unit_num').sendKeys('22');
-        this.getElementByName('address_street_number').sendKeys('62');
-        this.getElementByName('address_street').sendKeys('Dave');
-        this.getElementByName('address_post_code').sendKeys('3064');
-        this.getElementByName('address_suburb').sendKeys('Crazy');
-        this.getElementByName('address_state').sendKeys('VIC'); // dropdown
-
+            this.getElementByName('comm_pref').sendKeys(prefComm);
+            this.getElementByName('address_unit_num').sendKeys('22');
+            this.getElementByName('address_street_number').sendKeys('62');
+            this.getElementByName('address_street').sendKeys('Dave');
+            this.getElementByName('address_post_code').sendKeys('3064');
+            this.getElementByName('address_suburb').sendKeys('Crazy');
+            this.getElementByName('address_state').sendKeys('VIC'); // dropdown
+        }
         return this.getElementByName('register_user').click();
     }
 
@@ -113,13 +117,13 @@ export class ProfileRegisterPage extends PageObject {
 
     }
     validateAlphabeticalOrder = () => {
-    let  sorted = [] , unSorted = [];
-    let i = 0;
-    $$('section[name="interpreters"]').each((elem, idx) => {
-        elem.getText().then((name) => {
+        let sorted = [], unSorted = [];
+        let i = 0;
+        $$('section[name="interpreters"]').each((elem, idx) => {
+            elem.getText().then((name) => {
                 unSorted[i++] = name;
             });
-        }).then(function(){
+        }).then(function () {
             sorted = unSorted.slice();
             sorted.sort();
             expect(sorted.toString()).to.be.eq(unSorted.toString());

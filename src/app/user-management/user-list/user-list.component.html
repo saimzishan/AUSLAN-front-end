@@ -1,90 +1,96 @@
+<main>
+    <h1>ALL USERS</h1>
+    <section class="users" *ngIf="userList?.length > 0">
+        <table class="custom">
+            <thead>
+            <tr>
 
-		<main>
-			<h1>ALL USERS</h1>
-			<section class="users" *ngIf="userList?.length > 0">
-				<table class="custom">
-					<thead>
-						<tr>
+                <th width="11%">
+                    <span class=" asc">First Name</span>
+                    <!--<input type="text" name="first_name">-->
+                </th>
+                <th width="11%">
+                    <span class=" asc">Last Name</span>
+                    <!--<input type="text" name="last_name">-->
+                </th>
+                <th width="10%">
+                    <span class=" asc">Type</span>
+                    <!--<ul class="dropdown menu custom" data-dropdown-menu>-->
+                    <!--<li>-->
+                    <!--<a href="#">All</a>-->
+                    <!--<ul class="menu smaller">-->
+                    <!--<li><a href="#"><i></i> Auslan </a></li>-->
+                    <!--</ul>-->
+                    <!--</li>-->
+                    <!--</ul>-->
+                </th>
+                <th width="15%">
+                    <span class=" desc">Organisation</span>
+                    <!--<input type="text" name="organisation">-->
+                </th>
+                <th width="15%">
+                    <span class=" desc">Email</span>
+                    <!--<input type="text" name="email">-->
+                </th>
+                <th width="8%">
+                    <span class=" asc">Mobile</span>
+                    <!--<input type="text" name="mobile">-->
+                </th>
+                <th width="8%">
+                    <span class=" asc">Status</span>
+                    <!--<ul class="dropdown menu custom" data-dropdown-menu>-->
+                    <!--<li>-->
+                    <!--<a href="#">All</a>-->
+                    <!--<ul class="menu smaller">-->
+                    <!--<li ><a><i></i> Active </a></li>-->
+                    <!--<li><a><i></i>  Disabled </a></li>-->
+                    <!--<li><a><i></i>  Unverified</a></li>-->
+                    <!--</ul>-->
+                    <!--</li>-->
+                    <!--</ul>-->
+                </th>
 
-							<th width="11%">
-								<span class=" asc">First Name</span>
-								<!--<input type="text" name="first_name">-->
-							</th>
-							<th width="11%">
-								<span class=" asc">Last Name</span>
-								<!--<input type="text" name="last_name">-->
-							</th>
-							<th width="10%">
-								<span class=" asc">Type</span>
-								<!--<ul class="dropdown menu custom" data-dropdown-menu>-->
-									<!--<li>-->
-										<!--<a href="#">All</a>-->
-										<!--<ul class="menu smaller">-->
-											<!--<li><a href="#"><i></i> Auslan </a></li>-->
-										<!--</ul>-->
-									<!--</li>-->
-								<!--</ul>-->
-							</th>
-							<th width="15%">
-								<span class=" desc">Organisation</span>
-								<!--<input type="text" name="organisation">-->
-							</th>
-							<th width="15%">
-								<span class=" desc">Email</span>
-								<!--<input type="text" name="email">-->
-							</th>
-							<th width="8%">
-								<span class=" asc">Mobile</span>
-								<!--<input type="text" name="mobile">-->
-							</th>
-							<th width="8%">
-								<span class=" asc">Status</span>
-								<!--<ul class="dropdown menu custom" data-dropdown-menu>-->
-									<!--<li>-->
-										<!--<a href="#">All</a>-->
-										<!--<ul class="menu smaller">-->
-											<!--<li ><a><i></i> Active </a></li>-->
-											<!--<li><a><i></i>  Disabled </a></li>-->
-											<!--<li><a><i></i>  Unverified</a></li>-->
-										<!--</ul>-->
-									<!--</li>-->
-								<!--</ul>-->
-							</th>
+                <th width="9%">
+                    <span>Actions</span>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let user of userList">
 
-							<th width="9%">
-								<span>Actions</span>
-							</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr *ngFor="let user of userList">
+                <td>{{user.first_name}}</td>
+                <td>{{user.last_name}}</td>
+                <td class="truncated-text">{{ user.type | spacer}}</td>
+                <td>Auslan</td>
+                <td class="truncated-text">
+                    <a href="mailto:{{user.email}}">{{user.email}}</a>
+                </td>
+                <td class="truncated-text">{{user.mobile}}</td>
+                <td [ngClass]="{'active':user.verified}">{{ user.disabled ? 'Disabled' : !user.verified ? 'Unverified' :
+                    'Active' }}
+                </td>
 
-							<td>{{user.first_name}}</td>
-							<td>{{user.last_name}}</td>
-							<td class="truncated-text">{{ user.type | spacer}}</td>
-							<td>Auslan</td>
-							<td class="truncated-text">
-								<a href="mailto:{{user.email}}">{{user.email}}</a>
-							</td>
-							<td class="truncated-text">{{user.mobile}}</td>
-							<td [ngClass]="{'active':user.verified}" >{{ user.disabled ? 'Disabled' : !user.verified ? 'Unverified' : 'Active' }}</td>
-
-							<td *ngIf="canEditLink('user-management',user.type)">
-								<ul class="dropdown menu custom actions" data-dropdown-menu>
-									<li>
-										<a  href="javascript:void(0)"><i class="icon-actions"></i></a>
-										<ul class="menu right-side green">
-											<li><a  (click)="onUserSelect(user)" ><i class="icon-edit"></i> Edit</a></li>
-											<li *ngIf="isUserInterpreter(user)" >
-												<a id="lnkProfileSkill"
-				[routerLink]="['/user-management/' + user.id +'/skills']" ><i class="icon-skill-matrix"></i> Skill Matrix</a></li>
-											<li><a (click)="onResetPassword(user)" ><i class="icon-reset-password"></i> Reset password</a></li>
-										</ul>
-									</li>
-								</ul>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</section>
-		</main>
+                <td *ngIf="canEditLink('user-management',user.type)">
+                    <ul class="dropdown menu custom actions" data-dropdown-menu>
+                        <li>
+                            <a href="javascript:void(0)"><i class="icon-actions"></i></a>
+                            <ul class="menu right-side green">
+                                <li>
+                                    <a [routerLink]="['/init']" [queryParams]="{selectedRole:getQueryableRole(user), edit_user:
+												stringifyUser(user)}">
+                                        <i class="icon-edit"></i> Edit</a></li>
+                                <li *ngIf="isUserInterpreter(user)">
+                                    <a id="lnkProfileSkill"
+                                       [routerLink]="['/user-management/' + user.id +'/skills']"><i
+                                            class="icon-skill-matrix"></i> Skill Matrix</a></li>
+                                <li><a (click)="onResetPassword(user)"><i class="icon-reset-password"></i> Reset
+                                    password</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</main>

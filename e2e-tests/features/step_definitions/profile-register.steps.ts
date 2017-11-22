@@ -19,6 +19,8 @@ defineSupportCode(({Then, When}) => {
     // When(/^I fill all the details correctly for '(.*)'$/, profileRegisterPage.fillAllDataForRegister);
     When(/^I fill all the details correctly for -> '(.*)' with the pref communication is '(.*)'$/,
         profileRegisterPage.fillAllDataForRegister);
+    When(/^I fill in all the details correctly for -> '(.*)'$/,
+        profileRegisterPage.fillAllDataForAdmin);
 
     When(/^'(.*)' will be created$/, profileRegisterPage.userCreated);
 
