@@ -1,7 +1,7 @@
 import {PageObject} from './app.po';
 import {browser, by, element, $, $$, protractor} from 'protractor';
 import {expect} from '../config/helpers/chai-imports';
-import {User, Administrator, BookingOfficer, Interpreter, Client, Organisation} from '../helper';
+import {User, Administrator, BookingOfficer, Interpreter, Client, Organisation, Accountant} from '../helper';
 import {NotificationObject} from './notification';
 
 export class UserManagementPage extends PageObject {
@@ -28,6 +28,11 @@ export class UserManagementPage extends PageObject {
             case 'Booking Officer':
                 chosen_type = 'Booking Officer';
                 valid_user = new BookingOfficer('the_bookingofficer' + Math.round(Math.random() * 100) + '@curvetomorrow.com.au',
+                    'Pass@1234', 'BookingOfficer', 'The', '0490000111');
+                break;
+            case 'Accountant':
+                chosen_type = 'Accountant';
+                valid_user = new Accountant('the_bookingofficer' + Math.round(Math.random() * 100) + '@curvetomorrow.com.au',
                     'Pass@1234', 'BookingOfficer', 'The', '0490000111');
                 break;
             case 'Interpreter':
@@ -59,6 +64,11 @@ export class UserManagementPage extends PageObject {
                 chosen_type = 'Administrator';
                 invalid_user = new Administrator('the_admin2curvetomorrow.com.au',
                     'Pass@1234', 'Administrator', 'The', '0490000111');
+                break;
+            case 'Accountant':
+                chosen_type = 'Accountant';
+                invalid_user = new Accountant('the_accountant2curvetomorrow.com.au',
+                    'Pass@1234', 'Accountant', 'The', '0490000111');
                 break;
             case 'Booking Officer':
                 chosen_type = 'Booking Officer';

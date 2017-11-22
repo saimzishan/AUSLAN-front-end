@@ -33,6 +33,10 @@ export class User {
                 chosen_type = 'Administrator';
                 valid_user = new Administrator('robin@auslan.com.au', 'Abcd#1234');
                 break;
+            case 'Accountant':
+                chosen_type = 'Accountant';
+                valid_user = new Administrator('george@auslan.com.au', 'Abcd#1234');
+                break;
             case 'Booking Officer':
                 chosen_type = 'Booking Officer';
                 valid_user = new BookingOfficer('frank@auslan.com.au', 'Abcd#1234');
@@ -60,7 +64,7 @@ export class User {
         }
         valid_user.first_name = valid_user.email.replace('@auslan.com.au', '');
         valid_user.last_name = chosen_type;
-        valid_user.mobile_num = '0444 555 666';
+        valid_user.mobile_num = '0444555666';
         return {type: chosen_type, user: valid_user};
     }
 
@@ -74,7 +78,7 @@ export class User {
         let password = 'Abcd#1234';
         let firstName = 'MOH';
         let lastName = 'JAY';
-        let mobileNum = '0444 555 666';
+        let mobileNum = '0444555666';
 
         if (typeof user !== 'undefined') {
             email = user.email;
@@ -208,6 +212,9 @@ export class User {
     }
 }
 
+
+export class Accountant extends User {
+}
 
 export class Organisation extends User {
 }

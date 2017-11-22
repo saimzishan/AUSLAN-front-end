@@ -50,6 +50,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
             this.selectedRole = Boolean(p && p.length > 1) ? p : this.selectedRole;
             let jsonData = this.isEdit ?
                 JSON.parse(params['edit_user']) : {};
+            jsonData.id = params['uid'] || '';
             switch (this.selectedRole) {
                 case 'Interpreter'.toUpperCase():
                     let int1 = this.isEdit ? UserFactory.createUser(jsonData) : new Interpreter();

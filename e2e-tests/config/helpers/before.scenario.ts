@@ -20,7 +20,7 @@ defineSupportCode(({Before}) => {
             Heroku.sendCommandToHeroku('User.where.not(id: 1).destroy_all');
         }
 
-        let all_personas = ['Booking Officer', 'Administrator', 'Interpreter',
+        let all_personas = ['Booking Officer', 'Administrator', 'Accountant', 'Interpreter',
             'Interpreter1', 'Interpreter2', 'Individual Client', 'Organisational Representative'];
         let personas = [];
         all_personas.forEach((pn) => {

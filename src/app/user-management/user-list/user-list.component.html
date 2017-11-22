@@ -76,7 +76,7 @@
                             <a href="javascript:void(0)"><i class="icon-actions"></i></a>
                             <ul class="menu right-side green">
                                 <li>
-                                    <a name="lnkEditUser" [routerLink]="['/init']" [queryParams]="{selectedRole:getQueryableRole(user), edit_user:
+                                    <a name="lnkEditUser" [routerLink]="['/init']" [queryParams]="{selectedRole:getQueryableRole(user),uid:user.id, edit_user:
 												stringifyUser(user)}">
                                         <i class="icon-edit"></i> Edit</a></li>
                                 <li *ngIf="isUserInterpreter(user)">

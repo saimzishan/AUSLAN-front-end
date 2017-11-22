@@ -220,7 +220,7 @@ Feature: Create, read, update and delete a User
     And I update Interpreter available field
     And I click on update
     Then I see success notification
-#
+
 ############################### New Client ##############################
   @runThis
   Scenario: Administrator should be able to add a new Client
@@ -236,58 +236,128 @@ Feature: Create, read, update and delete a User
     Then 'INDIVIDUALCLIENT' will be created
     And I hover on the 'Profile'
     And I go to the 'User Management' list page
-    Then The 1 valid INDIVIDUAL CLIENT should be in the LIST
+    Then The 1 valid INDIVIDUAL CLIENT should be in the list
 
   @runThis
-  Scenario: Administrator should be able to update an Client
+  Scenario: Administrator should be able to update an Individual Client
     And I exist as an Administrator
     And I sign in with valid Administrator credentials
     And I am on my admin home screen
     And I hover on the 'Profile'
     And I go to the 'User Management' list page
-    Then I click on edit for an active existing Client
+    Then I click on edit for an active existing Individual Client
     And I will be taken to the 'INDIVIDUALCLIENT Signup' page
-    And I update some Client fields
+    And I update some Individual Client fields
     And I click on update
     Then I see success notification
 
   @runThis
-  Scenario: Administrator should be able to delete/disable an Client
+  Scenario: Administrator should be able to delete/disable an Individual Client
     And I exist as an Administrator
     And I sign in with valid Administrator credentials
     And I am on my admin home screen
     And I hover on the 'Profile'
     And I go to the 'User Management' list page
-    Then I click on edit for an active existing Client
+    Then I click on edit for an active existing Individual Client
     And I will be taken to the 'INDIVIDUALCLIENT Signup' page
-    And I update Client available field
+    And I update Individual Client available field
     And I click on update
     Then I see success notification
 
 
   @runThis
-  Scenario: Booking Officer  should be able to update an Client
+  Scenario: Booking Officer  should be able to update an Individual Client
     And I exist as an Booking Officer
     And I sign in with valid Booking Officer  credentials
     And I am on my admin home screen
     And I hover on the 'Profile'
     And I go to the 'User Management' list page
-    Then I click on edit for an active existing Client
+    Then I click on edit for an active existing Individual Client
     And I will be taken to the 'INDIVIDUALCLIENT Signup' page
-    And I update some Client fields
+    And I update some Individual Client fields
     And I click on update
     Then I see success notification
 
   @runThis
-  Scenario: Booking Officer  should be able to delete/disable an Client
+  Scenario: Booking Officer  should be able to delete/disable an Individual Client
     And I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
     And I am on my admin home screen
     And I hover on the 'Profile'
     And I go to the 'User Management' list page
-    Then I click on edit for an active existing Client
+    Then I click on edit for an active existing Individual Client
     And I will be taken to the 'INDIVIDUALCLIENT Signup' page
-    And I update Client available field
+    And I update Individual Client available field
+    And I click on update
+    Then I see success notification
+
+############################### New Accountant ##############################
+  @runThis
+  Scenario: Administrator should be able to add a new Account person
+    And I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on my admin home screen
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then I click on element by name 'user-roles'
+    When I hover on the userlist dropdown and select 'Accountant'
+    And I will be taken to the 'ACCOUNTANT Signup' page
+    And I fill in all the details correctly for -> 'ACCOUNTANT'
+    Then 'ACCOUNTANT' will be created
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then The 1 valid ACCOUNTANT should be in the list
+
+  @runThis
+  Scenario: Administrator should be able to update an Accountant
+    And I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on my admin home screen
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then I click on edit for an active existing Accountant
+    And I will be taken to the 'ACCOUNTANT Signup' page
+    And I update some Accountant fields
+    And I click on update
+    Then I see success notification
+
+  @runThis
+  Scenario: Administrator should be able to delete/disable an Accountant
+    And I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on my admin home screen
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then I click on edit for an active existing Accountant
+    And I will be taken to the 'ACCOUNTANT Signup' page
+    And I update Accountant available field
+    And I click on update
+    Then I see success notification
+
+
+  @runThis
+  Scenario: Booking Officer  should be able to update an Accountant
+    And I exist as an Booking Officer
+    And I sign in with valid Booking Officer  credentials
+    And I am on my admin home screen
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then I click on edit for an active existing Accountant
+    And I will be taken to the 'ACCOUNTANT Signup' page
+    And I update some Accountant fields
+    And I click on update
+    Then I see success notification
+
+  @runThis
+  Scenario: Booking Officer  should be able to delete/disable an Accountant
+    And I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    And I am on my admin home screen
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then I click on edit for an active existing Accountant
+    And I will be taken to the 'ACCOUNTANT Signup' page
+    And I update Accountant available field
     And I click on update
     Then I see success notification
 #
@@ -322,7 +392,7 @@ Feature: Create, read, update and delete a User
     Then I see success notification
 
   @runThis
-  Scenario: Administrator should be able to delete/disable an Client
+  Scenario: Administrator should be able to delete/disable an Organisational Representative
     And I exist as an Administrator
     And I sign in with valid Administrator credentials
     And I am on my admin home screen
@@ -336,7 +406,7 @@ Feature: Create, read, update and delete a User
 
 
   @runThis
-  Scenario: Booking Officer  should be able to update an Client
+  Scenario: Booking Officer  should be able to update an Organisational Representative
     And I exist as an Booking Officer
     And I sign in with valid Booking Officer  credentials
     And I am on my admin home screen
@@ -349,7 +419,7 @@ Feature: Create, read, update and delete a User
     Then I see success notification
 
   @runThis
-  Scenario: Booking Officer  should be able to delete/disable an Client
+  Scenario: Booking Officer  should be able to delete/disable an Organisational Representative
     And I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
     And I am on my admin home screen

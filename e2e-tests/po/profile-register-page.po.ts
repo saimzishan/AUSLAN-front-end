@@ -69,7 +69,7 @@ export class ProfileRegisterPage extends PageObject {
             this.getElementByName('cn_phone').sendKeys('0490394517');
             // this.getElementByName('preferred_contact_method').sendKeys(prefComm);
         }
-        if (type !== 'ADMINISTRATOR' && type !== 'BOOKINGOFFICER' ) {
+        if (type !== 'ADMINISTRATOR' && type !== 'BOOKINGOFFICER' && type !== 'ACCOUNTANT' ) {
 
             this.getElementByName('comm_pref').sendKeys(prefComm);
             this.getElementByName('address_unit_num').sendKeys('22');
