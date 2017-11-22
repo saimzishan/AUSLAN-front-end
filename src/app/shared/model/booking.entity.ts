@@ -30,6 +30,7 @@ export class Booking {
     public preference_allocations_attributes = [];
     public bookable_id: number;
     public bookable_type: string;
+    public created_by_admin: boolean;
     // Is it a limitation on interpreters invitation.
 
     constructor() {
@@ -58,6 +59,8 @@ export class Booking {
         this.specific_nature_of_appointment = '';
         this.state = BOOKING_STATE.None;
         this.bookable_type = 'IndividualClient';
+        this.notes = '';
+        this.created_by_admin = false;
     }
 
     clean(theObject) {
@@ -94,6 +97,7 @@ export class Booking {
         this.venue.post_code = data.address_attributes.post_code;
         this.venue.start_time_iso = new Date(data.start_time).toISOString();
         this.venue.end_time_iso = new Date(data.end_time).toISOString();
+        this.venue.parking_type = data.parking_availability;
         this.interpreters_required = data.number_of_interpreters_required;
         this.requested_by.first_name = data.requested_by_first_name;
         this.requested_by.last_name = data.requested_by_last_name;
@@ -117,6 +121,8 @@ export class Booking {
         this.state = BOOKING_STATE[state];
         this.bookable_id = data.bookable_id || data.created_by.id;
         this.bookable_type = data.bookable_type === 'User' ? data.created_by.type : data.bookable_type;
+        this.notes = data.notes;
+        this.created_by_admin = data.created_by_admin;
 
         if (Boolean(data.billing_account_attributes)) {
             this.client.organisation_primary_contact.first_name =
@@ -227,7 +233,9 @@ export class Booking {
             documents_attributes: this.documents_attributes,
             preference_allocations_attributes: this.preference_allocations_attributes,
             bookable_id: this.bookable_id,
-            bookable_type: this.bookable_type
+            bookable_type: this.bookable_type,
+            notes: this.notes,
+            created_by_admin: this.created_by_admin
         });
         return o;
     }

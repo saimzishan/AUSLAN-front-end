@@ -1,12 +1,12 @@
-<div class="separator" *ngIf="isHidden === 'false'"></div>
-<h4 class="text-center" *ngIf="isHidden ==='false'">{{title}}</h4>
+<div class="separator" *ngIf="!isHidden"></div>
+<h4 class="text-center" *ngIf="!isHidden">{{title}}</h4>
 <section id="page-booking">
     <main>
         <form name="{{isPreffered ? 'interpreter_block_prefered' : 'interpreter_block_blocked'}}">
             <div class="row ext">
                 <!-- div has no name property to bind -- big surprise -->
-                <div class="form-field">
-                    <label>DO YOU WANT TO ADD {{isHidden ==='false' ? '' : 'MORE'}} {{isPreffered ? 'PREFERED' : 'BLOCKED'}} INTERPRETERS?
+                <div class="form-field" *ngIf="!isHidden">
+                    <label>DO YOU WANT TO ADD {{isHidden ? 'MORE' : ''}} {{isPreffered ? 'PREFERED' : 'BLOCKED'}} INTERPRETERS?
                         <span mdTooltip="You can add prefered or blocked interpreters in this section." ><i class="inline-icon-tip"></i></span>
                     </label>
 
