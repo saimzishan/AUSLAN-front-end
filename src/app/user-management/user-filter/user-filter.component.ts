@@ -18,6 +18,9 @@ export class UserFilterComponent implements OnInit {
             this.selRoles.push(ROLE.Administrator);
             this.selRoles.push(ROLE.BookingOfficer);
         }
+        if (GLOBAL.currentUser.getRole() === ROLE.BookingOfficer) {
+            this.selRoles.push(ROLE.BookingOfficer);
+        }
 
         for (let r of this.selRoles) {
             this._selRoles.push(this.spacerPipe.transform(ROLE[r]));

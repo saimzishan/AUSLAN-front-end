@@ -86,6 +86,32 @@ Feature: Create, read, update and delete a User
 
   @runThis
   Scenario: Administrator should be able to update an Booking Officer
+    And I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on my admin home screen
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then I click on edit for an active existing Booking Officer
+    And I will be taken to the 'BOOKINGOFFICER Signup' page
+    And I update some Booking Officer fields
+    And I click on update
+    Then I see success notification
+
+  @runThis
+  Scenario: Administrator should be able to delete/disable an Booking Officer
+    And I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on my admin home screen
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then I click on edit for an active existing Booking Officer
+    And I will be taken to the 'BOOKINGOFFICER Signup' page
+    And I update Booking Officer available field
+    And I click on update
+    Then I see success notification
+
+  @runThis
+  Scenario: Booking Officer should be able to update an Booking-Officer
     And I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
     And I am on my admin home screen
@@ -98,9 +124,9 @@ Feature: Create, read, update and delete a User
     Then I see success notification
 
   @runThis
-  Scenario: Administrator should be able to delete/disable an Administrator
-    And I exist as an Administrator
-    And I sign in with valid Administrator credentials
+  Scenario: Booking Officer should be able to delete/disable an Booking Officer
+    And I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
     And I am on my admin home screen
     And I hover on the 'Profile'
     And I go to the 'User Management' list page
@@ -109,6 +135,19 @@ Feature: Create, read, update and delete a User
     And I update Booking Officer available field
     And I click on update
     Then I see success notification
+
+  @runThis
+  Scenario: Booking Officer should NOT be able to see Administrator
+    And I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    And I am on my admin home screen
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then The 0 valid ADMINISTRATOR should be in the list
+    Then I click on element by name 'user-roles'
+    When I hover on the userlist dropdown and I do not see 'Administrator'
+
+
 #
 ############################### New Interpreter ##############################
   @runThis
@@ -126,31 +165,60 @@ Feature: Create, read, update and delete a User
     And I hover on the 'Profile'
     And I go to the 'User Management' list page
     Then The 1 valid INTERPRETER should be in the list
-#  @ignoreThis
-#  Scenario: Administrator should be able to update an Interpreter
-#    Given There is 1 inactive Interpreter
-#    When I click on edit for an existing Interpreter
-#    And I update some Interpreter fields
-#    And I click on update
-#    Then I am on the 'User Management' list page
-#    And the updated Interpreter should be in the list
-#
-#  Scenario: Administrator should be able to delete/disable an Interpreter
-#    Given There is 1 active Interpreter
-#    When I click on edit for an active existing Interpreter
-#    And I update Interpreter available field
-#    And I click on 'SAVE'
-#    Then I am on the 'User Management' list page
-#    And the Interpreter should be disabled
-#
-#  Scenario: Administrator should not be able to add a new Interpreter with invalid information and should receive a visible warning
-#    When I click on 'Create New User'
-#    And I add an invalid Interpreter
-#    Then I am shown a validation error
-#    When I update the invalid Interpreter information
-#    And I click on 'Create'
-#    Then I am on the 'User Management' list page
-#    And the valid Interpreter should be in the list
+
+
+  @runThis
+  Scenario: Administrator should be able to update an Interpreter
+    And I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on my admin home screen
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then I click on edit for an active existing Interpreter
+    And I will be taken to the 'INTERPRETER Signup' page
+    And I update some Interpreter fields
+    And I click on update
+    Then I see success notification
+
+  @runThis
+  Scenario: Administrator should be able to delete/disable an Interpreter
+    And I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on my admin home screen
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then I click on edit for an active existing Interpreter
+    And I will be taken to the 'INTERPRETER Signup' page
+    And I update Interpreter available field
+    And I click on update
+    Then I see success notification
+
+
+  @runThis
+  Scenario: Booking Officer  should be able to update an Interpreter
+    And I exist as an Booking Officer
+    And I sign in with valid Booking Officer  credentials
+    And I am on my admin home screen
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then I click on edit for an active existing Interpreter
+    And I will be taken to the 'INTERPRETER Signup' page
+    And I update some Interpreter fields
+    And I click on update
+    Then I see success notification
+
+  @runThis
+  Scenario: Booking Officer  should be able to delete/disable an Interpreter
+    And I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    And I am on my admin home screen
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then I click on edit for an active existing Interpreter
+    And I will be taken to the 'INTERPRETER Signup' page
+    And I update Interpreter available field
+    And I click on update
+    Then I see success notification
 #
 ############################### New Client ##############################
   @runThis
@@ -167,32 +235,60 @@ Feature: Create, read, update and delete a User
     Then 'INDIVIDUALCLIENT' will be created
     And I hover on the 'Profile'
     And I go to the 'User Management' list page
-    Then The 1 valid INDIVIDUAL CLIENT should be in the list
-#  @ignoreThis
-#  Scenario: Administrator should be able to update an Client
-#    Given There is 1 inactive Client
-#    When I click on edit for an existing Client
-#    And I update some Client fields
-#    And I click on update
-#    Then I am on the 'User Management' list page
-#    And the updated Client should be in the list
-#
-#  Scenario: Administrator should be able to delete/disable an Client
-#    Given There is 1 active Client
-#    When I click on edit for an active existing Client
-#    And I update Client available field
-#    And I click on 'SAVE'
-#    Then I am on the 'User Management' list page
-#    And the Client should be disabled
-#
-#  Scenario: Administrator should not be able to add a new Client with invalid information and should receive a visible warning
-#    When I click on 'Create New User'
-#    And I add an invalid Client
-#    Then I am shown a validation error
-#    When I update the invalid Client information
-#    And I click on 'Create'
-#    Then I am on the 'User Management' list page
-#    And the valid Client should be in the list
+    Then The 1 valid INDIVIDUAL CLIENT should be in the LIST
+
+  @runThis
+  Scenario: Administrator should be able to update an Client
+    And I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on my admin home screen
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then I click on edit for an active existing Client
+    And I will be taken to the 'INDIVIDUALCLIENT Signup' page
+    And I update some Client fields
+    And I click on update
+    Then I see success notification
+
+  @runThis
+  Scenario: Administrator should be able to delete/disable an Client
+    And I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on my admin home screen
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then I click on edit for an active existing Client
+    And I will be taken to the 'INDIVIDUALCLIENT Signup' page
+    And I update Client available field
+    And I click on update
+    Then I see success notification
+
+
+  @runThis
+  Scenario: Booking Officer  should be able to update an Client
+    And I exist as an Booking Officer
+    And I sign in with valid Booking Officer  credentials
+    And I am on my admin home screen
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then I click on edit for an active existing Client
+    And I will be taken to the 'INDIVIDUALCLIENT Signup' page
+    And I update some Client fields
+    And I click on update
+    Then I see success notification
+
+  @runThis
+  Scenario: Booking Officer  should be able to delete/disable an Client
+    And I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    And I am on my admin home screen
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then I click on edit for an active existing Client
+    And I will be taken to the 'INDIVIDUALCLIENT Signup' page
+    And I update Client available field
+    And I click on update
+    Then I see success notification
 #
 ############################### New Organisational Representative ##############################
   @runThis
