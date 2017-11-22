@@ -29,12 +29,10 @@ export class InterpreterBoxComponent implements OnInit, AfterContentInit {
     ngOnInit() {
         this.title = this.isPreffered ?
             'PREFFERED INTERPRETER' : 'BLOCKED INTERPRETER';
-            if (this.preferAllocSub != null) {
                 this.preferAllocSub = this._sharedPreferedAllocationService.interpreterStream$.subscribe(
                     data => {
-                        this.addData(data);
+                        this.selectedInterpreters = data;
                     });
-            }
     }
 
     ngOndestroy() {
@@ -45,12 +43,6 @@ export class InterpreterBoxComponent implements OnInit, AfterContentInit {
 
     ngAfterContentInit() {
         this.needInterpreter = this.isHidden ? true : false ;
-    }
-
-    addData(data) {
-        data.forEach((interpreter) => {
-            this.selectedInterpreters.push(interpreter);
-        });
     }
 
     getIndex(interpreter) {
