@@ -238,6 +238,21 @@ export class BookingPage extends PageObject {
         this.getElementByName('cn_email').sendKeys('jt@star.com.au');
         this.getElementByName('cn_phone').sendKeys('0490394512');
 
+        let deaf_person_values = {
+            'deaf_person_name': 'Frank',
+            'deaf_person_last_name': 'Castle',
+            'deaf_person_email': 'petecastiligone@gmail.com',
+            'deaf_person_mobile': '0918273645'
+        }
+
+        Object.keys(deaf_person_values).forEach(field => {
+            this.getElementByName(field).getAttribute('value').then(value => {
+                if (!value) {
+                    this.getElementByName(field).sendKeys(deaf_person_values[field]);
+                }
+            });
+        });
+
         this.getElementByName('deaf_person_eaf').sendKeys('123');
     }
     createBookingWithAddressTimeAndInterpreter = (standard: string, startTime: string, endTime: string, interpreterNum: string) => {

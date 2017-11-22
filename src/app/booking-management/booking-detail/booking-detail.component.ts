@@ -96,14 +96,12 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 this.bookingModel.venue.end_time_iso =
                     this.datePipe.transform(this.bookingModel.venue.end_time_iso, 'yyyy-MM-ddTHH:mm:ss');
                 this.natureOfApptChange(null);
-
             }
 
             if (this.forEdit()) {
                 this.bookingHeading = 'EDIT BOOKING';
             } else {
                 this.bookingHeading = 'NEW BOOKING';
-
                 this.bookingModel.bookable_type = this.bookingModel.bookable_type || 'IndividualClient';
             }
         });
@@ -136,7 +134,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.isUserAdminORBookOfficer = <boolean> this.checkUserAdminORBookOfficer();
             this.isDisabledForAdmin = (this.forEdit() && !this.bookingModel.created_by_admin);
             this.onSelectionChange();
-            this.currentUserIsClient = this.isUserOrgRep()? 'false': 'true';  
+            this.currentUserIsClient = this.isUserOrgRep() ? 'false' : 'true';
             this.onClientSelectionChange();
             this.getUser();
             this.bookingModel.bookable_type = this.bookingModel.bookable_type || 'IndividualClient';
@@ -177,24 +175,24 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     public setInvoiceField() {
         let user = this.getBookableUser();
         if (user) {
-                    if (user['type'] === 'IndividualClient') {
-                        this.bookingModel.client.organisation_primary_contact = this.standardInvoice === 'true' ?
-                                                  user.individual_client_primary_contact : new Contact();
-                        this.bookingModel.client.organisation_billing_account.organisation_billing_address = this.standardInvoice === 'true' ?
-                                                  user.individual_client_billing_account.organisation_billing_address : new Address();
-                        this.bookingModel.client.organisation_billing_account.external_reference = this.standardInvoice === 'true' ?
-                                                  user.individual_client_billing_account.external_reference : '';
-                        this.bookingModel.deaf_person.eaf = this.standardInvoice === 'true' ? user.ndis_id : '';
-                    } else {
-                        this.bookingModel.client.organisation_primary_contact = this.standardInvoice === 'true' ?
-                                                  user.organisation_primary_contact : new Contact();
-                        this.bookingModel.client.organisation_billing_account.organisation_billing_address = this.standardInvoice === 'true' ?
-                                                  user.organisation_billing_account.organisation_billing_address : new Address();
-                        this.bookingModel.client.organisation_billing_account.external_reference = this.standardInvoice === 'true' ?
-                                                  user.organisation_billing_account.external_reference : '';
-                        this.bookingModel.deaf_person.eaf = '';
-                    }
-                }
+            if (user['type'] === 'IndividualClient') {
+                this.bookingModel.client.organisation_primary_contact = this.standardInvoice === 'true' ?
+                    user.individual_client_primary_contact : new Contact();
+                this.bookingModel.client.organisation_billing_account.organisation_billing_address = this.standardInvoice === 'true' ?
+                    user.individual_client_billing_account.organisation_billing_address : new Address();
+                this.bookingModel.client.organisation_billing_account.external_reference = this.standardInvoice === 'true' ?
+                    user.individual_client_billing_account.external_reference : '';
+                this.bookingModel.deaf_person.eaf = this.standardInvoice === 'true' ? user.ndis_id : '';
+            } else {
+                this.bookingModel.client.organisation_primary_contact = this.standardInvoice === 'true' ?
+                    user.organisation_primary_contact : new Contact();
+                this.bookingModel.client.organisation_billing_account.organisation_billing_address = this.standardInvoice === 'true' ?
+                    user.organisation_billing_account.organisation_billing_address : new Address();
+                this.bookingModel.client.organisation_billing_account.external_reference = this.standardInvoice === 'true' ?
+                    user.organisation_billing_account.external_reference : '';
+                this.bookingModel.deaf_person.eaf = '';
+            }
+        }
     }
 
     private getBookableUser() {
@@ -316,31 +314,27 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         }
 
         if (this.bookingModel.interpreters_required < 2 && this.isMoreInterpreterNeeded()) {
-
             let message = `This booking might require more than 1 interpreter. You've only requested 1 interpreter.
                             Are you sure you want to create this booking?` ;
             let title   = 'More Interpreter WARNING';
-            this.createModal(title, message); 
+            this.createModal(title, message);
             this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
-
                 if (result) {
                     this.proceedWithBooking();
-                } 
+                }
             });
-        }
-        else if (this.isLongBooking()){
+        } else if (this.isLongBooking()) {
             let message = `This booking will take 12 hours or more. Are you sure you want to submit this booking?` ;
             let title   = 'Long Booking WARNING';
-            this.createModal(title, message); 
+            this.createModal(title, message);
             this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
 
                 if (result) {
                     this.proceedWithBooking();
-                } 
+                }
             });
 
-        }
-        else {
+        } else {
             this.proceedWithBooking();
         }
     }
@@ -385,11 +379,11 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         return timeDiff;
     }
 
-    isLongBooking(){
-          return this.calculateTimeDiff() >= _ONE_HOUR*12; 
+    isLongBooking() {
+          return this.calculateTimeDiff() >= _ONE_HOUR * 12;
     }
 
-    createModal(title:any , message:any){
+    createModal(title: any, message: any) {
         let config: MdDialogConfig = {
             disableClose: true
         };
