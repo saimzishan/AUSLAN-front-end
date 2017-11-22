@@ -143,7 +143,7 @@ Feature: Create, read, update and delete a User
     And I am on my admin home screen
     And I hover on the 'Profile'
     And I go to the 'User Management' list page
-    Then The 0 valid ADMINISTRATOR should be in the list
+    Then The valid Administrator should not be in the list
     Then I click on element by name 'user-roles'
     When I hover on the userlist dropdown and I do not see 'Administrator'
 
