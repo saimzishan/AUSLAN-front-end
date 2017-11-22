@@ -82,7 +82,7 @@ Feature: Create, read, update and delete a User
     Then 'BOOKINGOFFICER' will be created
     And I hover on the 'Profile'
     And I go to the 'User Management' list page
-    Then The valid BOOKING OFFICER should be in the list are more than one
+    Then The 1 valid BOOKING OFFICER should be in the list
 
   @runThis
   Scenario: Booking Officer should be able to add a new Booking-Officer
@@ -98,7 +98,7 @@ Feature: Create, read, update and delete a User
     Then 'BOOKINGOFFICER' will be created
     And I hover on the 'Profile'
     And I go to the 'User Management' list page
-    Then The 1 valid BOOKING OFFICER should be in the list
+    Then The valid BOOKING OFFICER should be in the list are more than one
 
   @runThis
   Scenario: Administrator should be able to update an Booking Officer
