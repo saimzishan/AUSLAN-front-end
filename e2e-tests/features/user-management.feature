@@ -27,33 +27,46 @@ Feature: Create, read, update and delete a User
     And I go to the 'User Management' list page
     Then The 3 valid Administrator should be in the list
 
-#  @ignoreThis
-#  Scenario: Administrator should be able to update an Administrator
-#    Given There is 1 inactive Administrator
-#    When I click on edit for an existing Administrator
-#    And I update some Administrator fields
-#    And I click on update
-#    Then I am on the 'User Management' list page
-#    And the updated Administrator should be in the list
-#
-#  Scenario: Administrator should be able to delete/disable an Administrator
-#    Given There is 1 active Administrator
-#    Given There is at least 1 Administrator
-#    When I click on edit for an active existing Administrator
-#    And I update Administrator available field
-#    And I click on 'SAVE'
-#    Then I am on the 'User Management' list page
-#    And the Administrator should be disabled
-#
-#  Scenario: Administrator should not be able to add a new Administrator with invalid information and should receive a visible warning
-#    When I click on 'Create New User'
-#    And I add an invalid Administrator
-#    Then I am shown a validation error
-#    When I update the invalid Administrator information
-#    And I click on 'Create'
-#    Then I am on the 'User Management' list page
-#    And the valid Administrator should be in the list
-#
+  @runThis
+  Scenario: Administrator should be able to update an Admin
+    And I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on my admin home screen
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then I click on edit for an active existing Administrator
+    And I will be taken to the 'ADMINISTRATOR Signup' page
+    And I update some Administrator fields
+    And I click on update
+    Then I see success notification
+
+  @runThis
+  Scenario: Administrator should be able to delete/disable an Administrator
+    And I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on my admin home screen
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then I click on edit for an active existing Administrator
+    And I will be taken to the 'ADMINISTRATOR Signup' page
+    And I update Administrator available field
+    And I click on update
+    Then I see success notification
+
+  @runThis
+  Scenario: Administrator should not be able to add a new Administrator with invalid information and should receive a visible warning
+    And I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on my admin home screen
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then I click on element by name 'user-roles'
+    When I hover on the userlist dropdown and select 'Administrator'
+    And I will be taken to the 'ADMINISTRATOR Signup' page
+    And I add an invalid Administrator
+    And I click on update
+    Then I see validation errors
+
 ############################### New Booking Officer ##############################
   @runThis
   Scenario: Administrator should be able to add a new Booking-Officer

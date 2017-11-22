@@ -41,7 +41,7 @@
 													<span>Minimum 2 characters required.</span>!</span>
                             </div>
                         </div>
-                        <div class="medium-6 columns">
+                        <div *ngIf="false === isEdit" class="medium-6 columns">
                             <div class="form-field">
                                 <label class="icon-lock">
                                     PASSWORD *</label>
@@ -58,7 +58,7 @@
 
                             </div>
                         </div>
-                        <div class="medium-6 columns">
+                        <div *ngIf="false === isEdit" class="medium-6 columns">
                             <div class="form-field">
                                 <label class="icon-lock">
                                     CONFIRM PASSWORD *</label>

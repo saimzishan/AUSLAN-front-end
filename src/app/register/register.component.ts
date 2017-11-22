@@ -149,10 +149,14 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
         this.model.disabled = this.selectedStatus === 'Disabled';
         this.selectedStatus = '';
-        this.userService.createUser(this.model)
+        this.userService.updateUser(this.model)
             .subscribe((res: any) => {
-                    if (res.status === 204) {
+                    if (res.status === 200) {
                         // UI Notification
+
+                        let route = '/user-management';
+                        this.router.navigate([route]);
+                        this.spinnerService.requestInProcess(false);
                         this.notificationServiceBus.launchNotification(false, 'User details updated Successfully');
                     }
                 },

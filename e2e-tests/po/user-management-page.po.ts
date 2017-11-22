@@ -14,7 +14,6 @@ export class UserManagementPage extends PageObject {
      * Look at chai-import.ts for further details
      * */
 
-    saveBtn;
     cnt = 0;
 
     returnValidUser = (type: string) => {
@@ -24,27 +23,27 @@ export class UserManagementPage extends PageObject {
             case 'Administrator':
                 chosen_type = 'Administrator';
                 valid_user = new Administrator('the_admin' + Math.round(Math.random() * 100) + '@curvetomorrow.com.au',
-                    'Pass@1234', 'Administrator', 'The', '0917257725');
+                    'Pass@1234', 'Administrator', 'The', '0490000111');
                 break;
             case 'Booking Officer':
                 chosen_type = 'Booking Officer';
                 valid_user = new BookingOfficer('the_bookingofficer' + Math.round(Math.random() * 100) + '@curvetomorrow.com.au',
-                    'Pass@1234', 'BookingOfficer', 'The', '0917257725');
+                    'Pass@1234', 'BookingOfficer', 'The', '0490000111');
                 break;
             case 'Interpreter':
                 chosen_type = 'Interpreter';
                 valid_user = new Interpreter('the_interpreter' + Math.round(Math.random() * 100) + '@curvetomorrow.com.au',
-                    'Pass@1234', 'Interpreter', 'The', '0917257725');
+                    'Pass@1234', 'Interpreter', 'The', '0490000111');
                 break;
             case 'Individual Client':
                 chosen_type = 'Individual Client';
                 valid_user = new Client('the_client' + Math.round(Math.random() * 100) + '@curvetomorrow.com.au',
-                    'Pass@1234', 'Client', 'The', '0917257725');
+                    'Pass@1234', 'Client', 'The', '0490000111');
                 break;
             case 'Organisational Representative':
                 chosen_type = 'Organisational';
                 valid_user = new Organisation('the_orgrep' + Math.round(Math.random() * 100) + '@curvetomorrow.com.au',
-                    'Pass@1234', 'OrgRep', 'The', '0917257725');
+                    'Pass@1234', 'OrgRep', 'The', '0490000111');
                 break;
         }
         return {type: chosen_type, user: valid_user};
@@ -57,27 +56,27 @@ export class UserManagementPage extends PageObject {
             case 'Administrator':
                 chosen_type = 'Administrator';
                 invalid_user = new Administrator('the_admin2curvetomorrow.com.au',
-                    'Pass@1234', 'Administrator', 'The', '0917257725');
+                    'Pass@1234', 'Administrator', 'The', '0490000111');
                 break;
             case 'Booking Officer':
                 chosen_type = 'Booking Officer';
                 invalid_user = new BookingOfficer('the_bookingofficer2curvetomorrow.com.au',
-                    'Pass@1234', 'BookingOfficer', 'The', '0917257725');
+                    'Pass@1234', 'BookingOfficer', 'The', '0490000111');
                 break;
             case 'Interpreter':
                 chosen_type = 'Interpreter';
                 invalid_user = new Interpreter('the_interpreter2curvetomorrow.com.au',
-                    'Pass@1234', 'Interpreter', 'The', '0917257725');
+                    'Pass@1234', 'Interpreter', 'The', '0490000111');
                 break;
             case 'Client':
                 chosen_type = 'Individual Client';
                 invalid_user = new Client('the_client2curvetomorrow.com.au',
-                    'Pass@1234', 'Client', 'The', '0917257725');
+                    'Pass@1234', 'Client', 'The', '0490000111');
                 break;
             case 'Organisational Representative':
                 chosen_type = 'Organisational';
                 invalid_user = new Organisation('the_orgrep2curvetomorrow.com.au',
-                    'Pass@1234', 'OrgRep', 'The', '0917257725');
+                    'Pass@1234', 'OrgRep', 'The', '0490000111');
                 break;
         }
         return {type: chosen_type, user: invalid_user};
@@ -98,32 +97,24 @@ export class UserManagementPage extends PageObject {
     }
 
     didFinishedRendering = () => {
-        this.saveBtn = this.saveBtn;
-        return browser.wait(protractor.ExpectedConditions.presenceOf(this.saveBtn), 10000).then(() => {
-            expect(this.saveBtn).to.exist;
-        });
+
     }
 
     createUserClick = () => {
         let newUserBtn = this.getButtonByText('+ New User');
-        return newUserBtn.click().then(() => {
-            expect(this.getElementByCss('.md-dialog')).to.be.exist;
-        });
+        return newUserBtn.click();
     }
 
     addValidUser = (type: string) => {
         let type_valid_user = this.returnTypeAndUser(type, true);
         let chosen_type = type_valid_user.type;
         let valid_user = type_valid_user.user;
-        let dlg = this.getElementByCss('.md-dialog');
-        let role = this.getButtonByTextInsideElement(dlg, chosen_type);
-        role.click();
-        let fn = this.getElementInside(dlg, 'first_name');
-        let ln = this.getElementInside(dlg, 'last_name');
-        let el = this.getElementInside(dlg, 'email');
-        let mb = this.getElementInside(dlg, 'mobile');
-        let ps = this.getElementInside(dlg, 'password');
-        let cps = this.getElementInside(dlg, 'certainPassword');
+        let fn = this.getElementByName('first_name');
+        let ln = this.getElementByName( 'last_name');
+        let el = this.getElementByName( 'email');
+        let mb = this.getElementByName( 'mobile');
+        let ps = this.getElementByName( 'password');
+        let cps = this.getElementByName( 'certainPassword');
 
         this.setValue(el, valid_user.email);
         this.setValue(ps, valid_user.pass);
@@ -131,24 +122,20 @@ export class UserManagementPage extends PageObject {
         this.setValue(mb, valid_user.mobile_num);
         this.setValue(fn, valid_user.first_name);
         this.setValue(ln, valid_user.last_name);
-        return this.saveBtn.isEnabled().then( (enabled) => {
+        return this.getElementByName('register_user').isEnabled().then( (enabled) => {
             expect(enabled).to.equal(true);
         });
     }
 
     addInvalidUser = (type: string) => {
         let type_invalid_user = this.returnTypeAndUser(type, false);
-        let chosen_type = type_invalid_user.type;
         let invalid_user = type_invalid_user.user;
-        let dlg = this.getElementByCss('.md-dialog');
-        let role = this.getButtonByTextInsideElement(dlg, chosen_type);
-        role.click();
-        let fn = this.getElementInside(dlg, 'first_name');
-        let ln = this.getElementInside(dlg, 'last_name');
-        let el = this.getElementInside(dlg, 'email');
-        let mb = this.getElementInside(dlg, 'mobile');
-        let ps = this.getElementInside(dlg, 'password');
-        let cps = this.getElementInside(dlg, 'certainPassword');
+        let fn = this.getElementByName( 'first_name');
+        let ln = this.getElementByName( 'last_name');
+        let el = this.getElementByName( 'email');
+        let mb = this.getElementByName( 'mobile');
+        let ps = this.getElementByName( 'password');
+        let cps = this.getElementByName( 'certainPassword');
 
         this.setValue(el, invalid_user.email);
         this.setValue(ps, invalid_user.pass);
@@ -156,8 +143,8 @@ export class UserManagementPage extends PageObject {
         this.setValue(mb, invalid_user.mobile_num);
         this.setValue(fn, invalid_user.first_name);
         this.setValue(ln, invalid_user.last_name);
-        return this.saveBtn.isEnabled().then( (enabled) => {
-            expect(enabled).to.equal(false);
+        return this.getElementByName('register_user').isEnabled().then( (enabled) => {
+            expect(enabled).to.equal(true);
         });
     }
 
@@ -165,7 +152,7 @@ export class UserManagementPage extends PageObject {
         let tr = $$('table.custom tr');
         return tr.count().then((count) => {
             this.cnt = count - 1;
-            return this.saveBtn.click();
+            return this.getElementByName('register_user').click();
         });
     }
 
@@ -201,17 +188,15 @@ export class UserManagementPage extends PageObject {
 
     updateValidUserFields = (type: string) => {
         let type_valid_user = this.returnTypeAndUser(type, true);
-        let chosen_type = type_valid_user.type;
         let valid_user = type_valid_user.user;
-        let dlg = this.getElementByCss('.md-dialog');
-        let ln = this.getElementInside(dlg, 'last_name');
-        let mb = this.getElementInside(dlg, 'mobile');
+        let ln = this.getElementByName( 'last_name');
+        let mb = this.getElementByName( 'mobile');
 
         mb.clear();
         this.setValue(mb, valid_user.mobile_num);
         ln.clear();
         this.setValue(ln, valid_user.last_name);
-        return this.saveBtn.isEnabled().then( (enabled) => {
+        return this.getElementByName('register_user').isEnabled().then( (enabled) => {
             expect(enabled).to.equal(true);
         });
     }
@@ -219,11 +204,10 @@ export class UserManagementPage extends PageObject {
     updateInvalidatedField = (type: string) => {
         let type_valid_user = this.returnTypeAndUser(type, true);
         let valid_user = type_valid_user.user;
-        let dlg = this.getElementByCss('.md-dialog');
-        let el = this.getElementInside(dlg, 'email');
+        let el = this.getElementByName( 'email');
         el.clear();
         this.setValue(el, valid_user.email);
-        return this.saveBtn.isEnabled().then( (enabled) => {
+        return this.getElementByName('register_user').isEnabled().then( (enabled) => {
             expect(enabled).to.equal(true);
         });
     }
@@ -231,27 +215,23 @@ export class UserManagementPage extends PageObject {
     findClickableActionButton = (name: string, active: string, type: string) => {
         let type_valid_user = this.returnTypeAndUser(type, true);
         let chosen_type = type_valid_user.type;
-        return this.getAllByCSSandText('.truncated-text', chosen_type).then( (list_of_ORs) => {
+        return this.getAllByCSSandText('.truncated-text', chosen_type).then((list_of_ORs) => {
             let userRow: any;
-            if (active === 'active ') {
-                let first_OR = list_of_ORs[0];
-                userRow = this.getParent(first_OR);
-            } else {
-                let first_OR = list_of_ORs[0];
-                userRow = this.getParent(first_OR);
-            }
+            let first_OR = list_of_ORs[0];
+            userRow = this.getParent(first_OR);
+
             let action_button = this.getElementInsideByCSS(userRow, '.icon-actions');
             // hover over that button
             browser.actions().mouseMove(action_button).perform();
-            return this.getElementInsideByCSS(userRow, '.icon-' + name);
+            return browser.sleep(200).then( () => {
+              return this.getElementInsideByCSS(userRow, '.icon-' + name);
+            });
         });
     }
 
     clickOnEditUser = (active: string, type: string) => {
         return this.findClickableActionButton('edit', active, type).then((edit) => {
-            return edit.click().then(() => {
-                expect(this.getElementByCss('.md-dialog')).to.be.exist;
-            });
+            return edit.click();
         });
     }
 
@@ -260,7 +240,9 @@ export class UserManagementPage extends PageObject {
             return btn.click();
         });
     }
-
+    userUpdated = () => {
+        return NotificationObject.getNotificationContent('Successfully');
+    }
     clickOnSkillMatrix = (active: string, type: string) => {
         return this.findClickableActionButton('skill-matrix', active, type).then((btn) => {
             return btn.click();
@@ -268,28 +250,27 @@ export class UserManagementPage extends PageObject {
     }
 
     updateAvailableField = (type: string) => {
-        let dlg = this.getElementByCss('.md-dialog');
-        let trigger = this.getElementInsideByCSS(dlg, '.mat-select-trigger');
+        let trigger = this.getElementByName( 'selStatus');
         trigger.click();
-        // this.setValue(el, invalid_org.email);
-        let disable = this.getElementByCSSandText('.mat-option', 'Disabled');
-        let isDisabled = disable.getText();
-        expect(isDisabled).to.equal('Disabled');
-        disable.click();
-        return this.saveBtn.isEnabled().then( (enabled) => {
-            expect(enabled).to.equal(true);
+        let disable = this.getElementByCSSandText('option', 'Disabled');
+        return disable.getText().then( (disable_txt) => {
+            expect(disable_txt).to.equal('Disabled');
+            disable.click();
         });
     }
 
     clickOnUpdateOrSaveUser = () => {
-        return this.saveBtn.click();
+        return this.getElementByName('register_user').click();
     }
 
     shouldShowTheValidNotification = (type: string) => {
 
         return NotificationObject.getNotificationContent('The password has been reset');
     }
+    shouldShowInValidNotification = () => {
 
+        return NotificationObject.getNotificationContent('Kindly fill all the required (*) fields');
+    }
     hoverOnActions = (type: string) => {
         let trList = this.trListByUserType(type);
         let firstTr = trList.get(0);

@@ -38,6 +38,8 @@ defineSupportCode(({Given, Then, When}) => {
 
     Then(/^I update some (.*) fields/, userManagementPO.updateValidUserFields);
     Then(/^I update (.*) available field/, userManagementPO.updateAvailableField);
+    When(/^I see success notification$/, userManagementPO.userUpdated);
+    When(/^I see validation errors$/, userManagementPO.shouldShowInValidNotification);
 
     When(/^I click on update$/, userManagementPO.clickOnUpdateOrSaveUser);
     When(/^I hover on the 'Actions' of the (.*)$/, userManagementPO.hoverOnActions);
@@ -51,4 +53,5 @@ defineSupportCode(({Given, Then, When}) => {
 
     // ================================== TRIGGER PASSWORD RESET ========================================
     When(/^I click on reset password for an (.*) existing (.*)$/, userManagementPO.clickOnResetPassword);
+
 });
