@@ -1,5 +1,5 @@
 import {Component, Input, Output, EventEmitter} from '@angular/core';
-import {Interpreter, User} from '../../shared/model/user.entity';
+import {IndividualClient, Interpreter, OrganisationalRepresentative, User} from '../../shared/model/user.entity';
 import {SpacerPipe} from '../../shared/pipe/spacer.pipe';
 import {LinkAuth} from '../../shared/router/linkhelper';
 import {ROLE} from '../../shared/model/role.enum';
@@ -11,7 +11,7 @@ import {ROLE} from '../../shared/model/role.enum';
     styleUrls: ['./user-list.component.css']
 })
 export class UserListComponent {
-    @Input('userList') userList: Array<User> = [];
+    @Input('userList') userList: Array<any> = [];
     @Output() onResetPass = new EventEmitter<User>();
 
     constructor(private linkAuth: LinkAuth) {

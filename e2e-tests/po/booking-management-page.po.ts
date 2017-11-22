@@ -44,6 +44,19 @@ export class BookingManagementPage extends PageObject {
             });
         });
     }
+    selectionNotPresent = (headerTitle: string, selection: string) => {
+        let headerCss = '.dropdown#' + {
+            'Status': 'booking-status',
+            'State': 'booking-state',
+            'Type': 'booking-type',
+            'userlist': 'user-roles'
+        }[headerTitle];
+        let el = this.getElementByCss(headerCss);
+        return browser.actions().mouseMove(el).perform().then(() => {
+            let listEl = this.getElementByCSSandText(headerCss + ' ul li a', selection);
+            expect(listEl.isPresent()).to.eventually.false;
+        });
+    }
     hoverOnTableHeader = (headerTitle: string, selection: string) => {
         let headerCss = '.dropdown#' + {
             'Status': 'booking-status',
@@ -61,7 +74,6 @@ export class BookingManagementPage extends PageObject {
             });
         });
     }
-
     clickOnProfile = () => {
         return this.getElementByID('lnkProfile').click();
     }
