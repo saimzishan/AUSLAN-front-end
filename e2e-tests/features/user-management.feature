@@ -178,6 +178,7 @@ Feature: Create, read, update and delete a User
     And I will be taken to the 'INTERPRETER Signup' page
     And I update some Interpreter fields
     And I click on update
+    And I wait for 3000 milli-seconds
     Then I see success notification
 
   @runThis
@@ -306,32 +307,59 @@ Feature: Create, read, update and delete a User
     And I hover on the 'Profile'
     And I go to the 'User Management' list page
     Then The 1 valid ORGANISATIONAL REPRESENTATIVE should be in the list
-#
-#  Scenario: Administrator should be able to update an Organisational Representative
-#    Given There is 1 inactive Organisational Representative
-#    When I click on edit for an existing Organisational Representative
-#    And I update some Organisational Representative fields
-#    And I click on update
-#    Then I am on the 'User Management' list page
-#    And the updated Organisational Representative should be in the list
-#
-#  Scenario: Administrator should be able to delete/disable an Organisational Representative
-#    Given There is 1 inactive Organisational Representative
-#    When I click on edit for an active existing Organisational Representative
-#    And I update Organisational Representative available field
-#    And I click on 'SAVE'
-#    Then I am on the 'User Management' list page
-#    And the Organisational Representative should be disabled
-#
-#  Scenario: Administrator should not be able to add a new Organisational Representative with invalid information and should receive a visible warning
-#    When I click on 'Create New User'
-#    And I add an invalid Organisational Representative
-#    Then I am shown a validation error
-#    When I update the invalid Organisational Representative information
-#    And I click on 'Create'
-#    Then I am on the 'User Management' list page
-#    And the valid Organisational Representative should be in the list
 
+  @runThis
+  Scenario: Administrator should be able to update an Organisational Representative
+    And I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on my admin home screen
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then I click on edit for an active existing Organisational Representative
+    And I will be taken to the 'ORGANISATIONALREPRESENTATIVE Signup' page
+    And I update some Organisational Representative fields
+    And I click on update
+    Then I see success notification
+
+  @runThis
+  Scenario: Administrator should be able to delete/disable an Client
+    And I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on my admin home screen
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then I click on edit for an active existing Organisational Representative
+    And I will be taken to the 'ORGANISATIONALREPRESENTATIVE Signup' page
+    And I update Organisational Representative available field
+    And I click on update
+    Then I see success notification
+
+
+  @runThis
+  Scenario: Booking Officer  should be able to update an Client
+    And I exist as an Booking Officer
+    And I sign in with valid Booking Officer  credentials
+    And I am on my admin home screen
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then I click on edit for an active existing Organisational Representative
+    And I will be taken to the 'ORGANISATIONALREPRESENTATIVE Signup' page
+    And I update some Organisational Representative fields
+    And I click on update
+    Then I see success notification
+
+  @runThis
+  Scenario: Booking Officer  should be able to delete/disable an Client
+    And I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    And I am on my admin home screen
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then I click on edit for an active existing Organisational Representative
+    And I will be taken to the 'ORGANISATIONALREPRESENTATIVE Signup' page
+    And I update Organisational Representative available field
+    And I click on update
+    Then I see success notification
 # Trigger
   @runThis
   Scenario: Administrator should be able to trigger password reset for Interpreter

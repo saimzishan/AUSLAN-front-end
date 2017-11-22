@@ -35,12 +35,14 @@ export class UserManagementPage extends PageObject {
                 valid_user = new Interpreter('the_interpreter' + Math.round(Math.random() * 100) + '@curvetomorrow.com.au',
                     'Pass@1234', 'Interpreter', 'The', '0490000111');
                 break;
+            case 'Client':
             case 'Individual Client':
                 chosen_type = 'Individual Client';
                 valid_user = new Client('the_client' + Math.round(Math.random() * 100) + '@curvetomorrow.com.au',
                     'Pass@1234', 'Client', 'The', '0490000111');
                 break;
             case 'Organisational Representative':
+            case 'Organisational':
                 chosen_type = 'Organisational';
                 valid_user = new Organisation('the_orgrep' + Math.round(Math.random() * 100) + '@curvetomorrow.com.au',
                     'Pass@1234', 'OrgRep', 'The', '0490000111');

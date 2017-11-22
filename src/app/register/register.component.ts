@@ -2,7 +2,7 @@ import {Component, OnInit, Input, OnDestroy} from '@angular/core';
 import {UserService} from '../api/user.service';
 import {
     Accountant, Administrator, BookingOfficer, IndividualClient, Interpreter, Organisational, OrganisationalRepresentative,
-    User
+    User, UserFactory
 } from '../shared/model/user.entity';
 import {ROLE} from '../shared/model/role.enum';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -52,46 +52,46 @@ export class RegisterComponent implements OnInit, OnDestroy {
                 JSON.parse(params['edit_user']) : {};
             switch (this.selectedRole) {
                 case 'Interpreter'.toUpperCase():
-                    let int = new Interpreter(jsonData);
-                    this.model = int;
+                    let int1 = this.isEdit ? UserFactory.createUser(jsonData) : new Interpreter();
+                    this.model = int1;
                     this.model.role = ROLE.Interpreter;
 
                     break;
 
                 case 'IndividualClient'.toUpperCase():
-                    let ic = new IndividualClient(jsonData);
+                    let ic = this.isEdit ? UserFactory.createUser(jsonData) : new IndividualClient(jsonData);
                     this.model = ic;
                     this.model.role = ROLE.IndividualClient;
 
                     break;
                 case 'OrganisationalRepresentative'.toUpperCase():
-                    let orgr = new OrganisationalRepresentative(jsonData);
+                    let orgr = this.isEdit ? UserFactory.createUser(jsonData) : new OrganisationalRepresentative(jsonData);
                     this.model = orgr;
                     this.model.role = ROLE.OrganisationalRepresentative;
 
                     break;
                 case 'Organisation'.toUpperCase():
-                    let org = new OrganisationalRepresentative(jsonData);
+                    let org = this.isEdit ? UserFactory.createUser(jsonData) : new OrganisationalRepresentative(jsonData);
                     this.model = org;
                     this.model.role = ROLE.Organisation;
 
                     break;
 
                 case 'Administrator'.toUpperCase():
-                    let admin = new Administrator(jsonData);
+                    let admin = this.isEdit ? UserFactory.createUser(jsonData) : new Administrator();
                     this.model = admin;
                     this.model.role = ROLE.Administrator;
 
                     break;
 
                 case 'BookingOfficer'.toUpperCase():
-                    let bo = new BookingOfficer(jsonData);
+                    let bo = this.isEdit ? UserFactory.createUser(jsonData) : new BookingOfficer();
                     this.model = bo;
                     this.model.role = ROLE.BookingOfficer;
 
                     break;
                 case 'Accountant'.toUpperCase():
-                    let acc = new BookingOfficer(jsonData);
+                    let acc = this.isEdit ? UserFactory.createUser(jsonData) : new Accountant();
                     this.model = acc;
                     this.model.role = ROLE.Accountant;
 
