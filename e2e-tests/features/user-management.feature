@@ -83,7 +83,8 @@ Feature: Create, read, update and delete a User
     And I hover on the 'Profile'
     And I go to the 'User Management' list page
     Then The 1 valid BOOKING OFFICER should be in the list
-
+    
+  @runThis
   Scenario: Booking Officer should be able to add a new Booking-Officer
     And I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
