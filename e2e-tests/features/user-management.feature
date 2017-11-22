@@ -83,30 +83,32 @@ Feature: Create, read, update and delete a User
     And I hover on the 'Profile'
     And I go to the 'User Management' list page
     Then The 1 valid BOOKING OFFICER should be in the list
-#  Scenario: Administrator should be able to update an Booking Officer
-#    Given There is 1 inactive Booking Officer
-#    When I click on edit for an existing Booking Officer
-#    And I update some Booking Officer fields
-#    And I click on update
-#    Then I am on the 'User Management' list page
-#    And the updated Booking Officer should be in the list
-#
-#  Scenario: Administrator should be able to delete/disable an Booking Officer
-#    Given There is 1 active Booking Officer
-#    When I click on edit for an existing Booking Officer
-#    And I update Booking Officer available field
-#    And I click on 'SAVE'
-#    Then I am on the 'User Management' list page
-#    And the Booking Officer should be disabled
-#
-#  Scenario: Administrator should not be able to add a new Booking Officer with invalid information and should receive a visible warning
-#    When I click on 'Create New User'
-#    And I add an invalid Booking Officer
-#    Then I am shown a validation error
-#    When I update the invalid Booking Officer information
-#    And I click on 'Create'
-#    Then I am on the 'User Management' list page
-#    And the valid Booking Officer should be in the list
+
+  @runThis
+  Scenario: Administrator should be able to update an Booking Officer
+    And I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    And I am on my admin home screen
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then I click on edit for an active existing Booking Officer
+    And I will be taken to the 'BOOKINGOFFICER Signup' page
+    And I update some Booking Officer fields
+    And I click on update
+    Then I see success notification
+
+  @runThis
+  Scenario: Administrator should be able to delete/disable an Administrator
+    And I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on my admin home screen
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then I click on edit for an active existing Booking Officer
+    And I will be taken to the 'BOOKINGOFFICER Signup' page
+    And I update Booking Officer available field
+    And I click on update
+    Then I see success notification
 #
 ############################### New Interpreter ##############################
   @runThis

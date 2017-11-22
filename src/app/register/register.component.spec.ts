@@ -58,12 +58,11 @@ describe('RegisterComponent', () => {
             fixture = TestBed.createComponent(RegisterComponent);
             component = fixture.componentInstance;
             component.model = new User();
-            spyOn(component, 'addUser').and.callThrough();
+            component.isEdit = false;
+            spyOn(component, 'applyChanges').and.callThrough();
 
             fixture.debugElement.query(By.css('input[name=first_name]')).nativeElement.value = 'dummy';
             fixture.debugElement.query(By.css('input[name=last_name]')).nativeElement.value = 'dummy';
-            fixture.debugElement.query(By.css('input[name=password]')).nativeElement.value = 'dummy@admin.com';
-            fixture.debugElement.query(By.css('input[name=certainPassword]')).nativeElement.value = 'dummy@admin.com';
             fixture.debugElement.query(By.css('input[name=email]')).nativeElement.value = 'dummy@admin.com';
             fixture.detectChanges();
 
@@ -77,7 +76,7 @@ describe('RegisterComponent', () => {
 
 
         describe('RegisterComponent for OrganisationalRepresentative', () => {
-            it('should call adduser when OrganisationalRepresentative is selected', (done) => {
+            it('should call applyChanges when OrganisationalRepresentative is selected', (done) => {
                 component.selectedRole = 'ORGANISATION';
                 let org = new OrganisationalRepresentative({});
                 component.model = org;
@@ -85,7 +84,7 @@ describe('RegisterComponent', () => {
                 fixture.debugElement.query(By.css('button[name=register_user]')).nativeElement.click();
 
                 fixture.whenStable().then(() => {
-                    expect(component.addUser).toHaveBeenCalled();
+                    expect(component.applyChanges).toHaveBeenCalled();
                     expect(component.model.role).toEqual(ROLE.Organisation);
                     done();
                 });
@@ -96,7 +95,7 @@ describe('RegisterComponent', () => {
 
 
         describe('RegisterComponent for Client', () => {
-            it('should call adduser when IndividualClient is selected', (done) => {
+            it('should call applyChanges when IndividualClient is selected', (done) => {
                 component.selectedRole = 'INDIVIDUALCLIENT';
                 let ic = new IndividualClient({});
                 component.model = ic;
@@ -104,7 +103,7 @@ describe('RegisterComponent', () => {
                 fixture.debugElement.query(By.css('button[name=register_user]')).nativeElement.click();
 
                 fixture.whenStable().then(() => {
-                    expect(component.addUser).toHaveBeenCalled();
+                    expect(component.applyChanges).toHaveBeenCalled();
                     expect(component.model.role).toEqual(ROLE.IndividualClient);
                     done();
                 });
@@ -114,7 +113,7 @@ describe('RegisterComponent', () => {
         });
 
         describe('RegisterComponent for interpreter', () => {
-            it('should call adduser when Interpreter is selected', (done) => {
+            it('should call applyChanges when Interpreter is selected', (done) => {
                 component.selectedRole = 'INTERPRETER';
                 let int = new Interpreter();
                 component.model = int;
@@ -122,7 +121,7 @@ describe('RegisterComponent', () => {
                 fixture.debugElement.query(By.css('button[name=register_user]')).nativeElement.click();
 
                 fixture.whenStable().then(() => {
-                    expect(component.addUser).toHaveBeenCalled();
+                    expect(component.applyChanges).toHaveBeenCalled();
                     expect(component.model.role).toEqual(ROLE.Interpreter);
                     done();
                 });

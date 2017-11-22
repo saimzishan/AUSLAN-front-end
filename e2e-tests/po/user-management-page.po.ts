@@ -69,11 +69,13 @@ export class UserManagementPage extends PageObject {
                     'Pass@1234', 'Interpreter', 'The', '0490000111');
                 break;
             case 'Client':
+            case 'Individual Client':
                 chosen_type = 'Individual Client';
                 invalid_user = new Client('the_client2curvetomorrow.com.au',
                     'Pass@1234', 'Client', 'The', '0490000111');
                 break;
             case 'Organisational Representative':
+            case 'Organisational':
                 chosen_type = 'Organisational';
                 invalid_user = new Organisation('the_orgrep2curvetomorrow.com.au',
                     'Pass@1234', 'OrgRep', 'The', '0490000111');
