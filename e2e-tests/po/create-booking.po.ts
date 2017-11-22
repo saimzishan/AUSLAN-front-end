@@ -192,7 +192,10 @@ export class BookingPage extends PageObject {
     createBookingForPerth = () => {
         return this.createBookingWithAddressTimeAndInterpreter('standard', '10:15AM', '11:15AM', '2');
     }
-    
+
+    changeBookingAddressToPerth = () => {
+        return this.setPerthAddress();
+    }
     selectClientAsBookbable = () => {
         return this.getElementByName('booking_for').sendKeys('ted');
     }
@@ -236,6 +239,19 @@ export class BookingPage extends PageObject {
         this.getElementByName('cn_phone').sendKeys('0490394512');
 
         this.getElementByName('deaf_person_eaf').sendKeys('123');
+    }
+
+    setPerthAddress = () => {
+        browser.sleep(10000);
+        this.getAllElementByName('address_unit_num').get(0).sendKeys('F-Space');
+        this.getElementByName('address_unit_num').sendKeys(protractor.Key.TAB);
+        this.getElementByName('address_street_number').clear();
+        this.getElementByName('address_street_number').sendKeys('18/27');
+        this.getElementByName('address_street').clear();
+        this.getElementByName('address_street').sendKeys('Market St Fremantle');
+        this.getElementByName('address_post_code').sendKeys('6160');
+        this.getElementByName('address_suburb').sendKeys('Perth');
+        this.getElementByName('address_state').sendKeys('WA');
     }
 
     createBookingWithAddressTimeAndInterpreter = (standard: string, startTime: string, endTime: string, interpreterNum: string) => {

@@ -396,7 +396,7 @@ Feature: Booking Management
     And I am on the bookings page
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
-    When I fill New Booking form fields with address greater than 40 kilometers
+    When I fill New Booking form fields correctly
     And I select the bookable for client
     And I click the create booking button
     Then I will get an error notification saying "Kindly accept Terms and Conditions"
@@ -408,6 +408,7 @@ Feature: Booking Management
     Then I get a valid create booking notification
     And I am on the bookings page
     And I will be shown with bookings
+    Then I am shown with 1 booking
 
 #  @runThis
 #  Scenario: Individual Client can't have special instruction fields
