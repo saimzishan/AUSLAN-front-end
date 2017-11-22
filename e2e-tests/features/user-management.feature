@@ -198,7 +198,7 @@ Feature: Create, read, update and delete a User
   @runThis
   Scenario: Booking Officer  should be able to update an Interpreter
     And I exist as an Booking Officer
-    And I sign in with valid Booking Officer  credentials
+    And I sign in with valid Booking Officer credentials
     And I am on my admin home screen
     And I hover on the 'Profile'
     And I go to the 'User Management' list page
@@ -268,7 +268,7 @@ Feature: Create, read, update and delete a User
   @runThis
   Scenario: Booking Officer  should be able to update an Individual Client
     And I exist as an Booking Officer
-    And I sign in with valid Booking Officer  credentials
+    And I sign in with valid Booking Officer credentials
     And I am on my admin home screen
     And I hover on the 'Profile'
     And I go to the 'User Management' list page
@@ -338,7 +338,7 @@ Feature: Create, read, update and delete a User
   @runThis
   Scenario: Booking Officer  should be able to update an Accountant
     And I exist as an Booking Officer
-    And I sign in with valid Booking Officer  credentials
+    And I sign in with valid Booking Officer credentials
     And I am on my admin home screen
     And I hover on the 'Profile'
     And I go to the 'User Management' list page
@@ -408,7 +408,7 @@ Feature: Create, read, update and delete a User
   @runThis
   Scenario: Booking Officer  should be able to update an Organisational Representative
     And I exist as an Booking Officer
-    And I sign in with valid Booking Officer  credentials
+    And I sign in with valid Booking Officer credentials
     And I am on my admin home screen
     And I hover on the 'Profile'
     And I go to the 'User Management' list page
