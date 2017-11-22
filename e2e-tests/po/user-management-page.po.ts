@@ -187,6 +187,10 @@ export class UserManagementPage extends PageObject {
         let trList = this.trListByUserType(type);
         return trList.count().then((ntr) => expect(ntr).to.equal(count));
     }
+    validAdminShouldBeOnTheList = (type: string) => {
+        let trList = this.trListByUserType(type);
+        return trList.count().then((ntr) => expect(ntr).to.be.greaterThan(1));
+    }
     userShouldNotBeOnTheList = (type: string) => {
         let trList = this.trListByUserType(type);
         return trList.count().then((ntr) => expect(ntr).to.equal(0));
