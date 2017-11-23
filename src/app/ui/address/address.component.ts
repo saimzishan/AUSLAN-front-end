@@ -6,7 +6,6 @@ import {GmapsApiService} from '../../api/gmaps-api.service';
 import {GLOBAL} from '../../shared/global';
 import 'rxjs/add/operator/toPromise';
 import {isNullOrUndefined} from 'util';
-import {Observable} from "rxjs/Observable";
 
 @Component({
     selector: 'app-address',
@@ -50,13 +49,10 @@ export class AddressComponent implements AfterViewInit {
             originAddress.push('Australia');
             this.gmapApi.getMinDistance([originAddress.join(', ')], [GLOBAL.GOP_ADDRESS_ONE, GLOBAL.GOP_ADDRESS_TWO]).then(value => {
                 this.isTravelCostApplicable = Number((value / 1000).toFixed(2)) > 40;
-                return true;
-            }).catch(error => {
-                return false;
             });
         } else {
             this.isTravelCostApplicable = false;
-            return false;
         }
+        return true;
     };
 }

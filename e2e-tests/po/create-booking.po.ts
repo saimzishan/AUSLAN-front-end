@@ -193,9 +193,6 @@ export class BookingPage extends PageObject {
         return this.createBookingWithAddressTimeAndInterpreter('standard', '10:15AM', '11:15AM', '2');
     }
 
-    changeBookingAddressToPerth = () => {
-        return this.setPerthAddress();
-    }
     selectClientAsBookbable = () => {
         return this.getElementByName('booking_for').sendKeys('ted');
     }
@@ -241,30 +238,9 @@ export class BookingPage extends PageObject {
         this.getElementByName('deaf_person_eaf').sendKeys('123');
     }
 
-    setPerthAddress = () => {
-        browser.sleep(10000);
-        this.getAllElementByName('address_unit_num').get(0).sendKeys('F-Space');
-        this.getElementByName('address_unit_num').sendKeys(protractor.Key.TAB);
-        this.getElementByName('address_street_number').clear();
-        this.getElementByName('address_street_number').sendKeys('18/27');
-        this.getElementByName('address_street').clear();
-        this.getElementByName('address_street').sendKeys('Market St Fremantle');
-        this.getElementByName('address_post_code').sendKeys('6160');
-        this.getElementByName('address_suburb').sendKeys('Perth');
-        this.getElementByName('address_state').sendKeys('WA');
-    }
-
     createBookingWithAddressTimeAndInterpreter = (standard: string, startTime: string, endTime: string, interpreterNum: string) => {
         this.setStartEndTime('start', '12/12/2017', startTime);
         this.setStartEndTime('end', '12/12/2017', endTime);
-        this.setElementsValueByName('address_unit_num', 'F-Space');
-        this.setStreetNumber('18/27');
-        this.setElementsValueByName('address_street', 'Market St Fremantle');
-        this.setElementsValueByName('address_post_code', '6160');
-        this.setElementsValueByName('address_suburb', 'Perth');
-        let elements = this.getAllElementByName('address_state');
-        elements.get(0).sendKeys('WA');
-        elements.get(1).sendKeys('WA');
         this.getElementByName('attendee_count').click();
         this.getElementByName('attendee_count').sendKeys('1');
         this.getElementByName('interpreters_count').clear();
@@ -276,27 +252,29 @@ export class BookingPage extends PageObject {
         this.getElementByName('raw_booking_requested_by').sendKeys('Luke');
         this.getElementByName('raw_booking_requested_by_ln').sendKeys('Orange');
 
-        // this.getElementByName('ext_ref_num').sendKeys('321');
+        this.getElementByName('ext_ref_num').sendKeys('321');
+        this.getElementByName('cn_first_name').clear();
         this.getElementByName('cn_first_name').sendKeys('John');
+        this.getElementByName('cn_last_name').clear();
         this.getElementByName('cn_last_name').sendKeys('Travolta');
+        this.getElementByName('cn_email').clear();
         this.getElementByName('cn_email').sendKeys('jt@star.com.au');
+        this.getElementByName('cn_phone').clear();
         this.getElementByName('cn_phone').sendKeys('0490394512');
 
         this.getElementByName('deaf_person_eaf').sendKeys('123');
+        this.setBookingAddressToPerth();
+        this.isTravelCostCheckboxPresent();
+        // browser.sleep(10000);
     }
 
     setBookingAddressToPerth = () => {
-        this.setElementsValueByName('address_unit_num', 'F-Space');
-        this.setStreetNumber('18/27');
-        this.setElementsValueByName('address_street', 'Market St Fremantle');
-        this.setElementsValueByName('address_post_code', '6160');
-        this.setElementsValueByName('address_suburb', 'Perth');
-        // this.setElementsValueByName('address_state', 'WA');
-        let elements = this.getAllElementByName('address_state');
-        elements.get(0).sendKeys('WA');
-        browser.sleep(5000);
-        elements.get(1).sendKeys('WA');
-        // browser.waitForAngularEnabled();
+        this.getAllElementByName('address_unit_num').first().sendKeys('F-Space');
+        this.getAllElementByName('address_street_number').first().sendKeys('18/27');
+        this.getAllElementByName('address_street').first().sendKeys('Market St Fremantle');
+        this.getAllElementByName('address_post_code').first().sendKeys('6160');
+        this.getAllElementByName('address_suburb').first().sendKeys('Perth');
+        this.getAllElementByName('address_state').first().sendKeys('WA');
     }
 
     clickCreateBtn = () => {

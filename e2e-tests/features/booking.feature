@@ -518,3 +518,30 @@ Feature: Booking Management
     And I see an option 'CURVE TOMORROW - alana Organisational' in 'booking_for' dropdown
 
 # ---------------------------------------- AUSLAN1-727 -> END ----------------------------------------
+
+# ---------------------------------------- AUSLAN1-751 -> START ----------------------------------------
+  @runThis
+  Scenario: Given 1 verified Individual Client, Booking Officer can create a booking and travel cost should save
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    And I am on the bookings page
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    When I fill New Booking form fields only with booking address
+    And I select the bookable for client
+    And I click the create booking button
+    Then I will get an error notification saying "Travel cost must be applicable as your booking distance is more than 40 kms"
+    And I move to element name 'travel_cost_applicable'
+    And I click on checkbox name 'travel_cost_applicable'
+    When I click the create booking button
+    Then I will get an error notification saying "Kindly accept Terms and Conditions"
+    Then I move to element name 'lnkTC'
+    Then I verify that the link with name 'lnkTC' href is 'https://s3-ap-southeast-2.amazonaws.com/auslan-public-bucket/Auslan_Online_Terms_And_Conditions.pdf'
+    Then I move to element name 'tnc'
+    Then I click on checkbox name 'tnc'
+    And I click the create booking button
+    Then I get a valid create booking notification
+    And I am on the bookings page
+    And I will be shown with bookings
+    Then I am shown with 1 booking
+# ---------------------------------------- AUSLAN1-751 -> END ----------------------------------------
