@@ -1,5 +1,3 @@
-FROM curvetomorrow/auslan-dev-image:v7.8
-ENTRYPOINT /var/www/booking-system-frontend
 ENV E2E_ENV=localhost
 CMD /bin/bash -l
 CMD npm install
