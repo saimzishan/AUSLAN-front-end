@@ -1,6 +1,9 @@
 version: 2
 jobs:
   build:
+    branches:
+      ignore:
+        - DockerCI
     docker:
       - image: curvetomorrow/auslan-dev-image:v7.8
         auth:
