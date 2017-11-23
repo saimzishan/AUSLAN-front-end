@@ -7,6 +7,9 @@ import {CustomFormsModule} from 'ng2-validation';
 import {Address} from '../../shared/model/venue.entity';
 import {NotificationServiceBus} from '../../notification/notification.service';
 import {SimpleNotificationsModule} from 'angular2-notifications/src/simple-notifications.module';
+import {GmapsApiService} from '../../api/gmaps-api.service';
+import {AuthHttp} from 'angular2-jwt';
+import {MockBackend} from '@angular/http/testing';
 
 describe('AddressComponent', () => {
     let component: AddressComponent;
@@ -15,7 +18,7 @@ describe('AddressComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [AddressComponent],
-            providers: [NotificationServiceBus],
+            providers: [NotificationServiceBus, GmapsApiService, {provide: AuthHttp, useClass: MockBackend}],
             imports: [FormsModule, CustomFormsModule, SimpleNotificationsModule]
         })
             .compileComponents();

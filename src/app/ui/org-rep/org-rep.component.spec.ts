@@ -10,6 +10,9 @@ import {OrganisationalRepresentative} from '../../shared/model/user.entity';
 import {BillingAccountComponent} from '../billing-account/billing-account.component';
 import {NotificationServiceBus} from '../../notification/notification.service';
 import {SimpleNotificationsModule} from 'angular2-notifications/src/simple-notifications.module';
+import {GmapsApiService} from '../../api/gmaps-api.service';
+import {AuthHttp} from 'angular2-jwt';
+import {MockBackend} from '@angular/http/testing';
 
 describe('OrgRepComponent', () => {
   let component: OrgRepComponent;
@@ -18,7 +21,7 @@ describe('OrgRepComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ OrgRepComponent, AddressComponent, BillingAccountComponent ],
-        providers: [NotificationServiceBus],
+        providers: [NotificationServiceBus, GmapsApiService, {provide: AuthHttp, useClass: MockBackend}],
         imports: [CustomFormsModule, SimpleNotificationsModule,
             FormsModule, Md2Module.forRoot(),
             MaterialModule
