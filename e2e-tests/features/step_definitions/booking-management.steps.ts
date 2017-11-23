@@ -58,13 +58,13 @@ defineSupportCode(({Given, Then, When}) => {
 
     When(/^I specify i am the client of this booking$/, createBookingPO.specifyAsClientOfBooking);
     When(/^I specify i have special instruction$/, createBookingPO.specifyAsHavingSepcialInstruction);
-    
+
     Then(/^The field '(.*)' will be populated with '(.*)'$/, createBookingPO.theFieldWillBePopulated);
 
     Then(/^I can verify the field '(.*)' will have the value '(.*)'$/, createBookingPO.theFieldInBookingWillHaveValue);
 
     Then(/^The booking form will be automatically populated with the details.$/, createBookingPO.populatedUserDetails);
-    
+
     Given(/^I can see the '(.*)' auto populated$/, createBookingPO.sectionAutoPopulated);
     // Filling in specific fields in the booking form
     Then(/^I set the (\w+) time as (\d+) days (?:(\d+) hours?)?\s?from now$/, createBookingPO.setTime)
@@ -93,6 +93,7 @@ defineSupportCode(({Given, Then, When}) => {
     When(/^I query booking with suburb '(.*)'$/, bookingManagementPO.queryBookingBySuburb);
     When(/^I filter booking by date range first and last days of next week$/, bookingManagementPO.filterBookingByDateRange);
     When(/^I hover on the (.*) dropdown and select '(.*)'$/, bookingManagementPO.hoverOnTableHeader);
+    When(/^I hover on the (.*) dropdown and I do not see '(.*)'$/, bookingManagementPO.selectionNotPresent);
     When(/^I change the street number to (\d+)$/, createBookingPO.setStreetNumber);
     When(/^I click on one non-editable field$/, bookingEditPO.clickOnNonEditableField);
 

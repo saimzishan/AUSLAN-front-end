@@ -65,6 +65,9 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     bookingForItems = [];
     isEditableForOrgRepIndClient: boolean;
     isUserAdminORBookOfficer: boolean;
+    preferAllocSub: any;
+    oldInterpreterPreference = [];
+    isDisabledForAdmin: boolean;
 
     constructor(public bookingService: BookingService, private router: Router,
                 private route: ActivatedRoute, private rolePermission: RolePermission,
@@ -75,7 +78,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
 
         this.bookingModel = new Booking();
         this.onSpecialInstruction();
-        this.oldBookingModel = new Booking();
 
         /** http://stackoverflow.com/questions/38008334/angular2-rxjs-when-should-i-unsubscribe-from-subscription */
         this.sub = this.route.queryParams.subscribe(params => {
@@ -87,6 +89,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 let jsonData = JSON.parse(param);
                 this.bookingModel.fromJSON(jsonData);
                 this.oldDocuments = jsonData.documents_attributes;
+                this.oldInterpreterPreference = jsonData.preference_allocations_attributes;
                 this.bookingModel.documents_attributes = [];
                 this.bookingModel.venue.start_time_iso =
                     this.datePipe.transform(this.bookingModel.venue.start_time_iso, 'yyyy-MM-ddTHH:mm:ss');
@@ -103,9 +106,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
 
                 this.bookingModel.bookable_type = this.bookingModel.bookable_type || 'IndividualClient';
             }
-
         });
-
     }
 
     getOrgName(item) {
@@ -124,13 +125,16 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         if (this.dialogSub != null) {
             this.dialogSub.unsubscribe();
         }
-        return this.sub && this.sub.unsubscribe();
+
+        let prefSub = this.preferAllocSub && this.preferAllocSub.unsubscribe();
+        return prefSub && this.sub && this.sub.unsubscribe();
     }
 
     ngOnInit() {
         if (GLOBAL.currentUser !== undefined) {
             this.isEditableForOrgRepIndClient = <boolean> (this.isUserOrgRepORIndClientTemp() && this.forEdit()) ;
             this.isUserAdminORBookOfficer = <boolean> this.checkUserAdminORBookOfficer();
+            this.isDisabledForAdmin = (this.forEdit() && !this.bookingModel.created_by_admin);
             this.onSelectionChange();
             this.onClientSelectionChange();
             this.getUser();
@@ -211,10 +215,12 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     public onProfilePreferredSelectionChange() {
-        if (this.showProfilePreffered === 'true') {
-            this.filterUserPreference(this.userModel.prefferedInterpreters);
-        } else {
-            this.bookingModel.preference_allocations_attributes = this.bookingModel.preference_allocations_attributes.filter(a => a.preference !== 'preferred');
+        if (!this.forEdit()) {
+            if (this.showProfilePreffered === 'true') {
+                this.filterUserPreference(this.userModel.prefferedInterpreters);
+            } else {
+                this.bookingModel.preference_allocations_attributes = this.bookingModel.preference_allocations_attributes.filter(a => a.preference !== 'preferred');
+            }
         }
     }
 
@@ -226,10 +232,12 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     public onProfileBlockedSelectionChange() {
-        if (this.showProfileBlocked === 'true') {
-            this.filterUserPreference(this.userModel.prefferedInterpreters);
-        } else {
-            this.bookingModel.preference_allocations_attributes = this.bookingModel.preference_allocations_attributes.filter(a => a.preference !== 'blocked');
+        if (!this.forEdit()) {
+            if (this.showProfileBlocked === 'true') {
+                this.filterUserPreference(this.userModel.prefferedInterpreters);
+            } else {
+                this.bookingModel.preference_allocations_attributes = this.bookingModel.preference_allocations_attributes.filter(a => a.preference !== 'blocked');
+            }
         }
     }
 
@@ -293,7 +301,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     */
     public onCreateBooking(form: FormGroup, addressForm: any, billingForm: any, uploader: FileUploader) {
 
-        if (!this.termsAndConditionAccepted) {
+        if (!this.termsAndConditionAccepted && !this.forEdit()) {
             this.notificationServiceBus.launchNotification(true, 'Kindly accept Terms and Conditions');
             return;
         }
@@ -384,14 +392,17 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             };
             config.viewContainerRef = this.viewContainerRef;
             this.dialogRef = this.dialog.open(PopupComponent, config);
-            this.dialogRef.componentInstance.title = 'Important Fields Changed WARNING';
+            this.dialogRef.componentInstance.title = 'Important Fields Changed';
             this.dialogRef.componentInstance.cancelTitle = 'BACK';
             this.dialogRef.componentInstance.okTitle = 'Yes';
             this.dialogRef.componentInstance.popupMessage =
-                `Interpreter(s) have been/is allocated for this job. Did you get confirmation from the interpreter(s) that these changes are OK?`;
+                `Interpreter(s) have been/is allocated for this job. You're charging important fields of the booking.
+                 Do you have confirmation from the interpreter(s) that these changes are OK?`;
 
             this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
-                this.saveBooking();
+                if (result) {
+                    this.saveBooking();
+                }
             });
         } else {
             this.saveBooking();
@@ -400,16 +411,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
 
     saveBooking() {
         if (this.assignedInterpreter > this.bookingModel.interpreters_required) {
-            let config: MdDialogConfig = {
-                disableClose: true
-            };
-            config.viewContainerRef = this.viewContainerRef;
-            this.dialogRef = this.dialog.open(PopupComponent, config);
-            this.dialogRef.componentInstance.title = 'Assigned Interpreter WARNING';
-            this.dialogRef.componentInstance.cancelTitle = 'BACK';
-            this.dialogRef.componentInstance.okTitle = 'Ok';
-            this.dialogRef.componentInstance.popupMessage =
-                `"Oops! Too many interpreters already allocated. Please unassign first.`;
+            this.notificationServiceBus.launchNotification(true, 'Oops! Too many interpreters already allocated. Please unassign first.');
+            return;
         } else {
             this.spinnerService.requestInProcess(true);
             let bookingID = this.bookingModel.id;
@@ -511,6 +514,17 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 });
     }
     getUser() {
+
+        if (this.bookingModel.preference_allocations_attributes.filter(itm => itm.preference === 'preferred').length > 0) {
+            this.showPreffered = 'true';
+            this.showProfilePreffered = 'true';
+        }
+
+        if (this.bookingModel.preference_allocations_attributes.filter(itm => itm.preference === 'blocked').length > 0) {
+            this.showBlocked = 'true';
+            this.showProfileBlocked = 'true';
+        }
+
         this.userModel = Boolean(GLOBAL.currentUser) &&
         GLOBAL.currentUser instanceof OrganisationalRepresentative ?
             (<OrganisationalRepresentative>GLOBAL.currentUser) :
@@ -520,30 +534,41 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                     (<BookingOfficer>GLOBAL.currentUser) :
                     GLOBAL.currentUser;
 
-        this._sharedPreferedAllocationService.interpreterStream$.subscribe(data => {
+        this.bookingModel.preference_allocations_attributes = [];
+        this.preferAllocSub = this._sharedPreferedAllocationService.interpreterStream$.subscribe(data => {
             this.filterUserPreference(data);
         });
     }
 
     filterUserPreference(interpreters) {
-        this.bookingModel.preference_allocations_attributes = [];
-        interpreters.forEach(i => {
-            if (this.showProfilePreffered === 'true') {
-                if (i.preference === 'preferred' && !i.hasOwnProperty('_destroy')) {
-                    this.bookingModel.preference_allocations_attributes.push({ 'interpreter_id': i.interpreter_id, 'preference': i.preference });
-                } else if (i.hasOwnProperty('_destroy')) {
-                    this.userModel.prefferedInterpreters = this.userModel.prefferedInterpreters.filter(itm => itm.interpreter_id !== i.interpreter_id);
-                }
-            }
 
-            if (this.showProfileBlocked === 'true') {
-                if (i.preference === 'blocked' && !i.hasOwnProperty('_destroy')) {
-                    this.bookingModel.preference_allocations_attributes.push({ 'interpreter_id': i.interpreter_id, 'preference': i.preference });
-                } else if (i.hasOwnProperty('_destroy')) {
-                    this.userModel.prefferedInterpreters = this.userModel.prefferedInterpreters.filter(itm => itm.interpreter_id !== i.interpreter_id);
+        if (this.forEdit()) {
+            interpreters.forEach(i => {
+                if (i.hasOwnProperty('_destroy')) {
+                    this.bookingModel.preference_allocations_attributes.push({ 'id': i.interpreter_id, '_destroy': '1' });
+                    this.oldInterpreterPreference = this.oldInterpreterPreference.filter(old => old.interpreter_id !== i.interpreter_id);
                 }
-            }
-        });
+            });
+        } else {
+            this.bookingModel.preference_allocations_attributes = [];
+            interpreters.forEach(i => {
+                if (this.showProfilePreffered === 'true') {
+                    if (i.preference === 'preferred' && !i.hasOwnProperty('_destroy')) {
+                        this.bookingModel.preference_allocations_attributes.push({ 'interpreter_id': i.interpreter_id, 'preference': i.preference });
+                    } else if (i.hasOwnProperty('_destroy')) {
+                        this.userModel.prefferedInterpreters = this.userModel.prefferedInterpreters.filter(itm => itm.interpreter_id !== i.interpreter_id);
+                    }
+                }
+
+                if (this.showProfileBlocked === 'true') {
+                    if (i.preference === 'blocked' && !i.hasOwnProperty('_destroy')) {
+                        this.bookingModel.preference_allocations_attributes.push({ 'interpreter_id': i.interpreter_id, 'preference': i.preference });
+                    } else if (i.hasOwnProperty('_destroy')) {
+                        this.userModel.prefferedInterpreters = this.userModel.prefferedInterpreters.filter(itm => itm.interpreter_id !== i.interpreter_id);
+                    }
+                }
+            });
+        }
     }
 
     confirmDelete(docID) {
@@ -553,14 +578,14 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     isImportantFieldsChanged() {
-        return (this.bookingModel.venue.start_time_iso !== this.oldBookingModel.venue.start_time_iso)
-            || (this.bookingModel.venue.end_time_iso !== this.oldBookingModel.venue.end_time_iso)
-            || (this.bookingModel.raw_nature_of_appointment !== this.oldBookingModel.raw_nature_of_appointment)
+        return (this.bookingModel.venue.start_time_iso !== this.datePipe.transform(this.oldBookingModel.start_time, 'yyyy-MM-ddTHH:mm:ss'))
+            || (this.bookingModel.venue.end_time_iso !== this.datePipe.transform(this.oldBookingModel.end_time, 'yyyy-MM-ddTHH:mm:ss'))
+            || (this.bookingModel.raw_nature_of_appointment !== this.oldBookingModel.nature_of_appointment)
             || (this.bookingModel.specific_nature_of_appointment !== this.oldBookingModel.specific_nature_of_appointment)
-            || (this.bookingModel.venue.street_name !== this.oldBookingModel.venue.street_name)
-            || (this.bookingModel.venue.state !== this.oldBookingModel.venue.state)
-            || (this.bookingModel.venue.suburb !== this.oldBookingModel.venue.suburb)
-            || (this.bookingModel.venue.post_code !== this.oldBookingModel.venue.post_code);
+            || (this.bookingModel.venue.street_name !== this.oldBookingModel.address_attributes.street_name)
+            || (this.bookingModel.venue.state !== this.oldBookingModel.address_attributes.state)
+            || (this.bookingModel.venue.suburb !== this.oldBookingModel.address_attributes.suburb)
+            || (this.bookingModel.venue.post_code !== this.oldBookingModel.address_attributes.post_code);
     }
 
     deepCopy(oldObj: any) {

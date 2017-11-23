@@ -5,7 +5,8 @@
     <section id="page-signup-organisation">
         <section>
             <header>
-                <h1>{{isUserLogin() === true ? isEdit ? 'EDIT' : 'CREATE' : 'SIGN UP AS'}} {{ selectedRole === 'INDIVIDUALCLIENT' ? 'INDIVIDUAL CLIENT' :  selectedRole}}</h1>
+                <h1>{{isUserLogin() === true ? isEdit ? 'EDIT' : 'CREATE' : 'SIGN UP AS'}} {{ selectedRole ===
+                    'INDIVIDUALCLIENT' ? 'INDIVIDUAL CLIENT' : selectedRole}}</h1>
                 <p>Fields with * are required</p>
             </header>
 
@@ -41,38 +42,42 @@
 													<span>Minimum 2 characters required.</span>!</span>
                             </div>
                         </div>
-                        <div class="medium-6 columns">
-                            <div class="form-field">
-                                <label class="icon-lock">
-                                    PASSWORD *</label>
-                                <input id="pass1" type="password"
-                                       placeholder="Enter your password"
-                                       [(ngModel)]="model.password" name="password" #password="ngModel" [rangeLength]="[6, 30]"
-                                       required>
+                        <ng-container *ngIf="false === isEdit">
+                            <div class="medium-6 columns">
+                                <div class="form-field">
+                                    <label class="icon-lock">
+                                        PASSWORD *</label>
+                                    <input id="pass1" type="password"
+                                           placeholder="Enter your password"
+                                           [(ngModel)]="model.password" name="password" #password="ngModel"
+                                           [rangeLength]="[6, 30]"
+                                           required>
 
-                                <span *ngIf="password.touched &&  (!password.errors?.required && password.errors?.rangeLength);"
-                                      class="inline-icon inline-icon-valid valid"></span>
-                                <span *ngIf="password.touched && (password.errors?.required || password.errors?.rangeLength);"
-                                      class="inline-icon error">
+                                    <span *ngIf="password.touched &&  (!password.errors?.required && password.errors?.rangeLength);"
+                                          class="inline-icon inline-icon-valid valid"></span>
+                                    <span *ngIf="password.touched && (password.errors?.required || password.errors?.rangeLength);"
+                                          class="inline-icon error">
 										<span>Minimum 6 characters required.</span>!</span>
 
+                                </div>
                             </div>
-                        </div>
-                        <div class="medium-6 columns">
-                            <div class="form-field">
-                                <label class="icon-lock">
-                                    CONFIRM PASSWORD *</label>
-                                <input id="certainPassword" name="certainPassword" type="password"
-                                       placeholder="Confirm password" [(ngModel)]="model.confirm_password"
-                                       name="certainPassword" #certainPassword="ngModel" [equalTo]="password" required>
-                                <span *ngIf="certainPassword.touched && (!certainPassword.errors?.required && !certainPassword.errors?.equalTo);"
-                                      class="inline-icon inline-icon-valid valid"></span>
-                                <span *ngIf="certainPassword.touched && (certainPassword.errors?.required || certainPassword.errors?.equalTo);"
-                                      class="inline-icon error">
+                            <div class="medium-6 columns">
+                                <div class="form-field">
+                                    <label class="icon-lock">
+                                        CONFIRM PASSWORD *</label>
+                                    <input id="certainPassword" name="certainPassword" type="password"
+                                           placeholder="Confirm password" [(ngModel)]="model.confirm_password"
+                                           name="certainPassword" #certainPassword="ngModel" [equalTo]="password"
+                                           required>
+                                    <span *ngIf="certainPassword.touched && (!certainPassword.errors?.required && !certainPassword.errors?.equalTo);"
+                                          class="inline-icon inline-icon-valid valid"></span>
+                                    <span *ngIf="certainPassword.touched && (certainPassword.errors?.required || certainPassword.errors?.equalTo);"
+                                          class="inline-icon error">
 									<span>Minimum 6 characters required.</span>!</span>
 
+                                </div>
                             </div>
-                        </div>
+                        </ng-container>
                         <div class="medium-6 columns">
                             <div class="form-field">
                                 <label class="icon-email">
@@ -90,20 +95,21 @@
                             </div>
                         </div>
 
-                            <div class="medium-6 columns">
-                                <div class="form-field">
-                                    <label class="icon-mobile">MOBILE PHONE *</label>
-                                    <input type="tel" placeholder="Enter your mobile"
-                                           [(ngModel)]="model.mobile" name="mobile" #mobile="ngModel" [rangeLength]="[10, 11]"
-                                           required>
+                        <div class="medium-6 columns">
+                            <div class="form-field">
+                                <label class="icon-mobile">MOBILE PHONE *</label>
+                                <input type="tel" placeholder="Enter your mobile"
+                                       [(ngModel)]="model.mobile" name="mobile" #mobile="ngModel"
+                                       [rangeLength]="[10, 11]"
+                                       required>
 
-                                    <span *ngIf="mobile.touched && !mobile.errors?.required && !mobile.errors?.rangeLength;"
-                                          class="inline-icon inline-icon-valid valid"></span>
-                                    <span *ngIf="mobile.touched && mobile.errors?.required  || mobile.errors?.rangeLength;"
-                                          class="inline-icon error">
+                                <span *ngIf="mobile.touched && !mobile.errors?.required && !mobile.errors?.rangeLength;"
+                                      class="inline-icon inline-icon-valid valid"></span>
+                                <span *ngIf="mobile.touched && mobile.errors?.required  || mobile.errors?.rangeLength;"
+                                      class="inline-icon error">
 											<span>Minimum 10 digits required.</span>!</span>
-                                </div>
                             </div>
+                        </div>
                         <ng-container *ngIf="selectedRole === 'INDIVIDUALCLIENT' || selectedRole === 'ORGANISATION'">
                             <div class="medium-6 columns">
                                 <div class="form-field">
@@ -123,7 +129,7 @@
                             <div class="form-field">
                                 <label>STATUS</label>
                                 <select name="selStatus" [(ngModel)]="selectedStatus">
-                                    <option *ngFor="let i of userStatusArray" [value]="i.name" >{{i.name}}</option>
+                                    <option *ngFor="let i of userStatusArray" [value]="i.name">{{i.name}}</option>
                                 </select>
                             </div>
                         </div>
@@ -138,7 +144,8 @@
                 </div>
                 <br>
                 <app-org-rep [userModel]="model" *ngIf="selectedRole === 'ORGANISATION'"></app-org-rep>
-                <app-interpreter [displayCalendar]="false" [userModel]="model" *ngIf="selectedRole === 'INTERPRETER'"></app-interpreter>
+                <app-interpreter [displayCalendar]="false" [userModel]="model"
+                                 *ngIf="selectedRole === 'INTERPRETER'"></app-interpreter>
                 <app-ind-client [userModel]="model" *ngIf="selectedRole === 'INDIVIDUALCLIENT'"></app-ind-client>
                 <br>
 
@@ -155,10 +162,12 @@
                         *ngIf="selectedRole === 'ORGANISATION' || selectedRole === 'INDIVIDUALCLIENT'"
                 ></app-interpreter-box>
                 <br>
-                <app-termandcondition  (termAndConditionStatusChange)="tocChanged($event)" [termsAndConditionAccepted]="termsAndConditionAccepted" ></app-termandcondition>
+                <app-termandcondition (termAndConditionStatusChange)="tocChanged($event)"
+                                      [termsAndConditionAccepted]="termsAndConditionAccepted"></app-termandcondition>
                 <div align="center">
                     <button class="login button" name="register_user" type="submit"
-                            (click)="applyChanges(registerForm)" class="button">{{isUserLogin() === true ? isEdit ? 'Edit' : 'Create' : 'Register'}}
+                            (click)="applyChanges(registerForm)" class="button">{{isUserLogin() === true ? isEdit ?
+                        'Edit' : 'Create' : 'Register'}}
                     </button>
                 </div>
 

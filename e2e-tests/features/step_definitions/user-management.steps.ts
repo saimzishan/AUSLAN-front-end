@@ -25,6 +25,7 @@ defineSupportCode(({Given, Then, When}) => {
     // the 2 valid Administrators should be in the list
     Then(/^[tT]he (\d+)?\s?valid (.*[^s])s? should be in the list$/, userManagementPO.validUserShouldBeOnTheList);
     Then(/^The valid (.*) should not be in the list$/, userManagementPO.userShouldNotBeOnTheList);
+    Then(/^The valid (.*) should be in the list are more than one$/, userManagementPO.validAdminShouldBeOnTheList);
 
     // ================================== INVALID CREATING ========================================
     When(/^I add an invalid (.*)/, userManagementPO.addInvalidUser);
@@ -38,6 +39,8 @@ defineSupportCode(({Given, Then, When}) => {
 
     Then(/^I update some (.*) fields/, userManagementPO.updateValidUserFields);
     Then(/^I update (.*) available field/, userManagementPO.updateAvailableField);
+    When(/^I see success notification$/, userManagementPO.userUpdated);
+    When(/^I see validation errors$/, userManagementPO.shouldShowInValidNotification);
 
     When(/^I click on update$/, userManagementPO.clickOnUpdateOrSaveUser);
     When(/^I hover on the 'Actions' of the (.*)$/, userManagementPO.hoverOnActions);
@@ -51,4 +54,5 @@ defineSupportCode(({Given, Then, When}) => {
 
     // ================================== TRIGGER PASSWORD RESET ========================================
     When(/^I click on reset password for an (.*) existing (.*)$/, userManagementPO.clickOnResetPassword);
+
 });
