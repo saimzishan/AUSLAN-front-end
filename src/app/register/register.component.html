@@ -5,7 +5,7 @@
     <section id="page-signup-organisation">
         <section>
             <header>
-                <h1>{{isUserLogin() === true ? isEdit ? 'EDIT' : 'CREATE' : 'SIGN UP AS'}} {{ selectedRole ===
+                <h1>{{isUserLogin() === true ? isDuplicate ? 'DUPLICATE' : isEdit ? 'EDIT' : 'CREATE' : 'SIGN UP AS'}} {{ selectedRole ===
                     'INDIVIDUALCLIENT' ? 'INDIVIDUAL CLIENT' : selectedRole}}</h1>
                 <p>Fields with * are required</p>
             </header>
@@ -42,7 +42,7 @@
 													<span>Minimum 2 characters required.</span>!</span>
                             </div>
                         </div>
-                        <ng-container *ngIf="false === isEdit">
+                        <ng-container *ngIf="false === isEdit || isDuplicate">
                             <div class="medium-6 columns">
                                 <div class="form-field">
                                     <label class="icon-lock">
@@ -125,7 +125,7 @@
                                 </div>
                             </div>
                         </ng-container>
-                        <div [hidden]="false === isEdit" class="medium-6 columns">
+                        <div [hidden]="false === isEdit || isDuplicate" class="medium-6 columns">
                             <div class="form-field">
                                 <label>STATUS</label>
                                 <select name="selStatus" [(ngModel)]="selectedStatus">
@@ -143,7 +143,7 @@
                     </div>
                 </div>
                 <br>
-                <app-org-rep [userModel]="model" *ngIf="selectedRole === 'ORGANISATION'"></app-org-rep>
+                <app-org-rep [isDuplicate]="isDuplicate" [userModel]="model" *ngIf="selectedRole === 'ORGANISATION'"></app-org-rep>
                 <app-interpreter [displayCalendar]="false" [userModel]="model"
                                  *ngIf="selectedRole === 'INTERPRETER'"></app-interpreter>
                 <app-ind-client [userModel]="model" *ngIf="selectedRole === 'INDIVIDUALCLIENT'"></app-ind-client>
@@ -166,7 +166,7 @@
                                       [termsAndConditionAccepted]="termsAndConditionAccepted"></app-termandcondition>
                 <div align="center">
                     <button class="login button" name="register_user" type="submit"
-                            (click)="applyChanges(registerForm)" class="button">{{isUserLogin() === true ? isEdit ?
+                            (click)="applyChanges(registerForm)" class="button">{{isUserLogin() === true ? isDuplicate ? 'Duplicate' : isEdit ?
                         'Edit' : 'Create' : 'Register'}}
                     </button>
                 </div>

@@ -446,6 +446,58 @@ Feature: Create, read, update and delete a User
     And I update Organisational Representative available field
     And I click on update
     Then I see success notification
+
+    ############################### Duplicate Organisational Representative ##############################
+
+  @runThis
+  Scenario: Administrator should be able to duplicate an Organisational Representative
+    And I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on my admin home screen
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then I click on duplicate for an active existing Organisational Representative
+    And I will be taken to the 'ORGANISATIONALREPRESENTATIVE Signup' page
+    When I fill in basic details correctly for -> 'ORGANISATIONALREPRESENTATIVE'
+    Then I click on update
+    Then 'ORGANISATIONALREPRESENTATIVE' will be created
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then The 1 valid ORGANISATIONAL REPRESENTATIVE should be in the list
+
+
+  @runThis
+  Scenario: Booking Officer  should be able to duplicate an Organisational Representative
+    And I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    And I am on my admin home screen
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then I click on duplicate for an active existing Organisational Representative
+    And I will be taken to the 'ORGANISATIONALREPRESENTATIVE Signup' page
+    When I can see the element with name 'org-detail' as 'disabled'
+    When I fill in basic details correctly for -> 'ORGANISATIONALREPRESENTATIVE'
+    Then 'ORGANISATIONALREPRESENTATIVE' will be created
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then The 1 valid ORGANISATIONAL REPRESENTATIVE should be in the list
+
+  @runThis
+  Scenario: Organisational Representative should be able to duplicate an Organisational Representative
+    And I exist as an Organisational Representative
+    And I sign in with valid Organisational Representative credentials
+    And I am on my admin home screen
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then I click on duplicate for an active existing Organisational Representative
+    And I will be taken to the 'ORGANISATIONALREPRESENTATIVE Signup' page
+    When I can see the element with name 'org-detail' as 'disabled'
+    When I fill in basic details correctly for -> 'ORGANISATIONALREPRESENTATIVE'
+    Then 'ORGANISATIONALREPRESENTATIVE' will be created
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then The 2 valid ORGANISATIONAL REPRESENTATIVE should be in the list
+
 # Trigger
   @runThis
   Scenario: Administrator should be able to trigger password reset for Interpreter

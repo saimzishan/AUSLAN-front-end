@@ -1,5 +1,8 @@
 import {Component, Input, Output, EventEmitter} from '@angular/core';
-import {IndividualClient, Interpreter, OrganisationalRepresentative, User} from '../../shared/model/user.entity';
+import {
+    Administrator, BookingOfficer, IndividualClient, Interpreter, OrganisationalRepresentative,
+    User
+} from '../../shared/model/user.entity';
 import {SpacerPipe} from '../../shared/pipe/spacer.pipe';
 import {LinkAuth} from '../../shared/router/linkhelper';
 import {ROLE} from '../../shared/model/role.enum';
@@ -21,6 +24,7 @@ export class UserListComponent {
     getQueryableRole(user) {
         return ROLE[user.getRole()].toUpperCase().replace(/\s/g, '');
     }
+
     stringifyUser(user) {
         return JSON.stringify(user);
     }
@@ -35,6 +39,10 @@ export class UserListComponent {
 
     isUserInterpreter(user) {
         return user instanceof Interpreter;
+    }
+
+    isUserOrOrgrep(user) {
+        return user instanceof OrganisationalRepresentative;
     }
 
 }

@@ -314,6 +314,14 @@ defineSupportCode(({Given, When, Then}) => {
             expect(val).to.be.eq(isEnabled);
         });
     }
+    When(/^I can see the element with name '(.*)' as (.*)$/, isElementWithNameDisabled);
+
+    function isElementWithNameDisabled(css: string, disabled: string) {
+        let isEnabled = disabled.toLowerCase() === 'enabled';
+        return page.getElementByCss(css).isEnabled().then((val) => {
+            expect(val).to.be.eq(isEnabled);
+        });
+    }
     When(/^I can see the button state with css '(.*)' is '(.*)'$/, isButtonWithCSSVisible);
     When(/^I can see the element with css '(.*)' is '(.*)'$/, isButtonWithCSSVisible);
     function isButtonWithCSSVisible(css: string, visible: string) {

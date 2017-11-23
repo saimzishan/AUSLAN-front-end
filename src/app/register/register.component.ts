@@ -28,6 +28,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     private sub_param: any;
     public selectedRole = '';
     isEdit = false;
+    isDuplicate = false;
     termsAndConditionAccepted = false;
     selectedStatus = '';
     userStatusArray = GLOBAL.userStatusArray;
@@ -47,6 +48,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
         this.sub_param = this.routes.queryParams.subscribe(params => {
             let p = params['selectedRole'] || '';
             this.isEdit = Boolean(params['edit_user']);
+            this.isDuplicate = Boolean(params['isduplicate'])
             this.selectedRole = Boolean(p && p.length > 1) ? p : this.selectedRole;
             let jsonData = this.isEdit ?
                 JSON.parse(params['edit_user']) : {};
@@ -66,16 +68,17 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
                     break;
                 case 'OrganisationalRepresentative'.toUpperCase():
-                    let orgr = this.isEdit ? UserFactory.createUser(jsonData) : new OrganisationalRepresentative(jsonData);
-                    this.model = orgr;
-                    this.model.role = ROLE.OrganisationalRepresentative;
-
-                    break;
                 case 'Organisation'.toUpperCase():
-                    let org = this.isEdit ? UserFactory.createUser(jsonData) : new OrganisationalRepresentative(jsonData);
+                    let org = this.isEdit || this.isDuplicate ? UserFactory.createUser(jsonData) : new OrganisationalRepresentative(jsonData);
                     this.model = org;
                     this.model.role = ROLE.Organisation;
-
+                    if (this.isDuplicate) {
+                        this.model.first_name = this.model.last_name =
+                            this.model.email = this.model.mobile =
+                                this.model.photo_url = this.model.password =
+                                    this.model.confirm_password = '';
+                    }
+                    this.selectedRole = 'ORGANISATION';
                     break;
 
                 case 'Administrator'.toUpperCase():
@@ -124,10 +127,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
             return;
         }
         this.spinnerService.requestInProcess(true);
-        this.isEdit ? this.editUser() : this.addUser();
+        this.isEdit && !this.isDuplicate ? this.editUser() : this.addUser();
     }
 
     addUser() {
+        
         this.userService.createUser(this.model)
             .subscribe((res: any) => {
                 if (res.data.id && 0 < res.data.id) {

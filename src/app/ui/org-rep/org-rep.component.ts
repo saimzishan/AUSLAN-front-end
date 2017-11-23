@@ -9,6 +9,7 @@ import { AddressComponent } from '../address/address.component';
 })
 export class OrgRepComponent implements  OnInit {
   @Input() userModel: OrganisationalRepresentative;
+  @Input() isDuplicate = false;
   address_title = 'ORGANISATION ADDRESS';
     ngOnInit() {
         delete this.userModel.password;
