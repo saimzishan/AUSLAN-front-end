@@ -137,7 +137,6 @@ export class BookingService extends ApiService {
         return this.http.get(GLOBAL.BOOKING_API, options)
             .map(this.extractData)
             .catch((err) => { return this.handleError(err); });
-
     }
 
     /*

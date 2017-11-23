@@ -32,6 +32,15 @@ export class GLOBAL {
         'eyJpc3MiOiJPbmxpbmUgSldUIEJ1aWxkZXIiLCJpYXQiOjE0ODgxOTM0MTAsImV4cCI6MzMwNzY2M' +
         'zgyMTAsImF1ZCI6Ind3dy5wYWN0LmNvbSIsInN1YiI6Imthcm1hQHBhY3QuY29tIn0.lVWLJAYQRZcQTMtdDrxTHMwboSOqNQPISLDAKDkPy58';
     public static userStatusArray = [{name: 'Active'}, {name: 'Disabled'}];
+    public static _searchVal: any;
+
+    public static get searchVal(): any {
+        return this._searchVal;
+    }
+
+    public static set searchVal(val: any) {
+        this._searchVal = val;
+    }
 
     public static get currentUser(): any {
         return this._currentUser;

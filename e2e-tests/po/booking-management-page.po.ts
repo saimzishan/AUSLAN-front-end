@@ -236,6 +236,13 @@ export class BookingManagementPage extends PageObject {
         return bookingSuburbForm.submit();
     }
 
+    querySearchWith = (value: string) => {
+        let searchInput = this.getElementByCss('form input[name=search]');
+        let searchForm = this.getParent(searchInput);
+        value === 'empty' ? searchInput.click() : searchInput.sendKeys(value);;
+        return searchForm.submit();
+    }
+
     // Adds a '0' in the start if the date < 10
     private prettyDate = (date: number|string): string => {
         date = date.toString();
