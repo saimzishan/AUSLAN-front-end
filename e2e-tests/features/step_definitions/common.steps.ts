@@ -342,7 +342,6 @@ defineSupportCode(({Given, When, Then}) => {
     function isElementHasText(nam: string, txt: string) {
 
         return page.getElementByName(nam).getText().then(elmTxt => {
-            console.log("pass"+txt+"get"+elmTxt+"f");
             return expect(elmTxt).to.be.eq(txt);
         });
     }
