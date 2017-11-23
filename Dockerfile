@@ -1,1 +1,8 @@
-FROM curvetomorrow/auslan-dev-image:v7.6-debug
+FROM curvetomorrow/auslan-dev-image:v7.8
+ENTRYPOINT /var/www/booking-system-frontend
+ENV E2E_ENV=localhost
+CMD /bin/bash -l
+CMD npm install
+CMD npm install codeclimate-test-reporter -g
+CMD ./run-unit-test.sh
+CMD ./setup_ci.sh
