@@ -27,7 +27,7 @@ import {BookingInterpreter} from '../shared/model/contact.entity';
 export class BookingComponent {
     bookings: Array<Booking> = [];
     activeFilter = '';
-
+    totalItems = 0;
 
     constructor(public spinnerService: SpinnerService, public bookingDataService: BookingService,
                 private rolePermission: RolePermission) {
@@ -49,6 +49,7 @@ export class BookingComponent {
             .subscribe((res: any) => {
                     if (res.status === 200) {
                         this.bookings = [];
+                        this.totalItems = Boolean(res.paginates) ? res.paginates.total_records : res.data.bookings.length;
                         for (let o of res.data.bookings) {
                             if (Boolean(!this.rolePermission.isDataRestrictedForCurrentUser('booking-management', o.created_by.type))
                                 || (GLOBAL.currentUser instanceof OrganisationalRepresentative && GLOBAL.currentUser.id === o.created_by.id)

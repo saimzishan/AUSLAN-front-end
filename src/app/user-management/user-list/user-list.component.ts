@@ -13,7 +13,7 @@ import {ROLE} from '../../shared/model/role.enum';
 export class UserListComponent {
     @Input('userList') userList: Array<any> = [];
     @Output() onResetPass = new EventEmitter<User>();
-
+    p = 1;
     constructor(private linkAuth: LinkAuth) {
 
     }

@@ -22,6 +22,8 @@ export class BookingListComponent {
     bookingFilter: BookingFilter = {};
     private filterParams = new URLSearchParams();
     private currentSort = {'field': 'job', 'order': 'asc' };
+    @Input() totalItems = 0;
+    p = 1;
     private validKeys(list): Array<string> {
         let keys = Object.keys(list);
         return keys.slice(keys.length / 2);
