@@ -231,3 +231,88 @@ Feature: Booking Filter
     Then I am shown with 5 booking
     When I filter booking by date range first and last days of next week
     Then I am shown with 2 booking
+
+  @runThis
+  Scenario: As a Administrator, I should be able to search bookings by external ref number and when I remove the external ref number then all bookings should be displayed
+    And I sign in with valid Administrator credentials
+    And I am on the bookings page
+    Then I am shown with 5 booking
+    And I click on an individual booking
+    Then I am on the individual booking page
+    And I click on link 'Booking details'
+    Then I should be on the edit booking page
+    And I change the input field EXT. REFERENCE NUM with INV-909
+    And I click the create booking button
+    And If I am shown a popup, I approve it
+    Then I should get a valid booking update notification
+    And I am shown with 5 booking
+    When I query search with 'INV-909'
+    Then I am shown with 1 booking
+    And I click on an individual booking
+    Then I am on the individual booking page
+    And I click on link 'Booking details'
+    Then I should be on the edit booking page
+    And The field 'ext_ref_num' will be populated with 'INV-909'
+    Then I click on Bookings
+    When I am on the bookings page
+    Then I am shown with 1 booking
+    And The field 'search' will be populated with 'INV-909'
+    When I query search with 'empty'
+    Then I am shown with 5 booking
+
+  @runThis
+  Scenario: As a Booking Officer, I should be able to search bookings by external ref number and when I remove the external ref number then all bookings should be displayed
+    And I sign in with valid Booking Officer credentials
+    And I am on the bookings page
+    Then I am shown with 5 booking
+    And I click on an individual booking
+    Then I am on the individual booking page
+    And I click on link 'Booking details'
+    Then I should be on the edit booking page
+    And I change the input field EXT. REFERENCE NUM with INV-909
+    And I click the create booking button
+    And If I am shown a popup, I approve it
+    Then I should get a valid booking update notification
+    And I am shown with 5 booking
+    When I query search with 'INV-909'
+    Then I am shown with 1 booking
+    And I click on an individual booking
+    Then I am on the individual booking page
+    And I click on link 'Booking details'
+    Then I should be on the edit booking page
+    And The field 'ext_ref_num' will be populated with 'INV-909'
+    Then I click on Bookings
+    When I am on the bookings page
+    Then I am shown with 1 booking
+    And The field 'search' will be populated with 'INV-909'
+    When I query search with 'empty'
+    Then I am shown with 5 booking
+
+  @runThis
+  Scenario: As a Organisational Representative, I should be able to search bookings by external ref number and when I remove the external ref number then all bookings should be displayed
+    Given Assigned all bookings to Organisational Representative
+    And I sign in with valid Organisational Representative credentials
+    And I am on the bookings page
+    Then I am shown with 5 booking
+    And I click on an individual booking
+    Then I am on the individual booking page
+    And I click on link 'Booking details'
+    Then I should be on the edit booking page
+    And I change the input field EXT. REFERENCE NUM with INV-909
+    And I click the create booking button
+    And If I am shown a popup, I approve it
+    Then I should get a valid booking update notification
+    And I am shown with 5 booking
+    When I query search with 'INV-909'
+    Then I am shown with 1 booking
+    And I click on an individual booking
+    Then I am on the individual booking page
+    And I click on link 'Booking details'
+    Then I should be on the edit booking page
+    And The field 'ext_ref_num' will be populated with 'INV-909'
+    Then I click on Bookings
+    When I am on the bookings page
+    Then I am shown with 1 booking
+    And The field 'search' will be populated with 'INV-909'
+    When I query search with 'empty'
+    Then I am shown with 5 booking
