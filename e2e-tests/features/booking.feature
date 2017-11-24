@@ -519,7 +519,7 @@ Feature: Booking Management
 
 # ---------------------------------------- AUSLAN1-727 -> END ----------------------------------------
 
-# ---------------------------------------- AUSLAN1-751 -> START ----------------------------------------
+# ---------------------------------------- AUSLAN1-736, 737 -> START ----------------------------------------
   @runThis
   Scenario: Given 1 verified Individual Client, Booking Officer can create a booking and travel cost should save
     Given I exist as an Booking Officer
@@ -527,7 +527,7 @@ Feature: Booking Management
     And I am on the bookings page
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
-    When I fill New Booking form fields only with booking address
+    When I fill New Booking form fields with address greater than 40 kilometers
     And I select the bookable for client
     And I click the create booking button
     Then I will get an error notification saying "Travel cost must be applicable as your booking distance is more than 40 kms"
@@ -544,4 +544,4 @@ Feature: Booking Management
     And I am on the bookings page
     And I will be shown with bookings
     Then I am shown with 1 booking
-# ---------------------------------------- AUSLAN1-751 -> END ----------------------------------------
+# ---------------------------------------- AUSLAN1-736, 737 -> END ----------------------------------------

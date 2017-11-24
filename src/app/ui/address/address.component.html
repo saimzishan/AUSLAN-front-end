@@ -6,13 +6,13 @@
   <div class="medium-3 columns">
     <div class="form-field">
       <label>UNIT NUMBER <span mdTooltip="Enter the Unit Number"><i class="inline-icon-tip"></i></span></label>
-      <input type="text" [readonly]="canEdit" (click)="fieldClick($event)" (blur)="calculateDistance();" placeholder="Enter the Unit Number" [(ngModel)]="address.unit_number" name="address_unit_num" #address_unit_num="ngModel" digit>
+      <input type="text" [readonly]="canEdit" (click)="fieldClick($event)" (blur)="!parentForm && calculateDistance();" placeholder="Enter the Unit Number" [(ngModel)]="address.unit_number" name="address_unit_num" #address_unit_num="ngModel" digit>
     </div>
   </div>
   <div class="medium-3 columns">
     <div class="form-field">
       <label>STREET NUMBER * <span mdTooltip="Enter the Street Number"><i class="inline-icon-tip"></i></span></label>
-      <input type="text" [readonly]="canEdit" (click)="fieldClick($event)" (blur)="calculateDistance();" placeholder="Enter the Street Number" [(ngModel)]="address.street_number" name="address_street_number" #address_street_number="ngModel" [rangeLength]="[1, 6]" digit required>
+      <input type="text" [readonly]="canEdit" (click)="fieldClick($event)" (blur)="!parentForm && calculateDistance();" placeholder="Enter the Street Number" [(ngModel)]="address.street_number" name="address_street_number" #address_street_number="ngModel" [rangeLength]="[1, 6]" digit required>
       <span *ngIf="address_street_number.touched && !address_street_number.errors?.required && !address_street_number.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
       <span *ngIf="address_street_number.touched && (address_street_number.errors?.required ||address_street_number.errors?.rangeLength);" class="inline-icon error">
         <span>Minimum 1 characters required.</span>!
@@ -23,7 +23,7 @@
   <div class="medium-6 columns">
     <div class="form-field">
       <label>STREET NAME * <span mdTooltip="Enter the Street Name!"><i class="inline-icon-tip"></i></span></label>
-      <input type="text" [readonly]="canEdit" (click)="fieldClick($event)" (blur)="calculateDistance();" placeholder="Enter the Street Name" [(ngModel)]="address.street_name" name="address_street" #address_street="ngModel" [rangeLength]="[2, 30]" required>
+      <input type="text" [readonly]="canEdit" (click)="fieldClick($event)" (blur)="!parentForm && calculateDistance();" placeholder="Enter the Street Name" [(ngModel)]="address.street_name" name="address_street" #address_street="ngModel" [rangeLength]="[2, 30]" required>
       <span *ngIf="address_street.touched && !address_street.errors?.required && !address_street.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
       <span *ngIf="address_street.touched && (address_street.errors?.required || address_street.errors?.rangeLength);" class="inline-icon error">
         <span>Minimum 2 characters required.</span>!
@@ -33,7 +33,7 @@
   <div class="medium-5 columns">
     <div class="form-field">
       <label>SUBURB * <span mdTooltip="Enter the Booking Suburb!"><i class="inline-icon-tip"></i></span></label>
-      <input type="text" [readonly]="canEdit" (click)="fieldClick($event)" (blur)="calculateDistance();" placeholder="Enter the Booking Suburb" [(ngModel)]="address.suburb" name="address_suburb" #address_suburb="ngModel" [rangeLength]="[3, 30]" required>
+      <input type="text" [readonly]="canEdit" (click)="fieldClick($event)" (blur)="!parentForm && calculateDistance();" placeholder="Enter the Booking Suburb" [(ngModel)]="address.suburb" name="address_suburb" #address_suburb="ngModel" [rangeLength]="[3, 30]" required>
       <span *ngIf="address_suburb.touched && !address_suburb.errors?.required && !address_suburb.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
       <span *ngIf="address_suburb.touched && (address_suburb.errors?.required || address_suburb.errors?.rangeLength);" class="inline-icon error">
         <span>Minimum 2 characters required.</span>!
@@ -43,7 +43,7 @@
   <div class="medium-3 columns">
     <div class="form-field">
       <label>POST CODE * <span mdTooltip="Enter the Post Code"><i class="inline-icon-tip"></i></span></label>
-      <input type="tel" [readonly]="canEdit" (click)="fieldClick($event)" (blur)="calculateDistance();" placeholder="Enter the Post Code" [(ngModel)]="address.post_code" name="address_post_code" #address_post_code="ngModel" [rangeLength]="[4,6]" required digits>
+      <input type="tel" [readonly]="canEdit" (click)="fieldClick($event)" (blur)="!parentForm && calculateDistance();" placeholder="Enter the Post Code" [(ngModel)]="address.post_code" name="address_post_code" #address_post_code="ngModel" [rangeLength]="[4,6]" required digits>
       <span *ngIf="address_post_code.touched && !address_post_code.errors?.required && !address_post_code.errors?.rangeLength && !address_post_code.errors?.digits;" class="inline-icon inline-icon-valid valid"></span>
       <span *ngIf="address_post_code.touched && (address_post_code.errors?.required || address_post_code.errors?.rangeLength || address_post_code.errors?.digits);" class="inline-icon error">
         <span>Minimum 4 characters required.</span>!
@@ -53,7 +53,7 @@
   <div class="medium-4 columns">
     <div class="form-field">
       <label>STATE * <span mdTooltip="Enter the Booking State!"><i class="inline-icon-tip"></i></span></label>
-      <select placeholder="Enter the Booking State" aria-label="A" [disabled]="canEdit" (change)="calculateDistance();"
+      <select placeholder="Enter the Booking State" aria-label="A" [disabled]="canEdit" (change)="!parentForm && calculateDistance();"
               [(ngModel)]="address.state" name="address_state" #address_state="ngModel" [rangeLength]="[2, 3]" required>
 
         <option *ngFor="let state_name of ['ACT','NSW','QLD', 'TAS', 'VIC','WA', 'NT']" [value]="state_name">{{state_name}}</option>
