@@ -14,6 +14,7 @@ export class UserListComponent {
     @Input('userList') userList: Array<any> = [];
     @Output() onResetPass = new EventEmitter<User>();
     p = 1;
+    @Input() totalItems = 0;
     constructor(private linkAuth: LinkAuth) {
 
     }
