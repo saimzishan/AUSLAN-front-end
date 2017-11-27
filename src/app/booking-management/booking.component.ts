@@ -31,9 +31,8 @@ export class BookingComponent {
 
     constructor(public spinnerService: SpinnerService, public bookingDataService: BookingService,
                 private rolePermission: RolePermission) {
-        this.fetchBookings();
+        GLOBAL._searchVal ? this.fetchBookings(GLOBAL._searchVal) : this.fetchBookings();
     }
-
 
     setActiveFilter(activeFilter: string) {
         this.activeFilter = activeFilter;

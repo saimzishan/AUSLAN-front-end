@@ -34,6 +34,15 @@ export class GLOBAL {
     public static GOP_ADDRESS_ONE = '350 Bourke Street, Melbourne VIC, 3000, Australia';
     public static GOP_ADDRESS_TWO = '261 Queens Street, Brisbane City QLD, 4000, Australia';
     public static userStatusArray = [{name: 'Active'}, {name: 'Disabled'}];
+    public static _searchVal: any;
+
+    public static get searchVal(): any {
+        return this._searchVal;
+    }
+
+    public static set searchVal(val: any) {
+        this._searchVal = val;
+    }
 
     public static get currentUser(): any {
         return this._currentUser;

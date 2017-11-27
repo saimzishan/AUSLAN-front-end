@@ -96,6 +96,7 @@ defineSupportCode(({Given, Then, When}) => {
     When(/^I hover on the (.*) dropdown and I do not see '(.*)'$/, bookingManagementPO.selectionNotPresent);
     When(/^I change the street number to (\d+)$/, createBookingPO.setStreetNumber);
     When(/^I click on one non-editable field$/, bookingEditPO.clickOnNonEditableField);
+    When(/^I query search with '(.*)'$/, bookingManagementPO.querySearchWith);
 
     Then(/^All required booking fields should be filled$/, bookingEditPO.checkValueInAllRequiredFields);
 
