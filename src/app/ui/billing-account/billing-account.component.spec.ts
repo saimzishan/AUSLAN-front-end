@@ -10,6 +10,9 @@ import {AddressComponent} from '../address/address.component';
 import {MaterialModule} from '@angular/material';
 import {SimpleNotificationsModule} from 'angular2-notifications/src/simple-notifications.module';
 import {NotificationServiceBus} from '../../notification/notification.service';
+import {MockBackend} from '@angular/http/testing';
+import {AuthHttp} from 'angular2-jwt';
+import {GmapsApiService} from '../../api/gmaps-api.service';
 
 describe('BillingAccountComponent', () => {
     let component: BillingAccountComponent;
@@ -18,7 +21,7 @@ describe('BillingAccountComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [BillingAccountComponent, AddressComponent],
-            providers: [NotificationServiceBus],
+            providers: [NotificationServiceBus, GmapsApiService, {provide: AuthHttp, useClass: MockBackend}],
             imports: [FormsModule, CustomFormsModule, SimpleNotificationsModule, MaterialModule]
         }).compileComponents();
     }));

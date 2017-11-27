@@ -11,6 +11,9 @@ import {CalendarModule} from 'ap-angular2-fullcalendar';
 import {RouterTestingModule} from '@angular/router/testing';
 import {NotificationServiceBus} from '../../notification/notification.service';
 import {SimpleNotificationsModule} from 'angular2-notifications/src/simple-notifications.module';
+import {MockBackend} from '@angular/http/testing';
+import {AuthHttp} from 'angular2-jwt';
+import {GmapsApiService} from '../../api/gmaps-api.service';
 
 describe('InterpreterComponent', () => {
     let component: InterpreterComponent;
@@ -19,7 +22,7 @@ describe('InterpreterComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [InterpreterComponent, AddressComponent, BillingAccountComponent],
-            providers: [NotificationServiceBus],
+            providers: [NotificationServiceBus, GmapsApiService, {provide: AuthHttp, useClass: MockBackend}],
             imports: [FormsModule, CustomFormsModule, SimpleNotificationsModule,
                 RouterTestingModule, MaterialModule, CalendarModule]
         })

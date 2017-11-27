@@ -752,6 +752,13 @@
     </div>
 
     <div class="row">
+      <div class="medium-12 columns" id="travel-cost-applicable" *ngIf="addressForm.isTravelCostApplicable">
+        <div class="form-field">
+          <md-checkbox type="checkbox" [(ngModel)]="bookingModel.travel_cost_applicable" name="travel_cost_applicable" #travelCost="ngModel">
+            This is a regional booking and travel costs might be billed when there is no regional interpreter available.<br/> I give permission to book a metro interpreter if needed.
+          </md-checkbox>
+        </div>
+      </div>
       <section>
         <app-termandcondition (termAndConditionStatusChange)="tocChanged($event)"
          [termsAndConditionAccepted]="termsAndConditionAccepted"></app-termandcondition>

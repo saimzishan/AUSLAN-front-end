@@ -1,6 +1,6 @@
 /* tslint:disable:no-unused-variable */
 
-import {GLOBAL} from './shared/global';
+import{GLOBAL} from './shared/global';
 import {
     Response,
     RequestMethod
