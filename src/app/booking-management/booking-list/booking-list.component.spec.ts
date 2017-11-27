@@ -7,6 +7,7 @@ import { BookingListComponent } from './booking-list.component';
 import { Router } from '@angular/router';
 import { PrettyIDPipe } from '../../shared/pipe/pretty-id.pipe';
 import { FormsModule }   from '@angular/forms';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 describe('BookingListComponent' ,  () => {
   let component:  BookingListComponent;
@@ -44,7 +45,7 @@ describe('BookingListComponent' ,  () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations :  [ BookingListComponent, PrettyIDPipe ],
-      imports: [RouterTestingModule, FormsModule]
+      imports: [RouterTestingModule, FormsModule, NgxPaginationModule]
     }).compileComponents();
   }));
 

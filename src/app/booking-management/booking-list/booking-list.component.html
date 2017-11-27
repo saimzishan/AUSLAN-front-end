@@ -114,7 +114,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr [ngClass]="{'active': isSelectedBooking(booking.id)}" *ngFor="let booking of bookingList"
+            <tr [ngClass]="{'active': isSelectedBooking(booking.id)}" *ngFor="let booking of bookingList | paginate: { itemsPerPage: 10, currentPage: p, totalItems: totalItems }"
                 (click)="setClickedRow(booking)">
                 <td>
                     <div class="checkbox">
@@ -209,5 +209,7 @@
 
             </tbody>
         </table>
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+
     </section>
 </main>

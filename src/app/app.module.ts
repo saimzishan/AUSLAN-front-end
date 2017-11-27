@@ -72,6 +72,7 @@ import { InterpreterBoxComponent } from './shared/ui/interpreter-box/interpreter
 import {PreferedAllocationService} from './shared/prefered-allocation.service';
 import { BookingHeaderService } from './booking-management/booking-header/booking-header.service';
 import {GmapsApiService} from './api/gmaps-api.service';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -105,7 +106,7 @@ import {GmapsApiService} from './api/gmaps-api.service';
   entryComponents: [PopupComponent, InterpreterPopupComponent],
   imports: [CustomFormsModule, routing, FileUploadModule,
     BrowserModule, RouterModule, CommonModule, MobileFooterModule,
-    FormsModule, BrowserAnimationsModule,
+    FormsModule, BrowserAnimationsModule, NgxPaginationModule,
     HttpModule, SimpleNotificationsModule.forRoot(),
     ReactiveFormsModule, Md2Module.forRoot(),
     MaterialModule, CalendarModule
