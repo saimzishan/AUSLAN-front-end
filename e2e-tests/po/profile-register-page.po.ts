@@ -30,7 +30,7 @@ export class ProfileRegisterPage extends PageObject {
         this.getElementByName('certainPassword').sendKeys('Abcd#1234');
         this.getElementByName('email').sendKeys(type === 'INDIVIDUALCLIENT' ? 'ted@auslan.com.au' :
             type === 'INTERPRETER' ? 'dragana@auslan.com.au' :
-                type === 'ORGANISATIONALREPRESENTATIVE' ? 'alana@auslan.com.au' :
+                type === 'ORGANISATIONALREPRESENTATIVE' ? 'alana+org1@auslan.com.au' :
                     'strangeTypeOfUser@auslan.com.au'
         );
         this.getElementByName('mobile').sendKeys('0490394517');

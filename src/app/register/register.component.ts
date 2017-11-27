@@ -48,7 +48,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
         this.sub_param = this.routes.queryParams.subscribe(params => {
             let p = params['selectedRole'] || '';
             this.isEdit = Boolean(params['edit_user']);
-            this.isDuplicate = Boolean(params['isduplicate'])
+            this.isDuplicate = Boolean(params['isduplicate']);
             this.selectedRole = Boolean(p && p.length > 1) ? p : this.selectedRole;
             let jsonData = this.isEdit ?
                 JSON.parse(params['edit_user']) : {};
@@ -127,11 +127,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
             return;
         }
         this.spinnerService.requestInProcess(true);
-        this.isEdit && !this.isDuplicate ? this.editUser() : this.addUser();
+        this.isEdit && !this.isDuplicate ? this.editUser() : this.isDuplicate ? this.duplicateUser('create_orgrep') : this.addUser();
     }
 
     addUser() {
-        
         this.userService.createUser(this.model)
             .subscribe((res: any) => {
                 if (res.data.id && 0 < res.data.id) {
@@ -171,6 +170,26 @@ export class RegisterComponent implements OnInit, OnDestroy {
                     this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
                 });
     }
+
+    duplicateUser(toCreate: string) {
+        this.userService.duplicateUser(toCreate, this.model)
+            .subscribe((res: any) => {
+                if (res.status === 200) {
+
+                    this.model.id = res.data.id;
+                    let route = this.isUserLogin ? '/user-management' : '/';
+                    this.router.navigate([route]);
+                    this.spinnerService.requestInProcess(false);
+                    this.notificationServiceBus.launchNotification(false, this.successMessage);
+                }
+            }, errors => {
+                this.spinnerService.requestInProcess(false);
+                let e = errors.json();
+                this.notificationServiceBus.launchNotification(true, errors.statusText + ' '
+                    + JSON.stringify(e.errors).replace(/]|[[]/g, '').replace(/({|})/g, ''));
+            });
+    }
+
 
     handleFileSelect(evt) {
         let files = evt.target.files;

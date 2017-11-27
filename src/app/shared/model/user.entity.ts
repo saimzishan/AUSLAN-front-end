@@ -165,6 +165,48 @@ export class OrganisationalRepresentative extends Organisational {
         return o;
     }
 
+    toJSONForDuplicate() {
+        this.preferred_contact_method = 'email_only';
+        let o = {
+            'first_name': this.first_name,
+            'last_name': this.last_name,
+            'type': this.type,
+            'email': this.email,
+            'password': this.password,
+            'business_hours_phone': this.phone,
+            'send_email_on_receipt_of_request': this.email_receipt,
+            'email_confirmation_on_interpreter_allocation': this.email_confirmation,
+            'communication_preference': this.preferred_contact_method,
+            'mobile': this.mobile,
+            'special_instructions': this.special_instructions,
+            'discovery_of_auslan': this.reffered_by === 'OTHER' ?
+                'O:' + this.reffered_other : this.reffered_by,
+            'customer_reference': this.customer_ref,
+            'avatar': this.avatar,
+            'organisation_id': this.org_id,
+            'organisation_attributes':
+                {
+                    'abn': this.abn,
+                    'id': this.org_id,
+                    'name': this.organisation_name, 'group_email': this.group_email,
+                    'branch_office': this.branch_office,
+                    'preferred_contact_method': this.organisation_billing_account.preferred_contact_method,
+                    'address_attributes': this.address_attributes,
+                    'preference_allocations_attributes': this.prefferedInterpreters,
+                    'billing_account_attributes': {
+                        'id': this.organisation_billing_account.id,
+                        'primary_contact_first_name': this.organisation_primary_contact.first_name,
+                        'primary_contact_last_name': this.organisation_primary_contact.last_name,
+                        'primary_contact_email': this.organisation_primary_contact.email,
+                        'primary_contact_phone_number': this.organisation_primary_contact.phone_number,
+                        'account_number': 'ABCD-1234',
+                        'external_reference': this.organisation_billing_account.external_reference,
+                        'address_attributes': this.organisation_billing_account.organisation_billing_address
+                    }
+                }
+        };
+        return o;
+    }
     /*
     * {"id":2,"type":"OrganisationalRepresentative","email":"nauman+orgrep@curvetomorrow.com.au",
     * "first_name":"Nauman","last_name":"OrgRep","mobile":null,"verified":true,"disabled":false,
