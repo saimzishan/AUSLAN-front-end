@@ -41,7 +41,7 @@ Feature: Pagination
 
   @runThis
   Scenario: Given 1 verified Administrator Officer, I should be able to see paginated result on user list page
-    Given There exist 8 admins
+    Given There exist 7 admins
     And I exist as an Administrator
     And I sign in with valid Administrator credentials
     And I am on my admin home screen
