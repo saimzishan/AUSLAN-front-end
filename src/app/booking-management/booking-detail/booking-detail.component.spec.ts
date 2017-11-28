@@ -36,6 +36,7 @@ import {UserService} from '../../api/user.service';
 import {PreferedAllocationService} from '../../shared/prefered-allocation.service';
 import {BookingHeaderService} from '../booking-header/booking-header.service';
 import {GmapsApiService} from '../../api/gmaps-api.service';
+import {RemoveSpacePipe} from '../../shared/pipe/remove-space.pipe';
 
 describe('BookingDetailComponent', () => {
   let component: BookingDetailComponent;
@@ -45,7 +46,7 @@ describe('BookingDetailComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ BookingDetailComponent, EnumValPipe, AddressComponent,
           BillingAccountComponent, TermandconditionComponent, BookingHeaderComponent,
-          InterpreterBoxComponent, InterpreterPopupComponent
+          InterpreterBoxComponent, InterpreterPopupComponent, RemoveSpacePipe
       ],
       imports: [CustomFormsModule, FileuploaderModule,
         FormsModule, BrowserAnimationsModule, RouterTestingModule, HttpModule,

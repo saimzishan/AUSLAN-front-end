@@ -70,6 +70,7 @@ import {InterpreterBoxComponent} from './shared/ui/interpreter-box/interpreter-b
 import {InterpreterPopupComponent} from './shared/ui/interpreter-popup/interpreter-popup.component';
 import {PreferedAllocationService} from './shared/prefered-allocation.service';
 import {NgxPaginationModule} from 'ngx-pagination';
+import {RemoveSpacePipe} from './shared/pipe/remove-space.pipe';
 
 describe('AppComponent', () => {
   beforeEach(() => {
@@ -85,7 +86,7 @@ describe('AppComponent', () => {
         BookingDetailComponent, BlockoutComponent,
         SpinnerComponent, OrgRepComponent, InterpreterComponent, AddressComponent,
           IndClientComponent, BillingAccountComponent, AccountantComponent, PreComponent,
-          InterpreterBoxComponent, InterpreterPopupComponent
+          InterpreterBoxComponent, InterpreterPopupComponent, RemoveSpacePipe
 
       ],
       imports: [CustomFormsModule, NgxPaginationModule, FileuploaderModule, RouterTestingModule, Md2Module.forRoot(),
