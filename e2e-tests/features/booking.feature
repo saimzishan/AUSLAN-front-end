@@ -559,3 +559,13 @@ Feature: Booking Management
     And I click on checkbox name 'tnc'
     When I click the create booking button
     Then I will be shown a popup message 'This booking might require more than 1 interpreter. You've only requested 1 interpreter. Are you sure you want to create this booking?'
+  
+  @runThis
+  Scenario: As an Administrator, I should specify notes when I don't specify what will be discussed
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    When I am on the bookings page
+    And I click on 'New Booking'
+    Then I will be taken to the 'New Booking' form
+    When I select option OTHER from dropdown NATURE OF APPOINTMENT
+    And I am shown a validation error with the text 'Please specify what the appointment is about'

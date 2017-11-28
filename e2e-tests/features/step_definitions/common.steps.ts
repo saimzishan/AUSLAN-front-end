@@ -255,7 +255,7 @@ defineSupportCode(({Given, When, Then}) => {
 
     function showValidationErrorWithText(errText: string) {
         // browser.explore();
-        let errs = page.getAll('.inline-icon.error');
+        let errs = page.getAllByCSSandText('.inline-icon.error > span', errText);
         return errs.count().then((count) => {
             // expect(count).to.be.greaterThan(0);
             expect(count).to.be.greaterThan(0);

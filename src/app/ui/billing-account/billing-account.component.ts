@@ -11,11 +11,10 @@ import { NgForm } from '@angular/forms';
 })
 export class BillingAccountComponent {
   @Input() primaryContact: Contact;
-
-address_title = 'BILLING ADDRESS';
   @Input() billingAddressIsSame= true;
   @Input() billingAddress: Address;
   @Input() preferred_billing_method_email = false;
   @Input() parentForm: NgForm;
   @ViewChild('billingFields') public form: NgForm;
+  address_title = 'BILLING ADDRESS';
 }
