@@ -252,7 +252,14 @@ export class UserManagementPage extends PageObject {
             return edit.click();
         });
     }
-
+    clickOnDuplicateUser = (active: string, type: string) => {
+        return this.findClickableActionButton('duplicate-orgrep', active, type).then((duplicate) => {
+            return duplicate.isPresent().then( (v) => {
+                browser.actions().mouseMove(duplicate).perform();
+                duplicate.click();
+            });
+        });
+    }
     clickOnResetPassword = (active: string, type: string) => {
         return this.findClickableActionButton('reset-password', active, type).then((btn) => {
             return btn.click();

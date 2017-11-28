@@ -23,7 +23,7 @@ export class ProfileRegisterPage extends PageObject {
     fillAllDataForAdmin = (type: string) => {
         this.fillAllDataForRegister(type, '');
     }
-    fillAllDataForRegister = (type: string, prefComm: string) => {
+    fillBasicData  = (type: string) => {
         this.getElementByName('first_name').sendKeys('George');
         this.getElementByName('last_name').sendKeys('Charalambous');
         this.getElementByName('password').sendKeys('Abcd#1234');
@@ -34,6 +34,23 @@ export class ProfileRegisterPage extends PageObject {
                     'strangeTypeOfUser@auslan.com.au'
         );
         this.getElementByName('mobile').sendKeys('0490394517');
+    }
+
+    fillDuplicateBasicData  = (type: string) => {
+        this.getElementByName('first_name').sendKeys('George');
+        this.getElementByName('last_name').sendKeys('Charalambous');
+        this.getElementByName('password').sendKeys('Abcd#1234');
+        this.getElementByName('certainPassword').sendKeys('Abcd#1234');
+        this.getElementByName('email').sendKeys(type === 'INDIVIDUALCLIENT' ? 'ted+clt1@auslan.com.au' :
+            type === 'INTERPRETER' ? 'dragana+int1@auslan.com.au' :
+                type === 'ORGANISATIONALREPRESENTATIVE' ? 'alana+org1@auslan.com.au' :
+                    'strangeTypeOfUser@auslan.com.au'
+        );
+        this.getElementByName('mobile').sendKeys('0490394517');
+    }
+
+    fillAllDataForRegister = (type: string, prefComm: string) => {
+        this.fillBasicData(type);
         if (type === 'INDIVIDUALCLIENT') {
             this.getElementByName('phone').sendKeys('0490394517');
             this.getElementByName('ndis_id').sendKeys('311');

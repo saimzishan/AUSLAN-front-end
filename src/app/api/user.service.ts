@@ -77,6 +77,19 @@ export class UserService extends ApiService {
             .catch((err) => { return this.handleError(err); });
     }
 
+    duplicateUser(toCreate: string, user: User): Observable<Object> {
+
+                let headers = new Headers({'Accept': 'application/json',
+                    'Content-Type': 'application/json'});
+                let options = new RequestOptions({ headers: headers });
+                let obj = { 'user':
+                    user instanceof OrganisationalRepresentative ? (<OrganisationalRepresentative>user).toJSONForDuplicate() :
+                            user instanceof IndividualClient ? (<IndividualClient>user).toJSON() :
+                                user };
+                return this.http.post(GLOBAL.USER_API + '/' + toCreate, JSON.stringify(obj), options)
+                    .map(this.extractData)
+                    .catch((err) => { return this.handleError(err); });
+    }
     /*
       The Api should be able to update already created users.
     */

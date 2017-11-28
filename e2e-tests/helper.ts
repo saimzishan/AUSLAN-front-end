@@ -134,7 +134,7 @@ export class User {
                 data_to_sent['email_confirmation_on_interpreter_allocation'] = true;
                 data_to_sent['business_hours_phone'] = data_to_sent['mobile'];
                 let organisation_attributes_fields = {};
-                organisation_attributes_fields['abn'] = 12345;
+                organisation_attributes_fields['abn'] = 12345678900;
                 organisation_attributes_fields['name'] = 'Curve Tomorrow';
                 organisation_attributes_fields['group_email'] = 'group@ct.com.au';
                 organisation_attributes_fields['branch_office'] = 'Melbourne';

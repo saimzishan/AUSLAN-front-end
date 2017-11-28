@@ -36,7 +36,7 @@ defineSupportCode(({Given, Then, When}) => {
 
     // ================================== UPDATING & DISABLE USER ========================================
     When(/^I click on edit for an (.*) existing (.*)$/, userManagementPO.clickOnEditUser);
-
+    When(/^I click on duplicate for an (.*) existing (.*)$/, userManagementPO.clickOnDuplicateUser);
     Then(/^I update some (.*) fields/, userManagementPO.updateValidUserFields);
     Then(/^I update (.*) available field/, userManagementPO.updateAvailableField);
     When(/^I see success notification$/, userManagementPO.userUpdated);
