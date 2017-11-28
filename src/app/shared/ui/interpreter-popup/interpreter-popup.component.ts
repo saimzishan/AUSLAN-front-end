@@ -81,9 +81,9 @@ export class InterpreterPopupComponent implements OnInit {
         if (showError) {
             let tmp = this.selectedInterpreters.filter((i) => i.interpreter_id === interpreter_id)[0];
             if (tmp.preference === 'preferred') {
-                this.notificationServiceBus.launchNotification(true, 'This interpreter is already selected as a preffered interpreter. Please remove first.');
+                this.notificationServiceBus.launchNotification(true, 'Oops! This interpreter is already selected as a preferred interpreter. Please remove this interpreter first.');
             } else {
-                this.notificationServiceBus.launchNotification(true, 'This interpreter is already selected as a blocked interpreter. Please remove first.');
+                this.notificationServiceBus.launchNotification(true, 'Oops! This interpreter is already selected as a blocked interpreter. Please remove this interpreter first');
             }
         }
     }
