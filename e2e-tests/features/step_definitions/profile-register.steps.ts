@@ -23,6 +23,9 @@ defineSupportCode(({Then, When}) => {
     When(/^I fill in all the details correctly for -> '(.*)'$/,
         profileRegisterPage.fillAllDataForAdmin);
 
+    When(/^I fill in basic details correctly for duplicate -> '(.*)'$/,
+    profileRegisterPage.fillDuplicateBasicData);
+
     When(/^'(.*)' will be created$/, profileRegisterPage.userCreated);
 
     Then(/^I will get a (.*) validation alert$/, profileRegisterPage.getValidation);

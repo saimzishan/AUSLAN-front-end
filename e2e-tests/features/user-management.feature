@@ -458,7 +458,7 @@ Feature: Create, read, update and delete a User
     And I go to the 'User Management' list page
     Then I click on duplicate for an active existing Organisational Representative
     And I will be taken to the 'ORGANISATIONALREPRESENTATIVE Signup' page
-    When I fill in basic details correctly for -> 'ORGANISATIONALREPRESENTATIVE'
+    When I fill in basic details correctly for duplicate -> 'ORGANISATIONALREPRESENTATIVE'
     Then I click on update
     Then 'ORGANISATIONALREPRESENTATIVE' will be created
     And I hover on the 'Profile'
@@ -475,7 +475,7 @@ Feature: Create, read, update and delete a User
     And I go to the 'User Management' list page
     Then I click on duplicate for an active existing Organisational Representative
     And I will be taken to the 'ORGANISATIONALREPRESENTATIVE Signup' page
-    When I fill in basic details correctly for -> 'ORGANISATIONALREPRESENTATIVE'
+    When I fill in basic details correctly for duplicate -> 'ORGANISATIONALREPRESENTATIVE'
     Then I click on update
     Then 'ORGANISATIONALREPRESENTATIVE' will be created
     And I hover on the 'Profile'
