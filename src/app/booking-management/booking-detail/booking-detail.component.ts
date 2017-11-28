@@ -152,7 +152,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             ['first_name', 'last_name', 'email', 'mobile_number', 'ndis_id'].forEach((field) => {
                 let currentUserFieldMap = { mobile_number: 'mobile' };
                 let currentUserField = currentUserFieldMap[field] || field;
-                let value = this.currentUserIsClient === 'true' ? user[currentUserField] : '';
+                let value = this.currentUserIsClient === 'true' ? user[currentUserField] : (this.bookingModel.deaf_person[field] || '');
                 let mapForNsid = { ndis_id: 'eaf' };
                 field = mapForNsid[field] || field;
                 this.bookingModel.deaf_person[field] = value;
