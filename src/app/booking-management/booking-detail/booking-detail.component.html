@@ -567,7 +567,8 @@
             <input type="tel"
                    placeholder="Enter deaf person Mobile Number"
                    id="deaf_person_mobile"
-                   [(ngModel)]="bookingModel.deaf_person.mobile_number"
+                   [ngModel]="bookingModel.deaf_person.mobile_number | removeSpace"
+                   (ngModelChange)="bookingModel.deaf_person.mobile_number=$event"
                    name="deaf_person_mobile"
                    #deaf_person_mobile="ngModel"
                    digits [rangeLength]="[6,11]">

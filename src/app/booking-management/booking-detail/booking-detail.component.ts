@@ -20,6 +20,7 @@ import {IndividualClient, OrganisationalRepresentative, BookingOfficer, Administ
 import {PopupComponent} from '../../shared/popup/popup.component';
 import {Contact} from '../../shared/model/contact.entity';
 import {UserService} from '../../api/user.service';
+import {RemoveSpacePipe} from '../../shared/pipe/remove-space.pipe';
 
 const _ONE_HOUR = 1000 /*milliseconds*/
     * 60 /*seconds*/
@@ -101,6 +102,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
 
             if (this.forEdit()) {
                 this.bookingHeading = 'EDIT BOOKING';
+                this.termsAndConditionAccepted = true;
             } else {
                 this.bookingHeading = 'NEW BOOKING';
 
@@ -397,7 +399,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             config.viewContainerRef = this.viewContainerRef;
             this.dialogRef = this.dialog.open(PopupComponent, config);
             this.dialogRef.componentInstance.title = 'Important Fields Changed';
-            this.dialogRef.componentInstance.cancelTitle = 'BACK';
+            this.dialogRef.componentInstance.cancelTitle = 'Back';
             this.dialogRef.componentInstance.okTitle = 'Yes';
             this.dialogRef.componentInstance.popupMessage =
                 `Interpreter(s) have been/is allocated for this job. You're charging important fields of the booking.

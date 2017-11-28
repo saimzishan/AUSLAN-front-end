@@ -52,7 +52,8 @@
                 <label class="icon-email">
                     CONTACT NUMBER * </label>
                 <input type="tel" id="phone" placeholder="Enter your contact number"
-                       [(ngModel)]="primaryContact.phone_number" name="cn_phone" #cn_phone="ngModel" digits
+                       [ngModel]="primaryContact.phone_number | removeSpace" name="cn_phone" #cn_phone="ngModel" digits
+                       (ngModelChange)="primaryContact.phone_number=$event"
                        [rangeLength]="[10, 11]"
                        required>
                 <span *ngIf="cn_phone.touched && !cn_phone.errors?.email && !cn_phone.errors?.rangeLength;"

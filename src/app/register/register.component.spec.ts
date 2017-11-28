@@ -33,7 +33,7 @@ import {InterpreterPopupComponent} from '../shared/ui/interpreter-popup/interpre
 import {InterpreterBoxComponent} from '../shared/ui/interpreter-box/interpreter-box.component';
 import {PreferedAllocationService} from '../shared/prefered-allocation.service';
 import {SpinnerService} from '../spinner/spinner.service';
-
+import {RemoveSpacePipe} from '../shared/pipe/remove-space.pipe';
 
 describe('RegisterComponent', () => {
     let component: RegisterComponent;
@@ -44,7 +44,7 @@ describe('RegisterComponent', () => {
             declarations: [RegisterComponent, NotificationComponent,
                 OrgRepComponent, InterpreterComponent, AddressComponent, TermandconditionComponent,
                 IndClientComponent, BillingAccountComponent, AccountantComponent,
-            InterpreterPopupComponent, InterpreterBoxComponent],
+            InterpreterPopupComponent, InterpreterBoxComponent, RemoveSpacePipe],
             imports: [FormsModule, MaterialModule, CalendarModule,
                 CustomFormsModule, SimpleNotificationsModule.forRoot(),
                 RouterTestingModule],
