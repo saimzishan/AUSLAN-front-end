@@ -10,6 +10,7 @@ import { UserListComponent } from './user-list.component';
 import {FormsModule} from '@angular/forms';
 import {CustomFormsModule} from 'ng2-validation';
 import {RouterTestingModule} from '@angular/router/testing';
+import {NgxPaginationModule, PaginatePipe} from 'ngx-pagination';
 
 describe('UserListComponent', () => {
   let component: UserListComponent;
@@ -19,7 +20,7 @@ describe('UserListComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ UserListComponent, SpacerPipe ],
       providers: [RolePermission, LinkAuth],
-      imports: [HttpModule, RouterTestingModule, FormsModule, CustomFormsModule]
+      imports: [HttpModule, RouterTestingModule, NgxPaginationModule, FormsModule, CustomFormsModule]
     })
     .compileComponents();
   }));

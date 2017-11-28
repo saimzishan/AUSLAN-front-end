@@ -73,3 +73,16 @@ Feature: Booking Management with bulk upload
     When I will upload a bulk upload spreadsheet 'bulk_booking_upload_with_error_in_one_row.xlsx'
     Then I get an booking error notification with Error occured on server side. Unprocessable Entity {"errors":"Error on row 4. Address post code can't be blank, Billing account address street name can't be blank, Start time can't be blank, End time can't be blank, Number of people attending is not a number"}
     And I will be taken to the 'New Booking' form
+
+  @runThis
+  Scenario: Organisational Representative can upload the same excel file twice
+    Given I exist as an Organisational Representative
+    And I sign in with valid Organisational Representative credentials
+    And I am on the bookings page
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    When I will upload a bulk upload spreadsheet 'bulk_booking_upload_with_wrong_bookable.xlsx'
+    Then I get an booking error notification with Error occured on server side. Unprocessable Entity {"errors":"Error on row 4. Email does not correspond to your account"}
+    Then I wait for 5000 milli-seconds
+    And I will upload a bulk upload spreadsheet 'bulk_booking_upload_with_wrong_bookable.xlsx'
+    Then I get an booking error notification with Error occured on server side. Unprocessable Entity {"errors":"Error on row 4. Email does not correspond to your account"}

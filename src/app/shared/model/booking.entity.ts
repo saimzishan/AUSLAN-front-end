@@ -31,6 +31,7 @@ export class Booking {
     public bookable_id: number;
     public bookable_type: string;
     public created_by_admin: boolean;
+    public travel_cost_applicable: boolean;
     // Is it a limitation on interpreters invitation.
 
     constructor() {
@@ -61,6 +62,7 @@ export class Booking {
         this.bookable_type = 'IndividualClient';
         this.notes = '';
         this.created_by_admin = false;
+        this.travel_cost_applicable = false;
     }
 
     clean(theObject) {
@@ -123,6 +125,7 @@ export class Booking {
         this.bookable_type = data.bookable_type === 'User' ? data.created_by.type : data.bookable_type;
         this.notes = data.notes;
         this.created_by_admin = data.created_by_admin;
+        this.travel_cost_applicable = data.travel_cost_applicable;
 
         if (Boolean(data.billing_account_attributes)) {
             this.client.organisation_primary_contact.first_name =
@@ -235,7 +238,8 @@ export class Booking {
             bookable_id: this.bookable_id,
             bookable_type: this.bookable_type,
             notes: this.notes,
-            created_by_admin: this.created_by_admin
+            created_by_admin: this.created_by_admin,
+            travel_cost_applicable: this.travel_cost_applicable
         });
         return o;
     }

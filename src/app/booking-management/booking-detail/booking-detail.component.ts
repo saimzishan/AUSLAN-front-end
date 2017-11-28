@@ -301,6 +301,10 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     */
     public onCreateBooking(form: FormGroup, addressForm: any, billingForm: any, uploader: FileUploader) {
 
+        if (addressForm.isTravelCostApplicable && !form.value.travel_cost_applicable) {
+            this.notificationServiceBus.launchNotification(true, 'Travel cost must be applicable as your booking distance is more than 40 kms');
+            return;
+        }
         if (!this.termsAndConditionAccepted && !this.forEdit()) {
             this.notificationServiceBus.launchNotification(true, 'Kindly accept Terms and Conditions');
             return;
@@ -483,8 +487,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
 
     handleBulkUploadSelect(evt) {
         let files = evt.target.files;
-
         let file = files[0];
+        evt.srcElement.value = '';
         // File uploader wont add a duplicate file
         if (files && file) {
             this.fileName = file.name;

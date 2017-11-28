@@ -35,6 +35,7 @@ import {InterpreterPopupComponent} from '../../shared/ui/interpreter-popup/inter
 import {UserService} from '../../api/user.service';
 import {PreferedAllocationService} from '../../shared/prefered-allocation.service';
 import {BookingHeaderService} from '../booking-header/booking-header.service';
+import {GmapsApiService} from '../../api/gmaps-api.service';
 
 describe('BookingDetailComponent', () => {
   let component: BookingDetailComponent;
@@ -55,7 +56,7 @@ describe('BookingDetailComponent', () => {
             DatePipe, RolePermission, PreferedAllocationService, BookingHeaderService,
             NotificationServiceBus, { provide: BookingService, useClass: MockBookingService },
             { provide: UserService, useClass: MockUserService },
-          SpinnerService, { provide: AuthHttp, useClass: MockBackend },
+          SpinnerService, { provide: AuthHttp, useClass: MockBackend }, GmapsApiService,
           {
                     provide: ActivatedRoute,
                     useValue: {

@@ -40,6 +40,7 @@ import { HttpModule, Http, RequestOptions } from '@angular/http';
 import { VerifyComponent } from '../verify/verify.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Data } from '@angular/router';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
@@ -52,7 +53,7 @@ describe('DashboardComponent', () => {
     };
     TestBed.configureTestingModule({
       declarations: [DashboardComponent, SpacerPipe, UserFilterComponent, UserHeaderComponent, VerifyComponent, UserListComponent],
-      imports: [FormsModule, CustomFormsModule, HttpModule, RouterModule],
+      imports: [FormsModule, NgxPaginationModule, CustomFormsModule, HttpModule, RouterModule],
       providers: [RolePermission, LinkHelper, UserNameService, { provide: Router, useValue: routerStub },
         { provide: UserService, useClass: MockUserService }, { provide: AuthHttp, useClass: MockBackend },
         {

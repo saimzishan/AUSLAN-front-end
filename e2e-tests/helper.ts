@@ -488,6 +488,14 @@ export class Heroku {
                 '").update_attributes(verified:' + true + ')');
         }
     }
+    static createBulkAdministrator(numberOfUser: string) {
+        const num_of_user = parseInt(numberOfUser, 10);
+        for (let i = 0; i < num_of_user; i++) {
+            const data_to_sent = User.returnJSONForUser('Administrator', i);
+            const command = Heroku.createSingleUser(data_to_sent);
+            Heroku.sendCommandToHeroku(command);
+        }
+    }
 
     static addVerifiedUser(valid_login_user: User, type: string) {
         Heroku.createUser(valid_login_user, type);

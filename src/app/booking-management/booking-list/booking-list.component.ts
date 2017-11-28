@@ -22,6 +22,8 @@ export class BookingListComponent {
     bookingFilter: BookingFilter = {};
     private filterParams = new URLSearchParams();
     private currentSort = {'field': 'job', 'order': 'asc' };
+    @Input() totalItems = 0;
+    p = 1;
     private validKeys(list): Array<string> {
         let keys = Object.keys(list);
         return keys.slice(keys.length / 2);
@@ -97,7 +99,7 @@ export class BookingListComponent {
                     formattedValue = BOOKING_STATUS.hasOwnProperty(value) ? BOOKING_STATUS[value].toString() : '' ;
                     break;
                 case 'state':
-                    formattedValue = value === 'all' ? '' : value;
+                    formattedValue = value.toLowerCase() === 'all' ? '' : value;
                     break;
                 case 'booking_type':
                     formattedValue = BOOKING_NATURE.hasOwnProperty(value) ? BOOKING_NATURE[value].toString() : '' ;
@@ -106,7 +108,7 @@ export class BookingListComponent {
                     formattedValue = value;
             }
         }
-        return formattedValue.length ? formattedValue : undefined;
+        return formattedValue;
     }
     filter(field: string, value: string) {
         this.bookingFilter[field] = this.formatterValueFor(field, value);

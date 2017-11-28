@@ -7,10 +7,6 @@ import {
 import {ROLE} from '../shared/model/role.enum';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NotificationServiceBus} from '../notification/notification.service';
-import {NotificationComponent} from '../notification/notification.component';
-import {NavigationExtras} from '@angular/router';
-import {Address} from '../shared/model/venue.entity';
-import {Contact} from '../shared/model/contact.entity';
 import {FormGroup} from '@angular/forms';
 import {SpinnerService} from '../spinner/spinner.service';
 import {GLOBAL} from '../shared/global';

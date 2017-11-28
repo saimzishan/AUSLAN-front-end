@@ -1,6 +1,6 @@
 /* tslint:disable:no-unused-variable */
 
-import {GLOBAL} from './shared/global';
+import{GLOBAL} from './shared/global';
 import {
     Response,
     RequestMethod
@@ -69,6 +69,7 @@ import {TermandconditionComponent} from './ui/termandcondition/termandcondition.
 import {InterpreterBoxComponent} from './shared/ui/interpreter-box/interpreter-box.component';
 import {InterpreterPopupComponent} from './shared/ui/interpreter-popup/interpreter-popup.component';
 import {PreferedAllocationService} from './shared/prefered-allocation.service';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 describe('AppComponent', () => {
   beforeEach(() => {
@@ -87,7 +88,7 @@ describe('AppComponent', () => {
           InterpreterBoxComponent, InterpreterPopupComponent
 
       ],
-      imports: [CustomFormsModule, FileuploaderModule, RouterTestingModule, Md2Module.forRoot(),
+      imports: [CustomFormsModule, NgxPaginationModule, FileuploaderModule, RouterTestingModule, Md2Module.forRoot(),
       MaterialModule, FormsModule, SimpleNotificationsModule.forRoot(), MobileFooterModule,
         HttpModule, CalendarModule
       ],  providers: [ NotificationServiceBus,

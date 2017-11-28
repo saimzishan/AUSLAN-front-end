@@ -77,7 +77,7 @@
 </div>
 <br>
 
-<app-address [prefix]="address_title" [address]="userModel.address_attributes"></app-address>
+<app-address [prefix]="address_title" [address]="userModel.address_attributes" [parentForm]="parentForm"></app-address>
 
 <div class="row small-collapse">
   <div class="row-wrapper">
@@ -95,7 +95,7 @@
 
 <br>
 <app-billing-account [primaryContact]="userModel.individual_client_primary_contact" [billingAddress]="userModel.individual_client_billing_account.organisation_billing_address"
-                     [billingAddressIsSame]="userModel.billingAddressIsSame"
+                     [billingAddressIsSame]="userModel.billingAddressIsSame" [parentForm]="parentForm"
                      ></app-billing-account>
 
 

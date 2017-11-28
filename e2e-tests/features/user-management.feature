@@ -376,8 +376,8 @@ Feature: Create, read, update and delete a User
     And I update Accountant available field
     And I click on update
     Then I see success notification
-#
 ############################### New Organisational Representative ##############################
+
   @runThis
   Scenario: Administrator should be able to add a new orgrep
     And I exist as an Administrator
@@ -483,6 +483,7 @@ Feature: Create, read, update and delete a User
     Then The 2 valid ORGANISATIONAL REPRESENTATIVE should be in the list
 
 # Trigger
+############################### Trigger ##############################
   @runThis
   Scenario: Administrator should be able to trigger password reset for Interpreter
     And I exist as an Administrator

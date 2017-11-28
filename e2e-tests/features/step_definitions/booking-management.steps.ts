@@ -22,6 +22,7 @@ defineSupportCode(({Given, Then, When}) => {
     Given(/^The booking has status '(.*)'$/, Heroku.updateBookingWithStatus);
     Given(/^The booking has assignment category '(.*)'$/, Heroku.updateBookingWithCategory);
     Given(/^There exist (\d+) bookings$/, Heroku.createBulkBookings);
+    Given(/^There exist (\d+) admins/, Heroku.createBulkAdministrator);
     Given(/^I have preloaded bookings with different org values$/, Heroku.preloadOrgBookings);
     Given(/^One booking has client name as '(.*)'$/, Heroku.updateBookingWithClientName)
     Given(/^One booking has client last name as '(.*)'$/, Heroku.updateBookingWithLastClientName)
@@ -96,6 +97,7 @@ defineSupportCode(({Given, Then, When}) => {
     When(/^I hover on the (.*) dropdown and I do not see '(.*)'$/, bookingManagementPO.selectionNotPresent);
     When(/^I change the street number to (\d+)$/, createBookingPO.setStreetNumber);
     When(/^I click on one non-editable field$/, bookingEditPO.clickOnNonEditableField);
+    When(/^I query search with '(.*)'$/, bookingManagementPO.querySearchWith);
 
     Then(/^All required booking fields should be filled$/, bookingEditPO.checkValueInAllRequiredFields);
 

@@ -29,7 +29,7 @@ export class UserManagementComponent {
     users: Array<User> = [];
     // this is bad
     userName = '';
-
+    totalItems = 0;
 
     constructor(public spinnerService: SpinnerService,
                 public notificationServiceBus: NotificationServiceBus,
@@ -68,6 +68,8 @@ export class UserManagementComponent {
                             return result;
                         }).map(u => UserFactory.createUser(u));
                         this.users = userList;
+                        this.totalItems = Boolean(res.data.paginates) ? res.data.paginates.total_records : res.data.users.length;
+
                     }
                     this.spinnerService.requestInProcess(false);
                 },

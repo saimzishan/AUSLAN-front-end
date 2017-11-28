@@ -2,8 +2,8 @@
   <h1>BOOKINGS</h1>
 </header>
 <section id="page-jobs">
-  <app-booking-filter></app-booking-filter>
-  <app-booking-list [bookingList]='bookings' (onBookingFilter)="fetchBookings($event)"></app-booking-list>
+  <app-booking-filter (appBookingFilter)="fetchBookings($event)"></app-booking-filter>
+  <app-booking-list [totalItems]="totalItems" [bookingList]='bookings' (onBookingFilter)="fetchBookings($event)"></app-booking-list>
 </section>
 
 <nav id="footer-mobile">

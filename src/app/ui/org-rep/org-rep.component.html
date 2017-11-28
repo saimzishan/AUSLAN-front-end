@@ -91,7 +91,7 @@
 
 <br>
 
-<app-address [prefix]="address_title" [address]="userModel.address_attributes"></app-address>
+<app-address [prefix]="address_title" [address]="userModel.address_attributes" [parentForm]="parentForm"></app-address>
 
 <div class="row small-collapse">
     <div class="row-wrapper">
@@ -109,7 +109,7 @@
 </div>
 
 <br>
-<app-billing-account [primaryContact]="userModel.organisation_primary_contact"
+<app-billing-account [primaryContact]="userModel.organisation_primary_contact" [parentForm]="parentForm"
                      [billingAddress]="userModel.organisation_billing_account.organisation_billing_address"
                      [billingAddressIsSame]="userModel.billingAddressIsSame"
 ></app-billing-account>
