@@ -353,9 +353,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         if (this.isBookingTimeInNonStandardHours()) {
             let message = `This booking is not within the standard booking hours (8AM - 6PM).
                             Do you still want to create booking?` ;
-            let title   = 'NON-STANDARD HOURS WARNING';
+            let title   = 'Unsaved changes';
             this.createModal(title, message);
-
             this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
 
                 if (result) {
