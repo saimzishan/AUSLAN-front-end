@@ -545,3 +545,27 @@ Feature: Booking Management
     And I will be shown with bookings
     Then I am shown with 1 booking
 # ---------------------------------------- AUSLAN1-736, 737 -> END ----------------------------------------
+
+  @runThis
+  Scenario: Given an Individual Client, Booking Officer should get a popup when the booking needs more interpreters
+    Given I exist as a Booking Officer
+    And I sign in with valid Booking Officer credentials
+    When I am on the bookings page
+    And I click on 'New Booking'
+    Then I will be taken to the 'New Booking' form
+    When I fill New Booking form fields correctly with standard time from 09:00AM to 11:00AM with 1 interpreters
+    And I select the bookable for client
+    Then I move to element name 'tnc'
+    And I click on checkbox name 'tnc'
+    When I click the create booking button
+    Then I will be shown a popup message 'This booking might require more than 1 interpreter. You've only requested 1 interpreter. Are you sure you want to create this booking?'
+  
+  @runThis
+  Scenario: As an Administrator, I should specify notes when I don't specify what will be discussed
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    When I am on the bookings page
+    And I click on 'New Booking'
+    Then I will be taken to the 'New Booking' form
+    When I select option OTHER from dropdown NATURE OF APPOINTMENT
+    And I am shown a validation error with the text 'Please specify what the appointment is about'

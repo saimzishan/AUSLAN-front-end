@@ -55,12 +55,20 @@ export class BookingPage extends PageObject {
             return this.clickOnCancel();
         }
     }
+    private getDropdownFromLabel = (label: string) => {
+        const selected_label = this.getElementByCSSandText('label', label);
+        const div = this.getParent(selected_label);
+        return this.getElementInsideByTag(div, 'select');
+    }
 
     clickOnDropDown = (label_text: string) => {
-        const selected_label = this.getElementByCSSandText('label', label_text);
-        const div = this.getParent(selected_label);
-        const select_dropdown = this.getElementInsideByTag(div, 'select');
+        const select_dropdown = this.getDropdownFromLabel(label_text);
+        expect(select_dropdown.isPresent()).to.eventually.be.true;
         return select_dropdown.click();
+    }
+    selectOptionFromDropdown = (option: string, label: string) => {
+        const dropdown = this.getDropdownFromLabel(label).click();
+        return this.getElementInsideByCSSandText(dropdown, 'option', option).click();
     }
     optionExistsInDropDown = (option_text: string, dropdown_name: string) => {
         let sel = this.getElementByName(dropdown_name);
@@ -237,6 +245,21 @@ export class BookingPage extends PageObject {
         this.getElementByName('cn_last_name').sendKeys('Travolta');
         this.getElementByName('cn_email').sendKeys('jt@star.com.au');
         this.getElementByName('cn_phone').sendKeys('0490394512');
+
+        let deaf_person_values = {
+            'deaf_person_name': 'Frank',
+            'deaf_person_last_name': 'Castle',
+            'deaf_person_email': 'petecastiligone@gmail.com',
+            'deaf_person_mobile': '0918273645'
+        };
+
+        Object.keys(deaf_person_values).forEach(field => {
+            this.getElementByName(field).getAttribute('value').then(value => {
+                if (!value) {
+                    this.getElementByName(field).sendKeys(deaf_person_values[field]);
+                }
+            });
+        });
 
         this.getElementByName('deaf_person_eaf').sendKeys('123');
     }

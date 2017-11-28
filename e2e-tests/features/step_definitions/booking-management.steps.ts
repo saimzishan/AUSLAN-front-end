@@ -81,10 +81,11 @@ defineSupportCode(({Given, Then, When}) => {
     Then(/^I can see a list of (.*) (.*) interpreters$/, bookingJobPO.checkListofInterpreterIndividualBookingScreen);
     Then(/^I can not see a list of interpreters$/, bookingJobPO.listofInterpreterDoesNotExists);
 
-    Then(/^I can verify the image of myself in the list of interpreter start with '(.*)'$/, bookingJobPO.verifyPictureOfYourself)
+    Then(/^I can verify the image of myself in the list of interpreter start with '(.*)'$/, bookingJobPO.verifyPictureOfYourself);
 
 //    POPULATE DROP DOWN
     When(/^I click dropdown (.*)$/, createBookingPO.clickOnDropDown);
+    When(/^I select option (.*) from dropdown (.*)$/, createBookingPO.selectOptionFromDropdown);
 
     When(/^I click on option (.*) of (.*) for (.*)/, createBookingPO.clickOnOption);
     When(/^I query booking with booking id$/, bookingManagementPO.queryBookingWithID);

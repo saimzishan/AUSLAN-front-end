@@ -132,6 +132,7 @@
         </div>
       </div>
 
+      <app-address [address]="bookingModel.venue" [canEdit]="isEditableForOrgRepIndClient" #addressForm="ctAddressForm" ></app-address>
       <div class="medium-12 columns">
         <div class="form-field">
           <label>SPECIFIC LOCATION
@@ -145,7 +146,6 @@
 
         </div>
       </div>
-      <app-address [address]="bookingModel.venue" [canEdit]="isEditableForOrgRepIndClient" #addressForm="ctAddressForm" ></app-address>
       <div class="row-wrapper">
         <div class="medium-6 columns">
           <div class="form-field">
@@ -300,6 +300,11 @@
             </span>
           </label>
           <textarea placeholder="Important Notes" name="important_notes" [(ngModel)]="bookingModel.notes"></textarea>
+
+          <span *ngIf="bookingModel.raw_nature_of_appointment ==='Other' && bookingModel.notes.length < 2 ;"
+                class="inline-icon error">
+            <span>Please specify what the appointment is about</span>!
+          </span>
         </div>
       </div>
     </div>

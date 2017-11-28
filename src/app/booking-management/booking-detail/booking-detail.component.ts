@@ -41,8 +41,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     rdgSpecialInstruction = 'true';
     oldBookingModel;
     dialogSub;
-    appointment_types = Object.keys(BOOKING_NATURE).filter(value => value === BOOKING_NATURE[value]
-        || BOOKING_NATURE[value].startsWith(value)).map(v => BOOKING_NATURE[v]) as string[];
+    appointment_types = Object.keys(BOOKING_NATURE).filter(value => (value === BOOKING_NATURE[value]
+        || BOOKING_NATURE[value].startsWith(value)) && value !== BOOKING_NATURE[BOOKING_NATURE.None]).map(v => BOOKING_NATURE[v]) as string[];
 
     specific_appointment_types = [];
     currentUserIsContact = 'true';
@@ -96,14 +96,12 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 this.bookingModel.venue.end_time_iso =
                     this.datePipe.transform(this.bookingModel.venue.end_time_iso, 'yyyy-MM-ddTHH:mm:ss');
                 this.natureOfApptChange(null);
-
             }
 
             if (this.forEdit()) {
                 this.bookingHeading = 'EDIT BOOKING';
             } else {
                 this.bookingHeading = 'NEW BOOKING';
-
                 this.bookingModel.bookable_type = this.bookingModel.bookable_type || 'IndividualClient';
             }
         });
@@ -136,6 +134,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.isUserAdminORBookOfficer = <boolean> this.checkUserAdminORBookOfficer();
             this.isDisabledForAdmin = (this.forEdit() && !this.bookingModel.created_by_admin);
             this.onSelectionChange();
+            this.currentUserIsClient = this.isUserOrgRep() ? 'false' : 'true';
             this.onClientSelectionChange();
             this.getUser();
             this.bookingModel.bookable_type = this.bookingModel.bookable_type || 'IndividualClient';
@@ -153,7 +152,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             ['first_name', 'last_name', 'email', 'mobile_number', 'ndis_id'].forEach((field) => {
                 let currentUserFieldMap = { mobile_number: 'mobile' };
                 let currentUserField = currentUserFieldMap[field] || field;
-                let value = this.currentUserIsClient === 'true' ? user[currentUserField] : '';
+                let value = this.currentUserIsClient === 'true' ? user[currentUserField] : (this.bookingModel.deaf_person[field] || '');
                 let mapForNsid = { ndis_id: 'eaf' };
                 field = mapForNsid[field] || field;
                 this.bookingModel.deaf_person[field] = value;
@@ -176,24 +175,24 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     public setInvoiceField() {
         let user = this.getBookableUser();
         if (user) {
-                    if (user['type'] === 'IndividualClient') {
-                        this.bookingModel.client.organisation_primary_contact = this.standardInvoice === 'true' ?
-                                                  user.individual_client_primary_contact : new Contact();
-                        this.bookingModel.client.organisation_billing_account.organisation_billing_address = this.standardInvoice === 'true' ?
-                                                  user.individual_client_billing_account.organisation_billing_address : new Address();
-                        this.bookingModel.client.organisation_billing_account.external_reference = this.standardInvoice === 'true' ?
-                                                  user.individual_client_billing_account.external_reference : '';
-                        this.bookingModel.deaf_person.eaf = this.standardInvoice === 'true' ? user.ndis_id : '';
-                    } else {
-                        this.bookingModel.client.organisation_primary_contact = this.standardInvoice === 'true' ?
-                                                  user.organisation_primary_contact : new Contact();
-                        this.bookingModel.client.organisation_billing_account.organisation_billing_address = this.standardInvoice === 'true' ?
-                                                  user.organisation_billing_account.organisation_billing_address : new Address();
-                        this.bookingModel.client.organisation_billing_account.external_reference = this.standardInvoice === 'true' ?
-                                                  user.organisation_billing_account.external_reference : '';
-                        this.bookingModel.deaf_person.eaf = '';
-                    }
-                }
+            if (user['type'] === 'IndividualClient') {
+                this.bookingModel.client.organisation_primary_contact = this.standardInvoice === 'true' ?
+                    user.individual_client_primary_contact : new Contact();
+                this.bookingModel.client.organisation_billing_account.organisation_billing_address = this.standardInvoice === 'true' ?
+                    user.individual_client_billing_account.organisation_billing_address : new Address();
+                this.bookingModel.client.organisation_billing_account.external_reference = this.standardInvoice === 'true' ?
+                    user.individual_client_billing_account.external_reference : '';
+                this.bookingModel.deaf_person.eaf = this.standardInvoice === 'true' ? user.ndis_id : '';
+            } else {
+                this.bookingModel.client.organisation_primary_contact = this.standardInvoice === 'true' ?
+                    user.organisation_primary_contact : new Contact();
+                this.bookingModel.client.organisation_billing_account.organisation_billing_address = this.standardInvoice === 'true' ?
+                    user.organisation_billing_account.organisation_billing_address : new Address();
+                this.bookingModel.client.organisation_billing_account.external_reference = this.standardInvoice === 'true' ?
+                    user.organisation_billing_account.external_reference : '';
+                this.bookingModel.deaf_person.eaf = '';
+            }
+        }
     }
 
     private getBookableUser() {
@@ -313,18 +312,40 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.notificationServiceBus.launchNotification(true, 'Kindly fill all the required (*) fields');
             return;
         }
+
+        if (this.bookingModel.interpreters_required < 2 && this.isMoreInterpreterNeeded()) {
+            let message = `This booking might require more than 1 interpreter. You've only requested 1 interpreter.
+                            Are you sure you want to create this booking?` ;
+            let title   = 'More Interpreter WARNING';
+            this.createModal(title, message);
+            this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
+                if (result) {
+                    this.proceedWithBooking();
+                }
+            });
+        } else if (this.isLongBooking()) {
+            let message = `This booking will take 12 hours or more. Are you sure you want to submit this booking?` ;
+            let title   = 'Long Booking WARNING';
+            this.createModal(title, message);
+            this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
+
+                if (result) {
+                    this.proceedWithBooking();
+                }
+            });
+
+        } else {
+            this.proceedWithBooking();
+        }
+    }
+
+    // have to merge this with save booking later.
+    proceedWithBooking() {
         if (this.isBookingTimeInNonStandardHours()) {
-            let config: MdDialogConfig = {
-                disableClose: true
-            };
-            config.viewContainerRef = this.viewContainerRef;
-            this.dialogRef = this.dialog.open(PopupComponent, config);
-            this.dialogRef.componentInstance.title = 'NON-STANDARD HOURS WARNING';
-            this.dialogRef.componentInstance.cancelTitle = 'BACK';
-            this.dialogRef.componentInstance.okTitle = 'CREATE';
-            this.dialogRef.componentInstance.popupMessage =
-                `This booking is not within the standard booking hours (8AM - 6PM).
-                 Do you still want to create booking?`;
+            let message = `This booking is not within the standard booking hours (8AM - 6PM).
+                            Do you still want to create booking?` ;
+            let title   = 'NON-STANDARD HOURS WARNING';
+            this.createModal(title, message);
 
             this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
 
@@ -346,12 +367,33 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     isMoreInterpreterNeeded() {
+        return this.calculateTimeDiff() > _ONE_HOUR;
+        /* One hour */
+    }
+
+    calculateTimeDiff() {
         let startDate = new Date(this.bookingModel.venue.start_time_iso);
         let endDate = new Date(this.bookingModel.venue.end_time_iso);
         let timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
 
-        return timeDiff > _ONE_HOUR;
-        /* One hour */
+        return timeDiff;
+    }
+
+    isLongBooking() {
+          return this.calculateTimeDiff() >= _ONE_HOUR * 12;
+    }
+
+    createModal(title: any, message: any) {
+        let config: MdDialogConfig = {
+            disableClose: true
+        };
+        config.viewContainerRef = this.viewContainerRef;
+        this.dialogRef = this.dialog.open(PopupComponent, config);
+        this.dialogRef.componentInstance.title = title;
+        this.dialogRef.componentInstance.cancelTitle = 'BACK';
+        this.dialogRef.componentInstance.okTitle = 'CREATE';
+        this.dialogRef.componentInstance.popupMessage = message;
+
     }
 
     private isBookingTimeInNonStandardHours() {
