@@ -19,6 +19,7 @@ export class UserListComponent {
     @Output() onPageEmit = new EventEmitter<number>();
     p = 1;
     @Input() totalItems = 0;
+
     constructor(private linkAuth: LinkAuth) {
 
     }
@@ -47,8 +48,9 @@ export class UserListComponent {
         this.onPageEmit.emit(page);
         this.p = page;
 
-        }
-            isUserOrOrgrep(user) {
+    }
+
+    isUserOrOrgrep(user) {
         return user instanceof OrganisationalRepresentative;
     }
 
