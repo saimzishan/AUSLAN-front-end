@@ -39,6 +39,28 @@ export class UserManagementComponent {
         this.fetchUsers();
         this.userName = '';
     }
+    onPageEmit(page: number) {
+        this.newUser = null;
+        this.spinnerService.requestInProcess(true);
+        this.userDataService.fetchPaginatedUsers(page)
+            .subscribe((res: any) => {
+                    if (res.status === 200) {
+                        let userList = res.data.users.filter((u) => {
+                            let result = Boolean(false === this.rolePermission.isDataRestrictedForCurrentUser('user-management', u.type));
+                            return result;
+                        }).map(u => UserFactory.createUser(u));
+                        this.users = userList;
+                        this.totalItems = Boolean(res.data.paginates) ? res.data.paginates.total_records : res.data.users.length;
+
+                    }
+                    this.spinnerService.requestInProcess(false);
+                },
+                err => {
+                    this.spinnerService.requestInProcess(false);
+
+                    console.log(err);
+                });
+    }
 
     onResetPassword(u: User) {
         this.userName = u.first_name + ' ' + u.last_name;
@@ -58,26 +80,7 @@ export class UserManagementComponent {
     }
 
     fetchUsers() {
-        this.newUser = null;
-        this.spinnerService.requestInProcess(true);
-        this.userDataService.fetchUsers()
-            .subscribe((res: any) => {
-                    if (res.status === 200) {
-                        let userList = res.data.users.filter((u) => {
-                            let result = Boolean(false === this.rolePermission.isDataRestrictedForCurrentUser('user-management', u.type));
-                            return result;
-                        }).map(u => UserFactory.createUser(u));
-                        this.users = userList;
-                        this.totalItems = Boolean(res.data.paginates) ? res.data.paginates.total_records : res.data.users.length;
-
-                    }
-                    this.spinnerService.requestInProcess(false);
-                },
-                err => {
-                    this.spinnerService.requestInProcess(false);
-
-                    console.log(err);
-                });
+        this.onPageEmit(1);
     }
 
 }

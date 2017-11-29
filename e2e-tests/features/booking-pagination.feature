@@ -13,6 +13,8 @@ Feature: Pagination
     Then I will be shown with bookings
     Then I am shown with 10 booking
     Then I can count the element with css 'span.show-for-sr' to be '4'
+    Then I click on parent of '3' element with css 'span.show-for-sr'
+    Then I am shown with 2 booking
 
 
   @runThis
@@ -36,7 +38,8 @@ Feature: Pagination
     And I go to the 'User Management' list page
     Then The 10 valid Administrator should be in the list
     Then I can count the element with css 'span.show-for-sr' to be '4'
-
+    Then I click on parent of '3' element with css 'span.show-for-sr'
+    Then The 3 valid Administrator should be in the list
 
 
   @runThis
