@@ -1,4 +1,4 @@
-import {Component, AfterViewChecked} from '@angular/core';
+import {Component, AfterViewChecked, OnInit} from '@angular/core';
 import {URLSearchParams} from '@angular/http';
 import {BookingService} from '../api/booking.service';
 import {Booking} from '../shared/model/booking.entity';
@@ -24,17 +24,18 @@ import {BookingInterpreter} from '../shared/model/contact.entity';
     templateUrl: './booking.component.html',
     styleUrls: ['./booking.component.css']
 })
-export class BookingComponent {
+export class BookingComponent implements OnInit{
     bookings: Array<Booking> = [];
     activeFilter = '';
     totalItems = 0;
     page = 0;
-    search;
+    search: URLSearchParams;
     constructor(public spinnerService: SpinnerService, public bookingDataService: BookingService,
                 private rolePermission: RolePermission) {
+    }
+    ngOnInit() {
         GLOBAL._searchVal ? this.fetchBookings(GLOBAL._searchVal) : this.fetchBookings();
     }
-
     setActiveFilter(activeFilter: string) {
         this.activeFilter = activeFilter;
     }
