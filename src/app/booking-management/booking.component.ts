@@ -89,7 +89,7 @@ export class BookingComponent {
         ;
     }
     fetchBookings(search?: URLSearchParams) {
-        this.search = this.search || undefined;
+        this.search = search || undefined;
         this.page = 1;
         this.getPaginatedBooking();
 
