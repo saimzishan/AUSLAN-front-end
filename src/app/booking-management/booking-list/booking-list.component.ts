@@ -23,7 +23,7 @@ export class BookingListComponent {
     private filterParams = new URLSearchParams();
     private currentSort = {'field': 'job', 'order': 'asc' };
     @Output() onPageEmit = new EventEmitter<number>();
-    p = 1;
+    @Input() p = 1;
     @Input() totalItems = 0;
     private validKeys(list): Array<string> {
         let keys = Object.keys(list);
