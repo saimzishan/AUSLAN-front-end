@@ -20,6 +20,8 @@ export class InterpreterBoxComponent implements OnInit, AfterContentInit {
     title = '';
     @Input() isHidden = false;
     preferAllocSub: any;
+    @Input() showOld = true;
+    @Input() oldInterpreters = [];
 
     constructor(public dialog: MdDialog,
                 public viewContainerRef: ViewContainerRef,
@@ -64,11 +66,10 @@ export class InterpreterBoxComponent implements OnInit, AfterContentInit {
         };
         config.viewContainerRef = this.viewContainerRef;
         this.dialogRef = this.dialog.open(InterpreterPopupComponent, config);
-        this.dialogRef.componentInstance.selectedInterpreters = this.selectedInterpreters;
+        this.dialogRef.componentInstance.selectedInterpreters = this.showOld ? this.oldInterpreters : [];
         this.dialogRef.componentInstance.isPreffered = this.isPreffered;
         this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
             this._sharedPreferedAllocationService.publishData(this.selectedInterpreters);
-
         });
     }
 
