@@ -92,7 +92,7 @@
             </tr>
             </tbody>
         </table>
-        <pagination-controls (pageChange)="getPage($event)"></pagination-controls>
+        <pagination-controls *ngIf="totalItems >= 10" (pageChange)="getPage($event)"></pagination-controls>
 
     </section>
 </main>

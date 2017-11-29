@@ -30,7 +30,7 @@ export class UserManagementComponent {
     // this is bad
     userName = '';
     totalItems = 0;
-
+    page = 1;
     constructor(public spinnerService: SpinnerService,
                 public notificationServiceBus: NotificationServiceBus,
                 public userDataService: UserService,
@@ -40,6 +40,7 @@ export class UserManagementComponent {
         this.userName = '';
     }
     onPageEmit(page: number) {
+        this.page = page;
         this.newUser = null;
         this.spinnerService.requestInProcess(true);
         this.userDataService.fetchPaginatedUsers(page)
@@ -80,7 +81,7 @@ export class UserManagementComponent {
     }
 
     fetchUsers() {
-        this.onPageEmit(1);
+        this.onPageEmit(this.page);
     }
 
 }

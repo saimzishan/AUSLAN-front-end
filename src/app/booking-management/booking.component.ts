@@ -28,7 +28,8 @@ export class BookingComponent {
     bookings: Array<Booking> = [];
     activeFilter = '';
     totalItems = 0;
-
+    page = 0;
+    search;
     constructor(public spinnerService: SpinnerService, public bookingDataService: BookingService,
                 private rolePermission: RolePermission) {
         GLOBAL._searchVal ? this.fetchBookings(GLOBAL._searchVal) : this.fetchBookings();
@@ -41,10 +42,13 @@ export class BookingComponent {
     isActiveFilter(activeFilter: string) {
         return this.activeFilter === activeFilter;
     }
-
-    fetchBookings(search?: URLSearchParams) {
+    onPageEmit(page: number) {
+        this.page = page;
+        this.getPaginatedBooking();
+    }
+    getPaginatedBooking() {
         this.spinnerService.requestInProcess(true);
-        this.bookingDataService.fetchBookings(search || undefined)
+        this.bookingDataService.fetchPaginatedBookings(this.page, this.search)
             .subscribe((res: any) => {
                     if (res.status === 200) {
                         this.bookings = [];
@@ -83,6 +87,12 @@ export class BookingComponent {
                 }
             )
         ;
+    }
+    fetchBookings(search?: URLSearchParams) {
+        this.search = this.search || undefined;
+        this.page = 1;
+        this.getPaginatedBooking();
+
     }
 
 }
