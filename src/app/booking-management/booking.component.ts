@@ -24,7 +24,7 @@ import {BookingInterpreter} from '../shared/model/contact.entity';
     templateUrl: './booking.component.html',
     styleUrls: ['./booking.component.css']
 })
-export class BookingComponent implements OnInit{
+export class BookingComponent implements OnInit {
     bookings: Array<Booking> = [];
     activeFilter = '';
     totalItems = 0;
