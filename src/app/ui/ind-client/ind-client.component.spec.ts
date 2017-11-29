@@ -9,6 +9,9 @@ import {MaterialModule} from '@angular/material';
 import {BillingAccountComponent} from '../billing-account/billing-account.component';
 import {SimpleNotificationsModule} from 'angular2-notifications/src/simple-notifications.module';
 import {NotificationServiceBus} from '../../notification/notification.service';
+import {MockBackend} from '@angular/http/testing';
+import {AuthHttp} from 'angular2-jwt';
+import {GmapsApiService} from '../../api/gmaps-api.service';
 
 describe('IndClientComponent', () => {
     let component: IndClientComponent;
@@ -17,7 +20,7 @@ describe('IndClientComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [IndClientComponent, AddressComponent, BillingAccountComponent],
-            providers: [NotificationServiceBus],
+            providers: [NotificationServiceBus, GmapsApiService, {provide: AuthHttp, useClass: MockBackend}],
             imports: [FormsModule, CustomFormsModule, SimpleNotificationsModule, MaterialModule]
         })
             .compileComponents();

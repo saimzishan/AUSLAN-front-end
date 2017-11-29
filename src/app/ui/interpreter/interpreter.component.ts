@@ -6,6 +6,7 @@ import {DatePipe} from '@angular/common';
 import {Router} from '@angular/router';
 import * as moment from 'moment';
 import {Interpreter} from '../../shared/model/user.entity';
+import {NgForm} from '@angular/forms';
 
 @Component({
     selector: 'app-interpreter',
@@ -15,6 +16,7 @@ import {Interpreter} from '../../shared/model/user.entity';
 export class InterpreterComponent implements OnInit {
     @Input() userModel: Interpreter;
     @Input() displayCalendar= false;
+    @Input() parentForm: NgForm;
     updateCalendar = false;
     calendarOptions: Object = {
         height: 'parent',

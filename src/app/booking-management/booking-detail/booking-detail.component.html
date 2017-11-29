@@ -132,6 +132,7 @@
         </div>
       </div>
 
+      <app-address [address]="bookingModel.venue" [canEdit]="isEditableForOrgRepIndClient" #addressForm="ctAddressForm" ></app-address>
       <div class="medium-12 columns">
         <div class="form-field">
           <label>SPECIFIC LOCATION
@@ -145,7 +146,6 @@
 
         </div>
       </div>
-      <app-address [address]="bookingModel.venue" [canEdit]="isEditableForOrgRepIndClient" #addressForm="ctAddressForm" ></app-address>
       <div class="row-wrapper">
         <div class="medium-6 columns">
           <div class="form-field">
@@ -300,6 +300,11 @@
             </span>
           </label>
           <textarea placeholder="Important Notes" name="important_notes" [(ngModel)]="bookingModel.notes"></textarea>
+
+          <span *ngIf="bookingModel.raw_nature_of_appointment ==='Other' && bookingModel.notes.length < 2 ;"
+                class="inline-icon error">
+            <span>Please specify what the appointment is about</span>!
+          </span>
         </div>
       </div>
     </div>
@@ -752,6 +757,13 @@
     </div>
 
     <div class="row">
+      <div class="medium-12 columns" id="travel-cost-applicable" *ngIf="addressForm.isTravelCostApplicable">
+        <div class="form-field">
+          <md-checkbox type="checkbox" [(ngModel)]="bookingModel.travel_cost_applicable" name="travel_cost_applicable" #travelCost="ngModel">
+            This is a regional booking and travel costs might be billed when there is no regional interpreter available.<br/> I give permission to book a metro interpreter if needed.
+          </md-checkbox>
+        </div>
+      </div>
       <section>
         <app-termandcondition (termAndConditionStatusChange)="tocChanged($event)"
          [termsAndConditionAccepted]="termsAndConditionAccepted"></app-termandcondition>

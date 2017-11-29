@@ -83,6 +83,12 @@
                                     <a id="lnkProfileSkill"
                                        [routerLink]="['/user-management/' + user.id +'/skills']"><i
                                             class="icon-skill-matrix"></i> Skill Matrix</a></li>
+                                <li *ngIf="isUserOrOrgrep(user)">
+                                    <a id="lnkDuplicateOrgRep"
+                                       [routerLink]="['/init']" [queryParams]="{selectedRole:getQueryableRole(user) ,uid:user.id,
+                                       isduplicate:'true', edit_user:
+												stringifyUser(user)}">
+                                        <i class="icon-duplicate-orgrep icon-glass"></i> Duplicate </a></li>
                                 <li><a (click)="onResetPassword(user)"><i class="icon-reset-password"></i> Reset
                                     password</a></li>
                             </ul>

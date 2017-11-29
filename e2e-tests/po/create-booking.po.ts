@@ -1,5 +1,5 @@
 import {PageObject} from './app.po';
-import {browser, by, element, $, $$, protractor} from 'protractor';
+import {browser, by, element, $, $$, protractor, ExpectedConditions} from 'protractor';
 import {expect} from '../config/helpers/chai-imports';
 import {CONSTANT, Booking} from '../helper';
 import {NotificationObject} from './notification';
@@ -55,12 +55,20 @@ export class BookingPage extends PageObject {
             return this.clickOnCancel();
         }
     }
+    private getDropdownFromLabel = (label: string) => {
+        const selected_label = this.getElementByCSSandText('label', label);
+        const div = this.getParent(selected_label);
+        return this.getElementInsideByTag(div, 'select');
+    }
 
     clickOnDropDown = (label_text: string) => {
-        const selected_label = this.getElementByCSSandText('label', label_text);
-        const div = this.getParent(selected_label);
-        const select_dropdown = this.getElementInsideByTag(div, 'select');
+        const select_dropdown = this.getDropdownFromLabel(label_text);
+        expect(select_dropdown.isPresent()).to.eventually.be.true;
         return select_dropdown.click();
+    }
+    selectOptionFromDropdown = (option: string, label: string) => {
+        const dropdown = this.getDropdownFromLabel(label).click();
+        return this.getElementInsideByCSSandText(dropdown, 'option', option).click();
     }
     optionExistsInDropDown = (option_text: string, dropdown_name: string) => {
         let sel = this.getElementByName(dropdown_name);
@@ -189,6 +197,10 @@ export class BookingPage extends PageObject {
         return this.createBookingWithTimeAndInterpreter('standard', '10:15AM', '11:15AM', '2');
     }
 
+    createBookingForPerth = () => {
+        return this.createBookingWithAddressTimeAndInterpreter('standard', '10:15AM', '11:15AM', '2');
+    }
+
     selectClientAsBookbable = () => {
         return this.getElementByName('booking_for').sendKeys('ted');
     }
@@ -201,6 +213,9 @@ export class BookingPage extends PageObject {
     checkTheFieldExist = (cant: string, fieldName: string) => {
         let canSee = cant !== 'can\'t';
         return expect(this.getElementByName(fieldName).isPresent()).to.eventually.be.eq(canSee);
+    }
+    setUnitNumber = (stNumber: string) => {
+        this.setElementsValueByName('address_unit_num', stNumber);
     }
     setStreetNumber = (stNumber: string) => {
         this.setElementsValueByName('address_street_number', stNumber);
@@ -231,9 +246,50 @@ export class BookingPage extends PageObject {
         this.getElementByName('cn_email').sendKeys('jt@star.com.au');
         this.getElementByName('cn_phone').sendKeys('0490394512');
 
+        let deaf_person_values = {
+            'deaf_person_name': 'Frank',
+            'deaf_person_last_name': 'Castle',
+            'deaf_person_email': 'petecastiligone@gmail.com',
+            'deaf_person_mobile': '0918273645'
+        };
+
+        Object.keys(deaf_person_values).forEach(field => {
+            this.getElementByName(field).getAttribute('value').then(value => {
+                if (!value) {
+                    this.getElementByName(field).sendKeys(deaf_person_values[field]);
+                }
+            });
+        });
+
         this.getElementByName('deaf_person_eaf').sendKeys('123');
     }
+    createBookingWithAddressTimeAndInterpreter = (standard: string, startTime: string, endTime: string, interpreterNum: string) => {
+        this.setStartEndTime('start', '12/12/2017', startTime);
+        this.setStartEndTime('end', '12/12/2017', endTime);
+        this.setUnitNumber('F-Space');
+        this.setStreetNumber('18/27');
+        this.setElementsValueByName('address_street', 'Market St Fremantle');
+        this.setElementsValueByName('address_post_code', '6160');
+        this.setElementsValueByName('address_suburb', 'Perth');
+        this.setElementsValueByName('address_state', 'WA'); // dropdown
 
+        this.getElementByName('attendee_count').sendKeys('1');
+        this.getElementByName('interpreters_count').clear();
+        this.getElementByName('interpreters_count').sendKeys(interpreterNum);
+
+        this.getElementByName('nature_of_appointment').sendKeys('COURT');
+        this.getElementByName('specific_nature_of_appointment').sendKeys('DHS ORDER');
+
+        this.getElementByName('raw_booking_requested_by').sendKeys('Luke');
+        this.getElementByName('raw_booking_requested_by_ln').sendKeys('Orange');
+
+        this.getElementByName('cn_first_name').sendKeys('John');
+        this.getElementByName('cn_last_name').sendKeys('Travolta');
+        this.getElementByName('cn_email').sendKeys('jt@star.com.au');
+        this.getElementByName('cn_phone').sendKeys('0490394512');
+
+        this.getElementByName('deaf_person_eaf').sendKeys('123');
+    }
     clickCreateBtn = () => {
         return this.getElementByName('btnCreateBooking').click();
     }

@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { IndividualClient } from '../../shared/model/user.entity';
 import {GLOBAL} from '../../shared/global';
+import {NgForm} from '@angular/forms';
 
 @Component({
   selector: 'app-ind-client',
@@ -10,6 +11,7 @@ import {GLOBAL} from '../../shared/global';
 export class IndClientComponent   implements  OnInit {
 
   @Input() userModel: IndividualClient;
+  @Input() parentForm: NgForm;
   address_title = 'INDIVIDUAL CLIENT ADDRESS';
   ngOnInit() {
     delete this.userModel.password;

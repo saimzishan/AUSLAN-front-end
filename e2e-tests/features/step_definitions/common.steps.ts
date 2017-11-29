@@ -80,6 +80,7 @@ defineSupportCode(({Given, When, Then}) => {
     Given(/^I am on the bookings page$/, bookingManagementPage.verify);
     Given(/^I am on my admin home screen$/, bookingManagementPage.verify);
     Given(/^I fill New Booking form fields correctly$/, bookingPage.createBooking);
+    Given(/^I fill New Booking form fields with address greater than 40 kilometers$/, bookingPage.createBookingForPerth);
     Given(/^I select the bookable for client$/, bookingPage.selectClientAsBookbable);
     Given(/^I select the bookable for org rep/, bookingPage.selectOrgRepAsBookbable);
     Given(/^I fill New Booking form fields correctly with (.*) time from (.*) to (.*) with (.*) interpreters$/,
@@ -254,7 +255,7 @@ defineSupportCode(({Given, When, Then}) => {
 
     function showValidationErrorWithText(errText: string) {
         // browser.explore();
-        let errs = page.getAll('.inline-icon.error');
+        let errs = page.getAllByCSSandText('.inline-icon.error > span', errText);
         return errs.count().then((count) => {
             // expect(count).to.be.greaterThan(0);
             expect(count).to.be.greaterThan(0);
@@ -312,6 +313,14 @@ defineSupportCode(({Given, When, Then}) => {
     When(/^I can see the button with css '(.*)' is (.*)$/, isButtonWithCSSDisabled);
 
     function isButtonWithCSSDisabled(css: string, disabled: string) {
+        let isEnabled = disabled.toLowerCase() === 'enabled';
+        return page.getElementByCss(css).isEnabled().then((val) => {
+            expect(val).to.be.eq(isEnabled);
+        });
+    }
+    When(/^I can see the element with name '(.*)' as (.*)$/, isElementWithNameDisabled);
+
+    function isElementWithNameDisabled(css: string, disabled: string) {
         let isEnabled = disabled.toLowerCase() === 'enabled';
         return page.getElementByCss(css).isEnabled().then((val) => {
             expect(val).to.be.eq(isEnabled);

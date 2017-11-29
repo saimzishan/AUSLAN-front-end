@@ -16,11 +16,15 @@ defineSupportCode(({Then, When}) => {
 
     Then(/^I will be taken to the '(.*) Signup' page$/, profileRegisterPage.showSignupPage);
 
-    // When(/^I fill all the details correctly for '(.*)'$/, profileRegisterPage.fillAllDataForRegister);
     When(/^I fill all the details correctly for -> '(.*)' with the pref communication is '(.*)'$/,
         profileRegisterPage.fillAllDataForRegister);
+    When(/^I fill in basic details correctly for -> '(.*)'$/,
+        profileRegisterPage.fillBasicData);
     When(/^I fill in all the details correctly for -> '(.*)'$/,
         profileRegisterPage.fillAllDataForAdmin);
+
+    When(/^I fill in basic details correctly for duplicate -> '(.*)'$/,
+    profileRegisterPage.fillDuplicateBasicData);
 
     When(/^'(.*)' will be created$/, profileRegisterPage.userCreated);
 
