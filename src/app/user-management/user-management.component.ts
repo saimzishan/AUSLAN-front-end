@@ -1,4 +1,4 @@
-import {Component, AfterViewChecked, ChangeDetectionStrategy} from '@angular/core';
+import {Component, AfterViewChecked, ChangeDetectionStrategy, OnInit} from '@angular/core';
 import {UserService} from '../api/user.service';
 import {User, UserFactory} from '../shared/model/user.entity';
 import {ROLE} from '../shared/model/role.enum';
@@ -23,21 +23,46 @@ import {RolePermission} from '../shared/role-permission/role-permission';
 
 })
 
-export class UserManagementComponent {
+export class UserManagementComponent implements OnInit {
     newUser: User = null;
     roles: any;
     users: Array<User> = [];
     // this is bad
     userName = '';
     totalItems = 0;
-
+    page = 1;
     constructor(public spinnerService: SpinnerService,
                 public notificationServiceBus: NotificationServiceBus,
                 public userDataService: UserService,
                 private rolePermission: RolePermission) {
         this.roles = ROLE;
-        this.fetchUsers();
         this.userName = '';
+    }
+    ngOnInit() {
+        this.fetchUsers();
+    }
+    onPageEmit(page: number) {
+        this.page = page;
+        this.newUser = null;
+        this.spinnerService.requestInProcess(true);
+        this.userDataService.fetchPaginatedUsers(this.page)
+            .subscribe((res: any) => {
+                    if (res.status === 200) {
+                        let userList = res.data.users.filter((u) => {
+                            let result = Boolean(false === this.rolePermission.isDataRestrictedForCurrentUser('user-management', u.type));
+                            return result;
+                        }).map(u => UserFactory.createUser(u));
+                        this.users = userList;
+                        this.totalItems = Boolean(res.data.paginates) ? res.data.paginates.total_records : res.data.users.length;
+
+                    }
+                    this.spinnerService.requestInProcess(false);
+                },
+                err => {
+                    this.spinnerService.requestInProcess(false);
+
+                    console.log(err);
+                });
     }
 
     onResetPassword(u: User) {
@@ -58,26 +83,7 @@ export class UserManagementComponent {
     }
 
     fetchUsers() {
-        this.newUser = null;
-        this.spinnerService.requestInProcess(true);
-        this.userDataService.fetchUsers()
-            .subscribe((res: any) => {
-                    if (res.status === 200) {
-                        let userList = res.data.users.filter((u) => {
-                            let result = Boolean(false === this.rolePermission.isDataRestrictedForCurrentUser('user-management', u.type));
-                            return result;
-                        }).map(u => UserFactory.createUser(u));
-                        this.users = userList;
-                        this.totalItems = Boolean(res.data.paginates) ? res.data.paginates.total_records : res.data.users.length;
-
-                    }
-                    this.spinnerService.requestInProcess(false);
-                },
-                err => {
-                    this.spinnerService.requestInProcess(false);
-
-                    console.log(err);
-                });
+        this.onPageEmit(this.page);
     }
 
 }

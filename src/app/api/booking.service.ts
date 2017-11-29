@@ -140,6 +140,16 @@ export class BookingService extends ApiService {
     }
 
     /*
+          The Api should be able to fetch all the bookings.
+        */
+    fetchPaginatedBookings(page: number , search: URLSearchParams): Observable<Object> {
+        let headers = new Headers({'Accept': 'application/json'});
+        let options = new RequestOptions({ headers: headers, search: search });
+        return this.http.get(GLOBAL.BOOKING_API + '?page=' + page , options)
+            .map(this.extractData)
+            .catch((err) => { return this.handleError(err); });
+    }
+    /*
       The Api should be get booking by its ID (The Id should be email)
     */
     getBooking(id: number): Observable<Object> {

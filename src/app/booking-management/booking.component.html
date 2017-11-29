@@ -3,7 +3,7 @@
 </header>
 <section id="page-jobs">
   <app-booking-filter (appBookingFilter)="fetchBookings($event)"></app-booking-filter>
-  <app-booking-list [totalItems]="totalItems" [bookingList]='bookings' (onBookingFilter)="fetchBookings($event)"></app-booking-list>
+  <app-booking-list (onPageEmit)="onPageEmit($event)" [p]="page" [totalItems]="totalItems" [bookingList]='bookings' (onBookingFilter)="fetchBookings($event)"></app-booking-list>
 </section>
 
 <nav id="footer-mobile">

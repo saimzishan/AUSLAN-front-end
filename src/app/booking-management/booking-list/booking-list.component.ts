@@ -22,8 +22,9 @@ export class BookingListComponent {
     bookingFilter: BookingFilter = {};
     private filterParams = new URLSearchParams();
     private currentSort = {'field': 'job', 'order': 'asc' };
+    @Output() onPageEmit = new EventEmitter<number>();
+    @Input() p = 1;
     @Input() totalItems = 0;
-    p = 1;
     private validKeys(list): Array<string> {
         let keys = Object.keys(list);
         return keys.slice(keys.length / 2);
@@ -141,5 +142,10 @@ export class BookingListComponent {
         this.filterParams.set('sort', this.currentSort.field);
         this.filterParams.set('direction', this.currentSort.order);
         this.onBookingFilter.emit(this.filterParams);
+    }
+    getPage(page: number) {
+        this.onPageEmit.emit(page);
+        this.p = page;
+
     }
 }

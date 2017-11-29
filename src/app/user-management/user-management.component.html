@@ -6,5 +6,5 @@
     </section>
 
     <app-user-filter></app-user-filter>
-    <app-user-list [totalItems]="totalItems" [userList]='users' (onResetPass)="onResetPassword($event)"></app-user-list>
+    <app-user-list (onPageEmit)="onPageEmit($event)" [totalItems]="totalItems" [userList]='users' (onResetPass)="onResetPassword($event)"></app-user-list>
 </section>

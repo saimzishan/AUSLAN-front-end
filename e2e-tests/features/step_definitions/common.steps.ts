@@ -283,7 +283,10 @@ defineSupportCode(({Given, When, Then}) => {
     function clickOnElementWithCSS(css: string) {
         return page.getElementByCss(css).click();
     }
-
+    When(/^I click on parent of '(.*)' element with css '(.*)'$/, clickOnSingleElementWithCSS);
+    function clickOnSingleElementWithCSS(nth_child: number, css: string) {
+        return page.getAllElementByCSS(css).get(nth_child).element(by.xpath('..')).click();
+    }
     When(/^I can see the booking state '(.*)'$/, bookingJob.confirmBookingState);
 
 
