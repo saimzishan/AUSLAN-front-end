@@ -25,11 +25,26 @@ Feature: Booking Filter
     Then I will be shown with bookings
     Then I am shown with 10 booking
     Then I can count the element with css 'span.show-for-sr' to be '4'
+    Then I click on parent of '3' element with css 'span.show-for-sr'
     When I hover on the Status dropdown and select 'Red'
     Then I am shown with 1 booking
     Then I see one row with status 'red'
     Then I can see the element with css 'span.show-for-sr' is 'hidden'
 
+  @runThis
+  Scenario: Given 1 verified Booking Officer, I should be able to filter by job ids
+    Given There exist 7 bookings
+    Given The booking has status 'red'
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    When I am on the bookings page
+    Then I will be shown with bookings
+    Then I am shown with 10 booking
+    Then I can count the element with css 'span.show-for-sr' to be '4'
+    When I hover on the Status dropdown and select 'Red'
+    Then I am shown with 1 booking
+    Then I see one row with status 'red'
+    Then I can see the element with css 'span.show-for-sr' is 'hidden'
 
   @runThis
   Scenario: Given 1 verified Booking Officer, I should be able to filter by booking status
