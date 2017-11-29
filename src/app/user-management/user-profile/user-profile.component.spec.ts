@@ -26,6 +26,7 @@ import {CalendarModule} from 'ap-angular2-fullcalendar';
 import {InterpreterPopupComponent} from '../../shared/ui/interpreter-popup/interpreter-popup.component';
 import {InterpreterBoxComponent} from '../../shared/ui/interpreter-box/interpreter-box.component';
 import {PreferedAllocationService} from '../../shared/prefered-allocation.service';
+import {RemoveSpacePipe} from '../../shared/pipe/remove-space.pipe';
 
 describe('UserProfileComponent', () => {
   let component: UserProfileComponent;
@@ -36,7 +37,7 @@ describe('UserProfileComponent', () => {
       declarations: [ UserProfileComponent, UserHeaderComponent, InterpreterComponent,
         OrgRepComponent, InterpreterComponent, AddressComponent,
         IndClientComponent, BillingAccountComponent, AccountantComponent,
-          InterpreterPopupComponent, InterpreterBoxComponent],
+          InterpreterPopupComponent, InterpreterBoxComponent, RemoveSpacePipe],
       providers: [PreferedAllocationService, UserNameService, LinkHelper, LinkAuth, RolePermission,
          { provide: UserService, useClass: MockUserService}, { provide: AuthHttp, useClass: MockBackend},
         NotificationServiceBus,
