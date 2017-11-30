@@ -66,7 +66,7 @@ export class InterpreterBoxComponent implements OnInit, AfterContentInit {
         };
         config.viewContainerRef = this.viewContainerRef;
         this.dialogRef = this.dialog.open(InterpreterPopupComponent, config);
-        this.dialogRef.componentInstance.selectedInterpreters = this.showOld ? this.oldInterpreters : [];
+        this.dialogRef.componentInstance.selectedInterpreters = this.selectedInterpreters;
         this.dialogRef.componentInstance.isPreffered = this.isPreffered;
         this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
             this._sharedPreferedAllocationService.publishData(this.selectedInterpreters);

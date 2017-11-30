@@ -220,7 +220,9 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             if (this.showProfilePreffered === 'true') {
                 this.filterUserPreference(this.userModel.prefferedInterpreters);
             } else {
-                this.bookingModel.preference_allocations_attributes = this.bookingModel.preference_allocations_attributes.filter(a => a.preference !== 'preferred');
+                this.bookingModel.preference_allocations_attributes = this.bookingModel.preference_allocations_attributes.filter(
+                                                        a => (a.preference === 'preferred') &&
+                                                                !(this.userModel.prefferedInterpreters.some(f => f.interpreter_id === a.interpreter_id)));
             }
         }
     }
@@ -596,15 +598,16 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 }
             });
         } else {
+            let prefAlloc = this.bookingModel.preference_allocations_attributes;
             this.bookingModel.preference_allocations_attributes = [];
             interpreters.forEach(i => {
-                if (this.showProfilePreffered === 'true') {
+            //    if (this.showProfilePreffered === 'true') {
                     if (i.preference === 'preferred' && !i.hasOwnProperty('_destroy')) {
                         this.bookingModel.preference_allocations_attributes.push({ 'interpreter_id': i.interpreter_id, 'preference': i.preference });
                     } else if (i.hasOwnProperty('_destroy')) {
                         this.userModel.prefferedInterpreters = this.userModel.prefferedInterpreters.filter(itm => itm.interpreter_id !== i.interpreter_id);
                     }
-                }
+            //    }
 
                 if (this.showProfileBlocked === 'true') {
                     if (i.preference === 'blocked' && !i.hasOwnProperty('_destroy')) {
@@ -614,8 +617,25 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                     }
                 }
             });
+            this.bookingModel.preference_allocations_attributes = this.bookingModel.preference_allocations_attributes.concat(prefAlloc);
+          //  this.bookingModel.preference_allocations_attributes = this.removeDuplicates(this.bookingModel.preference_allocations_attributes,'interpreter_id');
         }
     }
+    // https://www.tjcafferkey.me/remove-duplicates-from-array-of-objects/
+    //  removeDuplicates(arr, key) {
+    //     if (!(arr instanceof Array) || key && typeof key !== 'string') {
+    //         return [];
+    //     }
+    //     if (key && typeof key === 'string') {
+    //         return arr.filter((obj, index, arr) => {
+    //             return arr.map(mapObj => mapObj[key]).indexOf(obj[key]) === index;
+    //         });
+    //     } else {
+    //         return arr.filter(function(item, index, arr) {
+    //             return arr.indexOf(item) == index;
+    //         });
+    //     }
+    // }
 
     confirmDelete(docID) {
         let obj = {'id': docID, '_destroy': '1'};
