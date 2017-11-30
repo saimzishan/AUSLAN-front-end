@@ -1,4 +1,4 @@
-import {defineSupportCode, HookScenarioResult,} from 'cucumber';
+import {defineSupportCode, HookScenarioResult} from 'cucumber';
 import * as path from 'path';
 import {browser} from 'protractor';
 import {WriteStream, ensureDirSync, createWriteStream} from 'fs-extra';
@@ -17,7 +17,7 @@ defineSupportCode(({After}) => {
             // (scenarioResult.status === 'failed') ? saveFailedScenarioScreenshot(world, scenarioResult) : Promise.resolve();
         } else {
             Heroku.sendCommandToHeroku('Booking.destroy_all');
-            Heroku.sendCommandToHeroku('User.where.not(id: 1).destroy_all');
+            Heroku.sendCommandToHeroku('User.destroy_all');
         }
         return browser.restart();
     });

@@ -17,7 +17,7 @@ defineSupportCode(({Before}) => {
         if (!first_run) {
             Heroku.sendCommandToHeroku('Assignment.destroy_all');
             Heroku.sendCommandToHeroku('Booking.destroy_all');
-            Heroku.sendCommandToHeroku('User.where.not(id: 1).destroy_all');
+            Heroku.sendCommandToHeroku('User.destroy_all');
         }
 
         let all_personas = ['Booking Officer', 'Administrator', 'Accountant', 'Interpreter',
