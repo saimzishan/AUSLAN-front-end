@@ -401,7 +401,7 @@ export class Heroku {
 
     static sendCommandToHeroku(command) {
         const exec = require('child_process').execSync;
-        command = 'ActiveRecord::Base.logger.level = Logger::INFO;' + command + ';nil;exit';
+        command = /*'ActiveRecord::Base.logger.level = Logger::INFO;'+*/  command + ';nil;exit';
         let herokuCommand = browser.params.env === 'localhost' ?
             'cd ../booking-system-api/ && echo  \'' + command + '\' | bundle exec rails c && cd ../booking-system-frontend/' :
             'echo  \'' + command + '\' | heroku run console --app auslan-e2e-testing';
