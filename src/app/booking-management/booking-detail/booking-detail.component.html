@@ -693,9 +693,9 @@
       </div>
     </div>
 
-    <app-interpreter-box *ngIf="showPreffered === 'true'" [isPreffered]="true" [showOld]="showProfilePreffered === 'true' ? true : false" 
-                          [oldInterpreters]="forEdit() ? [] : userModel.prefferedInterpreters"
-                          [isHidden]="true" [selectedInterpreters]="forEdit() ? oldInterpreterPreference : []">
+    <app-interpreter-box *ngIf="showPreffered === 'true'" [isPreffered]="true" [showProfilePref]="showProfilePreffered === 'true' ? true : false" 
+                          [profileInterp]="forEdit() ? [] : userModel.prefferedInterpreters"
+                          [isHidden]="true" [selectedInterpreters]="oldInterpreterPreference">
     </app-interpreter-box> 
 
     <br>
@@ -729,8 +729,9 @@
       </div>
     </div>
 
-    <app-interpreter-box *ngIf="showProfileBlocked === 'true'" [isPreffered]="false"
-                          [isHidden]="true" [selectedInterpreters]="forEdit() ? oldInterpreterPreference : userModel.prefferedInterpreters">
+    <app-interpreter-box *ngIf="showBlocked === 'true'" [isPreffered]="false" [showProfileBlock]="showProfileBlocked === 'true' ? true : false"
+                          [profileInterp]="forEdit() ? [] : userModel.prefferedInterpreters"
+                          [isHidden]="true" [selectedInterpreters]="oldInterpreterPreference">
     </app-interpreter-box> 
     <div [hidden]='true'>
       <div class="separator"></div>

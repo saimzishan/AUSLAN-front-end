@@ -217,14 +217,14 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
 
     public onProfilePreferredSelectionChange() {
         if (!this.forEdit()) {
-            if (this.showProfilePreffered === 'true') {
+     /*       if (this.showProfilePreffered === 'true') {
                 this.filterUserPreference(this.userModel.prefferedInterpreters);
             } else {
                 this.bookingModel.preference_allocations_attributes = this.bookingModel.preference_allocations_attributes.filter(
                                                         a => (a.preference === 'preferred') &&
                                                                 !(this.userModel.prefferedInterpreters.some(f => f.interpreter_id === a.interpreter_id)));
             }
-        }
+        */   }
     }
 
     public onBlockedSelectionChange() {
@@ -236,11 +236,11 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
 
     public onProfileBlockedSelectionChange() {
         if (!this.forEdit()) {
-            if (this.showProfileBlocked === 'true') {
-                this.filterUserPreference(this.userModel.prefferedInterpreters);
-            } else {
-                this.bookingModel.preference_allocations_attributes = this.bookingModel.preference_allocations_attributes.filter(a => a.preference !== 'blocked');
-            }
+            // if (this.showProfileBlocked === 'true') {
+            //     this.filterUserPreference(this.userModel.prefferedInterpreters);
+            // } else {
+            //     this.bookingModel.preference_allocations_attributes = this.bookingModel.preference_allocations_attributes.filter(a => a.preference !== 'blocked');
+            // }
         }
     }
 
@@ -589,7 +589,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     filterUserPreference(interpreters) {
-
+        this.oldInterpreterPreference = interpreters;
         if (this.forEdit()) {
             interpreters.forEach(i => {
                 if (i.hasOwnProperty('_destroy')) {
@@ -601,15 +601,15 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             let prefAlloc = this.bookingModel.preference_allocations_attributes;
             this.bookingModel.preference_allocations_attributes = [];
             interpreters.forEach(i => {
-            //    if (this.showProfilePreffered === 'true') {
+                if (this.showPreffered === 'true') {
                     if (i.preference === 'preferred' && !i.hasOwnProperty('_destroy')) {
                         this.bookingModel.preference_allocations_attributes.push({ 'interpreter_id': i.interpreter_id, 'preference': i.preference });
                     } else if (i.hasOwnProperty('_destroy')) {
                         this.userModel.prefferedInterpreters = this.userModel.prefferedInterpreters.filter(itm => itm.interpreter_id !== i.interpreter_id);
                     }
-            //    }
+                }
 
-                if (this.showProfileBlocked === 'true') {
+                if (this.showBlocked === 'true') {
                     if (i.preference === 'blocked' && !i.hasOwnProperty('_destroy')) {
                         this.bookingModel.preference_allocations_attributes.push({ 'interpreter_id': i.interpreter_id, 'preference': i.preference });
                     } else if (i.hasOwnProperty('_destroy')) {
@@ -617,7 +617,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                     }
                 }
             });
-            this.bookingModel.preference_allocations_attributes = this.bookingModel.preference_allocations_attributes.concat(prefAlloc);
+        //    this.bookingModel.preference_allocations_attributes = this.bookingModel.preference_allocations_attributes.concat(prefAlloc);
           //  this.bookingModel.preference_allocations_attributes = this.removeDuplicates(this.bookingModel.preference_allocations_attributes,'interpreter_id');
         }
     }

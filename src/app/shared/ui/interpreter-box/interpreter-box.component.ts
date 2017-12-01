@@ -20,8 +20,24 @@ export class InterpreterBoxComponent implements OnInit, AfterContentInit {
     title = '';
     @Input() isHidden = false;
     preferAllocSub: any;
-    @Input() showOld = true;
-    @Input() oldInterpreters = [];
+   // @Input() showOld = true;
+    @Input() profileInterp = [];
+    private _showProfilePref = true;
+    private _showProfileBlock = true;
+
+     @Input() set showProfilePref(val: boolean) {
+       this._showProfilePref = val ;
+      val ? this.addProfilePref() : this.removeProfilePref();
+     }
+
+     get showProfilePref(): boolean { return this._showProfilePref; }
+
+     @Input() set showProfileBlock(val: boolean) {
+        this._showProfileBlock = val ;
+        val ? this.addProfileBlock() : this.removeProfileBlock();
+      }
+
+      get showProfileBlock(): boolean { return this._showProfileBlock; }
 
     constructor(public dialog: MdDialog,
                 public viewContainerRef: ViewContainerRef,
@@ -76,6 +92,7 @@ export class InterpreterBoxComponent implements OnInit, AfterContentInit {
     removeInterpreter(selectedInterpreter) {
         if (AuthGuard.isLoggedIn()) {
             selectedInterpreter._destroy = 1;
+            this.selectedInterpreters = this.selectedInterpreters.filter(itm => itm.interpreter_id !== selectedInterpreter.interpreter_id);
         } else {
             this.selectedInterpreters =
                 this.selectedInterpreters.filter(i => i.interpreter_id !== selectedInterpreter.interpreter_id);
@@ -83,4 +100,27 @@ export class InterpreterBoxComponent implements OnInit, AfterContentInit {
         }
         this._sharedPreferedAllocationService.publishData(this.selectedInterpreters);
     }
+
+    addProfilePref() {
+        this.selectedInterpreters = this.selectedInterpreters.concat(this.profileInterp.filter(itm => itm.preference === 'preferred'));
+        this._sharedPreferedAllocationService.publishData(this.selectedInterpreters);
+    }
+
+    addProfileBlock() {
+        this.selectedInterpreters = this.selectedInterpreters.concat(this.profileInterp.filter(itm => itm.preference === 'blocked'));
+        this._sharedPreferedAllocationService.publishData(this.selectedInterpreters);
+    }
+
+    removeProfilePref() {
+        this.selectedInterpreters = this.selectedInterpreters.filter(item =>
+            this.profileInterp.every(old => (old.preference === 'preferred' && old.interpreter_id !== item.interpreter_id)));
+        this._sharedPreferedAllocationService.publishData(this.selectedInterpreters);
+    }
+
+    removeProfileBlock() {
+        this.selectedInterpreters = this.selectedInterpreters.filter(item =>
+            this.profileInterp.every(old => (old.preference === 'blocked' && old.interpreter_id !== item.interpreter_id)));
+        this._sharedPreferedAllocationService.publishData(this.selectedInterpreters);
+    }
+
 }
