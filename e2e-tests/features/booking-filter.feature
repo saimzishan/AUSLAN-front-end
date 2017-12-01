@@ -269,14 +269,16 @@ Feature: Booking Filter
     And I am on the bookings page
     Then I am shown with 5 booking
     And I click on an individual booking
-    Then I am on the individual booking page
     And I click on link 'Booking details'
     Then I should be on the edit booking page
     And I change the input field EXT. REFERENCE NUM with INV-909
     And I click the create booking button
     And If I am shown a popup, I approve it
     Then I should get a valid booking update notification
-    And I am shown with 5 booking
+    Then I am on the individual booking page
+    Then I click on Bookings
+    When I am on the bookings page
+    Then I am shown with 5 booking
     When I query search with 'INV-909'
     Then I am shown with 1 booking
     And I click on an individual booking
@@ -304,7 +306,10 @@ Feature: Booking Filter
     And I click the create booking button
     And If I am shown a popup, I approve it
     Then I should get a valid booking update notification
-    And I am shown with 5 booking
+    Then I am on the individual booking page
+    Then I click on Bookings
+    When I am on the bookings page
+    Then I am shown with 5 booking
     When I query search with 'INV-909'
     Then I am shown with 1 booking
     And I click on an individual booking
@@ -333,7 +338,10 @@ Feature: Booking Filter
     And I click the create booking button
     And If I am shown a popup, I approve it
     Then I should get a valid booking update notification
-    And I am shown with 5 booking
+    Then I am on the individual booking page
+    Then I click on Bookings
+    When I am on the bookings page
+    Then I am shown with 5 booking
     When I query search with 'INV-909'
     Then I am shown with 1 booking
     And I click on an individual booking
