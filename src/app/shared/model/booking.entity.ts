@@ -66,24 +66,11 @@ export class Booking {
     }
 
     clean(theObject) {
-        let result = null;
-        if (theObject instanceof Array) {
-            for (let i = 0; i < theObject.length; i++) {
-                this.clean(theObject[i]);
-            }
-        } else {
-            for (let prop in theObject) {
-                if (theObject.hasOwnProperty(prop)) {
-                    console.log(prop + ': ' + theObject[prop]);
-                    if (prop === 'id') {
-                        delete theObject[prop];
-                    }
-                    if (theObject[prop] instanceof Object || theObject[prop] instanceof Array) {
-                        this.clean(theObject[prop]);
-                    }
-                }
-            }
-        }
+        delete theObject['id'];
+        delete theObject['address_attributes']['id'];
+        delete theObject['billing_account_attributes']['id'];
+        delete theObject['billing_account_attributes']['address_attributes']['id'];
+        return theObject;
     }
 
     fromJSON(data: any) {
@@ -91,6 +78,7 @@ export class Booking {
         this.venue.expected_attendance = data.number_of_people_attending;
         this.venue.title = data.venue || '';
         this.status = data.status;
+        this.venue.id = data.address_attributes.id || '';
         this.venue.unit_number = data.address_attributes.unit_number || '';
         this.venue.street_number = data.address_attributes.street_number;
         this.venue.street_name = data.address_attributes.street_name;
@@ -128,6 +116,8 @@ export class Booking {
         this.travel_cost_applicable = data.travel_cost_applicable;
 
         if (Boolean(data.billing_account_attributes)) {
+            this.client.organisation_primary_contact.id =
+                data.billing_account_attributes.id;
             this.client.organisation_primary_contact.first_name =
                 data.billing_account_attributes.primary_contact_first_name;
 
@@ -174,6 +164,7 @@ export class Booking {
         if (Boolean(data.versions_attributes)) {
             for (let version_attributr of data.versions_attributes) {
                 let version = new BookingVersion();
+                version.model = version_attributr.model;
                 version.change_set = version_attributr.changeset;
                 version.booking_event = version_attributr.event;
                 version.created_at_iso = new Date(version_attributr.created_at).toISOString();
@@ -215,6 +206,7 @@ export class Booking {
             start_time: new Date(this.venue.start_time_iso).toISOString(),
             end_time: new Date(this.venue.end_time_iso).toISOString(),
             billing_account_attributes: {
+                id: this.client.organisation_primary_contact.id,
                 primary_contact_first_name: this.client.organisation_primary_contact.first_name,
                 primary_contact_last_name: this.client.organisation_primary_contact.last_name,
                 primary_contact_email: this.client.organisation_primary_contact.email,
@@ -225,6 +217,7 @@ export class Booking {
             },
             parking_availability: _parking_type,
             address_attributes: {
+                id: this.venue.id,
                 unit_number: this.venue.unit_number,
                 street_number: this.venue.street_number,
                 street_name: this.venue.street_name,

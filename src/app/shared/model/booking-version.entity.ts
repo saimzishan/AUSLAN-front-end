@@ -8,6 +8,7 @@ export class BookingVersion {
     public first_name: string;
     public last_name: string;
     public photo_url: string;
+    public model: string;
 
     booking_event_formatted() {
         return this.booking_event[0].toUpperCase() + this.booking_event.substring(1) + 'd by';

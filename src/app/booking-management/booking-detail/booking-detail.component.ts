@@ -412,7 +412,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         }
         this.spinnerService.requestInProcess(true);
         this.bookingModel.state = BOOKING_STATE.Requested; // res.data.state;
-        this.bookingModel.clean(this.bookingModel.toJSON());
         this.bookingService.createBooking(this.bookingModel)
             .subscribe((res: any) => {
                     if (res.status === 201 && res.data.id && 0 < res.data.id) {
@@ -462,7 +461,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         } else {
             this.spinnerService.requestInProcess(true);
             let bookingID = this.bookingModel.id;
-            this.bookingModel.clean(this.bookingModel.toJSON());
+            // this.bookingModel.clean(this.bookingModel.toJSON());
 
             this.deleteDocuments.forEach(element => {
                 this.bookingModel.documents_attributes.push(element);
