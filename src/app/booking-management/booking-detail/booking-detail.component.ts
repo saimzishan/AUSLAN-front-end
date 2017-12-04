@@ -1,8 +1,7 @@
-import {Component, AfterViewChecked, OnDestroy, OnChanges, Directive, SimpleChanges, OnInit, ViewContainerRef} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewContainerRef} from '@angular/core';
 import {Booking} from '../../shared/model/booking.entity';
 import {BookingService} from '../../api/booking.service';
 import {BA, BOOKING_NATURE} from '../../shared/model/booking-nature.enum';
-import {PARKING} from '../../shared/model/parking.enum';
 import {SpinnerService} from '../../spinner/spinner.service';
 import {BOOKING_STATE} from '../../shared/model/booking-state.enum';
 import {GLOBAL} from '../../shared/global';
@@ -10,17 +9,24 @@ import {NotificationServiceBus} from '../../notification/notification.service';
 import {Router, ActivatedRoute} from '@angular/router';
 import {RolePermission} from '../../shared/role-permission/role-permission';
 import {DatePipe} from '@angular/common';
-import {FormGroup, NgForm} from '@angular/forms';
-import {FileUploader, FileUploaderOptions} from 'ng2-file-upload';
+import {FormGroup} from '@angular/forms';
+import {FileUploader} from 'ng2-file-upload';
 import {Address} from '../../shared/model/venue.entity';
 import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
 import {PreferedAllocationService} from '../../shared/prefered-allocation.service';
-import {isNullOrUndefined} from 'util';
-import {IndividualClient, OrganisationalRepresentative, BookingOfficer, Administrator , UserFactory} from '../../shared/model/user.entity';
+import {
+    IndividualClient,
+    OrganisationalRepresentative,
+    BookingOfficer,
+    Administrator,
+    UserFactory,
+    Interpreter
+} from '../../shared/model/user.entity';
 import {PopupComponent} from '../../shared/popup/popup.component';
 import {Contact} from '../../shared/model/contact.entity';
 import {UserService} from '../../api/user.service';
 import {RemoveSpacePipe} from '../../shared/pipe/remove-space.pipe';
+import {isNullOrUndefined} from 'util';
 
 const _ONE_HOUR = 1000 /*milliseconds*/
     * 60 /*seconds*/
@@ -30,10 +36,8 @@ const _ONE_HOUR = 1000 /*milliseconds*/
     selector: 'app-booking-detail',
     templateUrl: './booking-detail.component.html',
     styleUrls: ['./booking-detail.component.css']
-
 })
 export class BookingDetailComponent implements OnInit, OnDestroy {
-
 
     private sub: any;
     public uploader: FileUploader = new FileUploader({url: '', maxFileSize: 20 * 1024 * 1024});
@@ -42,8 +46,10 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     rdgSpecialInstruction = 'true';
     oldBookingModel;
     dialogSub;
-    appointment_types = Object.keys(BOOKING_NATURE).filter(value => (value === BOOKING_NATURE[value]
-        || BOOKING_NATURE[value].startsWith(value)) && value !== BOOKING_NATURE[BOOKING_NATURE.None]).map(v => BOOKING_NATURE[v]) as string[];
+    appointment_types = Object.keys(BOOKING_NATURE)
+        .filter(value => {
+            return (value === BOOKING_NATURE[value] || BOOKING_NATURE[value].startsWith(value)) && value !== BOOKING_NATURE[BOOKING_NATURE.None];
+        }).map(v => BOOKING_NATURE[v]) as string[];
 
     specific_appointment_types = [];
     currentUserIsContact = 'true';

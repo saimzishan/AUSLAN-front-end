@@ -1,5 +1,4 @@
 export enum BOOKING_NATURE {
-
   Conference = <any>'Conference/Forum',
   Counselling = <any>'Counselling',
   Court = <any>'Court',
