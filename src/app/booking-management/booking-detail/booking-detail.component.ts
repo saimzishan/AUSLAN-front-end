@@ -461,7 +461,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         } else {
             this.spinnerService.requestInProcess(true);
             let bookingID = this.bookingModel.id;
-            // this.bookingModel.clean(this.bookingModel.toJSON());
 
             this.deleteDocuments.forEach(element => {
                 this.bookingModel.documents_attributes.push(element);
