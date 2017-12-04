@@ -12,6 +12,7 @@ import {NotificationServiceBus} from '../../notification/notification.service';
 import {MockBackend} from '@angular/http/testing';
 import {AuthHttp} from 'angular2-jwt';
 import {GmapsApiService} from '../../api/gmaps-api.service';
+import {RemoveSpacePipe} from '../../shared/pipe/remove-space.pipe';
 
 describe('IndClientComponent', () => {
     let component: IndClientComponent;
@@ -19,7 +20,7 @@ describe('IndClientComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [IndClientComponent, AddressComponent, BillingAccountComponent],
+            declarations: [IndClientComponent, AddressComponent, BillingAccountComponent, RemoveSpacePipe],
             providers: [NotificationServiceBus, GmapsApiService, {provide: AuthHttp, useClass: MockBackend}],
             imports: [FormsModule, CustomFormsModule, SimpleNotificationsModule, MaterialModule]
         })

@@ -14,6 +14,7 @@ import {SimpleNotificationsModule} from 'angular2-notifications/src/simple-notif
 import {MockBackend} from '@angular/http/testing';
 import {AuthHttp} from 'angular2-jwt';
 import {GmapsApiService} from '../../api/gmaps-api.service';
+import {RemoveSpacePipe} from '../../shared/pipe/remove-space.pipe';
 
 describe('InterpreterComponent', () => {
     let component: InterpreterComponent;
@@ -21,7 +22,7 @@ describe('InterpreterComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [InterpreterComponent, AddressComponent, BillingAccountComponent],
+            declarations: [InterpreterComponent, AddressComponent, BillingAccountComponent, RemoveSpacePipe],
             providers: [NotificationServiceBus, GmapsApiService, {provide: AuthHttp, useClass: MockBackend}],
             imports: [FormsModule, CustomFormsModule, SimpleNotificationsModule,
                 RouterTestingModule, MaterialModule, CalendarModule]

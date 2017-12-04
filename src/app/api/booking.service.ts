@@ -34,7 +34,7 @@ export class BookingService extends ApiService {
         let headers = new Headers({'Accept': 'application/json',
             'Content-Type': 'application/json'});
         let options = new RequestOptions({ headers: headers });
-        let obj = { 'booking': booking.toJSON() };
+        let obj = { 'booking': booking.clean(booking.toJSON()) };
 
         return this.http.post(GLOBAL.BOOKING_API + '/' , JSON.stringify(obj), options)
             .map(this.extractData)

@@ -260,6 +260,7 @@ export class OrganisationalRepresentative extends Organisational {
 }
 
 export class Accountant extends User {
+    public id: number;
     public account_number: number;
     public organisation_billing_address: Address = new Address();
     public external_reference: string;

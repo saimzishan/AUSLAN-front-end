@@ -73,6 +73,7 @@ import {PreferedAllocationService} from './shared/prefered-allocation.service';
 import { BookingHeaderService } from './booking-management/booking-header/booking-header.service';
 import {GmapsApiService} from './api/gmaps-api.service';
 import {NgxPaginationModule} from 'ngx-pagination';
+import {RemoveSpacePipe} from './shared/pipe/remove-space.pipe';
 
 @NgModule({
   declarations: [
@@ -101,7 +102,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
     InterpreterComponent, BillingAccountComponent,
     SkillMatrixComponent, AddressComponent, AccountantComponent,
       UserPasswordComponent, PreComponent, BlockoutComponent, TermandconditionComponent,
-       InterpreterBoxComponent, InterpreterPopupComponent
+       InterpreterBoxComponent, InterpreterPopupComponent, RemoveSpacePipe
   ],
   entryComponents: [PopupComponent, InterpreterPopupComponent],
   imports: [CustomFormsModule, routing, FileUploadModule,

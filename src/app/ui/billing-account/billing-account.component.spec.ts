@@ -13,6 +13,7 @@ import {NotificationServiceBus} from '../../notification/notification.service';
 import {MockBackend} from '@angular/http/testing';
 import {AuthHttp} from 'angular2-jwt';
 import {GmapsApiService} from '../../api/gmaps-api.service';
+import {RemoveSpacePipe} from '../../shared/pipe/remove-space.pipe';
 
 describe('BillingAccountComponent', () => {
     let component: BillingAccountComponent;
@@ -20,7 +21,7 @@ describe('BillingAccountComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [BillingAccountComponent, AddressComponent],
+            declarations: [BillingAccountComponent, AddressComponent, RemoveSpacePipe],
             providers: [NotificationServiceBus, GmapsApiService, {provide: AuthHttp, useClass: MockBackend}],
             imports: [FormsModule, CustomFormsModule, SimpleNotificationsModule, MaterialModule]
         }).compileComponents();
