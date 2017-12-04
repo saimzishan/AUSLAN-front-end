@@ -34,7 +34,7 @@ export class BookingComponent implements OnInit {
                 private rolePermission: RolePermission) {
     }
     ngOnInit() {
-        GLOBAL._searchVal ? this.fetchBookings(GLOBAL._searchVal) : this.fetchBookings();
+        this.fetchBookings();
     }
     setActiveFilter(activeFilter: string) {
         this.activeFilter = activeFilter;
@@ -89,9 +89,9 @@ export class BookingComponent implements OnInit {
             )
         ;
     }
-    fetchBookings(searchParam?: URLSearchParams) {
+    fetchBookings() {
         this.page = 1;
-        this.search = searchParam || undefined;
+        this.search =  GLOBAL.getSearchParameter();
         this.getPaginatedBooking();
 
     }

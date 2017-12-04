@@ -10,15 +10,16 @@ import {BookingInterpreter} from '../../shared/model/contact.entity';
 import {BookingFilter} from '../../shared/model/booking-filter.interface';
 import {FormGroup, NgForm} from '@angular/forms';
 import {BA, BOOKING_NATURE} from '../../shared/model/booking-nature.enum';
+import {OnInit} from '../../../../node_modules_lnx/@angular/core';
 
 @Component({
     selector: 'app-booking-list',
     templateUrl: './booking-list.component.html',
     styleUrls: ['./booking-list.component.css']
 })
-export class BookingListComponent {
+export class BookingListComponent implements OnInit {
     @Input('bookingList') bookingList: Array<Booking> = [];
-    @Output() onBookingFilter = new EventEmitter<URLSearchParams>();
+    @Output() onBookingFilter = new EventEmitter();
     bookingFilter: BookingFilter = {};
     private filterParams = new URLSearchParams();
     private currentSort = {'field': 'job', 'order': 'asc' };
@@ -34,6 +35,16 @@ export class BookingListComponent {
         BA.loadItems();
     }
 
+    ngOnInit () {
+        this.filterParams = GLOBAL._filterVal;
+        this.filterParams.paramsMap.forEach((value: string[], key: string) => {
+            for (let v of value) {
+                key = key.match(/filter\[(\w+)\]/)[1];
+                this.bookingFilter[key] = v;
+                break;
+            }
+        });
+    }
     underScoreToSpaces(str: string) {
         if (!str) { return 'All'; }
         return str.replace(/_/g, ' ');
@@ -91,7 +102,7 @@ export class BookingListComponent {
     }
     private formatterValueFor(field: string, value: string) {
         let formattedValue: string;
-        let val: number;
+        if (value.toLowerCase() === 'all' ) { return ''; };
         if (value && value.length) {
             value = value.trim();
             value = value.replace(/,$/g, '');
@@ -99,14 +110,12 @@ export class BookingListComponent {
                 case 'booking_status':
                     formattedValue = BOOKING_STATUS.hasOwnProperty(value) ? BOOKING_STATUS[value].toString() : '' ;
                     break;
-                case 'state':
-                    formattedValue = value.toLowerCase() === 'all' ? '' : value;
-                    break;
                 case 'booking_type':
                     formattedValue = BOOKING_NATURE.hasOwnProperty(value) ? BOOKING_NATURE[value].toString() : '' ;
                     break;
                 default:
                     formattedValue = value;
+                    break;
             }
         }
         return formattedValue;
@@ -118,10 +127,8 @@ export class BookingListComponent {
                 this.filterParams.set('filter[' + k + ']', this.bookingFilter[k]);
             }
         }
-        if (field === 'booking_type') {
-            this.bookingFilter.booking_type = value;
-        }
-        this.onBookingFilter.emit(this.filterParams);
+        GLOBAL._filterVal = this.filterParams;
+        this.onBookingFilter.emit();
     }
     private isCurrentSort(field: string) {
         return this.currentSort.field === field;
@@ -141,7 +148,8 @@ export class BookingListComponent {
         this.setCurrentSort(field);
         this.filterParams.set('sort', this.currentSort.field);
         this.filterParams.set('direction', this.currentSort.order);
-        this.onBookingFilter.emit(this.filterParams);
+        GLOBAL._filterVal = this.filterParams;
+        this.onBookingFilter.emit();
     }
     getPage(page: number) {
         this.onPageEmit.emit(page);

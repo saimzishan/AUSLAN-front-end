@@ -5,6 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import {AuthGuard} from './auth.guard';
 import { SpinnerService } from '../spinner/spinner.service';
 import {NotificationServiceBus} from '../notification/notification.service';
+import {GLOBAL} from '../shared/global';
+import {URLSearchParams} from '@angular/http';
 
 @Component({
   selector: 'app-auth',
@@ -64,7 +66,9 @@ export class AuthComponent implements OnInit, OnDestroy {
 
     logout(): void {
         this.model.token = null;
-        // clear token remove user from local storage to log user out
+        GLOBAL._extRefVal = new URLSearchParams();
+        GLOBAL._filterVal = new URLSearchParams();
+        // clear token remove user from local storage to log user out
         AuthGuard.logout();
     }
 

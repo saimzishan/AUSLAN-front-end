@@ -1,10 +1,10 @@
 <section id="filters">
   <section class="search-bar">
     <form #filterBySearch="ngForm" class="common-form compact" (ngSubmit)="filter()" novalidate>
-      <input type="text" name="search" id="search" [(ngModel)]="strSearch" (click)="clear()" placeholder="Search...">
+      <input type="text" name="search" id="search" [(ngModel)]="extRefNumber" (click)="'' !== extRefNumber && clear()" placeholder="Search...">
     </form>
     <button>
-      <i class="icon-glass"></i>
+      <i (click)="filter()" class="icon-glass"></i>
     </button>
   </section>
 
