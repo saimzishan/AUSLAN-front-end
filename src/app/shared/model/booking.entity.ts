@@ -106,8 +106,7 @@ export class Booking {
         this.primaryContact.first_name = data.contact_first_name;
         this.primaryContact.email = data.contact_email;
         this.primaryContact.last_name = data.contact_last_name;
-        this.primaryContact.phone_number = data.contact_phone_number;
-        this.primaryContact.mobile_number = data.contact_mobile_number;
+        this.primaryContact.mobile_number = data.contact_phone_number;
         this.client.organisation_name = data.created_by.organisation;
         this.client.organisation_billing_account.external_reference = '';
         this.special_instructions = data.special_instructions;
@@ -205,8 +204,7 @@ export class Booking {
             specific_nature_of_appointment: _specific_nature_of_appointment,
             contact_first_name: this.primaryContact.first_name,
             contact_last_name: this.primaryContact.last_name,
-            contact_phone_number: this.primaryContact.phone_number,
-            contact_mobile_number: this.primaryContact.mobile_number,
+            contact_phone_number: this.primaryContact.mobile_number,
             contact_email: this.primaryContact.email,
             deaf_persons_first_name: this.deaf_person.first_name,
             deaf_persons_last_name: this.deaf_person.last_name, deaf_persons_mobile: this.deaf_person.mobile_number,
