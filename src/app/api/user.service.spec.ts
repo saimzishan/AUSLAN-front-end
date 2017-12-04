@@ -81,8 +81,7 @@ describe('UserService', () => {
 
 
     afterAll(function (done) {
-        userProvider.finalize()
-            .then(function () { done(); }, function (err) { done.fail(err); });
+        done();
     });
 
     it('should have valid http', inject([UserService], (service) => {

@@ -5,7 +5,7 @@ Feature: Booking Admin Management
     And I go to the website
     And I am shown the login screen, with picture and signup button
 
-  @runThis
+  @ignoreThis
   Scenario: Administrator cancel the INPROGRESS to unable to service action, Interpreter exists and a booking is created, Version history is shown
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials

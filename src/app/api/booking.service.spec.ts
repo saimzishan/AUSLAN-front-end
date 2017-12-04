@@ -92,12 +92,7 @@ describe('BookingService', () => {
 
 
     afterAll(function (done) {
-        bookingProvider.finalize()
-            .then(function () {
-                done();
-            }, function (err) {
-                done.fail(err);
-            });
+        done();
     });
 
     it('should have valid http', inject([BookingService], (service) => {
