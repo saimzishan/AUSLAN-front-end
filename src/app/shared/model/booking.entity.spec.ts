@@ -14,8 +14,7 @@ describe('Booking Entity', () => {
     'nature_of_appointment': 'Translation',
     'specific_nature_of_appointment': 'Engagement',
     'contact_first_name': 'Hadrian', 'contact_last_name': 'French',
-     'contact_phone_number': '03 2342 2343',
-    'contact_mobile_number': '0411 222 333', 'deaf_persons_first_name': 'Clifford',
+     'contact_phone_number': '03 2342 2343', 'deaf_persons_first_name': 'Clifford',
     'deaf_persons_last_name': 'Yan', 'deaf_persons_mobile': '0444 555 666',
     'deaf_persons_email': 'clifford@vicdeaf.org.au', 'deaf_persons_eaf_no': '1231 0900',
     'number_of_people_attending': '1', 'number_of_interpreters_required' : '2',
@@ -42,8 +41,7 @@ describe('Booking Entity', () => {
       expect(mock_booking.requested_by.last_name).toEqual('George');
       expect(mock_booking.primaryContact.first_name).toEqual('Hadrian');
       expect(mock_booking.primaryContact.last_name).toEqual('French');
-      expect(mock_booking.primaryContact.phone_number).toEqual('03 2342 2343');
-      expect(mock_booking.primaryContact.mobile_number).toEqual('0411 222 333');
+      expect(mock_booking.primaryContact.mobile_number).toEqual('03 2342 2343');
       expect(mock_booking.deaf_person.first_name).toEqual('Clifford');
       expect(mock_booking.deaf_person.last_name).toEqual('Yan');
       expect(mock_booking.deaf_person.eaf).toEqual('1231 0900');
@@ -62,8 +60,7 @@ describe('Booking Entity', () => {
       mock_booking.requested_by.last_name = 'George';
       mock_booking.primaryContact.first_name = 'Hadrian';
       mock_booking.primaryContact.last_name = 'French';
-      mock_booking.primaryContact.phone_number = '03 2342 2343';
-      mock_booking.primaryContact.mobile_number = '0411 222 333';
+      mock_booking.primaryContact.mobile_number = '03 2342 2343';
       mock_booking.deaf_person.first_name = 'Clifford';
       mock_booking.deaf_person.last_name = 'Yan';
       mock_booking.deaf_person.eaf = '1231 0900';
@@ -86,7 +83,6 @@ describe('Booking Entity', () => {
       expect(data.contact_first_name).toEqual('Hadrian');
       expect(data.contact_last_name).toEqual('French');
       expect(data.contact_phone_number).toEqual('03 2342 2343');
-      expect(data.contact_mobile_number).toEqual('0411 222 333');
       expect(data.deaf_persons_first_name).toEqual('Clifford');
       expect(data.deaf_persons_last_name).toEqual('Yan');
       expect(data.deaf_persons_eaf_no).toEqual('1231 0900');
