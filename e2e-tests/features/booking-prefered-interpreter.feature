@@ -41,6 +41,7 @@ Feature: Create Booking with preferred or blocked interpreters
     When I click on element by name 'rdPreferredInterpretersYes'
     Then I can see the element with name 'preferInterQuestion2' is 'visible'
     And I can see the element with name 'preferInterQuestion2' has text 'Do you want to set the preferred interpreters that you have set in your profile?'
+    And I can see the element with name 'btnManageInterpreter_prefered' is 'visible'
     When I click on element by name 'rdProfilePreferredInterpretersYes'
     Then I can see the element with name 'btnManageInterpreter_prefered' is 'visible'
     And I can count the element with css 'section.interpreter_selected_prefered' to be '1'
@@ -101,8 +102,9 @@ Feature: Create Booking with preferred or blocked interpreters
     When I click on element by name 'rdBlockedInterpretersYes'
     Then I can see the element with name 'blockInterQuestion2' is 'visible'
     And I can see the element with name 'blockInterQuestion2' has text 'Do you want to set the blocked interpreters that you have set in your profile?'
+    And I can see the element with name 'btnManageInterpreter_blocked' is 'visible'
     When I click on element by name 'rdProfileBlockedInterpretersYes'
-    Then I can see the element with name 'btnManageInterpreter_blocked' is 'visible'
+    And I can see the element with name 'btnManageInterpreter_blocked' is 'visible'
     And I can count the element with css 'section.interpreter_selected_blocked' to be '1'
     And I click on BUTTON name 'btnManageInterpreter_blocked'
     Then I can see the element with css 'div.md-dialog' is 'visible'
@@ -167,14 +169,15 @@ Feature: Create Booking with preferred or blocked interpreters
     And I can see the element with name 'preferInterQuestion1' is 'visible'
     When I click on element by name 'rdPreferredInterpretersYes'
     Then I can see the element with name 'preferInterQuestion2' is 'visible'
+    And I can see the element with name 'btnManageInterpreter_prefered' is 'visible'
     When I click on element by name 'rdProfilePreferredInterpretersYes'
     Then I can see the element with name 'btnManageInterpreter_prefered' is 'visible'
     And I can count the element with css 'section.interpreter_selected_prefered' to be '1'
     And I click on BUTTON name 'btnManageInterpreter_prefered'
     Then I can see the element with css 'div.md-dialog' is 'visible'
-    When I click on '2' interpreter
+    When I click on '1' interpreter
     Then I can see the element with css 'section[name="interpreters"].selected' is 'not visible'
-    And I will get an error notification saying "This interpreter is already selected as a blocked interpreter. Please remove first."
+    And I will get an error notification saying "This interpreter is already selected as a preffered interpreter. Please remove first."
     Then I click on BUTTON name 'noBtn'
     Then I wait for 2000 milli-seconds
     Then I can see the element with css 'div.md-dialog' is 'hidden'
@@ -182,6 +185,7 @@ Feature: Create Booking with preferred or blocked interpreters
     And I can see the element with name 'blockInterQuestion1' is 'visible'
     When I click on element by name 'rdBlockedInterpretersYes'
     Then I can see the element with name 'blockInterQuestion2' is 'visible'
+    And I can see the element with name 'btnManageInterpreter_blocked' is 'visible'
     When I click on element by name 'rdProfileBlockedInterpretersYes'
     Then I can see the element with name 'btnManageInterpreter_blocked' is 'visible'
     And I can count the element with css 'section.interpreter_selected_blocked' to be '1'
@@ -190,10 +194,13 @@ Feature: Create Booking with preferred or blocked interpreters
     When I click on '1' interpreter
     Then I can see the element with css 'section[name="interpreters"].selected' is 'not visible'
     And I will get an error notification saying "This interpreter is already selected as a preffered interpreter. Please remove first."
+    Then I click on '2' interpreter
+    And I can see the element with css 'section[name="interpreters"].selected' is 'not visible'
+    And I will get an error notification saying "This interpreter is already selected as a blocked interpreter. Please remove first."
     Then I click on BUTTON name 'noBtn'
-    Then I wait for 2000 milli-seconds
+    And I wait for 2000 milli-seconds
     Then I can see the element with css 'div.md-dialog' is 'hidden'
-    Then I click on checkbox name 'tnc'
+    And I click on checkbox name 'tnc'
     And I click the create booking button
     Then I get a valid create booking notification
     And I am on the bookings page
