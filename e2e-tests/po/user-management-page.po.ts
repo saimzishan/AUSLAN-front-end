@@ -3,6 +3,7 @@ import {browser, by, element, $, $$, protractor} from 'protractor';
 import {expect} from '../config/helpers/chai-imports';
 import {User, Administrator, BookingOfficer, Interpreter, Client, Organisation, Accountant} from '../helper';
 import {NotificationObject} from './notification';
+import {GLOBAL} from '../../src/app/shared/global';
 
 export class UserManagementPage extends PageObject {
     /*
@@ -294,7 +295,7 @@ export class UserManagementPage extends PageObject {
     }
     shouldShowInValidNotification = () => {
 
-        return NotificationObject.getNotificationContent('Kindly fill all the required (*) fields');
+        return NotificationObject.getNotificationContent(GLOBAL.MISSING_FIELDS_ERROR_MESSAGE);
     }
     hoverOnActions = (type: string) => {
         let trList = this.trListByUserType(type);
