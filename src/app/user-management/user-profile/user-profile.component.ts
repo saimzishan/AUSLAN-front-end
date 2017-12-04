@@ -50,7 +50,7 @@ export class UserProfileComponent implements OnInit {
     editUser(form: FormGroup) {
         if ( form.invalid ) {
             this.notificationServiceBus.
-            launchNotification(true, GLOBAL.MISSING_FIELDS_ERROR_MESSAGE);
+            launchNotification(true, 'Oops! Please fill in all the fields correctly.');
             return;
         }
 

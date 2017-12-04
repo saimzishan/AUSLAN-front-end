@@ -295,7 +295,7 @@ export class UserManagementPage extends PageObject {
     }
     shouldShowInValidNotification = () => {
 
-        return NotificationObject.getNotificationContent(GLOBAL.MISSING_FIELDS_ERROR_MESSAGE);
+        return NotificationObject.getNotificationContent('Oops! Please fill in all the fields correctly.');
     }
     hoverOnActions = (type: string) => {
         let trList = this.trListByUserType(type);

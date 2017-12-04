@@ -34,7 +34,6 @@ export class GLOBAL {
     public static GOP_ADDRESS_ONE = '350 Bourke Street, Melbourne VIC, 3000, Australia';
     public static GOP_ADDRESS_TWO = '261 Queens Street, Brisbane City QLD, 4000, Australia';
     public static userStatusArray = [{name: 'Active'}, {name: 'Disabled'}];
-    public static MISSING_FIELDS_ERROR_MESSAGE = 'Oops! Please fill in all the fields correctly.'
     public static _searchVal: any;
 
     public static get searchVal(): any {

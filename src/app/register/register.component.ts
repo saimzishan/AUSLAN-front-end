@@ -119,7 +119,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
             return;
         }
         if (form.invalid) {
-            this.notificationServiceBus.launchNotification(true, GLOBAL.MISSING_FIELDS_ERROR_MESSAGE);
+            this.notificationServiceBus.launchNotification(true, 'Oops! Please fill in all the fields correctly.');
             return;
         }
         this.spinnerService.requestInProcess(true);
