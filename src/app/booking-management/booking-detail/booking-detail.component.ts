@@ -25,7 +25,7 @@ import {
 import {PopupComponent} from '../../shared/popup/popup.component';
 import {Contact} from '../../shared/model/contact.entity';
 import {UserService} from '../../api/user.service';
-import {isNullOrUndefined} from 'util';
+import {isNullOrUndefined, debug} from 'util';
 
 const _ONE_HOUR = 1000 /*milliseconds*/
     * 60 /*seconds*/
@@ -53,6 +53,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     specific_appointment_types = [];
     currentUserIsContact = 'true';
     currentUserIsClient = 'true';
+    rdBookingAdress='true';
     prefInterpreter: boolean;
     dialogRef: MdDialogRef<any>;
     fileName = '';
@@ -151,6 +152,10 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             } else {
                 this.oldBookingModel = this.deepCopy(this.bookingModel);
             }
+            if(!this.forEdit()) {
+                console.log("edit button :"+!this.forEdit());
+                this.onBookingAdressChange();
+            }
         }
     }
 
@@ -176,6 +181,17 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 let currentUserField = currentUserFieldMap[field] || field;
                 let value = this.currentUserIsContact === 'true' ? user[currentUserField] : '';
                 this.bookingModel.primaryContact[field] = value;
+            });
+        }
+    }
+
+    public onBookingAdressChange(){
+        let user = GLOBAL.currentUser;
+        if (user) {
+            ['unit_number', 'street_number', 'street_name', 'suburb', 'state', 'post_code'].forEach((field) => {
+                let value = this.rdBookingAdress === 'true' ? (this.isUserOrgRep() ?
+            user.organisation_attributes.address_attributes[field] : this.isIndClient() ? user.address_attributes[field] :''):'';
+                this.bookingModel.venue[field] = value;
             });
         }
     }
@@ -270,6 +286,9 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
     isUserOrgRep(): Boolean {
         return Boolean(GLOBAL.currentUser instanceof OrganisationalRepresentative);
+    }
+    isIndClient() {
+        return (GLOBAL.currentUser instanceof IndividualClient);
     }
     onSpecialInstruction() {
         let special_instructions =
