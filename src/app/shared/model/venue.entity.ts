@@ -1,7 +1,7 @@
 import {PARKING} from './parking.enum';
 
 export class Address {
-
+  public id: number;
   public title: string;
   public street_number: string;
   public unit_number: string;

@@ -162,7 +162,7 @@ describe('BookingService', () => {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
 
-                }, {'booking': Pact.Match.somethingLike(mock_booking.toJSON())})
+                }, {'booking': Pact.Match.somethingLike(mock_booking.clean(mock_booking.toJSON()))})
 
                 .willRespondWith(201, {
                     'Content-Type': 'application/json; charset=utf-8'

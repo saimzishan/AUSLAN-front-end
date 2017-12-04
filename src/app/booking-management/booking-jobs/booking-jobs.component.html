@@ -395,6 +395,9 @@
                             </td>
                             <td>
                                 <div name="data_changes">
+                                    <div>
+                                        <span style="font-style: oblique; font-weight: bolder">{{version.model}}</span>
+                                    </div>
                                     <div *ngFor="let change_item_key of version.change_set_formatted_hash()">
                                         <b>{{change_item_key[0]}}: </b>{{change_item_key[1][0]}} <b>to</b> <span>{{change_item_key[1][1]}}</span>
                                     </div>

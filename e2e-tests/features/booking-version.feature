@@ -5,7 +5,7 @@ Feature: Booking Admin Management
     And I go to the website
     And I am shown the login screen, with picture and signup button
 
-  @ignoreThis
+  @runThis
   Scenario: Administrator cancel the INPROGRESS to unable to service action, Interpreter exists and a booking is created, Version history is shown
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
@@ -27,8 +27,19 @@ Feature: Booking Admin Management
     And I will be shown the booking job page
     And The version history with name 'data_action' at index '0' with text 'Created by'
     And The version history with name 'data_action' at index '0' with text 'System'
-    And The version history with name 'data_action' at index '1' with text 'Updated by'
-    And The version history with name 'data_action' at index '1' with text 'robin Administrator'
-    And The version history with name 'data_changes' at index '1' with text 'State: Requested to In Progress'
-    And The version history with name 'data_changes' at index '1' with text 'Invite Url: [blank] to http://localhost:49152/#/booking-management/'
-    And The version history with name 'data_changes' at index '1' with text 'job-detail'
+    And The version history with name 'data_changes' at index '0' with text 'Booking'
+    And The version history with name 'data_action' at index '1' with text 'Created by'
+    And The version history with name 'data_action' at index '1' with text 'System'
+    And The version history with name 'data_changes' at index '1' with text 'Address'
+    And The version history with name 'data_action' at index '2' with text 'Created by'
+    And The version history with name 'data_action' at index '2' with text 'System'
+    And The version history with name 'data_changes' at index '2' with text 'Billing Account'
+    And The version history with name 'data_action' at index '3' with text 'Created by'
+    And The version history with name 'data_action' at index '3' with text 'System'
+    And The version history with name 'data_changes' at index '3' with text 'Billing Account - Address'
+    And The version history with name 'data_action' at index '4' with text 'Updated by'
+    And The version history with name 'data_action' at index '4' with text 'robin Administrator'
+    And The version history with name 'data_changes' at index '4' with text 'Booking'
+    And The version history with name 'data_changes' at index '4' with text 'State: Requested to In Progress'
+    And The version history with name 'data_changes' at index '4' with text 'Invite Url: [blank] to http://localhost:49152/#/booking-management/'
+    And The version history with name 'data_changes' at index '4' with text 'job-detail'
