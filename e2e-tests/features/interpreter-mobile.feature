@@ -164,7 +164,7 @@ Feature: As INTERPRETER, I can login on mobile
     Then I click on button with css 'div.manage-job-buttons > button.button.button-accept'
     Then I will be shown a popup message
     And I click on BUTTON name 'yesBtn'
-    Then I wait for 2000 milli-seconds
+    Then I wait for 2500 milli-seconds
     Then I can see the booking state ' ALLOCATED ' in booking detail page
     And I go to the website
     And I am on a computer
