@@ -15,7 +15,9 @@ const EDITABLE_FIELDS = [
     'deaf_person_email',
     'deaf_person_mobile',
     'ext_ref_num',
-    'uploader'
+    'uploader',
+    'contact_first_name',
+    'contact_last_name',
 ];
 
 const READONLY_FIELDS = [
@@ -30,8 +32,6 @@ const READONLY_FIELDS = [
     'raw_booking_requested_by_ln',
     'interpreters_count',
     'txtSpecialInstruction',
-    'contact_first_name',
-    'contact_last_name',
     'deaf_person_eaf',
     'deaf_person_name',
     'deaf_person_last_name'
