@@ -3,7 +3,6 @@ import {browser, by, element, $, $$, protractor} from 'protractor';
 import {expect} from '../config/helpers/chai-imports';
 import {User, Administrator, BookingOfficer, Interpreter, Client, Organisation, Accountant} from '../helper';
 import {NotificationObject} from './notification';
-import {GLOBAL} from '../../src/app/shared/global';
 
 export class UserManagementPage extends PageObject {
     /*

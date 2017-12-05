@@ -71,7 +71,7 @@ export class BlockoutComponent implements  OnDestroy, OnInit {
 
   editBlockouts(form: FormGroup) {
     if (form.invalid) {
-      this.notificationServiceBus.launchNotification(true, 'Oops! Please fill in all the fields correctly.');
+      this.notificationServiceBus.launchNotification(true, GLOBAL.MISSING_FIELDS_ERROR_MESSAGE);
       return;
     }
     this.spinnerService.requestInProcess(true);
