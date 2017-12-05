@@ -451,8 +451,8 @@ Feature: Booking Management
     Then I can see the 'CONTACT DETAILS' auto populated
     And I can see the 'CLIENT DETAILS' auto populated
     And I can see the 'INVOICE DETAILS' auto populated
-    And I can see the element with name 'serviceMsg' has text 'What kind of services does the organization need? Select multiple if relevant'
-    And I can see the element with name 'interpreterMsg' has text 'What kind of interpreter(s) does the organization need? Select multiple if relevant'
+    And I can see the element with name 'serviceMsg' has text 'What kind of services does the organisation need? Select multiple if relevant'
+    And I can see the element with name 'interpreterMsg' has text 'What kind of interpreter(s) does the organisation need? Select multiple if relevant'
     And I can see the element with name 'contactMsg' has text 'DO YOU WANT TO USE THE STANDARD CONTACT PERSON FOR THIS BOOKING? *'
     And I can see the element with name 'invoiceMsg' has text 'Do you want to use standard invoice details for this booking? *'
 
@@ -488,8 +488,8 @@ Feature: Booking Management
     Then I can see the 'CONTACT DETAILS' auto populated
     And I can see the 'CLIENT DETAILS' auto populated
     And I can see the 'INVOICE DETAILS' auto populated
-    And I can see the element with name 'serviceMsg' has text 'What kind of services does the organization need? Select multiple if relevant'
-    And I can see the element with name 'interpreterMsg' has text 'What kind of interpreter(s) does the organization need? Select multiple if relevant'
+    And I can see the element with name 'serviceMsg' has text 'What kind of services does the organisation need? Select multiple if relevant'
+    And I can see the element with name 'interpreterMsg' has text 'What kind of interpreter(s) does the organisation need? Select multiple if relevant'
     And I can see the element with name 'contactMsg' has text 'DO YOU WANT TO USE THE STANDARD CONTACT PERSON FOR THIS BOOKING? *'
     And I can see the element with name 'invoiceMsg' has text 'Do you want to use standard invoice details for this booking? *'
 # ---------------------------------------- AUSLAN1-727 -> START ----------------------------------------

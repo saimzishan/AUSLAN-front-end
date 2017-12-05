@@ -33,7 +33,7 @@
       <h2>CUSTOMER</h2>
       <div class="medium-12 columns">
         <div class="form-field">
-          <label>ARE YOU MAKING A BOOKING FOR AN INDIVIDUAL CLIENT OR ORGANIZATION?*</label>
+          <label>ARE YOU MAKING A BOOKING FOR AN INDIVIDUAL CLIENT OR ORGANISATION?*</label>
           <md-radio-group name="rdBookingFor" (change)='onBookingForChange()' [(ngModel)]="bookingModel.bookable_type" [disabled]="isDisabledForAdmin">
             <md-radio-button id ="IndividualClient" name ="IndividualClient" value="IndividualClient">CLIENT</md-radio-button>
             <md-radio-button id="OrganisationalRepresentative" name="OrganisationalRepresentative" value="OrganisationalRepresentative">ORGANISATION</md-radio-button>
@@ -45,7 +45,7 @@
     <div class="row" *ngIf="isUserAdminORBookOfficer">
       <div class="medium-6 columns">
         <div class="form-field">
-          <label>PLEASE SELECT THE {{bookingModel.bookable_type ==='IndividualClient' ? "CLIENT":"ORGANIZATION"}}*
+          <label>PLEASE SELECT THE {{bookingModel.bookable_type ==='IndividualClient' ? "CLIENT":"ORGANISATION"}}*
             <span mdTooltip="Select the Client/Org"><i class="inline-icon-tip"></i></span>
           </label>
           <select [(ngModel)]="bookingModel.bookable_id" (change)='onBookingForSelectionChange()'
@@ -65,7 +65,7 @@
     </div>
     <div class="row">
       <h2>Type of Booking</h2>
-      <p name="serviceMsg">What kind of services {{isUserAdminORBookOfficer ? (bookingModel.bookable_type ==='IndividualClient' ? "does the client":"does the organization") :"do you"}} need? Select multiple if relevant</p>
+      <p name="serviceMsg">What kind of services {{isUserAdminORBookOfficer ? (bookingModel.bookable_type ==='IndividualClient' ? "does the client":"does the organisation") :"do you"}} need? Select multiple if relevant</p>
       <section id="services">
         <button md-button class="active">
           <i class="icon-service-interpreting"></i>
@@ -84,7 +84,7 @@
           <span>Notetaking</span>
         </button>
       </section>
-      <p name="interpreterMsg">What kind of interpreter(s) {{isUserAdminORBookOfficer ? (bookingModel.bookable_type ==='IndividualClient' ? "does the client":"does the organization") :"do you"}} need? Select multiple if relevant</p>
+      <p name="interpreterMsg">What kind of interpreter(s) {{isUserAdminORBookOfficer ? (bookingModel.bookable_type ==='IndividualClient' ? "does the client":"does the organisation") :"do you"}} need? Select multiple if relevant</p>
       <section id="interpreters-kind">
         <md-checkbox [checked]="true" [disabled]="isDisabledForOrgRepIndClient">AUSLAN</md-checkbox>
         <md-checkbox [disabled]="isDisabledForOrgRepIndClient">DEAF INTERPRETER</md-checkbox>
