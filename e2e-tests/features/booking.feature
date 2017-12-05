@@ -620,7 +620,7 @@ Feature: Booking Management
     Then I can see the booking address is 'auto populated'
 
   @runThis
-  Scenario: IOrganisational Representative can use their address to auto fill booking address
+  Scenario: Organisational Representative can use their address to auto fill booking address
     Given I exist as an Organisational Representative
     And I sign in with valid Organisational Representative credentials
     And I am on the bookings page
