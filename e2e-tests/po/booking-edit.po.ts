@@ -15,9 +15,7 @@ const EDITABLE_FIELDS = [
     'deaf_person_email',
     'deaf_person_mobile',
     'ext_ref_num',
-    'uploader',
-    'contact_first_name',
-    'contact_last_name',
+    'uploader'
 ];
 
 const READONLY_FIELDS = [
@@ -34,7 +32,9 @@ const READONLY_FIELDS = [
     'txtSpecialInstruction',
     'deaf_person_eaf',
     'deaf_person_name',
-    'deaf_person_last_name'
+    'deaf_person_last_name',
+    'contact_first_name',
+    'contact_last_name'
 ];
 export class BookingEditPage extends PageObject {
     verify = () => {
