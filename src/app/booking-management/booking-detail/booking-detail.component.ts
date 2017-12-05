@@ -25,7 +25,6 @@ import {
 import {PopupComponent} from '../../shared/popup/popup.component';
 import {Contact} from '../../shared/model/contact.entity';
 import {UserService} from '../../api/user.service';
-import {RemoveSpacePipe} from '../../shared/pipe/remove-space.pipe';
 import {isNullOrUndefined} from 'util';
 
 const _ONE_HOUR = 1000 /*milliseconds*/
