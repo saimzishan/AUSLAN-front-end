@@ -20,7 +20,7 @@ Feature: Booking Management
     Then I move to element name 'tnc'
     Then I click on checkbox name 'tnc'
     And I click the create booking button
-    Then I will get an error notification saying "Kindly fill all the required (*) fields"
+    Then I will get an error notification saying "Oops! Please fill in all the fields correctly."
 
   @runThis
   Scenario: Given 1 verified Individual Client, Administrator can create a booking

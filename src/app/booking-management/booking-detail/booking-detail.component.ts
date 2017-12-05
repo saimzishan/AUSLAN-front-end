@@ -311,7 +311,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             return;
         }
         if (form.invalid || addressForm.form.invalid || billingForm.form.invalid) {
-            this.notificationServiceBus.launchNotification(true, 'Kindly fill all the required (*) fields');
+            this.notificationServiceBus.launchNotification(true, GLOBAL.MISSING_FIELDS_ERROR_MESSAGE);
             return;
         }
 

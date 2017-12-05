@@ -460,7 +460,7 @@ Feature: User Profile Management
     And I type in the new password is Pass@1234
     And I type in the confirm password is Pass@123
     And I click on BUTTON 'SAVE'
-    Then I get error message: 'Kindly fill all the required (*) fields'
+    Then I get error message: 'Oops! Please fill in all the fields correctly.'
 
   @runThis
 #  Change pass
@@ -476,7 +476,7 @@ Feature: User Profile Management
     And I type in the new password is Pass@1234
     And I type in the confirm password is Pass@123
     And I click on BUTTON 'SAVE'
-    Then I get error message: 'Kindly fill all the required (*) fields'
+    Then I get error message: 'Oops! Please fill in all the fields correctly.'
 
   @runThis
 #  Change pass
@@ -492,7 +492,7 @@ Feature: User Profile Management
     And I type in the new password is Pass@1234
     And I type in the confirm password is Pass@123
     And I click on BUTTON 'SAVE'
-    Then I get error message: 'Kindly fill all the required (*) fields'
+    Then I get error message: 'Oops! Please fill in all the fields correctly.'
 
   @runThis
 #  Change pass
@@ -508,7 +508,7 @@ Feature: User Profile Management
     And I type in the new password is Pass@1234
     And I type in the confirm password is Pass@123
     And I click on BUTTON 'SAVE'
-    Then I get error message: 'Kindly fill all the required (*) fields'
+    Then I get error message: 'Oops! Please fill in all the fields correctly.'
 
   @runThis
 #  Change pass
@@ -524,7 +524,7 @@ Feature: User Profile Management
     And I type in the new password is Pass@1234
     And I type in the confirm password is Pass@123
     And I click on BUTTON 'SAVE'
-    Then I get error message: 'Kindly fill all the required (*) fields'
+    Then I get error message: 'Oops! Please fill in all the fields correctly.'
 # ---------------------------------------- AUSLAN1-507 -> END ----------------------------------------
 
 # ---------------------------------------- AUSLAN1-53 -> Start ----------------------------------------
