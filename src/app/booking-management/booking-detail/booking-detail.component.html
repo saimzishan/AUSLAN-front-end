@@ -132,20 +132,20 @@
         </div>
       </div>
 
-      <div class="medium-12 columns" *ngIf="isUserOrgRepORIndClientTemp() && !forEdit">
+      <div class="medium-12 columns" *ngIf="isUserOrgRepORIndClientTemp() && !forEdit()">
         <div class="form-field">
-          <label>Do you want use your profile address for this booking?
+          <label name="lblQuestionBookAddr">Do you want to use your profile address for this booking?
             <span mdTooltip="Tooltip!">
               <i class="inline-icon-tip"></i>
             </span>
           </label>
-          <md-radio-group name="rdBookingAdress" [(ngModel)]="rdBookingAdress" (change)='onBookingAdressChange()'>
-            <md-radio-button value=true>YES</md-radio-button>
-            <md-radio-button value=false>NO</md-radio-button>
+          <md-radio-group name="rdBookingAddress" [(ngModel)]="rdBookingAddress" (change)='onBookingAddressChange()'>
+            <md-radio-button name="rdBookingAddressYes" value=true>YES</md-radio-button>
+            <md-radio-button name="rdBookingAddressNo" value=false>NO</md-radio-button>
           </md-radio-group>
         </div>
       </div>
-      <app-address [address]="bookingModel.venue" [canEdit]="isDisabledForOrgRepIndClient" #addressForm="ctAddressForm" ></app-address>
+      <app-address name="bookingAddress" [address]="bookingModel.venue" [canEdit]="isDisabledForOrgRepIndClient" #addressForm="ctAddressForm" ></app-address>
       <div class="medium-12 columns">
         <div class="form-field">
           <label>SPECIFIC LOCATION

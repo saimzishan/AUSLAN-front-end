@@ -603,3 +603,35 @@ Feature: Booking Management
     And I click on BUTTON 'SAVE'
     And If I am shown a popup, I approve it
     Then I should get a valid booking update notification
+# ---------------------------------------- AUSLAN1-711 -> START ----------------------------------------
+  @runThis
+  Scenario: Individual Client can use their address to auto fill booking address
+    Given I exist as an Individual Client
+    And I sign in with valid Individual Client credentials
+    And I am on the bookings page
+    When I click on 'New Booking'
+    Then I will be taken to the 'New Booking' form
+    And I can see the element with name 'lblQuestionBookAddr' has text 'Do you want to use your profile address for this booking?'
+    And I can see the element with name 'rdBookingAddress' is 'visible'
+    And I can see the booking address is 'auto populated'
+    When I click on element by name 'rdBookingAddressNo'
+    Then I can see the booking address is 'empty'
+    And I click on element by name 'rdBookingAddressYes'
+    Then I can see the booking address is 'auto populated'
+
+  @runThis
+  Scenario: IOrganisational Representative can use their address to auto fill booking address
+    Given I exist as an Organisational Representative
+    And I sign in with valid Organisational Representative credentials
+    And I am on the bookings page
+    When I click on 'New Booking'
+    Then I will be taken to the 'New Booking' form
+    And I can see the element with name 'lblQuestionBookAddr' has text 'Do you want to use your profile address for this booking?'
+    And I can see the element with name 'rdBookingAddress' is 'visible'
+    And I can see the booking address is 'auto populated'
+    When I click on element by name 'rdBookingAddressNo'
+    Then I can see the booking address is 'empty'
+    And I click on element by name 'rdBookingAddressYes'
+    Then I can see the booking address is 'auto populated'
+
+# ---------------------------------------- AUSLAN1-711 -> END ----------------------------------------

@@ -53,7 +53,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     specific_appointment_types = [];
     currentUserIsContact = 'true';
     currentUserIsClient = 'true';
-    rdBookingAdress='true';
+    rdBookingAddress = 'true';
     prefInterpreter: boolean;
     dialogRef: MdDialogRef<any>;
     fileName = '';
@@ -152,9 +152,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             } else {
                 this.oldBookingModel = this.deepCopy(this.bookingModel);
             }
-            if(!this.forEdit()) {
-                console.log("edit button :"+!this.forEdit());
-                this.onBookingAdressChange();
+            if (!this.forEdit()) {
+                this.onBookingAddressChange();
             }
         }
     }
@@ -185,12 +184,12 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         }
     }
 
-    public onBookingAdressChange(){
+    public onBookingAddressChange() {
         let user = GLOBAL.currentUser;
         if (user) {
             ['unit_number', 'street_number', 'street_name', 'suburb', 'state', 'post_code'].forEach((field) => {
-                let value = this.rdBookingAdress === 'true' ? (this.isUserOrgRep() ?
-            user.organisation_attributes.address_attributes[field] : this.isIndClient() ? user.address_attributes[field] :''):'';
+                let value = this.rdBookingAddress === 'true' ? (this.isUserOrgRep() ?
+                            user.organisation_attributes.address_attributes[field] : this.isIndClient() ? user.address_attributes[field] : '') : '';
                 this.bookingModel.venue[field] = value;
             });
         }
