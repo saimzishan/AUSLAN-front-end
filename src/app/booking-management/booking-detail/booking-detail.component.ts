@@ -69,7 +69,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     deleteDocuments = [];
     allClientsOrg = [];
     bookingForItems = [];
-    isEditableForOrgRepIndClient: boolean;
+    isDisabledForOrgRepIndClient: boolean;
     isUserAdminORBookOfficer: boolean;
     preferAllocSub: any;
     oldInterpreterPreference = [];
@@ -137,7 +137,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         if (GLOBAL.currentUser !== undefined) {
-            this.isEditableForOrgRepIndClient = <boolean> (this.isUserOrgRepORIndClientTemp() && this.forEdit()) ;
+            this.isDisabledForOrgRepIndClient = <boolean> (this.isUserOrgRepORIndClientTemp() && this.forEdit()) ;
             this.isUserAdminORBookOfficer = <boolean> this.checkUserAdminORBookOfficer();
             this.isDisabledForAdmin = (this.forEdit() && !this.bookingModel.created_by_admin);
             this.onSelectionChange();
