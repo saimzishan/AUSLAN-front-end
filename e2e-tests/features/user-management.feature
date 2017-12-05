@@ -487,7 +487,7 @@ Feature: Create, read, update and delete a User
   Scenario: Organisational Representative should be able to duplicate an Organisational Representative, Booking Officer, Administrator
     And I exist as an Organisational Representative
     And I sign in with valid Organisational Representative credentials
-    And I am on my admin home screen
+    And I am on my dashboard screen
     And I hover on the 'Profile'
     And I go to the 'User Management' list page
     Then The valid Administrator should not be in the list
