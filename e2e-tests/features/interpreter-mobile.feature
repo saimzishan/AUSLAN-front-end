@@ -120,7 +120,7 @@ Feature: As INTERPRETER, I can login on mobile
     And I sign in with valid Interpreter credentials
     And I will be shown the bookings page
     And I see one row with state 'In progress'
-    And  I click on an individual booking of type 'In progress'
+    And I click on an individual booking of type 'In progress'
     And I can see the valid header in booking detail page
     And I will be shown a valid booking detail page
     And I store the current url

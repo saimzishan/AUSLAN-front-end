@@ -148,6 +148,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.bookingModel.bookable_type = this.bookingModel.bookable_type || 'IndividualClient';
             if (this.isUserAdminORBookOfficer) {
                 this.getAllUsers();
+                this.bookingModel.created_by_admin = true;
             } else {
                 this.oldBookingModel = this.deepCopy(this.bookingModel);
             }
@@ -204,10 +205,11 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     private getBookableUser() {
-        return this.allClientsOrg.find( u => u.type === this.bookingModel.bookable_type && +u.id === +this.bookingModel.bookable_id);
+        return this.allClientsOrg.find(u => u.type === this.bookingModel.bookable_type && +u.id === +this.bookingModel.bookable_id);
     }
 
     public onBookingForSelectionChange() {
+        this.userModel = this.isUserAdminORBookOfficer ? this.getBookableUser() : this.userModel;
         this.onSelectionChange();
         this.onClientSelectionChange();
         this.setInvoiceField();
@@ -253,6 +255,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     public onBookingForChange() {
+        this.bookingModel.preference_allocations_attributes = [];
         this.bookingForItems =  this.bookingModel.bookable_type === 'IndividualClient' ?
             this.allClientsOrg.filter(u => u.type === 'IndividualClient') :
             this.allClientsOrg.filter(u => u.type === 'OrganisationalRepresentative');
@@ -581,14 +584,12 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.showProfileBlocked = 'true';
         }
 
-        this.userModel = Boolean(GLOBAL.currentUser) &&
-        GLOBAL.currentUser instanceof OrganisationalRepresentative ?
-            (<OrganisationalRepresentative>GLOBAL.currentUser) :
-            Boolean(GLOBAL.currentUser) && GLOBAL.currentUser instanceof IndividualClient ?
-                (<IndividualClient>GLOBAL.currentUser) :
-                Boolean(GLOBAL.currentUser) && GLOBAL.currentUser instanceof BookingOfficer ?
-                    (<BookingOfficer>GLOBAL.currentUser) :
-                    GLOBAL.currentUser;
+        this.userModel = Boolean(GLOBAL.currentUser) && GLOBAL.currentUser instanceof OrganisationalRepresentative ?
+                (<OrganisationalRepresentative>GLOBAL.currentUser) :
+                Boolean(GLOBAL.currentUser) && GLOBAL.currentUser instanceof IndividualClient ?
+                    (<IndividualClient>GLOBAL.currentUser) :
+                    Boolean(GLOBAL.currentUser) && GLOBAL.currentUser instanceof BookingOfficer ?
+                    (<BookingOfficer>GLOBAL.currentUser) : GLOBAL.currentUser;
 
         this.bookingModel.preference_allocations_attributes = [];
         this.preferAllocSub = this._sharedPreferedAllocationService.interpreterStream$.subscribe(data => {
