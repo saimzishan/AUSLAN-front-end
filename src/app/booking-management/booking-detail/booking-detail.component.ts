@@ -277,9 +277,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     forEdit(): Boolean {
-    //  this.isBookingOfficerORAdminEditing=false;
-     return Boolean(this.shouldEdit.length > 0 && this.shouldEdit  === 'edit' ) ;
-        // return false;
+        return Boolean(this.shouldEdit.length > 0 && this.shouldEdit === 'edit');
     }
 
     public onStandardInvoice() {
@@ -478,8 +476,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 .subscribe((res: any) => {
                         if (res.status === 204 && res.ok === true) {
                             this.notificationServiceBus.launchNotification(false, 'The Booking has been Updated.');
-                            // let route = this.rolePermission.getDefaultRouteForCurrentUser();
-                            // this.router.navigate([route]);
                             this.gotoBookingInfo();
                         }
                         this.spinnerService.requestInProcess(false);
