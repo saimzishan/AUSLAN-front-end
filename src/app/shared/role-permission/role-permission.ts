@@ -1,87 +1,88 @@
-import { Http } from '@angular/http';
-import { Injectable } from '@angular/core';
-import { ROLE } from '../model/role.enum';
-import { GLOBAL } from '../global';
-import { HyphenPipe } from '../pipe/hyphen.pipe';
-import { User } from '../model/user.entity';
+import {Http} from '@angular/http';
+import {Injectable} from '@angular/core';
+import {ROLE} from '../model/role.enum';
+import {GLOBAL} from '../global';
+import {HyphenPipe} from '../pipe/hyphen.pipe';
+import {User} from '../model/user.entity';
 
 @Injectable()
 export class RolePermission {
     permissions;
     defaultData = /**
      * This should be removed , and loaded from json file
-     */`{
-    "default-route": "booking-management",
-    "booking-officer":{
-    "not-allowed-routes": [
-    "block_out"
-    ],
-        "routes-with-data-permissions": {
-            "user-management": {
-                "administrator": "no-access"
+     */
+    `{
+        "default-route": "booking-management",
+        "booking-officer":{
+            "not-allowed-routes": [
+                "block_out"
+            ],
+            "routes-with-data-permissions": {
+                "user-management": {
+                    "administrator": "no-access"
+                }
             }
-        }
-    },
-     "accountant":{
-      "not-allowed-routes": [
-    "block_out"
-    ],
-        "routes-with-data-permissions": {
-            "user-management": {
-                "administrator": "no-access",
-                "booking-officer": "no-access",
-                "interpreter": "no-access",
-                "organizational-representitive": "no-access"
+        },
+        "accountant":{
+            "not-allowed-routes": [
+                "block_out"
+            ],
+            "routes-with-data-permissions": {
+                "user-management": {
+                    "administrator": "no-access",
+                    "booking-officer": "no-access",
+                    "interpreter": "no-access",
+                    "organizational-representitive": "no-access"
+                }
             }
-        }
-    },
-    "interpreter": {
-        "not-allowed-routes": [
-            "user-management",
-            "booking-job", "create-booking"
-        ],
-        "routes-with-data-permissions": {
-            "booking-management": {
-                "administrator": "no-access",
-                "booking-officer": "no-access",
-                "accountant": "no-access",
-                "organizational-representitive": "no-access"
+        },
+        "interpreter": {
+            "not-allowed-routes": [
+                "user-management",
+                "booking-job", "create-booking"
+            ],
+            "routes-with-data-permissions": {
+                "booking-management": {
+                    "administrator": "no-access",
+                    "booking-officer": "no-access",
+                    "accountant": "no-access",
+                    "organizational-representitive": "no-access"
+                }
             }
-        }
-    },
-    "organisational-representative": {
-        "not-allowed-routes": [
-            "user-management", "block_out",
-            "booking-job"
-        ],
-        "routes-with-data-permissions": {
-            "booking-management": {
-                "administrator": "no-access",
-                "booking-officer": "no-access",
-                "interpreter": "no-access"
+        },
+        "organisational-representative": {
+            "not-allowed-routes": [
+                "user-management", "block_out",
+                "booking-job"
+            ],
+            "routes-with-data-permissions": {
+                "booking-management": {
+                    "administrator": "no-access",
+                    "booking-officer": "no-access",
+                    "interpreter": "no-access"
+                }
             }
-        }
-    },
-    "individual-client": {
-        "not-allowed-routes": [
-            "user-management",
-            "booking-job", "block_out"
-        ],
-        "routes-with-data-permissions": {
-            "booking-management": {
-                "administrator": "no-access",
-                "booking-officer": "no-access",
-                "interpreter": "no-access",
-                "organizational-representitive": "no-access"
+        },
+        "individual-client": {
+            "not-allowed-routes": [
+                "user-management",
+                "booking-job", "block_out"
+            ],
+            "routes-with-data-permissions": {
+                "booking-management": {
+                    "administrator": "no-access",
+                    "booking-officer": "no-access",
+                    "interpreter": "no-access",
+                    "organizational-representitive": "no-access"
+                }
             }
+        },
+        "administrator": {
+           "not-allowed-routes": [
+             "block_out"
+            ]
         }
-    },
-    "administrator": {
-       "not-allowed-routes": [
-         "block_out"
-        ]
-    }
-}`;
+    }`;
     curr_role = '';
     hyphen_pipe = new HyphenPipe();
 
@@ -98,7 +99,10 @@ export class RolePermission {
 
     loadData() {
         let o = this.http.get('./role-permission.json')
-            .subscribe((res) => { this.permissions = res.json(); o.unsubscribe(); });
+            .subscribe((res) => {
+                this.permissions = res.json();
+                o.unsubscribe();
+            });
     }
 
     loadDefaultData() {
@@ -116,12 +120,12 @@ export class RolePermission {
     isRestrictedRouteForCurrentUser(path: string): Boolean {
         this.refreshUserDetail();
         path = path.startsWith('/') ? path : '/' + path;
-        let p = path.startsWith('/') ? path.split('/') : [path] ;
+        let p = path.startsWith('/') ? path.split('/') : [path];
         let lastPath = p.length > 0 ? p[p.length - 1] : '';
         let res: Boolean = Boolean(this.permissions[this.curr_role] && this.permissions[this.curr_role]['not-allowed-routes']);
-        if ( res) { // Some Typescript issue
-             for (let x of this.permissions[this.curr_role]['not-allowed-routes']) {
-                if ( lastPath.startsWith( x ) ) {
+        if (res) { // Some Typescript issue
+            for (let x of this.permissions[this.curr_role]['not-allowed-routes']) {
+                if (lastPath.startsWith(x)) {
                     return true;
                 }
             }
@@ -158,12 +162,12 @@ export class RolePermission {
         let r = this.permissions[this.hyphen_pipe.transform(role)];
 
         path = path.startsWith('/') ? path : '/' + path;
-        let p = path.startsWith('/') ? path.split('/') : [path] ;
+        let p = path.startsWith('/') ? path.split('/') : [path];
         let lastPath = p.length > 0 ? p[p.length - 1] : '';
         let res: Boolean = Boolean(r && r['not-allowed-routes']);
-        if ( res) { // Some Typescript issue
-             for (let x of r['not-allowed-routes']) {
-                if ( lastPath.startsWith( x ) ) {
+        if (res) { // Some Typescript issue
+            for (let x of r['not-allowed-routes']) {
+                if (lastPath.startsWith(x)) {
                     return true;
                 }
             }

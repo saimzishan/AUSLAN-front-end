@@ -125,7 +125,7 @@ defineSupportCode(({Given, Then, When}) => {
     Then(/^I should not be able to edit other fields$/, bookingEditPO.checkNonEditableFields);
     Then(/^I see an option '(.*)' in '(.*)' dropdown$/, createBookingPO.optionExistsInDropDown);
     Then(/^I should see the value under (.*) column as '(.*)'$/, bookingJobPO.checkTableDetails);
-    Then(/^I should\s?(not)? see the attachment icons under Attached column$/, bookingJobPO.checkAttachmentIcons)
-    // Then(/^I get the popup warning that is the non-standard booking$/, createBookingPO.popupForNonStandard)
-
+    Then(/^I note the value under (.*) column$/, bookingJobPO.noteTableDetails);
+    Then(/^The value under the (.*) column is the same as I noted above$/, bookingJobPO.checkNotedTableDetails);
+    Then(/^I should\s?(not)? see the attachment icons under Attached column$/, bookingJobPO.checkAttachmentIcons);
 });

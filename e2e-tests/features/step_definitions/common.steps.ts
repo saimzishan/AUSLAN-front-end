@@ -227,18 +227,12 @@ defineSupportCode(({Given, When, Then}) => {
     When(/^If I am shown a popup, I approve it$/, approveIfPopup);
 
     function approveIfPopup() {
-        return page.getElementByCss('app-popup')
-            .isPresent()
-            .then((presence: boolean) => {
-                if (presence) {
-                    return showPopup()
-                        .then((popup) => {
-                            if (popup) {
-                                clickOnBtnByName('yesBtn');
-                            }
-                        });
-                }
-            });
+        let popup = page.getElementByCss('app-popup');
+        popup.isPresent().then(presence => {
+            if (presence) {
+                clickOnBtnByName('yesBtn');
+            }
+        });
     }
 
     Given(/^I am shown a validation error$/, showValidationError);
