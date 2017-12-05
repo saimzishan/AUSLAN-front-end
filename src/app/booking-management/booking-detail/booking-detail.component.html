@@ -693,8 +693,8 @@
       </div>
     </div>
 
-    <app-interpreter-box *ngIf="showProfilePreffered === 'true'" [isPreffered]="true"
-                          [isHidden]="true" [selectedInterpreters]="forEdit() ? oldInterpreterPreference : userModel.prefferedInterpreters">
+    <app-interpreter-box *ngIf="showPreffered === 'true'" [isPreffered]="true"
+                          [isHidden]="true" [selectedInterpreters]="oldInterpreterPreference">
     </app-interpreter-box> 
 
     <br>
@@ -728,8 +728,8 @@
       </div>
     </div>
 
-    <app-interpreter-box *ngIf="showProfileBlocked === 'true'" [isPreffered]="false"
-                          [isHidden]="true" [selectedInterpreters]="forEdit() ? oldInterpreterPreference : userModel.prefferedInterpreters">
+    <app-interpreter-box *ngIf="showBlocked === 'true'" [isPreffered]="false"
+                          [isHidden]="true" [selectedInterpreters]="oldInterpreterPreference">
     </app-interpreter-box> 
     <div [hidden]='true'>
       <div class="separator"></div>
