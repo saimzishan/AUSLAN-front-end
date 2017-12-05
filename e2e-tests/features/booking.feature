@@ -569,3 +569,37 @@ Feature: Booking Management
     Then I will be taken to the 'New Booking' form
     When I select option OTHER from dropdown NATURE OF APPOINTMENT
     And I am shown a validation error with the text 'Please specify what the appointment is about'
+
+  #--------------------------------- AUSLAN1-770 -----------------------------------------------------
+  @runThis
+  Scenario: As a Booking Officer, I can create a booking for Organisational Representative
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    Then I am on the bookings page
+    And I click on 'New Booking'
+    Then I will be taken to the 'New Booking' form
+    When I fill New Booking form fields correctly
+    And I select the bookable for org rep
+    And I click on checkbox name 'tnc'
+    When I click the create booking button
+    Then I get a valid create booking notification
+    And I am on the bookings page
+    And I will be shown with bookings
+    And I am shown with 1 booking
+    Then I click on my name
+    And I click on logout
+    Then I go to the website
+    And I am shown the login screen, with picture and signup button
+    Given I exist as an Organisational Representative
+    And I sign in with valid Organisational Representative credentials
+    Then I am on the bookings page
+    And I will be shown with bookings
+    Then I am shown with 1 booking
+    When I click on an individual booking
+    Then I am on the individual booking page
+    Then I click on link 'Booking details'
+    When I change the street number to 154
+    And I click on checkbox name 'tnc'
+    And I click on BUTTON 'SAVE'
+    And If I am shown a popup, I approve it
+    Then I should get a valid booking update notification
