@@ -1,9 +1,9 @@
-import { Http } from '@angular/http';
-import { Injectable } from '@angular/core';
-import { ROLE } from '../model/role.enum';
-import { GLOBAL } from '../global';
-import { HyphenPipe } from '../pipe/hyphen.pipe';
-import { User } from '../model/user.entity';
+import {Http} from '@angular/http';
+import {Injectable} from '@angular/core';
+import {ROLE} from '../model/role.enum';
+import {GLOBAL} from '../global';
+import {HyphenPipe} from '../pipe/hyphen.pipe';
+import {User} from '../model/user.entity';
 
 @Injectable()
 export class RolePermission {
@@ -51,7 +51,7 @@ export class RolePermission {
     },
     "organisational-representative": {
         "not-allowed-routes": [
-            "user-management", "block_out",
+            "block_out",
             "booking-job"
         ],
         "routes-with-data-permissions": {
@@ -59,6 +59,12 @@ export class RolePermission {
                 "administrator": "no-access",
                 "booking-officer": "no-access",
                 "interpreter": "no-access"
+            },
+             "user-management": {
+                "administrator": "no-access",
+                "booking-officer": "no-access",
+                "interpreter": "no-access"
+
             }
         }
     },
@@ -98,7 +104,10 @@ export class RolePermission {
 
     loadData() {
         let o = this.http.get('./role-permission.json')
-            .subscribe((res) => { this.permissions = res.json(); o.unsubscribe(); });
+            .subscribe((res) => {
+                this.permissions = res.json();
+                o.unsubscribe();
+            });
     }
 
     loadDefaultData() {
@@ -116,12 +125,12 @@ export class RolePermission {
     isRestrictedRouteForCurrentUser(path: string): Boolean {
         this.refreshUserDetail();
         path = path.startsWith('/') ? path : '/' + path;
-        let p = path.startsWith('/') ? path.split('/') : [path] ;
+        let p = path.startsWith('/') ? path.split('/') : [path];
         let lastPath = p.length > 0 ? p[p.length - 1] : '';
         let res: Boolean = Boolean(this.permissions[this.curr_role] && this.permissions[this.curr_role]['not-allowed-routes']);
-        if ( res) { // Some Typescript issue
-             for (let x of this.permissions[this.curr_role]['not-allowed-routes']) {
-                if ( lastPath.startsWith( x ) ) {
+        if (res) { // Some Typescript issue
+            for (let x of this.permissions[this.curr_role]['not-allowed-routes']) {
+                if (lastPath.startsWith(x)) {
                     return true;
                 }
             }
@@ -158,12 +167,12 @@ export class RolePermission {
         let r = this.permissions[this.hyphen_pipe.transform(role)];
 
         path = path.startsWith('/') ? path : '/' + path;
-        let p = path.startsWith('/') ? path.split('/') : [path] ;
+        let p = path.startsWith('/') ? path.split('/') : [path];
         let lastPath = p.length > 0 ? p[p.length - 1] : '';
         let res: Boolean = Boolean(r && r['not-allowed-routes']);
-        if ( res) { // Some Typescript issue
-             for (let x of r['not-allowed-routes']) {
-                if ( lastPath.startsWith( x ) ) {
+        if (res) { // Some Typescript issue
+            for (let x of r['not-allowed-routes']) {
+                if (lastPath.startsWith(x)) {
                     return true;
                 }
             }
