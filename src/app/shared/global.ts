@@ -1,7 +1,8 @@
 import {environment} from '../../environments/environment';
 import {AuthHttp, AuthConfig} from 'angular2-jwt';
-import {Http, RequestOptions} from '@angular/http';
+import {Http, RequestOptions, URLSearchParams} from '@angular/http';
 import {User} from './model/user.entity';
+
 /* Change this class to use Using Application Providers import { Data } from "../../providers/data/data" */
 export class GLOBAL {
     public static MOCK_BOOKING_SERVER_PORT = 1233;
@@ -16,7 +17,7 @@ export class GLOBAL {
         : (environment.canary) ? 'https://auslan.herokuapp.com/api/v1' :
             (environment.localhost) ? `http://localhost:${GLOBAL.RAILS_LOCAL_SERVER_PORT}/api/v1` :
                 (environment.test) ? `https://auslan-e2e-testing.herokuapp.com/api/v1` :
-                `http://localhost:${GLOBAL.MOCK_USER_SERVER_PORT}/api/v1`;
+                    `http://localhost:${GLOBAL.MOCK_USER_SERVER_PORT}/api/v1`;
     public static BOOKING_API_ENDPOINT = (environment.stage) ? 'https://auslan-staging.herokuapp.com/api/v1'
         : (environment.canary) ? 'https://auslan.herokuapp.com/api/v1' :
             (environment.localhost) ? `http://localhost:${GLOBAL.RAILS_LOCAL_SERVER_PORT}/api/v1` :
@@ -33,16 +34,27 @@ export class GLOBAL {
         'zgyMTAsImF1ZCI6Ind3dy5wYWN0LmNvbSIsInN1YiI6Imthcm1hQHBhY3QuY29tIn0.lVWLJAYQRZcQTMtdDrxTHMwboSOqNQPISLDAKDkPy58';
     public static GOP_ADDRESS_ONE = '350 Bourke Street, Melbourne VIC, 3000, Australia';
     public static GOP_ADDRESS_TWO = '261 Queens Street, Brisbane City QLD, 4000, Australia';
-    public static userStatusArray = [{name: 'Active'}, {name: 'Disabled'}];
     public static MISSING_FIELDS_ERROR_MESSAGE = 'Oops! Please fill in all the fields correctly.';
-    public static _searchVal: any;
+    public static userStatusArray = [{name: 'Active'}, {name: 'Disabled'}];
+    public static _extRefVal: URLSearchParams = new URLSearchParams();
+    public static _filterVal: URLSearchParams = new URLSearchParams();
 
-    public static get searchVal(): any {
-        return this._searchVal;
-    }
+    // UI Params
+    public static selBookingID = '';
 
-    public static set searchVal(val: any) {
-        this._searchVal = val;
+    public static getSearchParameter() {
+        let p = new URLSearchParams();
+        this._extRefVal.paramsMap.forEach((value: string[], key: string) => {
+            for (let v of value) {
+                p.set(key, v);
+            }
+        });
+        this._filterVal.paramsMap.forEach((value: string[], key: string) => {
+            for (let v of value) {
+                p.set(key, v);
+            }
+        });
+        return p;
     }
 
     public static get currentUser(): any {
@@ -52,9 +64,6 @@ export class GLOBAL {
     public static set currentUser(user: any) {
         this._currentUser = user;
     }
-
-    // UI Params
-    public static selBookingID = '';
 
     static fixDateFormat(d: Date) {
 
