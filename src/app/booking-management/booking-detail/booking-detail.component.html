@@ -132,7 +132,9 @@
         </div>
       </div>
 
-      <app-address [address]="bookingModel.venue" [canEdit]="isEditableForOrgRepIndClient" #addressForm="ctAddressForm" ></app-address>
+      <app-address [address]="bookingModel.venue" [canEdit]="isEditableForOrgRepIndClient" #addressForm="ctAddressForm"
+                   [canCalculateDistance]="true"
+      ></app-address>
       <div class="medium-12 columns">
         <div class="form-field">
           <label>SPECIFIC LOCATION
@@ -623,7 +625,7 @@
         <div class="medium-12 columns">
           <div class="form-field">
             <app-billing-account #billingForm="ctBillingForm"
-               [billingAddressIsSame]="standardInvoice" [parentForm]="booking_form"
+               [billingAddressIsSame]="standardInvoice" [parentForm]="booking_form" [canCalculateDistance]="false"
                [billingAddress]="bookingModel.client.organisation_billing_account.organisation_billing_address"
                [primaryContact]="bookingModel.client.organisation_primary_contact"></app-billing-account>
           </div>

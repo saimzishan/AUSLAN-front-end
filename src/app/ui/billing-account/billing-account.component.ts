@@ -16,6 +16,7 @@ export class BillingAccountComponent {
   @Input() billingAddress: Address;
   @Input() preferred_billing_method_email = false;
   @Input() parentForm: NgForm;
+  @Input() canCalculateDistance: boolean;
   @ViewChild('billingFields') public form: NgForm;
   address_title = 'BILLING ADDRESS';
 }

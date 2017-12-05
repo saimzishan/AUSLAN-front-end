@@ -6,6 +6,7 @@ import {GmapsApiService} from '../../api/gmaps-api.service';
 import {GLOBAL} from '../../shared/global';
 import 'rxjs/add/operator/toPromise';
 import {isNullOrUndefined} from 'util';
+import {Interpreter} from '../../shared/model/user.entity';
 
 @Component({
     selector: 'app-address',
@@ -19,7 +20,9 @@ export class AddressComponent implements AfterViewInit {
     @Input() prefix = '';
     @ViewChild('addressFields') public form: NgForm;
     @Input() canEdit = false;
+    @Input() canCalculateDistance: boolean;
     @Input() parentForm: NgForm;
+    @Input() userModel: Interpreter;
 
     isTravelCostApplicable = false;
 
@@ -48,7 +51,11 @@ export class AddressComponent implements AfterViewInit {
             }
             originAddress.push('Australia');
             this.gmapApi.getMinDistance([originAddress.join(', ')], [GLOBAL.GOP_ADDRESS_ONE, GLOBAL.GOP_ADDRESS_TWO]).then(value => {
-                this.isTravelCostApplicable = Number((value / 1000).toFixed(2)) > 40;
+                let travelCost = Number((value / 1000).toFixed(2)) > 40;
+                if(this.userModel) {
+                    this.userModel.interpreter_type = travelCost ? 'Rural' : 'Metro';
+                }
+                this.isTravelCostApplicable = travelCost;
             });
         } else {
             this.isTravelCostApplicable = false;

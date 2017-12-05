@@ -144,7 +144,7 @@
                 </div>
                 <br>
                 <app-org-rep [isDuplicate]="isDuplicate" [userModel]="model" *ngIf="selectedRole === 'ORGANISATION'"></app-org-rep>
-                <app-interpreter [displayCalendar]="false" [userModel]="model"
+                <app-interpreter [displayCalendar]="false" [userModel]="model" [canCalculateDistance]="true"
                                  *ngIf="selectedRole === 'INTERPRETER'"></app-interpreter>
                 <app-ind-client [userModel]="model" *ngIf="selectedRole === 'INDIVIDUALCLIENT'"></app-ind-client>
                 <br>
