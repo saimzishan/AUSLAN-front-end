@@ -84,8 +84,8 @@ export class InterpreterPopupComponent implements OnInit {
                 this.notificationServiceBus.launchNotification(true, `Oops! This interpreter is already selected as a preferred interpreter
                 . Please remove this interpreter first.`);
             } else {
-                this.notificationServiceBus.launchNotification(true, `Oops! This interpreter is already selected as 
-                a blocked interpreter. Please remove this interpreter first.`);
+                this.notificationServiceBus.launchNotification(true, `Oops! This interpreter is already selected as a blocked interpreter
+                . Please remove this interpreter first.`);
             }
         }
     }
