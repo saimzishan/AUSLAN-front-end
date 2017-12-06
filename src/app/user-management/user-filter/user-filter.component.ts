@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {SpacerPipe} from '../../shared/pipe/spacer.pipe';
 import {ROLE} from '../../shared/model/role.enum';
 import {GLOBAL} from '../../shared/global';
+import {Administrator, BookingOfficer} from '../../shared/model/user.entity';
 
 @Component({
     selector: 'app-user-filter',
@@ -33,5 +34,8 @@ export class UserFilterComponent implements OnInit {
     makeQueryable(r) {
         return r.toUpperCase().replace(/\s/g, '');
     }
-
+    checkUserAdminORBookOfficer(): Boolean {
+        return Boolean(GLOBAL.currentUser instanceof Administrator ||
+            GLOBAL.currentUser instanceof BookingOfficer) ;
+    }
 }

@@ -482,6 +482,28 @@ Feature: Create, read, update and delete a User
     And I go to the 'User Management' list page
     Then The 2 valid ORGANISATIONAL REPRESENTATIVE should be in the list
 
+
+  @runThis
+  Scenario: Organisational Representative should be able to duplicate an Organisational Representative, Booking Officer, Administrator
+    And I exist as an Organisational Representative
+    And I sign in with valid Organisational Representative credentials
+    And I am on my dashboard screen
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then The valid Administrator should not be in the list
+    Then The valid Booking Officer should not be in the list
+    Then I can see the element with name 'user-roles' is 'hidden'
+    Then I click on duplicate for an active existing Organisational Representative
+    And I will be taken to the 'ORGANISATIONALREPRESENTATIVE Signup' page
+    When I fill in basic details correctly for duplicate -> 'ORGANISATIONALREPRESENTATIVE'
+    Then I click on update
+    Then 'ORGANISATIONALREPRESENTATIVE' will be created
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then The 2 valid ORGANISATIONAL REPRESENTATIVE should be in the list
+
+
+
 # Trigger
 ############################### Trigger ##############################
   @runThis

@@ -347,3 +347,20 @@ Feature: Booking Filter
     And The field 'search' will be populated with 'INV-909'
     When I query search with 'empty'
     Then I am shown with 5 booking
+
+  @runThis
+  Scenario: Given 1 verified Booking Officer, I should be able to filter by job ids
+    Given The booking has status 'red'
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    When I am on the bookings page
+    Then I am shown with 5 booking
+    When I hover on the Status dropdown and select 'Red'
+    Then I am shown with 1 booking
+    Then I see one row with status 'red'
+    And I click on my name in the top corner
+    And I will be taken to my individual profile page
+    Then I click on Bookings
+    And I am on the bookings page
+    Then I am shown with 1 booking
+    Then I see one row with status 'red'
