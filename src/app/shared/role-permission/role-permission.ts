@@ -10,46 +10,43 @@ export class RolePermission {
     permissions;
     defaultData = /**
      * This should be removed , and loaded from json file
-     */
-    `{
-        "default-route": "booking-management",
-        "booking-officer":{
-            "not-allowed-routes": [
-                "block_out"
-            ],
-            "routes-with-data-permissions": {
-                "user-management": {
-                    "administrator": "no-access"
-                }
+     */`{
+    "default-route": "booking-management",
+    "booking-officer":{
+    "not-allowed-routes": [
+    "block_out"
+    ],
+        "routes-with-data-permissions": {
+            "user-management": {
+                "administrator": "no-access"
             }
-        },
-        "accountant":{
-            "not-allowed-routes": [
-                "block_out"
-            ],
-            "routes-with-data-permissions": {
-                "user-management": {
-                    "administrator": "no-access",
-                    "booking-officer": "no-access",
-                    "interpreter": "no-access",
-                    "organizational-representitive": "no-access"
-                }
+        }
+    },
+     "accountant":{
+      "not-allowed-routes": [
+    "block_out"
+    ],
+        "routes-with-data-permissions": {
+            "user-management": {
+                "administrator": "no-access",
+                "booking-officer": "no-access",
+                "interpreter": "no-access",
+                "organizational-representitive": "no-access"
             }
-        },
-        "interpreter": {
-            "not-allowed-routes": [
-                "user-management",
-                "booking-job", "create-booking"
-            ],
-            "routes-with-data-permissions": {
-                "booking-management": {
-                    "administrator": "no-access",
-                    "booking-officer": "no-access",
-                    "accountant": "no-access",
-                    "organizational-representitive": "no-access"
-                }
+        }
+    },
+    "interpreter": {
+        "not-allowed-routes": [
+            "user-management",
+            "booking-job", "create-booking"
+        ],
+        "routes-with-data-permissions": {
+            "booking-management": {
+                "administrator": "no-access",
+                "booking-officer": "no-access",
+                "accountant": "no-access",
+                "organizational-representitive": "no-access"
             }
-<<<<<<< HEAD
         }
     },
     "organisational-representative": {
@@ -69,27 +66,29 @@ export class RolePermission {
                 "interpreter": "no-access"
 
             }
-        },
-        "individual-client": {
-            "not-allowed-routes": [
-                "user-management",
-                "booking-job", "block_out"
-            ],
-            "routes-with-data-permissions": {
-                "booking-management": {
-                    "administrator": "no-access",
-                    "booking-officer": "no-access",
-                    "interpreter": "no-access",
-                    "organizational-representitive": "no-access"
-                }
-            }
-        },
-        "administrator": {
-           "not-allowed-routes": [
-             "block_out"
-            ]
         }
-    }`;
+    },
+    "individual-client": {
+        "not-allowed-routes": [
+            "user-management",
+            "booking-job", "block_out"
+        ],
+        "routes-with-data-permissions": {
+            "booking-management": {
+                "administrator": "no-access",
+                "booking-officer": "no-access",
+                "interpreter": "no-access",
+                "organizational-representitive": "no-access"
+            }
+        }
+    },
+    "administrator": {
+       "not-allowed-routes": [
+         "block_out"
+        ]
+    }
+}`;
+
     curr_role = '';
     hyphen_pipe = new HyphenPipe();
 
