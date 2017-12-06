@@ -2,10 +2,10 @@
 			<section class="search-bar" style="width: 100%">
 			</section>
 			<section class="filters" style="width: 10%">
-                    <ul class="dropdown menu custom" name="user-roles" id="user-roles" data-dropdown-menu>
+                    <ul class="dropdown menu custom actions" name="user-roles" id="user-roles" data-dropdown-menu>
                         <li>
                             <a href="javascript:void(0)">New User</a>
-                            <ul class="menu smaller">
+                            <ul class="menu right-side green">
                                 <li *ngFor="let r of _selRoles">
                                     <a [routerLink]="['/init']" [queryParams]="{selectedRole:makeQueryable(r)}" ><i></i>{{r}}</a>
                                 </li>

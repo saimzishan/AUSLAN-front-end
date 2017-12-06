@@ -32,7 +32,6 @@
                             <span>{{interpreter.first_name}} {{interpreter.last_name}}</span>
                     </section>
                     </ng-container>
-
                     <button *ngIf="needInterpreter"
                             name="{{'btnManageInterpreter_' + (isPreffered ? 'prefered' : 'blocked')}}"
                             (click)="manageInterpreter()">

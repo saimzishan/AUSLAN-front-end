@@ -33,7 +33,7 @@
       <h2>CUSTOMER</h2>
       <div class="medium-12 columns">
         <div class="form-field">
-          <label>ARE YOU MAKING A BOOKING FOR AN INDIVIDUAL CLIENT OR ORGANIZATION?*</label>
+          <label>ARE YOU MAKING A BOOKING FOR AN INDIVIDUAL CLIENT OR ORGANISATION?*</label>
           <md-radio-group name="rdBookingFor" (change)='onBookingForChange()' [(ngModel)]="bookingModel.bookable_type" [disabled]="isDisabledForAdmin">
             <md-radio-button id ="IndividualClient" name ="IndividualClient" value="IndividualClient">CLIENT</md-radio-button>
             <md-radio-button id="OrganisationalRepresentative" name="OrganisationalRepresentative" value="OrganisationalRepresentative">ORGANISATION</md-radio-button>
@@ -45,7 +45,7 @@
     <div class="row" *ngIf="isUserAdminORBookOfficer">
       <div class="medium-6 columns">
         <div class="form-field">
-          <label>PLEASE SELECT THE {{bookingModel.bookable_type ==='IndividualClient' ? "CLIENT":"ORGANIZATION"}}*
+          <label>PLEASE SELECT THE {{bookingModel.bookable_type ==='IndividualClient' ? "CLIENT":"ORGANISATION"}}*
             <span mdTooltip="Select the Client/Org"><i class="inline-icon-tip"></i></span>
           </label>
           <select [(ngModel)]="bookingModel.bookable_id" (change)='onBookingForSelectionChange()'
@@ -65,7 +65,7 @@
     </div>
     <div class="row">
       <h2>Type of Booking</h2>
-      <p name="serviceMsg">What kind of services {{isUserAdminORBookOfficer ? (bookingModel.bookable_type ==='IndividualClient' ? "does the client":"does the organization") :"do you"}} need? Select multiple if relevant</p>
+      <p name="serviceMsg">What kind of services {{isUserAdminORBookOfficer ? (bookingModel.bookable_type ==='IndividualClient' ? "does the client":"does the organisation") :"do you"}} need? Select multiple if relevant</p>
       <section id="services">
         <button md-button class="active">
           <i class="icon-service-interpreting"></i>
@@ -84,11 +84,11 @@
           <span>Notetaking</span>
         </button>
       </section>
-      <p name="interpreterMsg">What kind of interpreter(s) {{isUserAdminORBookOfficer ? (bookingModel.bookable_type ==='IndividualClient' ? "does the client":"does the organization") :"do you"}} need? Select multiple if relevant</p>
+      <p name="interpreterMsg">What kind of interpreter(s) {{isUserAdminORBookOfficer ? (bookingModel.bookable_type ==='IndividualClient' ? "does the client":"does the organisation") :"do you"}} need? Select multiple if relevant</p>
       <section id="interpreters-kind">
-        <md-checkbox [checked]="true" [disabled]="isEditableForOrgRepIndClient">AUSLAN</md-checkbox>
-        <md-checkbox [disabled]="isEditableForOrgRepIndClient">DEAF INTERPRETER</md-checkbox>
-        <md-checkbox [disabled]="isEditableForOrgRepIndClient">DEAF BLIND</md-checkbox>
+        <md-checkbox [checked]="true" [disabled]="isDisabledForOrgRepIndClient">AUSLAN</md-checkbox>
+        <md-checkbox [disabled]="isDisabledForOrgRepIndClient">DEAF INTERPRETER</md-checkbox>
+        <md-checkbox [disabled]="isDisabledForOrgRepIndClient">DEAF BLIND</md-checkbox>
       </section>
     </div>
     <div class="separator"></div>
@@ -99,7 +99,7 @@
           <div class="form-field">
             <label>START DATE & TIME *</label>
             <input type='datetime-local'
-               [readonly]="isEditableForOrgRepIndClient"
+               [readonly]="isDisabledForOrgRepIndClient"
                (change)="onStartTimeChanged()"
                name='dpEventDate'
                placeholder="DATE & Time OF APPOINTMENT *"
@@ -118,7 +118,7 @@
         <div class="medium-5 columns">
           <div class="form-field">
             <label>END DATE & TIME *</label>
-            <input type='datetime-local' name='dpEventEndTime' [readonly]="isEditableForOrgRepIndClient"
+            <input type='datetime-local' name='dpEventEndTime' [readonly]="isDisabledForOrgRepIndClient"
                placeholder="ENDING TIME *" #dpEventEndTime="ngModel" (click)="fireNotification($event)"
                [(ngModel)]="bookingModel.venue.end_time_iso"
                required/>
@@ -132,7 +132,7 @@
         </div>
       </div>
 
-      <app-address [address]="bookingModel.venue" [canEdit]="isEditableForOrgRepIndClient" #addressForm="ctAddressForm" ></app-address>
+      <app-address [address]="bookingModel.venue" [canEdit]="isDisabledForOrgRepIndClient" #addressForm="ctAddressForm" ></app-address>
       <div class="medium-12 columns">
         <div class="form-field">
           <label>SPECIFIC LOCATION
@@ -155,7 +155,7 @@
               </span>
             </label>
             <select (change)="natureOfApptChange($event)"
-                    [disabled]="isEditableForOrgRepIndClient"
+                    [disabled]="isDisabledForOrgRepIndClient"
                     [(ngModel)]="bookingModel.raw_nature_of_appointment" 
                     #nature_of_appointment="ngModel" name="nature_of_appointment"
                     aria-label="A" required>
@@ -178,7 +178,7 @@
               </span>
             </label>
             <select [(ngModel)]="bookingModel.specific_nature_of_appointment"
-                   [disabled]="isEditableForOrgRepIndClient"
+                   [disabled]="isDisabledForOrgRepIndClient"
                    #specific_nature_of_appointment="ngModel" required 
                    name="specific_nature_of_appointment" aria-label="A">
               <option *ngFor="let item of specific_appointment_types | enumVal" [value]="item.value">
@@ -200,7 +200,7 @@
               </span>
             </label>
             <input type="text" placeholder="Enter the Request By Name"
-                               [readonly]="isEditableForOrgRepIndClient"
+                               [readonly]="isDisabledForOrgRepIndClient"
                                [(ngModel)]="bookingModel.requested_by.first_name"
                                name="raw_booking_requested_by" (click)="fireNotification($event)"
                                #raw_booking_requested_by="ngModel" [rangeLength]="[2,20]" required>
@@ -221,7 +221,7 @@
             </label>
             <input type="text"
                    placeholder="Enter the Request By Name"
-                   [readonly]="isEditableForOrgRepIndClient"
+                   [readonly]="isDisabledForOrgRepIndClient"
                    [(ngModel)]="bookingModel.requested_by.last_name"
                    name="raw_booking_requested_by_ln"
                    (click)="fireNotification($event)"
@@ -263,7 +263,7 @@
               </span>
             </label>
             <input [(ngModel)]="bookingModel.interpreters_required"
-                   name="interpreters_count" [readonly]="isEditableForOrgRepIndClient"
+                   name="interpreters_count" [readonly]="isDisabledForOrgRepIndClient"
                    #interpreters_count="ngModel"
                    placeholder="Enter the Number of Interpreters needed"
                    (click)="fireNotification($event)"
@@ -336,7 +336,7 @@
               </label>
               <input [(ngModel)]="bookingModel.special_instructions"
                      name='txtSpecialInstruction'
-                     [readonly]="isEditableForOrgRepIndClient"
+                     [readonly]="isDisabledForOrgRepIndClient"
                      (click)="fireNotification($event)"
                      type='text' placeholder="Enter Special instructions">
             </div>
@@ -482,7 +482,7 @@
             </label>
             <input type="tel"
                    placeholder="Enter deaf person EAF number"
-                   [readonly]="isEditableForOrgRepIndClient"
+                   [readonly]="isDisabledForOrgRepIndClient"
                    [(ngModel)]="bookingModel.deaf_person.eaf"
                    name="deaf_person_eaf"
                    (click)="fireNotification($event)"
@@ -521,7 +521,7 @@
             </label>
             <input type="text"
                    placeholder="Enter deaf person first name"
-                   [readonly]="isEditableForOrgRepIndClient"
+                   [readonly]="isDisabledForOrgRepIndClient"
                    [(ngModel)]="bookingModel.deaf_person.first_name"
                    name="deaf_person_name"
                    (click)="fireNotification($event)"
@@ -545,7 +545,7 @@
             </label>
             <input type="text"
                    placeholder="Enter deaf person last name"
-                   [readonly]="isEditableForOrgRepIndClient"
+                   [readonly]="isDisabledForOrgRepIndClient"
                    [(ngModel)]="bookingModel.deaf_person.last_name"
                    name="deaf_person_last_name"
                    (click)="fireNotification($event)"
@@ -693,8 +693,8 @@
       </div>
     </div>
 
-    <app-interpreter-box *ngIf="showProfilePreffered === 'true'" [isPreffered]="true"
-                          [isHidden]="true" [selectedInterpreters]="forEdit() ? oldInterpreterPreference : userModel.prefferedInterpreters">
+    <app-interpreter-box *ngIf="showPreffered === 'true'" [isPreffered]="true"
+                          [isHidden]="true" [selectedInterpreters]="oldInterpreterPreference">
     </app-interpreter-box> 
 
     <br>
@@ -728,8 +728,8 @@
       </div>
     </div>
 
-    <app-interpreter-box *ngIf="showProfileBlocked === 'true'" [isPreffered]="false"
-                          [isHidden]="true" [selectedInterpreters]="forEdit() ? oldInterpreterPreference : userModel.prefferedInterpreters">
+    <app-interpreter-box *ngIf="showBlocked === 'true'" [isPreffered]="false"
+                          [isHidden]="true" [selectedInterpreters]="oldInterpreterPreference">
     </app-interpreter-box> 
     <div [hidden]='true'>
       <div class="separator"></div>

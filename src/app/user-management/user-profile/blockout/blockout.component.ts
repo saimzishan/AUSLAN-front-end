@@ -71,7 +71,7 @@ export class BlockoutComponent implements  OnDestroy, OnInit {
 
   editBlockouts(form: FormGroup) {
     if (form.invalid) {
-      this.notificationServiceBus.launchNotification(true, 'Kindly fill all the required (*) fields');
+      this.notificationServiceBus.launchNotification(true, GLOBAL.MISSING_FIELDS_ERROR_MESSAGE);
       return;
     }
     this.spinnerService.requestInProcess(true);
@@ -98,7 +98,7 @@ export class BlockoutComponent implements  OnDestroy, OnInit {
 
     addBlockouts(form: FormGroup) {
         if (form.invalid) {
-            this.notificationServiceBus.launchNotification(true, 'Kindly fill all the required (*) fields');
+            this.notificationServiceBus.launchNotification(true, GLOBAL.MISSING_FIELDS_ERROR_MESSAGE);
             return;
         }
         this.spinnerService.requestInProcess(true);
