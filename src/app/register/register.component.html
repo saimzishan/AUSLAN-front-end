@@ -5,7 +5,8 @@
     <section id="page-signup-organisation">
         <section>
             <header>
-                <h1>{{isUserLogin() === true ? isDuplicate ? 'DUPLICATE' : isEdit ? 'EDIT' : 'CREATE' : 'SIGN UP AS'}} {{ selectedRole ===
+                <h1>{{isUserLogin() === true ? isDuplicate ? 'DUPLICATE' : isEdit ? 'EDIT' : 'CREATE' : 'SIGN UP AS'}}
+                    {{ selectedRole ===
                     'INDIVIDUALCLIENT' ? 'INDIVIDUAL CLIENT' : selectedRole ===
                     'BOOKINGOFFICER' ? 'BOOKING OFFICER' : selectedRole ===
                     'ORGANISATIONALREPRESENTATIVE' ? 'ORGANISATIONAL REPRESENTATIVE' : selectedRole ===
@@ -146,7 +147,8 @@
                     </div>
                 </div>
                 <br>
-                <app-org-rep [isDuplicate]="isDuplicate" [userModel]="model" *ngIf="selectedRole === 'ORGANISATION'"></app-org-rep>
+                <app-org-rep [isDuplicate]="isDuplicate" [userModel]="model"
+                             *ngIf="selectedRole === 'ORGANISATION'"></app-org-rep>
                 <app-interpreter [displayCalendar]="false" [userModel]="model"
                                  *ngIf="selectedRole === 'INTERPRETER'"></app-interpreter>
                 <app-ind-client [userModel]="model" *ngIf="selectedRole === 'INDIVIDUALCLIENT'"></app-ind-client>
@@ -154,22 +156,27 @@
 
 
                 <app-interpreter-box
+                        [isReadOnly]="isDuplicate"
                         [isPreffered]="true"
                         [selectedInterpreters]="model.prefferedInterpreters"
                         *ngIf="selectedRole === 'ORGANISATION' || selectedRole === 'INDIVIDUALCLIENT'"
                 ></app-interpreter-box>
                 <br>
                 <app-interpreter-box
+                        [isReadOnly]="isDuplicate"
                         [isPreffered]="false"
                         [selectedInterpreters]="model.prefferedInterpreters"
                         *ngIf="selectedRole === 'ORGANISATION' || selectedRole === 'INDIVIDUALCLIENT'"
                 ></app-interpreter-box>
                 <br>
-                <app-termandcondition (termAndConditionStatusChange)="tocChanged($event)"
-                                      [termsAndConditionAccepted]="termsAndConditionAccepted"></app-termandcondition>
+                <ng-container *ngIf="!isDuplicate">
+                    <app-termandcondition (termAndConditionStatusChange)="tocChanged($event)"
+                                          [termsAndConditionAccepted]="termsAndConditionAccepted"></app-termandcondition>
+                </ng-container>
                 <div align="center">
                     <button class="login button" name="register_user" type="submit"
-                            (click)="applyChanges(registerForm)" class="button">{{isUserLogin() === true ? isDuplicate ? 'Duplicate' : isEdit ?
+                            (click)="applyChanges(registerForm)" class="button">{{isUserLogin() === true ? isDuplicate ?
+                        'Duplicate' : isEdit ?
                         'Edit' : 'Create' : 'Register'}}
                     </button>
                 </div>

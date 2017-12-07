@@ -13,6 +13,7 @@ import {AuthGuard} from '../../../auth/auth.guard';
 export class InterpreterBoxComponent implements OnInit, AfterContentInit {
 
     @Input() isPreffered = false;
+    @Input() isReadOnly = false;
     @Input() selectedInterpreters = [];
     needInterpreter = false;
     private dialogSub: any;
@@ -55,6 +56,9 @@ export class InterpreterBoxComponent implements OnInit, AfterContentInit {
     }
 
     manageInterpreter() {
+        if (this.isReadOnly) {
+            return;
+        }
         if (this.dialogSub) {
             this.dialogSub.unsubscribe();
         }
@@ -72,6 +76,9 @@ export class InterpreterBoxComponent implements OnInit, AfterContentInit {
     }
 
     removeInterpreter(selectedInterpreter) {
+        if (this.isReadOnly) {
+            return;
+        }
         if (AuthGuard.isLoggedIn()) {
             selectedInterpreter._destroy = 1;
             this.selectedInterpreters = this.selectedInterpreters.filter(itm => itm.interpreter_id !== selectedInterpreter.interpreter_id);
