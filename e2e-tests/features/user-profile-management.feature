@@ -395,6 +395,36 @@ Feature: User Profile Management
 
 
   @runThis
+  Scenario: Interpreter should not be able to delete/disable his details
+    Given I exist as an Interpreter
+    And I sign in with valid Interpreter credentials
+    And I am on the bookings page
+    And I click on my name in the top corner
+    And I will be taken to my individual profile page
+    And I can see the element with name 'selStatus' is 'hidden'
+
+
+  @runThis
+  Scenario: Organisational Representative should not be able to delete/disable his details
+    Given I exist as an Organisational Representative
+    And I sign in with valid Organisational Representative credentials
+    And I am on the bookings page
+    And I click on my name in the top corner
+    And I will be taken to my individual profile page
+    And I can see the element with name 'selStatus' is 'hidden'
+
+
+  @runThis
+  Scenario: Individual Client should not be able to delete/disable his details
+    Given I exist as an Individual Client
+    And I sign in with valid Individual Client credentials
+    And I am on the bookings page
+    And I click on my name in the top corner
+    And I will be taken to my individual profile page
+    And I can see the element with name 'selStatus' is 'hidden'
+
+
+  @runThis
 #  Change pass
   Scenario: Be able to change password as Booking Officer
     Given I exist as an Booking Officer
