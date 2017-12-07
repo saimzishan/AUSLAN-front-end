@@ -6,7 +6,10 @@
         <section>
             <header>
                 <h1>{{isUserLogin() === true ? isDuplicate ? 'DUPLICATE' : isEdit ? 'EDIT' : 'CREATE' : 'SIGN UP AS'}} {{ selectedRole ===
-                    'INDIVIDUALCLIENT' ? 'INDIVIDUAL CLIENT' : selectedRole}}</h1>
+                    'INDIVIDUALCLIENT' ? 'INDIVIDUAL CLIENT' : selectedRole ===
+                    'BOOKINGOFFICER' ? 'BOOKING OFFICER' : selectedRole ===
+                    'ORGANISATIONALREPRESENTATIVE' ? 'ORGANISATIONAL REPRESENTATIVE' : selectedRole ===
+                    'ORGANISATION' ? 'ORGANISATIONAL REPRESENTATIVE' : selectedRole}}</h1>
                 <p>Fields with * are required</p>
             </header>
 
