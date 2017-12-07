@@ -466,7 +466,7 @@
             </span>
           </label>
           <md-radio-group name="rdcurrentUserIsClient" (change)='onClientSelectionChange()' 
-                          disabled="isEditableForOrgRepIndClient" [(ngModel)]="currentUserIsClient">
+                          [disabled]="isDisabledForOrgRepIndClient" [(ngModel)]="currentUserIsClient">
             <md-radio-button value=true>YES</md-radio-button>
             <md-radio-button value=false>NO</md-radio-button>
           </md-radio-group>
@@ -600,7 +600,7 @@
             </span>
           </label>
           <md-radio-group name="rdStandardInvoice"[(ngModel)]="standardInvoice" (change)='onStandardInvoice()'
-                          disabled="isEditableForOrgRepIndClient">
+                          [disabled]="isDisabledForOrgRepIndClient">
             <md-radio-button value=true>YES</md-radio-button>
             <md-radio-button value=false>NO</md-radio-button>
           </md-radio-group>
@@ -672,7 +672,7 @@
         <div class="form-field">
           <label name="preferInterQuestion1">Do you have preferred interpreters for this booking? </label>
           <md-radio-group name="rdPreferredInterpreters" (change)='onPreferredSelectionChange()'
-                          [(ngModel)]="showPreffered">
+                          [(ngModel)]="showPreferred">
             <md-radio-button name="rdPreferredInterpretersYes" value=true>YES</md-radio-button>
             <md-radio-button name="rdPreferredInterpretersNo" value=false>NO</md-radio-button>
           </md-radio-group>
@@ -680,12 +680,12 @@
       </div>
     </div>
 
-    <div class="row" *ngIf="showPreffered === 'true'">
+    <div class="row" *ngIf="showPreferred === 'true'">
       <div class="medium-12 columns">
         <div class="form-field">
           <label name="preferInterQuestion2">Do you want to set the preferred interpreters that you have set in your profile? </label>
           <md-radio-group name="rdProfilePreferredInterpreters" (change)='onProfilePreferredSelectionChange()'
-                          [(ngModel)]="showProfilePreffered">
+                          [(ngModel)]="showProfilePreferred">
             <md-radio-button name="rdProfilePreferredInterpretersYes" value=true>YES</md-radio-button>
             <md-radio-button name="rdProfilePreferredInterpretersNo" value=false>NO</md-radio-button>
           </md-radio-group>
@@ -693,8 +693,8 @@
       </div>
     </div>
 
-    <app-interpreter-box *ngIf="showPreffered === 'true'" [isPreffered]="true"
-                          [isHidden]="true" [selectedInterpreters]="oldInterpreterPreference">
+    <app-interpreter-box *ngIf="showPreferred === 'true'" [isPreffered]="true"
+                         [isHidden]="true" [selectedInterpreters]="oldInterpreterPreference">
     </app-interpreter-box> 
 
     <br>
