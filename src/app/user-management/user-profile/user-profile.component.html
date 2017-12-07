@@ -58,7 +58,8 @@
           </div>
         </div>
 
-        <div [hidden]="userModel.type === 'IndividualClient' || !userModel.verified" class="medium-6 columns">
+        <ng-container *ngIf="(userModel.type === 'Administrator' || userModel.type === 'BookingOfficer' ) && userModel.verified">
+        <div class="medium-6 columns">
           <div class="form-field">
             <label>STATUS</label>
             <select name="selStatus" [(ngModel)]="selectedStatus">
@@ -66,6 +67,7 @@
             </select>
           </div>
         </div>
+        </ng-container>
         <div class="medium-6 columns">
           <div class="form-field">
             <label>Change picture:</label>
