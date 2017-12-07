@@ -233,6 +233,21 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                 });
     }
 
+    fetchNearbyinterpreters(booking_id) {
+        this.bookingService.nearbyBookings(booking_id)
+            .subscribe((res: any) => {
+                    if (res.status === 200) {
+                        this.interpreterList = res.data.users;
+                    }
+                    this.spinnerService.requestInProcess(false);
+                },
+                err => {
+                    this.spinnerService.requestInProcess(false);
+                    let e = err.json() || 'There is some error on server side';
+                    this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
+                });
+    }
+
     fetchBookingInterpreters(param_id) {
         this.spinnerService.requestInProcess(true);
         this.bookingService.getBooking(param_id)
@@ -247,7 +262,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                             i.state === 'Accepted' ? -1 : j.state === 'Accepted' ? 1 : 0
                         );
 
-                        this.fetchAllInterpreters();
+                        this.fetchNearbyinterpreters(param_id);
                         this.isCancelledOrUnableToServe = this.isActiveState('Cancelled')
                             || this.isActiveState('Unable_to_service');
 
