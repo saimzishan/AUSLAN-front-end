@@ -81,7 +81,7 @@ export class InterpreterBoxComponent implements OnInit, AfterContentInit {
         }
         if (AuthGuard.isLoggedIn()) {
             selectedInterpreter._destroy = 1;
-            this.selectedInterpreters = this.selectedInterpreters.filter(itm => itm.interpreter_id !== selectedInterpreter.interpreter_id);
+        //    this.selectedInterpreters = this.selectedInterpreters.filter(itm => itm.interpreter_id !== selectedInterpreter.interpreter_id);
         } else {
             this.selectedInterpreters =
                 this.selectedInterpreters.filter(i => i.interpreter_id !== selectedInterpreter.interpreter_id);

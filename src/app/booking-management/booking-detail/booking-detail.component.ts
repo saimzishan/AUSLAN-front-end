@@ -221,9 +221,9 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     public onPreferredSelectionChange() {
         if (this.showPreferred === 'false') {
             this.showProfilePreferred = 'false';
-            this.bookingModel.preference_allocations_attributes = this.bookingModel.preference_allocations_attributes.filter(a => a.preference !== 'preferred');
+            this.bookingModel.preference_allocations_attributes = this.forEdit() ? this.removePreference('preferred') :
+                                                    this.bookingModel.preference_allocations_attributes.filter(a => a.preference !== 'preferred');
         }
-
     }
 
     public onProfilePreferredSelectionChange() {
@@ -241,7 +241,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     public onBlockedSelectionChange() {
         if (this.showBlocked === 'false') {
             this.showProfileBlocked = 'false';
-            this.bookingModel.preference_allocations_attributes = this.bookingModel.preference_allocations_attributes.filter(a => a.preference !== 'blocked');
+            this.bookingModel.preference_allocations_attributes = this.forEdit() ? this.removePreference('blocked') :
+                                                    this.bookingModel.preference_allocations_attributes.filter(a => a.preference !== 'blocked');
         }
     }
 
@@ -255,6 +256,15 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             }
             this.filterUserPreference(this.oldInterpreterPreference);
         }
+    }
+
+    removePreference(prefrenceType: string) {
+        let arry = [];
+        this.oldInterpreterPreference.filter(p => p.preference === prefrenceType).forEach((itm) => {
+            arry.push({ 'id': itm.id, '_destroy': '1' });
+        });
+
+        return arry;
     }
 
     public onBookingForChange() {
@@ -603,24 +613,23 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         });
     }
 
-    filterUserPreference(interpreters) {
-        this.oldInterpreterPreference = interpreters;
+    filterUserPreference(peferenceAllocations) {
+        this.oldInterpreterPreference = peferenceAllocations;
         if (this.forEdit()) {
-            interpreters.forEach(i => {
+            peferenceAllocations.forEach(i => {
                 if (i.hasOwnProperty('_destroy')) {
-                    this.bookingModel.preference_allocations_attributes.push({ 'id': i.interpreter_id, '_destroy': '1' });
+                    this.bookingModel.preference_allocations_attributes.push({ 'id': i.id, '_destroy': '1' });
                     this.oldInterpreterPreference = this.oldInterpreterPreference.filter(old => old.interpreter_id !== i.interpreter_id);
                 }
             });
         } else {
-            let prefAlloc = this.bookingModel.preference_allocations_attributes;
             this.bookingModel.preference_allocations_attributes = [];
-            interpreters.forEach(i => {
+            peferenceAllocations.forEach(i => {
                 if (this.showPreferred === 'true') {
                     if (i.preference === 'preferred' && !i.hasOwnProperty('_destroy')) {
                         this.bookingModel.preference_allocations_attributes.push({ 'interpreter_id': i.interpreter_id, 'preference': i.preference });
                     } else if (i.hasOwnProperty('_destroy')) {
-                        this.userModel.prefferedInterpreters = this.userModel.prefferedInterpreters.filter(itm => itm.interpreter_id !== i.interpreter_id);
+                        this.oldInterpreterPreference = this.oldInterpreterPreference.filter(itm => itm.interpreter_id !== i.interpreter_id);
                     }
                 }
 
@@ -628,7 +637,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                     if (i.preference === 'blocked' && !i.hasOwnProperty('_destroy')) {
                         this.bookingModel.preference_allocations_attributes.push({ 'interpreter_id': i.interpreter_id, 'preference': i.preference });
                     } else if (i.hasOwnProperty('_destroy')) {
-                        this.userModel.prefferedInterpreters = this.userModel.prefferedInterpreters.filter(itm => itm.interpreter_id !== i.interpreter_id);
+                        this.oldInterpreterPreference = this.oldInterpreterPreference.filter(itm => itm.interpreter_id !== i.interpreter_id);
                     }
                 }
             });
