@@ -255,6 +255,16 @@ export class BookingManagementPage extends PageObject {
         return this.booking.setDateOnly('date_to', dateTo);
     }
 
+    filterBookingByCurrentDate = () => {
+        let currentDate = new Date();
+        let dateStart = new Date(new Date(currentDate).setDate(currentDate.getDate()));
+        let todayDate= dateStart.getFullYear().toString()+"-"+(dateStart.getMonth() + 1)+"-"+"0"+dateStart.getDate().toString();
+      let datefrom=this.getElementByName('date_from');
+      datefrom.getAttribute('value').then((value)=> {
+            return expect(value).to.be.eq(todayDate);
+    });
+    }
+
     bookingExistsWithId = () => {
         let queriedID = this.queryIdBooking;
         let tblRows = this.getAllElementByCSS('table tbody tr');
