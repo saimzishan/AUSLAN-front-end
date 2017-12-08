@@ -330,7 +330,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         if (this.bookingModel.interpreters_required < 2 && this.isMoreInterpreterNeeded()) {
             let message = `This booking might require more than 1 interpreter. You've only requested 1 interpreter.
                             Are you sure you want to create this booking?` ;
-            let title   = 'More Interpreter WARNING';
+            let title   = 'Warning: this interpreter might require more interpreters';
             this.createModal(title, message);
             this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
                 if (result) {
