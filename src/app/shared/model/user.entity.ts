@@ -426,7 +426,7 @@ export class Interpreter extends User {
     public communication_preference = 'email_and_sms';
     public assignments_attributes = [];
     public availability_blocks_attributes: Array<AvailabilityBlock> = [];
-    public interpreter_type: string = 'Metro';
+    public interpreter_type = 'Metro';
 
     get user_type() {
         return 'Interpreter';

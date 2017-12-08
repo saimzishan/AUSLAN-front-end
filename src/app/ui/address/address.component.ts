@@ -50,9 +50,9 @@ export class AddressComponent implements AfterViewInit {
                 if (!isNullOrUndefined(this.form.value[i])) { originAddress.push(this.form.value[i]); }
             }
             originAddress.push('Australia');
-            this.gmapApi.getMinDistance([originAddress.join(', ')], [GLOBAL.GOP_ADDRESS_ONE, GLOBAL.GOP_ADDRESS_TWO]).then(value => {
+            this.gmapApi.getMinDistance([originAddress.join(', ')], [GLOBAL.GPO_ADDRESS_ONE, GLOBAL.GPO_ADDRESS_TWO]).then(value => {
                 let travelCost = Number((value / 1000).toFixed(2)) > 40;
-                if(this.userModel) {
+                if (this.userModel) {
                     this.userModel.interpreter_type = travelCost ? 'Rural' : 'Metro';
                 }
                 this.isTravelCostApplicable = travelCost;

@@ -461,4 +461,13 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         return false;
     }
 
+    public travelPayStatus(interpreter) {
+        if (!this.selectedBookingModel.is_metro && interpreter.interpreter_type === 'Metro') {
+            return 'Yes';
+        } else if (!this.selectedBookingModel.is_metro && (interpreter.distance > 40 && interpreter.interpreter_type === 'Rural')) {
+            return 'Yes';
+        } else {
+            return 'No';
+        }
+    }
 }

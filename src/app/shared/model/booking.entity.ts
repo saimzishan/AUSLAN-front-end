@@ -32,6 +32,7 @@ export class Booking {
     public bookable_type: string;
     public created_by_admin: boolean;
     public travel_cost_applicable: boolean;
+    public is_metro: boolean;
     // Is it a limitation on interpreters invitation.
 
     constructor() {
@@ -113,6 +114,7 @@ export class Booking {
         this.notes = data.notes;
         this.created_by_admin = data.created_by_admin;
         this.travel_cost_applicable = data.travel_cost_applicable;
+        this.is_metro = data.is_metro;
 
         if (Boolean(data.billing_account_attributes)) {
             this.client.organisation_primary_contact.id =
