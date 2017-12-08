@@ -364,3 +364,9 @@ Feature: Booking Filter
     And I am on the bookings page
     Then I am shown with 1 booking
     Then I see one row with status 'red'
+
+  @runThis
+  Scenario: As a Administrator, I should be able to see filtered bookings from today to future automaticaly when login
+    And I sign in with valid Administrator credentials
+    And I am on the bookings page
+    Then I can see that date_from is preseleted with current date
