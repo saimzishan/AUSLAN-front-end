@@ -79,6 +79,7 @@ defineSupportCode(({Given, When, Then}) => {
     Given(/^I will be shown the bookings page$/, bookingManagementPage.verify);
     Given(/^I am on the bookings page$/, bookingManagementPage.verify);
     Given(/^I am on my admin home screen$/, bookingManagementPage.verify);
+    Given(/^I am on my dashboard screen$/, bookingManagementPage.verify);
     Given(/^I fill New Booking form fields correctly$/, bookingPage.createBooking);
     Given(/^I fill New Booking form fields with address greater than 40 kilometers$/, bookingPage.createBookingForPerth);
     Given(/^I select the bookable for client$/, bookingPage.selectClientAsBookbable);
@@ -227,18 +228,12 @@ defineSupportCode(({Given, When, Then}) => {
     When(/^If I am shown a popup, I approve it$/, approveIfPopup);
 
     function approveIfPopup() {
-        return page.getElementByCss('app-popup')
-            .isPresent()
-            .then((presence: boolean) => {
-                if (presence) {
-                    return showPopup()
-                        .then((popup) => {
-                            if (popup) {
-                                clickOnBtnByName('yesBtn');
-                            }
-                        });
-                }
-            });
+        let popup = page.getElementByCss('app-popup');
+        popup.isPresent().then(presence => {
+            if (presence) {
+                clickOnBtnByName('yesBtn');
+            }
+        });
     }
 
     Given(/^I am shown a validation error$/, showValidationError);

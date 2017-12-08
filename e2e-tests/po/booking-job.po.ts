@@ -22,6 +22,7 @@ export class BookingJobPage extends PageObject {
      * */
     bookingID = 0;
     _currentPath = '';
+    private tableDetails = {};
 
     storePath = () =>  {
         return browser.getCurrentUrl().then((currentURL) => {
@@ -170,10 +171,23 @@ export class BookingJobPage extends PageObject {
                 });
             });
     }
-    checkTableDetails = (tableHeader: string, value: string) => {
+    private getBookingDetailsForTableHeader = (tableHeader: string) => {
         let bookingDetails = this.getAllElementByCSS('table#job-details-responsive tbody tr td');
         let el = bookingDetails.get(BookingDetailTableHeaders[tableHeader]);
-        return expect(el.getText()).to.eventually.eq(value);
+        return el.getText();
+    }
+    noteTableDetails = (tableHeader: string) => {
+        return this.getBookingDetailsForTableHeader(tableHeader).then(value => {
+            this.tableDetails[tableHeader] = value;
+        });
+    }
+    checkNotedTableDetails = (tableHeader: string) => {
+        return this.checkTableDetails(tableHeader, this.tableDetails[tableHeader]);
+    }
+    checkTableDetails = (tableHeader: string, value: string) => {
+        return this.getBookingDetailsForTableHeader(tableHeader).then(elValue => {
+            return expect(elValue).to.eq(value);
+        });
     }
     checkAttachmentIcons = (negate: string) => {
         let shouldSee = !(negate === 'not');

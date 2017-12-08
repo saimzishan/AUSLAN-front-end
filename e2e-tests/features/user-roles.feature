@@ -98,11 +98,11 @@ Feature: User Role and Permissions Management
     Then I should not be able to navigate to 'booking-management/1/booking-job'
 
   @runThis
-  Scenario: As an Organisational Representative I should not be able to visit user-management
+  Scenario: As an Organisational Representative I should be able to visit user-management
     Given I exist as an Organisational Representative
     And I sign in with valid Organisational Representative credentials
     Then I am on the bookings page
-    Then I should not be able to navigate to 'user-management'
+    Then I should be able to navigate to 'user-management'
 
   @runThis
   Scenario: As an Organisational Representative I should be able to visit user-management/profile

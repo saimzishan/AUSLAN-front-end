@@ -1,12 +1,7 @@
-import {expect} from '../../config/helpers/chai-imports';
-// import * from 'chai';
-// import {} from 'jasmine';
 import {defineSupportCode} from 'cucumber';
-import {browser, by, element, $, $$} from 'protractor';
-
 import {PageObject} from '../../po/app.po';
 import {BookingManagementPage} from '../../po/booking-management-page.po';
-import {CONSTANT, Booking} from '../../helper';
+import {Heroku} from '../../helper';
 import {UserPasswordPage} from '../../po/user-password-page.po';
 import {UserProfilePage} from '../../po/user-profile-page.po';
 
@@ -19,6 +14,8 @@ defineSupportCode(({Given, Then, When}) => {
     let bookingPage = new BookingManagementPage();
     let userPasswordPage = new UserPasswordPage();
     let userProfilePage = new UserProfilePage();
+
+    Given(/^Assign (.*) with preferred Interpreters$/, Heroku.createUserWithPreferedInterpreters);
 
     When(/^I click on my name in the top corner$/, bookingPage.clickOnProfile);
 

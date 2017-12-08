@@ -1,8 +1,7 @@
-import {Component, AfterViewChecked, OnDestroy, OnChanges, Directive, SimpleChanges, OnInit, ViewContainerRef} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewContainerRef, ViewChild} from '@angular/core';
 import {Booking} from '../../shared/model/booking.entity';
 import {BookingService} from '../../api/booking.service';
 import {BA, BOOKING_NATURE} from '../../shared/model/booking-nature.enum';
-import {PARKING} from '../../shared/model/parking.enum';
 import {SpinnerService} from '../../spinner/spinner.service';
 import {BOOKING_STATE} from '../../shared/model/booking-state.enum';
 import {GLOBAL} from '../../shared/global';
@@ -10,18 +9,24 @@ import {NotificationServiceBus} from '../../notification/notification.service';
 import {Router, ActivatedRoute} from '@angular/router';
 import {RolePermission} from '../../shared/role-permission/role-permission';
 import {DatePipe} from '@angular/common';
-import {FormGroup, NgForm} from '@angular/forms';
-import {FileUploader, FileUploaderOptions} from 'ng2-file-upload';
+import {FormGroup} from '@angular/forms';
+import {FileUploader} from 'ng2-file-upload';
 import {Address} from '../../shared/model/venue.entity';
 import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
 import {PreferedAllocationService} from '../../shared/prefered-allocation.service';
-import {isNullOrUndefined, debug} from 'util';
-import {IndividualClient, OrganisationalRepresentative, BookingOfficer, Administrator , UserFactory} from '../../shared/model/user.entity';
+import {
+    IndividualClient,
+    OrganisationalRepresentative,
+    BookingOfficer,
+    Administrator,
+    UserFactory,
+    Interpreter
+} from '../../shared/model/user.entity';
 import {PopupComponent} from '../../shared/popup/popup.component';
 import {Contact} from '../../shared/model/contact.entity';
 import {UserService} from '../../api/user.service';
-import {RemoveSpacePipe} from '../../shared/pipe/remove-space.pipe';
-
+import {isNullOrUndefined, debug} from 'util';
+import {AddressComponent} from '../../ui/address/address.component';
 const _ONE_HOUR = 1000 /*milliseconds*/
     * 60 /*seconds*/
     * 60 /*minutes*/;
@@ -30,10 +35,8 @@ const _ONE_HOUR = 1000 /*milliseconds*/
     selector: 'app-booking-detail',
     templateUrl: './booking-detail.component.html',
     styleUrls: ['./booking-detail.component.css']
-
 })
 export class BookingDetailComponent implements OnInit, OnDestroy {
-
 
     private sub: any;
     public uploader: FileUploader = new FileUploader({url: '', maxFileSize: 20 * 1024 * 1024});
@@ -42,13 +45,15 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     rdgSpecialInstruction = 'true';
     oldBookingModel;
     dialogSub;
-    appointment_types = Object.keys(BOOKING_NATURE).filter(value => (value === BOOKING_NATURE[value]
-        || BOOKING_NATURE[value].startsWith(value)) && value !== BOOKING_NATURE[BOOKING_NATURE.None]).map(v => BOOKING_NATURE[v]) as string[];
+    appointment_types = Object.keys(BOOKING_NATURE)
+        .filter(value => {
+            return (value === BOOKING_NATURE[value] || BOOKING_NATURE[value].startsWith(value)) && value !== BOOKING_NATURE[BOOKING_NATURE.None];
+        }).map(v => BOOKING_NATURE[v]) as string[];
 
     specific_appointment_types = [];
     currentUserIsContact = 'true';
     currentUserIsClient = 'true';
-    rdBookingAdress='true';
+    rdBookingAddress = 'true';
     prefInterpreter: boolean;
     dialogRef: MdDialogRef<any>;
     fileName = '';
@@ -65,11 +70,12 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     deleteDocuments = [];
     allClientsOrg = [];
     bookingForItems = [];
-    isEditableForOrgRepIndClient: boolean;
+    isDisabledForOrgRepIndClient: boolean;
     isUserAdminORBookOfficer: boolean;
     preferAllocSub: any;
     oldInterpreterPreference = [];
     isDisabledForAdmin: boolean;
+    @ViewChild('addressForm') private bookingAddress: AddressComponent;
 
     constructor(public bookingService: BookingService, private router: Router,
                 private route: ActivatedRoute, private rolePermission: RolePermission,
@@ -133,7 +139,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         if (GLOBAL.currentUser !== undefined) {
-            this.isEditableForOrgRepIndClient = <boolean> (this.isUserOrgRepORIndClientTemp() && this.forEdit()) ;
+            this.isDisabledForOrgRepIndClient = <boolean> (this.isUserOrgRepORIndClientTemp() && this.forEdit()) ;
             this.isUserAdminORBookOfficer = <boolean> this.checkUserAdminORBookOfficer();
             this.isDisabledForAdmin = (this.forEdit() && !this.bookingModel.created_by_admin);
             this.onSelectionChange();
@@ -143,12 +149,12 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.bookingModel.bookable_type = this.bookingModel.bookable_type || 'IndividualClient';
             if (this.isUserAdminORBookOfficer) {
                 this.getAllUsers();
+                this.bookingModel.created_by_admin = true;
             } else {
                 this.oldBookingModel = this.deepCopy(this.bookingModel);
             }
-            if(!this.forEdit()) {
-                console.log("edit button :"+!this.forEdit());
-                this.onBookingAdressChange();
+            if (!this.forEdit()) {
+                this.onBookingAddressChange();
             }
         }
     }
@@ -179,14 +185,16 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         }
     }
 
-    public onBookingAdressChange(){
+    public onBookingAddressChange() {
         let user = GLOBAL.currentUser;
+        console.log("USER: "+JSON.stringify(user));
         if (user) {
             ['unit_number', 'street_number', 'street_name', 'suburb', 'state', 'post_code'].forEach((field) => {
-                let value = this.rdBookingAdress === 'true' ? (this.isUserOrgRep() ?
-            user.organisation_attributes.address_attributes[field] : this.isIndClient() ? user.address_attributes[field] :''):'';
+                let value = this.rdBookingAddress === 'true' ? (this.isUserOrgRep() ?
+                            user.organisation_attributes.address_attributes[field] : this.isIndClient() ? user.address_attributes[field] : '') : '';
                 this.bookingModel.venue[field] = value;
             });
+            // this.bookingAddress.calculateDistance();
         }
     }
 
@@ -214,10 +222,11 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     private getBookableUser() {
-        return this.allClientsOrg.find( u => u.type === this.bookingModel.bookable_type && +u.id === +this.bookingModel.bookable_id);
+        return this.allClientsOrg.find(u => u.type === this.bookingModel.bookable_type && +u.id === +this.bookingModel.bookable_id);
     }
 
     public onBookingForSelectionChange() {
+        this.userModel = this.isUserAdminORBookOfficer ? this.getBookableUser() : this.userModel;
         this.onSelectionChange();
         this.onClientSelectionChange();
         this.setInvoiceField();
@@ -233,11 +242,13 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
 
     public onProfilePreferredSelectionChange() {
         if (!this.forEdit()) {
+            let prefInt = this.userModel.prefferedInterpreters.filter(itm => itm.preference === 'preferred');
             if (this.showProfilePreffered === 'true') {
-                this.filterUserPreference(this.userModel.prefferedInterpreters);
+                this.oldInterpreterPreference = this.oldInterpreterPreference.concat(prefInt);
             } else {
-                this.bookingModel.preference_allocations_attributes = this.bookingModel.preference_allocations_attributes.filter(a => a.preference !== 'preferred');
+                this.oldInterpreterPreference = this.oldInterpreterPreference.filter(item => prefInt.every(item2 => item2.interpreter_id !== item.interpreter_id));
             }
+            this.filterUserPreference(this.oldInterpreterPreference);
         }
     }
 
@@ -250,15 +261,18 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
 
     public onProfileBlockedSelectionChange() {
         if (!this.forEdit()) {
+            let blockInt = this.userModel.prefferedInterpreters.filter(itm => itm.preference === 'blocked');
             if (this.showProfileBlocked === 'true') {
-                this.filterUserPreference(this.userModel.prefferedInterpreters);
+                this.oldInterpreterPreference = this.oldInterpreterPreference.concat(blockInt);
             } else {
-                this.bookingModel.preference_allocations_attributes = this.bookingModel.preference_allocations_attributes.filter(a => a.preference !== 'blocked');
+                this.oldInterpreterPreference = this.oldInterpreterPreference.filter(item => blockInt.every(item2 => item2.interpreter_id !== item.interpreter_id));
             }
+            this.filterUserPreference(this.oldInterpreterPreference);
         }
     }
 
     public onBookingForChange() {
+        this.bookingModel.preference_allocations_attributes = [];
         this.bookingForItems =  this.bookingModel.bookable_type === 'IndividualClient' ?
             this.allClientsOrg.filter(u => u.type === 'IndividualClient') :
             this.allClientsOrg.filter(u => u.type === 'OrganisationalRepresentative');
@@ -330,7 +344,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             return;
         }
         if (form.invalid || addressForm.form.invalid || billingForm.form.invalid) {
-            this.notificationServiceBus.launchNotification(true, 'Kindly fill all the required (*) fields');
+            this.notificationServiceBus.launchNotification(true, GLOBAL.MISSING_FIELDS_ERROR_MESSAGE);
             return;
         }
 
@@ -590,14 +604,12 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.showProfileBlocked = 'true';
         }
 
-        this.userModel = Boolean(GLOBAL.currentUser) &&
-        GLOBAL.currentUser instanceof OrganisationalRepresentative ?
-            (<OrganisationalRepresentative>GLOBAL.currentUser) :
-            Boolean(GLOBAL.currentUser) && GLOBAL.currentUser instanceof IndividualClient ?
-                (<IndividualClient>GLOBAL.currentUser) :
-                Boolean(GLOBAL.currentUser) && GLOBAL.currentUser instanceof BookingOfficer ?
-                    (<BookingOfficer>GLOBAL.currentUser) :
-                    GLOBAL.currentUser;
+        this.userModel = Boolean(GLOBAL.currentUser) && GLOBAL.currentUser instanceof OrganisationalRepresentative ?
+                (<OrganisationalRepresentative>GLOBAL.currentUser) :
+                Boolean(GLOBAL.currentUser) && GLOBAL.currentUser instanceof IndividualClient ?
+                    (<IndividualClient>GLOBAL.currentUser) :
+                    Boolean(GLOBAL.currentUser) && GLOBAL.currentUser instanceof BookingOfficer ?
+                    (<BookingOfficer>GLOBAL.currentUser) : GLOBAL.currentUser;
 
         this.bookingModel.preference_allocations_attributes = [];
         this.preferAllocSub = this._sharedPreferedAllocationService.interpreterStream$.subscribe(data => {
@@ -606,7 +618,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     filterUserPreference(interpreters) {
-
+        this.oldInterpreterPreference = interpreters;
         if (this.forEdit()) {
             interpreters.forEach(i => {
                 if (i.hasOwnProperty('_destroy')) {
@@ -615,9 +627,10 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 }
             });
         } else {
+            let prefAlloc = this.bookingModel.preference_allocations_attributes;
             this.bookingModel.preference_allocations_attributes = [];
             interpreters.forEach(i => {
-                if (this.showProfilePreffered === 'true') {
+                if (this.showPreffered === 'true') {
                     if (i.preference === 'preferred' && !i.hasOwnProperty('_destroy')) {
                         this.bookingModel.preference_allocations_attributes.push({ 'interpreter_id': i.interpreter_id, 'preference': i.preference });
                     } else if (i.hasOwnProperty('_destroy')) {
@@ -625,7 +638,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                     }
                 }
 
-                if (this.showProfileBlocked === 'true') {
+                if (this.showBlocked === 'true') {
                     if (i.preference === 'blocked' && !i.hasOwnProperty('_destroy')) {
                         this.bookingModel.preference_allocations_attributes.push({ 'interpreter_id': i.interpreter_id, 'preference': i.preference });
                     } else if (i.hasOwnProperty('_destroy')) {

@@ -294,7 +294,7 @@ export class UserManagementPage extends PageObject {
     }
     shouldShowInValidNotification = () => {
 
-        return NotificationObject.getNotificationContent('Kindly fill all the required (*) fields');
+        return NotificationObject.getNotificationContent('Oops! Please fill in all the fields correctly.');
     }
     hoverOnActions = (type: string) => {
         let trList = this.trListByUserType(type);

@@ -177,6 +177,18 @@ export class BookingPage extends PageObject {
         });
     }
 
+    bookingAddressPopulated = (populated: string) => {
+        let condition = populated.toLowerCase() === 'auto populated';
+        const optionLabel = this.getAllElementByName('bookingAddress');
+        const divDetails = this.getAllByTagNameInElement(optionLabel, 'div');
+        const all_input_in_div = this.getAllByTagNameInElement(divDetails, 'input');
+        return all_input_in_div.each(function (single_input, index) {
+            return single_input.getAttribute('value').then((val) => {
+                expect(!!val).to.be.eq(condition);
+            });
+        });
+    }
+
     setStartEndTime = (field: string, date: string, time: string) => {
         let elementName = {
             'start': 'dpEventDate',
