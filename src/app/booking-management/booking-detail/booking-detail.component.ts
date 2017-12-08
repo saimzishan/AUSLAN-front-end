@@ -606,24 +606,15 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 }
             });
         } else {
-            let prefAlloc = this.bookingModel.preference_allocations_attributes;
             this.bookingModel.preference_allocations_attributes = [];
             interpreters.forEach(i => {
-                if (this.showPreferred === 'true') {
-                    if (i.preference === 'preferred' && !i.hasOwnProperty('_destroy')) {
+                    if ((this.showPreferred === 'true' && i.preference === 'preferred')
+                            || (this.showBlocked === 'true' && i.preference === 'blocked')
+                        && !i.hasOwnProperty('_destroy')) {
                         this.bookingModel.preference_allocations_attributes.push({ 'interpreter_id': i.interpreter_id, 'preference': i.preference });
                     } else if (i.hasOwnProperty('_destroy')) {
                         this.userModel.prefferedInterpreters = this.userModel.prefferedInterpreters.filter(itm => itm.interpreter_id !== i.interpreter_id);
                     }
-                }
-
-                if (this.showBlocked === 'true') {
-                    if (i.preference === 'blocked' && !i.hasOwnProperty('_destroy')) {
-                        this.bookingModel.preference_allocations_attributes.push({ 'interpreter_id': i.interpreter_id, 'preference': i.preference });
-                    } else if (i.hasOwnProperty('_destroy')) {
-                        this.userModel.prefferedInterpreters = this.userModel.prefferedInterpreters.filter(itm => itm.interpreter_id !== i.interpreter_id);
-                    }
-                }
             });
         }
     }
