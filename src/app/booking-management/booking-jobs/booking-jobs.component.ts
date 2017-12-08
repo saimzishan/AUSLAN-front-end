@@ -1,13 +1,8 @@
-import {Component, OnInit, Input, ViewContainerRef, AfterViewChecked, OnDestroy} from '@angular/core';
+import {Component, OnInit, ViewContainerRef, OnDestroy} from '@angular/core';
 import {BookingService} from '../../api/booking.service';
 import {Booking} from '../../shared/model/booking.entity';
-import {BookingInterpreter} from '../../shared/model/contact.entity';
 import {UserService} from '../../api/user.service';
-import {
-    Administrator, BookingOfficer, IndividualClient, Interpreter, OrganisationalRepresentative,
-    User
-} from '../../shared/model/user.entity';
-import {ROLE} from '../../shared/model/role.enum';
+import {Interpreter, OrganisationalRepresentative, User} from '../../shared/model/user.entity';
 import {SpinnerService} from '../../spinner/spinner.service';
 import {NotificationServiceBus} from '../../notification/notification.service';
 import {ActivatedRoute} from '@angular/router';
@@ -15,7 +10,6 @@ import {Router, NavigationExtras} from '@angular/router';
 import {BOOKING_STATE} from '../../shared/model/booking-state.enum';
 import {PopupComponent} from '../../shared/popup/popup.component';
 import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
-import {PrettyIDPipe} from '../../shared/pipe/pretty-id.pipe';
 import {GLOBAL} from '../../shared/global';
 import {BookingHeaderService} from '../booking-header/booking-header.service';
 
@@ -149,6 +143,9 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
 
     isCurrentUserInterpreter() {
         return GLOBAL.currentUser instanceof Interpreter;
+    }
+    showActions () {
+        return this.selectedBookingModel.state === BOOKING_STATE.In_progress && this.isCurrentUserInterpreter();
     }
 
     unableToServiceBooking() {

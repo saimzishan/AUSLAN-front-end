@@ -19,4 +19,5 @@ export class BillingAccountComponent {
   @Input() canCalculateDistance: boolean;
   @ViewChild('billingFields') public form: NgForm;
   address_title = 'BILLING ADDRESS';
+  @Input() isReadOnly = false;
 }

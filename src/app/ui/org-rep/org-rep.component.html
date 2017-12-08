@@ -7,6 +7,7 @@
             <div class="form-field">
                 <label>ABN * </label>
                 <input type="tel" class="valid" placeholder="Enter ABN"
+                       [readonly]="isDuplicate"
                        [(ngModel)]="userModel.abn" name="business_abn" #business_abn="ngModel"
                        [rangeLength]="[11, 11]" digit required>
                 <span *ngIf="business_abn.touched && !business_abn.errors?.required && !business_abn.errors?.rangeLength;"
@@ -20,6 +21,7 @@
             <div class="form-field">
                 <label>ORGANISATION'S NAME * </label>
                 <input type="text" class="valid" placeholder="Enter the name of the Organisation"
+                       [readonly]="isDuplicate"
                        [(ngModel)]="userModel.organisation_name" name="business_name" #business_name="ngModel" required>
                 <span *ngIf="business_name.touched && !business_name.errors?.required"
                       class="inline-icon inline-icon-valid valid"></span>
@@ -43,6 +45,7 @@
             <div class="form-field">
                 <label>ORGANISATION'S BRANCH OFFICE</label>
                 <input type="text" placeholder="Enter the branch office of the Organisation"
+                       [readonly]="isDuplicate"
                        [(ngModel)]="userModel.branch_office" name="business_branch_office"
                        #business_branch_office="ngModel">
             </div>
@@ -50,7 +53,8 @@
         <div class="medium-6 columns">
             <div class="form-field">
                 <label>PREFFERED CONTACT METHOD</label>
-                <select name="preferred_contact_method" [(ngModel)]="userModel.organisation_billing_account.preferred_contact_method">
+                <select name="preferred_contact_method"  [disabled]="isDuplicate"
+                        [(ngModel)]="userModel.organisation_billing_account.preferred_contact_method">
                     <option value="email">EMAIL</option>
                     <option value="phone">PHONE</option>
                 </select>
@@ -59,7 +63,8 @@
         <div class="medium-6 columns">
             <div class="form-field">
                 <label>COMM. PREFERENCE *</label>
-                <select name="comm_pref" [(ngModel)]="userModel.preferred_contact_method">
+                <select name="comm_pref"  [disabled]="isDuplicate"
+                        [(ngModel)]="userModel.preferred_contact_method">
                     <option value="email_only">EMAIL</option>
                 </select>
             </div>
@@ -71,7 +76,7 @@
         <div class="medium-6 columns">
             <div class="form-field">
                 <label>{{'Would you like the system to send email on receipt of a request?'.toUpperCase()}}</label>
-                <md-checkbox type="checkbox"
+                <md-checkbox type="checkbox"  [disabled]="isDuplicate"
                              [(ngModel)]="userModel.email_receipt" name="email_receipt" #email_receipt="ngModel">Yes
                 </md-checkbox>
 
@@ -80,7 +85,7 @@
         <div class="medium-6 columns">
             <div class="form-field">
                 <label>{{'When an interpreter is allocated would you like to receive confirmation via Email?'.toUpperCase()}}</label>
-                <md-checkbox type="checkbox"
+                <md-checkbox type="checkbox" [disabled]="isDuplicate"
                              [(ngModel)]="userModel.email_confirmation" name="email_confirmation"
                              #email_confirmation="ngModel">Yes
                 </md-checkbox>
@@ -91,14 +96,16 @@
 
 <br>
 
-<app-address [prefix]="address_title" [address]="userModel.address_attributes" [canCalculateDistance]="false"></app-address>
+<app-address [canEdit]="isDuplicate" [prefix]="address_title" [address]="userModel.address_attributes"
+             [canCalculateDistance]="false"></app-address>
 
 <div class="row small-collapse">
     <div class="row-wrapper">
         <div class="medium-6 columns">
             <div class="form-field">
                 <label>IS YOUR BILLING ADDRESS THE SAME AS YOUR ORGANISATION'S ADDRESS?</label>
-                <md-checkbox type="checkbox"
+                <md-checkbox  [disabled]="isDuplicate"
+                              type="checkbox"
                              [(ngModel)]="userModel.billingAddressIsSame"
                              name="billingAddressIsDifferent_confirmation"
                              #billingAddressIsDifferent_confirmation="ngModel">Yes
@@ -109,10 +116,10 @@
 </div>
 
 <br>
-<app-billing-account [primaryContact]="userModel.organisation_primary_contact" [canCalculateDistance]="false"
+<app-billing-account [isReadOnly]="isDuplicate" [primaryContact]="userModel.organisation_primary_contact"
                      [billingAddress]="userModel.organisation_billing_account.organisation_billing_address"
-                     [billingAddressIsSame]="userModel.billingAddressIsSame"
-></app-billing-account>
+                     [billingAddressIsSame]="userModel.billingAddressIsSame" [canCalculateDistance]="false">
+</app-billing-account>
 
 
 <div class="row small-collapse">
@@ -120,13 +127,15 @@
         <div class="medium-12 columns">
             <div class="form-field">
                 <label>CUSTOMER REF</label>
-                <input [(ngModel)]="userModel.customer_ref">
+                <input  [readonly]="isDuplicate"
+                        [(ngModel)]="userModel.customer_ref">
             </div>
         </div>
         <div class="medium-6 columns">
             <div class="form-field">
                 <label>HOW DID YOU FIND OUT ABOUT AUSLAN CONNECTIONS?</label>
-                <select [(ngModel)]="userModel.reffered_by">
+                <select  [disabled]="isDuplicate"
+                         [(ngModel)]="userModel.reffered_by">
                     <option value="A DEAF PERSON TOLD ME">A DEAF PERSON TOLD ME</option>
                     <option value="AN INTERPRETER TOLD ME">AN INTERPRETER TOLD ME</option>
                     <option value="INTERNET SEARCH ENGINE">INTERNET SEARCH ENGINE</option>
@@ -140,14 +149,16 @@
         <div class="medium-12 columns">
             <div class="form-field">
                 <label>IF OTHER THEN PLEASE DESCRIBE HERE</label>
-                <textarea [disabled]="userModel.reffered_by !== 'OTHER'" [(ngModel)]="userModel.reffered_other" cols="30" rows="10"
+                <textarea  [readonly]="isDuplicate"
+                           [disabled]="userModel.reffered_by !== 'OTHER'" [(ngModel)]="userModel.reffered_other" cols="30" rows="10"
                           class="inline-icon inline-icon-txt"></textarea>
             </div>
         </div>
         <div class="medium-12 columns">
             <div class="form-field">
                 <label>SPECIAL INSTRUCTION</label>
-                <textarea type="text" class="inline-icon inline-icon-txt"
+                <textarea  [readonly]="isDuplicate"
+                           type="text" class="inline-icon inline-icon-txt"
                           cols="30" rows="10"
                           [(ngModel)]="userModel.special_instructions" name="special_instructions"
                           #special_instructions="ngModel"></textarea>

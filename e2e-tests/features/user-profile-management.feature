@@ -395,6 +395,36 @@ Feature: User Profile Management
 
 
   @runThis
+  Scenario: Interpreter should not be able to delete/disable his details
+    Given I exist as an Interpreter
+    And I sign in with valid Interpreter credentials
+    And I am on the bookings page
+    And I click on my name in the top corner
+    And I will be taken to my individual profile page
+    And I can see the element with name 'selStatus' is 'hidden'
+
+
+  @runThis
+  Scenario: Organisational Representative should not be able to delete/disable his details
+    Given I exist as an Organisational Representative
+    And I sign in with valid Organisational Representative credentials
+    And I am on the bookings page
+    And I click on my name in the top corner
+    And I will be taken to my individual profile page
+    And I can see the element with name 'selStatus' is 'hidden'
+
+
+  @runThis
+  Scenario: Individual Client should not be able to delete/disable his details
+    Given I exist as an Individual Client
+    And I sign in with valid Individual Client credentials
+    And I am on the bookings page
+    And I click on my name in the top corner
+    And I will be taken to my individual profile page
+    And I can see the element with name 'selStatus' is 'hidden'
+
+
+  @runThis
 #  Change pass
   Scenario: Be able to change password as Booking Officer
     Given I exist as an Booking Officer
@@ -460,7 +490,7 @@ Feature: User Profile Management
     And I type in the new password is Pass@1234
     And I type in the confirm password is Pass@123
     And I click on BUTTON 'SAVE'
-    Then I get error message: 'Kindly fill all the required (*) fields'
+    Then I get error message: 'Oops! Please fill in all the fields correctly.'
 
   @runThis
 #  Change pass
@@ -476,7 +506,7 @@ Feature: User Profile Management
     And I type in the new password is Pass@1234
     And I type in the confirm password is Pass@123
     And I click on BUTTON 'SAVE'
-    Then I get error message: 'Kindly fill all the required (*) fields'
+    Then I get error message: 'Oops! Please fill in all the fields correctly.'
 
   @runThis
 #  Change pass
@@ -492,7 +522,7 @@ Feature: User Profile Management
     And I type in the new password is Pass@1234
     And I type in the confirm password is Pass@123
     And I click on BUTTON 'SAVE'
-    Then I get error message: 'Kindly fill all the required (*) fields'
+    Then I get error message: 'Oops! Please fill in all the fields correctly.'
 
   @runThis
 #  Change pass
@@ -508,7 +538,7 @@ Feature: User Profile Management
     And I type in the new password is Pass@1234
     And I type in the confirm password is Pass@123
     And I click on BUTTON 'SAVE'
-    Then I get error message: 'Kindly fill all the required (*) fields'
+    Then I get error message: 'Oops! Please fill in all the fields correctly.'
 
   @runThis
 #  Change pass
@@ -524,7 +554,7 @@ Feature: User Profile Management
     And I type in the new password is Pass@1234
     And I type in the confirm password is Pass@123
     And I click on BUTTON 'SAVE'
-    Then I get error message: 'Kindly fill all the required (*) fields'
+    Then I get error message: 'Oops! Please fill in all the fields correctly.'
 # ---------------------------------------- AUSLAN1-507 -> END ----------------------------------------
 
 # ---------------------------------------- AUSLAN1-53 -> Start ----------------------------------------

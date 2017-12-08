@@ -7,7 +7,9 @@
             <div class="form-field">
                 <label>CONTACT FIRST NAME * </label>
 
-                <input type="text" class="inline-icon inline-icon-user-circle valid" placeholder="Enter your first name"
+                <input type="text" class="inline-icon inline-icon-user-circle valid"
+                       [readonly]="isReadOnly"
+                       placeholder="Enter your first name"
                        [(ngModel)]="primaryContact.first_name" name="cn_first_name"
                        #cn_first_name="ngModel" [rangeLength]="[2, 20]" required>
                 <span *ngIf="cn_first_name.touched && !cn_first_name.errors?.required && !cn_first_name.errors?.rangeLength;"
@@ -22,7 +24,8 @@
             <div class="form-field">
                 <label>CONTACT LAST NAME *</label>
 
-                <input type="text" class="inline-icon inline-icon-user-circle valid" placeholder="Enter your last name"
+                <input [readonly]="isReadOnly"
+                       type="text" class="inline-icon inline-icon-user-circle valid" placeholder="Enter your last name"
                        [(ngModel)]="primaryContact.last_name" name="cn_last_name"
                        #cn_last_name="ngModel" [rangeLength]="[2, 30]" required>
                 <span *ngIf="cn_last_name.touched && !cn_last_name.errors?.required && !cn_last_name.errors?.rangeLength;"
@@ -36,7 +39,8 @@
             <div class="form-field">
                 <label class="icon-email">
                     CONTACT EMAIL * </label>
-                <input type="email" id="email" placeholder="Enter your email" [(ngModel)]="primaryContact.email"
+                <input [readonly]="isReadOnly"
+                       type="email" id="email" placeholder="Enter your email" [(ngModel)]="primaryContact.email"
                        name="cn_email" #cn_email="ngModel" email
                        required>
                 <span *ngIf="cn_email.touched && !cn_email.errors?.email;"
@@ -51,7 +55,8 @@
             <div class="form-field">
                 <label class="icon-email">
                     CONTACT NUMBER * </label>
-                <input type="tel" id="phone" placeholder="Enter your contact number"
+                <input type="tel" [readonly]="isReadOnly"
+                       id="phone" placeholder="Enter your contact number"
                        [ngModel]="primaryContact.phone_number | removeSpace" name="cn_phone" #cn_phone="ngModel" digits
                        (ngModelChange)="primaryContact.phone_number=$event"
                        [rangeLength]="[10, 11]"
@@ -66,5 +71,6 @@
     </div>
 </div>
 <br>
-<app-address [prefix]="address_title" [address]="billingAddress" [parentForm]="parentForm" [canCalculateDistance]="canCalculateDistance"></app-address>
+<app-address [canEdit]="isReadOnly" [prefix]="address_title" [address]="billingAddress"
+             [parentForm]="parentForm" [canCalculateDistance]="canCalculateDistance"></app-address>
 

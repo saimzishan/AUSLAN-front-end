@@ -558,7 +558,7 @@ export class Heroku {
 
     static updateBookingWithStatus(status: string) {
         let daysToAdd = status === 'red' ? '2' : '4';
-        let command = 'd = ' + daysToAdd + '.business_days.after(DateTime.now);'
+        let command = 'd = ' + daysToAdd + '.business_days.after(DateTime.now);';
         command += 'Booking.last.update(start_time: d, end_time: d + 1.hour);Booking.last.update_status';
         Heroku.sendCommandToHeroku(command);
     }
@@ -574,16 +574,16 @@ export class Heroku {
     }
 
     static updateBookingWithInterpreterFirstName(interpreter_first_name: string) {
-        let command = 'Interpreter.last.update(first_name: "' + interpreter_first_name + '");'
-        command += 'Booking.last.interpreters << Interpreter.last;'
-        command += 'Interpreter.last.translation_allocations.first.accept!'
+        let command = 'Interpreter.last.update(first_name: "' + interpreter_first_name + '");';
+        command += 'Booking.last.interpreters << Interpreter.last;';
+        command += 'Interpreter.last.translation_allocations.first.accept!';
         Heroku.sendCommandToHeroku(command);
     }
 
     static updateBookingWithInterpreterLastName(interpreter_last_name: string) {
-        let command = 'Interpreter.last.update(last_name: "' + interpreter_last_name + '");'
-        command += 'Booking.last.interpreters << Interpreter.last;'
-        command += 'Interpreter.last.translation_allocations.first.accept!'
+        let command = 'Interpreter.last.update(last_name: "' + interpreter_last_name + '");';
+        command += 'Booking.last.interpreters << Interpreter.last;';
+        command += 'Interpreter.last.translation_allocations.first.accept!';
         Heroku.sendCommandToHeroku(command);
     }
 
@@ -604,9 +604,18 @@ export class Heroku {
         Heroku.sendCommandToHeroku(command);
     }
 
-
     static assignExistingBooking(bookable: string) {
         let command = 'Booking.update_all(bookable_id: ' + bookable.replace(' ', '') + '.first.id)';
+        Heroku.sendCommandToHeroku(command);
+    }
+
+    static createUserWithPreferedInterpreters(userType: string) {
+        userType = userType.split(/\s/).map(str => {
+            return (str.charAt(0).toUpperCase() + str.slice(1).toLowerCase());
+        }).join('');
+        let command = 'client = ' + userType + '.last;';
+        command += 'Interpreter.all.each { |i| client.preference_allocations';
+        command += '<< PreferenceAllocation.new(clientable: client, interpreter: i, preference: :preferred) }';
         Heroku.sendCommandToHeroku(command);
     }
 

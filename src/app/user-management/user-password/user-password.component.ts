@@ -26,7 +26,7 @@ export class UserPasswordComponent {
   editUser(form: FormGroup) {
       if ( form.invalid ) {
           this.notificationServiceBus.
-          launchNotification(true, 'Kindly fill all the required (*) fields');
+          launchNotification(true, GLOBAL.MISSING_FIELDS_ERROR_MESSAGE);
           return;
       }
 

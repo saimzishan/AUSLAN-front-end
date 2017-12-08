@@ -504,6 +504,21 @@ Feature: Booking Admin Management
       Then I should see the value under Type column as 'Medical'
 
     @runThis
+    Scenario: As a Booking Officer I should see the correct Job number of the booking
+      Given There exist 1 bookings
+      Given I exist as a Booking Officer
+      When I sign in with valid Booking Officer credentials
+      Then I am on the bookings page
+      When I click on an individual booking
+      Then I will be shown the booking job page
+      And I note the value under Job column
+      When I click on link 'Booking details'
+      Then I should be on the edit booking page
+      When I click on link 'Booking info'
+      Then I am on the individual booking page
+      And The value under the Job column is the same as I noted above
+
+    @runThis
     Scenario: As a Booking Officer I should see an attchment icon if the booking has attachment
       Given There exist 1 bookings
       Given I exist as a Booking Officer
