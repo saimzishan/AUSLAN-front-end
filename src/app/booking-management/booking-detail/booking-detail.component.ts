@@ -187,7 +187,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
 
     public onBookingAddressChange() {
         let user = GLOBAL.currentUser;
-        console.log("USER: "+JSON.stringify(user));
         if (user) {
             ['unit_number', 'street_number', 'street_name', 'suburb', 'state', 'post_code'].forEach((field) => {
                 let value = this.rdBookingAddress === 'true' ? (this.isUserOrgRep() ?
