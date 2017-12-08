@@ -176,3 +176,36 @@ Feature: Edit Booking
     When I click on link 'Booking details'
     Then I should be on the edit booking page
     And I see attachment 'sushi.pdf' does 'not exists'
+
+  # Auslan1-843
+  # The bookings in this file are created using Factory Girl
+  # The configuration and values are as defined in the api project
+  # Following values have been assigned as of now
+  # Contact first name: Jimmy
+  # Contact last name: Donavan
+  # Contact email: jimmy@donavan.com
+  # Contact phone number: 03 9876 4321
+  @runThis
+  Scenario: As a Booking Officer, When editing a booking, I should see the contact details as given by api
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    And I am on the bookings page
+    Then I am shown with 1 booking
+    When I click on an individual booking
+    Then I am on the individual booking page
+    When I click on link 'Booking details'
+    Then I should be on the edit booking page
+    Then I can verify the input 'contact_first_name' will have the value 'Jimmy'
+    And I can verify the input 'contact_last_name' will have the value 'Donavan'
+    When I change the input field CONTACT FIRST NAME * with Frank
+    And I change the input field CONTACT LAST NAME with Castle
+    And I click on BUTTON 'SAVE'
+    Then I should get a valid booking update notification
+    And I am on the bookings page
+    Then I am shown with 1 booking
+    When I click on an individual booking
+    Then I am on the individual booking page
+    When I click on link 'Booking details'
+    Then I should be on the edit booking page
+    Then I can verify the input 'contact_first_name' will have the value 'Frank'
+    And I can verify the input 'contact_last_name' will have the value 'Castle'
