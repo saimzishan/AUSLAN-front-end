@@ -147,6 +147,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.isDisabledForOrgRepIndClient = Boolean(this.isUserOrgRepORIndClientTemp() && this.forEdit()) ;
             this.isUserAdminORBookOfficer = <boolean> this.checkUserAdminORBookOfficer();
             this.isDisabledForAdmin = (this.forEdit() && !this.bookingModel.created_by_admin);
+            this.currentUserIsContact = this.isCurrentUserContact();
             if (!this.forEdit()) {
                 this.onSelectionChange();
                 this.onClientSelectionChange();
@@ -154,7 +155,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.currentUserIsClient = this.isUserOrgRep() ? 'false' : 'true';
             this.getUser();
             this.bookingModel.bookable_type = this.bookingModel.bookable_type || 'IndividualClient';
-            this.currentUserIsContact = this.isCurrentUserContact();
             if (this.isUserAdminORBookOfficer) {
                 this.getAllUsers();
                 this.bookingModel.created_by_admin = true;
