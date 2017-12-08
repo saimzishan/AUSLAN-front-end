@@ -191,7 +191,7 @@ Feature: Booking Filter
     When I hover on the Status dropdown and select 'All'
     Then I am shown with 5 bookings
 
-  @ignoreThis
+  @runThis
   Scenario: Given 1 verified Booking Officer, 1 verified Interpreter exists, I should be able to reset filter by booking state
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
