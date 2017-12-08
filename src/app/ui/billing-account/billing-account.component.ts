@@ -18,4 +18,5 @@ export class BillingAccountComponent {
   @Input() parentForm: NgForm;
   @ViewChild('billingFields') public form: NgForm;
   address_title = 'BILLING ADDRESS';
+  @Input() isReadOnly = false;
 }

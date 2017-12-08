@@ -570,6 +570,18 @@ Feature: Booking Management
     When I select option OTHER from dropdown NATURE OF APPOINTMENT
     And I am shown a validation error with the text 'Please specify what the appointment is about'
 
+  @runThis
+  Scenario: As an Administrator, I should specify notes when I don't specify what will be discussed when duplicating a booking
+    Given There exist 1 bookings
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    When I am on the bookings page
+    And I click on an individual booking
+    Then I am on the individual booking page
+    Then I click on link 'Booking details'
+    When I select option OTHER from dropdown NATURE OF APPOINTMENT
+    Then I am shown a validation error with the text 'Please specify what the appointment is about'
+
   #--------------------------------- AUSLAN1-770 -----------------------------------------------------
   @runThis
   Scenario: As a Booking Officer, I can create a booking for Organisational Representative
