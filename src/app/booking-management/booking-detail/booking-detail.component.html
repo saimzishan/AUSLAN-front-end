@@ -372,7 +372,7 @@
                 <i class="inline-icon-tip"></i>
               </span>
             </label>
-            <input [readonly]='!isUserAdminORBookOfficer'
+            <input [readonly]='currentUserIsContact || isDisabledForOrgRepIndClient || !isUserAdminORBookOfficer'
                    (click)="fireNotification($event)"
                    type="text"
                    placeholder="Enter Contact First Name"
@@ -394,7 +394,7 @@
                 <i class="inline-icon-tip"></i>
               </span>
             </label>
-            <input [readonly]='!isUserAdminORBookOfficer'
+            <input [readonly]='currentUserIsContact || isDisabledForOrgRepIndClient || !isUserAdminORBookOfficer'
                    type="text"
                    placeholder="Enter Contact Last Name"
                    [(ngModel)]="bookingModel.primaryContact.last_name"
