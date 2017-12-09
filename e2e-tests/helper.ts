@@ -620,9 +620,17 @@ export class Heroku {
     }
 
     private static createBooking(int_required: number) {
-        let currentDate = new Date();
-        let dateStart = new Date(new Date(currentDate).setDate(currentDate.getDate()));
-        let todayDate= dateStart.getFullYear().toString()+"-"+(dateStart.getMonth() + 1)+"-"+"0"+dateStart.getDate().toString();
+      let today = new Date();
+      let dd = today.getDate().toString();
+      let mm = (today.getMonth()+1).toString(); //January is 0!
+      let yyyy =today.getFullYear();
+     if(+dd<10){
+        dd='0'+dd;
+     } 
+     if(+mm<10){
+         mm='0'+mm;
+     } 
+     let todayDate = yyyy+'-'+mm+'-'+dd;
         return new Object({
             'venue': 'Fed Square',
             'requested_by_first_name': 'Georgious',
