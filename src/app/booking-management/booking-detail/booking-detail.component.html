@@ -358,9 +358,9 @@
             </span>
           </label>
           <md-radio-group name="rdcurrentUserIsContact" (change)='onSelectionChange()'
-                          [(ngModel)]="currentUserIsContact">
-            <md-radio-button value=true>YES</md-radio-button>
-            <md-radio-button value=false>NO</md-radio-button>
+                          [(ngModel)]="currentUserIsContact" [disabled]="isDisabledForOrgRepIndClient">
+            <md-radio-button [value]="true">YES</md-radio-button>
+            <md-radio-button [value]="false">NO</md-radio-button>
           </md-radio-group>
         </div>
       </div>
@@ -372,7 +372,7 @@
                 <i class="inline-icon-tip"></i>
               </span>
             </label>
-            <input [readonly]='currentUserIsContact'
+            <input [readonly]='currentUserIsContact || isDisabledForOrgRepIndClient'
                    (click)="fireNotification($event)"
                    type="text"
                    placeholder="Enter Contact First Name"
@@ -394,7 +394,7 @@
                 <i class="inline-icon-tip"></i>
               </span>
             </label>
-            <input [readonly]='currentUserIsContact'
+            <input [readonly]='currentUserIsContact || isDisabledForOrgRepIndClient'
                    type="text"
                    placeholder="Enter Contact Last Name"
                    [(ngModel)]="bookingModel.primaryContact.last_name"
