@@ -6,7 +6,7 @@
   <section>
     <span>Fields with * are required</span>
   </section>
-    <div class="common-form">
+    <div class="common-form"  *ngIf="!forEdit()">
       <div style="float:right;">
         <section class="file-uploader bulk-upload">
           <button md-button>
@@ -29,7 +29,7 @@
       </div>
     </div>
   <form #booking_form="ngForm" class="common-form compact">
-    <div class="row" *ngIf="isUserAdminORBookOfficer">
+    <div class="row" *ngIf="!forEdit() && isUserAdminORBookOfficer ">
       <h2>CUSTOMER</h2>
       <div class="medium-12 columns">
         <div class="form-field">
@@ -42,7 +42,7 @@
       </div> 
     </div>
 
-    <div class="row" *ngIf="isUserAdminORBookOfficer">
+    <div class="row" *ngIf="!forEdit() && isUserAdminORBookOfficer">
       <div class="medium-6 columns">
         <div class="form-field">
           <label>PLEASE SELECT THE {{bookingModel.bookable_type ==='IndividualClient' ? "CLIENT":"ORGANISATION"}}*
@@ -372,7 +372,7 @@
                 <i class="inline-icon-tip"></i>
               </span>
             </label>
-            <input [readonly]='currentUserIsContact || isDisabledForOrgRepIndClient'
+            <input [readonly]='currentUserIsContact || isDisabledForOrgRepIndClient || !isUserAdminORBookOfficer'
                    (click)="fireNotification($event)"
                    type="text"
                    placeholder="Enter Contact First Name"
@@ -394,7 +394,7 @@
                 <i class="inline-icon-tip"></i>
               </span>
             </label>
-            <input [readonly]='currentUserIsContact || isDisabledForOrgRepIndClient'
+            <input [readonly]='currentUserIsContact || isDisabledForOrgRepIndClient || !isUserAdminORBookOfficer'
                    type="text"
                    placeholder="Enter Contact Last Name"
                    [(ngModel)]="bookingModel.primaryContact.last_name"
@@ -466,7 +466,7 @@
             </span>
           </label>
           <md-radio-group name="rdcurrentUserIsClient" (change)='onClientSelectionChange()' 
-                          [disabled]="isDisabledForOrgRepIndClient" [(ngModel)]="currentUserIsClient">
+                          [disabled]="isDisabledForOrgRepIndClient || !isUserAdminORBookOfficer" [(ngModel)]="currentUserIsClient">
             <md-radio-button value=true>YES</md-radio-button>
             <md-radio-button value=false>NO</md-radio-button>
           </md-radio-group>

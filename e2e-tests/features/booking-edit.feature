@@ -133,9 +133,7 @@ Feature: Edit Booking
     And I click the create booking button
     And If I am shown a popup message 'This booking is not within the standard booking hours (8AM - 6PM). Do you still want to create booking?', I approve it
     Then I should get a valid booking update notification
-    And I am on the bookings page
-    When I click on an individual booking
-    Then I am on the individual booking page
+    And I am on the individual booking page
     When I click on link 'Booking details'
     Then I should be on the edit booking page
     And I will see attachment 'sushi.pdf'
@@ -158,9 +156,7 @@ Feature: Edit Booking
     And I click on BUTTON 'SAVE'
     And If I am shown a popup message 'This booking is not within the standard booking hours (8AM - 6PM). Do you still want to create booking?', I approve it
     Then I should get a valid booking update notification
-    And I am on the bookings page
-    When I click on an individual booking
-    Then I am on the individual booking page
+    And I am on the individual booking page
     When I click on link 'Booking details'
     Then I should be on the edit booking page
     And I will see attachment 'sushi.pdf'
@@ -170,9 +166,7 @@ Feature: Edit Booking
     And I click on BUTTON 'SAVE'
     And If I am shown a popup message 'This booking is not within the standard booking hours (8AM - 6PM). Do you still want to create booking?', I approve it
     Then I should get a valid booking update notification
-    And I am on the bookings page
-    When I click on an individual booking
-    Then I am on the individual booking page
+    And I am on the individual booking page
     When I click on link 'Booking details'
     Then I should be on the edit booking page
     And I see attachment 'sushi.pdf' does 'not exists'

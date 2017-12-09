@@ -14,13 +14,7 @@ import {FileUploader} from 'ng2-file-upload';
 import {Address} from '../../shared/model/venue.entity';
 import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
 import {PreferedAllocationService} from '../../shared/prefered-allocation.service';
-import {
-    IndividualClient,
-    OrganisationalRepresentative,
-    BookingOfficer,
-    Administrator,
-    UserFactory
-} from '../../shared/model/user.entity';
+import {IndividualClient, OrganisationalRepresentative, Interpreter, BookingOfficer, Administrator , UserFactory} from '../../shared/model/user.entity';
 import {PopupComponent} from '../../shared/popup/popup.component';
 import {Contact} from '../../shared/model/contact.entity';
 import {UserService} from '../../api/user.service';
@@ -294,7 +288,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     forEdit(): Boolean {
-        return Boolean(this.shouldEdit.length > 0 && this.shouldEdit  === 'edit' ) ;
+        return Boolean(this.shouldEdit.length > 0 && this.shouldEdit === 'edit');
     }
 
     public onStandardInvoice() {
@@ -370,7 +364,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                             Do you still want to create booking?` ;
             let title   = 'NON-STANDARD HOURS WARNING';
             this.createModal(title, message);
-
             this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
 
                 if (result) {
@@ -494,8 +487,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 .subscribe((res: any) => {
                         if (res.status === 204 && res.ok === true) {
                             this.notificationServiceBus.launchNotification(false, 'The Booking has been Updated.');
-                            let route = this.rolePermission.getDefaultRouteForCurrentUser();
-                            this.router.navigate([route]);
+                            this.gotoBookingInfo();
                         }
                         this.spinnerService.requestInProcess(false);
                     },
@@ -508,6 +500,11 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         }
     }
 
+    gotoBookingInfo() {
+        let route = GLOBAL.currentUser instanceof Interpreter || GLOBAL.currentUser instanceof OrganisationalRepresentative
+          ? 'job-detail' : 'booking-job';
+        this.router.navigate(['/booking-management/' + GLOBAL.selBookingID, route]);
+      }
     onCancelBooking() {
         let route = this.rolePermission.getDefaultRouteForCurrentUser();
         this.router.navigate([route]);
