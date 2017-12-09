@@ -620,6 +620,9 @@ export class Heroku {
     }
 
     private static createBooking(int_required: number) {
+        let currentDate = new Date();
+        let dateStart = new Date(new Date(currentDate).setDate(currentDate.getDate()));
+        let todayDate= dateStart.getFullYear().toString()+"-"+(dateStart.getMonth() + 1)+"-"+"0"+dateStart.getDate().toString();
         return new Object({
             'venue': 'Fed Square',
             'requested_by_first_name': 'Georgious',
@@ -637,8 +640,8 @@ export class Heroku {
             'deaf_persons_eaf_no': '124',
             'number_of_people_attending': 1,
             'number_of_interpreters_required': int_required,
-            'start_time': '2017-08-05T09: 01: 26.298+00: 00',
-            'end_time': '2017-08-05T10: 01: 26.298+00: 00',
+            'start_time': todayDate+'T09: 01: 26.298+00: 00',
+            'end_time': todayDate+'T10: 01: 26.298+00: 00',
             'billing_account_attributes': {
                 'primary_contact_first_name': 'Paul',
                 'primary_contact_last_name': 'Biller',

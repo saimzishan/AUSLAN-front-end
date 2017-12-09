@@ -34,7 +34,7 @@ export class BookingComponent implements OnInit {
                 private rolePermission: RolePermission) {
     }
     ngOnInit() {
-        this.fetchBookings();
+        // this.fetchBookings();
     }
     setActiveFilter(activeFilter: string) {
         this.activeFilter = activeFilter;
