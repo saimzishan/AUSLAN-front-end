@@ -28,7 +28,7 @@ export class User {
     static returnValidUser(type: string) {
         let chosen_type = '';
         let valid_user;
-        switch (type) {
+        switch (type.trim()) {
             case 'Administrator':
                 chosen_type = 'Administrator';
                 valid_user = new Administrator('robin@auslan.com.au', 'Abcd#1234');
