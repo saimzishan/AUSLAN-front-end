@@ -145,6 +145,11 @@ export class BookingPage extends PageObject {
 
     }
 
+    theInputInBookingFormWillHaveValue = (inputName: string, value: string) => {
+        const input = this.getElementByName(inputName);
+        return expect(input.getAttribute('value')).to.eventually.eq(value);
+    }
+
     populatedUserDetails = () => {
         const clientOptionLabel = this.getElementByCSSandText('.text-center', 'CLIENT DETAILS');
         const divClientDetails = this.getNextSibling(clientOptionLabel, 'div');
