@@ -179,7 +179,7 @@ Feature: Edit Booking
   # Contact last name: Donavan
   # Contact email: jimmy@donavan.com
   # Contact phone number: 03 9876 4321
-  @runThis
+  @ignoreThis
   Scenario: As a Booking Officer, When editing a booking, I should see the contact details as given by api
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
