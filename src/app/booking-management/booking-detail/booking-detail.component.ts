@@ -50,7 +50,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         }).map(v => BOOKING_NATURE[v]) as string[];
 
     specific_appointment_types = [];
-    currentUserIsContact = 'true';
+    currentUserIsContact = false;
     currentUserIsClient = 'true';
     prefInterpreter: boolean;
     dialogRef: MdDialogRef<any>;
@@ -114,6 +114,13 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         });
     }
 
+    private isCurrentUserContact(): boolean {
+        if (this.forEdit()) {
+            return GLOBAL.currentUser.email === this.bookingModel.primaryContact.email;
+        } else {
+            return true;
+        }
+    }
     getOrgName(item) {
         return (item instanceof OrganisationalRepresentative ?
             (item.organisation_name.toUpperCase()  + ' - ') : '') + item.first_name + ' ' + item.last_name;
@@ -140,9 +147,12 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.isDisabledForOrgRepIndClient = Boolean(this.isUserOrgRepORIndClientTemp() && this.forEdit()) ;
             this.isUserAdminORBookOfficer = <boolean> this.checkUserAdminORBookOfficer();
             this.isDisabledForAdmin = (this.forEdit() && !this.bookingModel.created_by_admin);
-            this.onSelectionChange();
+            this.currentUserIsContact = this.isCurrentUserContact();
+            if (!this.forEdit()) {
+                this.onSelectionChange();
+                this.onClientSelectionChange();
+            }
             this.currentUserIsClient = this.isUserOrgRep() ? 'false' : 'true';
-            this.onClientSelectionChange();
             this.getUser();
             this.bookingModel.bookable_type = this.bookingModel.bookable_type || 'IndividualClient';
             if (this.isUserAdminORBookOfficer) {
@@ -174,7 +184,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             ['first_name', 'last_name', 'email', 'mobile_number'].forEach((field) => {
                 let currentUserFieldMap = { mobile_number: 'mobile' };
                 let currentUserField = currentUserFieldMap[field] || field;
-                let value = this.currentUserIsContact === 'true' ? user[currentUserField] : '';
+                let value = this.currentUserIsContact ? user[currentUserField] : '';
                 this.bookingModel.primaryContact[field] = value;
             });
         }
