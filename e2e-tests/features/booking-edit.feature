@@ -138,7 +138,7 @@ Feature: Edit Booking
     Then I should be on the edit booking page
     And I will see attachment 'sushi.pdf'
 
-  @runThis
+  @ignoreThis
   Scenario: As a Organisational Representative, I removed a document on the booking detail page and press save then the document will be removed from the booking
     Given Assigned all bookings to Organisational Representative
     Given I exist as an Organisational Representative
