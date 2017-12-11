@@ -10,6 +10,7 @@ import {NotificationServiceBus} from '../../notification/notification.service';
 import {GLOBAL} from '../../shared/global';
 import {UserNameService} from '../../shared/user-name.service';
 import {FormGroup} from '@angular/forms';
+import {AuthGuard} from '../../auth/auth.guard';
 
 @Component({
     selector: 'app-user-profile',
@@ -68,6 +69,7 @@ export class UserProfileComponent implements OnInit {
                             this.userModel.prefferedInterpreters =
                                 this.userModel.prefferedInterpreters.filter(i => i._destory === -1);
                         }
+                        AuthGuard.refreshUser(this.userModel);
                         this.notificationServiceBus.launchNotification(false, 'User details updated Successfully');
                         this.spinnerService.requestInProcess(false);
 
