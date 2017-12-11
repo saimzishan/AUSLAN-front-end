@@ -49,7 +49,7 @@ Feature: Create Booking with preferred or blocked interpreters
     Then I can see the element with css 'div.md-dialog' is 'visible'
     When I click on '2' interpreter
     Then I can see the element with css 'section[name="interpreters"].selected' is 'not visible'
-    And I will get an error notification saying "This interpreter is already selected as a preffered interpreter. Please remove first."
+    And I will get an error notification saying "Oops! This interpreter is already selected as a preferred interpreter. Please remove this interpreter first."
     When I click on '1' interpreter
     Then I can see the element with css 'section[name="interpreters"].selected' is 'visible'
     Then I click on BUTTON name 'selectBtn'
@@ -110,7 +110,7 @@ Feature: Create Booking with preferred or blocked interpreters
     Then I can see the element with css 'div.md-dialog' is 'visible'
     When I click on '2' interpreter
     Then I can see the element with css 'section[name="interpreters"].selected' is 'not visible'
-    And I will get an error notification saying "This interpreter is already selected as a blocked interpreter. Please remove first."
+    And I will get an error notification saying "Oops! This interpreter is already selected as a blocked interpreter. Please remove this interpreter first."
     When I click on '1' interpreter
     Then I can see the element with css 'section[name="interpreters"].selected' is 'visible'
     Then I click on BUTTON name 'selectBtn'
@@ -177,7 +177,7 @@ Feature: Create Booking with preferred or blocked interpreters
     Then I can see the element with css 'div.md-dialog' is 'visible'
     When I click on '1' interpreter
     Then I can see the element with css 'section[name="interpreters"].selected' is 'not visible'
-    And I will get an error notification saying "This interpreter is already selected as a preffered interpreter. Please remove first."
+    And I will get an error notification saying "Oops! This interpreter is already selected as a preferred interpreter. Please remove this interpreter first."
     Then I click on BUTTON name 'noBtn'
     Then I wait for 2000 milli-seconds
     Then I can see the element with css 'div.md-dialog' is 'hidden'
@@ -193,10 +193,10 @@ Feature: Create Booking with preferred or blocked interpreters
     Then I can see the element with css 'div.md-dialog' is 'visible'
     When I click on '1' interpreter
     Then I can see the element with css 'section[name="interpreters"].selected' is 'not visible'
-    And I will get an error notification saying "This interpreter is already selected as a preffered interpreter. Please remove first."
+    And I will get an error notification saying "Oops! This interpreter is already selected as a preferred interpreter. Please remove this interpreter first."
     Then I click on '2' interpreter
     And I can see the element with css 'section[name="interpreters"].selected' is 'not visible'
-    And I will get an error notification saying "This interpreter is already selected as a blocked interpreter. Please remove first."
+    And I will get an error notification saying "Oops! This interpreter is already selected as a blocked interpreter. Please remove this interpreter first."
     Then I click on BUTTON name 'noBtn'
     And I wait for 2000 milli-seconds
     Then I can see the element with css 'div.md-dialog' is 'hidden'

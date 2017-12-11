@@ -32,7 +32,7 @@ Feature: Booking Management
     Then I will be shown the booking job page
     And I see attachment 'sushi.pdf' does 'exists'
 
-  @ignoreThis
+  @runThis
   Scenario: Administrator can create a booking with pdf for Organisational Representative
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
