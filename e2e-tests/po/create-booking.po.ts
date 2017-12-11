@@ -201,7 +201,9 @@ export class BookingPage extends PageObject {
     createBooking = () => {
         return this.createBookingWithTimeAndInterpreter('standard', '10:15AM', '11:15AM', '2');
     }
-
+    createBookingWithYesterdayDate = () => {
+        return this.BookingWithYesterdayDate('standard', '10:15AM', '11:15AM', '2');
+    }
     createBookingForPerth = () => {
         return this.createBookingWithAddressTimeAndInterpreter('standard', '10:15AM', '11:15AM', '2');
     }
