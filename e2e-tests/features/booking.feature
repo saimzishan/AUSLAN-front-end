@@ -12,6 +12,7 @@ Feature: Booking Management
     And I am on the bookings page
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
+    When I click on element by name 'rdBookingAddressNo'
     When I fill New Booking form fields correctly
     And I click the create booking button
     Then I will get an error notification saying "Kindly accept Terms and Conditions"
@@ -29,6 +30,7 @@ Feature: Booking Management
     And I am on the bookings page
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
+    When I click on element by name 'rdBookingAddressNo'
     When I fill New Booking form fields correctly
     And I select the bookable for client
     And I click the create booking button
@@ -80,6 +82,7 @@ Feature: Booking Management
     And I am on the bookings page
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
+    When I click on element by name 'rdBookingAddressNo'
     When I fill New Booking form fields correctly
     And I select the bookable for client
     And I click the create booking button
@@ -129,6 +132,7 @@ Feature: Booking Management
     And I am on the bookings page
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
+    When I click on element by name 'rdBookingAddressNo'
     When I fill New Booking form fields correctly
     And I click the create booking button
     Then I will get an error notification saying "Kindly accept Terms and Conditions"
@@ -180,6 +184,7 @@ Feature: Booking Management
     And I am on the bookings page
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
+    When I click on element by name 'rdBookingAddressNo'
     When I fill New Booking form fields correctly with non-standard time from 04:00AM to 05:00AM with 1 interpreters
     And I select the bookable for client
     And I click the create booking button
@@ -198,6 +203,7 @@ Feature: Booking Management
     And I am on the bookings page
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
+    When I click on element by name 'rdBookingAddressNo'
     When I fill New Booking form fields correctly with non-standard time from 04:00AM to 05:00AM with 1 interpreters
     And I select the bookable for client
     And I click the create booking button
@@ -216,6 +222,7 @@ Feature: Booking Management
     And I am on the bookings page
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
+    When I click on element by name 'rdBookingAddressNo'
     When I fill New Booking form fields correctly with non-standard time from 04:00AM to 05:00AM with 1 interpreters
     And I click the create booking button
     Then I will get an error notification saying "Kindly accept Terms and Conditions"
@@ -233,6 +240,7 @@ Feature: Booking Management
     And I am on the bookings page
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
+    When I click on element by name 'rdBookingAddressNo'
     When I fill New Booking form fields correctly with non-standard time from 04:00AM to 05:00AM with 1 interpreters
     And I click the create booking button
     Then I will get an error notification saying "Kindly accept Terms and Conditions"
@@ -252,6 +260,7 @@ Feature: Booking Management
     And I am on the bookings page
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
+    When I click on element by name 'rdBookingAddressNo'
     When I fill New Booking form fields correctly with non-standard time from 04:00AM to 05:01AM with 1 interpreters
     Then I am shown a validation error with the text 'You may require more than 1 interpreter for this booking'
 
@@ -262,6 +271,7 @@ Feature: Booking Management
     And I am on the bookings page
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
+    When I click on element by name 'rdBookingAddressNo'
     When I fill New Booking form fields correctly with non-standard time from 04:00AM to 05:01AM with 1 interpreters
     Then I am shown a validation error with the text 'You may require more than 1 interpreter for this booking'
 
@@ -272,6 +282,7 @@ Feature: Booking Management
     And I am on the bookings page
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
+    When I click on element by name 'rdBookingAddressNo'
     When I fill New Booking form fields correctly with non-standard time from 04:00AM to 05:01AM with 1 interpreters
     Then I am shown a validation error with the text 'You may require more than 1 interpreter for this booking'
 
@@ -282,6 +293,7 @@ Feature: Booking Management
     And I am on the bookings page
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
+    When I click on element by name 'rdBookingAddressNo'
     When I fill New Booking form fields correctly with non-standard time from 04:00AM to 05:01AM with 1 interpreters
     Then I am shown a validation error with the text 'You may require more than 1 interpreter for this booking'
 # ---------------------------------------- AUSLAN1-254 -> END ----------------------------------------
@@ -304,6 +316,7 @@ Feature: Booking Management
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
     And I can see the ext_ref_num field
+    When I click on element by name 'rdBookingAddressNo'
     When I fill New Booking form fields correctly
     And I fill the field 'ext_ref_num' with value '1234'
     Then I move to element name 'tnc'
@@ -353,6 +366,7 @@ Feature: Booking Management
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
     And I can see the txtSpecialInstruction field
+    When I click on element by name 'rdBookingAddressNo'
     When I fill New Booking form fields correctly with non-standard time from 07:00AM to 08:00AM with 1 interpreters
     And I specify i have special instruction
     Then I move to element name 'tnc'
@@ -370,6 +384,7 @@ Feature: Booking Management
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
     And I can see the txtSpecialInstruction field
+    When I click on element by name 'rdBookingAddressNo'
     And I fill New Booking form fields correctly with non-standard time from 07:00AM to 08:00AM with 1 interpreters
     And I specify i have special instruction
     And The field 'txtSpecialInstruction' will be populated with 'I am special'
@@ -397,6 +412,7 @@ Feature: Booking Management
     And I am on the bookings page
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
+    When I click on element by name 'rdBookingAddressNo'
     When I fill New Booking form fields correctly
     And I select the bookable for client
     And I click the create booking button
@@ -554,6 +570,7 @@ Feature: Booking Management
     When I am on the bookings page
     And I click on 'New Booking'
     Then I will be taken to the 'New Booking' form
+    When I click on element by name 'rdBookingAddressNo'
     When I fill New Booking form fields correctly with standard time from 09:00AM to 11:00AM with 1 interpreters
     And I select the bookable for client
     Then I move to element name 'tnc'
@@ -591,6 +608,7 @@ Feature: Booking Management
     Then I am on the bookings page
     And I click on 'New Booking'
     Then I will be taken to the 'New Booking' form
+    When I click on element by name 'rdBookingAddressNo'
     When I fill New Booking form fields correctly
     And I select the bookable for org rep
     And I click on checkbox name 'tnc'

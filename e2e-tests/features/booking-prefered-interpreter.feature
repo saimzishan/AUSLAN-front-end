@@ -222,6 +222,7 @@ Feature: Create Booking with preferred or blocked interpreters
     When I click on 'New Booking'
     Then I will be taken to the 'New Booking' form
     When I select the bookable for client
+    When I click on element by name 'rdBookingAddressNo'
     And I fill New Booking form fields correctly
     And I can see the element with name 'preferInterHeading' has text 'Preferred interpreters'
     And I can see the element with name 'preferInterQuestion1' is 'visible'

@@ -16,6 +16,7 @@ Feature: Booking Management
     When I will upload a document 'sushi.pdf'
     And I will see attachment 'sushi.pdf'
     And I will close the file upload
+    When I click on element by name 'rdBookingAddressNo'
     And I fill New Booking form fields correctly
     And I select the bookable for client
     And I click the create booking button
@@ -42,6 +43,7 @@ Feature: Booking Management
     When I will upload a document 'sushi.pdf'
     And I will see attachment 'sushi.pdf'
     And I will close the file upload
+    When I click on element by name 'rdBookingAddressNo'
     And I fill New Booking form fields correctly
     And I select the bookable for org rep
     And I click the create booking button
@@ -69,6 +71,7 @@ Feature: Booking Management
     When I will upload a document 'sushi.pdf'
     And I will see attachment 'sushi.pdf'
     And I will close the file upload
+    When I click on element by name 'rdBookingAddressNo'
     And I fill New Booking form fields correctly
     And I select the bookable for client
     And I click the create booking button
@@ -122,6 +125,7 @@ Feature: Booking Management
     When I will upload a document 'docu_not_sushi.doc'
     And I will see attachment 'docu_not_sushi.doc'
     And I will close the file upload
+    When I click on element by name 'rdBookingAddressNo'
     And I fill New Booking form fields correctly
     And I select the bookable for client
     And I click the create booking button
@@ -148,6 +152,7 @@ Feature: Booking Management
     When I will upload a document 'ppt_not_sushi.ppt'
     And I will see attachment 'ppt_not_sushi.ppt'
     And I will close the file upload
+    When I click on element by name 'rdBookingAddressNo'
     And I fill New Booking form fields correctly
     And I select the bookable for client
     And I click the create booking button
@@ -174,6 +179,7 @@ Feature: Booking Management
     When I will upload a document 'ppt_not_sushi.ppt'
     And I will see attachment 'ppt_not_sushi.ppt'
     And I will close the file upload
+    When I click on element by name 'rdBookingAddressNo'
     And I fill New Booking form fields correctly
     And I select the bookable for client
     And I click the create booking button
@@ -209,6 +215,7 @@ Feature: Booking Management
     Then I will see attachment 'sushi.pdf' is removed
     Then I click on BUTTON name 'btnRemoveDocument_1'
     Then I will see attachment 'ppt_not_sushi.ppt' is removed
+    When I click on element by name 'rdBookingAddressNo'
     And I fill New Booking form fields correctly
     And I select the bookable for client
     And I click the create booking button
@@ -244,6 +251,7 @@ Feature: Booking Management
     Then I will see attachment 'ppt_not_sushi.ppt' is removed
     When I will upload a document 'sushi.pdf'
     And I will see attachment 'sushi.pdf'
+    When I click on element by name 'rdBookingAddressNo'
     And I fill New Booking form fields correctly
     And I select the bookable for client
     And I click the create booking button
