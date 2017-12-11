@@ -370,3 +370,23 @@ Feature: Booking Filter
     And I sign in with valid Administrator credentials
     And I am on the bookings page
     Then I can see that date_from is preseleted with current date
+    Then I click on my name
+    And I click on logout
+
+ @runThis
+ Scenario: As a Booking Officer, I can create a booking for Organisational Representative and I should be able to filter the booking by today date onwards
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    Then I am on the bookings page
+    And I click on 'New Booking'
+    Then I will be taken to the 'New Booking' form
+    When I fill New Booking form fields correctly with yesterday date
+    And I select the bookable for org rep
+    And I click on checkbox name 'tnc'
+    When I click the create booking button
+    Then I get a valid create booking notification
+    And I am on the bookings page
+    When I query search with empty date '(.*)'
+    Then I am shown with 6 booking
+    Then I click on my name
+    And I click on logout

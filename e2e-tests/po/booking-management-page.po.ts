@@ -3,6 +3,7 @@ import {browser, by, element, $, $$, protractor} from 'protractor';
 import {expect} from '../config/helpers/chai-imports';
 import {User} from '../helper';
 import {BookingPage} from './create-booking.po';
+import { debug } from 'util';
 
 enum BookingTableHeaders {
     None, Empty, Job, Status, State, Date, Org,
@@ -112,6 +113,7 @@ export class BookingManagementPage extends PageObject {
     }
 
     showTheNumberofBooking = (num_of_booking: string, type_of_booking?: string) => {
+        browser.pause();
         let numBooking = parseInt(num_of_booking, 10);
         let allTypeBooking;
         if (type_of_booking) {
@@ -242,7 +244,9 @@ export class BookingManagementPage extends PageObject {
         value === 'empty' ? searchInput.click() : searchInput.sendKeys(value);;
         return searchForm.submit();
     }
-
+    querySearchWithEmptyDate = (value: string) => {
+        let searchInput =this.getElementByName('date_from').sendKeys(protractor.Key.LEFT + protractor.Key.LEFT + protractor.Key.LEFT + protractor.Key.DELETE + protractor.Key.RIGHT + protractor.Key.DELETE + protractor.Key.RIGHT + protractor.Key.DELETE);
+    }
     // Adds a '0' in the start if the date < 10
     private prettyDate = (date: number|string): string => {
         date = date.toString();
@@ -268,9 +272,17 @@ export class BookingManagementPage extends PageObject {
     }
 
     filterBookingByCurrentDate = () => {
-        let currentDate = new Date();
-        let dateStart = new Date(new Date(currentDate).setDate(currentDate.getDate()));
-        let todayDate= dateStart.getFullYear().toString()+"-"+(dateStart.getMonth() + 1)+"-"+"0"+dateStart.getDate().toString();
+        let today = new Date();
+        let dd = today.getDate().toString();
+        let mm = (today.getMonth()+1).toString(); //January is 0!
+        let yyyy =today.getFullYear();
+       if(+dd<10){
+          dd='0'+dd;
+       }
+       if(+mm<10){
+           mm='0'+mm;
+       }
+       let todayDate = yyyy+'-'+mm+'-'+dd;
       let datefrom=this.getElementByName('date_from');
       datefrom.getAttribute('value').then((value)=> {
             return expect(value).to.be.eq(todayDate);
