@@ -166,6 +166,7 @@ Feature: Edit Booking
     And I click on BUTTON 'SAVE'
     And If I am shown a popup message 'This booking is not within the standard booking hours (8AM - 6PM). Do you still want to create booking?', I approve it
     Then I should get a valid booking update notification
+    And I wait for 1000 milli-seconds
     And I am on the individual booking page
     When I click on link 'Booking details'
     Then I should be on the edit booking page
