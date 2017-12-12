@@ -105,7 +105,7 @@
                                          (pageChange)="getPage($event)"></pagination-controls>
                 </td>
                 <td>
-                <span *ngIf="totalItems > 0">{{'Displaying ' + (((p - 1) * 10) + 1) + ' - '
+                <span id="displayTxt" *ngIf="totalItems > 0">{{'Displaying ' + (((p - 1) * 10) + 1) + ' - '
                 + ( userList.length < 10 ? totalItems : (p * 10)) + ' of ' + totalItems + ' Users'}}</span>
                 </td>
             </tr>
