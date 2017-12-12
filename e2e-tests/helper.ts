@@ -28,7 +28,7 @@ export class User {
     static returnValidUser(type: string) {
         let chosen_type = '';
         let valid_user;
-        switch (type) {
+        switch (type.trim()) {
             case 'Administrator':
                 chosen_type = 'Administrator';
                 valid_user = new Administrator('robin@auslan.com.au', 'Abcd#1234');
@@ -558,7 +558,7 @@ export class Heroku {
 
     static updateBookingWithStatus(status: string) {
         let daysToAdd = status === 'red' ? '2' : '4';
-        let command = 'd = ' + daysToAdd + '.business_days.after(DateTime.now);';
+        let command = 'd = ' + daysToAdd + '.business_days.after(DateTime.now.change(hour: 10));';
         command += 'Booking.last.update(start_time: d, end_time: d + 1.hour);Booking.last.update_status';
         Heroku.sendCommandToHeroku(command);
     }

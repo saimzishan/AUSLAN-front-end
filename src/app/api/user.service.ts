@@ -83,7 +83,7 @@ export class UserService extends ApiService {
                     'Content-Type': 'application/json'});
                 let options = new RequestOptions({ headers: headers });
                 let obj = { 'user':
-                    user instanceof OrganisationalRepresentative ? (<OrganisationalRepresentative>user).toJSONForDuplicate() :
+                    user instanceof OrganisationalRepresentative ? (<OrganisationalRepresentative>user).jsonForDuplicate() :
                             user instanceof IndividualClient ? (<IndividualClient>user).toJSON() :
                                 user };
                 return this.http.post(GLOBAL.USER_API + '/' + toCreate, JSON.stringify(obj), options)

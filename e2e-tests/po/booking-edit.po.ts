@@ -10,6 +10,7 @@ const EDITABLE_FIELDS = [
     'parking_type',
     'important_notes',
     'rdcurrentUserIsContact',
+    'rdPreferredInterpreters',
     'email',
     'mobile',
     'deaf_person_email',
@@ -81,7 +82,7 @@ export class BookingEditPage extends PageObject {
         READONLY_FIELDS.forEach((fieldName) => {
             let ele = this.getElementByName(fieldName);
             return ele.getAttribute('readonly').then(readonly => {
-                return ele.getAttribute('disabled').then(disabled => {
+                return ele.getAttribute('ng-reflect-is-disabled').then(disabled => {
                     return expect(disabled === 'true' || readonly === 'true').to.be.true;
                 });
             });

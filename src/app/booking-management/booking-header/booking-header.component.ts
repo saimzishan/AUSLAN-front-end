@@ -79,7 +79,7 @@ export class BookingHeaderComponent implements OnInit, OnDestroy {
         };
         config.viewContainerRef = this.viewContainerRef;
         this.dialogRef = this.dialog.open(PopupComponent, config);
-        this.dialogRef.componentInstance.title = 'NON-STANDARD HOURS WARNING';
+        this.dialogRef.componentInstance.title = 'Unsaved changes';
         this.dialogRef.componentInstance.cancelTitle = 'Leave page';
         this.dialogRef.componentInstance.okTitle = 'Stay on page';
         this.dialogRef.componentInstance.popupMessage =

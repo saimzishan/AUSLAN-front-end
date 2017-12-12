@@ -6,7 +6,7 @@
   <section>
     <span>Fields with * are required</span>
   </section>
-    <div class="common-form">
+    <div class="common-form"  *ngIf="!forEdit()">
       <div style="float:right;">
         <section class="file-uploader bulk-upload">
           <button md-button>
@@ -29,7 +29,7 @@
       </div>
     </div>
   <form #booking_form="ngForm" class="common-form compact">
-    <div class="row" *ngIf="isUserAdminORBookOfficer">
+    <div class="row" *ngIf="!forEdit() && isUserAdminORBookOfficer ">
       <h2>CUSTOMER</h2>
       <div class="medium-12 columns">
         <div class="form-field">
@@ -42,7 +42,7 @@
       </div> 
     </div>
 
-    <div class="row" *ngIf="isUserAdminORBookOfficer">
+    <div class="row" *ngIf="!forEdit() && isUserAdminORBookOfficer">
       <div class="medium-6 columns">
         <div class="form-field">
           <label>PLEASE SELECT THE {{bookingModel.bookable_type ==='IndividualClient' ? "CLIENT":"ORGANISATION"}}*
@@ -301,7 +301,7 @@
           </label>
           <textarea placeholder="Important Notes" name="important_notes" [(ngModel)]="bookingModel.notes"></textarea>
 
-          <span *ngIf="bookingModel.raw_nature_of_appointment ==='Other' && bookingModel.notes.length < 2 ;"
+          <span *ngIf="bookingModel.raw_nature_of_appointment === 'Other' && (!bookingModel.notes || (bookingModel.notes && bookingModel.notes.length < 2))"
                 class="inline-icon error">
             <span>Please specify what the appointment is about</span>!
           </span>
@@ -357,9 +357,9 @@
             </span>
           </label>
           <md-radio-group name="rdcurrentUserIsContact" (change)='onSelectionChange()'
-                          [(ngModel)]="currentUserIsContact">
-            <md-radio-button value=true>YES</md-radio-button>
-            <md-radio-button value=false>NO</md-radio-button>
+                          [(ngModel)]="currentUserIsContact" [disabled]="isDisabledForOrgRepIndClient">
+            <md-radio-button [value]="true">YES</md-radio-button>
+            <md-radio-button [value]="false">NO</md-radio-button>
           </md-radio-group>
         </div>
       </div>
@@ -463,7 +463,7 @@
             </span>
           </label>
           <md-radio-group name="rdcurrentUserIsClient" (change)='onClientSelectionChange()' 
-                          disabled="isEditableForOrgRepIndClient" [(ngModel)]="currentUserIsClient">
+                          [disabled]="isDisabledForOrgRepIndClient || !isUserAdminORBookOfficer" [(ngModel)]="currentUserIsClient">
             <md-radio-button value=true>YES</md-radio-button>
             <md-radio-button value=false>NO</md-radio-button>
           </md-radio-group>
@@ -597,7 +597,7 @@
             </span>
           </label>
           <md-radio-group name="rdStandardInvoice"[(ngModel)]="standardInvoice" (change)='onStandardInvoice()'
-                          disabled="isEditableForOrgRepIndClient">
+                          [disabled]="isDisabledForOrgRepIndClient">
             <md-radio-button value=true>YES</md-radio-button>
             <md-radio-button value=false>NO</md-radio-button>
           </md-radio-group>

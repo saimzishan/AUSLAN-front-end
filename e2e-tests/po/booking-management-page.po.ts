@@ -32,18 +32,6 @@ export class BookingManagementPage extends PageObject {
     logoutClick = () => {
         return this.getElementByID('lnkLogout').click();
     }
-
-    hoverOnProfile = (insideElementCss) => {
-        let el = this.getElementByID('lnkProfile');
-        return browser.actions().mouseMove(el).perform().then(() => {
-            let elm = this.getElementByID(insideElementCss);
-            this.currentPath().then((path) => {
-                browser.wait(protractor.ExpectedConditions.presenceOf(elm), 10000).then(() => {
-                    expect(elm).to.be.exist;
-                });
-            });
-        });
-    }
     selectionNotPresent = (headerTitle: string, selection: string) => {
         let headerCss = '.dropdown#' + {
             'Status': 'booking-status',
@@ -239,7 +227,7 @@ export class BookingManagementPage extends PageObject {
     querySearchWith = (value: string) => {
         let searchInput = this.getElementByCss('form input[name=search]');
         let searchForm = this.getParent(searchInput);
-        value === 'empty' ? searchInput.click() : searchInput.sendKeys(value);;
+        value === 'empty' ? searchInput.click() : searchInput.sendKeys(value);
         return searchForm.submit();
     }
 

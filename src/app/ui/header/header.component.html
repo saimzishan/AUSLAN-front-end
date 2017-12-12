@@ -8,7 +8,7 @@
 	<a *ngIf="userIsActive && canShowLink('create-booking')" id="lnkNewBooking" [ngClass]="{'active':isActiveLink(linkName.booking)}" (click)="setActiveLink(linkName.booking)" class="button" [routerLink]="['/booking-management','create-booking']">+ New Booking</a>
 
 	<section *ngIf="userIsActive">
-		<ul class="dropdown menu" data-dropdown-menu>
+		<ul class="dropdown menu" data-dropdown-menu data-disable-hover="true" data-click-open="true">
 			<li>
 				<a id="lnkProfile" [ngClass]="{'active':isActiveLink(linkName.profile)}"
 				   (click)="setActiveLink(linkName.profile)" [routerLink]="['user-management','profile']">

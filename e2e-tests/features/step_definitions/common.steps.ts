@@ -27,9 +27,7 @@ defineSupportCode(({Given, When, Then}) => {
     }
 
     Given(/^There exists an? (.*)/, Heroku.createFactory);
-    Given(/^I click on my name$/, () => {
-        return bookingManagementPage.hoverOnProfile('lnkLogout');
-    });
+    Given(/^I click on my name$/, bookingManagementPage.clickOnProfile);
     Given(/^I scroll to top$/, () => {
         return browser.executeScript('window.scrollTo(0,0);').then(function () {
             browser.sleep(1000);
@@ -37,9 +35,7 @@ defineSupportCode(({Given, When, Then}) => {
     });
 
     Given(/^I click on logout$/, bookingManagementPage.logoutClick);
-    Given(/^I hover on the 'Profile'$/, () => {
-        return bookingManagementPage.hoverOnProfile('lnkSettings');
-    });
+    Given(/^I hover on the 'Profile'$/, bookingManagementPage.clickOnProfile);
     Given(/^I go to the 'User Management' list page$/, clickOnUserManagementPage);
 
     function clickOnUserManagementPage() {
@@ -57,7 +53,7 @@ defineSupportCode(({Given, When, Then}) => {
     });
     Given(/^I sign in with valid (.*) credentials$/, (type: string) => {
         return homePage.signInWithValidCredential(type).then(() => {
-            browser.sleep(3000).then(() => {
+            browser.sleep(3200).then(() => {
                 bookingManagementPage.onBookingListPage();
             });
         });

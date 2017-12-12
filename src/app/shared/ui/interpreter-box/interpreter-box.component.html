@@ -10,11 +10,13 @@
                         <span mdTooltip="You can add prefered or blocked interpreters in this section." ><i class="inline-icon-tip"></i></span>
                     </label>
 
-                    <md-radio-group name="{{'rdNeedInterpreter_' + isPreffered}} "
+                    <md-radio-group
+                            name="{{'rdNeedInterpreter_' + isPreffered}} "
                                     [(ngModel)]="needInterpreter">
-                        <md-radio-button [ngClass]="{'btnYes_prefered' : isPreffered ,
+                        <md-radio-button [disabled]="isReadOnly"
+                                [ngClass]="{'btnYes_prefered' : isPreffered ,
                          'btnYes_blocked' : !isPreffered}" [value]=true>YES</md-radio-button>
-                        <md-radio-button [ngClass]="{'btnNo_prefered' : isPreffered ,
+                        <md-radio-button [disabled]="isReadOnly" [ngClass]="{'btnNo_prefered' : isPreffered ,
                          'btnNo_blocked' : !isPreffered}"  [value]=false>NO</md-radio-button>
                     </md-radio-group>
                 </div>

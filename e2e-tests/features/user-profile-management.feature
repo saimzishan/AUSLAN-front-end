@@ -720,7 +720,7 @@ Feature: User Profile Management
 
 
 # --------------------------------------------- AUSLAN1-165 -> START ---------------------------------------------
-  @ignoreThis
+  @runThis
 #  Show profile page
   Scenario: Be able to check the profile picture as Administrator
     Given I exist as an Administrator
@@ -728,7 +728,7 @@ Feature: User Profile Management
     Then I am on the bookings page
     And I can verify my profile pic is same with link 'https://s3-ap-southeast-2.amazonaws.com/auslan-public-bucket/missing.svg'
 
-  @ignoreThis
+  @runThis
 #  Show profile page
   Scenario: Be able to update the profile picture as Administrator with different picture
     Given I exist as an Administrator
@@ -738,6 +738,42 @@ Feature: User Profile Management
     And I click on my name in the top corner
     And I will be taken to my individual profile page
     When I will upload a document 'sanji_not_sushi.png'
+    And I click on BUTTON 'SAVE'
+    Then I get valid message: 'User details updated Successfully'
+    And I can verify my profile pic is different with link 'missing.svg'
+
+  @runThis
+#  Show profile page
+  Scenario: Be able to update the profile picture as Organisational Representative with different picture
+    Given I exist as an Organisational Representative
+    And I sign in with valid Organisational Representative credentials
+    And I am on the bookings page
+    And I can verify my profile pic is same with link 'missing.svg'
+    And I click on my name in the top corner
+    And I will be taken to my individual profile page
+    When I will upload a document 'sanji_not_sushi.png'
+    And I click on BUTTON 'SAVE'
+    Then I get valid message: 'User details updated Successfully'
+    And I can verify my profile pic is different with link 'missing.svg'
+    When I will upload a document 'sanji_not_sushi.jpg'
+    And I click on BUTTON 'SAVE'
+    Then I get valid message: 'User details updated Successfully'
+    And I can verify my profile pic is different with link 'missing.svg'
+
+  @runThis
+#  Show profile page
+  Scenario: Be able to update the profile picture as Individual Client with different picture
+    Given I exist as an Individual Client
+    And I sign in with valid Individual Client credentials
+    And I am on the bookings page
+    And I can verify my profile pic is same with link 'missing.svg'
+    And I click on my name in the top corner
+    And I will be taken to my individual profile page
+    When I will upload a document 'sanji_not_sushi.png'
+    And I click on BUTTON 'SAVE'
+    Then I get valid message: 'User details updated Successfully'
+    And I can verify my profile pic is different with link 'missing.svg'
+     When I will upload a document 'sanji_not_sushi.jpg'
     And I click on BUTTON 'SAVE'
     Then I get valid message: 'User details updated Successfully'
     And I can verify my profile pic is different with link 'missing.svg'
