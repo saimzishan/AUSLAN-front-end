@@ -207,18 +207,11 @@
             </tr>
             </tbody>
         </table>
-        <table>
-            <tr>
-                <td>
-                    <pagination-controls class="my-pagination" *ngIf="totalItems >= 10"
-                                         (pageChange)="getPage($event)"></pagination-controls>
-                </td>
-                <td>
-                <span id="displayTxt" *ngIf="totalItems > 0">{{'Displaying ' + (((p - 1) * 10) + 1) + ' - '
-                + ( bookingList.length < 10 ? totalItems : (p * 10)) + ' of ' + totalItems + ' Bookings'}}</span>
-                </td>
-            </tr>
-        </table>
+        <span id="displayTxt" *ngIf="totalItems > 0">{{'Displaying ' + (((p - 1) * 10) + 1) + ' - '
+                + ( bookingList.length < 10 ? totalItems : (p * 10)) + ' of ' + totalItems + ' Booking' + (bookingList.length > 1 ? 's' : '')}}</span>
+
+        <pagination-controls class="my-pagination" *ngIf="totalItems >= 10"
+                             (pageChange)="getPage($event)"></pagination-controls>
 
     </section>
 </main>
