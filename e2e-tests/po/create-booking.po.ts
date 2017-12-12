@@ -286,6 +286,52 @@ export class BookingPage extends PageObject {
 
         this.getElementByName('deaf_person_eaf').sendKeys('123');
     }
+
+    BookingWithYesterdayDate = (standard: string, startTime: string, endTime: string, interpreterNum: string) => {
+        let date = new Date();
+        const dateToSend = this.getDateAfterNDays(-1);
+        this.setStartEndTime('start', dateToSend, startTime);
+        this.setStartEndTime('end', dateToSend, endTime);
+        this.setStreetNumber('162');
+        this.setElementsValueByName('address_street', 'Dave');
+        this.setElementsValueByName('address_post_code', '3064');
+        this.setElementsValueByName('address_suburb', 'Parkville');
+        this.setElementsValueByName('address_state', 'VIC'); // dropdown
+
+        this.getElementByName('attendee_count').sendKeys('1');
+        this.getElementByName('interpreters_count').clear();
+        this.getElementByName('interpreters_count').sendKeys(interpreterNum);
+
+        this.getElementByName('nature_of_appointment').sendKeys('COURT');
+        this.getElementByName('specific_nature_of_appointment').sendKeys('DHS ORDER');
+
+        this.getElementByName('raw_booking_requested_by').sendKeys('Luke');
+        this.getElementByName('raw_booking_requested_by_ln').sendKeys('Orange');
+
+        // this.getElementByName('ext_ref_num').sendKeys('321');
+
+        this.getElementByName('cn_first_name').sendKeys('John');
+        this.getElementByName('cn_last_name').sendKeys('Travolta');
+        this.getElementByName('cn_email').sendKeys('jt@star.com.au');
+        this.getElementByName('cn_phone').sendKeys('0490394512');
+
+        let deaf_person_values = {
+            'deaf_person_name': 'Frank',
+            'deaf_person_last_name': 'Castle',
+            'deaf_person_email': 'petecastiligone@gmail.com',
+            'deaf_person_mobile': '0918273645'
+        };
+
+        Object.keys(deaf_person_values).forEach(field => {
+            this.getElementByName(field).getAttribute('value').then(value => {
+                if (!value) {
+                    this.getElementByName(field).sendKeys(deaf_person_values[field]);
+                }
+            });
+        });
+
+        this.getElementByName('deaf_person_eaf').sendKeys('123');
+    }
     createBookingWithAddressTimeAndInterpreter = (standard: string, startTime: string, endTime: string, interpreterNum: string) => {
         this.setStartEndTime('start', '12/12/2017', startTime);
         this.setStartEndTime('end', '12/12/2017', endTime);
