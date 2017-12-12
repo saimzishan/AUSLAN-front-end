@@ -2,7 +2,7 @@ import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {
     Accountant,
     Administrator, BookingOfficer, IndividualClient, Interpreter, OrganisationalRepresentative,
-    User
+    User, UserFactory
 } from '../../shared/model/user.entity';
 import {UserService} from '../../api/user.service';
 import {SpinnerService} from '../../spinner/spinner.service';
@@ -61,15 +61,18 @@ export class UserProfileComponent implements OnInit {
         this.userDataService.updateUser(this.userModel)
             .subscribe((res: any) => {
                     if (res.status === 200) {
+                        let user ;
                         // UI Notification
                         this.userModel.photo_url = res.json().photo_url || '';
-                        this.userNameService.setLoggedInUser(this.userModel);
                         if ( this.userModel instanceof OrganisationalRepresentative
                         || this.userModel instanceof IndividualClient) {
                             this.userModel.prefferedInterpreters =
                                 this.userModel.prefferedInterpreters.filter(i => i._destory === -1);
                         }
-                        AuthGuard.refreshUser(this.userModel);
+                        user = UserFactory.createUser(JSON.parse(res._body));
+                        GLOBAL.currentUser = user;
+                        AuthGuard.refreshUser(user);
+                        this.userNameService.setLoggedInUser(user);
                         this.notificationServiceBus.launchNotification(false, 'User details updated Successfully');
                         this.spinnerService.requestInProcess(false);
 

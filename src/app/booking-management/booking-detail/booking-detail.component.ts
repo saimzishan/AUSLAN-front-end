@@ -99,6 +99,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             } else {
                 this.bookingModel = new Booking();
                 this.resetPrefBlockInterpreters();
+                this.onSpecialInstruction();
             }
 
             if (this.forEdit()) {
