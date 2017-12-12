@@ -668,7 +668,7 @@
       <div class="medium-12 columns">
         <div class="form-field">
           <label name="preferInterQuestion1">Do you have preferred interpreters for this booking? </label>
-          <md-radio-group name="rdPreferredInterpreters" (change)='onPreferredSelectionChange()' disabled="isDisabledForOrgRepIndClient"
+          <md-radio-group name="rdPreferredInterpreters" (change)='onPreferredSelectionChange()' [disabled]="isDisabledForOrgRepIndClient"
                           [(ngModel)]="showPreffered">
             <md-radio-button name="rdPreferredInterpretersYes" value=true>YES</md-radio-button>
             <md-radio-button name="rdPreferredInterpretersNo" value=false>NO</md-radio-button>
@@ -703,7 +703,7 @@
       <div class="medium-12 columns">
         <div class="form-field">
           <label name="blockInterQuestion1">Do you have blocked interpreters for this booking? </label>
-          <md-radio-group name="rdBlockedInterpreters" (change)='onBlockedSelectionChange()' disabled="isDisabledForOrgRepIndClient"
+          <md-radio-group name="rdBlockedInterpreters" (change)='onBlockedSelectionChange()' [disabled]="isDisabledForOrgRepIndClient"
                           [(ngModel)]="showBlocked">
             <md-radio-button name="rdBlockedInterpretersYes" value=true>YES</md-radio-button>
             <md-radio-button name="rdBlockedInterpretersNo" value=false>NO</md-radio-button>

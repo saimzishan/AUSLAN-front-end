@@ -10,7 +10,6 @@ const EDITABLE_FIELDS = [
     'parking_type',
     'important_notes',
     'rdcurrentUserIsContact',
-    'rdPreferredInterpreters',
     'email',
     'mobile',
     'deaf_person_email',
