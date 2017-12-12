@@ -606,67 +606,35 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         });
     }
 
-    filterUserPreferenceOld(interpreters) {
-        this.oldInterpreterPreference = interpreters;
+    filterUserPreference(peferenceAllocations) {
+        this.oldInterpreterPreference = peferenceAllocations;
         if (this.forEdit()) {
-            interpreters.forEach(i => {
+            peferenceAllocations.forEach(i => {
                 if (i.hasOwnProperty('_destroy')) {
-                    this.bookingModel.preference_allocations_attributes.push({ 'id': i.interpreter_id, '_destroy': '1' });
+                    this.bookingModel.preference_allocations_attributes.push({ 'id': i.id, '_destroy': '1' });
                     this.oldInterpreterPreference = this.oldInterpreterPreference.filter(old => old.interpreter_id !== i.interpreter_id);
                 }
             });
-          //  this.saveBooking();
         } else {
-            let prefAlloc = this.bookingModel.preference_allocations_attributes;
             this.bookingModel.preference_allocations_attributes = [];
-            interpreters.forEach(i => {
+            peferenceAllocations.forEach(i => {
                 if (this.showPreffered === 'true') {
                     if (i.preference === 'preferred' && !i.hasOwnProperty('_destroy')) {
                         this.bookingModel.preference_allocations_attributes.push({ 'interpreter_id': i.interpreter_id, 'preference': i.preference });
                     } else if (i.hasOwnProperty('_destroy')) {
-                        this.userModel.prefferedInterpreters = this.userModel.prefferedInterpreters.filter(itm => itm.interpreter_id !== i.interpreter_id);
+                        this.oldInterpreterPreference = this.oldInterpreterPreference.filter(itm => itm.interpreter_id !== i.interpreter_id);
                     }
                 }
+
                 if (this.showBlocked === 'true') {
                     if (i.preference === 'blocked' && !i.hasOwnProperty('_destroy')) {
                         this.bookingModel.preference_allocations_attributes.push({ 'interpreter_id': i.interpreter_id, 'preference': i.preference });
                     } else if (i.hasOwnProperty('_destroy')) {
-                        this.userModel.prefferedInterpreters = this.userModel.prefferedInterpreters.filter(itm => itm.interpreter_id !== i.interpreter_id);
+                        this.oldInterpreterPreference = this.oldInterpreterPreference.filter(itm => itm.interpreter_id !== i.interpreter_id);
                     }
                 }
             });
         }
-    }
-
-    filterUserPreference(peferenceAllocations) {
-        let destroyed = this.bookingModel.preference_allocations_attributes.filter(d => d._destroy === '1' && d.hasOwnProperty('id'));
-        this.oldInterpreterPreference = peferenceAllocations;
-            this.bookingModel.preference_allocations_attributes = [];
-            peferenceAllocations.forEach(i => {
-                if (this.showPreffered === 'true') {
-                    if (i.preference === 'preferred' && !i.hasOwnProperty('_destroy') && !i.hasOwnProperty('id')) {
-                        this.bookingModel.preference_allocations_attributes.push({ 'interpreter_id': i.interpreter_id, 'preference': i.preference });
-                    } else if (i.hasOwnProperty('_destroy')) {
-                        if (this.forEdit()) {
-                            this.bookingModel.preference_allocations_attributes.push({ 'id': i.id, '_destroy': '1' });
-                        }
-                        this.oldInterpreterPreference = this.oldInterpreterPreference.filter(itm => itm.interpreter_id !== i.interpreter_id);
-                    }
-                }
-
-                if (this.showBlocked === 'true') {
-                    if (i.preference === 'blocked' && !i.hasOwnProperty('_destroy') && !i.hasOwnProperty('id')) {
-                        this.bookingModel.preference_allocations_attributes.push({ 'interpreter_id': i.interpreter_id, 'preference': i.preference });
-                    } else if (i.hasOwnProperty('_destroy')) {
-                        if (this.forEdit()) {
-                            this.bookingModel.preference_allocations_attributes.push({ 'id': i.id, '_destroy': '1' });
-                        }
-                        this.oldInterpreterPreference = this.oldInterpreterPreference.filter(itm => itm.interpreter_id !== i.interpreter_id);
-                    }
-                }
-            });
-      //  }
-      destroyed.forEach(item => this.bookingModel.preference_allocations_attributes.push(item));
     }
 
     confirmDelete(docID) {
