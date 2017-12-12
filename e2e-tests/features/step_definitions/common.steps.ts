@@ -348,7 +348,13 @@ defineSupportCode(({Given, When, Then}) => {
             return expect(elmTxt).to.be.eq(txt);
         });
     }
+    When(/^I can see the element with id '(.*)' has text '(.*)'$/, hasElementWithIDText);
+    function hasElementWithIDText(nam: string, txt: string) {
 
+        return page.getElementByID(nam).getText().then(elmTxt => {
+            return expect(elmTxt).to.be.eq(txt);
+        });
+    }
     When(/^I click on BUTTON '(.*)'$/, clickOnBtn);
 
     function clickOnBtn(btnLabel: string) {

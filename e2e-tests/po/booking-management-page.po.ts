@@ -77,8 +77,14 @@ export class BookingManagementPage extends PageObject {
 
 
     onBookingListPage = () => {
-        return this.currentPath().then((currentPath) => {
-            expect(currentPath).to.contain('booking-management');
+        return this.currentPath().then((currentPath1) => {
+            let isRedirecting = currentPath1.indexOf('dashboard?redirectedUrl') !== -1;
+            if ( isRedirecting ) {
+                browser.sleep(1500).then(() => {
+                    expect(currentPath1).to.contain('booking-management');
+                });
+            }
+            expect(currentPath1).to.contain('booking-management');
         });
     }
 

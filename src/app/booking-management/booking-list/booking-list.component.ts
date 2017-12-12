@@ -1,4 +1,4 @@
-import {Component, Input, Output, OnInit, EventEmitter} from '@angular/core';
+import {Component, Input, Output, OnInit, EventEmitter, SimpleChanges} from '@angular/core';
 import {URLSearchParams} from '@angular/http';
 import {Booking} from '../../shared/model/booking.entity';
 import {Router, NavigationExtras} from '@angular/router';
@@ -152,7 +152,5 @@ export class BookingListComponent implements OnInit {
     }
     getPage(page: number) {
         this.onPageEmit.emit(page);
-        this.p = page;
-
     }
 }
