@@ -69,6 +69,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     preferAllocSub: any;
     oldInterpreterPreference = [];
     isDisabledForAdmin: boolean;
+    isDuplicate: boolean;
     @ViewChild('addressForm') private bookingAddress: AddressComponent;
 
     constructor(public bookingService: BookingService, private router: Router,
@@ -86,6 +87,11 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             let param = params['bookingModel'] || '';
             this.shouldEdit = params['shouldEdit'] || '';
             this.assignedInterpreter = params['assignedInterpreter'] || '';
+            if (param.length > 0 && this.shouldEdit === '') {
+                this.isDuplicate = true;
+            } else {
+                this.isDuplicate = false;
+            }
 
             if (param.length > 0) {
                 let jsonData = JSON.parse(param);
@@ -157,8 +163,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             } else {
                 this.oldBookingModel = this.deepCopy(this.bookingModel);
             }
-            if (!this.forEdit()) {
-                this.onBookingAddressChange();
+            if (!this.forEdit() && !this.isDuplicate) {
+                 this.onBookingAddressChange();
             }
         }
     }

@@ -16,7 +16,6 @@ Feature: Booking Management
     When I will upload a document 'sushi.pdf'
     And I will see attachment 'sushi.pdf'
     And I will close the file upload
-    When I click on element by name 'rdBookingAddressNo'
     And I fill New Booking form fields correctly
     And I select the bookable for client
     And I click the create booking button
