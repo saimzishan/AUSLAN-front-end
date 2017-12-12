@@ -1,4 +1,4 @@
-import {Component, Input, Output, OnInit, EventEmitter} from '@angular/core';
+import {Component, Input, Output, OnInit, EventEmitter, SimpleChanges} from '@angular/core';
 import {URLSearchParams} from '@angular/http';
 import {Booking} from '../../shared/model/booking.entity';
 import {Router, NavigationExtras} from '@angular/router';
@@ -10,6 +10,7 @@ import {BookingInterpreter} from '../../shared/model/contact.entity';
 import {BookingFilter} from '../../shared/model/booking-filter.interface';
 import {FormGroup, NgForm} from '@angular/forms';
 import {BA, BOOKING_NATURE} from '../../shared/model/booking-nature.enum';
+import {OnChanges} from '../../../../node_modules_lnx/@angular/core';
 
 @Component({
     selector: 'app-booking-list',
@@ -152,7 +153,5 @@ export class BookingListComponent implements OnInit {
     }
     getPage(page: number) {
         this.onPageEmit.emit(page);
-        this.p = page;
-
     }
 }

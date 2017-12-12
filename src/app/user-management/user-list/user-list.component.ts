@@ -17,7 +17,7 @@ export class UserListComponent {
     @Input('userList') userList: Array<any> = [];
     @Output() onResetPass = new EventEmitter<User>();
     @Output() onPageEmit = new EventEmitter<number>();
-    p = 1;
+    @Input() p = 1;
     @Input() totalItems = 0;
 
     constructor(private linkAuth: LinkAuth) {
@@ -46,7 +46,6 @@ export class UserListComponent {
 
     getPage(page: number) {
         this.onPageEmit.emit(page);
-        this.p = page;
 
     }
 
