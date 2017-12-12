@@ -10,7 +10,6 @@ import {BookingInterpreter} from '../../shared/model/contact.entity';
 import {BookingFilter} from '../../shared/model/booking-filter.interface';
 import {FormGroup, NgForm} from '@angular/forms';
 import {BA, BOOKING_NATURE} from '../../shared/model/booking-nature.enum';
-import {OnChanges} from '../../../../node_modules_lnx/@angular/core';
 
 @Component({
     selector: 'app-booking-list',
