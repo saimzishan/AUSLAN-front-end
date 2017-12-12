@@ -101,7 +101,6 @@ export class BookingManagementPage extends PageObject {
     }
 
     showTheNumberofBooking = (num_of_booking: string, type_of_booking?: string) => {
-        browser.pause();
         let numBooking = parseInt(num_of_booking, 10);
         let allTypeBooking;
         if (type_of_booking) {
