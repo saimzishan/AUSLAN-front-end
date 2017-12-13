@@ -24,9 +24,11 @@ export class BookingManagementPage extends PageObject {
     booking = new BookingPage();
 
     verify = () => {
-        return this.currentPath().then((currentPath) => {
-            this.didFinishedRendering();
-            expect(currentPath).to.contain('booking-management');
+        return browser.sleep(500).then(() => {
+            return this.currentPath().then((currentPath) => {
+                this.didFinishedRendering();
+                expect(currentPath).to.contain('booking-management');
+            });
         });
     }
 
@@ -76,8 +78,10 @@ export class BookingManagementPage extends PageObject {
 
 
     onBookingListPage = () => {
-        return this.currentPath().then((currentPath) => {
-            expect(currentPath).to.contain('booking-management');
+        return this.currentPath().then((currentPath1) => {
+            let isRedirecting = currentPath1.indexOf('dashboard?redirectedUrl') !== -1
+            || currentPath1.indexOf('booking-management') !== -1;
+            expect(isRedirecting).to.be.true;
         });
     }
 
