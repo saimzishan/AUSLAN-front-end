@@ -5,7 +5,7 @@ import {Router, NavigationExtras} from '@angular/router';
 import {BOOKING_STATE} from '../../shared/model/booking-state.enum';
 import {BOOKING_STATUS} from '../../shared/model/booking-status.enum';
 import {GLOBAL} from '../../shared/global';
-import {Interpreter, OrganisationalRepresentative} from '../../shared/model/user.entity';
+import {IndividualClient, Interpreter, OrganisationalRepresentative} from '../../shared/model/user.entity';
 import {BookingInterpreter} from '../../shared/model/contact.entity';
 import {BookingFilter} from '../../shared/model/booking-filter.interface';
 import {FormGroup, NgForm} from '@angular/forms';
@@ -60,6 +60,7 @@ export class BookingListComponent implements OnInit {
 
     setClickedRow(booking: Booking) {
         let route = GLOBAL.currentUser instanceof Interpreter || GLOBAL.currentUser instanceof OrganisationalRepresentative
+        || GLOBAL.currentUser instanceof IndividualClient
             ? 'job-detail' : 'booking-job';
         this.router.navigate(['/booking-management/' + booking.id, route]);
         GLOBAL.selBookingID = booking.id;

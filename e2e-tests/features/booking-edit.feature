@@ -43,14 +43,14 @@ Feature: Edit Booking
     Then I should get a valid booking update notification
 
   @runThis
-  Scenario: As an Individual Client, I should not be able to go to booking detail page
+  Scenario: As an Individual Client, I should be able to go to booking detail page
     Given Assigned all bookings to Individual Client
     Given I exist as an Individual Client
     And I sign in with valid Individual Client credentials
     And I am on the bookings page
     Then I am shown with 1 booking
     When I click on an individual booking
-    Then I am on the bookings page
+    Then I am on the individual booking page
 
   @runThis
   Scenario: As an Organisational Representative, I should be able to only change certain fields

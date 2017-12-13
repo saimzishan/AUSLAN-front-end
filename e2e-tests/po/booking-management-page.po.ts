@@ -23,7 +23,7 @@ export class BookingManagementPage extends PageObject {
     booking = new BookingPage();
 
     verify = () => {
-        browser.sleep(500).then(() => {
+        return browser.sleep(500).then(() => {
             return this.currentPath().then((currentPath) => {
                 this.didFinishedRendering();
                 expect(currentPath).to.contain('booking-management');
