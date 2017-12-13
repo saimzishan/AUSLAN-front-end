@@ -74,6 +74,7 @@ import { BookingHeaderService } from './booking-management/booking-header/bookin
 import {GmapsApiService} from './api/gmaps-api.service';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {RemoveSpacePipe} from './shared/pipe/remove-space.pipe';
+import { NguiDatetimePickerModule } from '@ngui/datetime-picker';
 
 @NgModule({
   declarations: [
@@ -110,7 +111,7 @@ import {RemoveSpacePipe} from './shared/pipe/remove-space.pipe';
     FormsModule, BrowserAnimationsModule, NgxPaginationModule,
     HttpModule, SimpleNotificationsModule.forRoot(),
     ReactiveFormsModule, Md2Module.forRoot(),
-    MaterialModule, CalendarModule
+    MaterialModule, CalendarModule, NguiDatetimePickerModule
   ],  providers: [DatePipe, LinkAuth, UserNameService, RolePermission, AuthGuard, NoAuthGuard, Title, LinkHelper,
     NotificationServiceBus, SpinnerService, BookingService, UserService,
         PreferedAllocationService, BookingHeaderService, GmapsApiService,

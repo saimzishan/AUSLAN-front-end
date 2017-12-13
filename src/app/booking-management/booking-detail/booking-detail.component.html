@@ -95,7 +95,18 @@
     <h4 class="text-center">BOOKING DETAILS</h4>
     <div class="row small-collapse">
       <div class="row-wrapper">
-        <div class=" medium-7 columns">
+          <div class=" medium-6 columns">
+              <div class="form-field">
+                <label>START DATE & TIME *</label>
+                <input
+                name='Date'
+                [(ngModel)]="date"
+                (change)="Log()"
+                ngui-datetime-picker
+                date-only="true" />
+              </div>
+            </div>
+        <div class=" medium-3 columns">
           <div class="form-field">
             <label>START DATE & TIME *</label>
             <input type='datetime-local'
@@ -115,7 +126,7 @@
           </div>
         </div>
 
-        <div class="medium-5 columns">
+        <div class="medium-3 columns">
           <div class="form-field">
             <label>END DATE & TIME *</label>
             <input type='datetime-local' name='dpEventEndTime' [readonly]="isDisabledForOrgRepIndClient"
