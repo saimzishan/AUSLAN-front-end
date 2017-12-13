@@ -42,10 +42,9 @@ export class UserManagementComponent implements OnInit {
         this.fetchUsers();
     }
     onPageEmit(page: number) {
-        this.page = page;
         this.newUser = null;
         this.spinnerService.requestInProcess(true);
-        this.userDataService.fetchPaginatedUsers(this.page)
+        this.userDataService.fetchPaginatedUsers(page)
             .subscribe((res: any) => {
                     if (res.status === 200) {
                         let userList = res.data.users.filter((u) => {
@@ -54,7 +53,7 @@ export class UserManagementComponent implements OnInit {
                         }).map(u => UserFactory.createUser(u));
                         this.users = userList;
                         this.totalItems = Boolean(res.data.paginates) ? res.data.paginates.total_records : res.data.users.length;
-
+                        this.page = page;
                     }
                     this.spinnerService.requestInProcess(false);
                 },
