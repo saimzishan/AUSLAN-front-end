@@ -669,7 +669,7 @@
         <div class="form-field">
           <label name="preferInterQuestion1">Do you have preferred interpreters for this booking? </label>
           <md-radio-group name="rdPreferredInterpreters" (change)='onPreferredSelectionChange()' [disabled]="isDisabledForOrgRepIndClient"
-                          [(ngModel)]="showPreffered">
+                          [(ngModel)]="showPreferred">
             <md-radio-button name="rdPreferredInterpretersYes" value=true>YES</md-radio-button>
             <md-radio-button name="rdPreferredInterpretersNo" value=false>NO</md-radio-button>
           </md-radio-group>
@@ -677,12 +677,12 @@
       </div>
     </div>
 
-    <div class="row" *ngIf="showPreffered === 'true' && !isDisabledForOrgRepIndClient">
+    <div class="row" *ngIf="showPreferred === 'true' && !isDisabledForOrgRepIndClient">
       <div class="medium-12 columns">
         <div class="form-field">
           <label name="preferInterQuestion2">Do you want to set the preferred interpreters that you have set in your profile? </label>
           <md-radio-group name="rdProfilePreferredInterpreters" (change)='onProfilePreferredSelectionChange()' [disabled]="isDisabledForOrgRepIndClient"
-                          [(ngModel)]="showProfilePreffered">
+                          [(ngModel)]="showProfilePreferred">
             <md-radio-button name="rdProfilePreferredInterpretersYes" value=true>YES</md-radio-button>
             <md-radio-button name="rdProfilePreferredInterpretersNo" value=false>NO</md-radio-button>
           </md-radio-group>
@@ -690,7 +690,7 @@
       </div>
     </div>
 
-    <app-interpreter-box *ngIf="showPreffered === 'true'" [isPreffered]="true"
+    <app-interpreter-box *ngIf="showPreferred === 'true'" [isPreffered]="true"
                           [isHidden]="true" [selectedInterpreters]="oldInterpreterPreference" [isEditable]="!isDisabledForOrgRepIndClient">
     </app-interpreter-box> 
 
