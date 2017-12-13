@@ -98,7 +98,11 @@
             </tr>
             </tbody>
         </table>
-        <pagination-controls class="my-pagination" *ngIf="totalItems >= 10" (pageChange)="getPage($event)"></pagination-controls>
+        <span id="displayTxt" *ngIf="totalItems > 0">{{'Displaying ' + (((p - 1) * 10) + 1) + ' - '
+                + ( userList.length < 10 ? totalItems : (p * 10)) + ' of ' + totalItems + ' User' + (userList.length > 1 ? 's' : '')}}</span>
+
+        <pagination-controls class="my-pagination" *ngIf="totalItems >= 10"
+                                         (pageChange)="getPage($event)"></pagination-controls>
 
     </section>
 </main>
