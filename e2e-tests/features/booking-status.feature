@@ -64,7 +64,7 @@ Feature: Booking Status
     Then I see one row with state 'Requested'
     Then I see one row with status 'green'
 
-  @runThis
+  @ignoreThis
   Scenario: Organisational Representative can see red bookings created by himself and their status
     Given I exist as an Organisational Representative
     And I sign in with valid Organisational Representative credentials
