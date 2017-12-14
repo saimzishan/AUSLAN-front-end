@@ -63,12 +63,13 @@ defineSupportCode(({Given, Then, When}) => {
     Then(/^The field '(.*)' will be populated with '(.*)'$/, createBookingPO.theFieldWillBePopulated);
 
     Then(/^I can verify the field '(.*)' will have the value '(.*)'$/, createBookingPO.theFieldInBookingWillHaveValue);
+    Then(/^I can verify the input '(.*)' will have the value '(.*)'$/, createBookingPO.theInputInBookingFormWillHaveValue);
 
     Then(/^The booking form will be automatically populated with the details.$/, createBookingPO.populatedUserDetails);
 
     Given(/^I can see the '(.*)' auto populated$/, createBookingPO.sectionAutoPopulated);
     // Filling in specific fields in the booking form
-    Then(/^I set the (\w+) time as (\d+) days (?:(\d+) hours?)?\s?from now$/, createBookingPO.setTime)
+    Then(/^I set the (\w+) time as (\d+) days (?:(\d+) hours?)?\s?from now$/, createBookingPO.setTime);
 
     //    CANCEL BOOKING
     When(/^I press '(.*)'$/, createBookingPO.clickOnButton);

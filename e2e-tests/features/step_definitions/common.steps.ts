@@ -27,9 +27,7 @@ defineSupportCode(({Given, When, Then}) => {
     }
 
     Given(/^There exists an? (.*)/, Heroku.createFactory);
-    Given(/^I click on my name$/, () => {
-        return bookingManagementPage.hoverOnProfile('lnkLogout');
-    });
+    Given(/^I click on my name$/, bookingManagementPage.clickOnProfile);
     Given(/^I scroll to top$/, () => {
         return browser.executeScript('window.scrollTo(0,0);').then(function () {
             browser.sleep(1000);
@@ -37,9 +35,7 @@ defineSupportCode(({Given, When, Then}) => {
     });
 
     Given(/^I click on logout$/, bookingManagementPage.logoutClick);
-    Given(/^I hover on the 'Profile'$/, () => {
-        return bookingManagementPage.hoverOnProfile('lnkSettings');
-    });
+    Given(/^I hover on the 'Profile'$/, bookingManagementPage.clickOnProfile);
     Given(/^I go to the 'User Management' list page$/, clickOnUserManagementPage);
 
     function clickOnUserManagementPage() {
@@ -53,11 +49,11 @@ defineSupportCode(({Given, When, Then}) => {
     Given(/^I won't be logged in anymore and will be taken back to the loging screen/, homePage.didFinishedRendering);
     Given(/^I am on the mobile login screen without a hero picture$/, homePage.didFinishedRendering);
     Given(/^I exist as an? (.*)/, function (type: string) {
-        return browser.sleep(2000);
+        return browser.sleep(4000);
     });
     Given(/^I sign in with valid (.*) credentials$/, (type: string) => {
         return homePage.signInWithValidCredential(type).then(() => {
-            browser.sleep(3200).then(() => {
+            browser.sleep(4000).then(() => {
                 bookingManagementPage.onBookingListPage();
             });
         });
@@ -352,7 +348,13 @@ defineSupportCode(({Given, When, Then}) => {
             return expect(elmTxt).to.be.eq(txt);
         });
     }
+    When(/^I can see the element with id '(.*)' has text '(.*)'$/, hasElementWithIDText);
+    function hasElementWithIDText(nam: string, txt: string) {
 
+        return page.getElementByID(nam).getText().then(elmTxt => {
+            return expect(elmTxt).to.be.eq(txt);
+        });
+    }
     When(/^I click on BUTTON '(.*)'$/, clickOnBtn);
 
     function clickOnBtn(btnLabel: string) {

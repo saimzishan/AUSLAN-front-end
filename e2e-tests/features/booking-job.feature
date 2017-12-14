@@ -175,7 +175,7 @@ Feature: Booking Admin Management
     Then I see one row with state 'Requested'
 
 
-  @runThis
+  @ignoreThis
   Scenario: Booking Officer can REQUESTED to the unable to service a booking, Interpreter exists and a booking is created
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
@@ -536,6 +536,8 @@ Feature: Booking Admin Management
     And I click the create booking button
     And If I am shown a popup message 'This booking is not within the standard booking hours (8AM - 6PM). Do you still want to create booking?', I approve it
     Then I should get a valid booking update notification
+    Then I am on the individual booking page
+    Then I click on Bookings
     And I am on the bookings page
     When I click on an individual booking
     Then I am on the individual booking page
@@ -560,3 +562,4 @@ Feature: Booking Admin Management
     Then I click on Bookings
     And I am on the bookings page
     Then I see one row with state 'In progress'
+

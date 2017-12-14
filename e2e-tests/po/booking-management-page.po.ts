@@ -23,26 +23,16 @@ export class BookingManagementPage extends PageObject {
     booking = new BookingPage();
 
     verify = () => {
-        return this.currentPath().then((currentPath) => {
-            this.didFinishedRendering();
-            expect(currentPath).to.contain('booking-management');
+        return browser.sleep(500).then(() => {
+            return this.currentPath().then((currentPath) => {
+                this.didFinishedRendering();
+                expect(currentPath).to.contain('booking-management');
+            });
         });
     }
 
     logoutClick = () => {
         return this.getElementByID('lnkLogout').click();
-    }
-
-    hoverOnProfile = (insideElementCss) => {
-        let el = this.getElementByID('lnkProfile');
-        return browser.actions().mouseMove(el).perform().then(() => {
-            let elm = this.getElementByID(insideElementCss);
-            this.currentPath().then((path) => {
-                browser.wait(protractor.ExpectedConditions.presenceOf(elm), 10000).then(() => {
-                    expect(elm).to.be.exist;
-                });
-            });
-        });
     }
     selectionNotPresent = (headerTitle: string, selection: string) => {
         let headerCss = '.dropdown#' + {
@@ -87,8 +77,10 @@ export class BookingManagementPage extends PageObject {
 
 
     onBookingListPage = () => {
-        return this.currentPath().then((currentPath) => {
-            expect(currentPath).to.contain('booking-management');
+        return this.currentPath().then((currentPath1) => {
+            let isRedirecting = currentPath1.indexOf('dashboard?redirectedUrl') !== -1
+            || currentPath1.indexOf('booking-management') !== -1;
+            expect(isRedirecting).to.be.true;
         });
     }
 
@@ -239,7 +231,7 @@ export class BookingManagementPage extends PageObject {
     querySearchWith = (value: string) => {
         let searchInput = this.getElementByCss('form input[name=search]');
         let searchForm = this.getParent(searchInput);
-        value === 'empty' ? searchInput.click() : searchInput.sendKeys(value);;
+        value === 'empty' ? searchInput.click() : searchInput.sendKeys(value);
         return searchForm.submit();
     }
 

@@ -114,7 +114,8 @@
             </tr>
             </thead>
             <tbody>
-            <tr [ngClass]="{'active': isSelectedBooking(booking.id)}" *ngFor="let booking of bookingList | paginate: { itemsPerPage: 10, currentPage: p, totalItems: totalItems }"
+            <tr [ngClass]="{'active': isSelectedBooking(booking.id)}"
+                *ngFor="let booking of bookingList | paginate: { itemsPerPage: 10, currentPage: p, totalItems: totalItems }"
                 (click)="setClickedRow(booking)">
                 <td>
                     <div class="checkbox">
@@ -124,7 +125,7 @@
                 </td>
                 <td class="bookingID">
                     <div class="actions-container">
-		                <span>{{booking.id | PrettyID}}</span>
+                        <span>{{booking.id | PrettyID}}</span>
                         <ul class="dropdown menu custom actions hidden-desktop" data-dropdown-menu>
                             <li>
                                 <a href="javascript:void(0)"><i class="icon-more-icon"></i></a>
@@ -182,7 +183,7 @@
                 </td>
                 <td class="truncated">
                     <ng-container *ngIf="booking.documents_attributes.length > 0">
-                    <a href="javascript:void(0)" class="attach"><i class="icon-attach"></i></a>
+                        <a href="javascript:void(0)" class="attach"><i class="icon-attach"></i></a>
                     </ng-container>
                     {{booking.raw_nature_of_appointment}}
                 </td>
@@ -203,13 +204,14 @@
                         </li>
                     </ul>
                 </td>
-
             </tr>
-
-
             </tbody>
         </table>
-        <pagination-controls class="my-pagination" *ngIf="totalItems >= 10" (pageChange)="getPage($event)"></pagination-controls>
+        <span id="displayTxt" *ngIf="totalItems > 0">{{'Displaying ' + (((p - 1) * 10) + 1) + ' - '
+                + ( bookingList.length < 10 ? totalItems : (p * 10)) + ' of ' + totalItems + ' Booking' + (bookingList.length > 1 ? 's' : '')}}</span>
+
+        <pagination-controls class="my-pagination" *ngIf="totalItems >= 10"
+                             (pageChange)="getPage($event)"></pagination-controls>
 
     </section>
 </main>

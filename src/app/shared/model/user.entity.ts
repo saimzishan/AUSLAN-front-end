@@ -127,11 +127,13 @@ export class OrganisationalRepresentative extends Organisational {
     toJSON() {
         this.preferred_contact_method = 'email_only';
         let o = {
+            'id': this.id,
             'first_name': this.first_name,
             'last_name': this.last_name,
             'type': this.type,
             'email': this.email,
             'avatar': this.avatar,
+            'photo_url': this.photo_url,
             'password': this.password,
             'business_hours_phone': this.phone,
             'mobile': this.mobile,
@@ -166,7 +168,7 @@ export class OrganisationalRepresentative extends Organisational {
         return o;
     }
 
-    toJSONForDuplicate() {
+    jsonForDuplicate() {
         this.preferred_contact_method = 'email_only';
         let o = {
             'first_name': this.first_name,
@@ -322,6 +324,8 @@ export class IndividualClient extends User {
     * */
     toJSON() {
         let o = {
+            'id': this.id,
+            'photo_url': this.photo_url,
             'first_name': this.first_name, 'last_name': this.last_name, 'email': this.email, 'password': this.password,
             'type': this.type, 'send_email_on_receipt_of_request': this.email_receipt,
             'email_confirmation_on_interpreter_allocation': this.email_confirmation,

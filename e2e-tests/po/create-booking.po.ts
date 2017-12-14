@@ -145,6 +145,11 @@ export class BookingPage extends PageObject {
 
     }
 
+    theInputInBookingFormWillHaveValue = (inputName: string, value: string) => {
+        const input = this.getElementByName(inputName);
+        return expect(input.getAttribute('value')).to.eventually.eq(value);
+    }
+
     populatedUserDetails = () => {
         const clientOptionLabel = this.getElementByCSSandText('.text-center', 'CLIENT DETAILS');
         const divClientDetails = this.getNextSibling(clientOptionLabel, 'div');
@@ -220,9 +225,25 @@ export class BookingPage extends PageObject {
     setStreetNumber = (stNumber: string) => {
         this.setElementsValueByName('address_street_number', stNumber);
     }
+    // Adds a '0' in the start if the date < 10
+    private prettyDate = (date: number|string): string => {
+        date = date.toString();
+        return ('00' + date).slice(date.length);
+    }
+    private getDateAfterNDays = (n: number): string => {
+        let currentDate = new Date();
+        let dateStart = new Date(new Date(currentDate).setDate(currentDate.getDate() + n));
+        return [
+            this.prettyDate(dateStart.getMonth() + 1),
+            this.prettyDate(dateStart.getDate()),
+            dateStart.getFullYear().toString()
+        ].join('/');
+    }
     createBookingWithTimeAndInterpreter = (standard: string, startTime: string, endTime: string, interpreterNum: string) => {
-        this.setStartEndTime('start', '12/12/2017', startTime);
-        this.setStartEndTime('end', '12/12/2017', endTime);
+        let date = new Date();
+        const dateToSend = this.getDateAfterNDays(7);
+        this.setStartEndTime('start', dateToSend, startTime);
+        this.setStartEndTime('end', dateToSend, endTime);
         this.setStreetNumber('162');
         this.setElementsValueByName('address_street', 'Dave');
         this.setElementsValueByName('address_post_code', '3064');
