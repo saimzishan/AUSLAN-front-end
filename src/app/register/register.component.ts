@@ -40,7 +40,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-
         this.sub_param = this.routes.queryParams.subscribe(params => {
             let p = params['selectedRole'] || '';
             this.isEdit = Boolean(params['edit_user']);
@@ -102,7 +101,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
                 this.userStatusArray[0].name : this.userStatusArray[1].name;
         });
         this.termsAndConditionAccepted = this.isUserLogin();
-
+        this.model.state_where_most_bookings_occur = 'VIC';
     }
 
     tocChanged(val: boolean) {

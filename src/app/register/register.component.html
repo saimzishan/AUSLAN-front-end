@@ -151,7 +151,7 @@
                                       [(ngModel)]="model.state_where_most_bookings_occur" name="location_pref"
                                       #location_pref="ngModel" required>
                       
-                                <option *ngFor="let loc_name of  ['ACT','NSW','QLD', 'TAS', 'VIC','WA', 'NT']" [selected]="loc_name === 'ACT'"
+                                <option *ngFor="let loc_name of  ['ACT','NSW','QLD', 'TAS', 'VIC','WA', 'NT']"
                                         [value]="loc_name">{{loc_name.toUpperCase()}}</option>
                       
                               </select>
