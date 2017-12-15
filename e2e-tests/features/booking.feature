@@ -583,7 +583,7 @@ Feature: Booking Management
     Then I am shown a validation error with the text 'Please specify what the appointment is about'
 
   #--------------------------------- AUSLAN1-770 -----------------------------------------------------
-  @runThis
+  @ignoreThis
   Scenario: As a Booking Officer, I can create a booking for Organisational Representative
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
