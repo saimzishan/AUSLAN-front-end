@@ -68,7 +68,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     preferAllocSub: any;
     oldInterpreterPreference = [];
     isDisabledForAdmin: boolean;
-
+    date;
     constructor(public bookingService: BookingService, private router: Router,
                 private route: ActivatedRoute, private rolePermission: RolePermission,
                 public notificationServiceBus: NotificationServiceBus, public spinnerService: SpinnerService,
@@ -107,7 +107,10 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             }
         });
     }
-
+    dateSelection()
+    {
+        console.log("date: "+this.date);
+    }
     private isCurrentUserContact(): boolean {
         if (this.forEdit()) {
             return GLOBAL.currentUser.email === this.bookingModel.primaryContact.email;
@@ -119,7 +122,10 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         return (item instanceof OrganisationalRepresentative ?
             (item.organisation_name.toUpperCase()  + ' - ') : '') + item.first_name + ' ' + item.last_name;
     }
+    date2
     onStartTimeChanged() {
+        this.bookingModel.venue.start_time_iso =
+        this.datePipe.transform(this.date2, 'HH:mm:ss');
         this.bookingModel.venue.end_time_iso = this.bookingModel.venue.start_time_iso;
     }
     natureOfApptChange($event) {

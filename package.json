@@ -33,6 +33,7 @@
     "@angular/router": "~4.0.3",
     "@ngrx/core": "~1.2.0",
     "@ngrx/store": "^2.2.3",
+    "@ngui/datetime-picker": "^0.16.2",
     "@types/jquery": "^2.0.48",
     "angular2-jwt": "~0.1.28",
     "angular2-moment": "^1.4.0",

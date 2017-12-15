@@ -95,17 +95,42 @@
     <h4 class="text-center">BOOKING DETAILS</h4>
     <div class="row small-collapse">
       <div class="row-wrapper">
-        <div class=" medium-7 columns">
+          <div class=" medium-6 columns">
+              <div class="form-field">
+                <label>DATE OF APPOINTMENT *</label>
+          
+                <input
+                type="text"
+                [readonly]="isDisabledForOrgRepIndClient"
+                name='dpDate'
+                [(ngModel)]="date"
+                (valueChanged)= "dateSelection()"
+                (click)="fireNotification($event)"
+                ngui-datetime-picker
+                date-only="true"
+                required #dpDate="ngModel" />
+                <span *ngIf="dpDate.touched && !dpDate.errors?.required;"
+                      class="inline-icon inline-icon-valid valid"></span>
+                <span *ngIf="dpDate.touched && (dpDate.errors?.required);"
+                      class="inline-icon error">
+                  <span>Start Date is required</span>!
+                </span>
+              </div>
+            </div>
+
+        <div class=" medium-3 columns">
           <div class="form-field">
-            <label>START DATE & TIME *</label>
-            <input type='datetime-local'
-               [readonly]="isDisabledForOrgRepIndClient"
-               (change)="onStartTimeChanged()"
-               name='dpEventDate'
-               placeholder="DATE & Time OF APPOINTMENT *"
-               (click)="fireNotification($event)"
-               [(ngModel)]="bookingModel.venue.start_time_iso"
-               required #dpEventDate="ngModel"/>
+            <label>START TIME *</label>
+            <input
+            type="text"
+            [readonly]="isDisabledForOrgRepIndClient"
+            name='dpEventDate'
+            (click)="fireNotification($event)"
+            (valueChanged)="onStartTimeChanged()"
+            ngui-datetime-picker
+            time-only="false"
+            [(ngModel)]="date2"
+            required #dpEventDate="ngModel"/>
             <span *ngIf="dpEventDate.touched && !dpEventDate.errors?.required;"
                   class="inline-icon inline-icon-valid valid"></span>
             <span *ngIf="dpEventDate.touched && (dpEventDate.errors?.required);"
@@ -114,11 +139,11 @@
             </span>
           </div>
         </div>
-
-        <div class="medium-5 columns">
+ 
+        <div class="medium-3 columns">
           <div class="form-field">
-            <label>END DATE & TIME *</label>
-            <input type='datetime-local' name='dpEventEndTime' [readonly]="isDisabledForOrgRepIndClient"
+            <label>END TIME *</label>
+            <input type='text' name='dpEventEndTime' [readonly]="isDisabledForOrgRepIndClient"
                placeholder="ENDING TIME *" #dpEventEndTime="ngModel" (click)="fireNotification($event)"
                [(ngModel)]="bookingModel.venue.end_time_iso"
                required/>
