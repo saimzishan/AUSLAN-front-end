@@ -12,7 +12,7 @@ import {DatePipe} from '@angular/common';
 import {FormGroup} from '@angular/forms';
 import {FileUploader} from 'ng2-file-upload';
 import {Address} from '../../shared/model/venue.entity';
-import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
+import {MdDialog, MdDialogConfig, MdDialogRef, MdDatepicker} from '@angular/material';
 import {PreferedAllocationService} from '../../shared/prefered-allocation.service';
 import {IndividualClient, OrganisationalRepresentative, Interpreter, BookingOfficer, Administrator , UserFactory} from '../../shared/model/user.entity';
 import {PopupComponent} from '../../shared/popup/popup.component';
