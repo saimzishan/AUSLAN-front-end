@@ -104,7 +104,7 @@
                 [readonly]="isDisabledForOrgRepIndClient"
                 name='dpDate'
                 [(ngModel)]="date"
-                (valueChanged)= "dateSelection()"
+                (valueChanged)= 'dateSelection()'
                 (click)="fireNotification($event)"
                 ngui-datetime-picker
                 date-only="true"
@@ -122,14 +122,12 @@
           <div class="form-field">
             <label>START TIME *</label>
             <input
-            type="text"
+            type="time"
             [readonly]="isDisabledForOrgRepIndClient"
             name='dpEventDate'
             (click)="fireNotification($event)"
-            (valueChanged)="onStartTimeChanged()"
-            ngui-datetime-picker
-            time-only="false"
-            [(ngModel)]="date2"
+            (change)='onStartTimeChanged()'
+            [(ngModel)]="bookingModel.venue.start_time_iso"
             required #dpEventDate="ngModel"/>
             <span *ngIf="dpEventDate.touched && !dpEventDate.errors?.required;"
                   class="inline-icon inline-icon-valid valid"></span>
@@ -143,7 +141,8 @@
         <div class="medium-3 columns">
           <div class="form-field">
             <label>END TIME *</label>
-            <input type='text' name='dpEventEndTime' [readonly]="isDisabledForOrgRepIndClient"
+            <input type='time' name='dpEventEndTime' [readonly]="isDisabledForOrgRepIndClient"
+            (change)='onEndTimeChanged()'
                placeholder="ENDING TIME *" #dpEventEndTime="ngModel" (click)="fireNotification($event)"
                [(ngModel)]="bookingModel.venue.end_time_iso"
                required/>

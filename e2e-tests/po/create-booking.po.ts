@@ -186,8 +186,7 @@ export class BookingPage extends PageObject {
         let elementName = {
             'start': 'dpEventDate',
             'end': 'dpEventEndTime',
-            'date_from': 'date_from',
-            'date_to': 'date_to'
+            'date_from': 'dpDate'
         }[field];
         this.getElementByName(elementName).sendKeys(date);
         this.getElementByName(elementName).sendKeys(protractor.Key.TAB);
@@ -197,6 +196,10 @@ export class BookingPage extends PageObject {
         this.getElementByName(field).sendKeys(date.mm);
         this.getElementByName(field).sendKeys(date.dd);
         this.getElementByName(field).sendKeys(date.yy);
+    }
+    setDate= (date: string) => {
+        let elementName = 'dpDate';
+        this.getElementByName(elementName).sendKeys(date);
     }
     createBooking = () => {
         return this.createBookingWithTimeAndInterpreter('standard', '10:15AM', '11:15AM', '2');
@@ -242,6 +245,7 @@ export class BookingPage extends PageObject {
     createBookingWithTimeAndInterpreter = (standard: string, startTime: string, endTime: string, interpreterNum: string) => {
         let date = new Date();
         const dateToSend = this.getDateAfterNDays(7);
+        this.setDate(dateToSend);
         this.setStartEndTime('start', dateToSend, startTime);
         this.setStartEndTime('end', dateToSend, endTime);
         this.setStreetNumber('162');

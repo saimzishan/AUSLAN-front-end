@@ -107,9 +107,9 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             }
         });
     }
-    dateSelection()
-    {
-        console.log("date: "+this.date);
+    dateSelection() {
+        this.date =
+            this.datePipe.transform(this.date, 'yyyy-MM-dd');
     }
     private isCurrentUserContact(): boolean {
         if (this.forEdit()) {
@@ -122,11 +122,13 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         return (item instanceof OrganisationalRepresentative ?
             (item.organisation_name.toUpperCase()  + ' - ') : '') + item.first_name + ' ' + item.last_name;
     }
-    date2
     onStartTimeChanged() {
-        this.bookingModel.venue.start_time_iso =
-        this.datePipe.transform(this.date2, 'HH:mm:ss');
-        this.bookingModel.venue.end_time_iso = this.bookingModel.venue.start_time_iso;
+    }
+    onEndTimeChanged() {
+    }
+    timeFormatting() {
+        this.bookingModel.venue.start_time_iso = this.datePipe.transform(this.date + 'T' + this.bookingModel.venue.start_time_iso, 'yyyy-MM-ddTHH:mm:ss');
+        this.bookingModel.venue.end_time_iso = this.datePipe.transform(this.date + 'T' + this.bookingModel.venue.end_time_iso, 'yyyy-MM-ddTHH:mm:ss');
     }
     natureOfApptChange($event) {
         let val: BOOKING_NATURE = <BOOKING_NATURE> BOOKING_NATURE[this.bookingModel.raw_nature_of_appointment];
@@ -336,7 +338,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.notificationServiceBus.launchNotification(true, GLOBAL.MISSING_FIELDS_ERROR_MESSAGE);
             return;
         }
-
         if (this.bookingModel.interpreters_required < 2 && this.isMoreInterpreterNeeded()) {
             let message = `This booking might require more than 1 interpreter. You've only requested 1 interpreter.
                             Are you sure you want to create this booking?` ;
@@ -429,6 +430,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     createBooking() {
+        this.timeFormatting();
         if (!this.bookingModel.bookable_id) {
             this.bookingModel.bookable_id = GLOBAL.currentUser.id;
             this.bookingModel.bookable_type = GLOBAL.currentUser.type;
