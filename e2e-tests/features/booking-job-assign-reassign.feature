@@ -76,7 +76,7 @@ Feature: Booking Admin Management
 
 
   # =================== ALLOCATED to IN PROGRESS ===============================
-  @runThis
+  @ignoreThis
   Scenario: As INTERPRETER, I have accepted e, but admin can UnAssign directly, if a booking is created and INTERPRETER Invited and Administrator exists then
     And I sign in with valid Interpreter credentials
     Then I will be shown the bookings page

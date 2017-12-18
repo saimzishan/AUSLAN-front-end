@@ -145,7 +145,7 @@
           </md-radio-group>
         </div>
       </div>
-      <app-address name="bookingAddress" [address]="bookingModel.venue" [canEdit]="isDisabledForOrgRepIndClient" #addressForm="ctAddressForm" ></app-address>
+      <app-address name="bookingAddress" [address]="bookingModel.venue" [isReadOnly]="isDisabledForOrgRepIndClient" #addressForm="ctAddressForm" ></app-address>
       <div class="medium-12 columns">
         <div class="form-field">
           <label>SPECIFIC LOCATION
@@ -349,7 +349,6 @@
               </label>
               <input [(ngModel)]="bookingModel.special_instructions"
                      name='txtSpecialInstruction'
-                     [readonly]="isDisabledForOrgRepIndClient"
                      (click)="fireNotification($event)"
                      type='text' placeholder="Enter Special instructions">
             </div>
@@ -385,8 +384,7 @@
                 <i class="inline-icon-tip"></i>
               </span>
             </label>
-            <input [readonly]='currentUserIsContact || isDisabledForOrgRepIndClient || !isUserAdminORBookOfficer'
-                   (click)="fireNotification($event)"
+            <input (click)="fireNotification($event)"
                    type="text"
                    placeholder="Enter Contact First Name"
                    [(ngModel)]="bookingModel.primaryContact.first_name"
@@ -407,8 +405,7 @@
                 <i class="inline-icon-tip"></i>
               </span>
             </label>
-            <input [readonly]='currentUserIsContact || isDisabledForOrgRepIndClient || !isUserAdminORBookOfficer'
-                   type="text"
+            <input type="text"
                    placeholder="Enter Contact Last Name"
                    [(ngModel)]="bookingModel.primaryContact.last_name"
                    name="contact_last_name"
@@ -684,7 +681,7 @@
       <div class="medium-12 columns">
         <div class="form-field">
           <label name="preferInterQuestion1">Do you have preferred interpreters for this booking? </label>
-          <md-radio-group name="rdPreferredInterpreters" (change)='onPreferredSelectionChange()'
+          <md-radio-group name="rdPreferredInterpreters" (change)='onPreferredSelectionChange()' [disabled]="isDisabledForOrgRepIndClient"
                           [(ngModel)]="showPreferred">
             <md-radio-button name="rdPreferredInterpretersYes" value=true>YES</md-radio-button>
             <md-radio-button name="rdPreferredInterpretersNo" value=false>NO</md-radio-button>
@@ -693,11 +690,11 @@
       </div>
     </div>
 
-    <div class="row" *ngIf="showPreferred === 'true'">
+    <div class="row" *ngIf="showPreferred === 'true' && !isDisabledForOrgRepIndClient">
       <div class="medium-12 columns">
         <div class="form-field">
           <label name="preferInterQuestion2">Do you want to set the preferred interpreters that you have set in your profile? </label>
-          <md-radio-group name="rdProfilePreferredInterpreters" (change)='onProfilePreferredSelectionChange()'
+          <md-radio-group name="rdProfilePreferredInterpreters" (change)='onProfilePreferredSelectionChange()' [disabled]="isDisabledForOrgRepIndClient"
                           [(ngModel)]="showProfilePreferred">
             <md-radio-button name="rdProfilePreferredInterpretersYes" value=true>YES</md-radio-button>
             <md-radio-button name="rdProfilePreferredInterpretersNo" value=false>NO</md-radio-button>
@@ -707,7 +704,7 @@
     </div>
 
     <app-interpreter-box *ngIf="showPreferred === 'true'" [isPreffered]="true"
-                         [isHidden]="true" [selectedInterpreters]="oldInterpreterPreference">
+                          [isHidden]="true" [selectedInterpreters]="oldInterpreterPreference" [isEditable]="!isDisabledForOrgRepIndClient">
     </app-interpreter-box> 
 
     <br>
@@ -719,7 +716,7 @@
       <div class="medium-12 columns">
         <div class="form-field">
           <label name="blockInterQuestion1">Do you have blocked interpreters for this booking? </label>
-          <md-radio-group name="rdBlockedInterpreters" (change)='onBlockedSelectionChange()'
+          <md-radio-group name="rdBlockedInterpreters" (change)='onBlockedSelectionChange()' [disabled]="isDisabledForOrgRepIndClient"
                           [(ngModel)]="showBlocked">
             <md-radio-button name="rdBlockedInterpretersYes" value=true>YES</md-radio-button>
             <md-radio-button name="rdBlockedInterpretersNo" value=false>NO</md-radio-button>
@@ -728,11 +725,11 @@
       </div>
     </div>
 
-    <div class="row" *ngIf="showBlocked === 'true'">
+    <div class="row" *ngIf="showBlocked === 'true' && !isDisabledForOrgRepIndClient">
       <div class="medium-12 columns">
         <div class="form-field">
           <label name="blockInterQuestion2">Do you want to set the blocked interpreters that you have set in your profile? </label>
-          <md-radio-group name="rdProfileBlockedInterpreters" (change)='onProfileBlockedSelectionChange()'
+          <md-radio-group name="rdProfileBlockedInterpreters" (change)='onProfileBlockedSelectionChange()' [disabled]="isDisabledForOrgRepIndClient"
                           [(ngModel)]="showProfileBlocked">
             <md-radio-button name="rdProfileBlockedInterpretersYes" value=true>YES</md-radio-button>
             <md-radio-button name="rdProfileBlockedInterpretersNo" value=false>NO</md-radio-button>
@@ -741,7 +738,7 @@
       </div>
     </div>
 
-    <app-interpreter-box *ngIf="showBlocked === 'true'" [isPreffered]="false"
+    <app-interpreter-box *ngIf="showBlocked === 'true'" [isPreffered]="false" [isEditable]="!isDisabledForOrgRepIndClient"
                           [isHidden]="true" [selectedInterpreters]="oldInterpreterPreference">
     </app-interpreter-box> 
     <div [hidden]='true'>
