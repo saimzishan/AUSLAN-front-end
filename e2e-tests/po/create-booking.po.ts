@@ -188,8 +188,8 @@ export class BookingPage extends PageObject {
             'end': 'dpEventEndTime',
             'date_from': 'dpDate'
         }[field];
-        this.getElementByName(elementName).sendKeys(date);
-        this.getElementByName(elementName).sendKeys(protractor.Key.TAB);
+    //    this.getElementByName(elementName).sendKeys(date);
+    //    this.getElementByName(elementName).sendKeys(protractor.Key.TAB);
         this.getElementByName(elementName).sendKeys(time);
     }
     setDateOnly = (field: string, date: TestDateFormat) => {
