@@ -96,6 +96,10 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 this.bookingModel.venue.end_time_iso =
                     this.datePipe.transform(this.bookingModel.venue.end_time_iso, 'yyyy-MM-ddTHH:mm:ss');
                 this.natureOfApptChange(null);
+            } else {
+                this.bookingModel = new Booking();
+                this.resetPrefBlockInterpreters();
+                this.onSpecialInstruction();
             }
 
             if (this.forEdit()) {
@@ -679,5 +683,10 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                     this.notificationServiceBus.launchNotification(true,
                         'Error occured on server side. ' + errors.statusText + ' ' + JSON.stringify(e || e.errors));
                 });
+    }
+
+    resetPrefBlockInterpreters() {
+        this.oldInterpreterPreference = [];
+        this.showPreferred = this.showProfilePreferred = this.showBlocked = this.showProfileBlocked = 'false';
     }
 }

@@ -132,7 +132,7 @@
         </div>
       </div>
 
-      <app-address [address]="bookingModel.venue" [canEdit]="isDisabledForOrgRepIndClient" #addressForm="ctAddressForm" ></app-address>
+      <app-address [address]="bookingModel.venue" [isReadOnly]="isDisabledForOrgRepIndClient" #addressForm="ctAddressForm" ></app-address>
       <div class="medium-12 columns">
         <div class="form-field">
           <label>SPECIFIC LOCATION

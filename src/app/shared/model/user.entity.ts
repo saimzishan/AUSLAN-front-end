@@ -240,7 +240,7 @@ export class OrganisationalRepresentative extends Organisational {
         this.organisation_name = obj.organisation.name;
         this.group_email = obj.organisation.group_email;
         this.special_instructions = obj.special_instructions;
-        this.branch_office = obj.branch_office;
+        this.branch_office = obj.organisation.branch_office;
         this.reffered_by = Boolean(obj.discovery_of_auslan) ? obj.discovery_of_auslan.startsWith('O:') ?
             'Other' : obj.discovery_of_auslan : '';
         this.reffered_other = this.reffered_by === 'OTHER' ?
