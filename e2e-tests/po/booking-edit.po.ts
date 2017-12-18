@@ -10,13 +10,15 @@ const EDITABLE_FIELDS = [
     'parking_type',
     'important_notes',
     'rdcurrentUserIsContact',
-    'rdPreferredInterpreters',
     'email',
     'mobile',
     'deaf_person_email',
     'deaf_person_mobile',
     'ext_ref_num',
-    'uploader'
+    'uploader',
+    'txtSpecialInstruction',
+    'contact_first_name',
+    'contact_last_name'
 ];
 
 const READONLY_FIELDS = [
@@ -30,12 +32,11 @@ const READONLY_FIELDS = [
     'raw_booking_requested_by',
     'raw_booking_requested_by_ln',
     'interpreters_count',
-    'txtSpecialInstruction',
     'deaf_person_eaf',
     'deaf_person_name',
     'deaf_person_last_name',
-    'contact_first_name',
-    'contact_last_name'
+    'rdPreferredInterpreters',
+    'rdBlockedInterpreters'
 ];
 export class BookingEditPage extends PageObject {
     verify = () => {
