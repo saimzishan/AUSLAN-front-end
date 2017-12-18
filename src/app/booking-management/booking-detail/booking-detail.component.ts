@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewContainerRef} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewContainerRef, ViewChild} from '@angular/core';
 import {Booking} from '../../shared/model/booking.entity';
 import {BookingService} from '../../api/booking.service';
 import {BA, BOOKING_NATURE} from '../../shared/model/booking-nature.enum';
@@ -18,8 +18,8 @@ import {IndividualClient, OrganisationalRepresentative, Interpreter, BookingOffi
 import {PopupComponent} from '../../shared/popup/popup.component';
 import {Contact} from '../../shared/model/contact.entity';
 import {UserService} from '../../api/user.service';
-import {isNullOrUndefined} from 'util';
-
+import {isNullOrUndefined, debug} from 'util';
+import {AddressComponent} from '../../ui/address/address.component';
 const _ONE_HOUR = 1000 /*milliseconds*/
     * 60 /*seconds*/
     * 60 /*minutes*/;
@@ -46,6 +46,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     specific_appointment_types = [];
     currentUserIsContact = false;
     currentUserIsClient = 'true';
+    rdBookingAddress = 'true';
     prefInterpreter: boolean;
     dialogRef: MdDialogRef<any>;
     fileName = '';
@@ -68,6 +69,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     preferAllocSub: any;
     oldInterpreterPreference = [];
     isDisabledForAdmin: boolean;
+    isDuplicate: boolean;
+    @ViewChild('addressForm') private bookingAddress: AddressComponent;
 
     constructor(public bookingService: BookingService, private router: Router,
                 private route: ActivatedRoute, private rolePermission: RolePermission,
@@ -84,6 +87,11 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             let param = params['bookingModel'] || '';
             this.shouldEdit = params['shouldEdit'] || '';
             this.assignedInterpreter = params['assignedInterpreter'] || '';
+            if (param.length > 0 && this.shouldEdit === '') {
+                this.isDuplicate = true;
+            } else {
+                this.isDuplicate = false;
+            }
 
             if (param.length > 0) {
                 let jsonData = JSON.parse(param);
@@ -96,6 +104,10 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 this.bookingModel.venue.end_time_iso =
                     this.datePipe.transform(this.bookingModel.venue.end_time_iso, 'yyyy-MM-ddTHH:mm:ss');
                 this.natureOfApptChange(null);
+            } else {
+                this.bookingModel = new Booking();
+                this.resetPrefBlockInterpreters();
+                this.onSpecialInstruction();
             }
 
             if (this.forEdit()) {
@@ -155,6 +167,9 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             } else {
                 this.oldBookingModel = this.deepCopy(this.bookingModel);
             }
+            if (!this.forEdit() && !this.isDuplicate) {
+                 this.onBookingAddressChange();
+            }
         }
     }
 
@@ -181,6 +196,18 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 let value = this.currentUserIsContact ? user[currentUserField] : '';
                 this.bookingModel.primaryContact[field] = value;
             });
+        }
+    }
+
+    public onBookingAddressChange() {
+        let user = GLOBAL.currentUser;
+        if (user) {
+            ['unit_number', 'street_number', 'street_name', 'suburb', 'state', 'post_code'].forEach((field) => {
+                let value = this.rdBookingAddress === 'true' ? (this.isUserOrgRep() ?
+                            user.organisation_attributes.address_attributes[field] : this.isIndClient() ? user.address_attributes[field] : '') : '';
+                this.bookingModel.venue[field] = value;
+            });
+            // this.bookingAddress.calculateDistance();
         }
     }
 
@@ -274,6 +301,9 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
     isUserOrgRep(): Boolean {
         return Boolean(GLOBAL.currentUser instanceof OrganisationalRepresentative);
+    }
+    isIndClient() {
+        return (GLOBAL.currentUser instanceof IndividualClient);
     }
     onSpecialInstruction() {
         let special_instructions =
@@ -679,5 +709,10 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                     this.notificationServiceBus.launchNotification(true,
                         'Error occured on server side. ' + errors.statusText + ' ' + JSON.stringify(e || e.errors));
                 });
+    }
+
+    resetPrefBlockInterpreters() {
+        this.oldInterpreterPreference = [];
+        this.showPreferred = this.showProfilePreferred = this.showBlocked = this.showProfileBlocked = 'false';
     }
 }

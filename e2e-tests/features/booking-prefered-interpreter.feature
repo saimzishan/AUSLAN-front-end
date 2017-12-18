@@ -30,6 +30,7 @@ Feature: Create Booking with preferred or blocked interpreters
     And I am on the bookings page
     When I click on 'New Booking'
     Then I will be taken to the 'New Booking' form
+    When I click on element by name 'rdBookingAddressNo'
     And I fill New Booking form fields correctly
     And I can see the element with name 'preferInterHeading' has text 'Preferred interpreters'
     And I can see the element with name 'preferInterQuestion1' is 'visible'
@@ -91,6 +92,7 @@ Feature: Create Booking with preferred or blocked interpreters
     And I am on the bookings page
     When I click on 'New Booking'
     Then I will be taken to the 'New Booking' form
+    When I click on element by name 'rdBookingAddressNo'
     And I fill New Booking form fields correctly
     And I can see the element with name 'blockInterHeading' has text 'Blocked interpreters'
     And I can see the element with name 'blockInterQuestion1' is 'visible'
@@ -163,6 +165,7 @@ Feature: Create Booking with preferred or blocked interpreters
     And I am on the bookings page
     When I click on 'New Booking'
     Then I will be taken to the 'New Booking' form
+    When I click on element by name 'rdBookingAddressNo'
     And I fill New Booking form fields correctly
     And I can see the element with name 'preferInterHeading' has text 'Preferred interpreters'
     And I can see the element with name 'preferInterQuestion1' is 'visible'

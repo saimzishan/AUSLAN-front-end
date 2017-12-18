@@ -19,8 +19,8 @@ export class AddressComponent implements AfterViewInit {
     @Input() address: Address;
     @Input() prefix = '';
     @ViewChild('addressFields') public form: NgForm;
-    @Input() canEdit = false;
     @Input() canCalculateDistance: boolean;
+    @Input() isReadOnly = false;
     @Input() parentForm: NgForm;
     @Input() userModel: Interpreter;
 

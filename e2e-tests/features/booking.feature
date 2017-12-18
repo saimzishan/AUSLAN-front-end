@@ -109,6 +109,7 @@ Feature: Booking Management
     And I am on the bookings page
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
+    When I click on element by name 'rdBookingAddressNo'
     When I fill New Booking form fields correctly
     And I click the create booking button
     Then I will get an error notification saying "Kindly accept Terms and Conditions"
@@ -128,6 +129,7 @@ Feature: Booking Management
     And I am on the bookings page
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
+    When I click on element by name 'rdBookingAddressNo'
     When I fill New Booking form fields correctly
     And I click the create booking button
     Then I will get an error notification saying "Kindly accept Terms and Conditions"
@@ -215,6 +217,7 @@ Feature: Booking Management
     And I am on the bookings page
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
+    When I click on element by name 'rdBookingAddressNo'
     When I fill New Booking form fields correctly with non-standard time from 04:00AM to 05:00AM with 1 interpreters
     And I click the create booking button
     Then I will get an error notification saying "Kindly accept Terms and Conditions"
@@ -232,6 +235,7 @@ Feature: Booking Management
     And I am on the bookings page
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
+    When I click on element by name 'rdBookingAddressNo'
     When I fill New Booking form fields correctly with non-standard time from 04:00AM to 05:00AM with 1 interpreters
     And I click the create booking button
     Then I will get an error notification saying "Kindly accept Terms and Conditions"
@@ -271,6 +275,7 @@ Feature: Booking Management
     And I am on the bookings page
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
+    When I click on element by name 'rdBookingAddressNo'
     When I fill New Booking form fields correctly with non-standard time from 04:00AM to 05:01AM with 1 interpreters
     Then I am shown a validation error with the text 'You may require more than 1 interpreter for this booking'
 
@@ -281,6 +286,7 @@ Feature: Booking Management
     And I am on the bookings page
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
+    When I click on element by name 'rdBookingAddressNo'
     When I fill New Booking form fields correctly with non-standard time from 04:00AM to 05:01AM with 1 interpreters
     Then I am shown a validation error with the text 'You may require more than 1 interpreter for this booking'
 # ---------------------------------------- AUSLAN1-254 -> END ----------------------------------------
@@ -303,6 +309,7 @@ Feature: Booking Management
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
     And I can see the ext_ref_num field
+    When I click on element by name 'rdBookingAddressNo'
     When I fill New Booking form fields correctly
     And I fill the field 'ext_ref_num' with value '1234'
     Then I move to element name 'tnc'
@@ -352,6 +359,7 @@ Feature: Booking Management
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
     And I can see the txtSpecialInstruction field
+    When I click on element by name 'rdBookingAddressNo'
     When I fill New Booking form fields correctly with non-standard time from 07:00AM to 08:00AM with 1 interpreters
     And I specify i have special instruction
     Then I move to element name 'tnc'
@@ -369,6 +377,7 @@ Feature: Booking Management
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
     And I can see the txtSpecialInstruction field
+    When I click on element by name 'rdBookingAddressNo'
     And I fill New Booking form fields correctly with non-standard time from 07:00AM to 08:00AM with 1 interpreters
     And I specify i have special instruction
     And The field 'txtSpecialInstruction' will be populated with 'I am special'
@@ -583,7 +592,7 @@ Feature: Booking Management
     Then I am shown a validation error with the text 'Please specify what the appointment is about'
 
   #--------------------------------- AUSLAN1-770 -----------------------------------------------------
-  @runThis
+  @ignoreThis
   Scenario: As a Booking Officer, I can create a booking for Organisational Representative
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
@@ -615,3 +624,35 @@ Feature: Booking Management
     And I click on BUTTON 'SAVE'
     And If I am shown a popup, I approve it
     Then I should get a valid booking update notification
+# ---------------------------------------- AUSLAN1-711 -> START ----------------------------------------
+  @runThis
+  Scenario: Individual Client can use their address to auto fill booking address
+    Given I exist as an Individual Client
+    And I sign in with valid Individual Client credentials
+    And I am on the bookings page
+    When I click on 'New Booking'
+    Then I will be taken to the 'New Booking' form
+    And I can see the element with name 'lblQuestionBookAddr' has text 'Do you want to use your profile address for this booking?'
+    And I can see the element with name 'rdBookingAddress' is 'visible'
+    And I can see the booking address is 'auto populated'
+    When I click on element by name 'rdBookingAddressNo'
+    Then I can see the booking address is 'empty'
+    And I click on element by name 'rdBookingAddressYes'
+    Then I can see the booking address is 'auto populated'
+
+  @runThis
+  Scenario: Organisational Representative can use their address to auto fill booking address
+    Given I exist as an Organisational Representative
+    And I sign in with valid Organisational Representative credentials
+    And I am on the bookings page
+    When I click on 'New Booking'
+    Then I will be taken to the 'New Booking' form
+    And I can see the element with name 'lblQuestionBookAddr' has text 'Do you want to use your profile address for this booking?'
+    And I can see the element with name 'rdBookingAddress' is 'visible'
+    And I can see the booking address is 'auto populated'
+    When I click on element by name 'rdBookingAddressNo'
+    Then I can see the booking address is 'empty'
+    And I click on element by name 'rdBookingAddressYes'
+    Then I can see the booking address is 'auto populated'
+
+# ---------------------------------------- AUSLAN1-711 -> END ----------------------------------------

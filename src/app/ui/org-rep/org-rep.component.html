@@ -96,8 +96,7 @@
 
 <br>
 
-<app-address [canEdit]="isDuplicate" [prefix]="address_title" [address]="userModel.address_attributes"
-             [canCalculateDistance]="false"></app-address>
+<app-address [isReadOnly]="isDuplicate" [prefix]="address_title" [address]="userModel.address_attributes" [parentForm]="parentForm" [canCalculateDistance]="false"></app-address>
 
 <div class="row small-collapse">
     <div class="row-wrapper">

@@ -68,6 +68,7 @@ defineSupportCode(({Given, Then, When}) => {
     Then(/^The booking form will be automatically populated with the details.$/, createBookingPO.populatedUserDetails);
 
     Given(/^I can see the '(.*)' auto populated$/, createBookingPO.sectionAutoPopulated);
+    Given(/^I can see the booking address is '(.*)'$/, createBookingPO.bookingAddressPopulated);
     // Filling in specific fields in the booking form
     Then(/^I set the (\w+) time as (\d+) days (?:(\d+) hours?)?\s?from now$/, createBookingPO.setTime);
 
