@@ -26,7 +26,6 @@ export class BookingListComponent implements OnInit {
     @Output() onPageEmit = new EventEmitter<number>();
     @Input() p = 1;
     @Input() totalItems = 0;
-    currentDate;
     private validKeys(list): Array<string> {
         let keys = Object.keys(list);
         return keys.slice(keys.length / 2);
@@ -43,8 +42,7 @@ export class BookingListComponent implements OnInit {
                 break;
             }
         });
-    this.currentDate = Date.now();
-    this.bookingFilter.date_from = this.datePipe.transform( this.currentDate, 'yyyy-MM-dd');
+    this.bookingFilter.date_from = this.datePipe.transform( Date.now(), 'yyyy-MM-dd');
     this.filter('date_from', this.bookingFilter.date_from);
     }
     underScoreToSpaces(str: string) {

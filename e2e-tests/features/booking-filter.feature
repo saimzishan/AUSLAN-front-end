@@ -382,7 +382,7 @@ Feature: Booking Filter
     And I click on logout
 
  @runThis
- Scenario: As a Booking Officer, I can create a booking for Organisational Representative and I should be able to filter the booking by today date onwards
+ Scenario: As a Booking Officer, I can create a booking for Organisational Representative with old date and I should be able to filter the bookings by today's date onward 
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
     Then I am on the bookings page
