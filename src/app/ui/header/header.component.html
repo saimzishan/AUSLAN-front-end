@@ -10,9 +10,9 @@
 	<section *ngIf="userIsActive">
 		<ul class="dropdown menu" data-dropdown-menu data-disable-hover="true" data-click-open="true">
 			<li>
-				<a id="lnkProfile" [ngClass]="{'active':isActiveLink(linkName.profile)}"
-				   (click)="setActiveLink(linkName.profile)" [routerLink]="['user-management','profile']">
-					<img src={{getPicturePath()}}>{{fullName}}</a>
+				<a id="lnkProfile">
+					<img src={{getPicturePath()}}>{{fullName}}
+				</a>
 				<ul class="menu">
 					<li><a id="lnkProfile1" [ngClass]="{'active':isActiveLink(linkName.profile)}" (click)="setActiveLink(linkName.profile)" [routerLink]="['user-management','profile']"><i class="icon-user"></i> Profile</a></li>
 					<li><a id="lnkSettings" *ngIf="canShowLink('user-management')" [ngClass]="{'active':isActiveLink(linkName.usermanagement)}" (click)="setActiveLink(linkName.usermanagement)" [routerLink]="['user-management']"><i class="icon-settings"></i> Settings</a></li>
