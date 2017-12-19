@@ -68,7 +68,10 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     preferAllocSub: any;
     oldInterpreterPreference = [];
     isDisabledForAdmin: boolean;
-    date;
+    bookingdate: string;
+    miniDate: Date;
+    maxiDate: Date;
+
     constructor(public bookingService: BookingService, private router: Router,
                 private route: ActivatedRoute, private rolePermission: RolePermission,
                 public notificationServiceBus: NotificationServiceBus, public spinnerService: SpinnerService,
@@ -108,8 +111,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         });
     }
     dateSelection() {
-        this.date =
-            this.datePipe.transform(this.date, 'yyyy-MM-dd');
+        this.timeFormatting();
     }
     private isCurrentUserContact(): boolean {
         if (this.forEdit()) {
@@ -127,8 +129,11 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     onEndTimeChanged() {
     }
     timeFormatting() {
-        this.bookingModel.venue.start_time_iso = this.datePipe.transform(this.date + 'T' + this.bookingModel.venue.start_time_iso, 'yyyy-MM-ddTHH:mm:ss');
-        this.bookingModel.venue.end_time_iso = this.datePipe.transform(this.date + 'T' + this.bookingModel.venue.end_time_iso, 'yyyy-MM-ddTHH:mm:ss');
+        let selectedDate = this.datePipe.transform(this.bookingdate, 'yyyy-MM-dd');
+        let startTime = this.datePipe.transform(this.bookingModel.venue.start_time_iso, 'HH:mm:ss');
+        let endTime = this.datePipe.transform(this.bookingModel.venue.end_time_iso, 'HH:mm:ss');
+        this.bookingModel.venue.start_time_iso = selectedDate + 'T' + startTime;
+        this.bookingModel.venue.end_time_iso = selectedDate + 'T' + endTime;
     }
     natureOfApptChange($event) {
         let val: BOOKING_NATURE = <BOOKING_NATURE> BOOKING_NATURE[this.bookingModel.raw_nature_of_appointment];
@@ -164,7 +169,36 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 this.oldBookingModel = this.deepCopy(this.bookingModel);
             }
         }
+    //   this.dateRestrictions();
+    let today = new Date();
+    let month = today.getMonth();
+    let year = today.getFullYear();
+    let prevMonth = (month === 0) ? 11 : month - 1;
+    let prevYear = (prevMonth === 11) ? year - 1 : year;
+    let nextMonth = (month === 11) ? 0 : month + 1;
+    let nextYear = (nextMonth === 0) ? year + 5 : year;
+    this.miniDate = new Date();
+    this.miniDate.setDate(today.getDate());
+    this.maxiDate = new Date();
+    this.maxiDate.setMonth(nextMonth);
+    this.maxiDate.setFullYear(nextYear);
     }
+    // dateRestrictions()
+    // {
+    //     let today = new Date();
+    //     let month = today.getMonth();
+    //     let year = today.getFullYear();
+    //     let prevMonth = (month === 0) ? 11 : month -1;
+    //     let prevYear = (prevMonth === 11) ? year - 1 : year;
+    //     let nextMonth = (month === 11) ? 0 : month + 1;
+    //     let nextYear = (nextMonth === 0) ? year + 5 : year;
+    //     this.miniDate = new Date();
+    //     this.miniDate.setDate(today.getDate());
+    //     this.maxiDate = new Date();
+    //     this.maxiDate.setMonth(nextMonth);
+    //     this.maxiDate.setFullYear(nextYear);
+    //     console.log("restricted date: "  +  this.maxiDate.setFullYear(nextYear));
+    // }
 
     public onClientSelectionChange() {
         let user = this.isUserAdminORBookOfficer ? this.getBookableUser() : GLOBAL.currentUser;

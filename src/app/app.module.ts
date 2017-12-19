@@ -75,6 +75,8 @@ import {GmapsApiService} from './api/gmaps-api.service';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {RemoveSpacePipe} from './shared/pipe/remove-space.pipe';
 import { NguiDatetimePickerModule } from '@ngui/datetime-picker';
+import {CalendarModule as PrimeNgCalendarModule} from 'primeng/primeng';
+
 
 @NgModule({
   declarations: [
@@ -111,7 +113,7 @@ import { NguiDatetimePickerModule } from '@ngui/datetime-picker';
     FormsModule, BrowserAnimationsModule, NgxPaginationModule,
     HttpModule, SimpleNotificationsModule.forRoot(),
     ReactiveFormsModule, Md2Module.forRoot(),
-    MaterialModule, CalendarModule, NguiDatetimePickerModule
+    MaterialModule, CalendarModule, NguiDatetimePickerModule, PrimeNgCalendarModule
   ],  providers: [DatePipe, LinkAuth, UserNameService, RolePermission, AuthGuard, NoAuthGuard, Title, LinkHelper,
     NotificationServiceBus, SpinnerService, BookingService, UserService,
         PreferedAllocationService, BookingHeaderService, GmapsApiService,
