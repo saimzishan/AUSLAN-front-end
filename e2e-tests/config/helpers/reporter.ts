@@ -16,7 +16,7 @@ defineSupportCode(({registerListener}) => {
 
     };
 
-    registerListener(jsonFormatter);
+    // registerListener(jsonFormatter);
 
     return _generateAndSaveJsonFile();
 
