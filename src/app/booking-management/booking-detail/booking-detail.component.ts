@@ -68,7 +68,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     preferAllocSub: any;
     oldInterpreterPreference = [];
     isDisabledForAdmin: boolean;
-    bookingdate: string;
+    bookingDate: string;
     miniDate: Date;
     maxiDate: Date;
 
@@ -94,10 +94,11 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 this.oldDocuments = jsonData.documents_attributes;
                 this.oldInterpreterPreference = jsonData.preference_allocations_attributes;
                 this.bookingModel.documents_attributes = [];
+                this.bookingDate = this.datePipe.transform(this.bookingModel.venue.start_time_iso, 'MM/dd/yyyy');
                 this.bookingModel.venue.start_time_iso =
-                    this.datePipe.transform(this.bookingModel.venue.start_time_iso, 'yyyy-MM-ddTHH:mm:ss');
+                        this.datePipe.transform(this.bookingModel.venue.start_time_iso, 'hh:mm a');
                 this.bookingModel.venue.end_time_iso =
-                    this.datePipe.transform(this.bookingModel.venue.end_time_iso, 'yyyy-MM-ddTHH:mm:ss');
+                        this.datePipe.transform(this.bookingModel.venue.end_time_iso, 'hh:mm a');
                 this.natureOfApptChange(null);
             }
 
@@ -129,11 +130,11 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     onEndTimeChanged() {
     }
     timeFormatting() {
-        let selectedDate = this.datePipe.transform(this.bookingdate, 'yyyy-MM-dd');
+        let selectedDate = this.datePipe.transform(this.bookingDate, 'yyyy-MM-dd');
         let startTime = this.datePipe.transform(this.bookingModel.venue.start_time_iso, 'HH:mm:ss');
         let endTime = this.datePipe.transform(this.bookingModel.venue.end_time_iso, 'HH:mm:ss');
-        this.bookingModel.venue.start_time_iso = selectedDate + 'T' + startTime;
-        this.bookingModel.venue.end_time_iso = selectedDate + 'T' + endTime;
+        // this.bookingModel.venue.start_time_iso = selectedDate + 'T' + startTime;
+        // this.bookingModel.venue.end_time_iso = selectedDate + 'T' + endTime;
     }
     natureOfApptChange($event) {
         let val: BOOKING_NATURE = <BOOKING_NATURE> BOOKING_NATURE[this.bookingModel.raw_nature_of_appointment];

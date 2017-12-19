@@ -101,11 +101,11 @@
                 <p-calendar name='dpDate' 
                   placeholder="DATE OF APPOINTMENT *" 
                   [readonlyInput]="isDisabledForOrgRepIndClient"
-                  [(ngModel)]="bookingdate"
-                  (onSelect)="dateSelection()"
+                  [(ngModel)]="bookingDate"
+                  (onSelect)='dateSelection()'
                   [minDate]="miniDate" [maxDate]="maxiDate"
                   (click)="fireNotification($event)"
-                  required #dpDate="ngModel" [dataType]='dateOnly'></p-calendar>
+                  required #dpDate="ngModel" dateOnly="true" ></p-calendar>
 <!--           
                 <input
                 type="text"
@@ -152,7 +152,6 @@
             <p-calendar  name='dpEventEndTime' 
             [(ngModel)]="bookingModel.venue.end_time_iso" 
             [readonlyInput]="isDisabledForOrgRepIndClient"
-            (onSelect)="dateSelection()"
             placeholder="ENDING TIME *"
             [timeOnly]="true" hourFormat="12"  
             required #dpEventEndTime="ngModel"></p-calendar>
