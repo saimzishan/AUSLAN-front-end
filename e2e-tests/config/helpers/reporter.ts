@@ -1,14 +1,21 @@
 import { Capabilities } from 'selenium-webdriver';
 import { browser } from 'protractor';
 import { defineSupportCode } from 'cucumber';
-const Cucumber = require('cucumber');
-const jsonFormatter = new Cucumber.JsonFormatter();
+const JsonFormatter = require('cucumber').JsonFormatter;
 const fs = require('fs-extra');
 const jsonFile = require('jsonfile');
 const path = require('path');
 const projectRoot = process.cwd();
 
 defineSupportCode(({registerListener}) => {
+    const jsonFormatter = JsonFormatter;
+
+    jsonFormatter.log = function (string) {
+
+        console.log(string);
+
+    };
+
     registerListener(jsonFormatter);
 
     return _generateAndSaveJsonFile();
