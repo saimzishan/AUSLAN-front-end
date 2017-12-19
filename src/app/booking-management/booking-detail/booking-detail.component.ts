@@ -19,6 +19,7 @@ import {PopupComponent} from '../../shared/popup/popup.component';
 import {Contact} from '../../shared/model/contact.entity';
 import {UserService} from '../../api/user.service';
 import {isNullOrUndefined} from 'util';
+import * as moment from 'moment';
 
 const _ONE_HOUR = 1000 /*milliseconds*/
     * 60 /*seconds*/
@@ -112,7 +113,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         });
     }
     dateSelection() {
-        this.timeFormatting();
+       // this.timeFormatting();
     }
     private isCurrentUserContact(): boolean {
         if (this.forEdit()) {
@@ -131,10 +132,10 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
     timeFormatting() {
         let selectedDate = this.datePipe.transform(this.bookingDate, 'yyyy-MM-dd');
-        let startTime = this.datePipe.transform(this.bookingModel.venue.start_time_iso, 'HH:mm:ss');
-        let endTime = this.datePipe.transform(this.bookingModel.venue.end_time_iso, 'HH:mm:ss');
-        // this.bookingModel.venue.start_time_iso = selectedDate + 'T' + startTime;
-        // this.bookingModel.venue.end_time_iso = selectedDate + 'T' + endTime;
+        let startTime = moment(this.bookingModel.venue.start_time_iso, 'hh:mm A').format('HH:mm:ss');
+        let endTime = moment(this.bookingModel.venue.end_time_iso, 'hh:mm A').format('HH:mm:ss');
+        this.bookingModel.venue.start_time_iso = selectedDate + 'T' + startTime;
+        this.bookingModel.venue.end_time_iso = selectedDate + 'T' + endTime;
     }
     natureOfApptChange($event) {
         let val: BOOKING_NATURE = <BOOKING_NATURE> BOOKING_NATURE[this.bookingModel.raw_nature_of_appointment];
@@ -525,7 +526,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.deleteDocuments.forEach(element => {
                 this.bookingModel.documents_attributes.push(element);
             });
-
+            this.timeFormatting();
             this.bookingService.updateBooking(bookingID, this.bookingModel)
                 .subscribe((res: any) => {
                         if (res.status === 204 && res.ok === true) {
