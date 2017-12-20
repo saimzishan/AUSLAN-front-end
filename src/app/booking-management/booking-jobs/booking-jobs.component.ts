@@ -27,6 +27,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     invitePressed = false;
     unAssignPressed = false;
     reAssignPressed = false;
+    unlinkPressed = false;
     isCancelledOrUnableToServe = false;
     selectedActionableInterpreterID = -1;
     interpreterList: User[] = [];
@@ -78,6 +79,9 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                     break;
                 case 'duplicateBooking':
                     this.duplicateBooking();
+                    break;
+                case 'unlinkBooking':
+                    this.unlinkBooking();
                     break;
                 case 'saveChanges':
                     this.saveChanges();
@@ -196,6 +200,12 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
             queryParams: {bookingModel: JSON.stringify(this.selectedBookingModel)}
         };
         this.router.navigate(['/booking-management', 'create-booking'], navigationExtras);
+    }
+
+    unlinkBooking() {
+        this.unlinkPressed = true;
+        this.selectedBookingModel.link_id = null;
+        this.selectedBookingModel.update_all_linked_bookings = false;
     }
 
     editBooking() {
@@ -355,6 +365,21 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                 });
     }
 
+    private removeLinkFromBooking = () => {
+        this.bookingService.updateBooking(this.selectedBookingModel.id, this.selectedBookingModel)
+            .subscribe((res: any) => {
+                    if (res.status === 204) {
+                        this.spinnerService.requestInProcess(false);
+                        this.notificationServiceBus.launchNotification(false, 'The Booking has been Updated.');
+                    }
+                },
+                err => {
+                    this.spinnerService.requestInProcess(false);
+                    let e = err.json() || 'There is some error on server side';
+                    this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
+                });
+    }
+
     saveChanges() {
         let selectedInt = [];
         this.checkList = {};
@@ -382,6 +407,9 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
             this.reAssignPressed = false;
             this.sendReAssign(selectedInt);
             this.selectedActionableInterpreterID = -1;
+        } else if (this.unlinkPressed) {
+            this.unlinkPressed = false;
+            this.removeLinkFromBooking();
         }
     }
 

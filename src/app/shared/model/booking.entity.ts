@@ -33,6 +33,7 @@ export class Booking {
     public bookable_type: string;
     public created_by_admin: boolean;
     public travel_cost_applicable: boolean;
+    public update_all_linked_bookings: boolean;
     // Is it a limitation on interpreters invitation.
 
     constructor() {
@@ -64,6 +65,7 @@ export class Booking {
         this.notes = '';
         this.created_by_admin = false;
         this.travel_cost_applicable = false;
+        this.update_all_linked_bookings = false;
     }
 
     clean(theObject) {
@@ -189,7 +191,10 @@ export class Booking {
 
 
         let o = new Object({
-            id: this.id, state: _state,
+            id: this.id,
+            link_id: this.link_id,
+            update_all_linked_bookings: this.update_all_linked_bookings,
+            state: _state,
             special_instructions: this.special_instructions,
             venue: this.venue.title,
             requested_by_first_name: this.requested_by.first_name,
