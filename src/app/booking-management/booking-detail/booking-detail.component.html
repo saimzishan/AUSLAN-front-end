@@ -102,7 +102,6 @@
                   placeholder="DATE OF APPOINTMENT *" 
                   [readonlyInput]="isDisabledForOrgRepIndClient"
                   [(ngModel)]="bookingDate"
-                  (onSelect)='dateSelection()'
                   [minDate]="miniDate" [maxDate]="maxiDate"
                   (click)="fireNotification($event)"
                   required #dpDate="ngModel" dateOnly="true" ></p-calendar>
@@ -131,17 +130,17 @@
           <div class="form-field">
             <label>START TIME *</label>
             <p-calendar  name='dpEventDate' 
-            [(ngModel)]="bookingModel.venue.start_time_iso" 
+            [(ngModel)]="bookingStartTime" 
             [readonlyInput]="isDisabledForOrgRepIndClient"
             placeholder="STARTING TIME *"
-            (onSelect)="dateSelection()"
-            [timeOnly]="true" hourFormat="12"  
+            [timeOnly]="true" hourFormat="12"
+            [stepMinute]="5"
             required #dpEventDate="ngModel"></p-calendar>
             <span *ngIf="dpEventDate.touched && !dpEventDate.errors?.required;"
                   class="inline-icon inline-icon-valid valid"></span>
             <span *ngIf="dpEventDate.touched && (dpEventDate.errors?.required);"
                   class="inline-icon error">
-              <span>Start Date is required</span>!
+              <span>Start Time is required</span>!
             </span>
           </div>
         </div>
@@ -150,16 +149,21 @@
           <div class="form-field">
             <label>END TIME *</label>
             <p-calendar  name='dpEventEndTime' 
-            [(ngModel)]="bookingModel.venue.end_time_iso" 
+            [(ngModel)]="bookingEndTime" 
             [readonlyInput]="isDisabledForOrgRepIndClient"
             placeholder="ENDING TIME *"
-            [timeOnly]="true" hourFormat="12"  
+            [timeOnly]="true" hourFormat="12"
+            [stepMinute]="5"
             required #dpEventEndTime="ngModel"></p-calendar>
             <span *ngIf="dpEventEndTime.touched && !dpEventEndTime.errors?.required;"
                   class="inline-icon inline-icon-valid valid"></span>
             <span *ngIf="dpEventEndTime.touched && (dpEventEndTime.errors?.required);"
                   class="inline-icon error">
-              <span>End Date is required</span>!
+              <span>End Time is required</span>!
+            </span>
+            <span *ngIf="(bookingEndTime < bookingStartTime)"
+                  class="inline-icon error">
+              <span>End time can't be before start time</span>!
             </span>
           </div>
         </div>

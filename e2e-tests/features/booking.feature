@@ -179,7 +179,7 @@ Feature: Booking Management
     And I am on the bookings page
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
-    When I fill New Booking form fields correctly with non-standard time from 04:00AM to 05:00AM with 1 interpreters
+    When I fill New Booking form fields correctly with non-standard time from 04:00 AM to 05:00 AM with 1 interpreters
     And I select the bookable for client
     And I click the create booking button
     Then I will get an error notification saying "Kindly accept Terms and Conditions"
@@ -197,7 +197,7 @@ Feature: Booking Management
     And I am on the bookings page
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
-    When I fill New Booking form fields correctly with non-standard time from 04:00AM to 05:00AM with 1 interpreters
+    When I fill New Booking form fields correctly with non-standard time from 04:00 AM to 05:00 AM with 1 interpreters
     And I select the bookable for client
     And I click the create booking button
     Then I will get an error notification saying "Kindly accept Terms and Conditions"
@@ -215,7 +215,7 @@ Feature: Booking Management
     And I am on the bookings page
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
-    When I fill New Booking form fields correctly with non-standard time from 04:00AM to 05:00AM with 1 interpreters
+    When I fill New Booking form fields correctly with non-standard time from 04:00 AM to 05:00 AM with 1 interpreters
     And I click the create booking button
     Then I will get an error notification saying "Kindly accept Terms and Conditions"
     Then I move to element name 'lnkTC'
@@ -232,7 +232,7 @@ Feature: Booking Management
     And I am on the bookings page
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
-    When I fill New Booking form fields correctly with non-standard time from 04:00AM to 05:00AM with 1 interpreters
+    When I fill New Booking form fields correctly with non-standard time from 04:00 AM to 05:00 AM with 1 interpreters
     And I click the create booking button
     Then I will get an error notification saying "Kindly accept Terms and Conditions"
     Then I move to element name 'lnkTC'
@@ -251,7 +251,7 @@ Feature: Booking Management
     And I am on the bookings page
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
-    When I fill New Booking form fields correctly with non-standard time from 04:00AM to 05:01AM with 1 interpreters
+    When I fill New Booking form fields correctly with non-standard time from 04:00 AM to 05:01 AM with 1 interpreters
     Then I am shown a validation error with the text 'You may require more than 1 interpreter for this booking'
 
   @runThis
@@ -261,7 +261,7 @@ Feature: Booking Management
     And I am on the bookings page
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
-    When I fill New Booking form fields correctly with non-standard time from 04:00AM to 05:01AM with 1 interpreters
+    When I fill New Booking form fields correctly with non-standard time from 04:00 AM to 05:01 AM with 1 interpreters
     Then I am shown a validation error with the text 'You may require more than 1 interpreter for this booking'
 
   @runThis
@@ -271,7 +271,7 @@ Feature: Booking Management
     And I am on the bookings page
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
-    When I fill New Booking form fields correctly with non-standard time from 04:00AM to 05:01AM with 1 interpreters
+    When I fill New Booking form fields correctly with non-standard time from 04:00 AM to 05:01 AM with 1 interpreters
     Then I am shown a validation error with the text 'You may require more than 1 interpreter for this booking'
 
   @runThis
@@ -281,7 +281,7 @@ Feature: Booking Management
     And I am on the bookings page
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
-    When I fill New Booking form fields correctly with non-standard time from 04:00AM to 05:01AM with 1 interpreters
+    When I fill New Booking form fields correctly with non-standard time from 04:00 AM to 05:01 AM with 1 interpreters
     Then I am shown a validation error with the text 'You may require more than 1 interpreter for this booking'
 # ---------------------------------------- AUSLAN1-254 -> END ----------------------------------------
 
@@ -352,7 +352,7 @@ Feature: Booking Management
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
     And I can see the txtSpecialInstruction field
-    When I fill New Booking form fields correctly with non-standard time from 07:00AM to 08:00AM with 1 interpreters
+    When I fill New Booking form fields correctly with non-standard time from 07:00 AM to 08:00 AM with 1 interpreters
     And I specify i have special instruction
     Then I move to element name 'tnc'
     Then I click on checkbox name 'tnc'
@@ -369,7 +369,7 @@ Feature: Booking Management
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
     And I can see the txtSpecialInstruction field
-    And I fill New Booking form fields correctly with non-standard time from 07:00AM to 08:00AM with 1 interpreters
+    And I fill New Booking form fields correctly with non-standard time from 07:00 AM to 08:00 AM with 1 interpreters
     And I specify i have special instruction
     And The field 'txtSpecialInstruction' will be populated with 'I am special'
     Then I move to element name 'tnc'

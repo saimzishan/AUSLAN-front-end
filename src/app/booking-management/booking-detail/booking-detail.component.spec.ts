@@ -37,6 +37,7 @@ import {PreferedAllocationService} from '../../shared/prefered-allocation.servic
 import {BookingHeaderService} from '../booking-header/booking-header.service';
 import {GmapsApiService} from '../../api/gmaps-api.service';
 import {RemoveSpacePipe} from '../../shared/pipe/remove-space.pipe';
+import {CalendarModule as PrimeNgCalendarModule} from 'primeng/primeng';
 
 describe('BookingDetailComponent', () => {
   let component: BookingDetailComponent;
@@ -51,7 +52,7 @@ describe('BookingDetailComponent', () => {
       imports: [CustomFormsModule, FileuploaderModule,
         FormsModule, BrowserAnimationsModule, RouterTestingModule, HttpModule,
         Md2Module.forRoot(),
-        MaterialModule
+        MaterialModule, PrimeNgCalendarModule
       ],  providers: [MdDialog,
             ViewContainerRef,
             DatePipe, RolePermission, PreferedAllocationService, BookingHeaderService,
