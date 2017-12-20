@@ -140,8 +140,8 @@
             </span>
           </label>
           <md-radio-group name="rdBookingAddress" [(ngModel)]="rdBookingAddress" (change)='onBookingAddressChange()'>
-            <md-radio-button name="rdBookingAddressYes" [value]=true>YES</md-radio-button>
-            <md-radio-button name="rdBookingAddressNo" [value]=false>NO</md-radio-button>
+            <md-radio-button name="rdBookingAddressYes" [value]="true">YES</md-radio-button>
+            <md-radio-button name="rdBookingAddressNo" [value]="false">NO</md-radio-button>
           </md-radio-group>
         </div>
       </div>
@@ -334,8 +334,8 @@
               </span>
             </label>
             <md-radio-group name="rdSpecialInstruction" [(ngModel)]="rdgSpecialInstruction" (change)='onSpecialInstruction()'>
-              <md-radio-button [value]=true>YES</md-radio-button>
-              <md-radio-button [value]=false>NO</md-radio-button>
+              <md-radio-button [value]="true">YES</md-radio-button>
+              <md-radio-button [value]="false">NO</md-radio-button>
             </md-radio-group>
           </div>
         </div>
@@ -477,8 +477,8 @@
           </label>
           <md-radio-group name="rdcurrentUserIsClient" (change)='onClientSelectionChange()' 
                           [disabled]="isDisabledForOrgRepIndClient || !isUserAdminORBookOfficer" [(ngModel)]="currentUserIsClient">
-            <md-radio-button [value]=true>YES</md-radio-button>
-            <md-radio-button [value]=false>NO</md-radio-button>
+            <md-radio-button [value]="true">YES</md-radio-button>
+            <md-radio-button [value]="false">NO</md-radio-button>
           </md-radio-group>
         </div>
       </div>
@@ -611,8 +611,8 @@
           </label>
           <md-radio-group name="rdStandardInvoice" [(ngModel)]="standardInvoice" (change)='onStandardInvoice()'
                           [disabled]="isDisabledForOrgRepIndClient">
-            <md-radio-button [value]=true>YES</md-radio-button>
-            <md-radio-button [value]=false>NO</md-radio-button>
+            <md-radio-button [value]="true">YES</md-radio-button>
+            <md-radio-button [value]="false">NO</md-radio-button>
           </md-radio-group>
         </div>
       </div>
@@ -683,8 +683,8 @@
           <label name="preferInterQuestion1">Do you have preferred interpreters for this booking? </label>
           <md-radio-group name="rdPreferredInterpreters" (change)='onPreferredSelectionChange()' [disabled]="isDisabledForOrgRepIndClient"
                           [(ngModel)]="showPreferred">
-            <md-radio-button name="rdPreferredInterpretersYes" [value]=true>YES</md-radio-button>
-            <md-radio-button name="rdPreferredInterpretersNo" [value]=false>NO</md-radio-button>
+            <md-radio-button name="rdPreferredInterpretersYes" [value]="true">YES</md-radio-button>
+            <md-radio-button name="rdPreferredInterpretersNo" [value]="false">NO</md-radio-button>
           </md-radio-group>
         </div>
       </div>
@@ -696,8 +696,8 @@
           <label name="preferInterQuestion2">Do you want to set the preferred interpreters that you have set in your profile? </label>
           <md-radio-group name="rdProfilePreferredInterpreters" (change)='onProfilePreferredSelectionChange()' [disabled]="isDisabledForOrgRepIndClient"
                           [(ngModel)]="showProfilePreferred">
-            <md-radio-button name="rdProfilePreferredInterpretersYes" [value]=true>YES</md-radio-button>
-            <md-radio-button name="rdProfilePreferredInterpretersNo" [value]=false>NO</md-radio-button>
+            <md-radio-button name="rdProfilePreferredInterpretersYes" [value]="true">YES</md-radio-button>
+            <md-radio-button name="rdProfilePreferredInterpretersNo" [value]="false">NO</md-radio-button>
           </md-radio-group>
         </div>
       </div>
@@ -718,14 +718,14 @@
           <label name="blockInterQuestion1">Do you have blocked interpreters for this booking? </label>
           <md-radio-group name="rdBlockedInterpreters" (change)='onBlockedSelectionChange()' [disabled]="isDisabledForOrgRepIndClient"
                           [(ngModel)]="showBlocked">
-            <md-radio-button name="rdBlockedInterpretersYes" [value]=true>YES</md-radio-button>
-            <md-radio-button name="rdBlockedInterpretersNo" [value]=false>NO</md-radio-button>
+            <md-radio-button name="rdBlockedInterpretersYes" [value]="true">YES</md-radio-button>
+            <md-radio-button name="rdBlockedInterpretersNo" [value]="false">NO</md-radio-button>
           </md-radio-group>
         </div>
       </div>
     </div>
 
-    <div class="row" *ngIf="showBlocked === 'true' && !isDisabledForOrgRepIndClient">
+    <div class="row" *ngIf="showBlocked && !isDisabledForOrgRepIndClient">
       <div class="medium-12 columns">
         <div class="form-field">
           <label name="blockInterQuestion2">Do you want to set the blocked interpreters that you have set in your profile? </label>
@@ -738,7 +738,7 @@
       </div>
     </div>
 
-    <app-interpreter-box *ngIf="showBlocked === 'true'" [isPreffered]="false" [isEditable]="!isDisabledForOrgRepIndClient"
+    <app-interpreter-box *ngIf="showBlocked" [isPreffered]="false" [isEditable]="!isDisabledForOrgRepIndClient"
                           [isHidden]="true" [selectedInterpreters]="oldInterpreterPreference">
     </app-interpreter-box> 
     <div [hidden]='true'>
