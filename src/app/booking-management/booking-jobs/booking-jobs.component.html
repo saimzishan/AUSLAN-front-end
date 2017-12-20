@@ -46,7 +46,12 @@
                     </thead>
                     <tbody>
                     <tr>
-                        <td data-title="JOB NUMBER">{{selectedBookingModel.id | PrettyID}}</td>
+                        <td data-title="JOB NUMBER">
+                            {{selectedBookingModel.id | PrettyID}}
+                            <span data-title="Link ID" *ngIf="isCurrentUserAdminOrBookingOfficer()" class="linkId">
+                                <a>#{{selectedBookingModel.link_id}}</a>
+                            </span>
+                        </td>
                         <td data-title="TIME">
                             <span>{{selectedBookingModel.venue.start_time_iso | date:'shortTime'}} - {{selectedBookingModel.venue.end_time_iso | date:'shortTime'}}</span>
                         </td>
