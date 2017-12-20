@@ -8,8 +8,16 @@ Feature: Linked Bookings
 
   @runThis
   Scenario: As Administrator, I should be able to see booking link id on the bookings list page
-    Given I exist as an Administrator
-    And I sign in with valid Administrator credentials
+    Given I sign in with valid Administrator credentials
     Then I am on the bookings page
     And I am shown with 1 booking
     And I see one row with the link id
+
+  @runThis
+  Scenario: As Administrator, I should be able to see booking link id on the bookings job page
+    Given I sign in with valid Administrator credentials
+    Then I am on the bookings page
+    And I am shown with 1 booking
+    When I click on an individual booking
+    Then I will be shown the booking job page
+    And I should see the link id in booking details

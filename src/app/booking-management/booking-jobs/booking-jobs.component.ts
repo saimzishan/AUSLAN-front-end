@@ -2,7 +2,10 @@ import {Component, OnInit, ViewContainerRef, OnDestroy} from '@angular/core';
 import {BookingService} from '../../api/booking.service';
 import {Booking} from '../../shared/model/booking.entity';
 import {UserService} from '../../api/user.service';
-import {Interpreter, OrganisationalRepresentative, User} from '../../shared/model/user.entity';
+import {
+    Administrator, BookingOfficer, Interpreter, OrganisationalRepresentative,
+    User
+} from '../../shared/model/user.entity';
 import {SpinnerService} from '../../spinner/spinner.service';
 import {NotificationServiceBus} from '../../notification/notification.service';
 import {ActivatedRoute} from '@angular/router';
@@ -143,6 +146,10 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
 
     isCurrentUserInterpreter() {
         return GLOBAL.currentUser instanceof Interpreter;
+    }
+    isCurrentUserAdminOrBookingOfficer(): boolean {
+        return Boolean(GLOBAL.currentUser instanceof Administrator ||
+            GLOBAL.currentUser instanceof BookingOfficer);
     }
     showActions () {
         return this.selectedBookingModel.state === BOOKING_STATE.In_progress && this.isCurrentUserInterpreter();

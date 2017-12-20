@@ -188,6 +188,14 @@ export class BookingJobPage extends PageObject {
             return expect(elValue).to.eq(value);
         });
     }
+    checkLinkIdInTableDetails = () => {
+        const bookingDetails = this.getAllElementByCSS('table#job-details-responsive tbody tr td');
+        const el = bookingDetails.get(BookingDetailTableHeaders.Job);
+        return el.$$('span.linkId').getText().then(linkId => {
+            const isTextLinkId = linkId.length > 0 && !!linkId[0].match(/#\d+/);
+            return expect(isTextLinkId).to.be.true;
+        });
+    }
     checkAttachmentIcons = (negate: string) => {
         let shouldSee = !(negate === 'not');
         let bookingDetails = this.getAllElementByCSS('table#job-details-responsive tbody tr td');
