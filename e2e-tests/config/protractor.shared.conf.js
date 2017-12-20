@@ -19,7 +19,7 @@ function sharedConfig() {
                 path.resolve(process.cwd(), './e2e-tests/**/reporter.ts'),
                 path.resolve(process.cwd(), './e2e-tests/**/*.steps.ts')
             ],
-            format: 'pretty',
+            format: ['progress-bar'],
             // tags: ''
             tags: [
                 "@runThis",

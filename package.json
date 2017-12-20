@@ -96,7 +96,7 @@
     "karma-phantomjs-launcher": "~1.0.0",
     "karma-remap-istanbul": "~0.2.1",
     "karma-requirejs": "~1.0.0",
-    "multiple-cucumber-html-reporter": "0.1.0",
+    "multiple-cucumber-html-reporter": "1.4.0",
     "pact-consumer-js-dsl": "0.2.2",
     "path": "^0.12.7",
     "phantomjs-prebuilt": "^2.1.15",

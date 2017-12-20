@@ -12,7 +12,7 @@ interface World {
 }
 let first_run = false;
 defineSupportCode(({Before}) => {
-    Before(function (scenario: HookScenarioResult) {
+    Before(function (scenario: any) {
         console.log('Inside Before Scenario');
         if (!first_run) {
             Heroku.sendCommandToHeroku('Assignment.destroy_all');
@@ -24,8 +24,8 @@ defineSupportCode(({Before}) => {
             'Interpreter1', 'Interpreter2', 'Individual Client', 'Organisational Representative'];
         let personas = [];
         all_personas.forEach((pn) => {
-            if (scenario.scenario.name.toUpperCase().indexOf(pn.toUpperCase()) >= 0) {
-                if (scenario.scenario.name.toUpperCase().indexOf(('unverified ' + pn).toUpperCase()) < 0) {
+            if (scenario.pickle.name.toUpperCase().indexOf(pn.toUpperCase()) >= 0) {
+                if (scenario.pickle.name.toUpperCase().indexOf(('unverified ' + pn).toUpperCase()) < 0) {
                         personas.push(pn);
                 }
             }
@@ -37,30 +37,30 @@ defineSupportCode(({Before}) => {
             Heroku.addVerifiedUser(currentlyLoggedInUser, pn);
         }
 
-        if (scenario.scenario.name.toUpperCase().indexOf('booking is created'.toUpperCase()) >= 0) {
+        if (scenario.pickle.name.toUpperCase().indexOf('booking is created'.toUpperCase()) >= 0) {
             let currentlyLoggedInUser = User.returnTypeAndUser('Individual Client').user;
             Heroku.addVerifiedUser(currentlyLoggedInUser, 'Individual Client');
             Heroku.createSingleBooking();
         }
 
-        if (scenario.scenario.name.toUpperCase().indexOf('a booking with two Interpreters is created'.toUpperCase()) >= 0) {
+        if (scenario.pickle.name.toUpperCase().indexOf('a booking with two Interpreters is created'.toUpperCase()) >= 0) {
             let currentlyLoggedInUser = User.returnTypeAndUser('Individual Client').user;
             Heroku.addVerifiedUser(currentlyLoggedInUser, 'Individual Client');
             Heroku.createSingleBookingWithMoreInterpreter();
         }
 
-        if (scenario.scenario.name.toUpperCase().indexOf('Interpreter Invited'.toUpperCase()) >= 0) {
+        if (scenario.pickle.name.toUpperCase().indexOf('Interpreter Invited'.toUpperCase()) >= 0) {
             Heroku.inviteInterpreter();
         }
 
-        if (scenario.scenario.name.toUpperCase().indexOf('Interpreter_ALL Invited'.toUpperCase()) >= 0) {
+        if (scenario.pickle.name.toUpperCase().indexOf('Interpreter_ALL Invited'.toUpperCase()) >= 0) {
             Heroku.inviteAllInterpreter();
         }
 
-        if (scenario.scenario.name.toUpperCase().indexOf('Special'.toUpperCase()) >= 0) {
+        if (scenario.pickle.name.toUpperCase().indexOf('Special'.toUpperCase()) >= 0) {
             Heroku.specialOrgRepSetup();
         }
-        if (false === scenario.scenario.name.toUpperCase().indexOf(('unverified').toUpperCase()) < 0) {
+        if (false === scenario.pickle.name.toUpperCase().indexOf(('unverified').toUpperCase()) < 0) {
             console.log('Adding UnVerified Interpreter');
             let currentlyLoggedInUser = User.returnTypeAndUser('Interpreter').user;
             Heroku.createUser(currentlyLoggedInUser, 'Interpreter');
