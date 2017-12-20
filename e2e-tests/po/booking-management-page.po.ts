@@ -167,7 +167,7 @@ export class BookingManagementPage extends PageObject {
         });
     }
 
-    private getFirstBookingID = () => {
+    private getFirstBookingTdText = (spanCss: string) => {
         let table = this.getElementByID('jobs-responsive');
         return table.isPresent().then(res => {
             expect(res).to.be.true;
@@ -175,9 +175,17 @@ export class BookingManagementPage extends PageObject {
             let tblRows = table.$$('tr');
             expect(tblRows.count()).to.eventually.be.greaterThan(0);
         }).then(() => {
-            let el = table.$$('tr:first-child td.bookingID > div > span');
+            let el = table.$$('tr:first-child td.bookingID > div > span' + spanCss);
             return el.getText();
         });
+    }
+
+    private getFirstBookingID = () => {
+        return this.getFirstBookingTdText(':first-child');
+    }
+
+    private getFirstBookingLinkID = () => {
+        return this.getFirstBookingTdText('.linkId');
     }
 
     atleastABookingExists = () => {
@@ -263,8 +271,16 @@ export class BookingManagementPage extends PageObject {
         let queriedID = this.queryIdBooking;
         let tblRows = this.getAllElementByCSS('table tbody tr');
         expect(tblRows.count()).to.eventually.be.equal(1);
-        return this.getFirstBookingID().then((txt) => {
+        return this.getFirstBookingID().then(txt => {
             return expect(queriedID).to.be.eq(txt[0]);
+        });
+    }
+    bookingExistsWithLinkId = () => {
+        const tblRows = this.getAllElementByCSS('table tbody tr');
+        expect(tblRows.count()).to.eventually.be.equal(1);
+        return this.getFirstBookingLinkID().then(txt => {
+            const isTextLinkId = txt.length > 0 && !!txt[0].match(/#\d+/);
+            return expect(isTextLinkId).to.be.true;
         });
     }
     bookingExistsWithClientName = (client_name: string) => {
