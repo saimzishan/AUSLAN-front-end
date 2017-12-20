@@ -5,10 +5,16 @@
 
 <ng-container *ngIf="!jobAccessError">
     <section id="page-common">
-        <app-booking-header [bookingState]="selectedBookingModel.state" [isCancelOrUnable]="isCancelledOrUnableToServe"
+        <app-booking-header [bookingState]="selectedBookingModel.state"
+                            [hasLinkId]="!!selectedBookingModel.link_id"
+                            [isCancelOrUnable]="isCancelledOrUnableToServe"
                             [invitePress]="invitePressed"
-                            [unAssignPress]="unAssignPressed" [reAssignPress]="reAssignPressed" [showButtons]='true'
-                            [disableReject]="disableReject" [disableAccept]="disableAccept">
+                            [unAssignPress]="unAssignPressed"
+                            [reAssignPress]="reAssignPressed"
+                            [unlinkPress]="unlinkPressed"
+                            [showButtons]="true"
+                            [disableReject]="disableReject"
+                            [disableAccept]="disableAccept">
         </app-booking-header>
 
         <div class="job-status">
@@ -48,7 +54,7 @@
                     <tr>
                         <td data-title="JOB NUMBER">
                             {{selectedBookingModel.id | PrettyID}}
-                            <span data-title="Link ID" *ngIf="isCurrentUserAdminOrBookingOfficer()" class="linkId">
+                            <span data-title="Link ID" *ngIf="isCurrentUserAdminOrBookingOfficer() && !!selectedBookingModel.link_id" class="linkId">
                                 <a>#{{selectedBookingModel.link_id}}</a>
                             </span>
                         </td>
