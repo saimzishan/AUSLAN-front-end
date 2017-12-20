@@ -22,6 +22,7 @@ defineSupportCode(({Given, Then, When}) => {
     Given(/^The booking has status '(.*)'$/, Heroku.updateBookingWithStatus);
     Given(/^The booking has assignment category '(.*)'$/, Heroku.updateBookingWithCategory);
     Given(/^There exist (\d+) bookings$/, Heroku.createBulkBookings);
+    Given(/^There exist (\d+) bookings? with link id$/, Heroku.createBulkBookingsWithLinkId);
     Given(/^There exist (\d+) admins/, Heroku.createBulkAdministrator);
     Given(/^I have preloaded bookings with different org values$/, Heroku.preloadOrgBookings);
     Given(/^One booking has client name as '(.*)'$/, Heroku.updateBookingWithClientName)
@@ -114,6 +115,7 @@ defineSupportCode(({Given, Then, When}) => {
 
     Then(/^I (.*) see the (.*) field$/, createBookingPO.checkTheFieldExist);
     Then(/^I see one row with the booking id$/, bookingManagementPO.bookingExistsWithId);
+    Then(/^I see one row with the link id$/, bookingManagementPO.bookingExistsWithLinkId);
     Then(/^I see one row with client name '(.*)'$/, bookingManagementPO.bookingExistsWithClientName);
     Then(/^I see one row with client last name '(.*)'$/, bookingManagementPO.bookingExistsWithClientLastName);
     Then(/^I see one row with interpreter first name '(.*)'$/, bookingManagementPO.bookingExistsWithInterpreterFirstName);

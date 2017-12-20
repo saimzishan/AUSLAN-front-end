@@ -8,6 +8,7 @@ import {BookingVersion} from './booking-version.entity';
 export class Booking {
 
     public id: any;
+    public link_id: number;
     public venue: Venue = new Venue();
     public requested_by: Contact = new Contact();
     public last_updated: Date;
@@ -75,6 +76,7 @@ export class Booking {
 
     fromJSON(data: any) {
         this.id = data.id;
+        this.link_id = data.link_id;
         this.venue.expected_attendance = data.number_of_people_attending;
         this.venue.title = data.venue || '';
         this.status = data.status;
@@ -188,8 +190,9 @@ export class Booking {
 
         let o = new Object({
             id: this.id, state: _state,
-            special_instructions : this.special_instructions,
-            venue: this.venue.title, requested_by_first_name: this.requested_by.first_name,
+            special_instructions: this.special_instructions,
+            venue: this.venue.title,
+            requested_by_first_name: this.requested_by.first_name,
             requested_by_last_name: this.requested_by.last_name,
             number_of_interpreters_required: this.interpreters_required,
             nature_of_appointment: _nature_of_appointment,

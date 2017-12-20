@@ -463,7 +463,11 @@ export class Heroku {
         command += 'FactoryGirl.create_list(:booking, ' + count + ', bookable: IndividualClient.first)';
         Heroku.sendCommandToHeroku(command);
     }
-
+    static createBulkBookingsWithLinkId(count: number) {
+        let command = 'i=IndividualClient.first;FactoryGirl.create(:ted_individual_client) if !i;';
+        command += 'FactoryGirl.create_list(:booking, ' + count + ', bookable: IndividualClient.first, new_link_id_required: true)';
+        Heroku.sendCommandToHeroku(command);
+    }
     static preloadOrgBookings() {
         let task = 'seed:test_data:preloaded_org_bookings';
         Heroku.sendTaskToHeroku(task);
