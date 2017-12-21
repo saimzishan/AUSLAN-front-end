@@ -8,4 +8,4 @@ rm -rf .tmp
 mkdir -p .tmp/junit
 mkdir -p .tmp/cucumber
 npm run circle-test
-codeclimate-test-reporter < .tmp/junit/lcov.info
+codeclimate-test-reporter .tmp/junit/lcov.info
