@@ -553,7 +553,7 @@ Feature: Booking Management
     When I am on the bookings page
     And I click on 'New Booking'
     Then I will be taken to the 'New Booking' form
-    When I fill New Booking form fields correctly with standard time from 09:00AM to 11:00AM with 1 interpreters
+    When I fill New Booking form fields correctly with standard time from 09:00 AM to 11:00 AM with 1 interpreters
     And I select the bookable for client
     Then I move to element name 'tnc'
     And I click on checkbox name 'tnc'
