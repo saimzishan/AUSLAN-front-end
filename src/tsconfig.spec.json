@@ -5,9 +5,10 @@
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "lib": [
-      "es2016"
-    ],
+      "lib": [
+          "es2017",
+          "dom"
+      ],
     "outDir": "../out-tsc/spec",
     "module": "commonjs",
     "target": "es5",
