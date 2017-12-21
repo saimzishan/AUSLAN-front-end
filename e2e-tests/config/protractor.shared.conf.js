@@ -10,16 +10,18 @@ function sharedConfig() {
 
         framework: 'custom',
         frameworkPath: require.resolve('protractor-cucumber-framework'),
+        capabilities: {
+            shardTestFiles: true
+        },
         cucumberOpts: {
             compiler: "ts:ts-node/register",
             require: [
                 path.resolve(process.cwd(), './e2e-tests/**/before.scenario.ts'),
                 path.resolve(process.cwd(), './e2e-tests/**/after.scenario.ts'),
                 path.resolve(process.cwd(), './e2e-tests/**/cucumber.config.ts'),
-                path.resolve(process.cwd(), './e2e-tests/**/reporter.ts'),
                 path.resolve(process.cwd(), './e2e-tests/**/*.steps.ts')
             ],
-            format: ['progress-bar'],
+            format: ['progress-bar', 'json:.tmp/cucumber/results.json'],
             // tags: ''
             tags: [
                 "@runThis",
@@ -33,13 +35,12 @@ function sharedConfig() {
 
         },
         afterLaunch: function () {
-            /*
+
             multiCucumberHTLMReporter.generate({
-                openReportInBrowser: true,
-                jsonDir: '.tmp/json-output',
+                openReportInBrowser: false,
+                jsonDir: '.tmp/cucumber',
                 reportPath: './.tmp/report/'
             });
-*/
         },
         jasmineNodeOpts: {
             showColors: true,

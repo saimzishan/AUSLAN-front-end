@@ -10,7 +10,7 @@ interface World {
 }
 
 defineSupportCode(({After}) => {
-    After(function (scenarioResult: any) {
+    After(function (scenarioResult: HookScenarioResult) {
         if (Boolean(browser.params.debug) && browser.params.debug &&
             scenarioResult.status === 'failed') {
             const world = this;
@@ -25,9 +25,9 @@ defineSupportCode(({After}) => {
     /**
      * Save a screenshot when a scenario failed
      */
-    function saveFailedScenarioScreenshot(world: World, scenarioResult) {
+    function saveFailedScenarioScreenshot(world: World, scenarioResult: HookScenarioResult) {
         return browser.takeScreenshot().then((screenshot) => {
-            const fileName = `${scenarioResult.pickle.name
+            const fileName = `${scenarioResult.scenario.name
                 .replace(/[^a-zA-Z0-9\s]/g, '').replace(/\s/g, '-')
                 .toLowerCase().substr(0, 100)}.png`;
 

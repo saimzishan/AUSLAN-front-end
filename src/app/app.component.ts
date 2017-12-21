@@ -34,11 +34,12 @@ export class AppComponent  implements OnDestroy, AfterViewChecked {
     return AuthGuard.isLoggedIn();
   }
 
-  showProgress(val: boolean) {
+  setSpinner(val: boolean) {
     this.isRequesting = val;
   }
 
   ngOnDestroy() {
-    this.sub.unsubscribe();
+      this.setSpinner( true );
+      return this.sub && this.sub.unsubscribe();
   }
 }
