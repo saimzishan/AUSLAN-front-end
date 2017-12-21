@@ -74,6 +74,6 @@ export class BookingVersion {
     remove_underscores_and_capitilise_each_word(unformatted_string) {
         return unformatted_string
             .replace(/aasm_/, '').replace(/_/g, ' ')
-            .replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); } );
+            .replace(/\w\S*/g, (txt) => {return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); } );
     };
 }

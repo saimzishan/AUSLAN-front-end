@@ -51,7 +51,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
                   this.userNameService.setLoggedInUser(user);
                   if (!data.verified) { // show errors
                       this.router.navigate(['/verify/' + data.id]);
-                  }else {
+                  } else {
                       let route = this.returnUrl.length > 0 && this.returnUrl.endsWith('job-detail') ?
                           this.returnUrl : this.rolePermission.getDefaultRouteForCurrentUser();
                     this.router.navigate( [route] );
