@@ -7,38 +7,6 @@ export enum interpreter_avalability {}
 
 export enum blockout_availability {}
 
-export class UserFactory {
-
-    // This is boring ,  we should rather have templated function to return the object with right class
-    public static createUser(data: any) {
-        let type = data.type;
-        switch (type) {
-            case 'OrganisationalRepresentative':
-                let or = new OrganisationalRepresentative(data);
-                or.fromJSON(data);
-                return or;
-            case 'Accountant':
-                return new Accountant(data);
-            case 'IndividualClient':
-                let ic = new IndividualClient(data);
-                ic.fromJSON(data);
-                return ic;
-            case 'BookingOfficer':
-                return new BookingOfficer(data);
-            case 'Administrator':
-                return new Administrator(data);
-            case 'Interpreter':
-                let inte = new Interpreter(data);
-                inte.fromValues(data);
-                inte.address_attributes = <Address> data.address_attributes;
-                inte.availability_blocks_attributes = data.availability_blocks_attributes;
-                return inte;
-            default:
-                return new User(data);
-        }
-    }
-}
-
 // We should use a Builder Pattern here
 export class User {
 
@@ -80,6 +48,20 @@ export class User {
 
     constructor(values: Object = {}) {
         Object.assign(this, values);
+    }
+}
+
+
+export class Accountant extends User {
+    public id: number;
+    public account_number: number;
+    public organisation_billing_address: Address = new Address();
+    public external_reference: string;
+    public preferred_contact_method = 'email';
+    public preferred_billing_method_email = true;
+
+    get user_type() {
+        return 'Accountant';
     }
 }
 
@@ -261,19 +243,6 @@ export class OrganisationalRepresentative extends Organisational {
     }
 }
 
-export class Accountant extends User {
-    public id: number;
-    public account_number: number;
-    public organisation_billing_address: Address = new Address();
-    public external_reference: string;
-    public preferred_contact_method = 'email';
-    public preferred_billing_method_email = true;
-
-    get user_type() {
-        return 'Accountant';
-    }
-}
-
 export class IndividualClient extends User {
 
     public ndis_id: string;
@@ -439,3 +408,36 @@ export class Interpreter extends User {
     }
 
 }
+
+export class UserFactory {
+
+    // This is boring ,  we should rather have templated function to return the object with right class
+    public static createUser(data: any) {
+        let type = data.type;
+        switch (type) {
+            case 'OrganisationalRepresentative':
+                let or = new OrganisationalRepresentative(data);
+                or.fromJSON(data);
+                return or;
+            case 'Accountant':
+                return new Accountant(data);
+            case 'IndividualClient':
+                let ic = new IndividualClient(data);
+                ic.fromJSON(data);
+                return ic;
+            case 'BookingOfficer':
+                return new BookingOfficer(data);
+            case 'Administrator':
+                return new Administrator(data);
+            case 'Interpreter':
+                let inte = new Interpreter(data);
+                inte.fromValues(data);
+                inte.address_attributes = <Address> data.address_attributes;
+                inte.availability_blocks_attributes = data.availability_blocks_attributes;
+                return inte;
+            default:
+                return new User(data);
+        }
+    }
+}
+
