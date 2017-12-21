@@ -372,3 +372,12 @@ Feature: Booking Filter
     And I am on the bookings page
     Then I am shown with 1 booking
     Then I see one row with status 'red'
+
+  @runThis
+  Scenario: As Administrator, I should be able to filter bookings when I click on linked id
+    Given I sign in with valid Administrator credentials
+    When I am on the bookings page
+    Then I am shown with 5 booking
+    When I click on element by id 'linkId_0'
+    Then I am shown with 1 booking
+    And I can see the input with name 'booking_ids' has text '#1'

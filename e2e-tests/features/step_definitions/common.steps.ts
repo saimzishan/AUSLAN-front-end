@@ -341,12 +341,17 @@ defineSupportCode(({Given, When, Then}) => {
     }
 
 
-    When(/^I can see the element with name '(.*)' has text '(.*)'$/, isElementHasText);
-    function isElementHasText(nam: string, txt: string) {
-
-        return page.getElementByName(nam).getText().then(elmTxt => {
-            return expect(elmTxt).to.be.eq(txt);
-        });
+    When(/^I can see the (.*) with name '(.*)' has text '(.*)'$/, isElementHasText);
+    function isElementHasText(elemType: string, nam: string, txt: string) {
+        if (elemType === 'input') {
+            return page.getElementByName(nam).getAttribute('value').then(elmTxt => {
+                return expect(elmTxt).to.be.eq(txt);
+            });
+        } else {
+            return page.getElementByName(nam).getText().then(elmTxt => {
+                return expect(elmTxt).to.be.eq(txt);
+            });
+        }
     }
     When(/^I can see the element with id '(.*)' has text '(.*)'$/, hasElementWithIDText);
     function hasElementWithIDText(nam: string, txt: string) {
@@ -375,6 +380,11 @@ defineSupportCode(({Given, When, Then}) => {
     When(/^I click on element by name '(.*)'$/, clickOnCBByName);
     function clickOnCBByName(btnName: string) {
         return page.getElementByName(btnName).click();
+    }
+
+    When(/^I click on element by id '(.*)'$/, clickOnElementById);
+    function clickOnElementById(elemId: string) {
+        return page.getElementByID(elemId).click();
     }
 
     When(/^I verify that the link with name '(.*)' href is '(.*)'$/, (linkName: string, linkUrl: string) => {
