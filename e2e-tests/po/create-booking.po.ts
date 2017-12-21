@@ -289,7 +289,9 @@ export class BookingPage extends PageObject {
         this.getElementByName('deaf_person_eaf').sendKeys('123');
     }
     createBookingWithAddressTimeAndInterpreter = (standard: string, startTime: string, endTime: string, interpreterNum: string) => {
-        this.setDate('12/12/2017');
+        let date = new Date();
+        const dateToSend = this.getDateAfterNDays(7);
+        this.setDate(dateToSend);
         this.setStartEndTime('start', startTime);
         this.setStartEndTime('end', endTime);
         this.setUnitNumber('F-Space');
