@@ -54,6 +54,7 @@ Feature: Booking Status
     And I am on the bookings page
     When I click on 'New Booking'
     Then I will be taken to the 'New Booking' form
+    When I click on element by name 'rdBookingAddressNo'
     Then I fill New Booking form fields correctly
     Then I move to element name 'tnc'
     Then I click on checkbox name 'tnc'
@@ -64,13 +65,14 @@ Feature: Booking Status
     Then I see one row with state 'Requested'
     Then I see one row with status 'green'
 
-  @runThis
+  @ignoreThis
   Scenario: Organisational Representative can see red bookings created by himself and their status
     Given I exist as an Organisational Representative
     And I sign in with valid Organisational Representative credentials
     And I am on the bookings page
     When I click on 'New Booking'
     Then I will be taken to the 'New Booking' form
+    When I click on element by name 'rdBookingAddressNo'
     Then I fill New Booking form fields correctly
     Then I set the start time as 2 days 0 hour from now
     Then I set the end time as 2 days 1 hour from now
