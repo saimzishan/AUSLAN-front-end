@@ -97,6 +97,7 @@ export class User {
         data_to_sent['last_name'] = lastName;
         data_to_sent['mobile'] = mobileNum;
         data_to_sent['verified'] = false;
+        data_to_sent['state_where_most_bookings_occur'] = 'VIC';
 
         let address_attributes_fields = {};
         address_attributes_fields['unit_number'] = 22;
