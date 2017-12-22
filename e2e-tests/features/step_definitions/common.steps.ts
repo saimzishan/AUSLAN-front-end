@@ -266,7 +266,7 @@ defineSupportCode(({Given, When, Then}) => {
 
     When(/^I click on link '(.*)'$/, clickOnLink);
     function clickOnLink(label: string) {
-        return element(by.linkText(label)).click();
+        return page.getElementByCSSandText('a', label).click();
     }
 
     When(/^I click on button with css '(.*)'$/, clickOnElementWithCSS);

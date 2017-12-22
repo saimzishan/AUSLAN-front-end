@@ -67,7 +67,7 @@ Feature: Create Booking with preferred or blocked interpreters
     And I can count the element with css 'section.interpreter_selected_prefered' to be '2'
 
   @runThis
-  Scenario: Organisational Representative can create new booking with blocked interpreters, Interpreter, Interpreter1 and Interpreter2 exists
+  Scenario: Organisational Representative can create new booking with blocked interpreters, Interpreter , Interpreter1 and Interpreter2 exists
     Given I exist as an Organisational Representative
     And I sign in with valid Organisational Representative credentials
     When I click on my name in the top corner
@@ -120,6 +120,7 @@ Feature: Create Booking with preferred or blocked interpreters
     Then I can count the element with css 'section.interpreter_selected_blocked' to be '2'
     Then I click on checkbox name 'tnc'
     And I click the create booking button
+    Then I get a valid create booking notification
     And I am on the bookings page
     And I click on an individual booking
     Then I am on the individual booking page
@@ -128,7 +129,7 @@ Feature: Create Booking with preferred or blocked interpreters
     And I can count the element with css 'section.interpreter_selected_blocked' to be '2'
 
   @runThis
-  Scenario: Organisational Representative can check no overlap between preferred and blocked interpreters while creating new booking, Interpreter, Interpreter1 and Interpreter2 exists
+  Scenario: Organisational Representative can check no overlap between preferred and blocked interpreters while creating new booking, Interpreter , Interpreter1 and Interpreter2 exists
     Given I exist as an Organisational Representative
     And I sign in with valid Organisational Representative credentials
     When I click on my name in the top corner
@@ -203,6 +204,7 @@ Feature: Create Booking with preferred or blocked interpreters
     Then I can see the element with css 'div.md-dialog' is 'hidden'
     And I click on checkbox name 'tnc'
     And I click the create booking button
+    Then I get a valid create booking notification
     And I am on the bookings page
     And I click on an individual booking
     Then I am on the individual booking page

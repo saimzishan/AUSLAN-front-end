@@ -95,7 +95,6 @@ export class Booking {
         this.primaryContact.email = data.contact_email;
         this.primaryContact.last_name = data.contact_last_name;
         this.primaryContact.mobile_number = data.contact_phone_number;
-        this.client.email = data.created_by.email;
         this.client.organisation_name = data.created_by.organisation;
         this.client.organisation_billing_account.external_reference = '';
         this.special_instructions = data.special_instructions;
@@ -189,7 +188,7 @@ export class Booking {
         let o = new Object({
             id: this.id, state: _state,
             special_instructions : this.special_instructions,
-            venue: this.venue.title, requested_by_first_name: this.requested_by.first_name,
+        venue: this.venue.title, requested_by_first_name: this.requested_by.first_name,
             requested_by_last_name: this.requested_by.last_name,
             number_of_interpreters_required: this.interpreters_required,
             nature_of_appointment: _nature_of_appointment,
@@ -223,8 +222,7 @@ export class Booking {
                 suburb: this.venue.suburb, state: this.venue.state, post_code: this.venue.post_code
             },
             created_by: {
-                organisation: this.client.organisation_name,
-                email: this.client.email
+                organisation: this.client.organisation_name
             },
             documents_attributes: this.documents_attributes,
             preference_allocations_attributes: this.preference_allocations_attributes,
