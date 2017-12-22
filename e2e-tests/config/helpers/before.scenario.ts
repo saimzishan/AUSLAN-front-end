@@ -14,10 +14,12 @@ let first_run = false;
 defineSupportCode(({Before}) => {
     Before(function (scenario: HookScenarioResult) {
         console.log('Inside Before Scenario');
+
         if (!first_run) {
             Heroku.sendCommandToHeroku('Assignment.destroy_all');
             Heroku.sendCommandToHeroku('Booking.destroy_all');
             Heroku.sendCommandToHeroku('User.destroy_all');
+            Heroku.sendCommandToHeroku('Business.destroy_all');
         }
 
         let all_personas = ['Booking Officer', 'Administrator', 'Accountant', 'Interpreter',
@@ -30,6 +32,8 @@ defineSupportCode(({Before}) => {
                 }
             }
         });
+
+        Heroku.sendCommandToHeroku('FactoryGirl.create(:vic_deaf_business)');
 
         for (let pn of personas) {
             console.log('Adding Verified User', pn);

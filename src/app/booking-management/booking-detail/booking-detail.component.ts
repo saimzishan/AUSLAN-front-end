@@ -34,8 +34,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     private sub: any;
     public uploader: FileUploader = new FileUploader({url: '', maxFileSize: 20 * 1024 * 1024});
     bookingModel: Booking;
-    standardInvoice = 'true';
-    rdgSpecialInstruction = 'true';
+    standardInvoice = true;
+    rdgSpecialInstruction = true;
     oldBookingModel;
     dialogSub;
     appointment_types = Object.keys(BOOKING_NATURE)
@@ -45,18 +45,18 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
 
     specific_appointment_types = [];
     currentUserIsContact = false;
-    currentUserIsClient = 'true';
-    rdBookingAddress = 'true';
+    currentUserIsClient = true;
+    rdBookingAddress = true;
     prefInterpreter: boolean;
     dialogRef: MdDialogRef<any>;
     fileName = '';
     termsAndConditionAccepted = false;
-    showPreferred = 'false';
-    showProfilePreferred = 'false';
+    showPreferred = false;
+    showProfilePreferred = false;
     // userModel - Used only for preferred interpreters
     userModel;
-    showBlocked = 'false';
-    showProfileBlocked = 'false';
+    showBlocked = false;
+    showProfileBlocked = false;
     bookingHeading = '';
     shouldEdit = '';
     assignedInterpreter = 0;
@@ -122,7 +122,16 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
 
     private isCurrentUserContact(): boolean {
         if (this.forEdit()) {
-            return GLOBAL.currentUser.email === this.bookingModel.primaryContact.email;
+            return this.bookingModel.client.email === this.bookingModel.primaryContact.email
+                || GLOBAL.currentUser.email === this.bookingModel.primaryContact.email;
+        } else {
+            return true;
+        }
+    }
+    private isCurrentUserClient(): boolean {
+        if (this.forEdit()) {
+            return this.bookingModel.deaf_person.email === this.bookingModel.primaryContact.email
+                || GLOBAL.currentUser.email === this.bookingModel.primaryContact.email;
         } else {
             return true;
         }
@@ -154,11 +163,11 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.isUserAdminORBookOfficer = <boolean> this.checkUserAdminORBookOfficer();
             this.isDisabledForAdmin = (this.forEdit() && !this.bookingModel.created_by_admin);
             this.currentUserIsContact = this.isCurrentUserContact();
+            this.currentUserIsClient = this.isCurrentUserClient();
             if (!this.forEdit()) {
                 this.onSelectionChange();
                 this.onClientSelectionChange();
             }
-            this.currentUserIsClient = this.isUserOrgRep() ? 'false' : 'true';
             this.getUser();
             this.bookingModel.bookable_type = this.bookingModel.bookable_type || 'IndividualClient';
             if (this.isUserAdminORBookOfficer) {
@@ -179,7 +188,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             ['first_name', 'last_name', 'email', 'mobile_number', 'ndis_id'].forEach((field) => {
                 let currentUserFieldMap = { mobile_number: 'mobile' };
                 let currentUserField = currentUserFieldMap[field] || field;
-                let value = this.currentUserIsClient === 'true' ? user[currentUserField] : (this.bookingModel.deaf_person[field] || '');
+                let value = this.currentUserIsClient ? user[currentUserField] : (this.bookingModel.deaf_person[field] || '');
                 let mapForNsid = { ndis_id: 'eaf' };
                 field = mapForNsid[field] || field;
                 this.bookingModel.deaf_person[field] = value;
@@ -203,7 +212,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         let user = GLOBAL.currentUser;
         if (user) {
             ['unit_number', 'street_number', 'street_name', 'suburb', 'state', 'post_code'].forEach((field) => {
-                let value = this.rdBookingAddress === 'true' ? (this.isUserOrgRep() ?
+                let value = this.rdBookingAddress ? (this.isUserOrgRep() ?
                             user.organisation_attributes.address_attributes[field] : this.isIndClient() ? user.address_attributes[field] : '') : '';
                 this.bookingModel.venue[field] = value;
             });
@@ -215,19 +224,19 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         let user = this.getBookableUser();
         if (user) {
             if (user['type'] === 'IndividualClient') {
-                this.bookingModel.client.organisation_primary_contact = this.standardInvoice === 'true' ?
+                this.bookingModel.client.organisation_primary_contact = this.standardInvoice ?
                     user.individual_client_primary_contact : new Contact();
-                this.bookingModel.client.organisation_billing_account.organisation_billing_address = this.standardInvoice === 'true' ?
+                this.bookingModel.client.organisation_billing_account.organisation_billing_address = this.standardInvoice ?
                     user.individual_client_billing_account.organisation_billing_address : new Address();
-                this.bookingModel.client.organisation_billing_account.external_reference = this.standardInvoice === 'true' ?
+                this.bookingModel.client.organisation_billing_account.external_reference = this.standardInvoice ?
                     user.individual_client_billing_account.external_reference : '';
-                this.bookingModel.deaf_person.eaf = this.standardInvoice === 'true' ? user.ndis_id : '';
+                this.bookingModel.deaf_person.eaf = this.standardInvoice ? user.ndis_id : '';
             } else {
-                this.bookingModel.client.organisation_primary_contact = this.standardInvoice === 'true' ?
+                this.bookingModel.client.organisation_primary_contact = this.standardInvoice ?
                     user.organisation_primary_contact : new Contact();
-                this.bookingModel.client.organisation_billing_account.organisation_billing_address = this.standardInvoice === 'true' ?
+                this.bookingModel.client.organisation_billing_account.organisation_billing_address = this.standardInvoice ?
                     user.organisation_billing_account.organisation_billing_address : new Address();
-                this.bookingModel.client.organisation_billing_account.external_reference = this.standardInvoice === 'true' ?
+                this.bookingModel.client.organisation_billing_account.external_reference = this.standardInvoice ?
                     user.organisation_billing_account.external_reference : '';
                 this.bookingModel.deaf_person.eaf = '';
             }
@@ -246,8 +255,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     public onPreferredSelectionChange() {
-        if (this.showPreferred === 'false') {
-            this.showProfilePreferred = 'false';
+        if (!this.showPreferred) {
+            this.showProfilePreferred = false;
             this.bookingModel.preference_allocations_attributes = this.bookingModel.preference_allocations_attributes.filter(a => a.preference !== 'preferred');
         }
 
@@ -256,7 +265,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     public onProfilePreferredSelectionChange() {
         if (!this.forEdit()) {
             let prefInt = this.userModel.prefferedInterpreters.filter(itm => itm.preference === 'preferred');
-            if (this.showProfilePreferred === 'true') {
+            if (this.showProfilePreferred) {
                 this.oldInterpreterPreference = this.oldInterpreterPreference.concat(prefInt);
             } else {
                 this.oldInterpreterPreference = this.oldInterpreterPreference.filter(item => prefInt.every(item2 => item2.interpreter_id !== item.interpreter_id));
@@ -266,8 +275,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     public onBlockedSelectionChange() {
-        if (this.showBlocked === 'false') {
-            this.showProfileBlocked = 'false';
+        if (!this.showBlocked) {
+            this.showProfileBlocked = false;
             this.bookingModel.preference_allocations_attributes = this.bookingModel.preference_allocations_attributes.filter(a => a.preference !== 'blocked');
         }
     }
@@ -275,7 +284,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     public onProfileBlockedSelectionChange() {
         if (!this.forEdit()) {
             let blockInt = this.userModel.prefferedInterpreters.filter(itm => itm.preference === 'blocked');
-            if (this.showProfileBlocked === 'true') {
+            if (this.showProfileBlocked) {
                 this.oldInterpreterPreference = this.oldInterpreterPreference.concat(blockInt);
             } else {
                 this.oldInterpreterPreference = this.oldInterpreterPreference.filter(item => blockInt.every(item2 => item2.interpreter_id !== item.interpreter_id));
@@ -309,7 +318,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         let special_instructions =
             isNullOrUndefined(<OrganisationalRepresentative>GLOBAL.currentUser) ? '' : (<OrganisationalRepresentative>GLOBAL.currentUser).special_instructions;
         this.bookingModel.special_instructions =
-            this.rdgSpecialInstruction === 'true' ? special_instructions : '';
+            this.rdgSpecialInstruction ? special_instructions : '';
     }
 
     checkUserAdminORBookOfficer(): Boolean {
@@ -325,20 +334,20 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         if (GLOBAL.currentUser instanceof OrganisationalRepresentative) {
             let currentUser = <OrganisationalRepresentative>GLOBAL.currentUser;
 
-            this.bookingModel.client.organisation_primary_contact = this.standardInvoice === 'true' ?
+            this.bookingModel.client.organisation_primary_contact = this.standardInvoice ?
                 currentUser.organisation_primary_contact : new Contact();
 
-            this.bookingModel.client.organisation_billing_account.organisation_billing_address = this.standardInvoice === 'true' ?
+            this.bookingModel.client.organisation_billing_account.organisation_billing_address = this.standardInvoice ?
                 currentUser.organisation_billing_account.organisation_billing_address : new Address();
         } else if (this.isUserAdminORBookOfficer) {
             this.setInvoiceField();
         } else {
             let currentUser = <IndividualClient>GLOBAL.currentUser;
 
-            this.bookingModel.client.organisation_primary_contact = this.standardInvoice === 'true' ?
+            this.bookingModel.client.organisation_primary_contact = this.standardInvoice ?
                 currentUser.individual_client_primary_contact : new Contact();
 
-            this.bookingModel.client.organisation_billing_account.organisation_billing_address = this.standardInvoice === 'true' ?
+            this.bookingModel.client.organisation_billing_account.organisation_billing_address = this.standardInvoice ?
                 currentUser.individual_client_billing_account.organisation_billing_address : new Address();
         }
     }
@@ -613,13 +622,13 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     getUser() {
 
         if (this.bookingModel.preference_allocations_attributes.filter(itm => itm.preference === 'preferred').length > 0) {
-            this.showPreferred = 'true';
-            this.showProfilePreferred = 'true';
+            this.showPreferred = true;
+            this.showProfilePreferred = true;
         }
 
         if (this.bookingModel.preference_allocations_attributes.filter(itm => itm.preference === 'blocked').length > 0) {
-            this.showBlocked = 'true';
-            this.showProfileBlocked = 'true';
+            this.showBlocked = true;
+            this.showProfileBlocked = true;
         }
 
         this.userModel = Boolean(GLOBAL.currentUser) && GLOBAL.currentUser instanceof OrganisationalRepresentative ?
@@ -648,7 +657,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             let prefAlloc = this.bookingModel.preference_allocations_attributes;
             this.bookingModel.preference_allocations_attributes = [];
             interpreters.forEach(i => {
-                if (this.showPreferred === 'true') {
+                if (this.showPreferred) {
                     if (i.preference === 'preferred' && !i.hasOwnProperty('_destroy')) {
                         this.bookingModel.preference_allocations_attributes.push({ 'interpreter_id': i.interpreter_id, 'preference': i.preference });
                     } else if (i.hasOwnProperty('_destroy')) {
@@ -656,7 +665,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                     }
                 }
 
-                if (this.showBlocked === 'true') {
+                if (this.showBlocked) {
                     if (i.preference === 'blocked' && !i.hasOwnProperty('_destroy')) {
                         this.bookingModel.preference_allocations_attributes.push({ 'interpreter_id': i.interpreter_id, 'preference': i.preference });
                     } else if (i.hasOwnProperty('_destroy')) {
@@ -715,6 +724,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
 
     resetPrefBlockInterpreters() {
         this.oldInterpreterPreference = [];
-        this.showPreferred = this.showProfilePreferred = this.showBlocked = this.showProfileBlocked = 'false';
+        this.showPreferred = this.showProfilePreferred = this.showBlocked = this.showProfileBlocked = false;
     }
 }
