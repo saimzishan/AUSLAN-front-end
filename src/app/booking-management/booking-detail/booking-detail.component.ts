@@ -466,7 +466,9 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                         this.notificationServiceBus.launchNotification(false, 'The Booking has been created.');
                         let route = this.rolePermission.getDefaultRouteForCurrentUser();
                         this.router.navigate([route]);
-                    }
+                    } else {
+			console.log(res);
+		    }
                     this.spinnerService.requestInProcess(false);
                 },
                 errors => {
