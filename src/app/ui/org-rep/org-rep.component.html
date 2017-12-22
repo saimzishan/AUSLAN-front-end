@@ -115,11 +115,10 @@
 </div>
 
 <br>
-<app-billing-account  [isReadOnly]="isDuplicate"
-                      [primaryContact]="userModel.organisation_primary_contact" [parentForm]="parentForm"
-                     [billingAddress]="userModel.organisation_billing_account.organisation_billing_address"
-                     [billingAddressIsSame]="userModel.billingAddressIsSame"
-></app-billing-account>
+<app-billing-account [isReadOnly]="isDuplicate"
+                     [primaryContact]="userModel.organisation_primary_contact"
+                     [parentForm]="parentForm"
+                     [billingAddress]="userModel.organisation_billing_account.organisation_billing_address"></app-billing-account>
 
 
 <div class="row small-collapse">
