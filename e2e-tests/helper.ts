@@ -79,6 +79,7 @@ export class User {
         let firstName = 'MOH';
         let lastName = 'JAY';
         let mobileNum = '0444555666';
+        let stateWhereMostBookingsOccur = 'VIC';
 
         if (typeof user !== 'undefined') {
             email = user.email;
@@ -97,7 +98,7 @@ export class User {
         data_to_sent['last_name'] = lastName;
         data_to_sent['mobile'] = mobileNum;
         data_to_sent['verified'] = false;
-        data_to_sent['state_where_most_bookings_occur'] = 'VIC';
+        data_to_sent['state_where_most_bookings_occur'] = stateWhereMostBookingsOccur;
 
         let address_attributes_fields = {};
         address_attributes_fields['unit_number'] = 22;
