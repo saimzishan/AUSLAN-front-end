@@ -47,6 +47,7 @@ export class ProfileRegisterPage extends PageObject {
                     'strangeTypeOfUser@auslan.com.au'
         );
         this.getElementByName('mobile').sendKeys('0490394517');
+        this.getElementByName('location_pref').sendKeys('VIC');
     }
 
     fillAllDataForRegister = (type: string, prefComm: string) => {
@@ -95,6 +96,7 @@ export class ProfileRegisterPage extends PageObject {
             this.getElementByName('address_post_code').sendKeys('3064');
             this.getElementByName('address_suburb').sendKeys('Crazy');
             this.getElementByName('address_state').sendKeys('VIC'); // dropdown
+            this.getElementByName('location_pref').sendKeys('ACT');
         }
         return this.getElementByName('register_user').click();
     }
