@@ -72,24 +72,7 @@
       </div>
 
     </div>
-    <div class="medium-3 columns">
-      <div class="form-field">
-        <label>WORK PREFERENCE *</label>
-        <select placeholder="Enter the Skill level" aria-label="A"
-                [(ngModel)]="userModel.location_pref" name="location_pref"
-                #location_pref="ngModel" required>
-
-          <option *ngFor="let loc_name of  ['ACT','NSW','QLD', 'TAS', 'VIC','WA', 'NT']" [selected]="loc_name === 'ACT'"
-                  [value]="loc_name">{{loc_name.toUpperCase()}}</option>
-
-        </select>
-        <span *ngIf="location_pref.touched && !location_pref.errors?.required && !location_pref.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
-        <span *ngIf="location_pref.touched && (location_pref.errors?.required || location_pref.errors?.rangeLength);" class="inline-icon error">
-
-        <span>This field is required.</span>!
-      </span>
-      </div>
-    </div>
+   
     <div class="medium-5 columns">
       <div class="form-field">
         <label>SKILL LEVEL *</label>

@@ -144,6 +144,24 @@
 
                             </div>
                         </div>
+                        <div class="medium-3 columns">
+                            <div class="form-field">
+                              <label>WORK PREFERENCE *</label>
+                              <select aria-label="A"
+                                      [(ngModel)]="model.state_where_most_bookings_occur" name="location_pref"
+                                      #location_pref="ngModel" required>
+                      
+                                <option *ngFor="let loc_name of  ['ACT','NSW','QLD', 'TAS', 'VIC','WA', 'NT']"
+                                        [value]="loc_name">{{loc_name.toUpperCase()}}</option>
+                      
+                              </select>
+                              <span *ngIf="location_pref.touched && !location_pref.errors?.required && !location_pref.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
+                              <span *ngIf="location_pref.touched && (location_pref.errors?.required || location_pref.errors?.rangeLength);" class="inline-icon error">
+                      
+                              <span>This field is required.</span>!
+                            </span>
+                            </div>
+                          </div>
                     </div>
                 </div>
                 <br>

@@ -569,7 +569,7 @@ Feature: Booking Management
     And I click on checkbox name 'tnc'
     When I click the create booking button
     Then I will be shown a popup message 'This booking might require more than 1 interpreter. You've only requested 1 interpreter. Are you sure you want to create this booking?'
-  
+
   @runThis
   Scenario: As an Administrator, I should specify notes when I don't specify what will be discussed
     Given I exist as an Administrator
@@ -626,7 +626,7 @@ Feature: Booking Management
     And If I am shown a popup, I approve it
     Then I should get a valid booking update notification
 # ---------------------------------------- AUSLAN1-711 -> START ----------------------------------------
-  @runThis
+  @ignoreThis
   Scenario: Individual Client can use their address to auto fill booking address
     Given I exist as an Individual Client
     And I sign in with valid Individual Client credentials
@@ -641,7 +641,7 @@ Feature: Booking Management
     And I click on element by name 'rdBookingAddressYes'
     Then I can see the booking address is 'auto populated'
 
-  @runThis
+  @ignoreThis
   Scenario: Organisational Representative can use their address to auto fill booking address
     Given I exist as an Organisational Representative
     And I sign in with valid Organisational Representative credentials
