@@ -94,9 +94,10 @@
 </div>
 
 <br>
-<app-billing-account [primaryContact]="userModel.individual_client_primary_contact" [billingAddress]="userModel.individual_client_billing_account.organisation_billing_address"
-                     [billingAddressIsSame]="userModel.billingAddressIsSame"  [canCalculateDistance]="canCalculateDistance"
-                     ></app-billing-account>
+
+<app-billing-account [primaryContact]="userModel.individual_client_primary_contact"
+                     [billingAddress]="userModel.individual_client_billing_account.organisation_billing_address"
+                     [parentForm]="parentForm" [canCalculateDistance]="canCalculateDistance"></app-billing-account>
 
 
 <div class="row small-collapse">

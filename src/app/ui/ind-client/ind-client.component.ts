@@ -12,6 +12,7 @@ export class IndClientComponent   implements  OnInit {
 
   @Input() userModel: IndividualClient;
   @Input() canCalculateDistance: boolean;
+    @Input() parentForm: NgForm;
   address_title = 'INDIVIDUAL CLIENT ADDRESS';
   ngOnInit() {
     delete this.userModel.password;
