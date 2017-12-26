@@ -68,6 +68,7 @@ defineSupportCode(({Given, Then, When}) => {
     Then(/^The booking form will be automatically populated with the details.$/, createBookingPO.populatedUserDetails);
 
     Given(/^I can see the '(.*)' auto populated$/, createBookingPO.sectionAutoPopulated);
+    Given(/^I can see the booking address is '(.*)'$/, createBookingPO.bookingAddressPopulated);
     // Filling in specific fields in the booking form
     Then(/^I set the (\w+) time as (\d+) days (?:(\d+) hours?)?\s?from now$/, createBookingPO.setTime);
 
@@ -79,6 +80,7 @@ defineSupportCode(({Given, Then, When}) => {
     Then(/^The version history with name '(.*)' at index '(.*)' with text '(.*)'$/, bookingJobPO.verifyVersionInfo);
     Then(/^I am on the individual booking page$/, bookingJobPO.browse);
 
+    Then(/^I can see a list of (.*) (.*) interpreters with distance and travel pay$/, bookingJobPO.checkListOfInterpretersOnBookingScreen);
     Then(/^I can see a list of (.*) (.*) interpreters$/, bookingJobPO.checkListofInterpreterIndividualBookingScreen);
     Then(/^I can not see a list of interpreters$/, bookingJobPO.listofInterpreterDoesNotExists);
 

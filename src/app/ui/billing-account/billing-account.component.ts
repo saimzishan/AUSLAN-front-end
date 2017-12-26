@@ -1,8 +1,7 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import {Component, Input, ViewChild} from '@angular/core';
 import {Contact} from '../../shared/model/contact.entity';
 import {Address} from '../../shared/model/venue.entity';
-import { NgForm } from '@angular/forms';
-import {RemoveSpacePipe} from '../../shared/pipe/remove-space.pipe';
+import {NgForm} from '@angular/forms';
 
 @Component({
   selector: 'app-billing-account',
@@ -12,10 +11,10 @@ import {RemoveSpacePipe} from '../../shared/pipe/remove-space.pipe';
 })
 export class BillingAccountComponent {
   @Input() primaryContact: Contact;
-  @Input() billingAddressIsSame= true;
   @Input() billingAddress: Address;
   @Input() preferred_billing_method_email = false;
   @Input() parentForm: NgForm;
+  @Input() canCalculateDistance: boolean;
   @ViewChild('billingFields') public form: NgForm;
   address_title = 'BILLING ADDRESS';
   @Input() isReadOnly = false;

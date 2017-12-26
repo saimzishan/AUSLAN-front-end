@@ -32,6 +32,7 @@ export class UserFactory {
                 inte.fromValues(data);
                 inte.address_attributes = <Address> data.address_attributes;
                 inte.availability_blocks_attributes = data.availability_blocks_attributes;
+                inte.interpreter_type = data.interpreter_type;
                 return inte;
             default:
                 return new User(data);
@@ -57,6 +58,7 @@ export class User {
     public type = '';
     public avatar: any;
     public photo_url = '';
+    public state_where_most_bookings_occur: string;
 
     protected get user_type() {
         return '';
@@ -143,6 +145,7 @@ export class OrganisationalRepresentative extends Organisational {
                 'O:' + this.reffered_other : this.reffered_by,
             'customer_reference': this.customer_ref,
             'communication_preference': this.preferred_contact_method,
+            'state_where_most_bookings_occur': this.state_where_most_bookings_occur,
             'organisation_attributes':
                 {
                     'abn': this.abn,
@@ -240,7 +243,7 @@ export class OrganisationalRepresentative extends Organisational {
         this.organisation_name = obj.organisation.name;
         this.group_email = obj.organisation.group_email;
         this.special_instructions = obj.special_instructions;
-        this.branch_office = obj.branch_office;
+        this.branch_office = obj.organisation.branch_office;
         this.reffered_by = Boolean(obj.discovery_of_auslan) ? obj.discovery_of_auslan.startsWith('O:') ?
             'Other' : obj.discovery_of_auslan : '';
         this.reffered_other = this.reffered_by === 'OTHER' ?
@@ -340,6 +343,7 @@ export class IndividualClient extends User {
             'address_attributes': this.address_attributes,
             'communication_preference': this.preferred_contact_method,
             'preference_allocations_attributes': this.prefferedInterpreters,
+            'state_where_most_bookings_occur': this.state_where_most_bookings_occur,
             'billing_account_attributes': {
                 'id': this.individual_client_billing_account.id,
                 'primary_contact_first_name': this.individual_client_primary_contact.first_name,
@@ -429,6 +433,7 @@ export class Interpreter extends User {
     public communication_preference = 'email_and_sms';
     public assignments_attributes = [];
     public availability_blocks_attributes: Array<AvailabilityBlock> = [];
+    public interpreter_type = 'Metro';
 
     get user_type() {
         return 'Interpreter';

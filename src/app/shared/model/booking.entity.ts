@@ -32,6 +32,7 @@ export class Booking {
     public bookable_type: string;
     public created_by_admin: boolean;
     public travel_cost_applicable: boolean;
+    public is_metro: boolean;
     // Is it a limitation on interpreters invitation.
 
     constructor() {
@@ -95,6 +96,7 @@ export class Booking {
         this.primaryContact.email = data.contact_email;
         this.primaryContact.last_name = data.contact_last_name;
         this.primaryContact.mobile_number = data.contact_phone_number;
+        this.client.email = data.created_by.email;
         this.client.organisation_name = data.created_by.organisation;
         this.client.organisation_billing_account.external_reference = '';
         this.special_instructions = data.special_instructions;
@@ -113,6 +115,7 @@ export class Booking {
         this.notes = data.notes;
         this.created_by_admin = data.created_by_admin;
         this.travel_cost_applicable = data.travel_cost_applicable;
+        this.is_metro = data.is_metro;
 
         if (Boolean(data.billing_account_attributes)) {
             this.client.organisation_primary_contact.id =
@@ -188,7 +191,7 @@ export class Booking {
         let o = new Object({
             id: this.id, state: _state,
             special_instructions : this.special_instructions,
-        venue: this.venue.title, requested_by_first_name: this.requested_by.first_name,
+            venue: this.venue.title, requested_by_first_name: this.requested_by.first_name,
             requested_by_last_name: this.requested_by.last_name,
             number_of_interpreters_required: this.interpreters_required,
             nature_of_appointment: _nature_of_appointment,
@@ -222,7 +225,8 @@ export class Booking {
                 suburb: this.venue.suburb, state: this.venue.state, post_code: this.venue.post_code
             },
             created_by: {
-                organisation: this.client.organisation_name
+                organisation: this.client.organisation_name,
+                email: this.client.email
             },
             documents_attributes: this.documents_attributes,
             preference_allocations_attributes: this.preference_allocations_attributes,

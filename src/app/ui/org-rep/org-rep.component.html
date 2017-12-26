@@ -96,7 +96,7 @@
 
 <br>
 
-<app-address [canEdit]="isDuplicate" [prefix]="address_title" [address]="userModel.address_attributes" [parentForm]="parentForm"></app-address>
+<app-address [isReadOnly]="isDuplicate" [prefix]="address_title" [address]="userModel.address_attributes" [parentForm]="parentForm" [canCalculateDistance]="false"></app-address>
 
 <div class="row small-collapse">
     <div class="row-wrapper">
@@ -115,11 +115,10 @@
 </div>
 
 <br>
-<app-billing-account  [isReadOnly]="isDuplicate"
-                      [primaryContact]="userModel.organisation_primary_contact" [parentForm]="parentForm"
-                     [billingAddress]="userModel.organisation_billing_account.organisation_billing_address"
-                     [billingAddressIsSame]="userModel.billingAddressIsSame"
-></app-billing-account>
+<app-billing-account [isReadOnly]="isDuplicate"
+                     [primaryContact]="userModel.organisation_primary_contact"
+                     [parentForm]="parentForm" [canCalculateDistance]="false"
+                     [billingAddress]="userModel.organisation_billing_account.organisation_billing_address"></app-billing-account>
 
 
 <div class="row small-collapse">

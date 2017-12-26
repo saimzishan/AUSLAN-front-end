@@ -20,6 +20,7 @@ export class InterpreterBoxComponent implements OnInit, AfterContentInit {
     dialogRef: MdDialogRef<any>;
     title = '';
     @Input() isHidden = false;
+    @Input() isEditable = true;
     preferAllocSub: any;
 
     constructor(public dialog: MdDialog,

@@ -82,6 +82,7 @@ export class BookingHeaderComponent implements OnInit, OnDestroy {
         this.dialogRef.componentInstance.title = 'Unsaved changes';
         this.dialogRef.componentInstance.cancelTitle = 'Leave page';
         this.dialogRef.componentInstance.okTitle = 'Stay on page';
+        this.dialogRef.componentInstance.closeVal = true;
         this.dialogRef.componentInstance.popupMessage =
           `There are unsaved changes on this page. Are you sure you want to leave?`;
 

@@ -34,7 +34,6 @@ export class BookingJobPage extends PageObject {
     }
     browse = () => {
         return this.currentPath().then((currentPath) => {
-            this.didFinishedRendering();
             let EC = protractor.ExpectedConditions;
             let urlContainsBookingJob = EC.urlContains('booking-job');
             let urlContainsJobDetail = EC.urlContains('job-detail');
@@ -46,6 +45,29 @@ export class BookingJobPage extends PageObject {
         const interpreterRows = $$('section[id=invited-interpreters] tbody tr');
         return interpreterRows.count().then(interpereter_num => {
             expect(interpereter_num).to.eql(parseInt(num_of_user, 10));
+        });
+    }
+
+    checkListOfInterpretersOnBookingScreen = (num_of_user: string, verified: string) => {
+        const interpreterRows = this.getAllElementByCSS('section#invited-interpreters table tbody tr');
+        return interpreterRows.count().then(interpereter_num => {
+            expect(interpereter_num).to.eql(parseInt(num_of_user, 10));
+            interpreterRows.map((row) => {
+                let cols = row.all(by.tagName('td'));
+                cols.each((col, index) => {
+                    if (index === 8) {
+                        col.getText().then((txt) => {
+                            expect(txt.trim()).to.be.eq('0.8 KM');
+                        })
+                    }
+
+                    if (index === 9) {
+                        col.getText().then((txt) => {
+                            expect(txt.trim()).to.be.eq('No');
+                        })
+                    }
+                });
+            });
         });
     }
 
