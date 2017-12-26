@@ -542,3 +542,45 @@ Feature: Booking Admin Management
       When I click on an individual booking
       Then I am on the individual booking page
       Then I should see the attachment icons under Attached column
+
+  ########### REQUESTED TO CANCEL for linked bookings #######################################
+
+  @runThis
+  Scenario: Booking Officer can CANCEL a booking having linked id
+    Given There exist 1 booking with link id
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    And I am on the bookings page
+    And I see one row with the link id
+    When I click on an individual booking
+    Then I will be shown the booking job page
+    When I click on BUTTON 'Cancel Booking'
+    Then I will be shown a popup message 'Would you like to cancel only this booking, or all linked bookings?'
+    Then I click on BUTTON name 'yesBtn'
+    Then I get a valid 'Cancelled' notification for state
+    Then I can see the button state 'Cancel Booking' is hidden
+    Then I can see the button state 'Unable to Service' is hidden
+    Then I click on Bookings
+    And I am on the bookings page
+    Then I see one row with state 'Cancelled'
+
+  ########### REQUESTED TO Unable to service for linked bookings ###############################
+
+  @runThis
+  Scenario: Booking Officer can Unable to service a booking having linked id
+    Given There exist 1 booking with link id
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    And I am on the bookings page
+    And I see one row with the link id
+    When I click on an individual booking
+    Then I will be shown the booking job page
+    When I click on BUTTON 'Unable to Service'
+    Then I will be shown a popup message 'Would you like to mark this booking as unable to service, or all linked bookings?'
+    Then I click on BUTTON name 'yesBtn'
+    Then I get a valid 'Unable to Service' notification for state
+    Then I can see the button state 'Cancel Booking' is hidden
+    Then I can see the button state 'Unable to Service' is hidden
+    Then I click on Bookings
+    And I am on the bookings page
+    Then I see one row with state 'Unable to service'
