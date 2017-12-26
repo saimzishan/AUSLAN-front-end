@@ -81,6 +81,7 @@ defineSupportCode(({Given, Then, When}) => {
     Then(/^The version history with name '(.*)' at index '(.*)' with text '(.*)'$/, bookingJobPO.verifyVersionInfo);
     Then(/^I am on the individual booking page$/, bookingJobPO.browse);
 
+    Then(/^I can see a list of (.*) (.*) interpreters with distance and travel pay$/, bookingJobPO.checkListOfInterpretersOnBookingScreen);
     Then(/^I can see a list of (.*) (.*) interpreters$/, bookingJobPO.checkListofInterpreterIndividualBookingScreen);
     Then(/^I can not see a list of interpreters$/, bookingJobPO.listofInterpreterDoesNotExists);
 

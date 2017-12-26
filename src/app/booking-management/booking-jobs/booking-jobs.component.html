@@ -330,7 +330,10 @@
                                 <!--<input type="text" name="">-->
                             </th>
                             <th width="9%">
-                                <span class="">KM</span>
+                                <span class="">Distance</span>
+                            </th>
+                            <th width="9%">
+                                <span class="">Travel Pay</span>
                             </th>
                         </tr>
                         </thead>
@@ -353,7 +356,8 @@
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td></td>
+                            <td>{{user.distance}} KM</td>
+                            <td>{{ travelPayStatus(user)}}</td>
                         </tr>
                         </tbody>
                     </table>

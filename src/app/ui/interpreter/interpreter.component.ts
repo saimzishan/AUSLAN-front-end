@@ -1,12 +1,8 @@
 import {Component, OnInit, Input} from '@angular/core';
-import {Address} from '../../shared/model/venue.entity';
-import {AddressComponent} from '../address/address.component';
-import {GLOBAL} from '../../shared/global';
 import {DatePipe} from '@angular/common';
 import {Router} from '@angular/router';
 import * as moment from 'moment';
 import {Interpreter} from '../../shared/model/user.entity';
-import {NgForm} from '@angular/forms';
 
 @Component({
     selector: 'app-interpreter',
@@ -16,7 +12,7 @@ import {NgForm} from '@angular/forms';
 export class InterpreterComponent implements OnInit {
     @Input() userModel: Interpreter;
     @Input() displayCalendar= false;
-    @Input() parentForm: NgForm;
+    @Input() canCalculateDistance: boolean;
     updateCalendar = false;
     calendarOptions: Object = {
         height: 'parent',
