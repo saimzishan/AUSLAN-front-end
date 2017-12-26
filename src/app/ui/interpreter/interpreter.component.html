@@ -109,13 +109,12 @@
 </div>
 
 <br>
-<app-address [address]="userModel.address_attributes" [parentForm]="parentForm"></app-address>
+<app-address [address]="userModel.address_attributes" #addressForm="ctAddressForm" [canCalculateDistance]="canCalculateDistance" [userModel]="userModel"></app-address>
 
 <div class="row small-collapse">
   <div class="row-wrapper">
     <div class="medium-6 columns">
       <div class="form-field">
-
 
       </div>
     </div>
