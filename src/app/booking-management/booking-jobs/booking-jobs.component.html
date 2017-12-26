@@ -63,9 +63,10 @@
                         </td>
                         <td data-title="DATE"><span>{{selectedBookingModel.venue.start_time_iso | date:'EEE d MMM yy'}}</span></td>
                         <td data-title="ORGANISATION">{{selectedBookingModel.client.organisation_name}}</td>
-                        <td data-title="CLIENT">{{selectedBookingModel.deaf_person.first_name}}
-                            &nbsp;
-                            {{selectedBookingModel.deaf_person.last_name}}
+                        <td data-title="CLIENT">
+                            {{selectedBookingModel.deaf_person.first_name +
+                            ' ' +
+                            selectedBookingModel.deaf_person.last_name}}
                         </td>
                         <td data-title="VENUE">{{selectedBookingModel.venue.title}}</td>
                         <td data-title="ADDRESS">
