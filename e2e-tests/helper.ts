@@ -648,8 +648,8 @@ export class Heroku {
             'deaf_persons_eaf_no': '124',
             'number_of_people_attending': 1,
             'number_of_interpreters_required': int_required,
-            'start_time': currentDate+'T09: 01: 26.298+00: 00',
-            'end_time': currentDate+'T10: 01: 26.298+00: 00',
+            'start_time': currentDate + 'T09: 01: 26.298+00: 00',
+            'end_time': currentDate + 'T10: 01: 26.298+00: 00',
             'billing_account_attributes': {
                 'primary_contact_first_name': 'Paul',
                 'primary_contact_last_name': 'Biller',
