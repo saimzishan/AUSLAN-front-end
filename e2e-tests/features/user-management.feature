@@ -553,3 +553,20 @@ Feature: Create, read, update and delete a User
     When I hover on the 'Actions' of the Booking Officer
     When I click on reset password for an active existing Booking Officer
     Then The password for the user should be reset
+
+  @runThis
+  Scenario: Booking Officer can see the interpreter notes when add or edit the interpreter
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    And I am on my admin home screen
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then I click on element by name 'user-roles'
+    When I hover on the userlist dropdown and select 'Interpreter'
+    Then I will be taken to the 'INTERPRETER Signup' page
+    And I can see the element with name 'interpreter_notes' is 'visible'
+    Then I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    When I click on edit for an active existing Interpreter
+    Then I will be taken to the 'INTERPRETER Signup' page
+    And I can see the element with name 'interpreter_notes' is 'visible'
