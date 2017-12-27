@@ -551,7 +551,7 @@ Feature: Booking Management
     And I click the create booking button
     Then I get a valid create booking notification
     And I am on the bookings page
-    When I query search with empty date '(.*)'
+    When I query search with empty date
     And I will be shown with bookings
     Then I am shown with 1 booking
 # ---------------------------------------- AUSLAN1-736, 737 -> END ----------------------------------------

@@ -394,7 +394,7 @@ Feature: Booking Filter
     When I click the create booking button
     Then I get a valid create booking notification
     And I am on the bookings page
-    When I query search with empty date '(.*)'
+    When I query search with empty date
     Then I am shown with 6 booking
     Then I click on my name
     And I click on logout

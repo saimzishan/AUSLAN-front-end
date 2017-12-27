@@ -216,7 +216,7 @@ export class BookingPage extends PageObject {
         return this.createBookingWithTimeAndInterpreter('standard', '10:15AM', '11:15AM', '2');
     }
     createBookingWithYesterdayDate = () => {
-        this.previousDate=true;
+        this.previousDate = true;
         return this.createBookingWithTimeAndInterpreter('standard', '10:15AM', '11:15AM', '2');
     }
     createBookingForPerth = () => {
@@ -260,15 +260,9 @@ export class BookingPage extends PageObject {
     }
     createBookingWithTimeAndInterpreter = (standard: string, startTime: string, endTime: string, interpreterNum: string) => {
         let date = new Date();
-        if( this.previousDate) { //for yesterday date
-        const dateToSend = this.getDateAfterNDays(-1);
+        const dateToSend = this.previousDate ? this.getDateAfterNDays(-1) : this.getDateAfterNDays(7);
         this.setStartEndTime('start', dateToSend, startTime);
         this.setStartEndTime('end', dateToSend, endTime);
-        } else { //for 1 week ahead date
-            const dateToSend = this.getDateAfterNDays(7);
-            this.setStartEndTime('start', dateToSend, startTime);
-            this.setStartEndTime('end', dateToSend, endTime);
-        }
         this.setStreetNumber('162');
         this.setElementsValueByName('address_street', 'Dave');
         this.setElementsValueByName('address_post_code', '3064');

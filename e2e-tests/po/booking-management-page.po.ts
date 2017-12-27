@@ -235,8 +235,8 @@ export class BookingManagementPage extends PageObject {
         value === 'empty' ? searchInput.click() : searchInput.sendKeys(value);
         return searchForm.submit();
     }
-    querySearchWithEmptyDate = (value: string) => {
-        let searchInput =this.getElementByName('date_from').sendKeys(protractor.Key.LEFT + protractor.Key.LEFT + protractor.Key.LEFT + protractor.Key.DELETE + protractor.Key.RIGHT + protractor.Key.DELETE + protractor.Key.RIGHT + protractor.Key.DELETE);
+    querySearchWithEmptyDate = () => {
+        this.getElementByName('date_from').sendKeys(protractor.Key.BACK_SPACE);
     }
     // Adds a '0' in the start if the date < 10
     private prettyDate = (date: number|string): string => {
@@ -264,19 +264,14 @@ export class BookingManagementPage extends PageObject {
 
     filterBookingByCurrentDate = () => {
         let today = new Date();
-        let dd = today.getDate().toString();
-        let mm = (today.getMonth()+1).toString(); //January is 0!
-        let yyyy =today.getFullYear();
-       if(+dd<10){
-          dd='0'+dd;
-       }
-       if(+mm<10){
-           mm='0'+mm;
-       }
-       let todayDate = yyyy+'-'+mm+'-'+dd;
-      let datefrom=this.getElementByName('date_from');
-      datefrom.getAttribute('value').then((value)=> {
-            return expect(value).to.be.eq(todayDate);
+        let todayDate = {
+            mm: this.prettyDate(today.getMonth() + 1), //January is 0!
+            dd: this.prettyDate(today.getDate()),
+            yy: today.getFullYear().toString()
+        };
+        let datefrom = this.getElementByName('date_from');
+        datefrom.getAttribute('value').then((value)=> {
+        return expect(value).to.be.eq(todayDate.yy + '-' + todayDate.mm + '-' + todayDate.dd);
     });
     }
 
