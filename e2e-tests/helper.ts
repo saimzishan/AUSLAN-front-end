@@ -620,8 +620,17 @@ export class Heroku {
         command += '<< PreferenceAllocation.new(clientable: client, interpreter: i, preference: :preferred) }';
         Heroku.sendCommandToHeroku(command);
     }
-
+   
+    
     private static createBooking(int_required: number) {
+     
+      let today = new Date();
+      let todayDate = {
+          mm: this.prettyDate(today.getMonth() + 1), //January is 0!
+          dd: this.prettyDate(today.getDate()),
+          yy: today.getFullYear().toString()
+      };
+      let currentDate = todayDate.yy + '-' + todayDate.mm + '-' + todayDate.dd;
         return new Object({
             'venue': 'Fed Square',
             'requested_by_first_name': 'Georgious',
@@ -639,8 +648,8 @@ export class Heroku {
             'deaf_persons_eaf_no': '124',
             'number_of_people_attending': 1,
             'number_of_interpreters_required': int_required,
-            'start_time': '2017-08-05T09: 01: 26.298+00: 00',
-            'end_time': '2017-08-05T10: 01: 26.298+00: 00',
+            'start_time': currentDate + 'T09: 01: 26.298+00: 00',
+            'end_time': currentDate + 'T10: 01: 26.298+00: 00',
             'billing_account_attributes': {
                 'primary_contact_first_name': 'Paul',
                 'primary_contact_last_name': 'Biller',
@@ -669,5 +678,10 @@ export class Heroku {
             'bookable_id': 1,
             'bookable_type': 'OrganisationalRepresentative'
         });
+    }
+      // Adds a '0' in the start if the date < 10
+      private static prettyDate = (date: number|string): string => {
+        date = date.toString();
+        return ('00' + date).slice(date.length);
     }
 }

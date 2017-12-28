@@ -10,6 +10,7 @@ import {BookingInterpreter} from '../../shared/model/contact.entity';
 import {BookingFilter} from '../../shared/model/booking-filter.interface';
 import {FormGroup, NgForm} from '@angular/forms';
 import {BA, BOOKING_NATURE} from '../../shared/model/booking-nature.enum';
+import {DatePipe} from '@angular/common';
 
 @Component({
     selector: 'app-booking-list',
@@ -29,11 +30,9 @@ export class BookingListComponent implements OnInit {
         let keys = Object.keys(list);
         return keys.slice(keys.length / 2);
     };
-
-    constructor(public router: Router) {
+    constructor(public router: Router, private datePipe: DatePipe) {
         BA.loadItems();
     }
-
     ngOnInit () {
         this.filterParams = GLOBAL._filterVal;
         this.filterParams.paramsMap.forEach((value: string[], key: string) => {
@@ -43,6 +42,8 @@ export class BookingListComponent implements OnInit {
                 break;
             }
         });
+    this.bookingFilter.date_from = this.datePipe.transform( Date.now(), 'yyyy-MM-dd');
+    this.filter('date_from', this.bookingFilter.date_from);
     }
     underScoreToSpaces(str: string) {
         if (!str) { return 'All'; }

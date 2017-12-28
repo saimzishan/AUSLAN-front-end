@@ -11,6 +11,7 @@ interface TestDateFormat {
 }
 
 export class BookingPage extends PageObject {
+    previousDate:boolean=false;
     list_of_object = {};
     browse = () => {
         return this.currentPath().then((currentPath) => {
@@ -206,6 +207,7 @@ export class BookingPage extends PageObject {
         this.getElementByName(elementName).sendKeys(time);
     }
     setDateOnly = (field: string, date: TestDateFormat) => {
+        this.getElementByName(field).sendKeys(protractor.Key.BACK_SPACE);
         this.getElementByName(field).sendKeys(date.mm);
         this.getElementByName(field).sendKeys(date.dd);
         this.getElementByName(field).sendKeys(date.yy);
@@ -213,7 +215,10 @@ export class BookingPage extends PageObject {
     createBooking = () => {
         return this.createBookingWithTimeAndInterpreter('standard', '10:15AM', '11:15AM', '2');
     }
-
+    createBookingWithYesterdayDate = () => {
+        this.previousDate = true;
+        return this.createBookingWithTimeAndInterpreter('standard', '10:15AM', '11:15AM', '2');
+    }
     createBookingForPerth = () => {
         return this.createBookingWithAddressTimeAndInterpreter('standard', '10:15AM', '11:15AM', '2');
     }
@@ -255,7 +260,7 @@ export class BookingPage extends PageObject {
     }
     createBookingWithTimeAndInterpreter = (standard: string, startTime: string, endTime: string, interpreterNum: string) => {
         let date = new Date();
-        const dateToSend = this.getDateAfterNDays(7);
+        const dateToSend = this.previousDate ? this.getDateAfterNDays(-1) : this.getDateAfterNDays(7);
         this.setStartEndTime('start', dateToSend, startTime);
         this.setStartEndTime('end', dateToSend, endTime);
         this.setStreetNumber('162');
