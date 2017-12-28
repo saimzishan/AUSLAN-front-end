@@ -32,6 +32,7 @@ export class UserFactory {
                 inte.fromValues(data);
                 inte.address_attributes = <Address> data.address_attributes;
                 inte.availability_blocks_attributes = data.availability_blocks_attributes;
+                inte.interpreter_type = data.interpreter_type;
                 return inte;
             default:
                 return new User(data);
@@ -432,6 +433,8 @@ export class Interpreter extends User {
     public communication_preference = 'email_and_sms';
     public assignments_attributes = [];
     public availability_blocks_attributes: Array<AvailabilityBlock> = [];
+    public interpreter_type = 'Metro';
+    public booking_office_notes = '';
 
     get user_type() {
         return 'Interpreter';

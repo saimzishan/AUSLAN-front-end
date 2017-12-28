@@ -48,6 +48,29 @@ export class BookingJobPage extends PageObject {
         });
     }
 
+    checkListOfInterpretersOnBookingScreen = (num_of_user: string, verified: string) => {
+        const interpreterRows = this.getAllElementByCSS('section#invited-interpreters table tbody tr');
+        return interpreterRows.count().then(interpereter_num => {
+            expect(interpereter_num).to.eql(parseInt(num_of_user, 10));
+            interpreterRows.map((row) => {
+                let cols = row.all(by.tagName('td'));
+                cols.each((col, index) => {
+                    if (index === 8) {
+                        col.getText().then((txt) => {
+                            expect(txt.trim()).to.be.eq('0.8 KM');
+                        })
+                    }
+
+                    if (index === 9) {
+                        col.getText().then((txt) => {
+                            expect(txt.trim()).to.be.eq('No');
+                        })
+                    }
+                });
+            });
+        });
+    }
+
     selectInterpreters = (num_of_interpreter: string) => {
         let int_count = parseInt(num_of_interpreter, 10);
         return $$('md-checkbox').each((ef, ind) => {

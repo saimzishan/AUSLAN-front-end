@@ -1,4 +1,4 @@
-import {Address, Venue} from './venue.entity';
+import {Venue} from './venue.entity';
 import {Contact, BookingInterpreter, DEAFContact} from './contact.entity';
 import {BOOKING_NATURE} from './booking-nature.enum';
 import {BOOKING_STATE} from './booking-state.enum';
@@ -34,6 +34,7 @@ export class Booking {
     public created_by_admin: boolean;
     public travel_cost_applicable: boolean;
     public update_all_linked_bookings: boolean;
+    public is_metro: boolean;
     // Is it a limitation on interpreters invitation.
 
     constructor() {
@@ -118,6 +119,7 @@ export class Booking {
         this.notes = data.notes;
         this.created_by_admin = data.created_by_admin;
         this.travel_cost_applicable = data.travel_cost_applicable;
+        this.is_metro = data.is_metro;
 
         if (Boolean(data.billing_account_attributes)) {
             this.client.organisation_primary_contact.id =
@@ -193,7 +195,7 @@ export class Booking {
         let o = new Object({
             id: this.id,
             link_id: this.link_id,
-            update_all_linked_bookings: this.update_all_linked_bookings,
+            update_all_linked_bookings: this.update_all_linked_bookings || false,
             state: _state,
             special_instructions: this.special_instructions,
             venue: this.venue.title,

@@ -145,7 +145,7 @@
           </md-radio-group>
         </div>
       </div>
-      <app-address name="bookingAddress" [address]="bookingModel.venue" [isReadOnly]="isDisabledForOrgRepIndClient" #addressForm="ctAddressForm" ></app-address>
+      <app-address name="bookingAddress" [address]="bookingModel.venue" [isReadOnly]="isDisabledForOrgRepIndClient" #addressForm="ctAddressForm" [canCalculateDistance]="true"></app-address>
       <div class="medium-12 columns">
         <div class="form-field">
           <label>SPECIFIC LOCATION
@@ -633,7 +633,7 @@
         <div class="medium-12 columns">
           <div class="form-field">
             <app-billing-account #billingForm="ctBillingForm"
-                                 [parentForm]="booking_form"
+                                 [parentForm]="booking_form" [canCalculateDistance]="false"
                                  [billingAddress]="bookingModel.client.organisation_billing_account.organisation_billing_address"
                                  [primaryContact]="bookingModel.client.organisation_primary_contact"></app-billing-account>
           </div>

@@ -3,6 +3,7 @@ import {browser, by, element, $, $$, protractor} from 'protractor';
 import {expect} from '../config/helpers/chai-imports';
 import {User} from '../helper';
 import {BookingPage} from './create-booking.po';
+import { debug } from 'util';
 
 enum BookingTableHeaders {
     None, Empty, Job, Status, State, Date, Org,
@@ -242,7 +243,9 @@ export class BookingManagementPage extends PageObject {
         value === 'empty' ? searchInput.click() : searchInput.sendKeys(value);
         return searchForm.submit();
     }
-
+    querySearchWithEmptyDate = () => {
+        this.getElementByName('date_from').sendKeys(protractor.Key.BACK_SPACE);
+    }
     // Adds a '0' in the start if the date < 10
     private prettyDate = (date: number|string): string => {
         date = date.toString();
@@ -265,6 +268,19 @@ export class BookingManagementPage extends PageObject {
         };
         this.booking.setDateOnly('date_from', dateFrom);
         return this.booking.setDateOnly('date_to', dateTo);
+    }
+
+    filterBookingByCurrentDate = () => {
+        let today = new Date();
+        let todayDate = {
+            mm: this.prettyDate(today.getMonth() + 1), //January is 0!
+            dd: this.prettyDate(today.getDate()),
+            yy: today.getFullYear().toString()
+        };
+        let datefrom = this.getElementByName('date_from');
+        datefrom.getAttribute('value').then((value)=> {
+        return expect(value).to.be.eq(todayDate.yy + '-' + todayDate.mm + '-' + todayDate.dd);
+    });
     }
 
     bookingExistsWithId = () => {

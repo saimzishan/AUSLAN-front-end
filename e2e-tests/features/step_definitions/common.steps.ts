@@ -77,6 +77,7 @@ defineSupportCode(({Given, When, Then}) => {
     Given(/^I am on my admin home screen$/, bookingManagementPage.verify);
     Given(/^I am on my dashboard screen$/, bookingManagementPage.verify);
     Given(/^I fill New Booking form fields correctly$/, bookingPage.createBooking);
+    Given(/^I fill New Booking form fields correctly with yesterday date$/, bookingPage.createBookingWithYesterdayDate);
     Given(/^I fill New Booking form fields with address greater than 40 kilometers$/, bookingPage.createBookingForPerth);
     Given(/^I select the bookable for client$/, bookingPage.selectClientAsBookbable);
     Given(/^I select the bookable for org rep/, bookingPage.selectOrgRepAsBookbable);

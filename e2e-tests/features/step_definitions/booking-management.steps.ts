@@ -81,6 +81,7 @@ defineSupportCode(({Given, Then, When}) => {
     Then(/^The version history with name '(.*)' at index '(.*)' with text '(.*)'$/, bookingJobPO.verifyVersionInfo);
     Then(/^I am on the individual booking page$/, bookingJobPO.browse);
 
+    Then(/^I can see a list of (.*) (.*) interpreters with distance and travel pay$/, bookingJobPO.checkListOfInterpretersOnBookingScreen);
     Then(/^I can see a list of (.*) (.*) interpreters$/, bookingJobPO.checkListofInterpreterIndividualBookingScreen);
     Then(/^I can not see a list of interpreters$/, bookingJobPO.listofInterpreterDoesNotExists);
 
@@ -102,7 +103,9 @@ defineSupportCode(({Given, Then, When}) => {
     When(/^I change the street number to (\d+)$/, createBookingPO.setStreetNumber);
     When(/^I click on one non-editable field$/, bookingEditPO.clickOnNonEditableField);
     When(/^I query search with '(.*)'$/, bookingManagementPO.querySearchWith);
-
+    When(/^I query search with empty date$/, bookingManagementPO.querySearchWithEmptyDate);
+    When(/^I can see that date_from is preseleted with current date$/, bookingManagementPO.filterBookingByCurrentDate);
+    
     Then(/^All required booking fields should be filled$/, bookingEditPO.checkValueInAllRequiredFields);
 
     Then(/^The cell of (.*) will be populated with (.*)$/, createBookingPO.checkTheDropDown);

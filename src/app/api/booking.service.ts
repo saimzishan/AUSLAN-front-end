@@ -195,4 +195,14 @@ export class BookingService extends ApiService {
         }
       }
 
+    nearbyBookings(booking_id: number): Observable<Object> {
+        let headers = new Headers({'Accept': 'application/json'});
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http
+            .get(GLOBAL.BOOKING_API + '/' + booking_id + '/nearby_interpreters', options)
+            .map(this.extractData)
+            .catch((err) => { return this.handleError(err); });
+    }
+
 }

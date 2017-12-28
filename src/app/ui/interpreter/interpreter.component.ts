@@ -1,12 +1,9 @@
 import {Component, OnInit, Input} from '@angular/core';
-import {Address} from '../../shared/model/venue.entity';
-import {AddressComponent} from '../address/address.component';
-import {GLOBAL} from '../../shared/global';
 import {DatePipe} from '@angular/common';
 import {Router} from '@angular/router';
 import * as moment from 'moment';
-import {Interpreter} from '../../shared/model/user.entity';
-import {NgForm} from '@angular/forms';
+import {Interpreter, BookingOfficer, Administrator} from '../../shared/model/user.entity';
+import {GLOBAL} from '../../shared/global';
 
 @Component({
     selector: 'app-interpreter',
@@ -16,7 +13,7 @@ import {NgForm} from '@angular/forms';
 export class InterpreterComponent implements OnInit {
     @Input() userModel: Interpreter;
     @Input() displayCalendar= false;
-    @Input() parentForm: NgForm;
+    @Input() canCalculateDistance: boolean;
     updateCalendar = false;
     calendarOptions: Object = {
         height: 'parent',
@@ -100,4 +97,10 @@ export class InterpreterComponent implements OnInit {
         }
 
     }
+
+    isUserAdminORBookOfficer(): Boolean {
+        return Boolean(GLOBAL.currentUser instanceof Administrator ||
+            GLOBAL.currentUser instanceof BookingOfficer) ;
+    }
+
 }
