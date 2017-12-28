@@ -5,10 +5,16 @@
 
 <ng-container *ngIf="!jobAccessError">
     <section id="page-common">
-        <app-booking-header [bookingState]="selectedBookingModel.state" [isCancelOrUnable]="isCancelledOrUnableToServe"
+        <app-booking-header [bookingState]="selectedBookingModel.state"
+                            [hasLinkId]="!!selectedBookingModel.link_id"
+                            [isCancelOrUnable]="isCancelledOrUnableToServe"
                             [invitePress]="invitePressed"
-                            [unAssignPress]="unAssignPressed" [reAssignPress]="reAssignPressed" [showButtons]='true'
-                            [disableReject]="disableReject" [disableAccept]="disableAccept">
+                            [unAssignPress]="unAssignPressed"
+                            [reAssignPress]="reAssignPressed"
+                            [unlinkPress]="unlinkPressed"
+                            [showButtons]="true"
+                            [disableReject]="disableReject"
+                            [disableAccept]="disableAccept">
         </app-booking-header>
 
         <div class="job-status">
@@ -46,15 +52,21 @@
                     </thead>
                     <tbody>
                     <tr>
-                        <td data-title="JOB NUMBER">{{selectedBookingModel.id | PrettyID}}</td>
+                        <td data-title="JOB NUMBER">
+                            {{selectedBookingModel.id | PrettyID}}
+                            <span data-title="Link ID" *ngIf="isCurrentUserAdminOrBookingOfficer() && !!selectedBookingModel.link_id" class="linkId">
+                                <a>#{{selectedBookingModel.link_id}}</a>
+                            </span>
+                        </td>
                         <td data-title="TIME">
                             <span>{{selectedBookingModel.venue.start_time_iso | date:'shortTime'}} - {{selectedBookingModel.venue.end_time_iso | date:'shortTime'}}</span>
                         </td>
                         <td data-title="DATE"><span>{{selectedBookingModel.venue.start_time_iso | date:'EEE d MMM yy'}}</span></td>
                         <td data-title="ORGANISATION">{{selectedBookingModel.client.organisation_name}}</td>
-                        <td data-title="CLIENT">{{selectedBookingModel.deaf_person.first_name}}
-                            &nbsp;
-                            {{selectedBookingModel.deaf_person.last_name}}
+                        <td data-title="CLIENT">
+                            {{selectedBookingModel.deaf_person.first_name +
+                            ' ' +
+                            selectedBookingModel.deaf_person.last_name}}
                         </td>
                         <td data-title="VENUE">{{selectedBookingModel.venue.title}}</td>
                         <td data-title="ADDRESS">

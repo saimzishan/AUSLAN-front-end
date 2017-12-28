@@ -1,4 +1,4 @@
-import {Address, Venue} from './venue.entity';
+import {Venue} from './venue.entity';
 import {Contact, BookingInterpreter, DEAFContact} from './contact.entity';
 import {BOOKING_NATURE} from './booking-nature.enum';
 import {BOOKING_STATE} from './booking-state.enum';
@@ -8,6 +8,7 @@ import {BookingVersion} from './booking-version.entity';
 export class Booking {
 
     public id: any;
+    public link_id: number;
     public venue: Venue = new Venue();
     public requested_by: Contact = new Contact();
     public last_updated: Date;
@@ -32,6 +33,7 @@ export class Booking {
     public bookable_type: string;
     public created_by_admin: boolean;
     public travel_cost_applicable: boolean;
+    public update_all_linked_bookings: boolean;
     public is_metro: boolean;
     // Is it a limitation on interpreters invitation.
 
@@ -64,6 +66,7 @@ export class Booking {
         this.notes = '';
         this.created_by_admin = false;
         this.travel_cost_applicable = false;
+        this.update_all_linked_bookings = false;
     }
 
     clean(theObject) {
@@ -76,6 +79,7 @@ export class Booking {
 
     fromJSON(data: any) {
         this.id = data.id;
+        this.link_id = data.link_id;
         this.venue.expected_attendance = data.number_of_people_attending;
         this.venue.title = data.venue || '';
         this.status = data.status;
@@ -189,9 +193,13 @@ export class Booking {
 
 
         let o = new Object({
-            id: this.id, state: _state,
-            special_instructions : this.special_instructions,
-            venue: this.venue.title, requested_by_first_name: this.requested_by.first_name,
+            id: this.id,
+            link_id: this.link_id,
+            update_all_linked_bookings: this.update_all_linked_bookings || false,
+            state: _state,
+            special_instructions: this.special_instructions,
+            venue: this.venue.title,
+            requested_by_first_name: this.requested_by.first_name,
             requested_by_last_name: this.requested_by.last_name,
             number_of_interpreters_required: this.interpreters_required,
             nature_of_appointment: _nature_of_appointment,

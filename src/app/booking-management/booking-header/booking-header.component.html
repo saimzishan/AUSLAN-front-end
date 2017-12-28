@@ -5,11 +5,12 @@
             <a href="javascript:void(0);" *ngIf="!isCurrentUserInterpreter()" (click)="bookingDetailClick()" [ngClass]="{'active' : isActive('edit-booking')}">Booking details</a>
         </nav>
         <div *ngIf='showButtons'>
+            <button *ngIf='isCurrentUserAdminOrBookingOfficer() && hasLinkId' (click)="unlinkBooking()" class="button pink">Unlink</button>
             <button *ngIf='!isCancelOrUnable' (click)="showDialogBoxClick(false)" class="button pink">Unable to Service</button>
             <button *ngIf='!isCancelOrUnable' (click)="showDialogBoxClick(true)" class="button pink">Cancel Booking</button>
             <button name="dupBtn" (click)="duplicateClick()" class="button inverse">Duplicate</button>
             <div class="sep"></div>
-            <button (click)="saveClick()" name="saveBtn" [disabled]="!invitePress && !unAssignPress && !reAssignPress " class="button inverse">Save</button>
+            <button (click)="saveClick()" name="saveBtn" [disabled]="!invitePress && !unAssignPress && !reAssignPress && !unlinkPress" class="button inverse">Save</button>
         </div>
         <div *ngIf="isCurrentUserInterpreter()">
             <button *ngIf="!disableReject" (click)="showDialogBoxInterpreter(true)"

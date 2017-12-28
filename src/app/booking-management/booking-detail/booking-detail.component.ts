@@ -24,7 +24,10 @@ import {AddressComponent} from '../../ui/address/address.component';
 const _ONE_HOUR = 1000 /*milliseconds*/
     * 60 /*seconds*/
     * 60 /*minutes*/;
-
+interface ModalOptions {
+    cancelTitle: string;
+    okTitle: string;
+}
 @Component({
     selector: 'app-booking-detail',
     templateUrl: './booking-detail.component.html',
@@ -424,11 +427,10 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     proceedWithBooking() {
         if (this.isBookingTimeInNonStandardHours()) {
             let message = `This booking is not within the standard booking hours (8AM - 6PM).
-                            Do you still want to create booking?` ;
-            let title   = 'NON-STANDARD HOURS WARNING';
+                            Do you still want to create booking?`;
+            let title = 'NON-STANDARD HOURS WARNING';
             this.createModal(title, message);
             this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
-
                 if (result) {
                     if (this.shouldEdit.length > 0 && this.shouldEdit === 'edit') {
                         this.updateBooking();
@@ -464,15 +466,15 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
           return this.calculateTimeDiff() >= _ONE_HOUR * 12;
     }
 
-    createModal(title: any, message: any) {
+    createModal(title: string, message: string, options?: ModalOptions) {
         let config: MdDialogConfig = {
             disableClose: true
         };
         config.viewContainerRef = this.viewContainerRef;
         this.dialogRef = this.dialog.open(PopupComponent, config);
         this.dialogRef.componentInstance.title = title;
-        this.dialogRef.componentInstance.cancelTitle = 'BACK';
-        this.dialogRef.componentInstance.okTitle = 'CREATE';
+        this.dialogRef.componentInstance.cancelTitle = (options && options.cancelTitle) || 'BACK';
+        this.dialogRef.componentInstance.okTitle = (options && options.okTitle) || 'CREATE';
         this.dialogRef.componentInstance.popupMessage = message;
 
     }
@@ -523,7 +525,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.dialogRef.componentInstance.cancelTitle = 'Back';
             this.dialogRef.componentInstance.okTitle = 'Yes';
             this.dialogRef.componentInstance.popupMessage =
-                `Interpreter(s) have been/is allocated for this job. You're charging important fields of the booking.
+                `Interpreter(s) have been/is allocated for this job. You're changing important fields of the booking.
                  Do you have confirmation from the interpreter(s) that these changes are OK?`;
 
             this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
@@ -542,7 +544,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             return;
         } else {
             this.spinnerService.requestInProcess(true);
-            let bookingID = this.bookingModel.id;
+            const bookingID = this.bookingModel.id;
 
             this.deleteDocuments.forEach(element => {
                 this.bookingModel.documents_attributes.push(element);
