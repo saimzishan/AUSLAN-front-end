@@ -20,6 +20,7 @@ import {Contact} from '../../shared/model/contact.entity';
 import {UserService} from '../../api/user.service';
 import {isNullOrUndefined, debug} from 'util';
 import {AddressComponent} from '../../ui/address/address.component';
+import * as momentTimeZone from 'moment-timezone';
 const _ONE_HOUR = 1000 /*milliseconds*/
     * 60 /*seconds*/
     * 60 /*minutes*/;
@@ -180,6 +181,45 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                  this.onBookingAddressChange();
             }
         }
+    }
+
+    getNamedTimeZone(state: string, postCode: string) {
+        let namedTimeZone;
+        if (postCode === '2880') { // Broken Hill exception
+            namedTimeZone = 'Australia/Adelaide';
+            return namedTimeZone;
+        }
+
+        switch (state) {
+            case 'ACT':
+                namedTimeZone = 'Australia/Canberra';
+                break;
+            case 'NSW':
+                namedTimeZone = 'Australia/Sydney';
+                break;
+            case 'QLD':
+                namedTimeZone = 'Australia/Brisbane';
+                break;
+            case 'SA':
+                namedTimeZone = 'Australia/Adelaide';
+                break;
+            case 'TAS':
+                namedTimeZone = 'Australia/Hobart';
+                break;
+            case 'VIC':
+                namedTimeZone = 'Australia/Melbourne';
+                break;
+            case 'WA':
+                namedTimeZone = 'Australia/Perth';
+                break;
+            case 'NT':
+                namedTimeZone = 'Australia/Darwin';
+                break;
+            default:
+                namedTimeZone = '';
+                break;
+        }
+        return namedTimeZone;
     }
 
     public onClientSelectionChange() {
@@ -356,6 +396,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
       Calling this method will create a new booking
     */
     public onCreateBooking(form: FormGroup, addressForm: any, billingForm: any, uploader: FileUploader) {
+        let timeZone = this.getNamedTimeZone(this.bookingModel.venue.state, this.bookingModel.venue.post_code.toString());
+        let temp = momentTimeZone(this.bookingModel.venue.start_time_iso).tz(timeZone).format('YYYY-MM-DDTHH:mm:ss');
 
         if (addressForm.isTravelCostApplicable && !form.value.travel_cost_applicable) {
             this.notificationServiceBus.launchNotification(true, 'Travel cost must be applicable as your booking distance is more than 40 kms');
