@@ -114,7 +114,7 @@
             </thead>
             <tbody>
             <tr [ngClass]="{'active': isSelectedBooking(booking.id)}"
-                *ngFor="let booking of bookingList | paginate: { itemsPerPage: 10, currentPage: p, totalItems: totalItems }"
+                *ngFor="let booking of bookingList | paginate: { itemsPerPage: 10, currentPage: p, totalItems: totalItems } let i = index"
                 (click)="setClickedRow(booking)">
                 <td>
                     <div class="checkbox">
@@ -125,7 +125,10 @@
                 <td class="bookingID">
                     <div class="actions-container">
                         <span>{{booking.id | PrettyID}}</span>
-                        <span class="linkId" *ngIf="isCurrentUserAdminOrBookingOfficer() && !!booking.link_id">
+                        <span class="linkId"
+                              id="{{'linkId_'+i}}"
+                              (click)="linkIdClicked('#'+booking.link_id); $event.stopPropagation();"
+                              *ngIf="isCurrentUserAdminOrBookingOfficer() && !!booking.link_id">
                             <a>#{{booking.link_id}}</a>
                         </span>
                         <ul class="dropdown menu custom actions hidden-desktop" data-dropdown-menu>

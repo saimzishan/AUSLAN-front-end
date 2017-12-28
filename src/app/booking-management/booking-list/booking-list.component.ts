@@ -179,4 +179,8 @@ export class BookingListComponent implements OnInit {
     getPage(page: number) {
         this.onPageEmit.emit(page);
     }
+    linkIdClicked(linkID: string) {
+        this.bookingFilter.booking_ids = linkID;
+        this.filter('booking_ids', this.bookingFilter.booking_ids);
+    }
 }

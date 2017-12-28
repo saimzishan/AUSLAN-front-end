@@ -374,12 +374,19 @@ Feature: Booking Filter
     Then I see one row with status 'red'
 
   @runThis
+  Scenario: As Administrator, I should be able to filter bookings when I click on linked id
+    Given I sign in with valid Administrator credentials
+    When I am on the bookings page
+    Then I am shown with 5 booking
+    When I click on element by id 'linkId_0'
+    Then I am shown with 1 booking
+    And I can see the input with name 'booking_ids' has text '#1'
+
+  @runThis
   Scenario: As a Administrator, I should be able to see filtered bookings from today to future automaticaly when login
     And I sign in with valid Administrator credentials
     And I am on the bookings page
     Then I can see that date_from is preseleted with current date
-    Then I click on my name
-    And I click on logout
 
  @runThis
  Scenario: As a Booking Officer, I can create a booking for Organisational Representative with old date and I should be able to filter the bookings by today's date onward 
@@ -396,5 +403,3 @@ Feature: Booking Filter
     And I am on the bookings page
     When I query search with empty date
     Then I am shown with 6 booking
-    Then I click on my name
-    And I click on logout

@@ -1,4 +1,4 @@
-import {Address, Venue} from './venue.entity';
+import {Venue} from './venue.entity';
 import {Contact, BookingInterpreter, DEAFContact} from './contact.entity';
 import {BOOKING_NATURE} from './booking-nature.enum';
 import {BOOKING_STATE} from './booking-state.enum';
