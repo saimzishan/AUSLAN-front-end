@@ -12,7 +12,7 @@ import {DatePipe} from '@angular/common';
 import {FormGroup} from '@angular/forms';
 import {FileUploader} from 'ng2-file-upload';
 import {Address} from '../../shared/model/venue.entity';
-import {MdDialog, MdDialogConfig, MdDialogRef, MdDatepicker} from '@angular/material';
+import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
 import {PreferedAllocationService} from '../../shared/prefered-allocation.service';
 import {IndividualClient, OrganisationalRepresentative, Interpreter, BookingOfficer, Administrator , UserFactory} from '../../shared/model/user.entity';
 import {PopupComponent} from '../../shared/popup/popup.component';
@@ -71,8 +71,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     oldInterpreterPreference = [];
     isDisabledForAdmin: boolean;
     bookingDate: string;
-    miniDate: Date;
-    maxiDate: Date;
+    minDate: Date;
+    maxDate: Date;
     bookingStartTime: Date;
     bookingEndTime: Date;
     isDuplicate: boolean;
@@ -108,10 +108,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 this.bookingDate = this.datePipe.transform(this.bookingModel.venue.start_time_iso, 'MM/dd/yyyy');
                 this.bookingStartTime = new Date(this.bookingModel.venue.start_time_iso);
                 this.bookingEndTime = new Date(this.bookingModel.venue.end_time_iso);
-                // this.bookingModel.venue.start_time_iso =
-                //         this.datePipe.transform(this.bookingModel.venue.start_time_iso, 'hh:mm a');
-                // this.bookingModel.venue.end_time_iso =
-                //         this.datePipe.transform(this.bookingModel.venue.end_time_iso, 'hh:mm a');
                 this.natureOfApptChange(null);
             } else {
                 this.bookingModel = new Booking();
@@ -147,10 +143,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     getOrgName(item) {
         return (item instanceof OrganisationalRepresentative ?
             (item.organisation_name.toUpperCase()  + ' - ') : '') + item.first_name + ' ' + item.last_name;
-    }
-    onStartTimeChanged() {
-    }
-    onEndTimeChanged() {
     }
     timeFormatting() {
         let selectedDate = this.datePipe.transform(this.bookingDate, 'yyyy-MM-dd');
@@ -205,10 +197,10 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         let year = today.getFullYear();
         let nextMonth = (month === 11) ? 0 : month + 1;
         let nextYear = (nextMonth === 0) ? year + 5 : year;
-        this.miniDate = new Date();
-        this.miniDate.setDate(today.getDate());
-        this.maxiDate = new Date();
-        this.maxiDate.setFullYear(nextYear);
+        this.minDate = new Date();
+        this.minDate.setDate(today.getDate());
+        this.maxDate = new Date();
+        this.maxDate.setFullYear(nextYear);
      }
 
     public onClientSelectionChange() {
@@ -399,7 +391,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             return;
         }
         if (this.bookingEndTime < this.bookingStartTime) {
-            this.notificationServiceBus.launchNotification(true, GLOBAL.MISSING_FIELDS_ERROR_MESSAGE);
+            this.notificationServiceBus.launchNotification(true, 'Sorry. The field(s) underneath are filled in incorrectly. END TIME');
             return;
         }
         if (this.bookingModel.interpreters_required < 2 && this.isMoreInterpreterNeeded()) {

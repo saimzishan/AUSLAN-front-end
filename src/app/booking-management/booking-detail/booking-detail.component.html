@@ -102,21 +102,9 @@
                   placeholder="DATE OF APPOINTMENT *" 
                   [readonlyInput]="isDisabledForOrgRepIndClient"
                   [(ngModel)]="bookingDate"
-                  [minDate]="miniDate" [maxDate]="maxiDate"
+                  [minDate]="minDate" [maxDate]="maxDate"
                   (click)="fireNotification($event)"
                   required #dpDate="ngModel" dateOnly="true" ></p-calendar>
-<!--           
-                <input
-                type="text"
-                [readonly]="isDisabledForOrgRepIndClient"
-                name='dpDate'
-                [(ngModel)]="date"
-                placeholder="DATE OF APPOINTMENT *"
-                (valueChanged)= 'dateSelection()'
-                (click)="fireNotification($event)"
-                ngui-datetime-picker
-                date-only="true"
-                required #dpDate="ngModel" /> -->
                 <span *ngIf="dpDate.touched && !dpDate.errors?.required;"
                       class="inline-icon inline-icon-valid valid"></span>
                 <span *ngIf="dpDate.touched && (dpDate.errors?.required);"
