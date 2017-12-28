@@ -15,6 +15,7 @@ import {
 import {BookingInterpreter} from '../../shared/model/contact.entity';
 import {BookingFilter} from '../../shared/model/booking-filter.interface';
 import {BA, BOOKING_NATURE} from '../../shared/model/booking-nature.enum';
+import {DatePipe} from '@angular/common';
 
 @Component({
     selector: 'app-booking-list',
@@ -31,7 +32,7 @@ export class BookingListComponent implements OnInit {
     @Input() p = 1;
     @Input() totalItems = 0;
 
-    constructor(public router: Router) {
+    constructor(public router: Router, private datePipe: DatePipe) {
         BA.loadItems();
     }
 
@@ -44,6 +45,8 @@ export class BookingListComponent implements OnInit {
                 break;
             }
         });
+        this.bookingFilter.date_from = this.datePipe.transform(Date.now(), 'yyyy-MM-dd');
+        this.filter('date_from', this.bookingFilter.date_from);
     }
 
     underScoreToSpaces(str: string) {

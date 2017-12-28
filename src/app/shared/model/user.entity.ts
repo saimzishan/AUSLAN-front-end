@@ -434,6 +434,7 @@ export class Interpreter extends User {
     public assignments_attributes = [];
     public availability_blocks_attributes: Array<AvailabilityBlock> = [];
     public interpreter_type = 'Metro';
+    public booking_office_notes = '';
 
     get user_type() {
         return 'Interpreter';

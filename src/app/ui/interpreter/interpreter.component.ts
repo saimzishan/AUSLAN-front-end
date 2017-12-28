@@ -2,7 +2,8 @@ import {Component, OnInit, Input} from '@angular/core';
 import {DatePipe} from '@angular/common';
 import {Router} from '@angular/router';
 import * as moment from 'moment';
-import {Interpreter} from '../../shared/model/user.entity';
+import {Interpreter, BookingOfficer, Administrator} from '../../shared/model/user.entity';
+import {GLOBAL} from '../../shared/global';
 
 @Component({
     selector: 'app-interpreter',
@@ -96,4 +97,10 @@ export class InterpreterComponent implements OnInit {
         }
 
     }
+
+    isUserAdminORBookOfficer(): Boolean {
+        return Boolean(GLOBAL.currentUser instanceof Administrator ||
+            GLOBAL.currentUser instanceof BookingOfficer) ;
+    }
+
 }
