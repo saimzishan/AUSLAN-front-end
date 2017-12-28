@@ -125,8 +125,7 @@
                 <td class="bookingID">
                     <div class="actions-container">
                         <span>{{booking.id | PrettyID}}</span>
-                        <span *ngIf="isCurrentUserAdminOrBookingOfficer() && !!selectedBookingModel.link_id"
-                              class="linkId">
+                        <span class="linkId" *ngIf="isCurrentUserAdminOrBookingOfficer() && !!booking.link_id">
                             <a>#{{booking.link_id}}</a>
                         </span>
                         <ul class="dropdown menu custom actions hidden-desktop" data-dropdown-menu>

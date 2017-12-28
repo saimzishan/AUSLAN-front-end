@@ -195,7 +195,7 @@ export class Booking {
         let o = new Object({
             id: this.id,
             link_id: this.link_id,
-            update_all_linked_bookings: this.update_all_linked_bookings,
+            update_all_linked_bookings: this.update_all_linked_bookings || false,
             state: _state,
             special_instructions: this.special_instructions,
             venue: this.venue.title,
