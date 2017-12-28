@@ -381,7 +381,7 @@ Feature: Booking Filter
     Then I click on my name
     And I click on logout
 
- @runThis
+ @ignoreThis
  Scenario: As a Booking Officer, I can create a booking for Organisational Representative with old date and I should be able to filter the bookings by today's date onward 
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials

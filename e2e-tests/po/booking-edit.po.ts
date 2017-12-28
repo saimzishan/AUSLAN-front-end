@@ -35,6 +35,7 @@ const READONLY_FIELDS = [
     'deaf_person_eaf',
     'deaf_person_name',
     'deaf_person_last_name',
+    'dpDate',
     'rdPreferredInterpreters',
     'rdBlockedInterpreters'
 ];
@@ -78,8 +79,9 @@ export class BookingEditPage extends PageObject {
         });
     }
     checkNonEditableFields = () => {
+        let dateTimeFields = ['dpEventDate','dpEventEndTime','dpDate'];
         READONLY_FIELDS.forEach((fieldName) => {
-            let ele = this.getElementByName(fieldName);
+            let ele = dateTimeFields.indexOf(fieldName) !== -1 ? this.getElementByCss('input[name='+fieldName+']') : this.getElementByName(fieldName);
             return ele.getAttribute('readonly').then(readonly => {
                 return ele.getAttribute('ng-reflect-is-disabled').then(disabled => {
                     return expect(disabled === 'true' || readonly === 'true').to.be.true;
