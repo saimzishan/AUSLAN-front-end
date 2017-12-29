@@ -388,8 +388,8 @@ Feature: Booking Filter
     And I am on the bookings page
     Then I can see that date_from is preseleted with current date
 
- @ignoreThis
- Scenario: As a Booking Officer, I can create a booking for Organisational Representative with old date and I should be able to filter the bookings by today's date onward 
+  @ignoreThis
+  Scenario: As a Booking Officer, I can create a booking for Organisational Representative with old date and I should be able to filter the bookings by today's date onward
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
     Then I am on the bookings page
