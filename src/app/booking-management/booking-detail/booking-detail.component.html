@@ -95,38 +95,63 @@
     <h4 class="text-center">BOOKING DETAILS</h4>
     <div class="row small-collapse">
       <div class="row-wrapper">
-        <div class=" medium-7 columns">
+          <div class=" medium-6 columns">
+              <div class="form-field">
+                <label>DATE OF APPOINTMENT *</label>
+                <p-calendar name='dpDate' 
+                  placeholder="DATE OF APPOINTMENT *" 
+                  [readonlyInput]="isDisabledForOrgRepIndClient"
+                  [(ngModel)]="bookingDate"
+                  [minDate]="minDate" [maxDate]="maxDate"
+                  (click)="fireNotification($event)"
+                  required #dpDate="ngModel" dateOnly="true" ></p-calendar>
+                <span *ngIf="dpDate.touched && !dpDate.errors?.required;"
+                      class="inline-icon inline-icon-valid valid"></span>
+                <span *ngIf="dpDate.touched && (dpDate.errors?.required);"
+                      class="inline-icon error">
+                  <span>Start Date is required</span>!
+                </span>
+              </div>
+            </div>
+
+        <div class=" medium-3 columns">
           <div class="form-field">
-            <label>START DATE & TIME *</label>
-            <input type='datetime-local'
-               [readonly]="isDisabledForOrgRepIndClient"
-               (change)="onStartTimeChanged()"
-               name='dpEventDate'
-               placeholder="DATE & Time OF APPOINTMENT *"
-               (click)="fireNotification($event)"
-               [(ngModel)]="bookingModel.venue.start_time_iso"
-               required #dpEventDate="ngModel"/>
+            <label>START TIME *</label>
+            <p-calendar  name='dpEventDate' 
+            [(ngModel)]="bookingStartTime" 
+            [readonlyInput]="isDisabledForOrgRepIndClient"
+            placeholder="STARTING TIME *"
+            [timeOnly]="true" hourFormat="12"
+            [stepMinute]="5"
+            required #dpEventDate="ngModel"></p-calendar>
             <span *ngIf="dpEventDate.touched && !dpEventDate.errors?.required;"
                   class="inline-icon inline-icon-valid valid"></span>
             <span *ngIf="dpEventDate.touched && (dpEventDate.errors?.required);"
                   class="inline-icon error">
-              <span>Start Date is required</span>!
+              <span>Start Time is required</span>!
             </span>
           </div>
         </div>
-
-        <div class="medium-5 columns">
+ 
+        <div class="medium-3 columns">
           <div class="form-field">
-            <label>END DATE & TIME *</label>
-            <input type='datetime-local' name='dpEventEndTime' [readonly]="isDisabledForOrgRepIndClient"
-               placeholder="ENDING TIME *" #dpEventEndTime="ngModel" (click)="fireNotification($event)"
-               [(ngModel)]="bookingModel.venue.end_time_iso"
-               required/>
+            <label>END TIME *</label>
+            <p-calendar  name='dpEventEndTime' 
+            [(ngModel)]="bookingEndTime" 
+            [readonlyInput]="isDisabledForOrgRepIndClient"
+            placeholder="ENDING TIME *"
+            [timeOnly]="true" hourFormat="12"
+            [stepMinute]="5"
+            required #dpEventEndTime="ngModel"></p-calendar>
             <span *ngIf="dpEventEndTime.touched && !dpEventEndTime.errors?.required;"
                   class="inline-icon inline-icon-valid valid"></span>
             <span *ngIf="dpEventEndTime.touched && (dpEventEndTime.errors?.required);"
                   class="inline-icon error">
-              <span>End Date is required</span>!
+              <span>End Time is required</span>!
+            </span>
+            <span *ngIf="(bookingEndTime < bookingStartTime)"
+                  class="inline-icon error">
+              <span>End time can't be before start time</span>!
             </span>
           </div>
         </div>

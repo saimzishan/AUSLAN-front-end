@@ -1,5 +1,4 @@
 <main>
-
     <section class="jobs">
         <table id="jobs-responsive" class="custom">
             <thead>
@@ -115,7 +114,7 @@
             </thead>
             <tbody>
             <tr [ngClass]="{'active': isSelectedBooking(booking.id)}"
-                *ngFor="let booking of bookingList | paginate: { itemsPerPage: 10, currentPage: p, totalItems: totalItems }"
+                *ngFor="let booking of bookingList | paginate: { itemsPerPage: 10, currentPage: p, totalItems: totalItems } let i = index"
                 (click)="setClickedRow(booking)">
                 <td>
                     <div class="checkbox">
@@ -126,6 +125,12 @@
                 <td class="bookingID">
                     <div class="actions-container">
                         <span>{{booking.id | PrettyID}}</span>
+                        <span class="linkId"
+                              id="{{'linkId_'+i}}"
+                              (click)="linkIdClicked('#'+booking.link_id); $event.stopPropagation();"
+                              *ngIf="isCurrentUserAdminOrBookingOfficer() && !!booking.link_id">
+                            <a>#{{booking.link_id}}</a>
+                        </span>
                         <ul class="dropdown menu custom actions hidden-desktop" data-dropdown-menu>
                             <li>
                                 <a href="javascript:void(0)"><i class="icon-more-icon"></i></a>
@@ -144,37 +149,43 @@
                 </td>
                 <td class="text-center">
                     <i class="status"
-                       [ngClass]="{
-    'icon-check-green': booking.status === 'green',
-    'status-ready-to-process': booking.status === 'red',
-   'status-allocated': booking.status === 'orange'
-   }"></i>
+                       [ngClass]="{'icon-check-green': booking.status === 'green', 'status-ready-to-process': booking.status === 'red', 'status-allocated': booking.status === 'orange'}">
+                    </i>
                 </td>
                 <td style="text-transform: capitalize">{{stateToString(booking.state)}}</td>
                 <td>
                     <div class="job-date">
-                                    <span><i class="icon-time hidden-desktop"></i>
-                                        <span><span>
-										{{booking.venue.start_time_iso | date:'shortTime'}} -
-										{{booking.venue.end_time_iso | date:'shortTime'}}</span><span>{{booking.venue.start_time_iso | date:'EEE d MMM yy'}}</span></span>
-                                                                            </span>
-
+                        <span>
+                            <i class="icon-time hidden-desktop"></i>
+                            <span>
+                                <span>
+                                    {{booking.venue.start_time_iso | date:'shortTime'}} -
+                                    {{booking.venue.end_time_iso | date:'shortTime'}}
+                                </span>
+                                <span>
+                                    {{booking.venue.start_time_iso | date:'EEE d MMM yy'}}
+                                </span>
+                            </span>
+                        </span>
                         <i *ngIf="isCurrentUserInvitedInterpreter(booking.interpreters)" class="icon-requested"></i>
                     </div>
                 </td>
                 <td>{{booking.client.organisation_name}}</td>
-                <td>{{booking.deaf_person.first_name + ' ' +
+                <td>
+                    {{booking.deaf_person.first_name +
+                    ' ' +
                     booking.deaf_person.last_name}}
                 </td>
                 <td>{{booking.venue.suburb}}</td>
                 <td class="truncated">
                     <ng-container *ngIf="booking.interpreters.length > 0;">
                         <span *ngFor="let user of didInterpreterAccepted(booking.interpreters)">
-                                    <b *ngIf="isCurrentUser(user.id); else sim_user_Block">
+                                    <strong *ngIf="isCurrentUser(user.id); else sim_user_Block">
                                         {{user?.first_name  + ' ' + user?.last_name}}
-                                    </b>
-                                    <ng-template
-                                            #sim_user_Block>{{user?.first_name  + ' ' + user?.last_name[0] + '.'}}</ng-template>
+                                    </strong>
+                                    <ng-template #sim_user_Block>
+                                        {{user?.first_name  + ' ' + user?.last_name[0] + '.'}}
+                                    </ng-template>
 									<br/>
 								</span>
                     </ng-container>
@@ -194,12 +205,24 @@
                         <li>
                             <a href="javascript:void(0)"><i class="icon-more-icon"></i></a>
                             <ul class="menu right-side green">
-                                <li><a [routerLink]="['/booking-management/' + booking.id + '/job-detail']"><i
-                                        class="icon-check-mobile"></i> Accept</a></li>
-                                <li><a [routerLink]="['/booking-management/' + booking.id + '/job-detail']"><i
-                                        class="icon-help"></i> Tentative</a></li>
-                                <li><a [routerLink]="['/booking-management/' + booking.id + '/job-detail']"><i
-                                        class="icon-decline"></i> Decline</a></li>
+                                <li>
+                                    <a [routerLink]="['/booking-management/' + booking.id + '/job-detail']">
+                                        <i class="icon-check-mobile"></i>
+                                        Accept
+                                    </a>
+                                </li>
+                                <li>
+                                    <a [routerLink]="['/booking-management/' + booking.id + '/job-detail']">
+                                        <i class="icon-help"></i>
+                                        Tentative
+                                    </a>
+                                </li>
+                                <li>
+                                    <a [routerLink]="['/booking-management/' + booking.id + '/job-detail']">
+                                        <i class="icon-decline"></i>
+                                        Decline
+                                    </a>
+                                </li>
                             </ul>
                         </li>
                     </ul>
@@ -208,13 +231,15 @@
             </tbody>
         </table>
         <div class="pagination">
-            <div  class="element element_inline" id="displayTxt" *ngIf="totalItems > 0">{{'Displaying ' + (((p - 1) * 10) + 1) + ' - '
-                + ( bookingList.length < 10 ? totalItems : (p * 10)) + ' of ' + totalItems + ' Booking' + (bookingList.length > 1 ? 's' : '')}}</div>
+            <div class="element element_inline" id="displayTxt" *ngIf="totalItems > 0">
+                {{'Displaying ' + (((p - 1) * 10) + 1) + ' - '
+                + ( bookingList.length < 10 ? totalItems : (p * 10)) + ' of ' + totalItems + ' Booking' +
+                (bookingList.length > 1 ? 's' : '')}}
+            </div>
             <div class="element element_inline">
                 <pagination-controls class="my-pagination" *ngIf="totalItems >= 10"
-                                 (pageChange)="getPage($event)"></pagination-controls>
+                                     (pageChange)="getPage($event)"></pagination-controls>
             </div>
         </div>
-
     </section>
 </main>

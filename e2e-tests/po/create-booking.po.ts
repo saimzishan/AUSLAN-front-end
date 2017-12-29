@@ -11,6 +11,7 @@ interface TestDateFormat {
 }
 
 export class BookingPage extends PageObject {
+    previousDate:boolean=false;
     list_of_object = {};
     browse = () => {
         return this.currentPath().then((currentPath) => {
@@ -194,28 +195,32 @@ export class BookingPage extends PageObject {
         });
     }
 
-    setStartEndTime = (field: string, date: string, time: string) => {
+    setStartEndTime = (field: string, time: string) => {
         let elementName = {
             'start': 'dpEventDate',
-            'end': 'dpEventEndTime',
-            'date_from': 'date_from',
-            'date_to': 'date_to'
+            'end': 'dpEventEndTime'
         }[field];
-        this.getElementByName(elementName).sendKeys(date);
-        this.getElementByName(elementName).sendKeys(protractor.Key.TAB);
-        this.getElementByName(elementName).sendKeys(time);
+        this.getElementByCss('input[name='+elementName+']').sendKeys(time);
     }
     setDateOnly = (field: string, date: TestDateFormat) => {
+        this.getElementByName(field).sendKeys(protractor.Key.BACK_SPACE);
         this.getElementByName(field).sendKeys(date.mm);
         this.getElementByName(field).sendKeys(date.dd);
         this.getElementByName(field).sendKeys(date.yy);
     }
-    createBooking = () => {
-        return this.createBookingWithTimeAndInterpreter('standard', '10:15AM', '11:15AM', '2');
+    setDate= (date: string) => {
+        let elementName = 'dpDate';
+        this.getElementByCss('input[name="dpDate"]').sendKeys(date);
     }
-
+    createBooking = () => {
+        return this.createBookingWithTimeAndInterpreter('standard', '10:15 AM', '11:15 AM', '2');
+    }
+    createBookingWithYesterdayDate = () => {
+        this.previousDate = true;
+        return this.createBookingWithTimeAndInterpreter('standard', '10:15 AM', '11:15 AM', '2');
+    }
     createBookingForPerth = () => {
-        return this.createBookingWithAddressTimeAndInterpreter('standard', '10:15AM', '11:15AM', '2');
+        return this.createBookingWithAddressTimeAndInterpreter('standard', '10:15 AM', '11:15 AM', '2');
     }
 
     selectClientAsBookbable = () => {
@@ -254,10 +259,10 @@ export class BookingPage extends PageObject {
         ].join('/');
     }
     createBookingWithTimeAndInterpreter = (standard: string, startTime: string, endTime: string, interpreterNum: string) => {
-        let date = new Date();
-        const dateToSend = this.getDateAfterNDays(7);
-        this.setStartEndTime('start', dateToSend, startTime);
-        this.setStartEndTime('end', dateToSend, endTime);
+        const dateToSend = this.previousDate ? this.getDateAfterNDays(-1) : this.getDateAfterNDays(7);
+        this.setDate(dateToSend);
+        this.setStartEndTime('start', startTime);
+        this.setStartEndTime('end', endTime);
         this.setStreetNumber('162');
         this.setElementsValueByName('address_street', 'Dave');
         this.setElementsValueByName('address_post_code', '3064');
@@ -299,8 +304,10 @@ export class BookingPage extends PageObject {
         this.getElementByName('deaf_person_eaf').sendKeys('123');
     }
     createBookingWithAddressTimeAndInterpreter = (standard: string, startTime: string, endTime: string, interpreterNum: string) => {
-        this.setStartEndTime('start', '12/12/2017', startTime);
-        this.setStartEndTime('end', '12/12/2017', endTime);
+        const dateToSend = this.getDateAfterNDays(7);
+        this.setDate(dateToSend);
+        this.setStartEndTime('start', startTime);
+        this.setStartEndTime('end', endTime);
         this.setUnitNumber('F-Space');
         this.setStreetNumber('18/27');
         this.setElementsValueByName('address_street', 'Market St Fremantle');
@@ -344,6 +351,7 @@ export class BookingPage extends PageObject {
         let hh = Number(14 + Number(hours)); // date.getHours();
         let dateString = [mm, dd, yy].join('/');
         let timeString = hh.toString() + ':00PM';
-        this.setStartEndTime(field, dateString, timeString);
+        this.setDate(dateString);
+        this.setStartEndTime(field, timeString);
     }
 }

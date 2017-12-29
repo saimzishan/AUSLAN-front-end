@@ -116,6 +116,7 @@ Feature: User Profile Management
     And I am on the bookings page
     When I click on my name in the top corner
     Then I will be taken to my individual profile page
+    And I can see the element with name 'interpreter_notes' is 'not visible'
 
   @runThis
 #  Show profile page

@@ -3,6 +3,7 @@ import {browser, by, element, $, $$, protractor} from 'protractor';
 import {expect} from '../config/helpers/chai-imports';
 import {User} from '../helper';
 import {BookingPage} from './create-booking.po';
+import { debug } from 'util';
 
 enum BookingTableHeaders {
     None, Empty, Job, Status, State, Date, Org,
@@ -167,7 +168,7 @@ export class BookingManagementPage extends PageObject {
         });
     }
 
-    private getFirstBookingID = () => {
+    private getFirstBookingTdText = (spanCss: string) => {
         let table = this.getElementByID('jobs-responsive');
         return table.isPresent().then(res => {
             expect(res).to.be.true;
@@ -175,9 +176,17 @@ export class BookingManagementPage extends PageObject {
             let tblRows = table.$$('tr');
             expect(tblRows.count()).to.eventually.be.greaterThan(0);
         }).then(() => {
-            let el = table.$$('tr:first-child td.bookingID > div > span');
+            let el = table.$$('tr:first-child td.bookingID > div > span' + spanCss);
             return el.getText();
         });
+    }
+
+    private getFirstBookingID = () => {
+        return this.getFirstBookingTdText(':first-child');
+    }
+
+    private getFirstBookingLinkID = () => {
+        return this.getFirstBookingTdText('.linkId');
     }
 
     atleastABookingExists = () => {
@@ -234,7 +243,9 @@ export class BookingManagementPage extends PageObject {
         value === 'empty' ? searchInput.click() : searchInput.sendKeys(value);
         return searchForm.submit();
     }
-
+    querySearchWithEmptyDate = () => {
+        this.getElementByName('date_from').sendKeys(protractor.Key.BACK_SPACE);
+    }
     // Adds a '0' in the start if the date < 10
     private prettyDate = (date: number|string): string => {
         date = date.toString();
@@ -259,12 +270,33 @@ export class BookingManagementPage extends PageObject {
         return this.booking.setDateOnly('date_to', dateTo);
     }
 
+    filterBookingByCurrentDate = () => {
+        let today = new Date();
+        let todayDate = {
+            mm: this.prettyDate(today.getMonth() + 1), //January is 0!
+            dd: this.prettyDate(today.getDate()),
+            yy: today.getFullYear().toString()
+        };
+        let datefrom = this.getElementByName('date_from');
+        datefrom.getAttribute('value').then((value)=> {
+        return expect(value).to.be.eq(todayDate.yy + '-' + todayDate.mm + '-' + todayDate.dd);
+    });
+    }
+
     bookingExistsWithId = () => {
         let queriedID = this.queryIdBooking;
         let tblRows = this.getAllElementByCSS('table tbody tr');
         expect(tblRows.count()).to.eventually.be.equal(1);
-        return this.getFirstBookingID().then((txt) => {
+        return this.getFirstBookingID().then(txt => {
             return expect(queriedID).to.be.eq(txt[0]);
+        });
+    }
+    bookingExistsWithLinkId = () => {
+        const tblRows = this.getAllElementByCSS('table tbody tr');
+        expect(tblRows.count()).to.eventually.be.equal(1);
+        return this.getFirstBookingLinkID().then(txt => {
+            const isTextLinkId = txt.length > 0 && !!txt[0].match(/#\d+/);
+            return expect(isTextLinkId).to.be.true;
         });
     }
     bookingExistsWithClientName = (client_name: string) => {
