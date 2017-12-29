@@ -534,7 +534,7 @@ Feature: Booking Admin Management
       Then I will close the file upload
       And I click on checkbox name 'tnc'
       And I click the create booking button
-      And If I am shown a popup message 'This booking is not within the standard booking hours (8AM - 6PM). Do you still want to create booking?', I approve it
+      And If I am shown a popup, I approve it
       Then I should get a valid booking update notification
       Then I am on the individual booking page
       Then I click on Bookings
