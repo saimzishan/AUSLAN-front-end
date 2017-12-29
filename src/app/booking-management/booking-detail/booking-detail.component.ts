@@ -18,13 +18,17 @@ import {IndividualClient, OrganisationalRepresentative, Interpreter, BookingOffi
 import {PopupComponent} from '../../shared/popup/popup.component';
 import {Contact} from '../../shared/model/contact.entity';
 import {UserService} from '../../api/user.service';
+import * as moment from 'moment';
 import {isNullOrUndefined, debug} from 'util';
 import {AddressComponent} from '../../ui/address/address.component';
 import * as momentTimeZone from 'moment-timezone';
 const _ONE_HOUR = 1000 /*milliseconds*/
     * 60 /*seconds*/
     * 60 /*minutes*/;
-
+interface ModalOptions {
+    cancelTitle: string;
+    okTitle: string;
+}
 @Component({
     selector: 'app-booking-detail',
     templateUrl: './booking-detail.component.html',
@@ -70,6 +74,11 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     preferAllocSub: any;
     oldInterpreterPreference = [];
     isDisabledForAdmin: boolean;
+    bookingDate: string;
+    minDate: Date;
+    maxDate: Date;
+    bookingStartTime: Date;
+    bookingEndTime: Date;
     isDuplicate: boolean;
     @ViewChild('addressForm') private bookingAddress: AddressComponent;
 
@@ -100,10 +109,9 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 this.oldDocuments = jsonData.documents_attributes;
                 this.oldInterpreterPreference = jsonData.preference_allocations_attributes;
                 this.bookingModel.documents_attributes = [];
-                this.bookingModel.venue.start_time_iso =
-                    this.datePipe.transform(this.bookingModel.venue.start_time_iso, 'yyyy-MM-ddTHH:mm:ss');
-                this.bookingModel.venue.end_time_iso =
-                    this.datePipe.transform(this.bookingModel.venue.end_time_iso, 'yyyy-MM-ddTHH:mm:ss');
+                this.bookingDate = this.datePipe.transform(this.bookingModel.venue.start_time_iso, 'MM/dd/yyyy');
+                this.bookingStartTime = new Date(this.bookingModel.venue.start_time_iso);
+                this.bookingEndTime = new Date(this.bookingModel.venue.end_time_iso);
                 this.natureOfApptChange(null);
             } else {
                 this.bookingModel = new Booking();
@@ -120,7 +128,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             }
         });
     }
-
     private isCurrentUserContact(): boolean {
         if (this.forEdit()) {
             return this.bookingModel.client.email === this.bookingModel.primaryContact.email
@@ -141,8 +148,12 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         return (item instanceof OrganisationalRepresentative ?
             (item.organisation_name.toUpperCase()  + ' - ') : '') + item.first_name + ' ' + item.last_name;
     }
-    onStartTimeChanged() {
-        this.bookingModel.venue.end_time_iso = this.bookingModel.venue.start_time_iso;
+    timeFormatting() {
+        let selectedDate = this.datePipe.transform(this.bookingDate, 'yyyy-MM-dd');
+        let startTime = moment(this.bookingStartTime, 'hh:mm A').format('HH:mm:ss');
+        let endTime = moment(this.bookingEndTime, 'hh:mm A').format('HH:mm:ss');
+        this.bookingModel.venue.start_time_iso = selectedDate + 'T' + startTime;
+        this.bookingModel.venue.end_time_iso = selectedDate + 'T' + endTime;
     }
     natureOfApptChange($event) {
         let val: BOOKING_NATURE = <BOOKING_NATURE> BOOKING_NATURE[this.bookingModel.raw_nature_of_appointment];
@@ -181,6 +192,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                  this.onBookingAddressChange();
             }
         }
+      this.dateRestrictions();
     }
 
     getNamedTimeZone(state: string, postCode: string) {
@@ -221,6 +233,17 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         }
         return namedTimeZone;
     }
+     dateRestrictions() {
+        let today = new Date();
+        let month = today.getMonth();
+        let year = today.getFullYear();
+        let nextMonth = (month === 11) ? 0 : month + 1;
+        let nextYear = (nextMonth === 0) ? year + 5 : year;
+        this.minDate = new Date();
+        this.minDate.setDate(today.getDate());
+        this.maxDate = new Date();
+        this.maxDate.setFullYear(nextYear);
+     }
 
     public onClientSelectionChange() {
         let user = this.isUserAdminORBookOfficer ? this.getBookableUser() : GLOBAL.currentUser;
@@ -411,7 +434,10 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.notificationServiceBus.launchNotification(true, GLOBAL.MISSING_FIELDS_ERROR_MESSAGE);
             return;
         }
-
+        if (this.bookingEndTime < this.bookingStartTime) {
+            this.notificationServiceBus.launchNotification(true, 'Sorry. The field(s) underneath are filled in incorrectly. END TIME');
+            return;
+        }
         if (this.bookingModel.interpreters_required < 2 && this.isMoreInterpreterNeeded()) {
             let message = `This booking might require more than 1 interpreter. You've only requested 1 interpreter.
                             Are you sure you want to create this booking?` ;
@@ -442,11 +468,10 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     proceedWithBooking() {
         if (this.isBookingTimeInNonStandardHours()) {
             let message = `This booking is not within the standard booking hours (8AM - 6PM).
-                            Do you still want to create booking?` ;
-            let title   = 'NON-STANDARD HOURS WARNING';
+                            Do you still want to create booking?`;
+            let title = 'NON-STANDARD HOURS WARNING';
             this.createModal(title, message);
             this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
-
                 if (result) {
                     if (this.shouldEdit.length > 0 && this.shouldEdit === 'edit') {
                         this.updateBooking();
@@ -470,9 +495,10 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     calculateTimeDiff() {
-        let startDate = new Date(this.bookingModel.venue.start_time_iso);
-        let endDate = new Date(this.bookingModel.venue.end_time_iso);
-        let timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
+        let startTime = moment(this.bookingStartTime, 'hh:mm A').format('HH:mm:ss');
+        let endTime = moment(this.bookingEndTime, 'hh:mm A').format('HH:mm:ss');
+
+        let timeDiff = Math.abs(moment.duration(endTime).asMilliseconds() - moment.duration(startTime).asMilliseconds());
 
         return timeDiff;
     }
@@ -481,22 +507,22 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
           return this.calculateTimeDiff() >= _ONE_HOUR * 12;
     }
 
-    createModal(title: any, message: any) {
+    createModal(title: string, message: string, options?: ModalOptions) {
         let config: MdDialogConfig = {
             disableClose: true
         };
         config.viewContainerRef = this.viewContainerRef;
         this.dialogRef = this.dialog.open(PopupComponent, config);
         this.dialogRef.componentInstance.title = title;
-        this.dialogRef.componentInstance.cancelTitle = 'BACK';
-        this.dialogRef.componentInstance.okTitle = 'CREATE';
+        this.dialogRef.componentInstance.cancelTitle = (options && options.cancelTitle) || 'BACK';
+        this.dialogRef.componentInstance.okTitle = (options && options.okTitle) || 'CREATE';
         this.dialogRef.componentInstance.popupMessage = message;
 
     }
 
     private isBookingTimeInNonStandardHours() {
-        let startDate = new Date(this.bookingModel.venue.start_time_iso);
-        let endDate = new Date(this.bookingModel.venue.end_time_iso);
+        let startDate = new Date(this.bookingStartTime);
+        let endDate = new Date(this.bookingEndTime);
 
         return startDate.getHours() < 6 || (
             (endDate.getHours() === 20 && (endDate.getMinutes() > 0
@@ -504,6 +530,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     createBooking() {
+        this.timeFormatting();
         if (!this.bookingModel.bookable_id) {
             this.bookingModel.bookable_id = GLOBAL.currentUser.id;
             this.bookingModel.bookable_type = GLOBAL.currentUser.type;
@@ -539,7 +566,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.dialogRef.componentInstance.cancelTitle = 'Back';
             this.dialogRef.componentInstance.okTitle = 'Yes';
             this.dialogRef.componentInstance.popupMessage =
-                `Interpreter(s) have been/is allocated for this job. You're charging important fields of the booking.
+                `Interpreter(s) have been/is allocated for this job. You're changing important fields of the booking.
                  Do you have confirmation from the interpreter(s) that these changes are OK?`;
 
             this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
@@ -558,12 +585,12 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             return;
         } else {
             this.spinnerService.requestInProcess(true);
-            let bookingID = this.bookingModel.id;
+            const bookingID = this.bookingModel.id;
 
             this.deleteDocuments.forEach(element => {
                 this.bookingModel.documents_attributes.push(element);
             });
-
+            this.timeFormatting();
             this.bookingService.updateBooking(bookingID, this.bookingModel)
                 .subscribe((res: any) => {
                         if (res.status === 204 && res.ok === true) {
@@ -723,14 +750,19 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     isImportantFieldsChanged() {
-        return (this.bookingModel.venue.start_time_iso !== this.datePipe.transform(this.oldBookingModel.start_time, 'yyyy-MM-ddTHH:mm:ss'))
-            || (this.bookingModel.venue.end_time_iso !== this.datePipe.transform(this.oldBookingModel.end_time, 'yyyy-MM-ddTHH:mm:ss'))
+        let selectedDate = this.datePipe.transform(this.bookingDate, 'yyyy-MM-dd');
+        let startTime = moment(this.bookingStartTime, 'hh:mm A').format('HH:mm:ss');
+        let endTime = moment(this.bookingEndTime, 'hh:mm A').format('HH:mm:ss');
+
+        return ((selectedDate !== this.datePipe.transform(this.oldBookingModel.start_time, 'yyyy-MM-dd'))
+            || (startTime !== moment(this.oldBookingModel.start_time, 'hh:mm A').format('HH:mm:ss'))
+            || (endTime !== moment(this.oldBookingModel.end_time, 'hh:mm A').format('HH:mm:ss'))
             || (this.bookingModel.raw_nature_of_appointment !== this.oldBookingModel.nature_of_appointment)
             || (this.bookingModel.specific_nature_of_appointment !== this.oldBookingModel.specific_nature_of_appointment)
             || (this.bookingModel.venue.street_name !== this.oldBookingModel.address_attributes.street_name)
             || (this.bookingModel.venue.state !== this.oldBookingModel.address_attributes.state)
             || (this.bookingModel.venue.suburb !== this.oldBookingModel.address_attributes.suburb)
-            || (this.bookingModel.venue.post_code !== this.oldBookingModel.address_attributes.post_code);
+            || (this.bookingModel.venue.post_code !== this.oldBookingModel.address_attributes.post_code));
     }
 
     deepCopy(oldObj: any) {

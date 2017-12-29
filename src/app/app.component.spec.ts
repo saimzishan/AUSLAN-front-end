@@ -71,6 +71,7 @@ import {InterpreterPopupComponent} from './shared/ui/interpreter-popup/interpret
 import {PreferedAllocationService} from './shared/prefered-allocation.service';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {RemoveSpacePipe} from './shared/pipe/remove-space.pipe';
+import {CalendarModule as PrimeNgCalendarModule} from 'primeng/primeng';
 
 describe('AppComponent', () => {
   beforeEach(() => {
@@ -91,7 +92,7 @@ describe('AppComponent', () => {
       ],
       imports: [CustomFormsModule, NgxPaginationModule, FileuploaderModule, RouterTestingModule, Md2Module.forRoot(),
       MaterialModule, FormsModule, SimpleNotificationsModule.forRoot(), MobileFooterModule,
-        HttpModule, CalendarModule
+        HttpModule, CalendarModule, PrimeNgCalendarModule
       ],  providers: [ NotificationServiceBus,
             PreferedAllocationService,
          UserNameService, Title, SpinnerService, UserService, {provide: APP_BASE_HREF, useValue : '/' }, {

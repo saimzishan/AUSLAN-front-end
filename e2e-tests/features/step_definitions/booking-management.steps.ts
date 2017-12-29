@@ -22,6 +22,7 @@ defineSupportCode(({Given, Then, When}) => {
     Given(/^The booking has status '(.*)'$/, Heroku.updateBookingWithStatus);
     Given(/^The booking has assignment category '(.*)'$/, Heroku.updateBookingWithCategory);
     Given(/^There exist (\d+) bookings$/, Heroku.createBulkBookings);
+    Given(/^There exist (\d+) bookings? with link id$/, Heroku.createBulkBookingsWithLinkId);
     Given(/^There exist (\d+) admins/, Heroku.createBulkAdministrator);
     Given(/^I have preloaded bookings with different org values$/, Heroku.preloadOrgBookings);
     Given(/^One booking has client name as '(.*)'$/, Heroku.updateBookingWithClientName)
@@ -117,6 +118,7 @@ defineSupportCode(({Given, Then, When}) => {
 
     Then(/^I (.*) see the (.*) field$/, createBookingPO.checkTheFieldExist);
     Then(/^I see one row with the booking id$/, bookingManagementPO.bookingExistsWithId);
+    Then(/^I see one row with the link id$/, bookingManagementPO.bookingExistsWithLinkId);
     Then(/^I see one row with client name '(.*)'$/, bookingManagementPO.bookingExistsWithClientName);
     Then(/^I see one row with client last name '(.*)'$/, bookingManagementPO.bookingExistsWithClientLastName);
     Then(/^I see one row with interpreter first name '(.*)'$/, bookingManagementPO.bookingExistsWithInterpreterFirstName);
@@ -130,6 +132,7 @@ defineSupportCode(({Given, Then, When}) => {
     Then(/^I should not be able to edit other fields$/, bookingEditPO.checkNonEditableFields);
     Then(/^I see an option '(.*)' in '(.*)' dropdown$/, createBookingPO.optionExistsInDropDown);
     Then(/^I should see the value under (.*) column as '(.*)'$/, bookingJobPO.checkTableDetails);
+    Then(/^I should (not)?\s?see the link id in booking details$/, bookingJobPO.checkLinkIdInTableDetails);
     Then(/^I note the value under (.*) column$/, bookingJobPO.noteTableDetails);
     Then(/^The value under the (.*) column is the same as I noted above$/, bookingJobPO.checkNotedTableDetails);
     Then(/^I should\s?(not)? see the attachment icons under Attached column$/, bookingJobPO.checkAttachmentIcons);
