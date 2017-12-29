@@ -105,7 +105,10 @@ defineSupportCode(({Given, Then, When}) => {
     When(/^I query search with '(.*)'$/, bookingManagementPO.querySearchWith);
     When(/^I query search with empty date$/, bookingManagementPO.querySearchWithEmptyDate);
     When(/^I can see that date_from is preseleted with current date$/, bookingManagementPO.filterBookingByCurrentDate);
-    
+    When(/^I empty the search field '(.*)'$/, bookingManagementPO.emptyTheField);
+
+    When(/^I click out of the text box$/, bookingManagementPO.clickOutSide);
+
     Then(/^All required booking fields should be filled$/, bookingEditPO.checkValueInAllRequiredFields);
 
     Then(/^The cell of (.*) will be populated with (.*)$/, createBookingPO.checkTheDropDown);
