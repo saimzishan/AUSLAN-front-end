@@ -21,7 +21,6 @@ import {UserService} from '../../api/user.service';
 import * as moment from 'moment';
 import {isNullOrUndefined, debug} from 'util';
 import {AddressComponent} from '../../ui/address/address.component';
-import * as momentTimeZone from 'moment-timezone';
 const _ONE_HOUR = 1000 /*milliseconds*/
     * 60 /*seconds*/
     * 60 /*minutes*/;
@@ -152,8 +151,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         let selectedDate = this.datePipe.transform(this.bookingDate, 'yyyy-MM-dd');
         let startTime = moment(this.bookingStartTime, 'hh:mm A').format('HH:mm:ss');
         let endTime = moment(this.bookingEndTime, 'hh:mm A').format('HH:mm:ss');
-        this.bookingModel.venue.start_time_iso = selectedDate + 'T' + startTime;
-        this.bookingModel.venue.end_time_iso = selectedDate + 'T' + endTime;
+        this.bookingModel.venue.start_time_iso = this.bookingModel.utcToBookingTimeZone(selectedDate + 'T' + startTime);
+        this.bookingModel.venue.end_time_iso = this.bookingModel.utcToBookingTimeZone(selectedDate + 'T' + endTime);
     }
     natureOfApptChange($event) {
         let val: BOOKING_NATURE = <BOOKING_NATURE> BOOKING_NATURE[this.bookingModel.raw_nature_of_appointment];
@@ -193,45 +192,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             }
         }
       this.dateRestrictions();
-    }
-
-    getNamedTimeZone(state: string, postCode: string) {
-        let namedTimeZone;
-        if (postCode === '2880') { // Broken Hill exception
-            namedTimeZone = 'Australia/Adelaide';
-            return namedTimeZone;
-        }
-
-        switch (state) {
-            case 'ACT':
-                namedTimeZone = 'Australia/Canberra';
-                break;
-            case 'NSW':
-                namedTimeZone = 'Australia/Sydney';
-                break;
-            case 'QLD':
-                namedTimeZone = 'Australia/Brisbane';
-                break;
-            case 'SA':
-                namedTimeZone = 'Australia/Adelaide';
-                break;
-            case 'TAS':
-                namedTimeZone = 'Australia/Hobart';
-                break;
-            case 'VIC':
-                namedTimeZone = 'Australia/Melbourne';
-                break;
-            case 'WA':
-                namedTimeZone = 'Australia/Perth';
-                break;
-            case 'NT':
-                namedTimeZone = 'Australia/Darwin';
-                break;
-            default:
-                namedTimeZone = '';
-                break;
-        }
-        return namedTimeZone;
     }
      dateRestrictions() {
         let today = new Date();
@@ -419,8 +379,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
       Calling this method will create a new booking
     */
     public onCreateBooking(form: FormGroup, addressForm: any, billingForm: any, uploader: FileUploader) {
-        let timeZone = this.getNamedTimeZone(this.bookingModel.venue.state, this.bookingModel.venue.post_code.toString());
-        let temp = momentTimeZone(this.bookingModel.venue.start_time_iso).tz(timeZone).format('YYYY-MM-DDTHH:mm:ss');
 
         if (addressForm.isTravelCostApplicable && !form.value.travel_cost_applicable) {
             this.notificationServiceBus.launchNotification(true, 'Travel cost must be applicable as your booking distance is more than 40 kms');
