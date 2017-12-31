@@ -212,12 +212,12 @@ defineSupportCode(({Given, When, Then}) => {
             .isPresent()
             .then((presence: boolean) => {
                 if (presence) {
-                    return showPopupWithMessage(message)
-                        .then((popup) => {
-                            if (popup) {
-                                clickOnBtnByName('yesBtn');
-                            }
-                        });
+                    let elm = page.getElementByCss('app-popup main > div > p');
+                    return elm.getText().then(text => {
+                        if (text === message) {
+                            clickOnBtnByName('yesBtn');
+                        }
+                    });
                 }
             });
     }
