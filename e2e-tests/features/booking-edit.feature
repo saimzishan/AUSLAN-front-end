@@ -39,7 +39,9 @@ Feature: Edit Booking
     When I change the street number to 154
     And I click on checkbox name 'tnc'
     And I click on BUTTON 'SAVE'
-    And If I am shown a popup, I approve it
+    And If I am shown a popup message 'This booking is not within the standard booking hours (8AM - 6PM). Do you still want to create booking?', I approve it
+    Then I wait for 1200 milli-seconds
+    Then If I am shown a popup message 'Would you like to save these changes for all bookings or only for this one?', I approve it
     Then I should get a valid booking update notification
 
   @runThis
