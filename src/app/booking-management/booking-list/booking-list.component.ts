@@ -141,6 +141,8 @@ export class BookingListComponent implements OnInit {
     }
 
     filter(field: string, value: string) {
+        value = (field === 'date_from') ? value + '+11:00' :
+                                         (field === 'date_to') ? value + '+8:00' : value;
         this.bookingFilter[field] = this.formatterValueFor(field, value);
         for (let k in this.bookingFilter) {
             if (this.bookingFilter.hasOwnProperty(k)) {
