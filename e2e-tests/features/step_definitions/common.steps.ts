@@ -226,10 +226,11 @@ defineSupportCode(({Given, When, Then}) => {
 
     function approveIfPopup() {
         let popup = page.getElementByCss('app-popup');
-        popup.isPresent().then(presence => {
+        return popup.isPresent().then(presence => {
             if (presence) {
                 clickOnBtnByName('yesBtn');
             }
+            return presence;
         });
     }
 
@@ -450,6 +451,17 @@ defineSupportCode(({Given, When, Then}) => {
                     return expect(currentUrl).to.equal(newPath.join('/'));
                 }));
             });
+        });
+    }
+
+    Then(/^If I am shown popups, I approve all of them$/, approveAllPopups);
+    function approveAllPopups() {
+        return approveIfPopup().then(presence => {
+            if (presence) {
+                browser.sleep(1200).then(() => {
+                    approveAllPopups();
+                });
+            }
         });
     }
 });
