@@ -178,7 +178,7 @@
                 </td>
                 <td>{{booking.venue.suburb}}</td>
                 <td class="truncated">
-                    <ng-container *ngIf="booking.interpreters.length > 0;">
+                    <ng-container *ngIf="booking.interpreters_required == 2 && booking.interpreters.length > 0;">
                         <span *ngFor="let user of didInterpreterAccepted(booking.interpreters)">
                                     <strong *ngIf="isCurrentUser(user.id); else sim_user_Block">
                                         {{user?.first_name  + ' ' + user?.last_name}}
@@ -190,7 +190,9 @@
 								</span>
                     </ng-container>
 
-                    <span *ngIf="didInterpreterAccepted(booking.interpreters).length <1 ;">To be filled</span>
+                    <span *ngIf="booking.interpreters_required >= 3 !== booking.interpreters.length  ;">Need to be filled ({{booking.interpreters.length }}/{{booking.interpreters_required}})</span>
+                    <span *ngIf="booking.interpreters_required === booking.interpreters.length  ;">Multiple ({{booking.interpreters.length }}/{{booking.interpreters_required}})</span>
+                    
                 </td>
                 <td class="truncated">
                     <ng-container *ngIf="booking.documents_attributes.length > 0">
