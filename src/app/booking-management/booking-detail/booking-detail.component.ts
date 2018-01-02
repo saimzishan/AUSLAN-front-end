@@ -196,7 +196,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
 
     dateRestrictions() {
         let today = new Date();
-        let month = today.getMonth();
         let year = today.getFullYear();
         this.minDate = new Date();
         this.minDate.setDate(today.getDate());
