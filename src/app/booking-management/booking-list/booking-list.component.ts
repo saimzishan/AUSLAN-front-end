@@ -141,15 +141,21 @@ export class BookingListComponent implements OnInit {
     }
 
     filter(field: string, value: string) {
-        value = (field === 'date_from') ? value + '+11:00' :
-                                         (field === 'date_to') ? value + '+8:00' : value;
         this.bookingFilter[field] = this.formatterValueFor(field, value);
+        let filterValue;
         for (let k in this.bookingFilter) {
             if (this.bookingFilter.hasOwnProperty(k)) {
-                this.filterParams.set('filter[' + k + ']', this.bookingFilter[k]);
+                filterValue = this.bookingFilter[k];
+                filterValue = (k === 'date_from') ? filterValue + '+11:00' :
+                                                    (k === 'date_to') ? filterValue.replace(/\+.*/, '') + '+8:00' : filterValue;
+
+                this.filterParams.set('filter[' + k + ']', filterValue);
             }
         }
         GLOBAL._filterVal = this.filterParams;
+        if (this.bookingFilter.hasOwnProperty('date_to')) {
+            this.bookingFilter.date_to = this.bookingFilter.date_to.replace(/\+.*/, '');
+        }
         this.onBookingFilter.emit();
     }
 
