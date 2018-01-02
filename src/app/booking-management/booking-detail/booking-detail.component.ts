@@ -194,17 +194,14 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
       this.dateRestrictions();
     }
 
-     dateRestrictions() {
+    dateRestrictions() {
         let today = new Date();
-        let month = today.getMonth();
         let year = today.getFullYear();
-        let nextMonth = (month === 11) ? 0 : month + 1;
-        let nextYear = (nextMonth === 0) ? year + 5 : year;
         this.minDate = new Date();
         this.minDate.setDate(today.getDate());
         this.maxDate = new Date();
-        this.maxDate.setFullYear(nextYear);
-     }
+        this.maxDate.setFullYear(year + 5);
+    }
 
     public onClientSelectionChange() {
         let user = this.isUserAdminORBookOfficer ? this.getBookableUser() : GLOBAL.currentUser;
