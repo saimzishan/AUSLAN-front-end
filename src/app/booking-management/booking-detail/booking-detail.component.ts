@@ -193,14 +193,15 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         }
       this.dateRestrictions();
     }
-     dateRestrictions() {
+
+    dateRestrictions() {
         let today = new Date();
         let year = today.getFullYear();
         this.minDate = new Date();
         this.minDate.setDate(today.getDate());
         this.maxDate = new Date();
         this.maxDate.setFullYear(year + 5);
-     }
+    }
 
     public onClientSelectionChange() {
         let user = this.isUserAdminORBookOfficer ? this.getBookableUser() : GLOBAL.currentUser;
@@ -429,7 +430,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
                 if (result) {
                     if (this.shouldEdit.length > 0 && this.shouldEdit === 'edit') {
-                        this.updateBooking();
+                        this.updateLinkedBookings();
                     } else {
                         this.createBooking();
                     }
@@ -437,7 +438,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             });
         } else {
             if (this.shouldEdit.length > 0 && this.shouldEdit === 'edit') {
-                this.updateBooking();
+                this.updateLinkedBookings();
             } else {
                 this.createBooking();
             }
@@ -508,6 +509,20 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                     this.notificationServiceBus.launchNotification(true,
                         'Error occured on server side. ' + errors.statusText + ' ' + JSON.stringify(e || e.errors));
                 });
+    }
+
+    updateLinkedBookings() {
+        if (this.isUserAdminORBookOfficer && !!this.bookingModel.link_id) {
+            const message = 'Would you like to save these changes for all bookings or only for this one?';
+            const title = 'Change all bookings?';
+            this.createModal(title, message, {okTitle: 'Update only this booking', cancelTitle: 'Update all bookings'});
+            this.dialogSub = this.dialogRef.afterClosed().subscribe(updateOnlyThisBooking => {
+                this.bookingModel.update_all_linked_bookings = !updateOnlyThisBooking;
+                this.updateBooking();
+            });
+        } else {
+            this.updateBooking();
+        }
     }
 
     updateBooking() {
