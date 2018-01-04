@@ -14,20 +14,23 @@ import {FileUploader} from 'ng2-file-upload';
 import {Address} from '../../shared/model/venue.entity';
 import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
 import {PreferedAllocationService} from '../../shared/prefered-allocation.service';
-import {IndividualClient, OrganisationalRepresentative, Interpreter, BookingOfficer, Administrator , UserFactory} from '../../shared/model/user.entity';
+import {IndividualClient, OrganisationalRepresentative, Interpreter, BookingOfficer, Administrator, UserFactory} from '../../shared/model/user.entity';
 import {PopupComponent} from '../../shared/popup/popup.component';
 import {Contact} from '../../shared/model/contact.entity';
 import {UserService} from '../../api/user.service';
 import * as moment from 'moment';
 import {isNullOrUndefined, debug} from 'util';
 import {AddressComponent} from '../../ui/address/address.component';
+
 const _ONE_HOUR = 1000 /*milliseconds*/
     * 60 /*seconds*/
     * 60 /*minutes*/;
+
 interface ModalOptions {
     cancelTitle: string;
     okTitle: string;
 }
+
 @Component({
     selector: 'app-booking-detail',
     templateUrl: './booking-detail.component.html',
@@ -127,6 +130,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             }
         });
     }
+
     private isCurrentUserContact(): boolean {
         if (this.forEdit()) {
             return this.bookingModel.client.email === this.bookingModel.primaryContact.email
@@ -135,6 +139,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             return true;
         }
     }
+
     private isCurrentUserClient(): boolean {
         if (this.forEdit()) {
             return this.bookingModel.deaf_person.email === this.bookingModel.primaryContact.email
@@ -143,10 +148,12 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             return true;
         }
     }
+
     getOrgName(item) {
         return (item instanceof OrganisationalRepresentative ?
-            (item.organisation_name.toUpperCase()  + ' - ') : '') + item.first_name + ' ' + item.last_name;
+            (item.organisation_name.toUpperCase() + ' - ') : '') + item.first_name + ' ' + item.last_name;
     }
+
     timeFormatting() {
         let selectedDate = this.datePipe.transform(this.bookingDate, 'yyyy-MM-dd');
         let startTime = moment(this.bookingStartTime, 'hh:mm A').format('HH:mm:ss');
@@ -154,6 +161,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         this.bookingModel.venue.start_time_iso = selectedDate + 'T' + startTime;
         this.bookingModel.venue.end_time_iso = selectedDate + 'T' + endTime;
     }
+
     natureOfApptChange($event) {
         let val: BOOKING_NATURE = <BOOKING_NATURE> BOOKING_NATURE[this.bookingModel.raw_nature_of_appointment];
         this.specific_appointment_types = BA.DISSCUSSION_ITEM[BOOKING_NATURE[val]];
@@ -170,7 +178,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         if (GLOBAL.currentUser !== undefined) {
-            this.isDisabledForOrgRepIndClient = Boolean(this.isUserOrgRepORIndClientTemp() && this.forEdit()) ;
+            this.isDisabledForOrgRepIndClient = Boolean(this.isUserOrgRepORIndClientTemp() && this.forEdit());
             this.isUserAdminORBookOfficer = <boolean> this.checkUserAdminORBookOfficer();
             this.isDisabledForAdmin = (this.forEdit() && !this.bookingModel.created_by_admin);
             this.currentUserIsContact = this.isCurrentUserContact();
@@ -188,30 +196,29 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 this.oldBookingModel = this.deepCopy(this.bookingModel);
             }
             if (!this.forEdit() && !this.isDuplicate) {
-                 this.onBookingAddressChange();
+                this.onBookingAddressChange();
             }
         }
-      this.dateRestrictions();
+        this.dateRestrictions();
     }
 
-     dateRestrictions() {
+    dateRestrictions() {
         let today = new Date();
-        let month = today.getMonth();
         let year = today.getFullYear();
         this.minDate = new Date();
         this.minDate.setDate(today.getDate());
         this.maxDate = new Date();
         this.maxDate.setFullYear(year + 5);
-     }
+    }
 
     public onClientSelectionChange() {
         let user = this.isUserAdminORBookOfficer ? this.getBookableUser() : GLOBAL.currentUser;
         if (user) {
             ['first_name', 'last_name', 'email', 'mobile_number', 'ndis_id'].forEach((field) => {
-                let currentUserFieldMap = { mobile_number: 'mobile' };
+                let currentUserFieldMap = {mobile_number: 'mobile'};
                 let currentUserField = currentUserFieldMap[field] || field;
                 let value = this.currentUserIsClient ? user[currentUserField] : (this.bookingModel.deaf_person[field] || '');
-                let mapForNsid = { ndis_id: 'eaf' };
+                let mapForNsid = {ndis_id: 'eaf'};
                 field = mapForNsid[field] || field;
                 this.bookingModel.deaf_person[field] = value;
             });
@@ -222,7 +229,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         let user = this.isUserAdminORBookOfficer ? this.getBookableUser() : GLOBAL.currentUser;
         if (user) {
             ['first_name', 'last_name', 'email', 'mobile_number'].forEach((field) => {
-                let currentUserFieldMap = { mobile_number: 'mobile' };
+                let currentUserFieldMap = {mobile_number: 'mobile'};
                 let currentUserField = currentUserFieldMap[field] || field;
                 let value = this.currentUserIsContact ? user[currentUserField] : '';
                 this.bookingModel.primaryContact[field] = value;
@@ -235,7 +242,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         if (user) {
             ['unit_number', 'street_number', 'street_name', 'suburb', 'state', 'post_code'].forEach((field) => {
                 let value = this.rdBookingAddress ? (this.isUserOrgRep() ?
-                            user.organisation_attributes.address_attributes[field] : this.isIndClient() ? user.address_attributes[field] : '') : '';
+                    user.organisation_attributes.address_attributes[field] : this.isIndClient() ? user.address_attributes[field] : '') : '';
                 this.bookingModel.venue[field] = value;
             });
             // this.bookingAddress.calculateDistance();
@@ -317,7 +324,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
 
     public onBookingForChange() {
         this.bookingModel.preference_allocations_attributes = [];
-        this.bookingForItems =  this.bookingModel.bookable_type === 'IndividualClient' ?
+        this.bookingForItems = this.bookingModel.bookable_type === 'IndividualClient' ?
             this.allClientsOrg.filter(u => u.type === 'IndividualClient') :
             this.allClientsOrg.filter(u => u.type === 'OrganisationalRepresentative');
     }
@@ -330,12 +337,15 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         return Boolean(GLOBAL.currentUser instanceof OrganisationalRepresentative ||
             GLOBAL.currentUser instanceof IndividualClient);
     }
+
     isUserOrgRep(): Boolean {
         return Boolean(GLOBAL.currentUser instanceof OrganisationalRepresentative);
     }
+
     isIndClient() {
         return (GLOBAL.currentUser instanceof IndividualClient);
     }
+
     onSpecialInstruction() {
         let special_instructions =
             isNullOrUndefined(<OrganisationalRepresentative>GLOBAL.currentUser) ? '' : (<OrganisationalRepresentative>GLOBAL.currentUser).special_instructions;
@@ -345,7 +355,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
 
     checkUserAdminORBookOfficer(): Boolean {
         return Boolean(GLOBAL.currentUser instanceof Administrator ||
-            GLOBAL.currentUser instanceof BookingOfficer) ;
+            GLOBAL.currentUser instanceof BookingOfficer);
     }
 
     forEdit(): Boolean {
@@ -397,8 +407,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         }
         if (this.bookingModel.interpreters_required < 2 && this.isMoreInterpreterNeeded()) {
             let message = `This booking might require more than 1 interpreter. You've only requested 1 interpreter.
-                            Are you sure you want to create this booking?` ;
-            let title   = 'Warning: this interpreter might require more interpreters';
+                            Are you sure you want to create this booking?`;
+            let title = 'Warning: this interpreter might require more interpreters';
             this.createModal(title, message);
             this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
                 if (result) {
@@ -406,8 +416,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 }
             });
         } else if (this.isLongBooking()) {
-            let message = `This booking will take 12 hours or more. Are you sure you want to submit this booking?` ;
-            let title   = 'Long Booking WARNING';
+            let message = `This booking will take 12 hours or more. Are you sure you want to submit this booking?`;
+            let title = 'Long Booking WARNING';
             this.createModal(title, message);
             this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
 
@@ -431,7 +441,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
                 if (result) {
                     if (this.shouldEdit.length > 0 && this.shouldEdit === 'edit') {
-                        this.updateBooking();
+                        this.updateLinkedBookings();
                     } else {
                         this.createBooking();
                     }
@@ -439,7 +449,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             });
         } else {
             if (this.shouldEdit.length > 0 && this.shouldEdit === 'edit') {
-                this.updateBooking();
+                this.updateLinkedBookings();
             } else {
                 this.createBooking();
             }
@@ -461,7 +471,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     isLongBooking() {
-          return this.calculateTimeDiff() >= _ONE_HOUR * 12;
+        return this.calculateTimeDiff() >= _ONE_HOUR * 12;
     }
 
     createModal(title: string, message: string, options?: ModalOptions) {
@@ -483,7 +493,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
 
         return startDate.getHours() < 6 || (
             (endDate.getHours() === 20 && (endDate.getMinutes() > 0
-                || endDate.getSeconds() > 0) ) || endDate.getHours() > 20);
+                || endDate.getSeconds() > 0)) || endDate.getHours() > 20);
     }
 
     createBooking() {
@@ -510,6 +520,20 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                     this.notificationServiceBus.launchNotification(true,
                         'Error occured on server side. ' + errors.statusText + ' ' + JSON.stringify(e || e.errors));
                 });
+    }
+
+    updateLinkedBookings() {
+        if (this.isUserAdminORBookOfficer && !!this.bookingModel.link_id) {
+            const message = 'Would you like to save these changes for all bookings or only for this one?';
+            const title = 'Change all bookings?';
+            this.createModal(title, message, {okTitle: 'Update only this booking', cancelTitle: 'Update all bookings'});
+            this.dialogSub = this.dialogRef.afterClosed().subscribe(updateOnlyThisBooking => {
+                this.bookingModel.update_all_linked_bookings = !updateOnlyThisBooking;
+                this.updateBooking();
+            });
+        } else {
+            this.updateBooking();
+        }
     }
 
     updateBooking() {
@@ -567,15 +591,16 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
 
     gotoBookingInfo() {
         let route = GLOBAL.currentUser instanceof Interpreter || GLOBAL.currentUser instanceof OrganisationalRepresentative
-          ? 'job-detail' : 'booking-job';
+            ? 'job-detail' : 'booking-job';
         this.router.navigate(['/booking-management/' + GLOBAL.selBookingID, route]);
-      }
+    }
+
     onCancelBooking() {
         let route = this.rolePermission.getDefaultRouteForCurrentUser();
         this.router.navigate([route]);
     }
 
-    tocChanged (val: boolean) {
+    tocChanged(val: boolean) {
         this.termsAndConditionAccepted = val;
     }
 
@@ -588,9 +613,9 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         if (files && file) {
             this.fileName = file.name;
 
-                let reader = new FileReader();
-                reader.onload = this._handleReaderLoaded.bind(this);
-                reader.readAsDataURL(file);
+            let reader = new FileReader();
+            reader.onload = this._handleReaderLoaded.bind(this);
+            reader.readAsDataURL(file);
         }
     }
 
@@ -603,8 +628,9 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     _handleReaderLoaded(readerEvt) {
         this.bookingModel.documents_attributes.push({document: readerEvt.target.result, document_file_name: this.fileName});
     }
+
     removeDocuments(item) {
-        if (this.bookingModel.documents_attributes.filter( d => d.document_file_name === item.file.name).length > 0) {
+        if (this.bookingModel.documents_attributes.filter(d => d.document_file_name === item.file.name).length > 0) {
             item.remove();
             this.bookingModel.documents_attributes =
                 this.bookingModel.documents_attributes.filter(d => d.document_file_name !== item.file.name);
@@ -643,6 +669,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                         'Error occured on server side. ' + errors.statusText + ' ' + JSON.stringify(e || e.errors));
                 });
     }
+
     getUser() {
 
         if (this.bookingModel.preference_allocations_attributes.filter(itm => itm.preference === 'preferred').length > 0) {
@@ -656,10 +683,10 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         }
 
         this.userModel = Boolean(GLOBAL.currentUser) && GLOBAL.currentUser instanceof OrganisationalRepresentative ?
-                (<OrganisationalRepresentative>GLOBAL.currentUser) :
-                Boolean(GLOBAL.currentUser) && GLOBAL.currentUser instanceof IndividualClient ?
-                    (<IndividualClient>GLOBAL.currentUser) :
-                    Boolean(GLOBAL.currentUser) && GLOBAL.currentUser instanceof BookingOfficer ?
+            (<OrganisationalRepresentative>GLOBAL.currentUser) :
+            Boolean(GLOBAL.currentUser) && GLOBAL.currentUser instanceof IndividualClient ?
+                (<IndividualClient>GLOBAL.currentUser) :
+                Boolean(GLOBAL.currentUser) && GLOBAL.currentUser instanceof BookingOfficer ?
                     (<BookingOfficer>GLOBAL.currentUser) : GLOBAL.currentUser;
 
         this.bookingModel.preference_allocations_attributes = [];
@@ -669,21 +696,15 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     filterUserPreference(interpreters) {
-        this.oldInterpreterPreference = interpreters;
         if (this.forEdit()) {
-            interpreters.forEach(i => {
-                if (i.hasOwnProperty('_destroy')) {
-                    this.bookingModel.preference_allocations_attributes.push({ 'id': i.interpreter_id, '_destroy': '1' });
-                    this.oldInterpreterPreference = this.oldInterpreterPreference.filter(old => old.interpreter_id !== i.interpreter_id);
-                }
-            });
+            this.bookingModel.preference_allocations_attributes = interpreters;
+            this.saveBooking();
         } else {
-            let prefAlloc = this.bookingModel.preference_allocations_attributes;
             this.bookingModel.preference_allocations_attributes = [];
             interpreters.forEach(i => {
                 if (this.showPreferred) {
                     if (i.preference === 'preferred' && !i.hasOwnProperty('_destroy')) {
-                        this.bookingModel.preference_allocations_attributes.push({ 'interpreter_id': i.interpreter_id, 'preference': i.preference });
+                        this.bookingModel.preference_allocations_attributes.push({'interpreter_id': i.interpreter_id, 'preference': i.preference});
                     } else if (i.hasOwnProperty('_destroy')) {
                         this.userModel.prefferedInterpreters = this.userModel.prefferedInterpreters.filter(itm => itm.interpreter_id !== i.interpreter_id);
                     }
@@ -691,7 +712,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
 
                 if (this.showBlocked) {
                     if (i.preference === 'blocked' && !i.hasOwnProperty('_destroy')) {
-                        this.bookingModel.preference_allocations_attributes.push({ 'interpreter_id': i.interpreter_id, 'preference': i.preference });
+                        this.bookingModel.preference_allocations_attributes.push({'interpreter_id': i.interpreter_id, 'preference': i.preference});
                     } else if (i.hasOwnProperty('_destroy')) {
                         this.userModel.prefferedInterpreters = this.userModel.prefferedInterpreters.filter(itm => itm.interpreter_id !== i.interpreter_id);
                     }
@@ -728,6 +749,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             return newObj;
         }
     }
+
     isNewBooking() {
         return this.router.url.includes('create-booking');
     }
@@ -737,8 +759,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         this.userService.fetchUsers()
             .subscribe((res: any) => {
                     this.spinnerService.requestInProcess(false);
-                    if (res.status === 200 ) {
-                        this.allClientsOrg = res.data.users.map( u => UserFactory.createUser(u));
+                    if (res.status === 200) {
+                        this.allClientsOrg = res.data.users.map(u => UserFactory.createUser(u));
                         this.oldBookingModel = this.deepCopy(this.bookingModel);
                         this.onBookingForChange();
                     }

@@ -212,12 +212,12 @@ defineSupportCode(({Given, When, Then}) => {
             .isPresent()
             .then((presence: boolean) => {
                 if (presence) {
-                    return showPopupWithMessage(message)
-                        .then((popup) => {
-                            if (popup) {
-                                clickOnBtnByName('yesBtn');
-                            }
-                        });
+                    let elm = page.getElementByCss('app-popup main > div > p');
+                    return elm.getText().then(text => {
+                        if (text === message) {
+                            clickOnBtnByName('yesBtn');
+                        }
+                    });
                 }
             });
     }
@@ -226,10 +226,11 @@ defineSupportCode(({Given, When, Then}) => {
 
     function approveIfPopup() {
         let popup = page.getElementByCss('app-popup');
-        popup.isPresent().then(presence => {
+        return popup.isPresent().then(presence => {
             if (presence) {
                 clickOnBtnByName('yesBtn');
             }
+            return presence;
         });
     }
 
@@ -450,6 +451,17 @@ defineSupportCode(({Given, When, Then}) => {
                     return expect(currentUrl).to.equal(newPath.join('/'));
                 }));
             });
+        });
+    }
+
+    Then(/^If I am shown popups, I approve all of them$/, approveAllPopups);
+    function approveAllPopups() {
+        return approveIfPopup().then(presence => {
+            if (presence) {
+                browser.sleep(1200).then(() => {
+                    approveAllPopups();
+                });
+            }
         });
     }
 });
