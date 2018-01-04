@@ -22,6 +22,7 @@
                 </div>
                 <section id="booking-preferences" name="booking-preferences">
                     <ng-container *ngFor="let interpreter of selectedInterpreters; let i = index">
+                        <ng-container *ngIf="interpreter._destroy !== 1">
                         <section [ngClass]="{'interpreter_selected_prefered' : isPreffered === true,
                         'interpreter_selected_blocked' : isPreffered === false}"
                                  *ngIf="checkInterpreterPreference(interpreter)">
@@ -33,6 +34,7 @@
                             </figure>
                             <span>{{interpreter.first_name}} {{interpreter.last_name}}</span>
                     </section>
+                        </ng-container>
                     </ng-container>
                     <button *ngIf="needInterpreter && isEditable"
                             name="{{'btnManageInterpreter_' + (isPreffered ? 'prefered' : 'blocked')}}"
