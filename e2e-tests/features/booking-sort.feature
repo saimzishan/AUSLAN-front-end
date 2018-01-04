@@ -106,9 +106,9 @@ Feature: Booking Sort
     When I am on the bookings page
     Then I will be shown with bookings
     When I click on table header 'Interpreter'
-    Then I should see the bookings in ascending order of Interpreter
-    When I click on table header 'Interpreter'
     Then I should see the bookings in descending order of Interpreter
+    When I click on table header 'Interpreter'
+    Then I should see the bookings in ascending order of Interpreter
 
   @ignoreThis
   Scenario: As a Booking Officer, I can sort the bookings by Org column
