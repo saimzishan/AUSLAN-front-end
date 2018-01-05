@@ -82,6 +82,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     bookingStartTime: Date;
     bookingEndTime: Date;
     isDuplicate: boolean;
+    defaultDateTime: Date;
     @ViewChild('addressForm') private bookingAddress: AddressComponent;
 
     constructor(public bookingService: BookingService, private router: Router,
@@ -128,6 +129,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             } else {
                 this.bookingHeading = 'NEW BOOKING';
                 this.bookingModel.bookable_type = this.bookingModel.bookable_type || 'IndividualClient';
+                this.roundOffMinutes();
             }
         });
     }
@@ -218,6 +220,13 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                                             this.bookingStartTime.getHours(), this.bookingStartTime.getMinutes());
         this.bookingEndTime = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(),
                                             this.bookingEndTime.getHours(), this.bookingEndTime.getMinutes());
+    }
+
+    roundOffMinutes() {
+        let currentDate = new Date();
+        this.defaultDateTime = currentDate;
+        let minute = Math.ceil(currentDate.getMinutes() / 5) * 5;
+        this.defaultDateTime.setMinutes(minute);
     }
 
     public onClientSelectionChange() {
