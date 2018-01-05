@@ -6,7 +6,7 @@ import {PreferedAllocationService} from './prefered-allocation.service';
 
 describe('PreferedAllocationService', () => {
     let prefAllocationBackup = [];
-
+    let selectedInterpreter = {};
     beforeEach(() => {
         TestBed.configureTestingModule({
             providers: [PreferedAllocationService]
@@ -17,82 +17,87 @@ describe('PreferedAllocationService', () => {
         (service: PreferedAllocationService) => {
         expect(service).toBeTruthy();
     }));
+    it('should add the prefered interpreter locally', inject([PreferedAllocationService],
+        (service: PreferedAllocationService) => {
 
+            service.handlePreference(prefAllocationBackup, selectedInterpreter, false, 'add');
+
+        }));
     it('should remove the prefered interpreter locally', inject([PreferedAllocationService],
         (service: PreferedAllocationService) => {
 
-        service.handlePreference(prefAllocationBackup, 2, false, 'delete');
+        service.handlePreference(prefAllocationBackup, selectedInterpreter, false, 'delete');
 
     }));
     it('should remove the blocked interpreter locally', inject([PreferedAllocationService],
         (service: PreferedAllocationService) => {
 
-            service.handlePreference(prefAllocationBackup, 2, false, 'delete');
+            service.handlePreference(prefAllocationBackup, selectedInterpreter, false, 'delete');
 
         }));
     it('should remove the prefered interpreter from api', inject([PreferedAllocationService],
         (service: PreferedAllocationService) => {
 
-            service.handlePreference(prefAllocationBackup, 2, false, 'delete');
+            service.handlePreference(prefAllocationBackup, selectedInterpreter, false, 'delete');
 
         }));
     it('should remove the prefered interpreter from api', inject([PreferedAllocationService],
         (service: PreferedAllocationService) => {
 
-            service.handlePreference(prefAllocationBackup, 2, false, 'delete');
+            service.handlePreference(prefAllocationBackup, selectedInterpreter, false, 'delete');
 
         }));
 
     it('should add the prefered interpreter locally', inject([PreferedAllocationService],
         (service: PreferedAllocationService) => {
 
-            service.handlePreference(prefAllocationBackup, 2, false, 'add');
+            service.handlePreference(prefAllocationBackup, selectedInterpreter, false, 'add');
 
         }));
     it('should add the blocked interpreter locally', inject([PreferedAllocationService],
         (service: PreferedAllocationService) => {
 
-            service.handlePreference(prefAllocationBackup, 2, false, 'add');
+            service.handlePreference(prefAllocationBackup, selectedInterpreter, false, 'add');
 
         }));
     it('should add the prefered interpreter from api', inject([PreferedAllocationService],
         (service: PreferedAllocationService) => {
 
-            service.handlePreference(prefAllocationBackup, 2, false, 'add');
+            service.handlePreference(prefAllocationBackup, selectedInterpreter, false, 'add');
 
         }));
 
     it('should add the blocked interpreter from api', inject([PreferedAllocationService],
         (service: PreferedAllocationService) => {
 
-            service.handlePreference(prefAllocationBackup, 2, false, 'add');
+            service.handlePreference(prefAllocationBackup, selectedInterpreter, false, 'add');
 
         }));
 
     it('should change preference from prefered to blocked', inject([PreferedAllocationService],
         (service: PreferedAllocationService) => {
 
-            service.handlePreference(prefAllocationBackup, 2, false, 'add');
+            service.handlePreference(prefAllocationBackup, selectedInterpreter, false, 'add');
 
         }));
 
     it('should change preference to prefered from blocked', inject([PreferedAllocationService],
         (service: PreferedAllocationService) => {
 
-            service.handlePreference(prefAllocationBackup, 2, false, 'add');
+            service.handlePreference(prefAllocationBackup, selectedInterpreter, false, 'add');
 
         }));
     it('should add multiple prefered interpreters to already existing interpreters, remove one of them locally and from api', inject([PreferedAllocationService],
         (service: PreferedAllocationService) => {
 
-            service.handlePreference(prefAllocationBackup, 2, false, 'add');
+            service.handlePreference(prefAllocationBackup, selectedInterpreter, false, 'add');
 
         }));
     it('should add prefered interpreters to already existing interpreters, ' +
         'should add blocked interpreters , remove one from prefered locally', inject([PreferedAllocationService],
         (service: PreferedAllocationService) => {
 
-            service.handlePreference(prefAllocationBackup, 2, false, 'add');
+            service.handlePreference(prefAllocationBackup, selectedInterpreter, false, 'add');
 
         }));
 
