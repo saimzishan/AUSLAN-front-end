@@ -197,8 +197,8 @@ defineSupportCode(({Given, When, Then}) => {
     Given(/^I will be shown a popup message '(.*)'$/, showPopupWithMessage);
 
     function showPopupWithMessage(message) {
-        return page.getElementByCss('app-popup').isPresent().then(() => {
-            let elm = page.getElementByCss('app-popup main > div > p');
+        return page.getElementByCss('md-dialog-content').isPresent().then(() => {
+            let elm = page.getElementByCss('md-dialog-content main > div > p');
             return elm.getText().then((text) => {
                 return expect(text).to.eq(message);
             });
@@ -283,7 +283,7 @@ defineSupportCode(({Given, When, Then}) => {
     When(/^I can see the booking state '(.*)'$/, bookingJob.confirmBookingState);
 
 
-    When(/^I can see the button '(.*)' is (.*)$/, isButtonDisabled);
+    When(/^I can see the button '(.*)' is (disabled|enabled)$/, isButtonDisabled);
 
     function isButtonDisabled(btnLabel: string, disabled: string) {
         let isEnabled = disabled.toLowerCase() === 'enabled';

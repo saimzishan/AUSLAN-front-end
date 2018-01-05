@@ -15,6 +15,7 @@ import {PopupComponent} from '../../shared/popup/popup.component';
 import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
 import {GLOBAL} from '../../shared/global';
 import {BookingHeaderService} from '../booking-header/booking-header.service';
+import {LinkidPopupComponent} from '../linkid-popup/linkid-popup.component';
 
 @Component({
     selector: 'app-booking-jobs',
@@ -82,6 +83,9 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                     break;
                 case 'unlinkBooking':
                     this.unlinkBooking();
+                    break;
+                case 'linkBooking':
+                    this.linkBooking();
                     break;
                 case 'saveChanges':
                     this.saveChanges();
@@ -167,11 +171,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
           all linked bookings?`;
 
         this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
-            if (result) {
-                this.changeBookingState(isCancel, false);
-            } else {
-                this.changeBookingState(isCancel, true);
-            }
+            this.changeBookingState(isCancel, !result);
         });
     }
 
@@ -212,6 +212,30 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
             queryParams: {bookingModel: JSON.stringify(this.selectedBookingModel)}
         };
         this.router.navigate(['/booking-management', 'create-booking'], navigationExtras);
+    }
+
+    linkBooking() {
+        let config: MdDialogConfig = {
+            disableClose: true
+        };
+        config.viewContainerRef = this.viewContainerRef;
+        this.dialogRef = this.dialog.open(LinkidPopupComponent, config);
+        this.dialogRef.componentInstance.bookingId = this.selectedBookingModel.id;
+        this.dialogSub = this.dialogRef.afterClosed().subscribe((selectedLinkId: any) => {
+            if (+selectedLinkId) {
+                this.selectedBookingModel.link_id = Number(selectedLinkId);
+                this.selectedBookingModel.new_link_id_required = false;
+                this.selectedBookingModel.update_all_linked_bookings = false;
+            } else if (selectedLinkId === 'New linked booking') {
+                this.selectedBookingModel.link_id = null;
+                this.selectedBookingModel.new_link_id_required = true;
+                this.selectedBookingModel.update_all_linked_bookings = false;
+            }
+
+            if (selectedLinkId) {
+                this.saveChanges();
+            }
+        });
     }
 
     unlinkBooking() {
@@ -395,17 +419,18 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                 });
     }
 
-    private removeLinkFromBooking = () => {
+    private updateSelectedBookingModel = () => {
         this.bookingService.updateBooking(this.selectedBookingModel.id, this.selectedBookingModel)
             .subscribe((res: any) => {
                     if (res.status === 204) {
                         this.spinnerService.requestInProcess(false);
                         this.notificationServiceBus.launchNotification(false, 'The Booking has been Updated.');
+                        this.fetchBookingInterpreters(this.selectedBookingModel.id);
                     }
                 },
                 err => {
                     this.spinnerService.requestInProcess(false);
-                    let e = err.json() || 'There is some error on server side';
+                    let e = err.json() || {errors: 'There booking could not be updated. Please try after some time.'};
                     this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
                 });
     }
@@ -439,7 +464,9 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
             this.selectedActionableInterpreterID = -1;
         } else if (this.unlinkPressed) {
             this.unlinkPressed = false;
-            this.removeLinkFromBooking();
+            this.updateSelectedBookingModel();
+        } else {
+            this.updateSelectedBookingModel();
         }
     }
 

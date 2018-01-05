@@ -36,6 +36,7 @@ export class Booking {
     public travel_cost_applicable: boolean;
     public update_all_linked_bookings: boolean;
     public is_metro: boolean;
+    public new_link_id_required: boolean;
     // Is it a limitation on interpreters invitation.
 
     constructor() {
@@ -68,6 +69,7 @@ export class Booking {
         this.created_by_admin = false;
         this.travel_cost_applicable = false;
         this.update_all_linked_bookings = false;
+        this.new_link_id_required = false;
     }
 
     clean(theObject) {
@@ -197,6 +199,7 @@ export class Booking {
             id: this.id,
             link_id: this.link_id,
             update_all_linked_bookings: this.update_all_linked_bookings || false,
+            new_link_id_required: this.new_link_id_required || false,
             state: _state,
             special_instructions: this.special_instructions,
             venue: this.venue.title,
