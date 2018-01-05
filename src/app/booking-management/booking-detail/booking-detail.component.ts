@@ -82,6 +82,10 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     bookingStartTime: Date;
     bookingEndTime: Date;
     isDuplicate: boolean;
+    serviceInterpreting = true;
+    serviceVRI = false;
+    serviceCaptioning = false;
+    serviceNotetaking = false;
     @ViewChild('addressForm') private bookingAddress: AddressComponent;
 
     constructor(public bookingService: BookingService, private router: Router,
@@ -146,6 +150,30 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 || GLOBAL.currentUser.email === this.bookingModel.primaryContact.email;
         } else {
             return true;
+        }
+    }
+
+    serviceTypeClick(serviceType: string) {
+        let index;
+        switch (serviceType) {
+            case 'Interpreting':
+                this.serviceInterpreting = !this.serviceInterpreting;
+                break;
+            case 'VRI':
+                this.serviceVRI = !this.serviceVRI;
+                break;
+            case 'Captioning':
+                this.serviceCaptioning = !this.serviceCaptioning;
+                break;
+            case 'Notetaking':
+                this.serviceNotetaking = !this.serviceNotetaking;
+                break;
+        }
+
+        if (this.serviceInterpreting && serviceType === 'Interpreting') {
+            this.serviceVRI = false;
+        } else if (this.serviceVRI && serviceType === 'VRI') {
+            this.serviceInterpreting = false;
         }
     }
 

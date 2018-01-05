@@ -67,19 +67,19 @@
       <h2>Type of Booking</h2>
       <p name="serviceMsg">What kind of services {{isUserAdminORBookOfficer ? (bookingModel.bookable_type ==='IndividualClient' ? "does the client":"does the organisation") :"do you"}} need? Select multiple if relevant</p>
       <section id="services">
-        <button md-button class="active">
+        <button md-button [ngClass]="serviceInterpreting ? 'active' : ''" (click)="serviceTypeClick('Interpreting')">
           <i class="icon-service-interpreting"></i>
-          <span>Interpreting</span>
+          <span>On Site Interpreting</span>
         </button>
-        <button [disabled]='true' md-button>
+        <button md-button [ngClass]="serviceVRI ? 'active' : ''" (click)="serviceTypeClick('VRI')">
           <i class="icon-service-vri"></i>
           <span>VRI</span>
         </button>
-        <button [disabled]='true' md-button>
+        <button md-button [ngClass]="serviceCaptioning ? 'active' : ''" (click)="serviceTypeClick('Captioning')">
           <i class="icon-service-captioning"></i>
-          <span>Captioining</span>
+          <span>Captioning</span>
         </button>
-        <button [disabled]='true' md-button>
+        <button md-button [ngClass]="serviceNotetaking ? 'active' : ''" (click)="serviceTypeClick('Notetaking')">
           <i class="icon-service-captioning"></i>
           <span>Notetaking</span>
         </button>
