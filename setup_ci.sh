@@ -15,5 +15,4 @@ bundle exec rake db:migrate
 nohup bundle exec rails s -b 0.0.0.0 > rails_server.log 2>&1 &
 sleep 5
 ps -ef | grep "puma"
-npm install typescript@2.3.4 -g 
 cd ../booking-system-frontend
