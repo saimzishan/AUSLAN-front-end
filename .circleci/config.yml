@@ -29,7 +29,6 @@ jobs:
             E2E_ENV: "localhost"
           shell: /bin/bash -l
           command: |
-	        npm install typescript@2.3.4 -g
             npm install
       - run:
           name: Running the unit tests
