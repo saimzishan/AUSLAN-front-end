@@ -233,3 +233,207 @@ Feature: Create Booking with preferred or blocked interpreters
     When I click on element by name 'rdProfilePreferredInterpretersYes'
     Then I can see the element with name 'btnManageInterpreter_prefered' is 'visible'
     And I can count the element with css 'section.interpreter_selected_prefered' to be '2'
+
+
+
+  @runThis
+  Scenario: Administrator can add/remove the same interpreter into same preference, created by Organisational Representative , Interpreter  exists
+    Given I exist as an Organisational Representative
+    And I sign in with valid Organisational Representative credentials
+    And I am on the bookings page
+    When I click on 'New Booking'
+    Then I will be taken to the 'New Booking' form
+    When I click on element by name 'rdBookingAddressNo'
+    And I fill New Booking form fields correctly
+    When I click on element by name 'rdBlockedInterpretersYes'
+    When I click on element by name 'rdProfileBlockedInterpretersYes'
+    And I can see the element with name 'btnManageInterpreter_blocked' is 'visible'
+    And I can count the element with css 'section.interpreter_selected_blocked' to be '0'
+    And I click on BUTTON name 'btnManageInterpreter_blocked'
+    Then I can see the element with css 'div.md-dialog' is 'visible'
+    When I click on '1' interpreter
+    Then I can see the element with css 'section[name="interpreters"].selected' is 'visible'
+    Then I click on BUTTON name 'selectBtn'
+    Then I wait for 2000 milli-seconds
+    Then I can see the element with css 'div.md-dialog' is 'hidden'
+    Then I can count the element with css 'section.interpreter_selected_blocked' to be '1'
+    Then I click on checkbox name 'tnc'
+    And I click the create booking button
+    And I am on the bookings page
+    And I click on an individual booking
+    Then I am on the individual booking page
+    When I click on link 'Booking details'
+    Then I should be on the edit booking page
+    And I can count the element with css 'section.interpreter_selected_blocked' to be '1'
+    Then I scroll to top
+    And I click on my name in the top corner
+    Then I click on logout
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on the bookings page
+    And I click on an individual booking
+    Then I am on the individual booking page
+    When I click on link 'Booking details'
+    Then I should be on the edit booking page
+    When I click on element by name 'rdBlockedInterpretersYes'
+    When I click on element by name 'rdProfileBlockedInterpretersYes'
+    And I click on BUTTON name 'btnManageInterpreter_blocked'
+    Then I can see the element with css 'div.md-dialog' is 'visible'
+    When I click on '1' interpreter
+    And I will get an error notification saying "Oops! This interpreter is already selected as a blocked interpreter. Please remove this interpreter first."
+    Then I click on BUTTON name 'noBtn'
+    Then I wait for 2000 milli-seconds
+    Then I can remove '1' , 'blocked' interpreter
+    And I can count the element with css 'section.interpreter_selected_blocked' to be '0'
+    And I click on BUTTON name 'btnManageInterpreter_blocked'
+    Then I can see the element with css 'div.md-dialog' is 'visible'
+    When I click on '1' interpreter
+    Then I can see the element with css 'section[name="interpreters"].selected' is 'visible'
+    Then I click on BUTTON name 'selectBtn'
+    Then I wait for 2000 milli-seconds
+    Then I can see the element with css 'div.md-dialog' is 'hidden'
+    Then I can count the element with css 'section.interpreter_selected_blocked' to be '1'
+    Then I click on checkbox name 'tnc'
+    And I click the create booking button
+    Then I am on the individual booking page
+    When I click on link 'Booking details'
+    Then I should be on the edit booking page
+    And I can count the element with css 'section.interpreter_selected_blocked' to be '1'
+
+
+
+  @runThis
+  Scenario: Administrator can add/remove the same interpreter into different preference, created by Organisational Representative , Interpreter  exists
+    Given I exist as an Organisational Representative
+    And I sign in with valid Organisational Representative credentials
+    And I am on the bookings page
+    When I click on 'New Booking'
+    Then I will be taken to the 'New Booking' form
+    When I click on element by name 'rdBookingAddressNo'
+    And I fill New Booking form fields correctly
+    When I click on element by name 'rdBlockedInterpretersYes'
+    When I click on element by name 'rdProfileBlockedInterpretersYes'
+    And I can see the element with name 'btnManageInterpreter_blocked' is 'visible'
+    And I can count the element with css 'section.interpreter_selected_blocked' to be '0'
+    And I click on BUTTON name 'btnManageInterpreter_blocked'
+    Then I can see the element with css 'div.md-dialog' is 'visible'
+    When I click on '1' interpreter
+    Then I can see the element with css 'section[name="interpreters"].selected' is 'visible'
+    Then I click on BUTTON name 'selectBtn'
+    Then I wait for 2000 milli-seconds
+    Then I can see the element with css 'div.md-dialog' is 'hidden'
+    Then I can count the element with css 'section.interpreter_selected_blocked' to be '1'
+    Then I click on checkbox name 'tnc'
+    And I click the create booking button
+    And I am on the bookings page
+    And I click on an individual booking
+    Then I am on the individual booking page
+    When I click on link 'Booking details'
+    Then I should be on the edit booking page
+    And I can count the element with css 'section.interpreter_selected_blocked' to be '1'
+    Then I scroll to top
+    And I click on my name in the top corner
+    Then I click on logout
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on the bookings page
+    And I click on an individual booking
+    Then I am on the individual booking page
+    When I click on link 'Booking details'
+    Then I should be on the edit booking page
+    When I click on element by name 'rdBlockedInterpretersYes'
+    When I click on element by name 'rdProfileBlockedInterpretersYes'
+    And I click on BUTTON name 'btnManageInterpreter_blocked'
+    Then I can see the element with css 'div.md-dialog' is 'visible'
+    When I click on '1' interpreter
+    And I will get an error notification saying "Oops! This interpreter is already selected as a blocked interpreter. Please remove this interpreter first."
+    Then I click on BUTTON name 'noBtn'
+    Then I wait for 2000 milli-seconds
+    Then I can remove '1' , 'blocked' interpreter
+    And I can count the element with css 'section.interpreter_selected_blocked' to be '0'
+    When I click on element by name 'rdPreferredInterpretersYes'
+    When I click on element by name 'rdProfilePreferredInterpretersYes'
+    And  I click on BUTTON name 'btnManageInterpreter_prefered'
+    Then I can see the element with css 'div.md-dialog' is 'visible'
+    When I click on '1' interpreter
+    Then I can see the element with css 'section[name="interpreters"].selected' is 'visible'
+    Then I click on BUTTON name 'selectBtn'
+    Then I wait for 2000 milli-seconds
+    Then I can see the element with css 'div.md-dialog' is 'hidden'
+    Then I can count the element with css 'section.interpreter_selected_prefered' to be '1'
+    Then I click on checkbox name 'tnc'
+    And I click the create booking button
+    Then I am on the individual booking page
+    When I click on link 'Booking details'
+    Then I should be on the edit booking page
+    And I can count the element with css 'section.interpreter_selected_blocked' to be '0'
+    And I can count the element with css 'section.interpreter_selected_prefered' to be '1'
+
+
+
+  @runThis
+  Scenario: Administrator can add/remove the same interpreter into different preference, created by Individual Client , Interpreter  exists
+    Given I exist as an Individual Client
+    And I sign in with valid Individual Client credentials
+    And I am on the bookings page
+    When I click on 'New Booking'
+    Then I will be taken to the 'New Booking' form
+    When I click on element by name 'rdBookingAddressNo'
+    And I fill New Booking form fields correctly
+    When I click on element by name 'rdBlockedInterpretersYes'
+    When I click on element by name 'rdProfileBlockedInterpretersYes'
+    And I can see the element with name 'btnManageInterpreter_blocked' is 'visible'
+    And I can count the element with css 'section.interpreter_selected_blocked' to be '0'
+    And I click on BUTTON name 'btnManageInterpreter_blocked'
+    Then I can see the element with css 'div.md-dialog' is 'visible'
+    When I click on '1' interpreter
+    Then I can see the element with css 'section[name="interpreters"].selected' is 'visible'
+    Then I click on BUTTON name 'selectBtn'
+    Then I wait for 2000 milli-seconds
+    Then I can see the element with css 'div.md-dialog' is 'hidden'
+    Then I can count the element with css 'section.interpreter_selected_blocked' to be '1'
+    Then I click on checkbox name 'tnc'
+    And I click the create booking button
+    And I am on the bookings page
+    And I click on an individual booking
+    Then I am on the individual booking page
+    When I click on link 'Booking details'
+    Then I should be on the edit booking page
+    And I can count the element with css 'section.interpreter_selected_blocked' to be '1'
+    Then I scroll to top
+    And I click on my name in the top corner
+    Then I click on logout
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on the bookings page
+    And I click on an individual booking
+    Then I am on the individual booking page
+    When I click on link 'Booking details'
+    Then I should be on the edit booking page
+    When I click on element by name 'rdBlockedInterpretersYes'
+    When I click on element by name 'rdProfileBlockedInterpretersYes'
+    And I click on BUTTON name 'btnManageInterpreter_blocked'
+    Then I can see the element with css 'div.md-dialog' is 'visible'
+    When I click on '1' interpreter
+    And I will get an error notification saying "Oops! This interpreter is already selected as a blocked interpreter. Please remove this interpreter first."
+    Then I click on BUTTON name 'noBtn'
+    Then I wait for 2000 milli-seconds
+    Then I can remove '1' , 'blocked' interpreter
+    And I can count the element with css 'section.interpreter_selected_blocked' to be '0'
+    When I click on element by name 'rdPreferredInterpretersYes'
+    When I click on element by name 'rdProfilePreferredInterpretersYes'
+    And  I click on BUTTON name 'btnManageInterpreter_prefered'
+    Then I can see the element with css 'div.md-dialog' is 'visible'
+    When I click on '1' interpreter
+    Then I can see the element with css 'section[name="interpreters"].selected' is 'visible'
+    Then I click on BUTTON name 'selectBtn'
+    Then I wait for 2000 milli-seconds
+    Then I can see the element with css 'div.md-dialog' is 'hidden'
+    Then I can count the element with css 'section.interpreter_selected_prefered' to be '1'
+    Then I click on checkbox name 'tnc'
+    And I click the create booking button
+    Then I am on the individual booking page
+    When I click on link 'Booking details'
+    Then I should be on the edit booking page
+    And I can count the element with css 'section.interpreter_selected_blocked' to be '0'
+    And I can count the element with css 'section.interpreter_selected_prefered' to be '1'
