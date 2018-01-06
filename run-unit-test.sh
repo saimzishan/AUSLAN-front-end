@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 set -x #echo on
 set -eo pipefail
-npm install typescript@2.3.4 -g
 bundle install
 ng lint
 rm -rf tmp
