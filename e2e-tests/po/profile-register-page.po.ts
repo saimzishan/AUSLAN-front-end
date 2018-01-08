@@ -122,7 +122,9 @@ export class ProfileRegisterPage extends PageObject {
     removeInterpreter = (index, preference) => {
         let elementName = `btnRemoveInterpreter_${preference}_${(+index - 1)}`;
         let elm = this.getElementByName(elementName);
-        return elm.click();
+        return elm.click().then( () => {
+            browser.sleep(1500);
+        });
     }
     countInterpreter = (count) => {
         return this.getAllElementByCSS('section[name="interpreters"]').count().then((cnt) => {

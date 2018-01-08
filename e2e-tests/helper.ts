@@ -403,50 +403,21 @@ export class Heroku {
 
     static sendCommandToHeroku(command) {
         const exec = require('child_process').execSync;
-        command = 'ActiveRecord::Base.logger.level = Logger::INFO;' +  command + ';nil;exit';
-        let herokuCommand = browser.params.env === 'localhost' ?
-            'cd ../booking-system-api/ && echo  \'' + command + '\' | bundle exec rails c && cd ../booking-system-frontend/' :
-            'echo  \'' + command + '\' | heroku run console --app auslan-e2e-testing';
 
-        exec(herokuCommand
-            , (o1, o2, o3) => {
-                console.log('Heroku Command => Output', o1);
-                console.log('Heroku Command => StdError', o2);
-                console.log('Heroku Command => Error', o3);
-
-            });
+        command = 'ActiveRecord::Base.logger.level = Logger::INFO;' + command + ';nil;exit';
+        let herokuCommand =  'cd ../booking-system-api/ && echo  \'' + command + '\' | bundle exec rails c && cd ../booking-system-frontend/';
+        exec(herokuCommand);
     }
 
     static sendTaskToHeroku(task) {
         const exec = require('child_process').execSync;
-        let herokuCommand = browser.params.env === 'localhost' ?
-            'cd ../booking-system-api/ && bundle exec rails ' + task + ' && cd ../booking-system-frontend/' :
-            'heroku run bundle exec rails ' + task + ' --app auslan-e2e-testing';
+        let herokuCommand = 'cd ../booking-system-api/ && bundle exec rails ' + task + ' && cd ../booking-system-frontend/';
 
         exec(herokuCommand , (o1, o2, o3) => {
                 console.log('Heroku Command => Output', o1);
                 console.log('Heroku Command => StdError', o2);
                 console.log('Heroku Command => Error', o3);
             });
-    }
-
-    static getOutputFromHeroku (command) {
-        let sync = require('child_process').spawn;
-        let herokuCommand = browser.params.env === 'localhost' ?
-            'cd ../booking-system-api/ && echo  \'' + command + ';\' | bundle exec rails c && cd ../booking-system-frontend/' :
-            'echo  \'' + command + '\' | heroku run console --app auslan-e2e-testing';
-        let child = sync(herokuCommand);
-        child.stdout.on('data',
-            function (data) {
-                console.log('ls command output: ' + data);
-            });
-        child.stderr.on('data', function (data) {
-            console.log('stderr: ' + data);
-        });
-
-        child.on('close', function (code) {
-            console.log('child process exited with code ' + code);
-        });
     }
 
     static createSingleBooking() {
@@ -624,11 +595,12 @@ export class Heroku {
         command += '<< PreferenceAllocation.new(clientable: client, interpreter: i, preference: :preferred) }';
         Heroku.sendCommandToHeroku(command);
     }
-   
-    
+
+
     private static createBooking(int_required: number) {
-     
+
       let today = new Date();
+      today.setDate(today.getDate() + 1);
       let todayDate = {
           mm: this.prettyDate(today.getMonth() + 1), //January is 0!
           dd: this.prettyDate(today.getDate()),
@@ -652,8 +624,8 @@ export class Heroku {
             'deaf_persons_eaf_no': '124',
             'number_of_people_attending': 1,
             'number_of_interpreters_required': int_required,
-            'start_time': currentDate + 'T09: 01: 26.298+00: 00',
-            'end_time': currentDate + 'T10: 01: 26.298+00: 00',
+            'start_time': currentDate + ' 01:26 +11:00',
+            'end_time': currentDate + ' 02:26 +11:00',
             'billing_account_attributes': {
                 'primary_contact_first_name': 'Paul',
                 'primary_contact_last_name': 'Biller',
