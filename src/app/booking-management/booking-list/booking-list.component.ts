@@ -40,13 +40,16 @@ export class BookingListComponent implements OnInit {
         this.filterParams = GLOBAL._filterVal;
         this.filterParams.paramsMap.forEach((value: string[], key: string) => {
             for (let v of value) {
+            if (key !== 'sort' && key !== 'direction') {
                 key = key.match(/filter\[(\w+)\]/)[1];
+            }
                 this.bookingFilter[key] = v;
                 break;
             }
         });
         this.bookingFilter.date_from = this.datePipe.transform(Date.now(), 'yyyy-MM-dd');
         this.filter('date_from', this.bookingFilter.date_from);
+        this.sort('start_time');
     }
 
     underScoreToSpaces(str: string) {
