@@ -242,6 +242,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         this.unlinkPressed = true;
         this.selectedBookingModel.link_id = null;
         this.selectedBookingModel.update_all_linked_bookings = false;
+        this.selectedBookingModel.new_link_id_required = false;
     }
 
     editBooking() {
