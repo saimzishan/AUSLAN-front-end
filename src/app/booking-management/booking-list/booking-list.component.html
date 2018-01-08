@@ -13,7 +13,7 @@
                     <span class="order" [ngClass]="getSortOrder('job')" (click)="sort('job')">Job</span>
                     <form #filterByBookingIds="ngForm" class="common-form compact"
                           (ngSubmit)="filter('booking_ids', filterByBookingIds.value.booking_ids)" novalidate>
-                        <input type="text" name="booking_ids" [(ngModel)]="bookingFilter.booking_ids">
+                        <input type="text" name="booking_ids" (blur)="filter('booking_ids', filterByBookingIds.value.booking_ids)"  [(ngModel)]="bookingFilter.booking_ids">
                     </form>
                 </th>
                 <th width="7%">
@@ -64,7 +64,7 @@
                           (click)="sort('organisation')">Org</span>
                     <form #filterByOrg="ngForm" class="common-form compact"
                           (ngSubmit)="filter('organisation', filterByOrg.value.organisation)" novalidate>
-                        <input type="text" name="organisation" [(ngModel)]="bookingFilter.organisation">
+                        <input type="text" name="organisation" (blur)="filter('organisation', filterByOrg.value.organisation)" [(ngModel)]="bookingFilter.organisation">
                     </form>
                 </th>
                 <th>
@@ -73,7 +73,7 @@
                           (click)="sort('booking_client')">Client</span>
                     <form #filterByClientName="ngForm" class="common-form compact"
                           (ngSubmit)="filter('client_name', filterByClientName.value.client_name)" novalidate>
-                        <input type="text" name="client_name" [(ngModel)]="bookingFilter.client_name">
+                        <input type="text" name="client_name" (blur)="filter('client_name', filterByClientName.value.client_name)" [(ngModel)]="bookingFilter.client_name">
                     </form>
                 </th>
                 <th>
@@ -82,14 +82,14 @@
                           (click)="sort('suburb')">Suburb</span>
                     <form #filterBySuburb="ngForm" class="common-form compact"
                           (ngSubmit)="filter('suburb', filterBySuburb.value.suburb)" novalidate>
-                        <input type="text" name="suburb" [(ngModel)]="bookingFilter.suburb">
+                        <input type="text" name="suburb" (blur) = "filter('suburb', filterBySuburb.value.suburb)" [(ngModel)]="bookingFilter.suburb">
                     </form>
                 </th>
                 <th width="10%">
                     <span class="order" [ngClass]="getSortOrder('interpreter')" (click)="sort('interpreter')">Interpreter</span>
                     <form #filterByInterpreter="ngForm" class="common-form compact"
                           (ngSubmit)="filter('interpreter', filterByInterpreter.value.interpreter_name)" novalidate>
-                        <input type="text" name="interpreter_name" [(ngModel)]="bookingFilter.interpreter_name">
+                        <input type="text" name="interpreter_name"  (blur) ="filter('interpreter', filterByInterpreter.value.interpreter_name)" [(ngModel)]="bookingFilter.interpreter_name">
                     </form>
                 </th>
                 <th width="12%">

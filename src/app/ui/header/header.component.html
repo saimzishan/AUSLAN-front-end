@@ -1,5 +1,5 @@
 <header id="header">
-	<a href="javascript:void(0)"><i class="icons icons-logo"></i></a>
+	<a href="javascript:void(0)"><i name="auslanLogo" class="icons icons-logo"></i></a>
 
 	<nav *ngIf="userIsActive">
 		<a id="lnkBooking" *ngIf="canShowLink('booking-management')" [ngClass]="{'active':isActiveLink(linkName.booking)}" (click)="setActiveLink(linkName.booking)" [routerLink]="['/booking-management']"><span><i class="icon-bookings"></i> BOOKINGS</span></a>

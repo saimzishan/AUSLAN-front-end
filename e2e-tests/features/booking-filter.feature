@@ -405,3 +405,49 @@ Feature: Booking Filter
     And I am on the bookings page
     When I query search with empty date
     Then I am shown with 6 booking
+
+ @runThis
+  Scenario: As a Administrator, I should be able to submit the search when i change the text and i click out of the text box
+    Given I sign in with valid Administrator credentials
+    When I am on the bookings page
+    Then I am shown with 5 booking
+    Then I fill the field 'organisation' with value 'Ted'
+    And I click out of the text box
+    Then I am shown with 5 booking
+    Then I fill the field 'organisation' with value 'thisiswrongvalue'
+    And I click out of the text box
+    Then I am shown with 0 booking
+    And I empty the search field 'organisation'
+    And I click out of the text box
+    Then I am shown with 5 booking
+    Then I fill the field 'client_name' with value 'Charles Barkley'
+    And I click out of the text box
+    Then I am shown with 5 booking
+    Then I fill the field 'client_name' with value 'thisiswrongvalue'
+    And I click out of the text box
+    Then I am shown with 0 booking
+    And I empty the search field 'client_name'
+    Then I am shown with 5 booking
+    Then I fill the field 'suburb' with value 'Parkville'
+    And I click out of the text box
+    Then I am shown with 5 booking
+    Then I fill the field 'suburb' with value 'thisiswrongvalue'
+    And I click out of the text box
+    Then I am shown with 0 booking
+    And I empty the search field 'suburb'
+    Then I am shown with 5 booking
+    Then I fill the field 'interpreter_name' with value 'thisiswrongvalue'
+    And I click out of the text box
+    Then I am shown with 0 booking
+    And I empty the search field 'interpreter_name'
+    Then I am shown with 5 booking
+    Then I fill the field 'booking_ids' with value 'thisiswrongvalue'
+    And I click out of the text box
+    Then I am shown with 0 booking
+    And I empty the search field 'booking_ids'
+    Then I am shown with 5 booking
+    Then I fill the field 'search' with value 'INV-909'
+    Then I am shown with 5 booking
+    Then I fill the field 'search' with value 'thisiswrongvalue'
+    And I click out of the text box
+    Then I am shown with 0 booking
