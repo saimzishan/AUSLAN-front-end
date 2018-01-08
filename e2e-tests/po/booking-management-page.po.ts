@@ -246,6 +246,15 @@ export class BookingManagementPage extends PageObject {
     querySearchWithEmptyDate = () => {
         this.getElementByName('date_from').sendKeys(protractor.Key.BACK_SPACE);
     }
+    emptyTheField = (elementName: string) => {
+        this.getElementByName(elementName).clear();
+        this.getElementByName(elementName).sendKeys('x');
+        this.getElementByName(elementName).sendKeys(protractor.Key.BACK_SPACE);
+        this.getElementByName('auslanLogo').click();
+    }
+    clickOutSide = () => {
+        this.getElementByName('auslanLogo').click();
+    }
     // Adds a '0' in the start if the date < 10
     private prettyDate = (date: number|string): string => {
         date = date.toString();
