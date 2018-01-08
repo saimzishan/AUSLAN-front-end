@@ -144,9 +144,9 @@
 
                             </div>
                         </div>
-                        <div class="medium-3 columns">
+                        <div *ngIf="selectedRole !== 'BOOKINGOFFICER' && selectedRole !== 'ADMINISTRATOR'" class="medium-6 columns">
                             <div class="form-field">
-                              <label>WORK PREFERENCE *</label>
+                              <label>{{(selectedRole === 'INDIVIDUALCLIENT' || selectedRole === 'ORGANISATION') ? 'In which state will most of your bookings take place?' : 'WORK PREFERENCE *'}}</label>
                               <select aria-label="A"
                                       [(ngModel)]="model.state_where_most_bookings_occur" name="location_pref"
                                       #location_pref="ngModel" required>
