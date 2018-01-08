@@ -600,6 +600,7 @@ export class Heroku {
     private static createBooking(int_required: number) {
 
       let today = new Date();
+      today.setDate(today.getDate() + 1);
       let todayDate = {
           mm: this.prettyDate(today.getMonth() + 1), //January is 0!
           dd: this.prettyDate(today.getDate()),
@@ -623,8 +624,8 @@ export class Heroku {
             'deaf_persons_eaf_no': '124',
             'number_of_people_attending': 1,
             'number_of_interpreters_required': int_required,
-            'start_time': currentDate + 'T09: 01: 26.298+00: 00',
-            'end_time': currentDate + 'T10: 01: 26.298+00: 00',
+            'start_time': currentDate + ' 01:26 +11:00',
+            'end_time': currentDate + ' 02:26 +11:00',
             'billing_account_attributes': {
                 'primary_contact_first_name': 'Paul',
                 'primary_contact_last_name': 'Biller',
