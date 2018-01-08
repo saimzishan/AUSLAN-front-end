@@ -108,6 +108,8 @@ defineSupportCode(({Given, Then, When}) => {
     When(/^I empty the search field '(.*)'$/, bookingManagementPO.emptyTheField);
 
     When(/^I click out of the text box$/, bookingManagementPO.clickOutSide);
+    When(/^I click on Booking$/, bookingManagementPO.clickOnBooking);
+    
 
     Then(/^All required booking fields should be filled$/, bookingEditPO.checkValueInAllRequiredFields);
 

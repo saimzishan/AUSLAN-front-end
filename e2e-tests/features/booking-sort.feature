@@ -121,3 +121,19 @@ Feature: Booking Sort
     Then I should see the bookings in ascending order of Org
     When I click on table header 'Org'
     Then I should see the bookings in descending order of Org
+
+     @runThis
+  Scenario: Given 1 verified Booking Officer, I should be able to sort by date in ascending order
+    Given One booking has start and end dates as first and last days of next week
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    When I am on the bookings page
+    Then I will be shown with bookings
+    When I click on table header 'Date'
+    Then I should see the bookings in ascending order of Date
+    When I click on table header 'Date'
+    Then I should see the bookings in descending order of Date
+    And I click on 'New Booking'
+    And I click on Booking
+    Then I am shown with 5 booking
+    Then I should see the bookings in descending order of Date
