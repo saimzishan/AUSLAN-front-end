@@ -86,6 +86,18 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     serviceVRI = false;
     serviceCaptioning = false;
     serviceNotetaking = false;
+    cbAuslanInterpreter = true;
+    cbDeafInterpreter = false;
+    cbDeafBlindInterpreter = false;
+    cbOtherLanguageNeeds = false;
+    cbVisualFrame = false;
+    cbTactile = false;
+    cbPlatform = false;
+    cbAsl = false;
+    cbBsl = false;
+    cbIsl = false;
+    cbSignedEnglish = false;
+    cbIndigenousSign = false;
     @ViewChild('addressForm') private bookingAddress: AddressComponent;
 
     constructor(public bookingService: BookingService, private router: Router,
