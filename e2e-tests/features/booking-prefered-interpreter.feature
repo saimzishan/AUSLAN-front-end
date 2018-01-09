@@ -433,6 +433,7 @@ Feature: Create Booking with preferred or blocked interpreters
     Then I click on checkbox name 'tnc'
     And I click the create booking button
     Then I am on the individual booking page
+    Then I wait for 500 milli-seconds
     When I click on link 'Booking details'
     Then I should be on the edit booking page
     And I can count the element with css 'section.interpreter_selected_blocked' to be '0'
