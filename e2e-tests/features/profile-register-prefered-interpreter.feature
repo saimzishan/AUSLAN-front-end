@@ -368,5 +368,4 @@ Feature: Create Profile with prefered or blocked interpreters
     Then I can count the element with css 'section.interpreter_selected_prefered' to be '0'
 
 
-
 # --------------------------------------- AUSLAN1-379 END ------------------------------------------------
