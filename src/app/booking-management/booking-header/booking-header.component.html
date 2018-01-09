@@ -33,8 +33,8 @@
                     'passed' : isPassedState('Allocated')}">Allocated</a>
             <a href="javascript:void(0);" [ngClass]="{'active' : isActiveState('Completed'),
                     'passed' : isPassedState('Completed')}">Completed</a>
-            <a href="javascript:void(0);" [ngClass]="{'active' :  isActiveState('Unable_to_service') || isActiveState('Cancelled')}">
-                {{isActiveState('Cancelled') ? 'Cancelled' :
+            <a href="javascript:void(0);" [ngClass]="{'active' :  isActiveState('Unable_to_service') || isActiveState('Cancelled_no_charge')}">
+                {{isActiveState('Cancelled_no_charge') ? 'Cancelled No Charge' :
                 isActiveState('Unable_to_service') ? 'Unable To Service' : 'Finished' }}
             </a>
         </nav>

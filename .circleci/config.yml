@@ -7,7 +7,7 @@ jobs:
           username: $DOCKER_USER
           password: $DOCKER_PASS
     working_directory: /var/www/booking-system-frontend
-    parallelism: 6
+    parallelism: 9
     steps:
       - checkout
       - setup_remote_docker:
@@ -24,14 +24,22 @@ jobs:
             circleci tests glob "/var/www/booking-system-frontend/e2e-tests/features/*.feature" | circleci tests split > /var/www/booking-system-frontend/test_features_for_split_container.txt
             cat /var/www/booking-system-frontend/test_features_for_split_container.txt
       - run:
-          name: Running the unit tests
+          name: NPM Install
           environment:
             E2E_ENV: "localhost"
           shell: /bin/bash -l
           command: |
             npm install
-            npm install codeclimate-test-reporter -g
-            ./run-unit-test.sh
+      - run:
+          name: Running the unit tests
+          environment:
+            E2E_ENV: "localhost"
+          shell: /bin/bash -l
+          command: |
+            if [ "${CIRCLE_NODE_INDEX}" == "0" ]; then
+              npm install codeclimate-test-reporter -g
+              ./run-unit-test.sh
+            fi
       - run:
           name: Setup the server and run E2E tests
           environment:
