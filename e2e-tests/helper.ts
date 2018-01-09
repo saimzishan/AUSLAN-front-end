@@ -600,7 +600,7 @@ export class Heroku {
     private static createBooking(int_required: number) {
 
       let today = new Date();
-      today.setDate(today.getDate() + 1);
+      today.setDate(today.getDate() + 5);
       let todayDate = {
           mm: this.prettyDate(today.getMonth() + 1), //January is 0!
           dd: this.prettyDate(today.getDate()),
