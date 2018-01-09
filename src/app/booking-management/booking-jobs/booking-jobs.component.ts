@@ -187,14 +187,14 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     }
 
     changeBookingState(isCancel: Boolean, update_all_linked_bookings?: boolean) {
-        let state = isCancel ? 'cancelled' : 'unable_to_service';
-        let stateMsg = isCancel ? 'Cancelled' : 'Unable to Service';
+        let state = isCancel ? 'cancelled_no_charge' : 'unable_to_service';
+        let stateMsg = isCancel ? 'Cancelled with No Charge' : 'Unable to Service';
 
         this.spinnerService.requestInProcess(true);
         this.bookingService.updateBookingByTransitioning(this.selectedBookingModel.id, state, update_all_linked_bookings)
             .subscribe((res: any) => {
                     if (res.status === 204) {
-                        this.selectedBookingModel.state = isCancel ? BOOKING_STATE.Cancelled : BOOKING_STATE.Unable_to_service;
+                        this.selectedBookingModel.state = isCancel ? BOOKING_STATE.Cancelled_no_charge : BOOKING_STATE.Unable_to_service;
                         this.isCancelledOrUnableToServe = true;
                         this.notificationServiceBus.launchNotification(false, 'The booking has been transitioned to \"' + stateMsg + '\" state');
                     }
