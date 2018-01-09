@@ -21,8 +21,18 @@ jobs:
           type: shell
           name: Setup parallelism
           command: |
-            circleci tests glob "/var/www/booking-system-frontend/e2e-tests/features/*.feature" | circleci tests split > /var/www/booking-system-frontend/test_features_for_split_container.txt
-            cat /var/www/booking-system-frontend/test_features_for_split_container.txt
+            if [ $CIRCLE_BRANCH = 'master' ];
+            then
+              circleci tests glob "/var/www/booking-system-frontend/e2e-tests/features/*.feature" | circleci tests split > /var/www/booking-system-frontend/test_features_for_split_container.txt
+              cat /var/www/booking-system-frontend/test_features_for_split_container.txt
+            fi
+            if [ $CIRCLE_BRANCH != 'master' ];
+              then
+                PR=git rev-parse --abbrev-ref HEAD
+                FEATUREFILES=git diff --name-only origin/$PR `git merge-base origin/$PR origin/master` | grep feature
+                circleci tests glob FEATUREFILES | circleci tests split > /var/www/booking-system-frontend/test_features_for_split_container.txt
+                cat /var/www/booking-system-frontend/test_features_for_split_container.txt
+            fi
       - run:
           name: NPM Install
           environment:
