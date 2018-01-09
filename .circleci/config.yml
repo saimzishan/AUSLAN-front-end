@@ -21,8 +21,15 @@ jobs:
           type: shell
           name: Setup parallelism
           command: |
-            circleci tests glob "/var/www/booking-system-frontend/e2e-tests/features/*.feature" | circleci tests split > /var/www/booking-system-frontend/test_features_for_split_container.txt
-            cat /var/www/booking-system-frontend/test_features_for_split_container.txt
+            if [ $CIRCLE_BRANCH = 'master' ];
+              then
+                circleci tests glob "/var/www/booking-system-frontend/e2e-tests/features/*.feature" | circleci tests split > /var/www/booking-system-frontend/test_features_for_split_container.txt
+                cat /var/www/booking-system-frontend/test_features_for_split_container.txt
+            else
+              PR=$(git rev-parse --abbrev-ref HEAD)
+              git diff --name-only origin/$PR `git merge-base origin/$PR origin/master` | grep feature | circleci tests split > /var/www/booking-system-frontend/test_features_for_split_container.txt
+              cat /var/www/booking-system-frontend/test_features_for_split_container.txt
+            fi
       - run:
           name: NPM Install
           environment:
@@ -46,8 +53,11 @@ jobs:
             E2E_ENV: "localhost"
           shell: /bin/bash -l
           command: |
-            ./setup_ci.sh
-            ./run-e2e-test.sh
+            FILE=/var/www/booking-system-frontend/test_features_for_split_container.txt
+            if [[ -s $FILE ]] ; then
+              ./setup_ci.sh
+              ./run-e2e-test.sh
+            fi
       - deploy:
           name: Deploy to S3 if tests pass and branch is Master
           command: |
