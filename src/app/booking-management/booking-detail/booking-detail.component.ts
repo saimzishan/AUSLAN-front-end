@@ -82,10 +82,10 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     bookingStartTime: Date;
     bookingEndTime: Date;
     isDuplicate: boolean;
-    serviceInterpreting = true;
+    serviceOnSite = true;
     serviceVRI = false;
-    serviceCaptioning = false;
-    serviceNotetaking = false;
+    cbCaptioning = false;
+    cbNotetaking = false;
     cbAuslanInterpreter = true;
     cbDeafInterpreter = false;
     cbDeafBlindInterpreter = false;
@@ -166,26 +166,15 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     serviceTypeClick(serviceType: string) {
-        let index;
         switch (serviceType) {
-            case 'Interpreting':
-                this.serviceInterpreting = !this.serviceInterpreting;
+            case 'onSite':
+                this.serviceOnSite = !this.serviceOnSite;
+                this.serviceVRI = !this.serviceOnSite;
                 break;
             case 'VRI':
                 this.serviceVRI = !this.serviceVRI;
+                this.serviceOnSite = !this.serviceVRI;
                 break;
-            case 'Captioning':
-                this.serviceCaptioning = !this.serviceCaptioning;
-                break;
-            case 'Notetaking':
-                this.serviceNotetaking = !this.serviceNotetaking;
-                break;
-        }
-
-        if (this.serviceInterpreting && serviceType === 'Interpreting') {
-            this.serviceVRI = false;
-        } else if (this.serviceVRI && serviceType === 'VRI') {
-            this.serviceInterpreting = false;
         }
     }
 
@@ -445,7 +434,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.notificationServiceBus.launchNotification(true, 'Sorry. The field(s) underneath are filled in incorrectly. END TIME');
             return;
         }
-        if (this.bookingModel.interpreters_required < 2 && this.isMoreInterpreterNeeded()) {
+        if (this.bookingModel.number_of_auslan_interpreters_required < 2 && this.isMoreInterpreterNeeded()) {
             let message = `This booking might require more than 1 interpreter. You've only requested 1 interpreter.
                             Are you sure you want to create this booking?`;
             let title = 'Warning: this interpreter might require more interpreters';
@@ -546,8 +535,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         this.bookingModel.state = BOOKING_STATE.Requested; // res.data.state;
         this.bookingService.createBooking(this.bookingModel)
             .subscribe((res: any) => {
-                    if (res.status === 201 && res.data.id && 0 < res.data.id) {
-                        this.bookingModel.id = res.data.id;
+                    if (res.status === 204) {
                         this.notificationServiceBus.launchNotification(false, 'The Booking has been created.');
                         let route = this.rolePermission.getDefaultRouteForCurrentUser();
                         this.router.navigate([route]);
@@ -601,7 +589,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     saveBooking() {
-        if (this.assignedInterpreter > this.bookingModel.interpreters_required) {
+        if (this.assignedInterpreter > this.bookingModel.number_of_auslan_interpreters_required) {
             this.notificationServiceBus.launchNotification(true, 'Oops! Too many interpreters already allocated. Please unassign first.');
             return;
         } else {

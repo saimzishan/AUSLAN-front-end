@@ -21,7 +21,6 @@ export class Booking {
     public state: BOOKING_STATE;
     public attachment: any;
     public interpreters: Array<BookingInterpreter> = [];
-    public interpreters_required = 0;
     public notes = '';
     public special_instructions = '';
     public primaryContact = new Contact();
@@ -35,6 +34,20 @@ export class Booking {
     public travel_cost_applicable: boolean;
     public update_all_linked_bookings: boolean;
     public is_metro: boolean;
+
+    public number_of_auslan_interpreters_required: number;
+    public number_of_deaf_interpreters_required: number;
+    public number_of_deaf_blind_interpreters_required: number;
+    public number_of_captioners_required: number;
+    public number_of_note_takers_required: number;
+    public number_of_visual_frame_interpreters_required: number;
+    public number_of_tactile_interpreters_required: number;
+    public number_of_platform_interpreters_required: number;
+    public number_of_asl_interpreters_required: number;
+    public number_of_bsl_interpreters_required: number;
+    public number_of_isl_interpreters_required: number;
+    public number_of_signed_english_interpreters_required: number;
+    public number_of_indigenous_sign_interpreters_required: number;
     // Is it a limitation on interpreters invitation.
 
     constructor() {
@@ -93,7 +106,19 @@ export class Booking {
         this.venue.start_time_iso = new Date(data.start_time).toISOString();
         this.venue.end_time_iso = new Date(data.end_time).toISOString();
         this.venue.parking_type = data.parking_availability;
-        this.interpreters_required = data.number_of_interpreters_required;
+        this.number_of_auslan_interpreters_required = data.number_of_auslan_interpreters_required;
+        this.number_of_deaf_interpreters_required = data.number_of_deaf_interpreters_required;
+        this.number_of_deaf_blind_interpreters_required = data.number_of_deaf_blind_interpreters_required;
+        this.number_of_captioners_required = data.number_of_captioners_required;
+        this.number_of_note_takers_required = data.number_of_note_takers_required;
+        this.number_of_visual_frame_interpreters_required = data.number_of_visual_frame_interpreters_required;
+        this.number_of_tactile_interpreters_required = data.number_of_tactile_interpreters_required;
+        this.number_of_platform_interpreters_required = data.number_of_platform_interpreters_required;
+        this.number_of_asl_interpreters_required = data.number_of_asl_interpreters_required;
+        this.number_of_bsl_interpreters_required = data.number_of_bsl_interpreters_required;
+        this.number_of_isl_interpreters_required = data.number_of_isl_interpreters_required;
+        this.number_of_signed_english_interpreters_required = data.number_of_signed_english_interpreters_required;
+        this.number_of_indigenous_sign_interpreters_required = data.number_of_indigenous_sign_interpreters_required;
         this.requested_by.first_name = data.requested_by_first_name;
         this.requested_by.last_name = data.requested_by_last_name;
         this.primaryContact.first_name = data.contact_first_name;
@@ -201,7 +226,19 @@ export class Booking {
             venue: this.venue.title,
             requested_by_first_name: this.requested_by.first_name,
             requested_by_last_name: this.requested_by.last_name,
-            number_of_interpreters_required: this.interpreters_required,
+            number_of_auslan_interpreters_required: this.number_of_auslan_interpreters_required,
+            number_of_deaf_interpreters_required: this.number_of_deaf_interpreters_required,
+            number_of_deaf_blind_interpreters_required: this.number_of_deaf_blind_interpreters_required,
+            number_of_captioners_required: this.number_of_captioners_required,
+            number_of_note_takers_required: this.number_of_note_takers_required,
+            number_of_visual_frame_interpreters_required: this.number_of_visual_frame_interpreters_required,
+            number_of_tactile_interpreters_required: this.number_of_tactile_interpreters_required,
+            number_of_platform_interpreters_required: this.number_of_platform_interpreters_required,
+            number_of_asl_interpreters_required: this.number_of_asl_interpreters_required,
+            number_of_bsl_interpreters_required: this.number_of_bsl_interpreters_required,
+            number_of_isl_interpreters_required: this.number_of_isl_interpreters_required,
+            number_of_signed_english_interpreters_required: this.number_of_signed_english_interpreters_required,
+            number_of_indigenous_sign_interpreters_required: this.number_of_indigenous_sign_interpreters_required,
             nature_of_appointment: _nature_of_appointment,
             specific_nature_of_appointment: _specific_nature_of_appointment,
             contact_first_name: this.primaryContact.first_name,
