@@ -30,6 +30,8 @@ jobs:
               then
                 PR=$(git rev-parse --abbrev-ref HEAD)
                 FEATUREFILES=$(git diff --name-only origin/$PR `git merge-base origin/$PR origin/master` | grep feature)
+                echo $PR
+                echo $FEATUREFILES
                 circleci tests glob $FEATUREFILES | circleci tests split > /var/www/booking-system-frontend/test_features_for_split_container.txt
                 cat /var/www/booking-system-frontend/test_features_for_split_container.txt
             fi
