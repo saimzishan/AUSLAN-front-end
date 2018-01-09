@@ -289,7 +289,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                         );
 
                         this.fetchNearbyinterpreters(param_id);
-                        this.isCancelledOrUnableToServe = this.isActiveState('Cancelled')
+                        this.isCancelledOrUnableToServe = this.isActiveState('Cancelled_no_charge')
                             || this.isActiveState('Unable_to_service');
 
                         if (this.isCurrentUserInterpreter()) {

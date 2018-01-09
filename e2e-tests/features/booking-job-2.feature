@@ -17,14 +17,14 @@ Feature: Booking Admin Management
     Then I click on BUTTON 'Cancel Booking'
     Then I will be shown a popup message
     Then I click on BUTTON name 'yesBtn'
-    Then I get a valid 'Cancelled' notification for state
+    Then I get a valid 'Cancelled with No Charge' notification for state
     And I can not see a list of interpreters
     Then I can see the button state 'Unable to Service' is hidden
     Then I can see the button state 'Cancel Booking' is hidden
-    Then I can see the booking state 'Cancelled'
+    Then I can see the booking state 'Cancelled no charge'
     Then I click on Bookings
     And I am on the bookings page
-    Then I see one row with state 'Cancelled'
+    Then I see one row with state 'Cancelled no charge'
 
   @runThis
   Scenario: Booking Officer cancel the REQUESTED to Cancel Booking action, Interpreter exists and a booking is created
@@ -72,14 +72,14 @@ Feature: Booking Admin Management
     Then I click on BUTTON 'Cancel Booking'
     Then I will be shown a popup message
     Then I click on BUTTON name 'yesBtn'
-    Then I get a valid 'Cancelled' notification for state
+    Then I get a valid 'Cancelled with No Charge' notification for state
     And I can not see a list of interpreters
     Then I can see the button state 'Unable to Service' is hidden
     Then I can see the button state 'Cancel Booking' is hidden
-    Then I can see the booking state 'Cancelled'
+    Then I can see the booking state 'Cancelled no charge'
     Then I click on Bookings
     And I am on the bookings page
-    Then I see one row with state 'Cancelled'
+    Then I see one row with state 'Cancelled no charge'
 
   @runThis
   Scenario: Administrator cancel the INPROGRESS to Cancel Booking action, Interpreter exists and a booking is created
@@ -135,14 +135,14 @@ Feature: Booking Admin Management
     Then I click on BUTTON 'Cancel Booking'
     Then I will be shown a popup message
     Then I click on BUTTON name 'yesBtn'
-    Then I get a valid 'Cancelled' notification for state
+    Then I get a valid 'Cancelled with No Charge' notification for state
     And I can not see a list of interpreters
     Then I can see the button state 'Unable to Service' is hidden
     Then I can see the button state 'Cancel Booking' is hidden
-    Then I can see the booking state 'Cancelled'
+    Then I can see the booking state 'Cancelled no charge'
     Then I click on Bookings
     And I am on the bookings page
-    Then I see one row with state 'Cancelled'
+    Then I see one row with state 'Cancelled no charge'
 
   @runThis
   Scenario: Booking Officer cancel the INPROGRESS to Cancel Booking action, Interpreter exists  and a booking is created

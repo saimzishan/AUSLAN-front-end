@@ -92,7 +92,7 @@ Feature: Booking Management
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
     Then I can't see the txtSpecialInstruction field
- ---------------------------------------- AUSLAN1-40 -> END ----------------------------------------
+ # ---------------------------------------- AUSLAN1-40 -> END ----------------------------------------
 
   @runThis
   Scenario: As a Booking Officer, Given that I opened new booking page and select a Individual Client for booking then I can see the auto populate changes
