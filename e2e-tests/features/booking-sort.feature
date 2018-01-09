@@ -12,9 +12,9 @@ Feature: Booking Sort
     When I am on the bookings page
     Then I will be shown with bookings
     When I click on table header 'Job'
-    Then I should see the bookings in descending order of Job
-    When I click on table header 'Job'
     Then I should see the bookings in ascending order of Job
+    When I click on table header 'Job'
+    Then I should see the bookings in descending order of Job
 
   @runThis
   Scenario: Given 1 verified Booking Officer, I should be able to sort by booking status
@@ -58,9 +58,9 @@ Feature: Booking Sort
     When I am on the bookings page
     Then I will be shown with bookings
     When I click on table header 'Date'
-    Then I should see the bookings in ascending order of Date
-    When I click on table header 'Date'
     Then I should see the bookings in descending order of Date
+    When I click on table header 'Date'
+    Then I should see the bookings in ascending order of Date
 
   @runThis
   Scenario: Given 1 verified Booking Officer, I should be able to sort by client first name when last name is same
@@ -130,10 +130,10 @@ Feature: Booking Sort
     When I am on the bookings page
     Then I will be shown with bookings
     When I click on table header 'Date'
-    Then I should see the bookings in ascending order of Date
-    When I click on table header 'Date'
     Then I should see the bookings in descending order of Date
+    When I click on table header 'Date'
+    Then I should see the bookings in ascending order of Date
     And I click on 'New Booking'
     And I click on Booking
     Then I am shown with 5 booking
-    Then I should see the bookings in descending order of Date
+    Then I should see the bookings in ascending order of Date
