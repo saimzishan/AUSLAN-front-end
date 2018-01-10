@@ -27,7 +27,7 @@ jobs:
                 cat /var/www/booking-system-frontend/test_features_for_split_container.txt
             else
               PR=$(git rev-parse --abbrev-ref HEAD)
-              git diff --name-only origin/$PR `git merge-base origin/$PR origin/master` | grep feature | circleci tests split > /var/www/booking-system-frontend/test_features_for_split_container.txt
+              git diff --name-only origin/$PR `git merge-base origin/$PR origin/master` | grep "\.feature" | circleci tests split > /var/www/booking-system-frontend/test_features_for_split_container.txt
               cat /var/www/booking-system-frontend/test_features_for_split_container.txt
             fi
       - run:
