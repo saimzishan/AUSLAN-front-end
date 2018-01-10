@@ -1,6 +1,6 @@
-import {expect} from '../../config/helpers/chai-imports';
 // import * from 'chai';
 // import {} from 'jasmine';
+import {expect} from '../../config/helpers/chai-imports';
 import {defineSupportCode} from 'cucumber';
 import {browser, by, element, $, $$} from 'protractor';
 
@@ -9,7 +9,7 @@ import {BookingManagementPage} from '../../po/booking-management-page.po';
 import {CONSTANT, Booking, Heroku} from '../../helper';
 import {BookingPage} from '../../po/create-booking.po';
 import {BookingJobPage} from '../../po/booking-job.po';
-import {BookingEditPage} from "../../po/booking-edit.po";
+import {BookingEditPage} from '../../po/booking-edit.po';
 
 defineSupportCode(({Given, Then, When}) => {
 
@@ -108,6 +108,8 @@ defineSupportCode(({Given, Then, When}) => {
     When(/^I empty the search field '(.*)'$/, bookingManagementPO.emptyTheField);
 
     When(/^I click out of the text box$/, bookingManagementPO.clickOutSide);
+    When(/^I click on Booking$/, bookingManagementPO.clickOnBooking);
+
 
     Then(/^All required booking fields should be filled$/, bookingEditPO.checkValueInAllRequiredFields);
 

@@ -255,6 +255,9 @@ export class BookingManagementPage extends PageObject {
     clickOutSide = () => {
         this.getElementByName('auslanLogo').click();
     }
+    clickOnBooking = () => {
+        return this.getElementByID('lnkBooking').click();
+    }
     // Adds a '0' in the start if the date < 10
     private prettyDate = (date: number|string): string => {
         date = date.toString();
