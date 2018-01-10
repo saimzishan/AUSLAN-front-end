@@ -82,6 +82,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     bookingStartTime: Date;
     bookingEndTime: Date;
     isDuplicate: boolean;
+    defaultDateTime: Date;
     @ViewChild('addressForm') private bookingAddress: AddressComponent;
 
     constructor(public bookingService: BookingService, private router: Router,
@@ -114,6 +115,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 this.bookingDate = this.datePipe.transform(this.bookingModel.venue.start_time_iso, 'MM/dd/yyyy');
                 this.bookingStartTime = new Date(this.bookingModel.venue.start_time_iso);
                 this.bookingEndTime = new Date(this.bookingModel.venue.end_time_iso);
+                this.setDayMonthYear();
                 this.natureOfApptChange(null);
             } else {
                 this.bookingModel = new Booking();
@@ -127,6 +129,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             } else {
                 this.bookingHeading = 'NEW BOOKING';
                 this.bookingModel.bookable_type = this.bookingModel.bookable_type || 'IndividualClient';
+                this.roundOffMinutes();
             }
         });
     }
@@ -206,9 +209,24 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         let today = new Date();
         let year = today.getFullYear();
         this.minDate = new Date();
-        this.minDate.setDate(today.getDate());
+        this.isUserAdminORBookOfficer ? this.minDate.setFullYear(year - 5) : this.minDate.setDate(today.getDate());
         this.maxDate = new Date();
         this.maxDate.setFullYear(year + 5);
+    }
+
+    setDayMonthYear() {
+        let currentDate = new Date();
+        this.bookingStartTime = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(),
+                                            this.bookingStartTime.getHours(), this.bookingStartTime.getMinutes());
+        this.bookingEndTime = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(),
+                                            this.bookingEndTime.getHours(), this.bookingEndTime.getMinutes());
+    }
+
+    roundOffMinutes() {
+        let currentDate = new Date();
+        this.defaultDateTime = currentDate;
+        let minute = Math.ceil(currentDate.getMinutes() / 5) * 5;
+        this.defaultDateTime.setMinutes(minute);
     }
 
     public onClientSelectionChange() {
