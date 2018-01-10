@@ -430,14 +430,14 @@ export class Heroku {
     }
 
     static createBulkBookings(count: string) {
-        let command = 'Booking.destroy_all;i=IndividualClient.first;FactoryGirl.create(:ted_individual_client) if !i;';
+        let command = 'i=IndividualClient.first;FactoryGirl.create(:ted_individual_client) if !i;';
         command += 'FactoryGirl.create_list(:booking, ' + count + ', bookable: IndividualClient.first)';
         Heroku.sendCommandToHeroku(command);
     }
 
     static createBulkBookingsWithLinkId(count: number, negate: string) {
         const newLinkIdRequired = String(!(negate === 'out'));
-        let command = 'Booking.destroy_all;i=IndividualClient.first;FactoryGirl.create(:ted_individual_client) if !i;';
+        let command = 'i=IndividualClient.first;FactoryGirl.create(:ted_individual_client) if !i;';
         command += 'FactoryGirl.create_list(:booking, ' + count + ', bookable: IndividualClient.first, new_link_id_required: ' + newLinkIdRequired + ')';
         Heroku.sendCommandToHeroku(command);
     }

@@ -332,7 +332,7 @@ export class BookingManagementPage extends PageObject {
         expect(tblRows.count()).to.eventually.be.least(1);
         let clientNameTd = this.getElementByCss('table tbody tr:first-child td:nth-child(9)');
         return clientNameTd.getText().then((txt) => {
-            return expect(txt.split(' ')[0]).to.be.eq(interpreter_name);
+            return expect(txt).to.be.eq(interpreter_name);
         });
     }
     bookingExistsWithInterpreterLastName = (interpreter_name: string) => {
@@ -340,7 +340,7 @@ export class BookingManagementPage extends PageObject {
         expect(tblRows.count()).to.eventually.be.least(1);
         let clientNameTd = this.getElementByCss('table tbody tr:first-child td:nth-child(9)');
         return clientNameTd.getText().then((txt) => {
-            return expect(txt.split(' ')[1]).to.be.eq(interpreter_name);
+            return expect(txt).to.be.eq(interpreter_name);
         });
     }
     bookingExistsWithOrgName = (org_name: string) => {
