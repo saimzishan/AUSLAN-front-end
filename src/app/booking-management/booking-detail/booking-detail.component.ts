@@ -716,7 +716,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     filterUserPreference(interpreters) {
         if (this.forEdit()) {
             this.bookingModel.preference_allocations_attributes = interpreters;
-            this.saveBooking();
         } else {
             this.bookingModel.preference_allocations_attributes = [];
             interpreters.forEach(i => {

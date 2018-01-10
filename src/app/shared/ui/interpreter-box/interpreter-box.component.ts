@@ -10,7 +10,7 @@ import {AuthGuard} from '../../../auth/auth.guard';
     styleUrls: ['./interpreter-box.component.css']
 
 })
-export class InterpreterBoxComponent implements OnInit, AfterContentInit {
+export class InterpreterBoxComponent implements OnInit, AfterContentInit, OnDestroy {
 
     @Input() isPreffered = false;
     @Input() isReadOnly = false;
@@ -37,9 +37,8 @@ export class InterpreterBoxComponent implements OnInit, AfterContentInit {
                     });
     }
 
-    ngOndestroy() {
+    ngOnDestroy() {
         let sub = this.preferAllocSub && this.preferAllocSub.unsubscribe();
-
         return sub ;
     }
 
