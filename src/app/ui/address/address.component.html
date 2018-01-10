@@ -3,6 +3,13 @@
   <h4 class="text-center">{{prefix}}</h4>
 </header>
 <div class="row-wrapper" ngForm="addressFields" #addressFields="ngForm">
+  <div class="medium-10 columns">
+    <div class="form-field">
+      <label>FIND ADDRESS<span mdTooltip="Find address"><i class="inline-icon-tip"></i></span></label>
+      <input name="search_address" #searchAddress placeholder="Enter address" type="text"
+             class="ng-pristine ng-valid ng-touched" [(ngModel)]="address.search_address">
+    </div>
+  </div>
   <div class="medium-3 columns">
     <div class="form-field">
       <label>UNIT NUMBER <span mdTooltip="Enter the Unit Number"><i class="inline-icon-tip"></i></span></label>
@@ -12,7 +19,8 @@
   <div class="medium-3 columns">
     <div class="form-field">
       <label>STREET NUMBER * <span mdTooltip="Enter the Street Number"><i class="inline-icon-tip"></i></span></label>
-      <input type="text" [readonly]="isReadOnly" (click)="fieldClick($event)" (blur)="canCalculateDistance && calculateDistance();" placeholder="Enter the Street Number" [(ngModel)]="address.street_number" name="address_street_number" #address_street_number="ngModel" [rangeLength]="[1, 6]" digit required>
+      <input type="text" [readonly]="isReadOnly" (click)="fieldClick($event)" (blur)="canCalculateDistance && calculateDistance();" placeholder="Enter the Street Number"
+             [(ngModel)]="address.street_number" name="address_street_number" #address_street_number="ngModel" [rangeLength]="[1, 6]" digit required>
       <span *ngIf="address_street_number.touched && !address_street_number.errors?.required && !address_street_number.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
       <span *ngIf="address_street_number.touched && (address_street_number.errors?.required ||address_street_number.errors?.rangeLength);" class="inline-icon error">
         <span>Minimum 1 characters required.</span>!
@@ -23,7 +31,8 @@
   <div class="medium-6 columns">
     <div class="form-field">
       <label>STREET NAME * <span mdTooltip="Enter the Street Name!"><i class="inline-icon-tip"></i></span></label>
-      <input type="text" [readonly]="isReadOnly" (click)="fieldClick($event)" (blur)="canCalculateDistance && calculateDistance();" placeholder="Enter the Street Name" [(ngModel)]="address.street_name" name="address_street" #address_street="ngModel" [rangeLength]="[2, 30]" required>
+      <input type="text" [readonly]="isReadOnly" (click)="fieldClick($event)" (blur)="canCalculateDistance && calculateDistance();" placeholder="Enter the Street Name"
+             [(ngModel)]="address.street_name" name="address_street" #address_street="ngModel" [rangeLength]="[2, 30]" required>
       <span *ngIf="address_street.touched && !address_street.errors?.required && !address_street.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
       <span *ngIf="address_street.touched && (address_street.errors?.required || address_street.errors?.rangeLength);" class="inline-icon error">
         <span>Minimum 2 characters required.</span>!

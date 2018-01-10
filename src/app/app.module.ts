@@ -75,6 +75,7 @@ import {GmapsApiService} from './api/gmaps-api.service';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {RemoveSpacePipe} from './shared/pipe/remove-space.pipe';
 import {CalendarModule as PrimeNgCalendarModule} from 'primeng/primeng';
+import { AgmCoreModule } from '@agm/core';
 
 
 @NgModule({
@@ -112,7 +113,10 @@ import {CalendarModule as PrimeNgCalendarModule} from 'primeng/primeng';
     FormsModule, BrowserAnimationsModule, NgxPaginationModule,
     HttpModule, SimpleNotificationsModule.forRoot(),
     ReactiveFormsModule, Md2Module.forRoot(),
-    MaterialModule, CalendarModule, PrimeNgCalendarModule
+    MaterialModule, CalendarModule, PrimeNgCalendarModule, AgmCoreModule.forRoot({
+          apiKey: 'AIzaSyD6AdcxpDfXs_UN2BrOn70oVXeWh7VnxOY',
+          libraries: ['places']
+      }),
   ],  providers: [DatePipe, LinkAuth, UserNameService, RolePermission, AuthGuard, NoAuthGuard, Title, LinkHelper,
     NotificationServiceBus, SpinnerService, BookingService, UserService,
         PreferedAllocationService, BookingHeaderService, GmapsApiService,
