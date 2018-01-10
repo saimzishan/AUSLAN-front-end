@@ -76,7 +76,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     preferAllocSub: any;
     oldInterpreterPreference = [];
     isDisabledForAdmin: boolean;
-    bookingDate: string;
+    bookingDate: Date;
     minDate: Date;
     maxDate: Date;
     bookingStartTime: Date;
@@ -112,7 +112,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 this.oldDocuments = jsonData.documents_attributes;
                 this.oldInterpreterPreference = jsonData.preference_allocations_attributes;
                 this.bookingModel.documents_attributes = [];
-                this.bookingDate = this.datePipe.transform(this.bookingModel.venue.start_time_iso, 'MM/dd/yyyy');
+                this.bookingDate = new Date(this.datePipe.transform(this.bookingModel.venue.start_time_iso, 'MM/dd/yyyy'));
                 this.bookingStartTime = new Date(this.bookingModel.venue.start_time_iso);
                 this.bookingEndTime = new Date(this.bookingModel.venue.end_time_iso);
                 this.setDayMonthYear();
