@@ -82,8 +82,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     bookingStartTime: Date;
     bookingEndTime: Date;
     isDuplicate: boolean;
-    serviceOnSite = true;
-    serviceVRI = false;
     cbCaptioning = false;
     cbNotetaking = false;
     cbAuslanInterpreter = true;
@@ -166,16 +164,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     serviceTypeClick(serviceType: string) {
-        switch (serviceType) {
-            case 'onSite':
-                this.serviceOnSite = !this.serviceOnSite;
-                this.serviceVRI = !this.serviceOnSite;
-                break;
-            case 'VRI':
-                this.serviceVRI = !this.serviceVRI;
-                this.serviceOnSite = !this.serviceVRI;
-                break;
-        }
+        this.bookingModel.method_type = serviceType;
     }
 
     getOrgName(item) {
@@ -434,10 +423,10 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.notificationServiceBus.launchNotification(true, 'Sorry. The field(s) underneath are filled in incorrectly. END TIME');
             return;
         }
-        if (this.bookingModel.number_of_auslan_interpreters_required < 2 && this.isMoreInterpreterNeeded()) {
-            let message = `This booking might require more than 1 interpreter. You've only requested 1 interpreter.
+        if (this.isInterpreterLessThanTwo() && this.isMoreInterpreterNeeded()) {
+            let message = `This booking might require more than 1 professional. You've only requested 1.
                             Are you sure you want to create this booking?`;
-            let title = 'Warning: this interpreter might require more interpreters';
+            let title = 'Warning: this booking might require more professionals';
             this.createModal(title, message);
             this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
                 if (result) {
@@ -482,6 +471,39 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             } else {
                 this.createBooking();
             }
+        }
+    }
+
+    isInterpreterLessThanTwo() {
+
+        if (this.cbAuslanInterpreter && this.bookingModel.number_of_auslan_interpreters_required < 2) {
+            return true;
+        } else if (this.cbDeafInterpreter && this.bookingModel.number_of_deaf_interpreters_required < 2) {
+            return true;
+        } else if (this.cbDeafBlindInterpreter && this.bookingModel.number_of_deaf_blind_interpreters_required < 2) {
+            return true;
+        } else if (this.cbCaptioning && this.bookingModel.number_of_captioners_required < 2) {
+            return true;
+        } else if (this.cbNotetaking && this.bookingModel.number_of_note_takers_required < 2) {
+            return true;
+        } else if (this.cbVisualFrame && this.bookingModel.number_of_visual_frame_interpreters_required < 2) {
+            return true;
+        } else if (this.cbTactile && this.bookingModel.number_of_tactile_interpreters_required < 2) {
+            return true;
+        } else if (this.cbPlatform && this.bookingModel.number_of_platform_interpreters_required < 2) {
+            return true;
+        } else if (this.cbAsl && this.bookingModel.number_of_asl_interpreters_required < 2) {
+            return true;
+        } else if (this.cbBsl && this.bookingModel.number_of_bsl_interpreters_required < 2) {
+            return true;
+        } else if (this.cbIsl && this.bookingModel.number_of_isl_interpreters_required < 2) {
+            return true;
+        } else if (this.cbSignedEnglish && this.bookingModel.number_of_signed_english_interpreters_required < 2) {
+            return true;
+        } else if (this.cbIndigenousSign && this.bookingModel.number_of_indigenous_sign_interpreters_required < 2) {
+            return true;
+        } else {
+            return false;
         }
     }
 
