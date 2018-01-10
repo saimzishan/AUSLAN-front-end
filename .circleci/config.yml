@@ -7,7 +7,7 @@ jobs:
           username: $DOCKER_USER
           password: $DOCKER_PASS
     working_directory: /var/www/booking-system-frontend
-    parallelism: 6
+    parallelism: 9
     steps:
       - checkout
       - setup_remote_docker:
