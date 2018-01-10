@@ -5,13 +5,15 @@ import { UserNameService } from './user-name.service';
 import {PreferedAllocationService} from './prefered-allocation.service';
 
 describe('PreferedAllocationService', () => {
+    let prefAllocationBackup = [];
+    let selectedInterpreter = {};
     beforeEach(() => {
         TestBed.configureTestingModule({
             providers: [PreferedAllocationService]
         });
     });
 
-    it('should ...', inject([PreferedAllocationService],
+    it('should exists', inject([PreferedAllocationService],
         (service: PreferedAllocationService) => {
         expect(service).toBeTruthy();
     }));
