@@ -217,9 +217,9 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     setDayMonthYear() {
         let currentDate = new Date();
         this.bookingStartTime = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(),
-                                            this.bookingStartTime.getHours(), this.bookingStartTime.getMinutes());
+            this.bookingStartTime.getHours(), this.bookingStartTime.getMinutes());
         this.bookingEndTime = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(),
-                                            this.bookingEndTime.getHours(), this.bookingEndTime.getMinutes());
+            this.bookingEndTime.getHours(), this.bookingEndTime.getMinutes());
     }
 
     roundOffMinutes() {
