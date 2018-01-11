@@ -29,15 +29,6 @@ describe('EnumValPipe', () => {
     expect(keys[r.None].key).toEqual([r.None].toString());
   });
 
-
-  it('transforms enum into dict, as far as its base 10 >= 0', () => {
-    let r = BOOKING_STATE;
-    let keys = pipe.transform(r);
-
-    expect(keys[r.Ready_to_process].key).toEqual([r.Ready_to_process].toString());
-    expect(r[r.Ready_to_process]).toEqual(keys[r.Ready_to_process].value);
-  });
-
   it('do not transforms enum into dict, as far as its base 10 < 0', () => {
     enum BAD_ENUM { ANYKEY1= -1 , ANYKEY2= -2};
     let r = BAD_ENUM;
