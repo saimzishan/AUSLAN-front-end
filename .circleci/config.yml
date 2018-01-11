@@ -38,6 +38,15 @@ jobs:
           command: |
             npm install
       - run:
+          name: Test Deployment Package
+          environment:
+            E2E_ENV: "localhost"
+          shell: /bin/bash -l
+          command: |
+            rm -rf dist
+            npm install enhanced-resolve@3.3.0
+            ng build --aot --env=canary
+      - run:
           name: Running the unit tests
           environment:
             E2E_ENV: "localhost"

@@ -2,12 +2,12 @@
   <md-dialog-content>
     <header>
       <h1>Link Booking</h1>
-      <button (click)="closeDialog()"><i class="icon-close"></i></button>
+      <button (click)="closeDialog(false)"><i class="icon-close"></i></button>
     </header>
     <main>
       <div>
         <p>Select the link-id for this booking</p>
-        <form name="linkBookingForm" (submit)="saveBooking()">
+        <form name="linkBookingForm">
           <label for="availableLinkIds">
             Link ID
           </label>
@@ -21,7 +21,7 @@
 
   <div>
     <md-dialog-actions>
-      <button name="noBtn" (click)="closeDialog()" class="button red">Back to Job</button>
+      <button name="noBtn" (click)="closeDialog(false)" class="button red">Back to Job</button>
       <button name="yesBtn"  (click)="closeDialog(true)" class="button">Link Booking</button>
     </md-dialog-actions>
   </div>

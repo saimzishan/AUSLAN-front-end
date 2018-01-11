@@ -8,8 +8,8 @@ import {MdDialogRef} from '@angular/material';
     styleUrls: ['./linkid-popup.component.css']
 })
 export class LinkidPopupComponent implements OnInit {
-    private selectedLinkId: number;
-    private availableLinkIds: Array<number|string> = ['New linked booking'];
+    selectedLinkId: number;
+    availableLinkIds: Array<number|string> = ['New linked booking'];
     @Input() bookingId: number;
 
     constructor(private bookingService: BookingService, private dialogRef: MdDialogRef<LinkidPopupComponent>) {
@@ -22,7 +22,7 @@ export class LinkidPopupComponent implements OnInit {
             });
     }
 
-    public closeDialog(val) {
+    closeDialog(val) {
         this.dialogRef.close(val ? this.selectedLinkId : val);
     }
 }
