@@ -419,7 +419,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.notificationServiceBus.launchNotification(true, GLOBAL.MISSING_FIELDS_ERROR_MESSAGE);
             return;
         }
-        if (this.bookingEndTime < this.bookingStartTime) {
+        if (this.bookingEndTime.getTime() < this.bookingStartTime.getTime()) {
             this.notificationServiceBus.launchNotification(true, 'Sorry. The field(s) underneath are filled in incorrectly. END TIME');
             return;
         }
