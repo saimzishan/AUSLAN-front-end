@@ -315,7 +315,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
 
                         this.fetchNearbyinterpreters(param_id);
                         this.isCancelledOrUnableToServe = this.isActiveState('Cancelled_no_charge')
-                            || this.isActiveState('Unable_to_service');
+                            || this.isActiveState('Unable_to_service') || this.isActiveState('Cancelled_chargeable');
 
                         this.selectedBookingModel.venue.start_time_iso = this.selectedBookingModel.utcToBookingTimeZone(this.selectedBookingModel.venue.start_time_iso);
                         this.selectedBookingModel.venue.end_time_iso = this.selectedBookingModel.utcToBookingTimeZone(this.selectedBookingModel.venue.end_time_iso);
