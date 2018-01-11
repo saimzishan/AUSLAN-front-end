@@ -138,6 +138,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             if (this.forEdit()) {
                 this.bookingHeading = 'EDIT BOOKING';
                 this.termsAndConditionAccepted = true;
+                this.checkInterpreterBoxes();
             } else {
                 this.bookingHeading = 'NEW BOOKING';
                 this.bookingModel.bookable_type = this.bookingModel.bookable_type || 'IndividualClient';
@@ -505,6 +506,24 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         } else {
             return false;
         }
+    }
+
+    checkInterpreterBoxes() {
+        this.cbAuslanInterpreter = this.bookingModel.number_of_auslan_interpreters_required > 0;
+        this.cbDeafInterpreter = this.bookingModel.number_of_deaf_interpreters_required > 0;
+        this.cbDeafBlindInterpreter = this.bookingModel.number_of_deaf_blind_interpreters_required > 0;
+        this.cbCaptioning = this.bookingModel.number_of_captioners_required > 0;
+        this.cbNotetaking = this.bookingModel.number_of_note_takers_required > 0;
+        this.cbVisualFrame = this.bookingModel.number_of_visual_frame_interpreters_required > 0;
+        this.cbTactile = this.bookingModel.number_of_tactile_interpreters_required > 0;
+        this.cbPlatform = this.bookingModel.number_of_platform_interpreters_required > 0;
+        this.cbAsl = this.bookingModel.number_of_asl_interpreters_required > 0;
+        this.cbBsl = this.bookingModel.number_of_bsl_interpreters_required > 0;
+        this.cbIsl = this.bookingModel.number_of_isl_interpreters_required > 0;
+        this.cbSignedEnglish = this.bookingModel.number_of_signed_english_interpreters_required > 0;
+        this.cbIndigenousSign = this.bookingModel.number_of_indigenous_sign_interpreters_required > 0;
+
+        this.cbOtherLanguageNeeds = this.cbAsl || this.cbBsl || this.cbIsl || this.cbSignedEnglish || this.cbIndigenousSign;
     }
 
     isMoreInterpreterNeeded() {

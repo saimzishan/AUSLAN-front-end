@@ -79,21 +79,21 @@
       <ng-container>
       <p name="interpreterMsg">What kind of interpreter(s) {{isUserAdminORBookOfficer ? (bookingModel.bookable_type ==='IndividualClient' ? "does the client":"does the organisation") :"do you"}} need? Select multiple if relevant</p>
       <div class="row" id="interpreters-kind">
-        <div class="medium-3 columns"> <md-checkbox name="cbAuslan" [(ngModel)]="cbAuslanInterpreter" [disabled]="isDisabledForOrgRepIndClient">AUSLAN</md-checkbox> </div>
-        <div class="medium-3 columns"> <md-checkbox name="cbDeaf" [(ngModel)]="cbDeafInterpreter" [disabled]="isDisabledForOrgRepIndClient">DEAF</md-checkbox> </div>
-        <div class="medium-3 columns"> <md-checkbox name="cbDeafBlind" [(ngModel)]="cbDeafBlindInterpreter" [disabled]="isDisabledForOrgRepIndClient">DEAF BLIND</md-checkbox> </div>
+        <div class="medium-3 columns"> <md-checkbox name="cbAuslan" [(ngModel)]="cbAuslanInterpreter">AUSLAN</md-checkbox> </div>
+        <div class="medium-3 columns"> <md-checkbox name="cbDeaf" [(ngModel)]="cbDeafInterpreter">DEAF</md-checkbox> </div>
+        <div class="medium-3 columns"> <md-checkbox name="cbDeafBlind" [(ngModel)]="cbDeafBlindInterpreter">DEAF BLIND</md-checkbox> </div>
         <div class="medium-3 columns"> <md-checkbox name="cbCaptioning" [(ngModel)]="cbCaptioning">CAPTIONING</md-checkbox> </div>
         <div class="medium-3 columns"> <md-checkbox name="cbNotetaking" [(ngModel)]="cbNotetaking">NOTETAKING</md-checkbox> </div>
-        <div class="medium-3 columns"> <md-checkbox name="cbOtherLanguage" [(ngModel)]="cbOtherLanguageNeeds" [disabled]="isDisabledForOrgRepIndClient">OTHER LANGUAGE NEEDS</md-checkbox> </div>
+        <div class="medium-3 columns"> <md-checkbox name="cbOtherLanguage" [(ngModel)]="cbOtherLanguageNeeds">OTHER LANGUAGE NEEDS</md-checkbox> </div>
       </div>
-      <div class="row" *ngIf="cbDeafBlindInterpreter" name="deafBlindInterpreterTypes">
+      <div class="row" *ngIf="cbDeafBlindInterpreter || cbVisualFrame || cbTactile || cbPlatform" name="deafBlindInterpreterTypes">
           <div class="medium-3 columns"> <md-checkbox name="cbVisualFrame" [(ngModel)]="cbVisualFrame">VISUAL FRAME</md-checkbox> </div>
           <div class="medium-3 columns"> <md-checkbox name="cbTactile" [(ngModel)]="cbTactile">TACTILE</md-checkbox> </div>
           <div class="medium-3 columns"> <md-checkbox name="cbPlatform" [(ngModel)]="cbPlatform">PLATFORM</md-checkbox> </div>
       </div>
       <div class="row" *ngIf="cbOtherLanguageNeeds" name="otherLanguageTypes">
           <div class="medium-3 columns"> <md-checkbox name="cbAsl" [(ngModel)]="cbAsl">ASL</md-checkbox> </div>
-          <div class="medium-3 columns">  <md-checkbox name="cbBsl" [(ngModel)]="cbBsl">BSL</md-checkbox> </div>
+          <div class="medium-3 columns"> <md-checkbox name="cbBsl" [(ngModel)]="cbBsl">BSL</md-checkbox> </div>
           <div class="medium-3 columns"> <md-checkbox name="cbIsl" [(ngModel)]="cbIsl">ISL</md-checkbox> </div>
           <div class="medium-3 columns"> <md-checkbox name="cbSignedEnglish" [(ngModel)]="cbSignedEnglish">SIGNED ENGLISH</md-checkbox> </div>
           <div class="medium-3 columns"> <md-checkbox name="cbIndigenousSign" [(ngModel)]="cbIndigenousSign">INDIGENOUS SIGN</md-checkbox> </div>
@@ -339,7 +339,7 @@
               </span>
             </label>
             <input [(ngModel)]="bookingModel.number_of_captioners_required"
-                   name="captioning_count" [readonly]="isDisabledForOrgRepIndClient"
+                   name="captioning_count"
                    #captioning_count="ngModel"
                    placeholder="Enter the Number of Captioners needed"
                    (click)="fireNotification($event)"
@@ -364,7 +364,7 @@
               </span>
             </label>
             <input [(ngModel)]="bookingModel.number_of_note_takers_required"
-                   name="notetaking_count" [readonly]="isDisabledForOrgRepIndClient"
+                   name="notetaking_count"
                    #notetaking_count="ngModel"
                    placeholder="Enter the Number of Notetaker needed"
                    (click)="fireNotification($event)"
@@ -393,7 +393,7 @@
               </span>
             </label>
             <input [(ngModel)]="bookingModel.number_of_deaf_interpreters_required"
-                   name="deaf_count" [readonly]="isDisabledForOrgRepIndClient"
+                   name="deaf_count"
                    #deaf_count="ngModel"
                    placeholder="Enter the Number of Deaf Interpreters needed"
                    (click)="fireNotification($event)"
@@ -414,7 +414,7 @@
             </span>
           </div>
         </div>
-      <ng-container *ngIf="cbDeafBlindInterpreter">
+      <ng-container *ngIf="cbDeafBlindInterpreter || cbVisualFrame || cbTactile || cbPlatform">
         <div class="medium-6 columns" *ngIf="cbDeafBlindInterpreter">
           <div class="form-field">
             <label>NUMB. OF DEAF BLIND INT. NEEDED *
@@ -423,7 +423,7 @@
               </span>
             </label>
             <input [(ngModel)]="bookingModel.number_of_deaf_blind_interpreters_required"
-                   name="deafBlind_count" [readonly]="isDisabledForOrgRepIndClient"
+                   name="deafBlind_count"
                    #deafBlind_count="ngModel"
                    placeholder="Enter the Number of Deaf Blind Interpreters needed"
                    (click)="fireNotification($event)"
@@ -452,7 +452,7 @@
               </span>
             </label>
             <input [(ngModel)]="bookingModel.number_of_visual_frame_interpreters_required"
-                   name="visualFrame_count" [readonly]="isDisabledForOrgRepIndClient"
+                   name="visualFrame_count"
                    #visualFrame_count="ngModel"
                    placeholder="Enter the Number of Visual Frame Interpreters needed"
                    (click)="fireNotification($event)"
@@ -481,7 +481,7 @@
               </span>
             </label>
             <input [(ngModel)]="bookingModel.number_of_tactile_interpreters_required"
-                   name="tactile_count" [readonly]="isDisabledForOrgRepIndClient"
+                   name="tactile_count"
                    #tactile_count="ngModel"
                    placeholder="Enter the Number of Tactile Interpreters needed"
                    (click)="fireNotification($event)"
@@ -510,7 +510,7 @@
               </span>
             </label>
             <input [(ngModel)]="bookingModel.number_of_platform_interpreters_required"
-                   name="platform_count" [readonly]="isDisabledForOrgRepIndClient"
+                   name="platform_count"
                    #platform_count="ngModel"
                    placeholder="Enter the Number of Platform Interpreters needed"
                    (click)="fireNotification($event)"
@@ -541,7 +541,7 @@
               </span>
             </label>
             <input [(ngModel)]="bookingModel.number_of_asl_interpreters_required"
-                   name="asl_count" [readonly]="isDisabledForOrgRepIndClient"
+                   name="asl_count"
                    #asl_count="ngModel"
                    placeholder="Enter the Number of ASL Interpreters needed"
                    (click)="fireNotification($event)"
@@ -570,7 +570,7 @@
               </span>
             </label>
             <input [(ngModel)]="bookingModel.number_of_bsl_interpreters_required"
-                   name="bsl_count" [readonly]="isDisabledForOrgRepIndClient"
+                   name="bsl_count"
                    #bsl_count="ngModel"
                    placeholder="Enter the Number of BSL Interpreters needed"
                    (click)="fireNotification($event)"
@@ -599,7 +599,7 @@
               </span>
             </label>
             <input [(ngModel)]="bookingModel.number_of_isl_interpreters_required"
-                   name="isl_count" [readonly]="isDisabledForOrgRepIndClient"
+                   name="isl_count"
                    #isl_count="ngModel"
                    placeholder="Enter the Number of ISL Interpreters needed"
                    (click)="fireNotification($event)"
@@ -628,7 +628,7 @@
               </span>
             </label>
             <input [(ngModel)]="bookingModel.number_of_signed_english_interpreters_required"
-                   name="signedEnglish_count" [readonly]="isDisabledForOrgRepIndClient"
+                   name="signedEnglish_count"
                    #signedEnglish_count="ngModel"
                    placeholder="Enter the Number of Signed English Interpreters needed"
                    (click)="fireNotification($event)"
@@ -657,7 +657,7 @@
               </span>
             </label>
             <input [(ngModel)]="bookingModel.number_of_indigenous_sign_interpreters_required"
-                   name="indigenousSign_count" [readonly]="isDisabledForOrgRepIndClient"
+                   name="indigenousSign_count"
                    #indigenousSign_count="ngModel"
                    placeholder="Enter the Number of Indigenous Sign Interpreters needed"
                    (click)="fireNotification($event)"

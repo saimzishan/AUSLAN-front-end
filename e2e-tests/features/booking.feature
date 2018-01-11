@@ -673,7 +673,6 @@ Feature: Booking Management
     And I fill New Booking form fields correctly
     And I select the bookable for client
     When I click on BUTTON name 'btnVri'
-    Then I debug
     Then I can see the element with name 'vriAdditionalFields' is 'visible'
     And I can see the element with name 'captioningAndVriAdditionalFields' is 'visible'
     Then I click on checkbox name 'cbDeaf'
