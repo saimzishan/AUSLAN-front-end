@@ -43,9 +43,11 @@ jobs:
             E2E_ENV: "localhost"
           shell: /bin/bash -l
           command: |
-            rm -rf dist
-            npm install enhanced-resolve@3.3.0
-            ng build --aot --env=canary
+            if [ "${CIRCLE_NODE_INDEX}" == "0" ]; then
+              rm -rf dist
+              npm install enhanced-resolve@3.3.0
+              ng build --aot --env=canary
+            fi
       - run:
           name: Running the unit tests
           environment:
