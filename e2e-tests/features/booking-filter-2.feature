@@ -15,7 +15,7 @@ Feature: Booking Filter
     Then I am shown with 5 booking
     When I query booking with interpreter name 'Rebecca'
     Then I am shown with 1 booking
-    Then I see one row with interpreter first name 'Rebecca'
+    Then I see one row with interpreter first name 'Needs to be filled (1/3)'
 
   @runThis
   Scenario: Given 1 verified Booking Officer, 1 verified Interpreter, I should be able to filter by interpreter last name
@@ -27,7 +27,7 @@ Feature: Booking Filter
     Then I am shown with 5 booking
     When I query booking with interpreter name 'Jones'
     Then I am shown with 1 booking
-    Then I see one row with interpreter last name 'J.'
+    Then I see one row with interpreter last name 'Needs to be filled (1/3)'
 
   @runThis
   Scenario: Given 1 verified Booking Officer, I should be able to filter by suburb

@@ -76,12 +76,13 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     preferAllocSub: any;
     oldInterpreterPreference = [];
     isDisabledForAdmin: boolean;
-    bookingDate: string;
+    bookingDate: Date;
     minDate: Date;
     maxDate: Date;
     bookingStartTime: Date;
     bookingEndTime: Date;
     isDuplicate: boolean;
+    defaultDateTime: Date;
     @ViewChild('addressForm') private bookingAddress: AddressComponent;
 
     constructor(public bookingService: BookingService, private router: Router,
@@ -111,9 +112,10 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 this.oldDocuments = jsonData.documents_attributes;
                 this.oldInterpreterPreference = jsonData.preference_allocations_attributes;
                 this.bookingModel.documents_attributes = [];
-                this.bookingDate = this.datePipe.transform(this.bookingModel.venue.start_time_iso, 'MM/dd/yyyy');
+                this.bookingDate = new Date(this.datePipe.transform(this.bookingModel.venue.start_time_iso, 'MM/dd/yyyy'));
                 this.bookingStartTime = new Date(this.bookingModel.venue.start_time_iso);
                 this.bookingEndTime = new Date(this.bookingModel.venue.end_time_iso);
+                this.setDayMonthYear();
                 this.natureOfApptChange(null);
             } else {
                 this.bookingModel = new Booking();
@@ -127,6 +129,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             } else {
                 this.bookingHeading = 'NEW BOOKING';
                 this.bookingModel.bookable_type = this.bookingModel.bookable_type || 'IndividualClient';
+                this.roundOffMinutes();
             }
         });
     }
@@ -158,8 +161,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         let selectedDate = this.datePipe.transform(this.bookingDate, 'yyyy-MM-dd');
         let startTime = moment(this.bookingStartTime, 'hh:mm A').format('HH:mm:ss');
         let endTime = moment(this.bookingEndTime, 'hh:mm A').format('HH:mm:ss');
-        this.bookingModel.venue.start_time_iso = selectedDate + 'T' + startTime;
-        this.bookingModel.venue.end_time_iso = selectedDate + 'T' + endTime;
+        this.bookingModel.venue.start_time_iso = this.bookingModel.utcToBookingTimeZone(selectedDate + 'T' + startTime);
+        this.bookingModel.venue.end_time_iso = this.bookingModel.utcToBookingTimeZone(selectedDate + 'T' + endTime);
     }
 
     natureOfApptChange($event) {
@@ -206,9 +209,24 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         let today = new Date();
         let year = today.getFullYear();
         this.minDate = new Date();
-        this.minDate.setDate(today.getDate());
+        this.isUserAdminORBookOfficer ? this.minDate.setFullYear(year - 5) : this.minDate.setDate(today.getDate());
         this.maxDate = new Date();
         this.maxDate.setFullYear(year + 5);
+    }
+
+    setDayMonthYear() {
+        let currentDate = new Date();
+        this.bookingStartTime = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(),
+            this.bookingStartTime.getHours(), this.bookingStartTime.getMinutes());
+        this.bookingEndTime = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(),
+            this.bookingEndTime.getHours(), this.bookingEndTime.getMinutes());
+    }
+
+    roundOffMinutes() {
+        let currentDate = new Date();
+        this.defaultDateTime = currentDate;
+        let minute = Math.ceil(currentDate.getMinutes() / 5) * 5;
+        this.defaultDateTime.setMinutes(minute);
     }
 
     public onClientSelectionChange() {
@@ -401,7 +419,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.notificationServiceBus.launchNotification(true, GLOBAL.MISSING_FIELDS_ERROR_MESSAGE);
             return;
         }
-        if (this.bookingEndTime < this.bookingStartTime) {
+        if (this.bookingEndTime.getTime() < this.bookingStartTime.getTime()) {
             this.notificationServiceBus.launchNotification(true, 'Sorry. The field(s) underneath are filled in incorrectly. END TIME');
             return;
         }

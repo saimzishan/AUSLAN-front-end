@@ -92,7 +92,8 @@ Feature: Booking Filter
     Given I sign in with valid Administrator credentials
     When I am on the bookings page
     Then I am shown with 5 booking
-    When I click on element by id 'linkId_0'
+    When I click on table header 'Job'
+    And I click on element by id 'linkId_0'
     Then I am shown with 1 booking
     And I can see the input with name 'booking_ids' has text '#1'
 

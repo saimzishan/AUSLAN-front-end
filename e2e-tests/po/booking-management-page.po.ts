@@ -161,7 +161,7 @@ export class BookingManagementPage extends PageObject {
 
     bookingWithTypeExists = (count: string, booking_type: string) => {
         let tblRows = this.getAllElementByCSS('table tbody tr');
-        expect(tblRows.count()).to.eventually.be.equal(1);
+        expect(tblRows.count()).to.eventually.be.least(1);
         let orgNameTd = this.getElementByCss('table tbody tr:first-child td:nth-child(10)');
         return orgNameTd.getText().then((txt) => {
             return expect(txt).to.be.eq(booking_type);
@@ -255,6 +255,9 @@ export class BookingManagementPage extends PageObject {
     clickOutSide = () => {
         this.getElementByName('auslanLogo').click();
     }
+    clickOnBooking = () => {
+        return this.getElementByID('lnkBooking').click();
+    }
     // Adds a '0' in the start if the date < 10
     private prettyDate = (date: number|string): string => {
         date = date.toString();
@@ -295,22 +298,22 @@ export class BookingManagementPage extends PageObject {
     bookingExistsWithId = () => {
         let queriedID = this.queryIdBooking;
         let tblRows = this.getAllElementByCSS('table tbody tr');
-        expect(tblRows.count()).to.eventually.be.equal(1);
         return this.getFirstBookingID().then(txt => {
+            expect(tblRows.count()).to.eventually.be.least(1);
             return expect(queriedID).to.be.eq(txt[0]);
         });
     }
     bookingExistsWithLinkId = () => {
         const tblRows = this.getAllElementByCSS('table tbody tr');
-        expect(tblRows.count()).to.eventually.be.equal(1);
         return this.getFirstBookingLinkID().then(txt => {
             const isTextLinkId = txt.length > 0 && !!txt[0].match(/#\d+/);
+            expect(tblRows.count()).to.eventually.be.gte(1);
             return expect(isTextLinkId).to.be.true;
         });
     }
     bookingExistsWithClientName = (client_name: string) => {
         let tblRows = this.getAllElementByCSS('table tbody tr');
-        expect(tblRows.count()).to.eventually.be.equal(1);
+        expect(tblRows.count()).to.eventually.be.least(1);
         let clientNameTd = this.getElementByCss('table tbody tr:first-child td:nth-child(' + BookingTableHeaders.Client + ')');
         return clientNameTd.getText().then((txt) => {
             return expect(txt.split(' ')[0]).to.be.eq(client_name);
@@ -318,7 +321,7 @@ export class BookingManagementPage extends PageObject {
     }
     bookingExistsWithClientLastName = (client_name: string) => {
         let tblRows = this.getAllElementByCSS('table tbody tr');
-        expect(tblRows.count()).to.eventually.be.equal(1);
+        expect(tblRows.count()).to.eventually.be.least(1);
         let clientNameTd = this.getElementByCss('table tbody tr:first-child td:nth-child(' + BookingTableHeaders.Client + ')');
         return clientNameTd.getText().then((txt) => {
             return expect(txt.split(' ')[1]).to.be.eq(client_name);
@@ -326,23 +329,23 @@ export class BookingManagementPage extends PageObject {
     }
     bookingExistsWithInterpreterFirstName = (interpreter_name: string) => {
         let tblRows = this.getAllElementByCSS('table tbody tr');
-        expect(tblRows.count()).to.eventually.be.equal(1);
+        expect(tblRows.count()).to.eventually.be.least(1);
         let clientNameTd = this.getElementByCss('table tbody tr:first-child td:nth-child(9)');
         return clientNameTd.getText().then((txt) => {
-            return expect(txt.split(' ')[0]).to.be.eq(interpreter_name);
+            return expect(txt).to.be.eq(interpreter_name);
         });
     }
     bookingExistsWithInterpreterLastName = (interpreter_name: string) => {
         let tblRows = this.getAllElementByCSS('table tbody tr');
-        expect(tblRows.count()).to.eventually.be.equal(1);
+        expect(tblRows.count()).to.eventually.be.least(1);
         let clientNameTd = this.getElementByCss('table tbody tr:first-child td:nth-child(9)');
         return clientNameTd.getText().then((txt) => {
-            return expect(txt.split(' ')[1]).to.be.eq(interpreter_name);
+            return expect(txt).to.be.eq(interpreter_name);
         });
     }
     bookingExistsWithOrgName = (org_name: string) => {
         let tblRows = this.getAllElementByCSS('table tbody tr');
-        expect(tblRows.count()).to.eventually.be.equal(1);
+        expect(tblRows.count()).to.eventually.be.least(1);
         let orgNameTd = this.getElementByCss('table tbody tr:first-child td:nth-child(' + BookingTableHeaders.Org + ')');
         return orgNameTd.getText().then((txt) => {
             return expect(txt).to.be.eq(org_name);
@@ -350,7 +353,7 @@ export class BookingManagementPage extends PageObject {
     }
     bookingExistsWithSuburb = (suburb: string) => {
         let tblRows = this.getAllElementByCSS('table tbody tr');
-        expect(tblRows.count()).to.eventually.be.equal(1);
+        expect(tblRows.count()).to.eventually.be.least(1);
         let suburbTd = this.getElementByCss('table tbody tr:first-child td:nth-child(' + BookingTableHeaders.Suburb + ')');
         return suburbTd.getText().then((txt) => {
             return expect(txt).to.be.eq(suburb);
