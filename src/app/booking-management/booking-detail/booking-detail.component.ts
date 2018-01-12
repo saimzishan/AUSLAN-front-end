@@ -167,8 +167,25 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         }
     }
 
-    serviceTypeClick(serviceType: string) {
-        this.bookingModel.method_type = serviceType;
+    serviceTypeChange(serviceType: string) {
+        console.log(this.cbAuslanInterpreter);
+        switch (serviceType) {
+            case 'auslan':
+                break;
+            case 'deaf':
+                this.cbAuslanInterpreter = false;
+                break;
+            case 'deafBlind':
+                break;
+            case 'captioning':
+                break;
+            case 'notetaking':
+                break;
+            case 'otherLanguage':
+                break;
+            default:
+                break;
+        }
     }
 
     getOrgName(item) {
@@ -648,8 +665,9 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     saveBooking() {
-        if (this.assignedInterpreter > this.bookingModel.number_of_auslan_interpreters_required) {
-            this.notificationServiceBus.launchNotification(true, 'Oops! Too many interpreters already allocated. Please unassign first.');
+        if (this.isAssignInterpGreaterThanRequested()) {
+            let msg = this.cbCaptioning ? 'captioners' : this.cbNotetaking ? 'notetakers' : 'interpreters';
+            this.notificationServiceBus.launchNotification(true, 'Oops! Too many ' + msg + ' already allocated. Please unassign first.');
             return;
         } else {
             this.spinnerService.requestInProcess(true);
@@ -674,6 +692,13 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                             'Error occurred on server side. ' + errors.statusText + ' ' + JSON.stringify(e || e.errors));
                     });
         }
+    }
+
+    isAssignInterpGreaterThanRequested() {
+       return this.cbCaptioning ? this.assignedInterpreter > this.bookingModel.number_of_captioners_required :
+                                  this.cbNotetaking ? this.assignedInterpreter > this.bookingModel.number_of_note_takers_required :
+                                  this.assignedInterpreter > this.bookingModel.number_of_auslan_interpreters_required;
+
     }
 
     gotoBookingInfo() {

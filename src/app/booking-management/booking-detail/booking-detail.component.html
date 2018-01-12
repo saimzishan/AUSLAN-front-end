@@ -67,11 +67,11 @@
       <h2>Type of Booking</h2>
       <p name="serviceMsg">What kind of services {{isUserAdminORBookOfficer ? (bookingModel.bookable_type ==='IndividualClient' ? "does the client":"does the organisation") :"do you"}} need? Select multiple if relevant</p>
       <section id="services">
-        <button md-button name="btnOnsite" [ngClass]="bookingModel.method_type === 'onsite' ? 'active' : ''" (click)="serviceTypeClick('onsite')">
+        <button md-button name="btnOnsite" [ngClass]="bookingModel.method_type === 'onsite' ? 'active' : ''" (click)="bookingModel.method_type = 'onsite'">
           <i class="icon-service-interpreting"></i>
           <span>On Site</span>
         </button>
-        <button md-button name="btnVri" [ngClass]="bookingModel.method_type === 'vri' ? 'active' : ''" (click)="serviceTypeClick('vri')">
+        <button md-button name="btnVri" [ngClass]="bookingModel.method_type === 'vri' ? 'active' : ''" (click)="bookingModel.method_type = 'vri'">
           <i class="icon-service-vri"></i>
           <span>VRI</span>
         </button>
@@ -79,12 +79,12 @@
       <ng-container>
       <p name="interpreterMsg">What kind of interpreter(s) {{isUserAdminORBookOfficer ? (bookingModel.bookable_type ==='IndividualClient' ? "does the client":"does the organisation") :"do you"}} need? Select multiple if relevant</p>
       <div class="row" id="interpreters-kind">
-        <div class="medium-3 columns"> <md-checkbox name="cbAuslan" [(ngModel)]="cbAuslanInterpreter">AUSLAN</md-checkbox> </div>
-        <div class="medium-3 columns"> <md-checkbox name="cbDeaf" [(ngModel)]="cbDeafInterpreter">DEAF</md-checkbox> </div>
-        <div class="medium-3 columns"> <md-checkbox name="cbDeafBlind" [(ngModel)]="cbDeafBlindInterpreter">DEAF BLIND</md-checkbox> </div>
-        <div class="medium-3 columns"> <md-checkbox name="cbCaptioning" [(ngModel)]="cbCaptioning">CAPTIONING</md-checkbox> </div>
-        <div class="medium-3 columns"> <md-checkbox name="cbNotetaking" [(ngModel)]="cbNotetaking">NOTETAKING</md-checkbox> </div>
-        <div class="medium-3 columns"> <md-checkbox name="cbOtherLanguage" [(ngModel)]="cbOtherLanguageNeeds">OTHER LANGUAGE NEEDS</md-checkbox> </div>
+        <div class="medium-3 columns"> <md-checkbox name="cbAuslan" [(ngModel)]="cbAuslanInterpreter" (change)="serviceTypeChange('auslan')" [disabled]="cbAuslanInterpreter">AUSLAN</md-checkbox> </div>
+        <div class="medium-3 columns"> <md-checkbox name="cbDeaf" [(ngModel)]="cbDeafInterpreter" (change)="serviceTypeChange('deaf')">DEAF</md-checkbox> </div>
+        <div class="medium-3 columns"> <md-checkbox name="cbDeafBlind" [(ngModel)]="cbDeafBlindInterpreter" (change)="serviceTypeChange('deafBlind')">DEAF BLIND</md-checkbox> </div>
+        <div class="medium-3 columns"> <md-checkbox name="cbCaptioning" [(ngModel)]="cbCaptioning" (change)="serviceTypeChange('captioning')">CAPTIONING</md-checkbox> </div>
+        <div class="medium-3 columns"> <md-checkbox name="cbNotetaking" [(ngModel)]="cbNotetaking" (change)="serviceTypeChange('notetaking')">NOTETAKING</md-checkbox> </div>
+        <div class="medium-3 columns"> <md-checkbox name="cbOtherLanguage" [(ngModel)]="cbOtherLanguageNeeds" (change)="serviceTypeChange('otherLanguage')">OTHER LANGUAGE NEEDS</md-checkbox> </div>
       </div>
       <div class="row" *ngIf="cbDeafBlindInterpreter || cbVisualFrame || cbTactile || cbPlatform" name="deafBlindInterpreterTypes">
           <div class="medium-3 columns"> <md-checkbox name="cbVisualFrame" [(ngModel)]="cbVisualFrame">VISUAL FRAME</md-checkbox> </div>
