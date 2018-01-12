@@ -15,6 +15,7 @@ import {PopupComponent} from '../../shared/popup/popup.component';
 import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
 import {GLOBAL} from '../../shared/global';
 import {BookingHeaderService} from '../booking-header/booking-header.service';
+import {LinkidPopupComponent} from '../linkid-popup/linkid-popup.component';
 
 @Component({
     selector: 'app-booking-jobs',
@@ -82,6 +83,9 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                     break;
                 case 'unlinkBooking':
                     this.unlinkBooking();
+                    break;
+                case 'linkBooking':
+                    this.linkBooking();
                     break;
                 case 'saveChanges':
                     this.saveChanges();
@@ -167,11 +171,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
           all linked bookings?`;
 
         this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
-            if (result) {
-                this.changeBookingState(isCancel, false);
-            } else {
-                this.changeBookingState(isCancel, true);
-            }
+            this.changeBookingState(isCancel, !result);
         });
     }
 
@@ -187,14 +187,14 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     }
 
     changeBookingState(isCancel: Boolean, update_all_linked_bookings?: boolean) {
-        let state = isCancel ? 'cancelled' : 'unable_to_service';
-        let stateMsg = isCancel ? 'Cancelled' : 'Unable to Service';
+        let state = isCancel ? 'cancelled_no_charge' : 'unable_to_service';
+        let stateMsg = isCancel ? 'Cancelled with No Charge' : 'Unable to Service';
 
         this.spinnerService.requestInProcess(true);
         this.bookingService.updateBookingByTransitioning(this.selectedBookingModel.id, state, update_all_linked_bookings)
             .subscribe((res: any) => {
                     if (res.status === 204) {
-                        this.selectedBookingModel.state = isCancel ? BOOKING_STATE.Cancelled : BOOKING_STATE.Unable_to_service;
+                        this.selectedBookingModel.state = isCancel ? BOOKING_STATE.Cancelled_no_charge : BOOKING_STATE.Unable_to_service;
                         this.isCancelledOrUnableToServe = true;
                         this.notificationServiceBus.launchNotification(false, 'The booking has been transitioned to \"' + stateMsg + '\" state');
                     }
@@ -214,10 +214,35 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         this.router.navigate(['/booking-management', 'create-booking'], navigationExtras);
     }
 
+    linkBooking() {
+        let config: MdDialogConfig = {
+            disableClose: true
+        };
+        config.viewContainerRef = this.viewContainerRef;
+        this.dialogRef = this.dialog.open(LinkidPopupComponent, config);
+        this.dialogRef.componentInstance.bookingId = this.selectedBookingModel.id;
+        this.dialogSub = this.dialogRef.afterClosed().subscribe((selectedLinkId: any) => {
+            if (+selectedLinkId) {
+                this.selectedBookingModel.link_id = Number(selectedLinkId);
+                this.selectedBookingModel.new_link_id_required = false;
+                this.selectedBookingModel.update_all_linked_bookings = false;
+            } else if (selectedLinkId === 'New linked booking') {
+                this.selectedBookingModel.link_id = null;
+                this.selectedBookingModel.new_link_id_required = true;
+                this.selectedBookingModel.update_all_linked_bookings = false;
+            }
+
+            if (selectedLinkId) {
+                this.saveChanges();
+            }
+        });
+    }
+
     unlinkBooking() {
         this.unlinkPressed = true;
         this.selectedBookingModel.link_id = null;
         this.selectedBookingModel.update_all_linked_bookings = false;
+        this.selectedBookingModel.new_link_id_required = false;
     }
 
     editBooking() {
@@ -289,8 +314,11 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                         );
 
                         this.fetchNearbyinterpreters(param_id);
-                        this.isCancelledOrUnableToServe = this.isActiveState('Cancelled')
-                            || this.isActiveState('Unable_to_service');
+                        this.isCancelledOrUnableToServe = this.isActiveState('Cancelled_no_charge')
+                            || this.isActiveState('Unable_to_service') || this.isActiveState('Cancelled_chargeable');
+
+                        this.selectedBookingModel.venue.start_time_iso = this.selectedBookingModel.utcToBookingTimeZone(this.selectedBookingModel.venue.start_time_iso);
+                        this.selectedBookingModel.venue.end_time_iso = this.selectedBookingModel.utcToBookingTimeZone(this.selectedBookingModel.venue.end_time_iso);
 
                         if (this.isCurrentUserInterpreter()) {
                             this.selectedBookingModel.interpreters.filter(i => i.id === GLOBAL.currentUser.id)
@@ -392,17 +420,18 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                 });
     }
 
-    private removeLinkFromBooking = () => {
+    private updateSelectedBookingModel = () => {
         this.bookingService.updateBooking(this.selectedBookingModel.id, this.selectedBookingModel)
             .subscribe((res: any) => {
                     if (res.status === 204) {
                         this.spinnerService.requestInProcess(false);
                         this.notificationServiceBus.launchNotification(false, 'The Booking has been Updated.');
+                        this.fetchBookingInterpreters(this.selectedBookingModel.id);
                     }
                 },
                 err => {
                     this.spinnerService.requestInProcess(false);
-                    let e = err.json() || 'There is some error on server side';
+                    let e = err.json() || {errors: 'There booking could not be updated. Please try after some time.'};
                     this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
                 });
     }
@@ -436,7 +465,9 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
             this.selectedActionableInterpreterID = -1;
         } else if (this.unlinkPressed) {
             this.unlinkPressed = false;
-            this.removeLinkFromBooking();
+            this.updateSelectedBookingModel();
+        } else {
+            this.updateSelectedBookingModel();
         }
     }
 

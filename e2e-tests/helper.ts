@@ -1,5 +1,3 @@
-import {execSync} from 'child_process';
-import {environment} from '../src/environments/environment';
 import {browser} from 'protractor';
 
 /**
@@ -398,14 +396,13 @@ export class Booking {
 }
 
 
-
 export class Heroku {
 
     static sendCommandToHeroku(command) {
         const exec = require('child_process').execSync;
 
         command = 'ActiveRecord::Base.logger.level = Logger::INFO;' + command + ';nil;exit';
-        let herokuCommand =  'cd ../booking-system-api/ && echo  \'' + command + '\' | bundle exec rails c && cd ../booking-system-frontend/';
+        let herokuCommand = 'cd ../booking-system-api/ && echo  \'' + command + '\' | bundle exec rails c && cd ../booking-system-frontend/';
         exec(herokuCommand);
     }
 
@@ -413,11 +410,11 @@ export class Heroku {
         const exec = require('child_process').execSync;
         let herokuCommand = 'cd ../booking-system-api/ && bundle exec rails ' + task + ' && cd ../booking-system-frontend/';
 
-        exec(herokuCommand , (o1, o2, o3) => {
-                console.log('Heroku Command => Output', o1);
-                console.log('Heroku Command => StdError', o2);
-                console.log('Heroku Command => Error', o3);
-            });
+        exec(herokuCommand, (o1, o2, o3) => {
+            console.log('Heroku Command => Output', o1);
+            console.log('Heroku Command => StdError', o2);
+            console.log('Heroku Command => Error', o3);
+        });
     }
 
     static createSingleBooking() {
@@ -431,16 +428,20 @@ export class Heroku {
         let command = 'b = Booking.new(' + JSON.stringify(data) + '); b.bookable = IndividualClient.first; b.save';
         Heroku.sendCommandToHeroku(command);
     }
+
     static createBulkBookings(count: string) {
         let command = 'i=IndividualClient.first;FactoryGirl.create(:ted_individual_client) if !i;';
         command += 'FactoryGirl.create_list(:booking, ' + count + ', bookable: IndividualClient.first)';
         Heroku.sendCommandToHeroku(command);
     }
-    static createBulkBookingsWithLinkId(count: number) {
+
+    static createBulkBookingsWithLinkId(count: number, negate: string) {
+        const newLinkIdRequired = String(!(negate === 'out'));
         let command = 'i=IndividualClient.first;FactoryGirl.create(:ted_individual_client) if !i;';
-        command += 'FactoryGirl.create_list(:booking, ' + count + ', bookable: IndividualClient.first, new_link_id_required: true)';
+        command += 'FactoryGirl.create_list(:booking, ' + count + ', bookable: IndividualClient.first, new_link_id_required: ' + newLinkIdRequired + ')';
         Heroku.sendCommandToHeroku(command);
     }
+
     static preloadOrgBookings() {
         let task = 'seed:test_data:preloaded_org_bookings';
         Heroku.sendTaskToHeroku(task);
@@ -465,6 +466,7 @@ export class Heroku {
                 '").update_attributes(verified:' + true + ')');
         }
     }
+
     static createBulkAdministrator(numberOfUser: string) {
         const num_of_user = parseInt(numberOfUser, 10);
         for (let i = 0; i < num_of_user; i++) {
@@ -507,6 +509,7 @@ export class Heroku {
         command += 'b.save;';
         Heroku.sendCommandToHeroku(command);
     }
+
     static specialOrgRepSetup() {
         let command = 'o=OrganisationalRepresentative.first;';
         command += 'o.special_instructions="I am special";';
@@ -599,14 +602,13 @@ export class Heroku {
 
     private static createBooking(int_required: number) {
 
-      let today = new Date();
-      today.setDate(today.getDate() + 1);
-      let todayDate = {
-          mm: this.prettyDate(today.getMonth() + 1), //January is 0!
-          dd: this.prettyDate(today.getDate()),
-          yy: today.getFullYear().toString()
-      };
-      let currentDate = todayDate.yy + '-' + todayDate.mm + '-' + todayDate.dd;
+        let today = new Date();
+        today.setDate(today.getDate() + 1);
+        const currentDate = [
+            this.prettyDate(today.getDate()),
+            this.prettyDate(today.getMonth() + 1), // January is 0!
+            today.getFullYear().toString()
+        ].join('-');
         return new Object({
             'venue': 'Fed Square',
             'requested_by_first_name': 'Georgious',
@@ -655,8 +657,9 @@ export class Heroku {
             'bookable_type': 'OrganisationalRepresentative'
         });
     }
-      // Adds a '0' in the start if the date < 10
-      private static prettyDate = (date: number|string): string => {
+
+    // Adds a '0' in the start if the date < 10
+    private static prettyDate = (date: number | string): string => {
         date = date.toString();
         return ('00' + date).slice(date.length);
     }

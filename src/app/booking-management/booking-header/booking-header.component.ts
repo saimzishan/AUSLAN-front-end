@@ -63,6 +63,10 @@ export class BookingHeaderComponent implements OnInit, OnDestroy {
         this.bookingHeaderService.notifyOther({option: 'unlinkBooking'});
     }
 
+    linkBooking() {
+        this.bookingHeaderService.notifyOther({option: 'linkBooking'});
+    }
+
     saveClick() {
         this.bookingHeaderService.notifyOther({option: 'saveChanges', value: ''});
     }

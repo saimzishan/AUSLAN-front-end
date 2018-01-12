@@ -120,6 +120,9 @@
                       class="inline-icon error">
                   <span>Start Date is required</span>!
                 </span>
+                <span *ngIf="(bookingDate < minDate)" class="inline-icon error">
+                  <span>Please select the correct date</span>
+                </span>
               </div>
             </div>
 
@@ -131,7 +134,7 @@
             [readonlyInput]="isDisabledForOrgRepIndClient"
             placeholder="STARTING TIME *"
             [timeOnly]="true" hourFormat="12"
-            [stepMinute]="5"
+            [stepMinute]="5" [defaultDate]="defaultDateTime"
             required #dpEventDate="ngModel"></p-calendar>
             <span *ngIf="dpEventDate.touched && !dpEventDate.errors?.required;"
                   class="inline-icon inline-icon-valid valid"></span>
@@ -150,7 +153,7 @@
             [readonlyInput]="isDisabledForOrgRepIndClient"
             placeholder="ENDING TIME *"
             [timeOnly]="true" hourFormat="12"
-            [stepMinute]="5"
+            [stepMinute]="5" [defaultDate]="defaultDateTime"
             required #dpEventEndTime="ngModel"></p-calendar>
             <span *ngIf="dpEventEndTime.touched && !dpEventEndTime.errors?.required;"
                   class="inline-icon inline-icon-valid valid"></span>

@@ -35,8 +35,8 @@ describe('Booking Entity', () => {
       expect(mock_booking.venue.street_number).toEqual('50');
       expect(mock_booking.number_of_auslan_interpreters_required).toEqual('2');
       expect(mock_booking.venue.street_name).toEqual('Flemington Rd');
-      expect(mock_booking.venue.start_time_iso).toEqual('2017-04-02T07:50:19.212Z');
-      expect(mock_booking.venue.end_time_iso).toEqual('2017-04-02T08:50:19.212Z');
+      expect(mock_booking.utcToBookingTimeZone(mock_booking.venue.start_time_iso)).toEqual('2017-04-02T17:50:19+10:00');
+      expect(mock_booking.utcToBookingTimeZone(mock_booking.venue.end_time_iso)).toEqual('2017-04-02T18:50:19+10:00');
       expect(mock_booking.requested_by.first_name).toEqual('Georgious');
       expect(mock_booking.requested_by.last_name).toEqual('George');
       expect(mock_booking.primaryContact.first_name).toEqual('Hadrian');

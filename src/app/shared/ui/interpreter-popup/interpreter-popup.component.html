@@ -8,7 +8,7 @@
       <section id="interpreters-list">
         <section name="interpreters" *ngFor="let interpreter of interpreterList;"
                  [ngClass]="{'selected': interpreter.interpreter_id === checkedInterpreter,
-                 'interpreter_added': isAlreadyAdded(interpreter.interpreter_id)  === true}"
+                 'interpreter_added': !isLocallyRemovedFromArray(interpreter.interpreter_id) && isAlreadyAdded(interpreter.interpreter_id)  === true}"
                  (click)="isInterpreterSelectable(interpreter.interpreter_id)">
           <img (click)="checkedInterpreter = interpreter.interpreter_id ;" src="{{interpreter.photo_url}}"  alt="">
           <span>{{interpreter.first_name}} {{interpreter.last_name}}</span>

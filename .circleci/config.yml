@@ -7,7 +7,7 @@ jobs:
           username: $DOCKER_USER
           password: $DOCKER_PASS
     working_directory: /var/www/booking-system-frontend
-    parallelism: 6
+    parallelism: 9
     steps:
       - checkout
       - setup_remote_docker:
@@ -21,25 +21,54 @@ jobs:
           type: shell
           name: Setup parallelism
           command: |
-            circleci tests glob "/var/www/booking-system-frontend/e2e-tests/features/*.feature" | circleci tests split > /var/www/booking-system-frontend/test_features_for_split_container.txt
-            cat /var/www/booking-system-frontend/test_features_for_split_container.txt
+            if [ $CIRCLE_BRANCH = 'master' ];
+              then
+                circleci tests glob "/var/www/booking-system-frontend/e2e-tests/features/*.feature" | circleci tests split > /var/www/booking-system-frontend/test_features_for_split_container.txt
+                cat /var/www/booking-system-frontend/test_features_for_split_container.txt
+            else
+              PR=$(git rev-parse --abbrev-ref HEAD)
+              git diff --name-only origin/$PR `git merge-base origin/$PR origin/master` | grep "\.feature" | circleci tests split > /var/www/booking-system-frontend/test_features_for_split_container.txt
+              cat /var/www/booking-system-frontend/test_features_for_split_container.txt
+            fi
+      - run:
+          name: NPM Install
+          environment:
+            E2E_ENV: "localhost"
+          shell: /bin/bash -l
+          command: |
+            npm install
+      - run:
+          name: Test Deployment Package
+          environment:
+            E2E_ENV: "localhost"
+          shell: /bin/bash -l
+          command: |
+            if [ "${CIRCLE_NODE_INDEX}" == "0" ]; then
+              rm -rf dist
+              npm install enhanced-resolve@3.3.0
+              ng build --aot --env=canary
+            fi
       - run:
           name: Running the unit tests
           environment:
             E2E_ENV: "localhost"
           shell: /bin/bash -l
           command: |
-            npm install
-            npm install codeclimate-test-reporter -g
-            ./run-unit-test.sh
+            if [ "${CIRCLE_NODE_INDEX}" == "0" ]; then
+              npm install codeclimate-test-reporter -g
+              ./run-unit-test.sh
+            fi
       - run:
           name: Setup the server and run E2E tests
           environment:
             E2E_ENV: "localhost"
           shell: /bin/bash -l
           command: |
-            ./setup_ci.sh
-            ./run-e2e-test.sh
+            FILE=/var/www/booking-system-frontend/test_features_for_split_container.txt
+            if [[ -s $FILE ]] ; then
+              ./setup_ci.sh
+              ./run-e2e-test.sh
+            fi
       - deploy:
           name: Deploy to S3 if tests pass and branch is Master
           command: |

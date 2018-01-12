@@ -35,10 +35,30 @@ export class InterpreterPopupComponent implements OnInit {
         return this.selectedInterpreters.filter((i) => i.interpreter_id === interpreter_id).length > 0;
     }
 
+    isLocallyRemoved(selectedInterpreter) {
+        return selectedInterpreter.hasOwnProperty('_destroy') && selectedInterpreter._destroy === 1;
+    }
+    isLocallyRemovedFromArray(interpreter_id) {
+        if ( this.selectedInterpreters.filter((i) => i.interpreter_id === interpreter_id).length > 0) {
+            let selectedInterpreter = this.selectedInterpreters.filter((i) => i.interpreter_id === interpreter_id)[0];
+            return selectedInterpreter.hasOwnProperty('_destroy') && selectedInterpreter._destroy === 1;
+        }
+        return false;
+    }
     isInterpreterSelectable(interpreter_id) {
-        this.checkedInterpreter =
-            this.isAlreadyAdded(interpreter_id) ? -1 : interpreter_id;
-            this.checkForNotification(this.isAlreadyAdded(interpreter_id), interpreter_id);
+        let alreadyAdded = this.isAlreadyAdded(interpreter_id);
+        this.checkedInterpreter = alreadyAdded ? -1 : interpreter_id;
+        if (alreadyAdded) {
+            let selectedInterpreter = this.selectedInterpreters.filter((i) => i.interpreter_id === interpreter_id)[0];
+            if (!this.isLocallyRemoved(selectedInterpreter)) {
+                this.notificationServiceBus.launchNotification(true, `Oops! This interpreter is already selected as a ${selectedInterpreter.preference} interpreter.
+                 Please remove this interpreter first.`);
+            } else {
+                selectedInterpreter._destroy = 0;
+                selectedInterpreter.preference = this.isPreffered ? 'preferred' : 'blocked';
+                this.checkedInterpreter = interpreter_id;
+            }
+        }
     }
 
     /* Hmm need a class as an api wrapper to throw in all such method, its anti-DRY*/
@@ -48,7 +68,7 @@ export class InterpreterPopupComponent implements OnInit {
         this.userDataService.fetchBasicDetailsForInterpreter()
             .subscribe((res: any) => {
                     if (res.status === 200) {
-                        this.interpreterList = res.data.users.sort( function(a, b){
+                        this.interpreterList = res.data.users.sort(function (a, b) {
                             let nameA = a.first_name.toLowerCase();
                             let nameB = b.first_name.toLowerCase();
                             if (nameA < nameB) { // sort string ascending
@@ -73,20 +93,9 @@ export class InterpreterPopupComponent implements OnInit {
         let selectedInterpreter =
             this.interpreterList.filter(i => i.interpreter_id === this.checkedInterpreter)[0];
         selectedInterpreter.preference = this.isPreffered ? 'preferred' : 'blocked';
-        this.selectedInterpreters.push(selectedInterpreter);
-        this.closeDialog();
-    }
-
-    checkForNotification(showError, interpreter_id) {
-        if (showError) {
-            let tmp = this.selectedInterpreters.filter((i) => i.interpreter_id === interpreter_id)[0];
-            if (tmp.preference === 'preferred') {
-                this.notificationServiceBus.launchNotification(true, `Oops! This interpreter is already selected as a preferred interpreter.
-                 Please remove this interpreter first.`);
-            } else {
-                this.notificationServiceBus.launchNotification(true, `Oops! This interpreter is already selected as a blocked interpreter.
-                 Please remove this interpreter first.`);
-            }
+        if (!this.isAlreadyAdded(selectedInterpreter.interpreter_id)) {
+            this.selectedInterpreters.push(selectedInterpreter);
         }
+        this.closeDialog();
     }
 }

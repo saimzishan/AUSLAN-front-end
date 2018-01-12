@@ -1,0 +1,28 @@
+<div class="md-dialog">
+  <md-dialog-content>
+    <header>
+      <h1>Link Booking</h1>
+      <button (click)="closeDialog(false)"><i class="icon-close"></i></button>
+    </header>
+    <main>
+      <div>
+        <p>Select the link-id for this booking</p>
+        <form name="linkBookingForm">
+          <label for="availableLinkIds">
+            Link ID
+          </label>
+          <select name="availableLinkIds" id="availableLinkIds" [(ngModel)]="selectedLinkId">
+            <option *ngFor="let linkId of availableLinkIds" [value]="linkId">{{linkId}}</option>
+          </select>
+        </form>
+      </div>
+    </main>
+  </md-dialog-content>
+
+  <div>
+    <md-dialog-actions>
+      <button name="noBtn" (click)="closeDialog(false)" class="button red">Back to Job</button>
+      <button name="yesBtn"  (click)="closeDialog(true)" class="button">Link Booking</button>
+    </md-dialog-actions>
+  </div>
+</div>

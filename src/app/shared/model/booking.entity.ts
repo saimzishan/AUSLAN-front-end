@@ -5,6 +5,7 @@ import {BOOKING_STATE} from './booking-state.enum';
 import {PARKING} from './parking.enum';
 import {OrganisationalRepresentative} from './user.entity';
 import {BookingVersion} from './booking-version.entity';
+import * as momentTimeZone from 'moment-timezone';
 export class Booking {
 
     public id: any;
@@ -59,6 +60,7 @@ export class Booking {
     public hardware: string;
     public who_will_initiate_call: string;
     public how_would_you_like_to_receive_notes: string;
+    public new_link_id_required: boolean;
     // Is it a limitation on interpreters invitation.
 
     constructor() {
@@ -92,6 +94,7 @@ export class Booking {
         this.travel_cost_applicable = false;
         this.update_all_linked_bookings = false;
         this.method_type = 'onsite';
+        this.new_link_id_required = false;
     }
 
     clean(theObject) {
@@ -245,6 +248,7 @@ export class Booking {
             id: this.id,
             link_id: this.link_id,
             update_all_linked_bookings: this.update_all_linked_bookings || false,
+            new_link_id_required: this.new_link_id_required || false,
             state: _state,
             special_instructions: this.special_instructions,
             venue: this.venue.title,
@@ -285,8 +289,8 @@ export class Booking {
             deaf_persons_last_name: this.deaf_person.last_name, deaf_persons_mobile: this.deaf_person.mobile_number,
             deaf_persons_email: this.deaf_person.email, deaf_persons_eaf_no: this.deaf_person.eaf,
             number_of_people_attending: _expected_attendance,
-            start_time: new Date(this.venue.start_time_iso).toISOString(),
-            end_time: new Date(this.venue.end_time_iso).toISOString(),
+            start_time: this.venue.start_time_iso,
+            end_time: this.venue.end_time_iso,
             billing_account_attributes: {
                 id: this.client.organisation_primary_contact.id,
                 primary_contact_first_name: this.client.organisation_primary_contact.first_name,
@@ -328,5 +332,49 @@ export class Booking {
               +this.number_of_asl_interpreters_required + +this.number_of_bsl_interpreters_required +
               +this.number_of_isl_interpreters_required + +this.number_of_signed_english_interpreters_required +
               +this.number_of_indigenous_sign_interpreters_required ;
+    }
+
+    getNamedTimeZone(state: string, postCode: string) {
+        let namedTimeZone;
+        if (postCode === '2880') { // Broken Hill exception
+            namedTimeZone = 'Australia/Adelaide';
+            return namedTimeZone;
+        }
+
+        switch (state) {
+            case 'ACT':
+                namedTimeZone = 'Australia/Canberra';
+                break;
+            case 'NSW':
+                namedTimeZone = 'Australia/Sydney';
+                break;
+            case 'QLD':
+                namedTimeZone = 'Australia/Brisbane';
+                break;
+            case 'SA':
+                namedTimeZone = 'Australia/Adelaide';
+                break;
+            case 'TAS':
+                namedTimeZone = 'Australia/Hobart';
+                break;
+            case 'VIC':
+                namedTimeZone = 'Australia/Melbourne';
+                break;
+            case 'WA':
+                namedTimeZone = 'Australia/Perth';
+                break;
+            case 'NT':
+                namedTimeZone = 'Australia/Darwin';
+                break;
+            default:
+                namedTimeZone = '';
+                break;
+        }
+        return namedTimeZone;
+    }
+
+    utcToBookingTimeZone(time: string) {
+        let timeZone = this.getNamedTimeZone(this.venue.state, this.venue.post_code.toString());
+        return momentTimeZone(time).tz(timeZone).format();
     }
 }

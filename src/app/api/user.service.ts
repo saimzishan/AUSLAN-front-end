@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Headers, RequestOptions} from '@angular/http';
-import {IndividualClient, Interpreter, OrganisationalRepresentative, User} from '../shared/model/user.entity';
+import {IndividualClient, OrganisationalRepresentative, User} from '../shared/model/user.entity';
 import {ROLE} from '../shared/model/role.enum';
 import {GLOBAL} from '../shared/global';
-import { Observable } from 'rxjs/Observable';
-import { ApiService } from './api.service';
+import {Observable} from 'rxjs/Observable';
+import {ApiService} from './api.service';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';

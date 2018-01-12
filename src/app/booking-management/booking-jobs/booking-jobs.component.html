@@ -121,7 +121,7 @@
                                         <span *ngIf="interpreter.state !== 'Accepted'">To be filled</span>
                                         <button name="{{'unassingBtn_' + +(i + 1)}}"
                                                 (click)="unAssignInterpreters(interpreter.id)"
-                                                *ngIf="!isCurrentUserInterpreter() && (false === isActiveState('Unable_to_service') && false === isActiveState('Cancelled')) && interpreter.state === 'Accepted'">
+                                                *ngIf="!isCurrentUserInterpreter() && (false === isActiveState('Unable_to_service') && false === isActiveState('Cancelled_no_charge')) && interpreter.state === 'Accepted'">
                                             Unassign
                                         </button>
                                     </div>
