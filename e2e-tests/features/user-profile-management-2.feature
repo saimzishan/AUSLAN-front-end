@@ -21,6 +21,7 @@ Feature: User Profile Management
     And I click on Bookings
     And I am on the bookings page
     And I click on my name in the top corner
+    When I click on the option  profile
     And I will be taken to my individual profile page
     And I verify input text fields of the BOOKINGOFFICER is updated
 
@@ -39,6 +40,7 @@ Feature: User Profile Management
     And I click on Bookings
     And I am on the bookings page
     And I click on my name in the top corner
+    When I click on the option  profile
     And I will be taken to my individual profile page
     And I verify input text fields of the ADMINISTRATOR is updated
 
@@ -57,6 +59,7 @@ Feature: User Profile Management
     And I click on Bookings
     And I am on the bookings page
     And I click on my name in the top corner
+    When I click on the option  profile
     And I will be taken to my individual profile page
     And I verify input text fields of the INTERPRETER is updated
 
@@ -75,6 +78,7 @@ Feature: User Profile Management
     And I click on Bookings
     And I am on the bookings page
     And I click on my name in the top corner
+    When I click on the option  profile
     And I will be taken to my individual profile page
     And I verify input text fields of the ORGANISATIONALREPRESENTATIVE is updated
 
@@ -93,6 +97,7 @@ Feature: User Profile Management
     And I click on Bookings
     And I am on the bookings page
     And I click on my name in the top corner
+    When I click on the option  profile
     And I will be taken to my individual profile page
     And I verify input text fields of the INDIVIDUALCLIENT is updated
 
