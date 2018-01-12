@@ -605,8 +605,8 @@ export class Heroku {
         let today = new Date();
         today.setDate(today.getDate() + 1);
         const currentDate = [
-            this.prettyDate(today.getMonth() + 1), // January is 0!
             this.prettyDate(today.getDate()),
+            this.prettyDate(today.getMonth() + 1), // January is 0!
             today.getFullYear().toString()
         ].join('-');
         return new Object({
