@@ -12,6 +12,7 @@ Feature: User Profile Management
     And I sign in with valid Booking Officer credentials
     And I am on the bookings page
     And I click on my name in the top corner
+    When I click on the option  profile
     And I will be taken to my individual profile page
     And I click on Profile 'Change Password'
     And I will be taken to my individual secure_pass page
@@ -29,6 +30,7 @@ Feature: User Profile Management
     And I sign in with valid Individual Client credentials
     And I am on the bookings page
     And I click on my name in the top corner
+    When I click on the option  profile
     And I will be taken to my individual profile page
     And I click on Profile 'Change Password'
     And I will be taken to my individual secure_pass page
@@ -46,6 +48,7 @@ Feature: User Profile Management
     And I sign in with valid Organisational Representative credentials
     And I am on the bookings page
     And I click on my name in the top corner
+    When I click on the option  profile
     And I will be taken to my individual profile page
     And I click on Profile 'Change Password'
     And I will be taken to my individual secure_pass page
@@ -64,6 +67,7 @@ Feature: User Profile Management
     And I sign in with valid Administrator credentials
     And I am on the bookings page
     And I click on my name in the top corner
+    When I click on the option  profile
     And I will be taken to my individual profile page
     And I click on Profile 'Change Password'
     And I will be taken to my individual secure_pass page
@@ -80,6 +84,7 @@ Feature: User Profile Management
     And I sign in with valid Interpreter credentials
     And I am on the bookings page
     And I click on my name in the top corner
+    When I click on the option  profile
     And I will be taken to my individual profile page
     And I click on Profile 'Change Password'
     And I will be taken to my individual secure_pass page
@@ -96,6 +101,7 @@ Feature: User Profile Management
     And I sign in with valid Booking Officer credentials
     And I am on the bookings page
     And I click on my name in the top corner
+    When I click on the option  profile
     And I will be taken to my individual profile page
     And I click on Profile 'Change Password'
     And I will be taken to my individual secure_pass page
@@ -112,6 +118,7 @@ Feature: User Profile Management
     And I sign in with valid Individual Client credentials
     And I am on the bookings page
     And I click on my name in the top corner
+    When I click on the option  profile
     And I will be taken to my individual profile page
     And I click on Profile 'Change Password'
     And I will be taken to my individual secure_pass page
@@ -128,6 +135,7 @@ Feature: User Profile Management
     And I sign in with valid Organisational Representative credentials
     And I am on the bookings page
     And I click on my name in the top corner
+    When I click on the option  profile
     And I will be taken to my individual profile page
     And I click on Profile 'Change Password'
     And I will be taken to my individual secure_pass page
@@ -147,6 +155,7 @@ Feature: User Profile Management
     And I sign in with valid Interpreter credentials
     And I am on the bookings page
     And I click on my name in the top corner
+    When I click on the option  profile
     And I will be taken to my individual profile page
     When I change the dropwdown field COMM. PREFERENCE * with SMS
     And I click on BUTTON 'SAVE'
@@ -157,6 +166,7 @@ Feature: User Profile Management
     And I sign in with valid Interpreter credentials
     And I am on the bookings page
     And I click on my name in the top corner
+    When I click on the option  profile
     And I will be taken to my individual profile page
     And The dropdown field COMM. PREFERENCE * will be updated with sms_only
 
@@ -167,6 +177,7 @@ Feature: User Profile Management
     And I sign in with valid Interpreter credentials
     And I am on the bookings page
     And I click on my name in the top corner
+    When I click on the option  profile
     And I will be taken to my individual profile page
     When I change the dropwdown field COMM. PREFERENCE * with SMS AND EMAIL
     And I click on BUTTON 'SAVE'
@@ -177,5 +188,6 @@ Feature: User Profile Management
     And I sign in with valid Interpreter credentials
     And I am on the bookings page
     And I click on my name in the top corner
+    When I click on the option  profile
     And I will be taken to my individual profile page
     And The dropdown field COMM. PREFERENCE * will be updated with email_and_sms

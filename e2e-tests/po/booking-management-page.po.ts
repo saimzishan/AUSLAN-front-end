@@ -68,6 +68,9 @@ export class BookingManagementPage extends PageObject {
     clickOnProfile = () => {
         return this.getElementByID('lnkProfile').click();
     }
+    clickOnOptionProfile = () => {
+        return this.getElementByID('lnkProfile1').click();
+    }
 
     didFinishedRendering = () => {
         let el = this.getElementByID('jobs-responsive');
