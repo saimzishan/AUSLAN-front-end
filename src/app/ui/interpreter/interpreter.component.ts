@@ -18,7 +18,8 @@ export class InterpreterComponent implements OnInit {
     calendarOptions: Object = {
         height: 'parent',
         fixedWeekCount: false,
-        defaultDate: '2016-01-01',
+        defaultDate: '2018-01-01',
+        weekends: false, // will hide Saturdays and Sundays
         header: {
             left: 'prev,next, today',
             center: 'title',
@@ -30,11 +31,13 @@ export class InterpreterComponent implements OnInit {
             listMonth: {buttonText: 'list Month'},
             month: {buttonText: 'Grid Month'}
         },
-        eventRender: function (event, element, view) {
-            return (event.ranges.filter(function (range) {
-                    return (event.start.isBefore(range.end) &&
+        eventRender: function (event, elm, view) {
+            return event.recurring === false || (event.ranges.filter(function(range){ // test event against all the ranges
+                event.end = event.end || event.start;
+                return (event.start.isBefore(range.end) &&
                     event.end.isAfter(range.start));
-                }).length) > 0;
+
+            }).length)  > 0; // if it isn't in one of the ranges, don't render it (by returning false
         },
         defaultView: 'month',
         navLinks: true, // can click day/week names to navigate views
@@ -69,23 +72,37 @@ export class InterpreterComponent implements OnInit {
                 let ed = new Date(avail_block.end_time);
                 let event = ({
                     title: avail_block.name,
-                    color: avail_block.recurring ? '#257e4a' : '#0000ff',
+                    color: avail_block.recurring ? '#00ff00' : '#0000ff',
                     id: avail_block.id,
                     booking_id: avail_block.booking_id,
-                    start: `${sd.getHours()}:${sd.getMinutes()}`,
-                    end: `${ed.getHours()}:${ed.getMinutes()}`,
-                    dow: avail_block.recurring && avail_block.frequency === 'daily' ? [1, 2, 3, 4, 5, 6, 0] : [sd.getDay()],
+                    start:  avail_block.recurring === false ? sd.toISOString() : `${sd.getHours()}:${sd.getMinutes()}`,
+                    end: avail_block.recurring === false ? ed.toISOString() : `${ed.getHours()}:${ed.getMinutes()}`,
+                    dow: avail_block.recurring === false ? moment(sd.toISOString()).day() : [sd.getDay()],
                     ranges: [
-                        {
-                            start: moment().endOf(avail_block.frequency === 'daily' ? 'day' :
-                                avail_block.frequency === 'weekly' ? 'week' :
-                                    avail_block.frequency === 'monthly' ? 'month' : 'week')
-                            // ,end: moment().endOf('week').add(7,'d'),
+                        { // repeating events are only displayed if they are within at least one of the following ranges.
+                            start: avail_block.recurring === false ? moment().startOf ('day') :
+                                moment().endOf(avail_block.frequency === 'weekly' ? 'week' :
+                                    avail_block.frequency === 'monthly' ? 'month' : 'day'),
+                            end: avail_block.recurring === false ? moment().endOf('day') :
+                                moment().endOf(avail_block.frequency === 'weekly' ? 'week' :
+                                    avail_block.frequency === 'monthly' ? 'month' : 'day'),
                         },
+                        {
+                            start: moment(sd.toISOString()).format('YYYY-MM-DD'),
+                            end: moment(ed.toISOString()).format( 'YYYY-MM-DD')
+                        }
+                        ],
+                /*ranges: [
+                    {
+                        start: moment().endOf(avail_block.frequency === 'daily' ? 'day' :
+                            avail_block.frequency === 'weekly' ? 'week' :
+                                avail_block.frequency === 'monthly' ? 'month' : 'week')
+                         , end: moment().endOf('week').add(7,'d'),
+                    },
                         {
                             start: moment(sd.toISOString(), 'YYYY-MM-DD'),
                             end: moment(ed.toISOString(), 'YYYY-MM-DD').endOf(avail_block.recurring ? 'year' : 'week')
-                        }],
+                        }],*/
                     recurring: avail_block.recurring,
                     frequency: avail_block.frequency
                 });

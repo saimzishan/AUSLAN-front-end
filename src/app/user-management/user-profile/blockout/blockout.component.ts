@@ -9,44 +9,46 @@ import {ActivatedRoute} from '@angular/router';
 import {AvailabilityBlock} from '../../../shared/model/availability-block.entity';
 
 @Component({
-  selector: 'app-blockout',
-  templateUrl: './blockout.component.html',
-  styleUrls: ['./blockout.component.css']
+    selector: 'app-blockout',
+    templateUrl: './blockout.component.html',
+    styleUrls: ['./blockout.component.css']
 })
 export class BlockoutComponent implements  OnDestroy, OnInit {
-  availabilityBlock: AvailabilityBlock;
-  sub;
-  interpreter: Interpreter;
+    sub;
+    interpreter: Interpreter;
     param_id: number;
-  constructor(public userDataService: UserService,
-              public notificationServiceBus: NotificationServiceBus,
-              public spinnerService: SpinnerService,
-              private route: ActivatedRoute) {
+    public availabilityBlock: AvailabilityBlock = new AvailabilityBlock();
+    constructor(public userDataService: UserService,
+                public notificationServiceBus: NotificationServiceBus,
+                public spinnerService: SpinnerService,
+                private route: ActivatedRoute) {
 
 
-  }
-
+    }
     ngOnInit() {
         this.interpreter = Boolean(GLOBAL.currentUser) &&
         GLOBAL.currentUser instanceof Interpreter ?
             (<Interpreter>GLOBAL.currentUser) : null;
-
         this.sub = this.route.params.subscribe(params => {
             let param_id = params['id'] || '';
             if (Boolean(param_id) && parseInt(param_id, 10) > 0) {
                 this.param_id = parseInt(param_id, 10);
                 this.interpreter.availability_blocks_attributes
-                    .filter( a => a.id === this.param_id  ).map( a => this.availabilityBlock = a );
-            } else {
-                this.availabilityBlock = new AvailabilityBlock();
+                    .filter( a => a.id === this.param_id  )
+                    .map( a =>
+                        this.availabilityBlock = a
+                    );
             }
+            console.log(this.availabilityBlock);
         });
     }
 
     ngOnDestroy() {
         return this.sub && this.sub.unsubscribe();
     }
-
+    onStartTimeChanged () {
+        this.availabilityBlock.end_time = this.availabilityBlock.start_time;
+    }
     deleteBlockout () {
         this.spinnerService.requestInProcess(true);
         this.userDataService.deleteBlockout( GLOBAL.currentUser.id , this.availabilityBlock.id)
@@ -69,32 +71,32 @@ export class BlockoutComponent implements  OnDestroy, OnInit {
 
     }
 
-  editBlockouts(form: FormGroup) {
-    if (form.invalid) {
-      this.notificationServiceBus.launchNotification(true, GLOBAL.MISSING_FIELDS_ERROR_MESSAGE);
-      return;
+    editBlockouts(form: FormGroup) {
+        if (form.invalid) {
+            this.notificationServiceBus.launchNotification(true, GLOBAL.MISSING_FIELDS_ERROR_MESSAGE);
+            return;
+        }
+        this.spinnerService.requestInProcess(true);
+        this.userDataService.editBlockout( GLOBAL.currentUser.id ,
+            this.availabilityBlock)
+            .subscribe((res: any) => {
+                if (res.status === 204) {
+                    // UI Notification
+                    this.interpreter.availability_blocks_attributes.filter(o => o.id === this.availabilityBlock.id)
+                        .map( o => o = this.availabilityBlock);
+                    this.spinnerService.requestInProcess(false);
+
+
+                    this.notificationServiceBus.launchNotification(false, 'Blockout edit Successfully');
+                }
+            }, errors => {
+                this.spinnerService.requestInProcess(false);
+
+                let e = errors.json();
+                this.notificationServiceBus.launchNotification(true, errors.statusText + ' '
+                    + JSON.stringify(e || e.errors).replace(/]|[[]/g, '').replace(/({|})/g, ''));
+            });
     }
-    this.spinnerService.requestInProcess(true);
-    this.userDataService.editBlockout( GLOBAL.currentUser.id ,
-        this.availabilityBlock)
-        .subscribe((res: any) => {
-          if (res.status === 204) {
-            // UI Notification
-              this.interpreter.availability_blocks_attributes.filter(o => o.id === this.availabilityBlock.id)
-                  .map( o => o = this.availabilityBlock);
-              this.spinnerService.requestInProcess(false);
-
-
-              this.notificationServiceBus.launchNotification(false, 'Blockout edit Successfully');
-          }
-        }, errors => {
-          this.spinnerService.requestInProcess(false);
-
-          let e = errors.json();
-          this.notificationServiceBus.launchNotification(true, errors.statusText + ' '
-              + JSON.stringify(e || e.errors).replace(/]|[[]/g, '').replace(/({|})/g, ''));
-        });
-  }
 
     addBlockouts(form: FormGroup) {
         if (form.invalid) {
