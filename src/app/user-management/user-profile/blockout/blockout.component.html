@@ -31,9 +31,12 @@
                     <div class="form-field">
                         <label>START *</label>
 
-                        <input type='datetime-local'
+                        <!-- input type='datetime-local'
                                name='dpEventDate_st' (change)="onStartTimeChanged()" placeholder="DATE & Time OF APPOINTMENT *"
-                               [(ngModel)]="availabilityBlock.start_time" required #dpEventDate_st="ngModel"/>
+                               [(ngModel)]="availabilityBlock.start_time" required #dpEventDate_st="ngModel"/ -->
+                        <p-calendar name='dpEventDate_st' (onClose)="onStartTimeChanged()"  [(ngModel)]="availabilityBlock.start_time"
+                                    required #dpEventDate_st="ngModel" showTime="true" hourFormat="12"></p-calendar>
+
 
                         <span *ngIf="dpEventDate_st.touched &&  (!dpEventDate_st.errors?.required);"
                               class="inline-icon inline-icon-valid valid"></span>
@@ -51,9 +54,11 @@
                     <div class="form-field">
                         <label>END *</label>
 
-                        <input type='datetime-local'
+                        <!-- input type='datetime-local'
                                name='dpEventDate_end' placeholder="DATE & Time OF APPOINTMENT *"
-                               [(ngModel)]="availabilityBlock.end_time" required #dpEventDate_end="ngModel"/>
+                               [(ngModel)]="availabilityBlock.end_time" required #dpEventDate_end="ngModel"/ -->
+                        <p-calendar name='dpEventDate_end' (change)="onStartTimeChanged()"  [(ngModel)]="availabilityBlock.end_time"
+                                    required #dpEventDate_end="ngModel" showTime="true" hourFormat="12"></p-calendar>
 
                         <span *ngIf="dpEventDate_end.touched &&  (!dpEventDate_end.errors?.required);"
                               class="inline-icon inline-icon-valid valid"></span>
@@ -90,7 +95,7 @@
                             <select [(ngModel)]="availabilityBlock.frequency" name="availabilityBlock_frequency"
                                     #availabilityBlock_frequency="ngModel" required
                                     aria-label="A">
-                                <option *ngFor="let frequency_name of ['daily', 'weekly', 'monthly']"
+                                <option *ngFor="let frequency_name of ['weekly']"
                                         [value]="frequency_name">{{frequency_name.toUpperCase()}}
                                 </option>
 
