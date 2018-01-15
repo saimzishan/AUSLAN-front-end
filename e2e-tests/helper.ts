@@ -400,8 +400,8 @@ export class Heroku {
 
     static sendCommandToHeroku(command) {
         const exec = require('child_process').execSync;
-
-        command = 'ActiveRecord::Base.logger.level = Logger::INFO;' + command + ';nil;exit';
+        console.log(command);
+        command = /*'ActiveRecord::Base.logger.level = Logger::INFO;' + */ command + ';nil;exit';
         let herokuCommand = 'cd ../booking-system-api/ && echo  \'' + command + '\' | bundle exec rails c && cd ../booking-system-frontend/';
         exec(herokuCommand);
     }
@@ -605,9 +605,9 @@ export class Heroku {
         let today = new Date();
         today.setDate(today.getDate() + 1);
         const currentDate = [
-            this.prettyDate(today.getDate()),
-            this.prettyDate(today.getMonth() + 1), // January is 0!
-            today.getFullYear().toString()
+            today.getFullYear().toString(),
+            this.prettyDate(today.getMonth() + 1), // January is 0!,
+            this.prettyDate(today.getDate())
         ].join('-');
         return new Object({
             'venue': 'Fed Square',
@@ -626,8 +626,8 @@ export class Heroku {
             'deaf_persons_eaf_no': '124',
             'number_of_people_attending': 1,
             'number_of_interpreters_required': int_required,
-            'start_time': currentDate + ' 01:26 +11:00',
-            'end_time': currentDate + ' 02:26 +11:00',
+            'start_time': currentDate + 'T01:26:00+11:00',
+            'end_time': currentDate + 'T02:26:00+11:00',
             'billing_account_attributes': {
                 'primary_contact_first_name': 'Paul',
                 'primary_contact_last_name': 'Biller',

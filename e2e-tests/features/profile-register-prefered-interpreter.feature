@@ -233,6 +233,7 @@ Feature: Create Profile with prefered or blocked interpreters
     And I sign in with valid Individual Client credentials
     And I am on the bookings page
     When I click on my name in the top corner
+    When I click on the option  profile
     Then I will be taken to my individual profile page
     Then I can see the element with name 'interpreter_block_prefered' is 'visible'
     Then I can see the element with css '.btnYes_prefered' is 'visible'
@@ -253,6 +254,7 @@ Feature: Create Profile with prefered or blocked interpreters
     And I sign in with valid Individual Client credentials
     And I am on the bookings page
     When I click on my name in the top corner
+    When I click on the option  profile
     Then I will be taken to my individual profile page
     Then I can count the element with css 'section.interpreter_selected_prefered' to be '1'
 
@@ -263,6 +265,7 @@ Feature: Create Profile with prefered or blocked interpreters
     And I sign in with valid Organisational Representative credentials
     And I am on the bookings page
     When I click on my name in the top corner
+    When I click on the option  profile
     Then I will be taken to my individual profile page
     Then I can see the element with name 'interpreter_block_prefered' is 'visible'
     Then I can see the element with css '.btnYes_prefered' is 'visible'
@@ -283,6 +286,7 @@ Feature: Create Profile with prefered or blocked interpreters
     And I sign in with valid Organisational Representative credentials
     And I am on the bookings page
     When I click on my name in the top corner
+    When I click on the option  profile
     Then I will be taken to my individual profile page
     Then I can count the element with css 'section.interpreter_selected_prefered' to be '1'
 
@@ -292,6 +296,7 @@ Feature: Create Profile with prefered or blocked interpreters
     And I sign in with valid Individual Client credentials
     And I am on the bookings page
     When I click on my name in the top corner
+    When I click on the option  profile
     Then I will be taken to my individual profile page
     Then I can see the element with name 'interpreter_block_prefered' is 'visible'
     Then I can see the element with css '.btnYes_prefered' is 'visible'
@@ -312,6 +317,7 @@ Feature: Create Profile with prefered or blocked interpreters
     And I sign in with valid Individual Client credentials
     And I am on the bookings page
     When I click on my name in the top corner
+    When I click on the option  profile
     Then I will be taken to my individual profile page
     Then I can count the element with css 'section.interpreter_selected_prefered' to be '1'
     Then I can remove '1' , 'prefered' interpreter
@@ -323,6 +329,7 @@ Feature: Create Profile with prefered or blocked interpreters
     And I sign in with valid Individual Client credentials
     And I am on the bookings page
     When I click on my name in the top corner
+    When I click on the option  profile
     Then I will be taken to my individual profile page
     Then I can count the element with css 'section.interpreter_selected_prefered' to be '0'
 
@@ -333,6 +340,7 @@ Feature: Create Profile with prefered or blocked interpreters
     And I sign in with valid Organisational Representative credentials
     And I am on the bookings page
     When I click on my name in the top corner
+    When I click on the option  profile
     Then I will be taken to my individual profile page
     Then I can see the element with name 'interpreter_block_prefered' is 'visible'
     Then I can see the element with css '.btnYes_prefered' is 'visible'
@@ -353,6 +361,7 @@ Feature: Create Profile with prefered or blocked interpreters
     And I sign in with valid Organisational Representative credentials
     And I am on the bookings page
     When I click on my name in the top corner
+    When I click on the option  profile
     Then I will be taken to my individual profile page
     Then I can count the element with css 'section.interpreter_selected_prefered' to be '1'
     Then I can remove '1' , 'prefered' interpreter
@@ -364,6 +373,7 @@ Feature: Create Profile with prefered or blocked interpreters
     And I sign in with valid Organisational Representative credentials
     And I am on the bookings page
     When I click on my name in the top corner
+    When I click on the option  profile
     Then I will be taken to my individual profile page
     Then I can count the element with css 'section.interpreter_selected_prefered' to be '0'
 
