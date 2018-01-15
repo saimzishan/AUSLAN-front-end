@@ -18,7 +18,6 @@ export class InterpreterComponent implements OnInit {
     calendarOptions: Object = {
         height: 'parent',
         fixedWeekCount: false,
-        defaultDate: '2018-01-01',
         weekends: false, // will hide Saturdays and Sundays
         header: {
             left: 'prev,next, today',
@@ -70,43 +69,26 @@ export class InterpreterComponent implements OnInit {
             for (let avail_block of this.userModel.availability_blocks_attributes) {
                 let sd = new Date(avail_block.start_time);
                 let ed = new Date(avail_block.end_time);
-                let event = ({
+                let event: any = ({
                     title: avail_block.name,
-                    color: avail_block.recurring ? '#00ff00' : '#0000ff',
+                    color: avail_block.recurring ? '#00ff00' : '#257e4a',
                     id: avail_block.id,
                     booking_id: avail_block.booking_id,
-                    start:  avail_block.recurring === false ? sd.toISOString() : `${sd.getHours()}:${sd.getMinutes()}`,
+                    start: avail_block.recurring === false ? sd.toISOString() : `${sd.getHours()}:${sd.getMinutes()}`,
                     end: avail_block.recurring === false ? ed.toISOString() : `${ed.getHours()}:${ed.getMinutes()}`,
-                    dow: avail_block.recurring === false ? moment(sd.toISOString()).day() : [sd.getDay()],
                     ranges: [
-                        { // repeating events are only displayed if they are within at least one of the following ranges.
-                            start: avail_block.recurring === false ? moment().startOf ('day') :
-                                moment().endOf(avail_block.frequency === 'weekly' ? 'week' :
-                                    avail_block.frequency === 'monthly' ? 'month' : 'day'),
-                            end: avail_block.recurring === false ? moment().endOf('day') :
-                                moment().endOf(avail_block.frequency === 'weekly' ? 'week' :
-                                    avail_block.frequency === 'monthly' ? 'month' : 'day'),
-                        },
                         {
                             start: moment(sd.toISOString()).format('YYYY-MM-DD'),
-                            end: moment(ed.toISOString()).format( 'YYYY-MM-DD')
+                            end: moment(ed.toISOString()).format('YYYY-MM-DD')
                         }
-                        ],
-                /*ranges: [
-                    {
-                        start: moment().endOf(avail_block.frequency === 'daily' ? 'day' :
-                            avail_block.frequency === 'weekly' ? 'week' :
-                                avail_block.frequency === 'monthly' ? 'month' : 'week')
-                         , end: moment().endOf('week').add(7,'d'),
-                    },
-                        {
-                            start: moment(sd.toISOString(), 'YYYY-MM-DD'),
-                            end: moment(ed.toISOString(), 'YYYY-MM-DD').endOf(avail_block.recurring ? 'year' : 'week')
-                        }],*/
+                    ],
                     recurring: avail_block.recurring,
                     frequency: avail_block.frequency
                 });
-                console.log(event);
+                if ( avail_block.recurring === true ) {
+                 event.dow = [sd.getDay()];
+                }
+
                 this.calendarOptions['events'].push(event);
             }
 

@@ -17,6 +17,8 @@ export class BlockoutComponent implements  OnDestroy, OnInit {
     sub;
     interpreter: Interpreter;
     param_id: number;
+    end_time: Date = new Date();
+    start_time: Date  = new Date();
     public availabilityBlock: AvailabilityBlock = new AvailabilityBlock();
     constructor(public userDataService: UserService,
                 public notificationServiceBus: NotificationServiceBus,
@@ -38,8 +40,9 @@ export class BlockoutComponent implements  OnDestroy, OnInit {
                     .map( a =>
                         this.availabilityBlock = a
                     );
+                this.start_time = new Date(this.availabilityBlock.start_time);
+                this.end_time = new Date(this.availabilityBlock.end_time);
             }
-            console.log(this.availabilityBlock);
         });
     }
 
@@ -47,7 +50,7 @@ export class BlockoutComponent implements  OnDestroy, OnInit {
         return this.sub && this.sub.unsubscribe();
     }
     onStartTimeChanged () {
-        this.availabilityBlock.end_time = this.availabilityBlock.start_time;
+        this.end_time = this.start_time;
     }
     deleteBlockout () {
         this.spinnerService.requestInProcess(true);
@@ -106,6 +109,9 @@ export class BlockoutComponent implements  OnDestroy, OnInit {
         this.spinnerService.requestInProcess(true);
         delete this.availabilityBlock.booking_id;
         delete this.availabilityBlock.id;
+        this.availabilityBlock.start_time = this.start_time.toISOString();
+        this.availabilityBlock.end_time = this.end_time.toISOString();
+
         this.userDataService.addBlockout( GLOBAL.currentUser.id , this.availabilityBlock)
             .subscribe((res: any) => {
                 if (res.status === 200) {

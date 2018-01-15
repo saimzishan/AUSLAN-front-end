@@ -31,10 +31,7 @@
                     <div class="form-field">
                         <label>START *</label>
 
-                        <!-- input type='datetime-local'
-                               name='dpEventDate_st' (change)="onStartTimeChanged()" placeholder="DATE & Time OF APPOINTMENT *"
-                               [(ngModel)]="availabilityBlock.start_time" required #dpEventDate_st="ngModel"/ -->
-                        <p-calendar name='dpEventDate_st' (onClose)="onStartTimeChanged()"  [(ngModel)]="availabilityBlock.start_time"
+                        <p-calendar name='dpEventDate_st' (onClose)="onStartTimeChanged()"  [(ngModel)]="start_time"
                                     required #dpEventDate_st="ngModel" showTime="true" hourFormat="12"></p-calendar>
 
 
@@ -54,10 +51,7 @@
                     <div class="form-field">
                         <label>END *</label>
 
-                        <!-- input type='datetime-local'
-                               name='dpEventDate_end' placeholder="DATE & Time OF APPOINTMENT *"
-                               [(ngModel)]="availabilityBlock.end_time" required #dpEventDate_end="ngModel"/ -->
-                        <p-calendar name='dpEventDate_end' (change)="onStartTimeChanged()"  [(ngModel)]="availabilityBlock.end_time"
+                        <p-calendar name='dpEventDate_end' (change)="onStartTimeChanged()"  [(ngModel)]="end_time"
                                     required #dpEventDate_end="ngModel" showTime="true" hourFormat="12"></p-calendar>
 
                         <span *ngIf="dpEventDate_end.touched &&  (!dpEventDate_end.errors?.required);"
