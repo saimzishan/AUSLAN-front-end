@@ -71,7 +71,7 @@ export class ProfileRegisterPage extends PageObject {
             this.getElementByName('date_of_birth').sendKeys('01-30-2015');
             this.getElementByName('highest_level_edu').sendKeys('Bachelor Degree'.toUpperCase());
             this.getElementByName('location_pref').sendKeys('ACT');
-            this.getElementByName('skill_level').sendKeys('ASL Certified'.toUpperCase());
+            this.getElementByName('skill_level').sendKeys('Certified Conference Interpreter'.toUpperCase());
             // this.getElementByName('comm_pref').sendKeys(prefComm);
         } else if (type === 'ORGANISATIONALREPRESENTATIVE') {
             this.getElementByName('phone').sendKeys('0490394517');
