@@ -61,7 +61,7 @@ Feature: Booking Management
     Then I move to element name 'tnc'
     And I click on checkbox name 'tnc'
     When I click the create booking button
-    Then I will be shown a popup message 'This booking might require more than 1 interpreter. You've only requested 1 interpreter. Are you sure you want to create this booking?'
+    Then I will be shown a popup message 'This booking might require more than 1 professional. You've only requested 1. Are you sure you want to create this booking?'
 
   @runThis
   Scenario: As an Administrator, I should specify notes when I don't specify what will be discussed
