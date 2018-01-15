@@ -1,9 +1,11 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, ViewChild, OnInit, Input, ElementRef} from '@angular/core';
 import {DatePipe} from '@angular/common';
 import {Router} from '@angular/router';
+import * as $ from 'jquery';
 import * as moment from 'moment';
 import {Interpreter, BookingOfficer, Administrator} from '../../shared/model/user.entity';
 import {GLOBAL} from '../../shared/global';
+import {CalendarComponent} from 'ap-angular2-fullcalendar';
 
 @Component({
     selector: 'app-interpreter',
@@ -14,44 +16,11 @@ export class InterpreterComponent implements OnInit {
     @Input() userModel: Interpreter;
     @Input() displayCalendar= false;
     @Input() canCalculateDistance: boolean;
+    @ViewChild('mycal') myCal: CalendarComponent;
     updateCalendar = false;
-    calendarOptions: Object = {
-        height: 'parent',
-        fixedWeekCount: false,
-        weekends: false, // will hide Saturdays and Sundays
-        header: {
-            left: 'prev,next, today',
-            center: 'title',
-            right: 'listMonth, month'
-        },
-        // customize the button names,
-        // otherwise they'd all just say "list"
-        views: {
-            listMonth: {buttonText: 'list Month'},
-            month: {buttonText: 'Grid Month'}
-        },
-        eventRender: function (event, elm, view) {
-            return event.recurring === false || (event.ranges.filter(function(range){ // test event against all the ranges
-                event.end = event.end || event.start;
-                return (event.start.isBefore(range.end) &&
-                    event.end.isAfter(range.start));
+    calendarOptions: Object = {};
 
-            }).length)  > 0; // if it isn't in one of the ranges, don't render it (by returning false
-        },
-        defaultView: 'month',
-        navLinks: true, // can click day/week names to navigate views
-        eventClick: (calEvent, jsEvent, view) => {
-            this.router.navigate(['/user-management/', calEvent.id, 'block_out']);
-        },
-        editable: true,
-        eventLimit: true, // allow "more" link when too many events
-        events: []
-    };
-
-    constructor(private router: Router) {
-
-
-    }
+    constructor(private router: Router) {}
 
     ngOnInit() {
         let d = new DatePipe('en-us');
@@ -66,6 +35,52 @@ export class InterpreterComponent implements OnInit {
         delete this.userModel.password;
 
         if (this.displayCalendar) {
+            this.calendarOptions = {
+                height: 'parent',
+                fixedWeekCount: false,
+                weekends: false, // will hide Saturdays and Sundays
+                header: {
+                    left: 'title',
+                    center: '',
+                    right: 'month,agendaWeek,agendaDay,listYear,today,prev,next'
+                },
+                contentHeight: 'auto',
+                navLinks: true, // can click day/week names to navigate views
+                selectable: true,
+                selectHelper: true,
+                windowResize: (view) => {
+                    if ($(window).width() < 768 ) {
+                        this.myCal.fullCalendar( 'changeView', 'listMonth' );
+
+                    } else {
+                        this.myCal.fullCalendar( 'changeView', 'month' );
+
+                    }
+                },
+                // customize the button names,
+                // otherwise they'd all just say "list"
+                views: {
+                    listMonth: {buttonText: 'list Month'},
+                    month: {buttonText: 'Grid Month'}
+                },
+                eventRender: function (event, elm, view) {
+                    return event.recurring === false || (event.ranges.filter(function(range){ // test event against all the ranges
+                        event.end = event.end || event.start;
+                        return (event.start.isBefore(range.end) &&
+                            event.end.isAfter(range.start));
+
+                    }).length)  > 0; // if it isn't in one of the ranges, don't render it (by returning false
+                },
+                timeFormat: 'h:mm',
+                defaultView: 'month',
+                eventClick: (calEvent, jsEvent, view) => {
+                    this.router.navigate(['/user-management/', calEvent.id, 'block_out']);
+                },
+                editable: true,
+                eventLimit: true, // allow "more" link when too many events
+                events: []
+            };
+
             for (let avail_block of this.userModel.availability_blocks_attributes) {
                 let sd = new Date(avail_block.start_time);
                 let ed = new Date(avail_block.end_time);
