@@ -63,6 +63,9 @@ defineSupportCode(({Given, Then, When}) => {
     When(/^I click on one non-editable field$/, bookingEditPO.clickOnNonEditableField);
     When(/^I query search with '(.*)'$/, bookingManagementPO.querySearchWith);
     When(/^I query search with empty date$/, bookingManagementPO.querySearchWithEmptyDate);
+    When(/^I query search with future date$/, bookingManagementPO.queryManualSearchWithFutureDate);
+    When(/^I query search with current date manually$/, bookingManagementPO.queryManualSearchWithCurrentDate);
+    When(/^I press enter$/, bookingManagementPO.enterPressed);
     When(/^I can see that date_from is preseleted with current date$/, bookingManagementPO.filterBookingByCurrentDate);
     When(/^I empty the search field '(.*)'$/, bookingManagementPO.emptyTheField);
     When(/^I click out of the text box$/, bookingManagementPO.clickOutSide);
