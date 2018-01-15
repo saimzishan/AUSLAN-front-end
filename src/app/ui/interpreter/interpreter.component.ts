@@ -49,13 +49,7 @@ export class InterpreterComponent implements OnInit {
                 selectable: true,
                 selectHelper: true,
                 windowResize: (view) => {
-                    if ($(window).width() < 768 ) {
-                        this.myCal.fullCalendar( 'changeView', 'listMonth' );
-
-                    } else {
-                        this.myCal.fullCalendar( 'changeView', 'month' );
-
-                    }
+                    this.myCal.fullCalendar( 'changeView', $(window).width() < 768 ? 'listMonth' : 'month');
                 },
                 // customize the button names,
                 // otherwise they'd all just say "list"
@@ -91,17 +85,20 @@ export class InterpreterComponent implements OnInit {
                     booking_id: avail_block.booking_id,
                     start: avail_block.recurring === false ? sd.toISOString() : `${sd.getHours()}:${sd.getMinutes()}`,
                     end: avail_block.recurring === false ? ed.toISOString() : `${ed.getHours()}:${ed.getMinutes()}`,
-                    ranges: [
+                    recurring: avail_block.recurring,
+                    frequency: avail_block.frequency
+                });
+                if (avail_block.recurring === true) {
+                    event.dow = [sd.getDay()];
+                    // let offSet = 1;
+                    // ed.setDate(ed.getDate() + offSet);
+
+                    event.ranges = [
                         {
                             start: moment(sd.toISOString()).format('YYYY-MM-DD'),
                             end: moment(ed.toISOString()).format('YYYY-MM-DD')
                         }
-                    ],
-                    recurring: avail_block.recurring,
-                    frequency: avail_block.frequency
-                });
-                if ( avail_block.recurring === true ) {
-                 event.dow = [sd.getDay()];
+                    ];
                 }
 
                 this.calendarOptions['events'].push(event);
