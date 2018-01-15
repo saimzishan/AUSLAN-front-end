@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewContainerRef, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewContainerRef, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {Booking} from '../../shared/model/booking.entity';
 import {BookingService} from '../../api/booking.service';
 import {BA, BOOKING_NATURE} from '../../shared/model/booking-nature.enum';
@@ -32,6 +32,7 @@ interface ModalOptions {
 }
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.OnPush,
     selector: 'app-booking-detail',
     templateUrl: './booking-detail.component.html',
     styleUrls: ['./booking-detail.component.css']
@@ -65,7 +66,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     showBlocked = false;
     showProfileBlocked = false;
     bookingHeading = '';
-    shouldEdit = '';
+    forEdit = false;
     assignedInterpreter = 0;
     oldDocuments = [];
     deleteDocuments = [];
@@ -112,9 +113,10 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         /** http://stackoverflow.com/questions/38008334/angular2-rxjs-when-should-i-unsubscribe-from-subscription */
         this.sub = this.route.queryParams.subscribe(params => {
             let param = params['bookingModel'] || '';
-            this.shouldEdit = params['shouldEdit'] || '';
+            let shouldEdit = params['shouldEdit'] || '';
+            this.forEdit = Boolean(shouldEdit.length > 0 && shouldEdit === 'edit');
             this.assignedInterpreter = params['assignedInterpreter'] || '';
-            if (param.length > 0 && this.shouldEdit === '') {
+            if (param.length > 0 && shouldEdit === '') {
                 this.isDuplicate = true;
             } else {
                 this.isDuplicate = false;
@@ -137,7 +139,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 this.onSpecialInstruction();
             }
 
-            if (this.forEdit()) {
+            if (this.forEdit) {
                 this.bookingHeading = 'EDIT BOOKING';
                 this.termsAndConditionAccepted = true;
                 this.checkInterpreterBoxes();
@@ -150,7 +152,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     private isCurrentUserContact(): boolean {
-        if (this.forEdit()) {
+        if (this.forEdit) {
             return this.bookingModel.client.email === this.bookingModel.primaryContact.email
                 || GLOBAL.currentUser.email === this.bookingModel.primaryContact.email;
         } else {
@@ -159,7 +161,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     private isCurrentUserClient(): boolean {
-        if (this.forEdit()) {
+        if (this.forEdit) {
             return this.bookingModel.deaf_person.email === this.bookingModel.primaryContact.email
                 || GLOBAL.currentUser.email === this.bookingModel.primaryContact.email;
         } else {
@@ -169,22 +171,25 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
 
     serviceTypeChange(serviceType: string) {
         console.log(this.cbAuslanInterpreter);
-        switch (serviceType) {
-            case 'auslan':
-                break;
-            case 'deaf':
-                this.cbAuslanInterpreter = false;
-                break;
-            case 'deafBlind':
-                break;
-            case 'captioning':
-                break;
-            case 'notetaking':
-                break;
-            case 'otherLanguage':
-                break;
-            default:
-                break;
+        if (this.forEdit) {
+
+            switch (serviceType) {
+                case 'auslan':
+                    break;
+                case 'deaf':
+                    this.cbAuslanInterpreter = false;
+                    break;
+                case 'deafBlind':
+                    break;
+                case 'captioning':
+                    break;
+                case 'notetaking':
+                    break;
+                case 'otherLanguage':
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
@@ -217,12 +222,12 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         if (GLOBAL.currentUser !== undefined) {
-            this.isDisabledForOrgRepIndClient = Boolean(this.isUserOrgRepORIndClientTemp() && this.forEdit());
+            this.isDisabledForOrgRepIndClient = Boolean(this.isUserOrgRepORIndClientTemp() && this.forEdit);
             this.isUserAdminORBookOfficer = <boolean> this.checkUserAdminORBookOfficer();
-            this.isDisabledForAdmin = (this.forEdit() && !this.bookingModel.created_by_admin);
+            this.isDisabledForAdmin = (this.forEdit && !this.bookingModel.created_by_admin);
             this.currentUserIsContact = this.isCurrentUserContact();
             this.currentUserIsClient = this.isCurrentUserClient();
-            if (!this.forEdit()) {
+            if (!this.forEdit) {
                 this.onSelectionChange();
                 this.onClientSelectionChange();
             }
@@ -234,7 +239,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             } else {
                 this.oldBookingModel = this.deepCopy(this.bookingModel);
             }
-            if (!this.forEdit() && !this.isDuplicate) {
+            if (!this.forEdit && !this.isDuplicate) {
                 this.onBookingAddressChange();
             }
         }
@@ -346,7 +351,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     public onProfilePreferredSelectionChange() {
-        if (!this.forEdit()) {
+        if (!this.forEdit) {
             let prefInt = this.userModel.prefferedInterpreters.filter(itm => itm.preference === 'preferred');
             if (this.showProfilePreferred) {
                 this.oldInterpreterPreference = this.oldInterpreterPreference.concat(prefInt);
@@ -365,7 +370,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     public onProfileBlockedSelectionChange() {
-        if (!this.forEdit()) {
+        if (!this.forEdit) {
             let blockInt = this.userModel.prefferedInterpreters.filter(itm => itm.preference === 'blocked');
             if (this.showProfileBlocked) {
                 this.oldInterpreterPreference = this.oldInterpreterPreference.concat(blockInt);
@@ -412,10 +417,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             GLOBAL.currentUser instanceof BookingOfficer);
     }
 
-    forEdit(): Boolean {
-        return Boolean(this.shouldEdit.length > 0 && this.shouldEdit === 'edit');
-    }
-
     public onStandardInvoice() {
         if (GLOBAL.currentUser instanceof OrganisationalRepresentative) {
             let currentUser = <OrganisationalRepresentative>GLOBAL.currentUser;
@@ -447,7 +448,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.notificationServiceBus.launchNotification(true, 'Travel cost must be applicable as your booking distance is more than 40 kms');
             return;
         }
-        if (!this.termsAndConditionAccepted && !this.forEdit()) {
+        if (!this.termsAndConditionAccepted && !this.forEdit) {
             this.notificationServiceBus.launchNotification(true, 'Kindly accept Terms and Conditions');
             return;
         }
@@ -494,7 +495,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.createModal(title, message);
             this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
                 if (result) {
-                    if (this.shouldEdit.length > 0 && this.shouldEdit === 'edit') {
+                    if (this.forEdit) {
                         this.updateLinkedBookings();
                     } else {
                         this.createBooking();
@@ -502,7 +503,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 }
             });
         } else {
-            if (this.shouldEdit.length > 0 && this.shouldEdit === 'edit') {
+            if (this.forEdit) {
                 this.updateLinkedBookings();
             } else {
                 this.createBooking();
@@ -808,7 +809,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     filterUserPreference(interpreters) {
-        if (this.forEdit()) {
+        if (this.forEdit) {
             this.bookingModel.preference_allocations_attributes = interpreters;
         } else {
             this.bookingModel.preference_allocations_attributes = [];
@@ -855,7 +856,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     deepCopy(oldObj: any) {
-        if (this.forEdit()) {
+        if (this.forEdit) {
             let newObj = JSON.parse(JSON.stringify(oldObj));
             return newObj;
         }

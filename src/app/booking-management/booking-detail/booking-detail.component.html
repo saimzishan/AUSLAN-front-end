@@ -6,7 +6,7 @@
   <section>
     <span>Fields with * are required</span>
   </section>
-    <div class="common-form"  *ngIf="!forEdit()">
+    <div class="common-form"  *ngIf="!forEdit">
       <div style="float:right;">
         <section class="file-uploader bulk-upload">
           <button md-button>
@@ -29,7 +29,7 @@
       </div>
     </div>
   <form #booking_form="ngForm" class="common-form compact">
-    <div class="row" *ngIf="!forEdit() && isUserAdminORBookOfficer ">
+    <div class="row" *ngIf="!forEdit && isUserAdminORBookOfficer ">
       <h2>CUSTOMER</h2>
       <div class="medium-12 columns">
         <div class="form-field">
@@ -42,7 +42,7 @@
       </div> 
     </div>
 
-    <div class="row" *ngIf="!forEdit() && isUserAdminORBookOfficer">
+    <div class="row" *ngIf="!forEdit && isUserAdminORBookOfficer">
       <div class="medium-6 columns">
         <div class="form-field">
           <label>PLEASE SELECT THE {{bookingModel.bookable_type ==='IndividualClient' ? "CLIENT":"ORGANISATION"}}*
@@ -79,24 +79,24 @@
       <ng-container>
       <p name="interpreterMsg">What kind of interpreter(s) {{isUserAdminORBookOfficer ? (bookingModel.bookable_type ==='IndividualClient' ? "does the client":"does the organisation") :"do you"}} need? Select multiple if relevant</p>
       <div class="row" id="interpreters-kind">
-        <div class="medium-3 columns"> <md-checkbox name="cbAuslan" [(ngModel)]="cbAuslanInterpreter" (change)="serviceTypeChange('auslan')" [disabled]="cbAuslanInterpreter">AUSLAN</md-checkbox> </div>
-        <div class="medium-3 columns"> <md-checkbox name="cbDeaf" [(ngModel)]="cbDeafInterpreter" (change)="serviceTypeChange('deaf')">DEAF</md-checkbox> </div>
-        <div class="medium-3 columns"> <md-checkbox name="cbDeafBlind" [(ngModel)]="cbDeafBlindInterpreter" (change)="serviceTypeChange('deafBlind')">DEAF BLIND</md-checkbox> </div>
-        <div class="medium-3 columns"> <md-checkbox name="cbCaptioning" [(ngModel)]="cbCaptioning" (change)="serviceTypeChange('captioning')">CAPTIONING</md-checkbox> </div>
-        <div class="medium-3 columns"> <md-checkbox name="cbNotetaking" [(ngModel)]="cbNotetaking" (change)="serviceTypeChange('notetaking')">NOTETAKING</md-checkbox> </div>
-        <div class="medium-3 columns"> <md-checkbox name="cbOtherLanguage" [(ngModel)]="cbOtherLanguageNeeds" (change)="serviceTypeChange('otherLanguage')">OTHER LANGUAGE NEEDS</md-checkbox> </div>
+        <div class="medium-3 columns"> <md-checkbox name="cbAuslan" [(ngModel)]="cbAuslanInterpreter" (change)="serviceTypeChange('auslan')" [disabled]="cbAuslanInterpreter && forEdit">AUSLAN</md-checkbox> </div>
+        <div class="medium-3 columns"> <md-checkbox name="cbDeaf" [(ngModel)]="cbDeafInterpreter" (change)="serviceTypeChange('deaf')" [disabled]="cbDeafInterpreter && forEdit">DEAF</md-checkbox> </div>
+        <div class="medium-3 columns"> <md-checkbox name="cbDeafBlind" [(ngModel)]="cbDeafBlindInterpreter" (change)="serviceTypeChange('deafBlind')" [disabled]="cbDeafBlindInterpreter && forEdit">DEAF BLIND</md-checkbox> </div>
+        <div class="medium-3 columns"> <md-checkbox name="cbCaptioning" [(ngModel)]="cbCaptioning" (change)="serviceTypeChange('captioning')" [disabled]="cbCaptioning && forEdit">CAPTIONING</md-checkbox> </div>
+        <div class="medium-3 columns"> <md-checkbox name="cbNotetaking" [(ngModel)]="cbNotetaking" (change)="serviceTypeChange('notetaking')" [disabled]="cbNotetaking && forEdit">NOTETAKING</md-checkbox> </div>
+        <div class="medium-3 columns"> <md-checkbox name="cbOtherLanguage" [(ngModel)]="cbOtherLanguageNeeds" (change)="serviceTypeChange('otherLanguage')" [disabled]="cbOtherLanguageNeeds && forEdit">OTHER LANGUAGE NEEDS</md-checkbox> </div>
       </div>
       <div class="row" *ngIf="cbDeafBlindInterpreter || cbVisualFrame || cbTactile || cbPlatform" name="deafBlindInterpreterTypes">
-          <div class="medium-3 columns"> <md-checkbox name="cbVisualFrame" [(ngModel)]="cbVisualFrame">VISUAL FRAME</md-checkbox> </div>
-          <div class="medium-3 columns"> <md-checkbox name="cbTactile" [(ngModel)]="cbTactile">TACTILE</md-checkbox> </div>
-          <div class="medium-3 columns"> <md-checkbox name="cbPlatform" [(ngModel)]="cbPlatform">PLATFORM</md-checkbox> </div>
+          <div class="medium-3 columns"> <md-checkbox name="cbVisualFrame" [(ngModel)]="cbVisualFrame" [disabled]="cbVisualFrame && forEdit">VISUAL FRAME</md-checkbox> </div>
+          <div class="medium-3 columns"> <md-checkbox name="cbTactile" [(ngModel)]="cbTactile" [disabled]="cbTactile && forEdit">TACTILE</md-checkbox> </div>
+          <div class="medium-3 columns"> <md-checkbox name="cbPlatform" [(ngModel)]="cbPlatform" [disabled]="cbPlatform && forEdit">PLATFORM</md-checkbox> </div>
       </div>
       <div class="row" *ngIf="cbOtherLanguageNeeds" name="otherLanguageTypes">
-          <div class="medium-3 columns"> <md-checkbox name="cbAsl" [(ngModel)]="cbAsl">ASL</md-checkbox> </div>
-          <div class="medium-3 columns"> <md-checkbox name="cbBsl" [(ngModel)]="cbBsl">BSL</md-checkbox> </div>
-          <div class="medium-3 columns"> <md-checkbox name="cbIsl" [(ngModel)]="cbIsl">ISL</md-checkbox> </div>
-          <div class="medium-3 columns"> <md-checkbox name="cbSignedEnglish" [(ngModel)]="cbSignedEnglish">SIGNED ENGLISH</md-checkbox> </div>
-          <div class="medium-3 columns"> <md-checkbox name="cbIndigenousSign" [(ngModel)]="cbIndigenousSign">INDIGENOUS SIGN</md-checkbox> </div>
+          <div class="medium-3 columns"> <md-checkbox name="cbAsl" [(ngModel)]="cbAsl" [disabled]="cbAsl && forEdit">ASL</md-checkbox> </div>
+          <div class="medium-3 columns"> <md-checkbox name="cbBsl" [(ngModel)]="cbBsl" [disabled]="cbBsl && forEdit">BSL</md-checkbox> </div>
+          <div class="medium-3 columns"> <md-checkbox name="cbIsl" [(ngModel)]="cbIsl" [disabled]="cbIsl && forEdit">ISL</md-checkbox> </div>
+          <div class="medium-3 columns"> <md-checkbox name="cbSignedEnglish" [(ngModel)]="cbSignedEnglish" [disabled]="cbSignedEnglish && forEdit">SIGNED ENGLISH</md-checkbox> </div>
+          <div class="medium-3 columns"> <md-checkbox name="cbIndigenousSign" [(ngModel)]="cbIndigenousSign" [disabled]="cbIndigenousSign && forEdit">INDIGENOUS SIGN</md-checkbox> </div>
       </div>
       </ng-container>
     </div>
@@ -169,7 +169,7 @@
         </div>
       </div>
 
-      <div class="medium-12 columns" *ngIf="isUserOrgRepORIndClientTemp() && !forEdit()">
+      <div class="medium-12 columns" *ngIf="isUserOrgRepORIndClientTemp() && !forEdit">
         <div class="form-field">
           <label name="lblQuestionBookAddr">Do you want to use your profile address for this booking?
             <span mdTooltip="Tooltip!">
