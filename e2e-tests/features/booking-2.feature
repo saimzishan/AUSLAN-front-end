@@ -51,7 +51,7 @@ Feature: Booking Management
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
     When I fill New Booking form fields correctly with non-standard time from 04:00 AM to 05:01 AM with 1 interpreters
-    Then I am shown a validation error with the text 'You may require more than 1 interpreter for this booking'
+    Then I am shown a validation error with the text 'You may require more than 1 auslan interpreter for this booking.'
 
   @runThis
   Scenario: Administrator can't create a less interpreter booking
@@ -61,7 +61,7 @@ Feature: Booking Management
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
     When I fill New Booking form fields correctly with non-standard time from 04:00 AM to 05:01 AM with 1 interpreters
-    Then I am shown a validation error with the text 'You may require more than 1 interpreter for this booking'
+    Then I am shown a validation error with the text 'You may require more than 1 auslan interpreter for this booking.'
 
   @runThis
   Scenario: Organisational Representative can't create a less interpreter booking
@@ -72,7 +72,7 @@ Feature: Booking Management
     And I will be taken to the 'New Booking' form
     When I click on element by name 'rdBookingAddressNo'
     When I fill New Booking form fields correctly with non-standard time from 04:00 AM to 05:01 AM with 1 interpreters
-    Then I am shown a validation error with the text 'You may require more than 1 interpreter for this booking'
+    Then I am shown a validation error with the text 'You may require more than 1 auslan interpreter for this booking.'
 
   @runThis
   Scenario: Individual Client can't create a less interpreter booking
@@ -83,7 +83,7 @@ Feature: Booking Management
     And I will be taken to the 'New Booking' form
     When I click on element by name 'rdBookingAddressNo'
     When I fill New Booking form fields correctly with non-standard time from 04:00 AM to 05:01 AM with 1 interpreters
-    Then I am shown a validation error with the text 'You may require more than 1 interpreter for this booking'
+    Then I am shown a validation error with the text 'You may require more than 1 auslan interpreter for this booking.'
 # ---------------------------------------- AUSLAN1-254 -> END ----------------------------------------
 
 # ---------------------------------------- AUSLAN1-242 -> START ----------------------------------------
