@@ -81,6 +81,7 @@ Feature: Booking Filter
     Then I am shown with 1 booking
     Then I see one row with status 'red'
     And I click on my name in the top corner
+    When I click on the option  profile
     And I will be taken to my individual profile page
     Then I click on Bookings
     And I am on the bookings page

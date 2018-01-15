@@ -13,6 +13,7 @@ Feature: User Profile Management
     And I sign in with valid Booking Officer credentials
     And I am on the bookings page
     And I click on my name in the top corner
+    When I click on the option  profile
     And I will be taken to my individual profile page
     When I change some input text fields of the BOOKINGOFFICER
     And I click on BUTTON 'SAVE'
@@ -20,6 +21,7 @@ Feature: User Profile Management
     And I click on Bookings
     And I am on the bookings page
     And I click on my name in the top corner
+    When I click on the option  profile
     And I will be taken to my individual profile page
     And I verify input text fields of the BOOKINGOFFICER is updated
 
@@ -30,6 +32,7 @@ Feature: User Profile Management
     And I sign in with valid Administrator credentials
     And I am on the bookings page
     And I click on my name in the top corner
+    When I click on the option  profile
     And I will be taken to my individual profile page
     When I change some input text fields of the ADMINISTRATOR
     And I click on BUTTON 'SAVE'
@@ -37,6 +40,7 @@ Feature: User Profile Management
     And I click on Bookings
     And I am on the bookings page
     And I click on my name in the top corner
+    When I click on the option  profile
     And I will be taken to my individual profile page
     And I verify input text fields of the ADMINISTRATOR is updated
 
@@ -47,6 +51,7 @@ Feature: User Profile Management
     And I sign in with valid Interpreter credentials
     And I am on the bookings page
     And I click on my name in the top corner
+    When I click on the option  profile
     And I will be taken to my individual profile page
     When I change some input text fields of the INTERPRETER
     And I click on BUTTON 'SAVE'
@@ -54,6 +59,7 @@ Feature: User Profile Management
     And I click on Bookings
     And I am on the bookings page
     And I click on my name in the top corner
+    When I click on the option  profile
     And I will be taken to my individual profile page
     And I verify input text fields of the INTERPRETER is updated
 
@@ -64,6 +70,7 @@ Feature: User Profile Management
     And I sign in with valid Organisational Representative credentials
     And I am on the bookings page
     And I click on my name in the top corner
+    When I click on the option  profile
     And I will be taken to my individual profile page
     When I change some input text fields of the ORGANISATIONALREPRESENTATIVE
     And I click on BUTTON 'SAVE'
@@ -71,6 +78,7 @@ Feature: User Profile Management
     And I click on Bookings
     And I am on the bookings page
     And I click on my name in the top corner
+    When I click on the option  profile
     And I will be taken to my individual profile page
     And I verify input text fields of the ORGANISATIONALREPRESENTATIVE is updated
 
@@ -81,6 +89,7 @@ Feature: User Profile Management
     And I sign in with valid Individual Client credentials
     And I am on the bookings page
     And I click on my name in the top corner
+    When I click on the option  profile
     And I will be taken to my individual profile page
     When I change some input text fields of the INDIVIDUALCLIENT
     And I click on BUTTON 'SAVE'
@@ -88,6 +97,7 @@ Feature: User Profile Management
     And I click on Bookings
     And I am on the bookings page
     And I click on my name in the top corner
+    When I click on the option  profile
     And I will be taken to my individual profile page
     And I verify input text fields of the INDIVIDUALCLIENT is updated
 
@@ -99,6 +109,7 @@ Feature: User Profile Management
     And I sign in with valid Individual Client credentials
     And I am on the bookings page
     And I click on my name in the top corner
+    When I click on the option  profile
     And I will be taken to my individual profile page
     When I click on Profile 'Change Password'
     Then I will be taken to my individual secure_pass page
@@ -110,6 +121,7 @@ Feature: User Profile Management
     And I sign in with valid Administrator credentials
     And I am on the bookings page
     And I click on my name in the top corner
+    When I click on the option  profile
     And I will be taken to my individual profile page
     When I click on Profile 'Change Password'
     Then I will be taken to my individual secure_pass page
@@ -121,6 +133,7 @@ Feature: User Profile Management
     And I sign in with valid Booking Officer credentials
     And I am on the bookings page
     And I click on my name in the top corner
+    When I click on the option  profile
     And I will be taken to my individual profile page
     When I click on Profile 'Change Password'
     Then I will be taken to my individual secure_pass page
@@ -132,6 +145,7 @@ Feature: User Profile Management
     And I sign in with valid Organisational Representative credentials
     And I am on the bookings page
     And I click on my name in the top corner
+    When I click on the option  profile
     And I will be taken to my individual profile page
     When I click on Profile 'Change Password'
     Then I will be taken to my individual secure_pass page
@@ -143,6 +157,7 @@ Feature: User Profile Management
     And I sign in with valid Interpreter credentials
     And I am on the bookings page
     And I click on my name in the top corner
+    When I click on the option  profile
     And I will be taken to my individual profile page
     When I click on Profile 'Change Password'
     Then I will be taken to my individual secure_pass page
