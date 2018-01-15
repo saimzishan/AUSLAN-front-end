@@ -401,7 +401,7 @@ export class Heroku {
     static sendCommandToHeroku(command) {
         const exec = require('child_process').execSync;
         console.log(command);
-        command = /*'ActiveRecord::Base.logger.level = Logger::INFO;' + */ command + ';nil;exit';
+        command = 'ActiveRecord::Base.logger.level = Logger::INFO;' + command + ';nil;exit';
         let herokuCommand = 'cd ../booking-system-api/ && echo  \'' + command + '\' | bundle exec rails c && cd ../booking-system-frontend/';
         exec(herokuCommand);
     }
