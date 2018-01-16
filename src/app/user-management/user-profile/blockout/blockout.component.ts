@@ -14,29 +14,34 @@ import {AuthGuard} from '../../../auth/auth.guard';
     templateUrl: './blockout.component.html',
     styleUrls: ['./blockout.component.css']
 })
-export class BlockoutComponent implements  OnDestroy, OnInit {
+export class BlockoutComponent implements OnDestroy, OnInit {
     sub;
     interpreter: Interpreter;
-    param_id: number;
+    param_id: number = -1;
+    start_time: Date = new Date();
     end_time: Date = new Date();
-    end_date: Date = new Date();
-    start_time: Date  = new Date();
+    end_date: Date = this.start_time;
     public availabilityBlock: AvailabilityBlock = new AvailabilityBlock();
+
     constructor(public userDataService: UserService,
                 public notificationServiceBus: NotificationServiceBus,
                 public spinnerService: SpinnerService,
-                private route: ActivatedRoute) {}
+                private route: ActivatedRoute) {
+    }
+
     ngOnInit() {
         this.interpreter = Boolean(GLOBAL.currentUser) &&
         GLOBAL.currentUser instanceof Interpreter ?
             (<Interpreter>GLOBAL.currentUser) : null;
+
+        this.end_time.setTime(this.start_time.getTime() + (1 * 60 * 60 * 1000));
         this.sub = this.route.params.subscribe(params => {
             let param_id = params['id'] || '';
             if (Boolean(param_id) && parseInt(param_id, 10) > 0) {
                 this.param_id = parseInt(param_id, 10);
                 this.interpreter.availability_blocks_attributes
-                    .filter( a => a.id === this.param_id  )
-                    .map( a =>
+                    .filter(a => a.id === this.param_id)
+                    .map(a =>
                         this.availabilityBlock = a
                     );
                 this.start_time = new Date(this.availabilityBlock.start_time);
@@ -49,19 +54,28 @@ export class BlockoutComponent implements  OnDestroy, OnInit {
     ngOnDestroy() {
         return this.sub && this.sub.unsubscribe();
     }
-    onStartTimeChanged () {
-        // this.end_time.setTime(this.start_time.getTime() + (1 * 60 * 60 * 1000));
-        this.end_time = this.start_time;
+
+    onStartTimeChanged() {
+        let dt = new Date();
+        dt.setDate(this.start_time.getDate());
+        this.end_date = dt;
+
+        dt.setTime(this.start_time.getTime() + (1 * 60 * 60 * 1000));
+        this.end_time = dt;
+        console.log(this.end_time);
     }
-    deleteBlockout () {
+
+    deleteBlockout() {
         this.spinnerService.requestInProcess(true);
-        this.userDataService.deleteBlockout( GLOBAL.currentUser.id , this.availabilityBlock.id)
+        this.userDataService.deleteBlockout(GLOBAL.currentUser.id, this.availabilityBlock.id)
             .subscribe((res: any) => {
                 if (res.status === 204) {
                     // UI Notification
                     let idx = this.interpreter.availability_blocks_attributes.indexOf(this.availabilityBlock);
-                    this.interpreter.availability_blocks_attributes.splice(idx, 1);
+                    this.interpreter.availability_blocks_attributes =
+                        this.interpreter.availability_blocks_attributes.splice(idx, 1);
                     this.availabilityBlock = new AvailabilityBlock();
+                    this.param_id = -1;
                     this.spinnerService.requestInProcess(false);
                     AuthGuard.refreshUser(this.interpreter);
                     this.notificationServiceBus.launchNotification(false, 'Blockout deleted Successfully');
@@ -86,13 +100,13 @@ export class BlockoutComponent implements  OnDestroy, OnInit {
         this.availabilityBlock.start_time = this.start_time.toISOString();
         this.availabilityBlock.end_time = this.end_time.toISOString();
         this.availabilityBlock.end_date = this.end_date.toISOString();
-        this.userDataService.editBlockout( GLOBAL.currentUser.id ,
+        this.userDataService.editBlockout(GLOBAL.currentUser.id,
             this.availabilityBlock)
             .subscribe((res: any) => {
                 if (res.status === 204) {
                     // UI Notification
                     this.interpreter.availability_blocks_attributes.filter(o => o.id === this.availabilityBlock.id)
-                        .map( o => o = this.availabilityBlock);
+                        .map(o => o = this.availabilityBlock);
                     this.spinnerService.requestInProcess(false);
                     AuthGuard.refreshUser(this.interpreter);
                     this.notificationServiceBus.launchNotification(false, 'Blockout edit Successfully');
@@ -117,7 +131,7 @@ export class BlockoutComponent implements  OnDestroy, OnInit {
         this.availabilityBlock.end_time = this.end_time.toISOString();
         this.availabilityBlock.end_date = this.end_date.toISOString();
 
-        this.userDataService.addBlockout( GLOBAL.currentUser.id , this.availabilityBlock)
+        this.userDataService.addBlockout(GLOBAL.currentUser.id, this.availabilityBlock)
             .subscribe((res: any) => {
                 if (res.status === 200) {
                     // UI Notification

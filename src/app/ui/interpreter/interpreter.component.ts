@@ -65,7 +65,6 @@ export class InterpreterComponent implements OnInit {
 
                     }).length)  > 0; // if it isn't in one of the ranges, don't render it (by returning false
                 },
-                timeFormat: 'h:mm',
                 defaultView: 'month',
                 eventClick: (calEvent, jsEvent, view) => {
                     this.router.navigate(['/user-management/', calEvent.id, 'block_out']);
@@ -77,23 +76,34 @@ export class InterpreterComponent implements OnInit {
 
             for (let avail_block of this.userModel.availability_blocks_attributes) {
                 let sd = new Date(avail_block.start_time);
-                let ed = new Date(avail_block.end_time);
+                let ed = new Date(avail_block.end_date);
+                let edt = new Date(avail_block.end_time);
+
+
                 let event: any = ({
                     title: avail_block.name,
                     color: avail_block.recurring ? '#00ff00' : '#257e4a',
                     id: avail_block.id,
                     booking_id: avail_block.booking_id,
                     start: avail_block.recurring === false ? sd.toISOString() : `${sd.getHours()}:${sd.getMinutes()}`,
-                    end: avail_block.recurring === false ? ed.toISOString() : `${ed.getHours()}:${ed.getMinutes()}`,
+                    end: avail_block.recurring === false ? ed.toISOString() :  `${edt.getHours()}:${edt.getMinutes()}`,
                     recurring: avail_block.recurring,
                     frequency: avail_block.frequency
                 });
                 if (avail_block.recurring === true) {
-                    event.dow = [sd.getDay()];
+                    event.dow = avail_block.frequency === 'daily' ? [1, 2, 3, 4, 5] : [sd.getDay()];
                     // let offSet = 1;
                     // ed.setDate(ed.getDate() + offSet);
 
                     event.ranges = [
+                        {
+                            start: moment().endOf(avail_block.frequency === 'daily' ? 'day' :
+                                avail_block.frequency === 'weekly' ? 'week' :
+                                    avail_block.frequency === 'monthly' ? 'month' : 'week'),
+                            end: moment().endOf(avail_block.frequency === 'daily' ? 'day' :
+                                avail_block.frequency === 'weekly' ? 'week' :
+                                    avail_block.frequency === 'monthly' ? 'month' : 'week')
+                        },
                         {
                             start: moment(sd.toISOString()).format('YYYY-MM-DD'),
                             end: moment(ed.toISOString()).format('YYYY-MM-DD')
