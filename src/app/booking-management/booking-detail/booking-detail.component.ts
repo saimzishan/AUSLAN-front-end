@@ -170,26 +170,23 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     serviceTypeChange(serviceType: string) {
-        console.log(this.cbAuslanInterpreter);
         if (this.forEdit) {
+            let allServiceTypes = ['cbAuslanInterpreter', 'cbDeafInterpreter', 'cbDeafBlindInterpreter', 'cbCaptioning', 'cbNotetaking', 'cbOtherLanguageNeeds',
+                                   'cbVisualFrame', 'cbTactile', 'cbPlatform', 'cbAsl', 'cbBsl', 'cbIsl', 'cbSignedEnglish', 'cbIndigenousSign'];
 
-            switch (serviceType) {
-                case 'auslan':
-                    break;
-                case 'deaf':
-                    this.cbAuslanInterpreter = false;
-                    break;
-                case 'deafBlind':
-                    break;
-                case 'captioning':
-                    break;
-                case 'notetaking':
-                    break;
-                case 'otherLanguage':
-                    break;
-                default:
-                    break;
-            }
+            allServiceTypes.forEach(type => {
+                if (serviceType !== type) {
+                    this[type] = false;
+                }
+            });
+
+            ['number_of_auslan_interpreters_required', 'number_of_deaf_interpreters_required', 'number_of_deaf_blind_interpreters_required',
+             'number_of_captioners_required', 'number_of_note_takers_required', 'number_of_visual_frame_interpreters_required', 'number_of_tactile_interpreters_required',
+             'number_of_platform_interpreters_required', 'number_of_asl_interpreters_required', 'number_of_bsl_interpreters_required',
+             'number_of_isl_interpreters_required', 'number_of_signed_english_interpreters_required',
+             'number_of_indigenous_sign_interpreters_required'].forEach(modelVal => {
+                    this.bookingModel[modelVal] = 0;
+                });
         }
     }
 

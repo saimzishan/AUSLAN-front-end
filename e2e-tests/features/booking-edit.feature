@@ -206,3 +206,57 @@ Feature: Edit Booking
     Then I should be on the edit booking page
     Then I can verify the input 'contact_first_name' will have the value 'Frank'
     And I can verify the input 'contact_last_name' will have the value 'Castle'
+
+    #----------------------------------------- AUSLAN1-978 -> START ----------------------------------------
+  @runThis
+  Scenario: Booking Officer can change the booking method
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    Then I am on the bookings page
+    And I am shown with 1 bookings
+    When I click on an individual booking
+    Then I am on the individual booking page
+    When I click on link 'Booking details'
+    Then I should be on the edit booking page
+    And I can see the button 'btnOnsite' is 'active'
+    And I can see the button 'btnVri' is 'not active'
+    When I click on BUTTON name 'btnVri'
+    Then I can see the button 'btnOnsite' is 'not active'
+    And I can see the button 'btnVri' is 'active'
+    When I click on BUTTON 'SAVE'
+    Then If I am shown a popup message 'Would you like to save these changes for all bookings or only for this one?', I approve it
+    Then I should get a valid booking update notification
+    And I am on the individual booking page
+    When I click on link 'Booking details'
+    Then I should be on the edit booking page
+    And I can see the button 'btnVri' is 'active'
+    #----------------------------------------- AUSLAN1-978 -> END ----------------------------------------
+
+    #----------------------------------------- AUSLAN1-979 -> START ----------------------------------------
+  @runThis
+  Scenario: Booking Officer can select only 1 service type at a time
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    Then I am on the bookings page
+    And I am shown with 1 bookings
+    When I click on an individual booking
+    Then I am on the individual booking page
+    When I click on link 'Booking details'
+    Then I should be on the edit booking page
+    And I verify checkbox name 'cbAuslan' is checked 'true'
+    Then I click on checkbox name 'cbAuslan'
+    And I verify checkbox name 'cbAuslan' is checked 'true'
+    Then I click on checkbox name 'cbDeaf'
+    And I verify checkbox name 'cbDeaf' is checked 'true'
+    And I verify checkbox name 'cbAuslan' is checked 'false'
+    Then I click on checkbox name 'cbDeaf'
+    And I verify checkbox name 'cbDeaf' is checked 'true'
+    And I verify checkbox name 'cbAuslan' is checked 'false'
+    Then I click on checkbox name 'cbDeafBlind'
+    And I verify checkbox name 'cbDeafBlind' is checked 'true'
+    And I verify checkbox name 'cbDeaf' is checked 'false'
+    Then I click on checkbox name 'cbDeafBlind'
+    And I verify checkbox name 'cbDeafBlind' is checked 'true'
+    And I verify checkbox name 'cbDeaf' is checked 'false'
+
+    #----------------------------------------- AUSLAN1-979 -> END ----------------------------------------

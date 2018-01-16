@@ -181,7 +181,7 @@ Feature: Booking Management
     And I am on the bookings page
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
-    When I fill New Booking form fields correctly with non-standard time from 04:00 AM to 05:00 AM with 1 interpreters
+    When I fill New Booking form fields correctly with non-standard time from 04:00 AM to 05:00 AM with 1 'auslanInterpreters_count'
     And I select the bookable for client
     And I click the create booking button
     Then I will get an error notification saying "Kindly accept Terms and Conditions"
@@ -199,7 +199,7 @@ Feature: Booking Management
     And I am on the bookings page
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
-    When I fill New Booking form fields correctly with non-standard time from 04:00 AM to 05:00 AM with 1 interpreters
+    When I fill New Booking form fields correctly with non-standard time from 04:00 AM to 05:00 AM with 1 'auslanInterpreters_count'
     And I select the bookable for client
     And I click the create booking button
     Then I will get an error notification saying "Kindly accept Terms and Conditions"

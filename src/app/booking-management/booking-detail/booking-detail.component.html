@@ -79,24 +79,24 @@
       <ng-container>
       <p name="interpreterMsg">What kind of interpreter(s) {{isUserAdminORBookOfficer ? (bookingModel.bookable_type ==='IndividualClient' ? "does the client":"does the organisation") :"do you"}} need? Select multiple if relevant</p>
       <div class="row" id="interpreters-kind">
-        <div class="medium-3 columns"> <md-checkbox name="cbAuslan" [(ngModel)]="cbAuslanInterpreter" (change)="serviceTypeChange('auslan')" [disabled]="cbAuslanInterpreter && forEdit">AUSLAN</md-checkbox> </div>
-        <div class="medium-3 columns"> <md-checkbox name="cbDeaf" [(ngModel)]="cbDeafInterpreter" (change)="serviceTypeChange('deaf')" [disabled]="cbDeafInterpreter && forEdit">DEAF</md-checkbox> </div>
-        <div class="medium-3 columns"> <md-checkbox name="cbDeafBlind" [(ngModel)]="cbDeafBlindInterpreter" (change)="serviceTypeChange('deafBlind')" [disabled]="cbDeafBlindInterpreter && forEdit">DEAF BLIND</md-checkbox> </div>
-        <div class="medium-3 columns"> <md-checkbox name="cbCaptioning" [(ngModel)]="cbCaptioning" (change)="serviceTypeChange('captioning')" [disabled]="cbCaptioning && forEdit">CAPTIONING</md-checkbox> </div>
-        <div class="medium-3 columns"> <md-checkbox name="cbNotetaking" [(ngModel)]="cbNotetaking" (change)="serviceTypeChange('notetaking')" [disabled]="cbNotetaking && forEdit">NOTETAKING</md-checkbox> </div>
-        <div class="medium-3 columns"> <md-checkbox name="cbOtherLanguage" [(ngModel)]="cbOtherLanguageNeeds" (change)="serviceTypeChange('otherLanguage')" [disabled]="cbOtherLanguageNeeds && forEdit">OTHER LANGUAGE NEEDS</md-checkbox> </div>
+        <div class="medium-3 columns"> <md-checkbox name="cbAuslan" [(ngModel)]="cbAuslanInterpreter" (change)="serviceTypeChange('cbAuslanInterpreter')" [disabled]="cbAuslanInterpreter && forEdit">AUSLAN</md-checkbox> </div>
+        <div class="medium-3 columns"> <md-checkbox name="cbDeaf" [(ngModel)]="cbDeafInterpreter" (change)="serviceTypeChange('cbDeafInterpreter')" [disabled]="cbDeafInterpreter && forEdit">DEAF</md-checkbox> </div>
+        <div class="medium-3 columns"> <md-checkbox name="cbDeafBlind" [(ngModel)]="cbDeafBlindInterpreter" (change)="serviceTypeChange('cbDeafBlindInterpreter')" [disabled]="cbDeafBlindInterpreter && forEdit">DEAF BLIND</md-checkbox> </div>
+        <div class="medium-3 columns"> <md-checkbox name="cbCaptioning" [(ngModel)]="cbCaptioning" (change)="serviceTypeChange('cbCaptioning')" [disabled]="cbCaptioning && forEdit">CAPTIONING</md-checkbox> </div>
+        <div class="medium-3 columns"> <md-checkbox name="cbNotetaking" [(ngModel)]="cbNotetaking" (change)="serviceTypeChange('cbNotetaking')" [disabled]="cbNotetaking && forEdit">NOTETAKING</md-checkbox> </div>
+        <div class="medium-3 columns"> <md-checkbox name="cbOtherLanguage" [(ngModel)]="cbOtherLanguageNeeds" (change)="serviceTypeChange('cbOtherLanguageNeeds')" [disabled]="cbOtherLanguageNeeds && forEdit">OTHER LANGUAGE NEEDS</md-checkbox> </div>
       </div>
       <div class="row" *ngIf="cbDeafBlindInterpreter || cbVisualFrame || cbTactile || cbPlatform" name="deafBlindInterpreterTypes">
-          <div class="medium-3 columns"> <md-checkbox name="cbVisualFrame" [(ngModel)]="cbVisualFrame" [disabled]="cbVisualFrame && forEdit">VISUAL FRAME</md-checkbox> </div>
-          <div class="medium-3 columns"> <md-checkbox name="cbTactile" [(ngModel)]="cbTactile" [disabled]="cbTactile && forEdit">TACTILE</md-checkbox> </div>
-          <div class="medium-3 columns"> <md-checkbox name="cbPlatform" [(ngModel)]="cbPlatform" [disabled]="cbPlatform && forEdit">PLATFORM</md-checkbox> </div>
+          <div class="medium-3 columns"> <md-checkbox name="cbVisualFrame" [(ngModel)]="cbVisualFrame" (change)="serviceTypeChange('cbVisualFrame')" [disabled]="cbVisualFrame && forEdit">VISUAL FRAME</md-checkbox> </div>
+          <div class="medium-3 columns"> <md-checkbox name="cbTactile" [(ngModel)]="cbTactile" (change)="serviceTypeChange('cbTactile')" [disabled]="cbTactile && forEdit">TACTILE</md-checkbox> </div>
+          <div class="medium-3 columns"> <md-checkbox name="cbPlatform" [(ngModel)]="cbPlatform" (change)="serviceTypeChange('cbPlatform')" [disabled]="cbPlatform && forEdit">PLATFORM</md-checkbox> </div>
       </div>
-      <div class="row" *ngIf="cbOtherLanguageNeeds" name="otherLanguageTypes">
-          <div class="medium-3 columns"> <md-checkbox name="cbAsl" [(ngModel)]="cbAsl" [disabled]="cbAsl && forEdit">ASL</md-checkbox> </div>
-          <div class="medium-3 columns"> <md-checkbox name="cbBsl" [(ngModel)]="cbBsl" [disabled]="cbBsl && forEdit">BSL</md-checkbox> </div>
-          <div class="medium-3 columns"> <md-checkbox name="cbIsl" [(ngModel)]="cbIsl" [disabled]="cbIsl && forEdit">ISL</md-checkbox> </div>
-          <div class="medium-3 columns"> <md-checkbox name="cbSignedEnglish" [(ngModel)]="cbSignedEnglish" [disabled]="cbSignedEnglish && forEdit">SIGNED ENGLISH</md-checkbox> </div>
-          <div class="medium-3 columns"> <md-checkbox name="cbIndigenousSign" [(ngModel)]="cbIndigenousSign" [disabled]="cbIndigenousSign && forEdit">INDIGENOUS SIGN</md-checkbox> </div>
+      <div class="row" *ngIf="cbOtherLanguageNeeds || cbAsl || cbBsl || cbIsl || cbSignedEnglish || cbIndigenousSign" name="otherLanguageTypes">
+          <div class="medium-3 columns"> <md-checkbox name="cbAsl" [(ngModel)]="cbAsl" (change)="serviceTypeChange('cbAsl')" [disabled]="cbAsl && forEdit">ASL</md-checkbox> </div>
+          <div class="medium-3 columns"> <md-checkbox name="cbBsl" [(ngModel)]="cbBsl" (change)="serviceTypeChange('cbBsl')" [disabled]="cbBsl && forEdit">BSL</md-checkbox> </div>
+          <div class="medium-3 columns"> <md-checkbox name="cbIsl" [(ngModel)]="cbIsl" (change)="serviceTypeChange('cbIsl')" [disabled]="cbIsl && forEdit">ISL</md-checkbox> </div>
+          <div class="medium-3 columns"> <md-checkbox name="cbSignedEnglish" [(ngModel)]="cbSignedEnglish" (change)="serviceTypeChange('cbSignedEnglish')" [disabled]="cbSignedEnglish && forEdit">SIGNED ENGLISH</md-checkbox> </div>
+          <div class="medium-3 columns"> <md-checkbox name="cbIndigenousSign" [(ngModel)]="cbIndigenousSign" (change)="serviceTypeChange('cbIndigenousSign')" [disabled]="cbIndigenousSign && forEdit">INDIGENOUS SIGN</md-checkbox> </div>
       </div>
       </ng-container>
     </div>
@@ -342,18 +342,18 @@
               </span>
             </label>
             <input [(ngModel)]="bookingModel.number_of_captioners_required"
-                   name="captioning_count"
-                   #captioning_count="ngModel"
+                   name="captioner_count"
+                   #captioner_count="ngModel"
                    placeholder="Enter the Number of Captioners needed"
                    (click)="fireNotification($event)"
                    type="tel" min="1" required digits>
-            <span *ngIf="captioning_count.touched && !captioning_count.errors?.required && !captioning_count.errors?.digits;"
+            <span *ngIf="captioner_count.touched && !captioner_count.errors?.required && !captioner_count.errors?.digits;"
                   class="inline-icon inline-icon-valid valid"></span>
-            <span *ngIf="captioning_count.touched && (captioning_count.errors?.required || captioning_count.errors?.digits);"
+            <span *ngIf="captioner_count.touched && (captioner_count.errors?.required || captioner_count.errors?.digits);"
                   class="inline-icon error">
               <span>Minimum 1 digit required.</span>!
             </span>
-            <span *ngIf="captioning_count.touched && captioning_count.errors?.min"
+            <span *ngIf="captioner_count.touched && captioner_count.errors?.min"
                   class="inline-icon error">
               <span>Minimum value should be 1.</span>!
             </span>
@@ -367,18 +367,18 @@
               </span>
             </label>
             <input [(ngModel)]="bookingModel.number_of_note_takers_required"
-                   name="notetaking_count"
-                   #notetaking_count="ngModel"
+                   name="noteTaker_count"
+                   #noteTaker_count="ngModel"
                    placeholder="Enter the Number of Notetaker needed"
                    (click)="fireNotification($event)"
                    type="tel" min="1" required digits>
-            <span *ngIf="notetaking_count.touched && !notetaking_count.errors?.required && !notetaking_count.errors?.digits;"
+            <span *ngIf="noteTaker_count.touched && !noteTaker_count.errors?.required && !noteTaker_count.errors?.digits;"
                   class="inline-icon inline-icon-valid valid"></span>
-            <span *ngIf="notetaking_count.touched && (notetaking_count.errors?.required || notetaking_count.errors?.digits);"
+            <span *ngIf="noteTaker_count.touched && (noteTaker_count.errors?.required || noteTaker_count.errors?.digits);"
                   class="inline-icon error">
               <span>Minimum 1 digit required.</span>!
             </span>
-            <span *ngIf="notetaking_count.touched && notetaking_count.errors?.min"
+            <span *ngIf="noteTaker_count.touched && noteTaker_count.errors?.min"
                   class="inline-icon error">
               <span>Minimum value should be 1.</span>!
             </span>
@@ -535,7 +535,7 @@
           </div>
         </div>
       </ng-container>
-      <ng-container *ngIf="cbOtherLanguageNeeds">
+      <ng-container *ngIf="cbOtherLanguageNeeds || cbAsl || cbBsl || cbIsl || cbSignedEnglish || cbIndigenousSign">
         <div class="medium-6 columns" *ngIf="cbAsl">
           <div class="form-field">
             <label>NUMB. OF ASL INT. NEEDED *
