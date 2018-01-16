@@ -1,4 +1,4 @@
-import {Component, OnDestroy, AfterViewChecked, AfterContentInit } from '@angular/core';
+import { Component, OnDestroy, AfterViewChecked } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import {GLOBAL} from './shared/global';
 import {AuthGuard} from './auth/auth.guard';
@@ -12,7 +12,7 @@ declare var $: any;
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent  implements OnDestroy, AfterContentInit , AfterViewChecked {
+export class AppComponent  implements OnDestroy, AfterViewChecked {
   public isRequesting = false;
   private sub: any;
 
@@ -25,11 +25,9 @@ export class AppComponent  implements OnDestroy, AfterContentInit , AfterViewChe
       });
   }
 
-  ngAfterContentInit () {
 
-  }
   ngAfterViewChecked() {
-      $(document).foundation();
+    $(document).foundation();
   }
 
   isLoggedIn() {

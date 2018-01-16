@@ -120,6 +120,14 @@ export class BlockoutComponent implements OnDestroy, OnInit {
             });
     }
 
+    saveBlockouts(form: FormGroup) {
+        if (this.availabilityBlock.id < 1) {
+            this.addBlockouts(form);
+        } else {
+            this.editBlockouts(form);
+        }
+    }
+
     addBlockouts(form: FormGroup) {
         if (form.invalid) {
             this.notificationServiceBus.launchNotification(true, GLOBAL.MISSING_FIELDS_ERROR_MESSAGE);
