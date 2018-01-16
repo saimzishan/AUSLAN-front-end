@@ -110,8 +110,6 @@ export class User {
 
         switch (type) {
             case 'Individual Client':
-                data_to_sent['send_email_on_receipt_of_request'] = true;
-                data_to_sent['email_confirmation_on_interpreter_allocation'] = true;
                 data_to_sent['business_hours_phone'] = data_to_sent['mobile'];
                 billing_account_attributes_fields['primary_contact_first_name'] = 'MOH';
                 billing_account_attributes_fields['primary_contact_last_name'] = 'JAY';
@@ -130,8 +128,6 @@ export class User {
                 data_to_sent['address_attributes'] = address_attributes_fields;
                 break;
             case 'Organisational Representative':
-                data_to_sent['send_email_on_receipt_of_request'] = true;
-                data_to_sent['email_confirmation_on_interpreter_allocation'] = true;
                 data_to_sent['business_hours_phone'] = data_to_sent['mobile'];
                 let organisation_attributes_fields = {};
                 organisation_attributes_fields['abn'] = 12345678900;
