@@ -72,8 +72,7 @@ export class BlockoutComponent implements OnDestroy, OnInit {
                 if (res.status === 204) {
                     // UI Notification
                     let idx = this.interpreter.availability_blocks_attributes.indexOf(this.availabilityBlock);
-                    this.interpreter.availability_blocks_attributes =
-                        this.interpreter.availability_blocks_attributes.splice(idx, 1);
+                    this.interpreter.availability_blocks_attributes.splice(idx, 1);
                     this.availabilityBlock = new AvailabilityBlock();
                     this.param_id = -1;
                     this.spinnerService.requestInProcess(false);
@@ -109,7 +108,7 @@ export class BlockoutComponent implements OnDestroy, OnInit {
                         .map(o => o = this.availabilityBlock);
                     this.spinnerService.requestInProcess(false);
                     AuthGuard.refreshUser(this.interpreter);
-                    this.notificationServiceBus.launchNotification(false, 'Blockout edit Successfully');
+                    this.notificationServiceBus.launchNotification(false, 'Blockout updated Successfully');
                 }
             }, errors => {
                 this.spinnerService.requestInProcess(false);
