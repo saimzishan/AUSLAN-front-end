@@ -103,7 +103,7 @@ Feature: Edit Booking
     And I wait for 2000 milli-seconds
     Then I am on the individual booking page
 
-  @ignoreThis
+  @runThis
   Scenario: As an Organisational Representative, I should see an error notification when I click a non-editable field
     Given Assigned all bookings to Organisational Representative
     Given I exist as an Organisational Representative
