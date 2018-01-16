@@ -319,6 +319,16 @@ defineSupportCode(({Given, When, Then}) => {
             expect(val).to.be.eq(isEnabled);
         });
     }
+    When(/^I can see the element with css '(.*)' and text (.*)$/, isElementWithCSSAndTextPresent);
+    function isElementWithCSSAndTextPresent(css: string, txt: string) {
+        return page.getAllByCSSandText(css, txt).first().isDisplayed().then((val) => {
+            expect(val).to.be.eq(true);
+        });
+    }
+    When(/^I can click the element with css '(.*)' and text (.*)$/, clickElementWithCSSAndTextPresent);
+    function clickElementWithCSSAndTextPresent(css: string, txt: string) {
+        return page.getAllByCSSandText(css, txt).first().click();
+    }
     When(/^I can see the button state with css '(.*)' is '(.*)'$/, isButtonWithCSSVisible);
     When(/^I can see the element with css '(.*)' is '(.*)'$/, isButtonWithCSSVisible);
     function isButtonWithCSSVisible(css: string, visible: string) {

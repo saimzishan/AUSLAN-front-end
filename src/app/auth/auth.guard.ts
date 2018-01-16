@@ -40,7 +40,7 @@ export class AuthGuard implements CanActivate {
         localStorage.setItem('user', JSON.stringify(GLOBAL.currentUser));
     }
 
-    public static refreshUser(user) {
+    public static   refreshUser(user) {
         GLOBAL.currentUser = user;
         user.password = '************';
         localStorage.setItem('user', JSON.stringify(GLOBAL.currentUser));

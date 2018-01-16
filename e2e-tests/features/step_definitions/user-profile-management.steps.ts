@@ -4,6 +4,7 @@ import {BookingManagementPage} from '../../po/booking-management-page.po';
 import {Heroku} from '../../helper';
 import {UserPasswordPage} from '../../po/user-password-page.po';
 import {UserProfilePage} from '../../po/user-profile-page.po';
+import {BlockoutPagePo} from '../../po/blockout-page.po';
 
 
 defineSupportCode(({Given, Then, When}) => {
@@ -14,7 +15,7 @@ defineSupportCode(({Given, Then, When}) => {
     let bookingPage = new BookingManagementPage();
     let userPasswordPage = new UserPasswordPage();
     let userProfilePage = new UserProfilePage();
-
+    let blockoutPage = new BlockoutPagePo();
     Given(/^Assign (.*) with preferred Interpreters$/, Heroku.createUserWithPreferedInterpreters);
 
     When(/^I click on my name in the top corner$/, bookingPage.clickOnProfile);
@@ -27,6 +28,8 @@ defineSupportCode(({Given, Then, When}) => {
             return userProfilePage.browse();
         }
     }
+    Then(/^I will be taken to my blockout page$/, blockoutPage.browse);
+    Then(/^I enter blockout name '(.*)'$/, blockoutPage.enterBlockoutName);
 
     When(/^I change some input (.*) fields of the (.*)/, userProfilePage.updateMandatoryFields);
 

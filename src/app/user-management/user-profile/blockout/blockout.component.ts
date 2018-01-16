@@ -143,7 +143,8 @@ export class BlockoutComponent implements OnDestroy, OnInit {
             .subscribe((res: any) => {
                 if (res.status === 200) {
                     // UI Notification
-                    this.availabilityBlock.id = res.id;
+
+                    this.availabilityBlock.id = res.json().id;
                     this.spinnerService.requestInProcess(false);
                     this.interpreter.availability_blocks_attributes.push(this.availabilityBlock);
                     AuthGuard.refreshUser(this.interpreter);
