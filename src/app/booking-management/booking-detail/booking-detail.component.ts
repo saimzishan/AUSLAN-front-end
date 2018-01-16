@@ -29,6 +29,7 @@ const _ONE_HOUR = 1000 /*milliseconds*/
 interface ModalOptions {
     cancelTitle: string;
     okTitle: string;
+    closeVal: string;
 }
 
 @Component({
@@ -571,8 +572,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         this.dialogRef.componentInstance.title = title;
         this.dialogRef.componentInstance.cancelTitle = (options && options.cancelTitle) || 'BACK';
         this.dialogRef.componentInstance.okTitle = (options && options.okTitle) || 'CREATE';
+        this.dialogRef.componentInstance.closeVal = (options && options.closeVal) || false;
         this.dialogRef.componentInstance.popupMessage = message;
-
     }
 
     private isBookingTimeInNonStandardHours() {
@@ -613,10 +614,12 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         if (this.isUserAdminORBookOfficer && !!this.bookingModel.link_id) {
             const message = 'Would you like to save these changes for all bookings or only for this one?';
             const title = 'Change all bookings?';
-            this.createModal(title, message, {okTitle: 'Update only this booking', cancelTitle: 'Update all bookings'});
+            this.createModal(title, message, {okTitle: 'Update only this booking', cancelTitle: 'Update all bookings', closeVal: 'cancel'});
             this.dialogSub = this.dialogRef.afterClosed().subscribe(updateOnlyThisBooking => {
-                this.bookingModel.update_all_linked_bookings = !updateOnlyThisBooking;
-                this.updateBooking();
+                if (updateOnlyThisBooking !== 'cancel') {
+                    this.bookingModel.update_all_linked_bookings = !updateOnlyThisBooking;
+                    this.updateBooking();
+                }
             });
         } else {
             this.updateBooking();
