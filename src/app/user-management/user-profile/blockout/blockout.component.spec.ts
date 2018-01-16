@@ -16,6 +16,7 @@ import {AuthHttp} from 'angular2-jwt';
 import {MockBackend} from '@angular/http/testing';
 import {SpinnerService} from '../../../spinner/spinner.service';
 import {NotificationServiceBus} from '../../../notification/notification.service';
+import {CalendarModule as PrimeNgCalendarModule} from 'primeng/primeng';
 
 describe('BlockoutComponent', () => {
   let component: BlockoutComponent;
@@ -28,7 +29,8 @@ describe('BlockoutComponent', () => {
         { provide: UserService, useClass: MockUserService}, { provide: AuthHttp, useClass: MockBackend},
         NotificationServiceBus,
         SpinnerService],
-      imports: [HttpModule, FormsModule, MaterialModule, RouterTestingModule, CustomFormsModule, BrowserAnimationsModule]
+      imports: [HttpModule, FormsModule, MaterialModule, PrimeNgCalendarModule,
+          RouterTestingModule, CustomFormsModule, BrowserAnimationsModule]
     })
         .compileComponents();
   }));
