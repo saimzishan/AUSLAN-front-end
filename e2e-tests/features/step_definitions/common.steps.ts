@@ -321,13 +321,19 @@ defineSupportCode(({Given, When, Then}) => {
     }
     When(/^I can see the element with css '(.*)' and text (.*)$/, isElementWithCSSAndTextPresent);
     function isElementWithCSSAndTextPresent(css: string, txt: string) {
-        return page.getAllByCSSandText(css, txt).first().isDisplayed().then((val) => {
-            expect(val).to.be.eq(true);
+        let elm = page.getAllByCSSandText(css, txt).first();
+        browser.actions().mouseMove(elm).perform().then( () => {
+            return elm.isDisplayed().then((val) => {
+                expect(val).to.be.eq(true);
+            });
         });
     }
     When(/^I can click the element with css '(.*)' and text (.*)$/, clickElementWithCSSAndTextPresent);
     function clickElementWithCSSAndTextPresent(css: string, txt: string) {
-        return page.getAllByCSSandText(css, txt).first().click();
+        let elm = page.getAllByCSSandText(css, txt).first();
+        return browser.actions().mouseMove(elm).perform().then( () => {
+            elm.click();
+        });
     }
     When(/^I can see the button state with css '(.*)' is '(.*)'$/, isButtonWithCSSVisible);
     When(/^I can see the element with css '(.*)' is '(.*)'$/, isButtonWithCSSVisible);
