@@ -4,7 +4,7 @@ import {BookingService} from '../../api/booking.service';
 import {BA, BOOKING_NATURE} from '../../shared/model/booking-nature.enum';
 import {SpinnerService} from '../../spinner/spinner.service';
 import {BOOKING_STATE} from '../../shared/model/booking-state.enum';
-import {GLOBAL} from '../../shared/global';
+import {GLOBAL, ModalOptions} from '../../shared/global';
 import {NotificationServiceBus} from '../../notification/notification.service';
 import {Router, ActivatedRoute} from '@angular/router';
 import {RolePermission} from '../../shared/role-permission/role-permission';
@@ -26,11 +26,6 @@ const _ONE_HOUR = 1000 /*milliseconds*/
     * 60 /*seconds*/
     * 60 /*minutes*/;
 
-interface ModalOptions {
-    cancelTitle: string;
-    okTitle: string;
-    closeVal: string;
-}
 
 @Component({
     selector: 'app-booking-detail',
