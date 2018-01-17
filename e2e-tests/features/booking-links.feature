@@ -39,7 +39,7 @@ Feature: Linked Bookings
     Then I should get a valid booking update notification
     And I should not see the link id in booking details
 
-  @runThis
+  @ignoreThis
   Scenario: As Administrator, I should see a popup confirmation when editing a linked booking
     Given There exist 1 booking with link id
     Given I sign in with valid Administrator credentials
