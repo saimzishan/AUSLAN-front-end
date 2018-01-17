@@ -57,8 +57,8 @@ Feature: Linked Bookings
     When I click on BUTTON name 'cancel-popup'
     Then I will be shown the booking job page
     When I click the create booking button
+    And I wait for 1200 milli-seconds
     And If I am shown popups, I approve all of them
-    Then I wait for 1000 milli-seconds
     Then I should get a valid booking update notification
 
     @runThis
