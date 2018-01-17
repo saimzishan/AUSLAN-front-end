@@ -83,20 +83,20 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     bookingStartTime: Date;
     bookingEndTime: Date;
     isDuplicate: boolean;
-    cbCaptioning = false;
-    cbNotetaking = false;
+    cbCaptioner = false;
+    cbNotetaker = false;
     cbAuslanInterpreter = true;
     cbDeafInterpreter = false;
     cbDeafBlindInterpreter = false;
     cbOtherLanguageNeeds = false;
-    cbVisualFrame = false;
-    cbTactile = false;
-    cbPlatform = false;
-    cbAsl = false;
-    cbBsl = false;
-    cbIsl = false;
-    cbSignedEnglish = false;
-    cbIndigenousSign = false;
+    cbVisualFrameInterpreter = false;
+    cbTactileInterpreter = false;
+    cbPlatformInterpreter = false;
+    cbAslInterpreter = false;
+    cbBslInterpreter = false;
+    cbIslInterpreter = false;
+    cbSignedEnglishInterpreter = false;
+    cbIndigenousSignInterpreter = false;
     defaultDateTime: Date;
     @ViewChild('addressForm') private bookingAddress: AddressComponent;
 
@@ -169,10 +169,16 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         }
     }
 
-    serviceTypeChange(serviceType: string) {
+    serviceTypeChange(serviceType: string, cbName) {
         if (this.forEdit) {
-            let allServiceTypes = ['cbAuslanInterpreter', 'cbDeafInterpreter', 'cbDeafBlindInterpreter', 'cbCaptioning', 'cbNotetaking', 'cbOtherLanguageNeeds',
-                                   'cbVisualFrame', 'cbTactile', 'cbPlatform', 'cbAsl', 'cbBsl', 'cbIsl', 'cbSignedEnglish', 'cbIndigenousSign'];
+            if (this.assignedInterpreter > 0) {
+                this[serviceType] = cbName.checked = false;
+                this.notificationServiceBus.launchNotification(true, 'Oops. Deallocate interpreters before changing the interpreting type.');
+                return;
+            }
+            let allServiceTypes = ['cbAuslanInterpreter', 'cbDeafInterpreter', 'cbDeafBlindInterpreter', 'cbCaptioner', 'cbNotetaker', 'cbOtherLanguageNeeds',
+                                   'cbVisualFrameInterpreter', 'cbTactileInterpreter', 'cbPlatformInterpreter', 'cbAslInterpreter', 'cbBslInterpreter',
+                                   'cbIslInterpreter', 'cbSignedEnglishInterpreter', 'cbIndigenousSignInterpreter'];
 
             allServiceTypes.forEach(type => {
                 if (serviceType !== type) {
@@ -516,25 +522,25 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             return true;
         } else if (this.cbDeafBlindInterpreter && this.bookingModel.number_of_deaf_blind_interpreters_required < 2) {
             return true;
-        } else if (this.cbCaptioning && this.bookingModel.number_of_captioners_required < 2) {
+        } else if (this.cbCaptioner && this.bookingModel.number_of_captioners_required < 2) {
             return true;
-        } else if (this.cbNotetaking && this.bookingModel.number_of_note_takers_required < 2) {
+        } else if (this.cbNotetaker && this.bookingModel.number_of_note_takers_required < 2) {
             return true;
-        } else if (this.cbVisualFrame && this.bookingModel.number_of_visual_frame_interpreters_required < 2) {
+        } else if (this.cbVisualFrameInterpreter && this.bookingModel.number_of_visual_frame_interpreters_required < 2) {
             return true;
-        } else if (this.cbTactile && this.bookingModel.number_of_tactile_interpreters_required < 2) {
+        } else if (this.cbTactileInterpreter && this.bookingModel.number_of_tactile_interpreters_required < 2) {
             return true;
-        } else if (this.cbPlatform && this.bookingModel.number_of_platform_interpreters_required < 2) {
+        } else if (this.cbPlatformInterpreter && this.bookingModel.number_of_platform_interpreters_required < 2) {
             return true;
-        } else if (this.cbAsl && this.bookingModel.number_of_asl_interpreters_required < 2) {
+        } else if (this.cbAslInterpreter && this.bookingModel.number_of_asl_interpreters_required < 2) {
             return true;
-        } else if (this.cbBsl && this.bookingModel.number_of_bsl_interpreters_required < 2) {
+        } else if (this.cbBslInterpreter && this.bookingModel.number_of_bsl_interpreters_required < 2) {
             return true;
-        } else if (this.cbIsl && this.bookingModel.number_of_isl_interpreters_required < 2) {
+        } else if (this.cbIslInterpreter && this.bookingModel.number_of_isl_interpreters_required < 2) {
             return true;
-        } else if (this.cbSignedEnglish && this.bookingModel.number_of_signed_english_interpreters_required < 2) {
+        } else if (this.cbSignedEnglishInterpreter && this.bookingModel.number_of_signed_english_interpreters_required < 2) {
             return true;
-        } else if (this.cbIndigenousSign && this.bookingModel.number_of_indigenous_sign_interpreters_required < 2) {
+        } else if (this.cbIndigenousSignInterpreter && this.bookingModel.number_of_indigenous_sign_interpreters_required < 2) {
             return true;
         } else {
             return false;
@@ -545,18 +551,19 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         this.cbAuslanInterpreter = this.bookingModel.number_of_auslan_interpreters_required > 0;
         this.cbDeafInterpreter = this.bookingModel.number_of_deaf_interpreters_required > 0;
         this.cbDeafBlindInterpreter = this.bookingModel.number_of_deaf_blind_interpreters_required > 0;
-        this.cbCaptioning = this.bookingModel.number_of_captioners_required > 0;
-        this.cbNotetaking = this.bookingModel.number_of_note_takers_required > 0;
-        this.cbVisualFrame = this.bookingModel.number_of_visual_frame_interpreters_required > 0;
-        this.cbTactile = this.bookingModel.number_of_tactile_interpreters_required > 0;
-        this.cbPlatform = this.bookingModel.number_of_platform_interpreters_required > 0;
-        this.cbAsl = this.bookingModel.number_of_asl_interpreters_required > 0;
-        this.cbBsl = this.bookingModel.number_of_bsl_interpreters_required > 0;
-        this.cbIsl = this.bookingModel.number_of_isl_interpreters_required > 0;
-        this.cbSignedEnglish = this.bookingModel.number_of_signed_english_interpreters_required > 0;
-        this.cbIndigenousSign = this.bookingModel.number_of_indigenous_sign_interpreters_required > 0;
+        this.cbCaptioner = this.bookingModel.number_of_captioners_required > 0;
+        this.cbNotetaker = this.bookingModel.number_of_note_takers_required > 0;
+        this.cbVisualFrameInterpreter = this.bookingModel.number_of_visual_frame_interpreters_required > 0;
+        this.cbTactileInterpreter = this.bookingModel.number_of_tactile_interpreters_required > 0;
+        this.cbPlatformInterpreter = this.bookingModel.number_of_platform_interpreters_required > 0;
+        this.cbAslInterpreter = this.bookingModel.number_of_asl_interpreters_required > 0;
+        this.cbBslInterpreter = this.bookingModel.number_of_bsl_interpreters_required > 0;
+        this.cbIslInterpreter = this.bookingModel.number_of_isl_interpreters_required > 0;
+        this.cbSignedEnglishInterpreter = this.bookingModel.number_of_signed_english_interpreters_required > 0;
+        this.cbIndigenousSignInterpreter = this.bookingModel.number_of_indigenous_sign_interpreters_required > 0;
 
-        this.cbOtherLanguageNeeds = this.cbAsl || this.cbBsl || this.cbIsl || this.cbSignedEnglish || this.cbIndigenousSign;
+        this.cbOtherLanguageNeeds = this.cbAslInterpreter || this.cbBslInterpreter || this.cbIslInterpreter || this.cbSignedEnglishInterpreter
+                                    || this.cbIndigenousSignInterpreter;
     }
 
     isMoreInterpreterNeeded() {
@@ -664,7 +671,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
 
     saveBooking() {
         if (this.isAssignInterpGreaterThanRequested()) {
-            let msg = this.cbCaptioning ? 'captioners' : this.cbNotetaking ? 'notetakers' : 'interpreters';
+            let msg = this.cbCaptioner ? 'captioners' : this.cbNotetaker ? 'notetakers' : 'interpreters';
             this.notificationServiceBus.launchNotification(true, 'Oops! Too many ' + msg + ' already allocated. Please unassign first.');
             return;
         } else {
@@ -693,8 +700,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     isAssignInterpGreaterThanRequested() {
-       return this.cbCaptioning ? this.assignedInterpreter > this.bookingModel.number_of_captioners_required :
-                                  this.cbNotetaking ? this.assignedInterpreter > this.bookingModel.number_of_note_takers_required :
+       return this.cbCaptioner ? this.assignedInterpreter > this.bookingModel.number_of_captioners_required :
+                                  this.cbNotetaker ? this.assignedInterpreter > this.bookingModel.number_of_note_takers_required :
                                   this.assignedInterpreter > this.bookingModel.number_of_auslan_interpreters_required;
 
     }

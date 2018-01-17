@@ -260,3 +260,28 @@ Feature: Edit Booking
     And I verify checkbox name 'cbDeaf' is checked 'false'
 
     #----------------------------------------- AUSLAN1-979 -> END ----------------------------------------
+
+  @runThis
+  Scenario: Booking Officer will get error notification while changing the service type of booking which has allocated interpreters
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    Then I am on the bookings page
+    And I am shown with 1 bookings
+    When I click on an individual booking
+    Then I am on the individual booking page
+    Then I wait for 2000 milli-seconds
+    Then I select 1 Interpreter
+    And I click on BUTTON name 'reassingBtn'
+    And I click on BUTTON 'Save'
+    Then I wait for 1000 milli-seconds
+    Then I get valid message: 'The interpreter have been assigned'
+    When I click on link 'Booking details'
+    Then I should be on the edit booking page
+    When I click on checkbox name 'cbDeaf'
+    Then I will get an error notification saying "Oops. Deallocate interpreters before changing the interpreting type."
+    And I verify checkbox name 'cbDeaf' is checked 'false'
+    And I verify checkbox name 'cbAuslan' is checked 'true'
+    When I click on checkbox name 'cbOtherLanguage'
+    Then I will get an error notification saying "Oops. Deallocate interpreters before changing the interpreting type."
+    And I verify checkbox name 'cbOtherLanguage' is checked 'false'
+    And I verify checkbox name 'cbAuslan' is checked 'true'
