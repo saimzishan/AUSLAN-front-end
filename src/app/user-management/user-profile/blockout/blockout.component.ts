@@ -45,7 +45,7 @@ export class BlockoutComponent implements OnDestroy, OnInit {
         if (this.interpreter === null ) {
             this.router.navigate(['/user-management']);
         }
-        this.userID = this.interpreter.id;
+        this.userID = this.interpreter !== null ? this.interpreter.id : -1;
         this.end_time.setTime(this.start_time.getTime() + (1 * 60 * 60 * 1000));
         this.sub = this.route.params.subscribe(params => {
             let param_id = params['id'] || '';
@@ -58,7 +58,7 @@ export class BlockoutComponent implements OnDestroy, OnInit {
                     );
                 this.start_time = new Date(this.availabilityBlock.start_time);
                 this.end_time = new Date(this.availabilityBlock.end_time);
-                this.end_date = Boolean(this.availabilityBlock.end_date) ? new Date(this.availabilityBlock.end_date):
+                this.end_date = Boolean(this.availabilityBlock.end_date) ? new Date(this.availabilityBlock.end_date) :
                     new Date(this.availabilityBlock.start_time);
             }
         });
