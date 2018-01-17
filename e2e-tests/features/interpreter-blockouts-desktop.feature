@@ -32,7 +32,6 @@ Feature: As INTERPRETER, I can create blockout on desktop
     And I enter blockout name 'singleEvent1'
     And I click on BUTTON name 'save_blockout'
     And I get success message: 'Blockout successfully updated'
-    And I click on my name in the top corner
     And I will be taken to my individual profile page
     And I can count the element with css 'span.fc-title' to be '1'
     And I can see the element with css 'span.fc-title' and text singleEvent1
@@ -44,7 +43,6 @@ Feature: As INTERPRETER, I can create blockout on desktop
     And I will be shown a popup message 'Do you really want to delete this blockout?'
     And I click on BUTTON name 'yesBtn'
     And I get success message: 'Blockout successfully deleted'
-    And I click on my name in the top corner
     And I will be taken to my individual profile page
     And I can count the element with css 'span.fc-title' to be '0'
 

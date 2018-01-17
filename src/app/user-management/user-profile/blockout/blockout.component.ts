@@ -5,7 +5,7 @@ import {SpinnerService} from '../../../spinner/spinner.service';
 import {NotificationServiceBus} from '../../../notification/notification.service';
 import {UserService} from '../../../api/user.service';
 import {GLOBAL, ModalOptions} from '../../../shared/global';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {AvailabilityBlock} from '../../../shared/model/availability-block.entity';
 import {AuthGuard} from '../../../auth/auth.guard';
 import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
@@ -30,6 +30,7 @@ export class BlockoutComponent implements OnDestroy, OnInit {
                 public notificationServiceBus: NotificationServiceBus,
                 public spinnerService: SpinnerService,
                 private route: ActivatedRoute,
+                private router: Router,
                 public dialog: MdDialog,
                 public viewContainerRef: ViewContainerRef) {
     }
@@ -99,6 +100,7 @@ export class BlockoutComponent implements OnDestroy, OnInit {
                             this.spinnerService.requestInProcess(false);
                             AuthGuard.refreshUser(this.interpreter);
                             this.notificationServiceBus.launchNotification(false, 'Blockout successfully deleted');
+                            this.router.navigate(['/user-management/profile']);
                         }
                     }, errors => {
                         this.spinnerService.requestInProcess(false);
@@ -130,6 +132,7 @@ export class BlockoutComponent implements OnDestroy, OnInit {
                         .map(o => o = this.availabilityBlock);
                     this.spinnerService.requestInProcess(false);
                     AuthGuard.refreshUser(this.interpreter);
+                    this.router.navigate(['/user-management/profile']);
                     this.notificationServiceBus.launchNotification(false, 'Blockout successfully updated');
                 }
             }, errors => {
