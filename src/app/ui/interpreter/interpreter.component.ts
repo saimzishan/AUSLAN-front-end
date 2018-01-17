@@ -19,8 +19,7 @@ export class InterpreterComponent implements OnInit {
     @ViewChild('mycal') myCal: CalendarComponent;
     updateCalendar = false;
     calendarOptions: Object = {};
-    uid = -1;
-    sub_param;
+
     constructor(private routes: ActivatedRoute, private router: Router) {}
 
     ngOnInit() {
@@ -34,9 +33,7 @@ export class InterpreterComponent implements OnInit {
 
         delete this.userModel.assignments_attributes;
         delete this.userModel.password;
-        this.sub_param = this.routes.queryParams.subscribe(params => {
-          this.uid  = params['uid'] || GLOBAL.currentUser.id;
-        });
+
         if (this.displayCalendar) {
             this.calendarOptions = {
                 height: 'parent',
@@ -71,7 +68,7 @@ export class InterpreterComponent implements OnInit {
                 },
                 defaultView: $(window).width() < 768 ? 'listMonth' : 'month',
                 eventClick: (calEvent, jsEvent, view) => {
-                    this.router.navigate(['/user-management/', calEvent.id, 'block_out'], { queryParams: { u_id: this.uid } });
+                    this.router.navigate(['/user-management/', calEvent.id, 'block_out']);
                 },
                 editable: true,
                 eventLimit: true, // allow "more" link when too many events
@@ -80,7 +77,7 @@ export class InterpreterComponent implements OnInit {
 
             for (let avail_block of this.userModel.availability_blocks_attributes) {
                 let sd = new Date(avail_block.start_time);
-                let ed = new Date(avail_block.end_date);
+                let ed = new Date(avail_block.end_date || avail_block.start_time);
                 let edt = new Date(avail_block.end_time);
 
 

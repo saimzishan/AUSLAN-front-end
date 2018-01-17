@@ -1,5 +1,5 @@
 import {Component, Input, OnDestroy, OnInit, ViewContainerRef} from '@angular/core';
-import {blockout_availability, Interpreter} from '../../../shared/model/user.entity';
+import {Administrator, blockout_availability, BookingOfficer, Interpreter, UserFactory} from '../../../shared/model/user.entity';
 import {FormGroup} from '@angular/forms';
 import {SpinnerService} from '../../../spinner/spinner.service';
 import {NotificationServiceBus} from '../../../notification/notification.service';
@@ -10,6 +10,7 @@ import {AvailabilityBlock} from '../../../shared/model/availability-block.entity
 import {AuthGuard} from '../../../auth/auth.guard';
 import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
 import {PopupComponent} from '../../../shared/popup/popup.component';
+import {ROLE} from '../../../shared/model/role.enum';
 
 @Component({
     selector: 'app-blockout',
@@ -26,6 +27,8 @@ export class BlockoutComponent implements OnDestroy, OnInit {
     public availabilityBlock: AvailabilityBlock = new AvailabilityBlock();
     dialogRef: MdDialogRef<any>;
     dialogSub;
+    userID = -1;
+    queryParamSub;
     constructor(public userDataService: UserService,
                 public notificationServiceBus: NotificationServiceBus,
                 public spinnerService: SpinnerService,
@@ -37,9 +40,12 @@ export class BlockoutComponent implements OnDestroy, OnInit {
 
     ngOnInit() {
         this.interpreter = Boolean(GLOBAL.currentUser) &&
-        GLOBAL.currentUser instanceof Interpreter ?
-            (<Interpreter>GLOBAL.currentUser) : null;
-
+        GLOBAL.currentUser instanceof Interpreter ?  <Interpreter>GLOBAL.currentUser :
+           this.isUserAdminOrBO() ?  GLOBAL.currentInterpreter : null;
+        if (this.interpreter === null ) {
+            this.router.navigate(['/user-management']);
+        }
+        this.userID = this.interpreter.id;
         this.end_time.setTime(this.start_time.getTime() + (1 * 60 * 60 * 1000));
         this.sub = this.route.params.subscribe(params => {
             let param_id = params['id'] || '';
@@ -52,11 +58,15 @@ export class BlockoutComponent implements OnDestroy, OnInit {
                     );
                 this.start_time = new Date(this.availabilityBlock.start_time);
                 this.end_time = new Date(this.availabilityBlock.end_time);
-                this.end_date = new Date(this.availabilityBlock.end_date);
+                this.end_date = Boolean(this.availabilityBlock.end_date) ? new Date(this.availabilityBlock.end_date):
+                    new Date(this.availabilityBlock.start_time);
             }
         });
     }
-
+    isUserAdminOrBO () {
+        return GLOBAL.currentUser instanceof Administrator ||
+        GLOBAL.currentUser instanceof BookingOfficer;
+    }
     ngOnDestroy() {
         return this.sub && this.sub.unsubscribe();
     }
@@ -89,7 +99,7 @@ export class BlockoutComponent implements OnDestroy, OnInit {
         this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
             if (result) {
                 this.spinnerService.requestInProcess(true);
-                this.userDataService.deleteBlockout(GLOBAL.currentUser.id, this.availabilityBlock.id)
+                this.userDataService.deleteBlockout(this.userID, this.availabilityBlock.id)
                     .subscribe((res: any) => {
                         if (res.status === 204) {
                             // UI Notification
@@ -98,9 +108,11 @@ export class BlockoutComponent implements OnDestroy, OnInit {
                             this.availabilityBlock = new AvailabilityBlock();
                             this.param_id = -1;
                             this.spinnerService.requestInProcess(false);
-                            AuthGuard.refreshUser(this.interpreter);
+                            if (this.isUserAdminOrBO() === false) {
+                                AuthGuard.refreshUser(this.interpreter);
+                            }
                             this.notificationServiceBus.launchNotification(false, 'Blockout successfully deleted');
-                            this.router.navigate(['/user-management/profile']);
+                            this.router.navigate([ this.isUserAdminOrBO() ? '/user-management' : '/user-management/profile']);
                         }
                     }, errors => {
                         this.spinnerService.requestInProcess(false);
@@ -122,8 +134,8 @@ export class BlockoutComponent implements OnDestroy, OnInit {
 
         this.availabilityBlock.start_time = this.start_time.toISOString();
         this.availabilityBlock.end_time = this.end_time.toISOString();
-        this.availabilityBlock.end_date = this.end_date.toISOString();
-        this.userDataService.editBlockout(GLOBAL.currentUser.id,
+        this.availabilityBlock.end_date = Boolean(this.end_date) ? this.end_date.toISOString() : this.start_time.toISOString();
+        this.userDataService.editBlockout(this.userID,
             this.availabilityBlock)
             .subscribe((res: any) => {
                 if (res.status === 204) {
@@ -131,8 +143,10 @@ export class BlockoutComponent implements OnDestroy, OnInit {
                     this.interpreter.availability_blocks_attributes.filter(o => o.id === this.availabilityBlock.id)
                         .map(o => o = this.availabilityBlock);
                     this.spinnerService.requestInProcess(false);
-                    AuthGuard.refreshUser(this.interpreter);
-                    this.router.navigate(['/user-management/profile']);
+                    if (this.isUserAdminOrBO() === false) {
+                        AuthGuard.refreshUser(this.interpreter);
+                    }
+                    this.router.navigate([ this.isUserAdminOrBO() ? '/user-management' : '/user-management/profile']);
                     this.notificationServiceBus.launchNotification(false, 'Blockout successfully updated');
                 }
             }, errors => {
@@ -163,7 +177,7 @@ export class BlockoutComponent implements OnDestroy, OnInit {
         this.availabilityBlock.end_time = this.end_time.toISOString();
         this.availabilityBlock.end_date = this.end_date.toISOString();
 
-        this.userDataService.addBlockout(GLOBAL.currentUser.id, this.availabilityBlock)
+        this.userDataService.addBlockout(this.userID, this.availabilityBlock)
             .subscribe((res: any) => {
                 if (res.status === 200) {
                     // UI Notification
@@ -171,7 +185,10 @@ export class BlockoutComponent implements OnDestroy, OnInit {
                     this.availabilityBlock.id = res.json().id;
                     this.spinnerService.requestInProcess(false);
                     this.interpreter.availability_blocks_attributes.push(this.availabilityBlock);
-                    AuthGuard.refreshUser(this.interpreter);
+                    if (this.isUserAdminOrBO() === false) {
+                        AuthGuard.refreshUser(this.interpreter);
+                    }
+                    this.router.navigate([ this.isUserAdminOrBO() ? '/user-management' : '/user-management/profile']);
                     this.notificationServiceBus.launchNotification(false, 'Blockout successfully added');
                 }
             }, errors => {
