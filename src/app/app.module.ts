@@ -74,6 +74,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
 import {RemoveSpacePipe} from './shared/pipe/remove-space.pipe';
 import {CalendarModule as PrimeNgCalendarModule} from 'primeng/primeng';
 import {LinkidPopupComponent} from './booking-management/linkid-popup/linkid-popup.component';
+import { MobileHeaderComponent } from './ui/mobile-header/mobile-header.component';
 
 
 @NgModule({
@@ -103,7 +104,7 @@ import {LinkidPopupComponent} from './booking-management/linkid-popup/linkid-pop
         InterpreterComponent, BillingAccountComponent,
         SkillMatrixComponent, AddressComponent, AccountantComponent,
         UserPasswordComponent, PreComponent, BlockoutComponent, TermandconditionComponent,
-        InterpreterBoxComponent, InterpreterPopupComponent, RemoveSpacePipe, LinkidPopupComponent
+        InterpreterBoxComponent, InterpreterPopupComponent, RemoveSpacePipe, LinkidPopupComponent, MobileHeaderComponent
     ],
     entryComponents: [PopupComponent, InterpreterPopupComponent, LinkidPopupComponent],
     imports: [CustomFormsModule, routing, FileUploadModule,

@@ -18,6 +18,7 @@ import {SpinnerService} from '../../../spinner/spinner.service';
 import {NotificationServiceBus} from '../../../notification/notification.service';
 import {CalendarModule as PrimeNgCalendarModule} from 'primeng/primeng';
 import {ViewContainerRef} from '@angular/core';
+import {MobileHeaderComponent} from '../../../ui/mobile-header/mobile-header.component';
 
 describe('BlockoutComponent', () => {
   let component: BlockoutComponent;
@@ -25,7 +26,7 @@ describe('BlockoutComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BlockoutComponent, UserHeaderComponent ],
+      declarations: [ BlockoutComponent, UserHeaderComponent, MobileHeaderComponent ],
       providers: [MdDialog,
           ViewContainerRef, LinkHelper, LinkAuth, RolePermission,
         { provide: UserService, useClass: MockUserService}, { provide: AuthHttp, useClass: MockBackend},

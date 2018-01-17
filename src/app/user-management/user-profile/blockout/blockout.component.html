@@ -5,23 +5,8 @@
 <header class="text-center hidden-mobile">
     <h1>{{ param_id < 1 ? 'ADD BLOCKOUT' : 'EDIT BLOCKOUT'}}</h1>
 </header>
-<header id="header-mobile">
-    <button [routerLink]="['/user-management/profile']" class="icon-back"></button>
+<app-mobile-header title="{{ param_id < 1 ? 'ADD BLOCKOUT' : 'EDIT BLOCKOUT'}}" backLink="/user-management/profile"></app-mobile-header>
 
-    <h1>{{ param_id < 1 ? 'ADD BLOCKOUT' : 'EDIT BLOCKOUT'}}</h1>
-
-    <section>
-        <a href="#" class="header__message"><i class="icon-messages"></i></a>
-        <ul class="dropdown menu" data-disable-hover="true" data-click-open="true" data-dropdown-menu>
-            <li>
-                <a href="#" class="header__profile"><img src="assets/img/dummy/profile.png"></a>
-                <ul class="menu">
-                    <li><a href="#"><i class="icon-logout"></i> Log Out</a></li>
-                </ul>
-            </li>
-        </ul>
-    </section>
-</header>
 <section id="page-add-blockout">
     <main>
         <form #user_blockout_form="ngForm" class="common-form compact with-mobile-transformation">
@@ -137,9 +122,3 @@
         </div>
     </main>
 </section>
-
-<nav id="footer-mobile">
-    <a href="#"><i class="icon-home"></i><span>HOME</span></a>
-    <a href="#"><i class="icon-jobs"></i><span>JOBS</span></a>
-    <a href="#" class="active"><i class="icon-profile"></i><span>PROFILE</span></a>
-</nav>
