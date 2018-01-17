@@ -1,6 +1,6 @@
 import {Component, ViewChild, OnInit, Input, ElementRef} from '@angular/core';
 import {DatePipe} from '@angular/common';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import * as $ from 'jquery';
 import * as moment from 'moment';
 import {Interpreter, BookingOfficer, Administrator} from '../../shared/model/user.entity';
@@ -19,8 +19,9 @@ export class InterpreterComponent implements OnInit {
     @ViewChild('mycal') myCal: CalendarComponent;
     updateCalendar = false;
     calendarOptions: Object = {};
-
-    constructor(private router: Router) {}
+    uid = -1;
+    sub_param;
+    constructor(private routes: ActivatedRoute, private router: Router) {}
 
     ngOnInit() {
         let d = new DatePipe('en-us');
@@ -33,7 +34,9 @@ export class InterpreterComponent implements OnInit {
 
         delete this.userModel.assignments_attributes;
         delete this.userModel.password;
-
+        this.sub_param = this.routes.queryParams.subscribe(params => {
+          this.uid  = params['uid'] || GLOBAL.currentUser.id;
+        });
         if (this.displayCalendar) {
             this.calendarOptions = {
                 height: 'parent',
@@ -68,7 +71,7 @@ export class InterpreterComponent implements OnInit {
                 },
                 defaultView: $(window).width() < 768 ? 'listMonth' : 'month',
                 eventClick: (calEvent, jsEvent, view) => {
-                    this.router.navigate(['/user-management/', calEvent.id, 'block_out']);
+                    this.router.navigate(['/user-management/', calEvent.id, 'block_out'], { queryParams: { u_id: this.uid } });
                 },
                 editable: true,
                 eventLimit: true, // allow "more" link when too many events
@@ -93,9 +96,6 @@ export class InterpreterComponent implements OnInit {
                 });
                 if (avail_block.recurring === true) {
                     event.dow = avail_block.frequency === 'daily' ? [1, 2, 3, 4, 5] : [sd.getDay()];
-                    // let offSet = 1;
-                    // ed.setDate(ed.getDate() + offSet);
-
                     event.ranges = [
                         {
                             start: moment().endOf(avail_block.frequency === 'daily' ? 'day' :

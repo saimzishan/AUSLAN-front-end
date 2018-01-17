@@ -185,7 +185,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
             });
     }
 
-
+    checkUserAdminORBookOfficer(): Boolean {
+        return Boolean(GLOBAL.currentUser instanceof Administrator ||
+            GLOBAL.currentUser instanceof BookingOfficer) ;
+    }
     handleFileSelect(evt) {
         let files = evt.target.files;
         let file = files[0];
