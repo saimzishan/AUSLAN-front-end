@@ -67,29 +67,38 @@
       <h2>Type of Booking</h2>
       <p name="serviceMsg">What kind of services {{isUserAdminORBookOfficer ? (bookingModel.bookable_type ==='IndividualClient' ? "does the client":"does the organisation") :"do you"}} need? Select multiple if relevant</p>
       <section id="services">
-        <button md-button class="active">
+        <button md-button name="btnOnsite" [ngClass]="bookingModel.method_type === 'onsite' ? 'active' : ''" (click)="serviceTypeClick('onsite')">
           <i class="icon-service-interpreting"></i>
-          <span>Interpreting</span>
+          <span>On Site</span>
         </button>
-        <button [disabled]='true' md-button>
+        <button md-button name="btnVri" [ngClass]="bookingModel.method_type === 'vri' ? 'active' : ''" (click)="serviceTypeClick('vri')">
           <i class="icon-service-vri"></i>
           <span>VRI</span>
         </button>
-        <button [disabled]='true' md-button>
-          <i class="icon-service-captioning"></i>
-          <span>Captioining</span>
-        </button>
-        <button [disabled]='true' md-button>
-          <i class="icon-service-captioning"></i>
-          <span>Notetaking</span>
-        </button>
       </section>
+      <ng-container>
       <p name="interpreterMsg">What kind of interpreter(s) {{isUserAdminORBookOfficer ? (bookingModel.bookable_type ==='IndividualClient' ? "does the client":"does the organisation") :"do you"}} need? Select multiple if relevant</p>
-      <section id="interpreters-kind">
-        <md-checkbox [checked]="true" [disabled]="isDisabledForOrgRepIndClient">AUSLAN</md-checkbox>
-        <md-checkbox [disabled]="isDisabledForOrgRepIndClient">DEAF INTERPRETER</md-checkbox>
-        <md-checkbox [disabled]="isDisabledForOrgRepIndClient">DEAF BLIND</md-checkbox>
-      </section>
+      <div class="row" id="interpreters-kind">
+        <div class="medium-3 columns"> <md-checkbox name="cbAuslan" [(ngModel)]="cbAuslanInterpreter">AUSLAN</md-checkbox> </div>
+        <div class="medium-3 columns"> <md-checkbox name="cbDeaf" [(ngModel)]="cbDeafInterpreter">DEAF</md-checkbox> </div>
+        <div class="medium-3 columns"> <md-checkbox name="cbDeafBlind" [(ngModel)]="cbDeafBlindInterpreter">DEAF BLIND</md-checkbox> </div>
+        <div class="medium-3 columns"> <md-checkbox name="cbCaptioning" [(ngModel)]="cbCaptioning">CAPTIONING</md-checkbox> </div>
+        <div class="medium-3 columns"> <md-checkbox name="cbNotetaking" [(ngModel)]="cbNotetaking">NOTETAKING</md-checkbox> </div>
+        <div class="medium-3 columns"> <md-checkbox name="cbOtherLanguage" [(ngModel)]="cbOtherLanguageNeeds">OTHER LANGUAGE NEEDS</md-checkbox> </div>
+      </div>
+      <div class="row" *ngIf="cbDeafBlindInterpreter || cbVisualFrame || cbTactile || cbPlatform" name="deafBlindInterpreterTypes">
+          <div class="medium-3 columns"> <md-checkbox name="cbVisualFrame" [(ngModel)]="cbVisualFrame">VISUAL FRAME</md-checkbox> </div>
+          <div class="medium-3 columns"> <md-checkbox name="cbTactile" [(ngModel)]="cbTactile">TACTILE</md-checkbox> </div>
+          <div class="medium-3 columns"> <md-checkbox name="cbPlatform" [(ngModel)]="cbPlatform">PLATFORM</md-checkbox> </div>
+      </div>
+      <div class="row" *ngIf="cbOtherLanguageNeeds" name="otherLanguageTypes">
+          <div class="medium-3 columns"> <md-checkbox name="cbAsl" [(ngModel)]="cbAsl">ASL</md-checkbox> </div>
+          <div class="medium-3 columns"> <md-checkbox name="cbBsl" [(ngModel)]="cbBsl">BSL</md-checkbox> </div>
+          <div class="medium-3 columns"> <md-checkbox name="cbIsl" [(ngModel)]="cbIsl">ISL</md-checkbox> </div>
+          <div class="medium-3 columns"> <md-checkbox name="cbSignedEnglish" [(ngModel)]="cbSignedEnglish">SIGNED ENGLISH</md-checkbox> </div>
+          <div class="medium-3 columns"> <md-checkbox name="cbIndigenousSign" [(ngModel)]="cbIndigenousSign">INDIGENOUS SIGN</md-checkbox> </div>
+      </div>
+      </ng-container>
     </div>
     <div class="separator"></div>
     <h4 class="text-center">BOOKING DETAILS</h4>
@@ -112,7 +121,7 @@
                   <span>Start Date is required</span>!
                 </span>
                 <span *ngIf="(bookingDate < minDate)" class="inline-icon error">
-                  <span>Please select the correct date</span>
+                  <span>Date is in the past. Please change the date</span>
                 </span>
               </div>
             </div>
@@ -296,31 +305,383 @@
             </span>
           </div>
         </div>
-        <div class="medium-6 columns">
+        <div class="medium-6 columns" *ngIf="cbAuslanInterpreter">
           <div class="form-field">
-            <label>NUMB. OF INTERPRETERS NEEDED *
-              <span mdTooltip="Enter the Number of Interpreters needed">
+            <label>NUMB. OF AUSLAN INT. NEEDED *
+              <span mdTooltip="Enter the Number of Auslan Interpreters needed">
                 <i class="inline-icon-tip"></i>
               </span>
             </label>
-            <input [(ngModel)]="bookingModel.interpreters_required"
-                   name="interpreters_count" [readonly]="isDisabledForOrgRepIndClient"
-                   #interpreters_count="ngModel"
-                   placeholder="Enter the Number of Interpreters needed"
+            <input [(ngModel)]="bookingModel.number_of_auslan_interpreters_required"
+                   name="auslanInterpreters_count" [readonly]="isDisabledForOrgRepIndClient"
+                   #auslanInterpreters_count="ngModel"
+                   placeholder="Enter the Number of Auslan Interpreters needed"
                    (click)="fireNotification($event)"
-                   type="tel" required digits>
-            <span *ngIf="interpreters_count.touched && !interpreters_count.errors?.required && !interpreters_count.errors?.digits;"
+                   type="tel" min="1" required digits>
+            <span *ngIf="auslanInterpreters_count.touched && !auslanInterpreters_count.errors?.required && !auslanInterpreters_count.errors?.digits;"
                   class="inline-icon inline-icon-valid valid"></span>
-            <span *ngIf="interpreters_count.touched && (interpreters_count.errors?.required || interpreters_count.errors?.digits);"
+            <span *ngIf="auslanInterpreters_count.touched && (auslanInterpreters_count.errors?.required || auslanInterpreters_count.errors?.digits);"
                   class="inline-icon error">
               <span>Minimum 1 digit required.</span>!
             </span>
-            <span *ngIf="bookingModel.interpreters_required < 2  && isMoreInterpreterNeeded()"
+            <span *ngIf="auslanInterpreters_count.touched && auslanInterpreters_count.errors?.min"
                   class="inline-icon error">
-              <span>You may require more than 1 interpreter for this booking.</span>!
+              <span>Minimum value should be 1.</span>!
+            </span>
+            <span *ngIf="bookingModel.number_of_auslan_interpreters_required < 2  && isMoreInterpreterNeeded()"
+                  class="inline-icon error">
+              <span>You may require more than 1 auslan interpreter for this booking.</span>!
             </span>
           </div>
         </div>
+        <div class="medium-6 columns" *ngIf="cbCaptioning">
+          <div class="form-field">
+            <label>NUMB. OF CAPTIONERS NEEDED *
+              <span mdTooltip="Enter the Number of Captioners needed">
+                <i class="inline-icon-tip"></i>
+              </span>
+            </label>
+            <input [(ngModel)]="bookingModel.number_of_captioners_required"
+                   name="captioning_count"
+                   #captioning_count="ngModel"
+                   placeholder="Enter the Number of Captioners needed"
+                   (click)="fireNotification($event)"
+                   type="tel" min="1" required digits>
+            <span *ngIf="captioning_count.touched && !captioning_count.errors?.required && !captioning_count.errors?.digits;"
+                  class="inline-icon inline-icon-valid valid"></span>
+            <span *ngIf="captioning_count.touched && (captioning_count.errors?.required || captioning_count.errors?.digits);"
+                  class="inline-icon error">
+              <span>Minimum 1 digit required.</span>!
+            </span>
+            <span *ngIf="captioning_count.touched && captioning_count.errors?.min"
+                  class="inline-icon error">
+              <span>Minimum value should be 1.</span>!
+            </span>
+          </div>
+        </div>
+        <div class="medium-6 columns" *ngIf="cbNotetaking">
+          <div class="form-field">
+            <label>NUMB. OF NOTETAKERS NEEDED *
+              <span mdTooltip="Enter the Number of Notetakers needed">
+                <i class="inline-icon-tip"></i>
+              </span>
+            </label>
+            <input [(ngModel)]="bookingModel.number_of_note_takers_required"
+                   name="notetaking_count"
+                   #notetaking_count="ngModel"
+                   placeholder="Enter the Number of Notetaker needed"
+                   (click)="fireNotification($event)"
+                   type="tel" min="1" required digits>
+            <span *ngIf="notetaking_count.touched && !notetaking_count.errors?.required && !notetaking_count.errors?.digits;"
+                  class="inline-icon inline-icon-valid valid"></span>
+            <span *ngIf="notetaking_count.touched && (notetaking_count.errors?.required || notetaking_count.errors?.digits);"
+                  class="inline-icon error">
+              <span>Minimum 1 digit required.</span>!
+            </span>
+            <span *ngIf="notetaking_count.touched && notetaking_count.errors?.min"
+                  class="inline-icon error">
+              <span>Minimum value should be 1.</span>!
+            </span>
+            <span *ngIf="bookingModel.number_of_note_takers_required < 2  && isMoreInterpreterNeeded()"
+                  class="inline-icon error">
+              <span>You may require more than 1 notetaker for this booking.</span>!
+            </span>
+          </div>
+        </div>
+        <div class="medium-6 columns" *ngIf="cbDeafInterpreter">
+          <div class="form-field">
+            <label>NUMB. OF DEAF INT. NEEDED *
+              <span mdTooltip="Enter the Number of Deaf Interpreters needed">
+                <i class="inline-icon-tip"></i>
+              </span>
+            </label>
+            <input [(ngModel)]="bookingModel.number_of_deaf_interpreters_required"
+                   name="deaf_count"
+                   #deaf_count="ngModel"
+                   placeholder="Enter the Number of Deaf Interpreters needed"
+                   (click)="fireNotification($event)"
+                   type="tel" min="1" required digits>
+            <span *ngIf="deaf_count.touched && !deaf_count.errors?.required && !deaf_count.errors?.digits;"
+                  class="inline-icon inline-icon-valid valid"></span>
+            <span *ngIf="deaf_count.touched && (deaf_count.errors?.required || deaf_count.errors?.digits);"
+                  class="inline-icon error">
+              <span>Minimum 1 digit required.</span>!
+            </span>
+            <span *ngIf="deaf_count.touched && deaf_count.errors?.min"
+                  class="inline-icon error">
+              <span>Minimum value should be 1.</span>!
+            </span>
+            <span *ngIf="bookingModel.number_of_deaf_interpreters_required < 2  && isMoreInterpreterNeeded()"
+                  class="inline-icon error">
+              <span>You may require more than 1 deaf interpreter for this booking.</span>!
+            </span>
+          </div>
+        </div>
+      <ng-container *ngIf="cbDeafBlindInterpreter || cbVisualFrame || cbTactile || cbPlatform">
+        <div class="medium-6 columns" *ngIf="cbDeafBlindInterpreter">
+          <div class="form-field">
+            <label>NUMB. OF DEAF BLIND INT. NEEDED *
+              <span mdTooltip="Enter the Number of Deaf Interpreters needed">
+                <i class="inline-icon-tip"></i>
+              </span>
+            </label>
+            <input [(ngModel)]="bookingModel.number_of_deaf_blind_interpreters_required"
+                   name="deafBlind_count"
+                   #deafBlind_count="ngModel"
+                   placeholder="Enter the Number of Deaf Blind Interpreters needed"
+                   (click)="fireNotification($event)"
+                   type="tel" min="1" required digits>
+            <span *ngIf="deafBlind_count.touched && !deafBlind_count.errors?.required && !deafBlind_count.errors?.digits;"
+                  class="inline-icon inline-icon-valid valid"></span>
+            <span *ngIf="deafBlind_count.touched && (deafBlind_count.errors?.required || deafBlind_count.errors?.digits);"
+                  class="inline-icon error">
+              <span>Minimum 1 digit required.</span>!
+            </span>
+            <span *ngIf="deafBlind_count.touched && deafBlind_count.errors?.min"
+                  class="inline-icon error">
+              <span>Minimum value should be 1.</span>!
+            </span>
+            <span *ngIf="bookingModel.number_of_deaf_blind_interpreters_required < 2  && isMoreInterpreterNeeded()"
+                  class="inline-icon error">
+              <span>You may require more than 1 deaf blind interpreter for this booking.</span>!
+            </span>
+          </div>
+        </div>
+        <div class="medium-6 columns" *ngIf="cbVisualFrame">
+          <div class="form-field">
+            <label>NUMB. OF VISUAL FRAME INT. NEEDED *
+              <span mdTooltip="Enter the Number of Visual Frame Interpreters needed">
+                <i class="inline-icon-tip"></i>
+              </span>
+            </label>
+            <input [(ngModel)]="bookingModel.number_of_visual_frame_interpreters_required"
+                   name="visualFrame_count"
+                   #visualFrame_count="ngModel"
+                   placeholder="Enter the Number of Visual Frame Interpreters needed"
+                   (click)="fireNotification($event)"
+                   type="tel" min="1" required digits>
+            <span *ngIf="visualFrame_count.touched && !visualFrame_count.errors?.required && !visualFrame_count.errors?.digits;"
+                  class="inline-icon inline-icon-valid valid"></span>
+            <span *ngIf="visualFrame_count.touched && (visualFrame_count.errors?.required || visualFrame_count.errors?.digits);"
+                  class="inline-icon error">
+              <span>Minimum 1 digit required.</span>!
+            </span>
+            <span *ngIf="visualFrame_count.touched && visualFrame_count.errors?.min"
+                  class="inline-icon error">
+              <span>Minimum value should be 1.</span>!
+            </span>
+            <span *ngIf="bookingModel.number_of_visual_frame_interpreters_required < 2  && isMoreInterpreterNeeded()"
+                  class="inline-icon error">
+              <span>You may require more than 1 visual frame interpreter for this booking.</span>!
+            </span>
+          </div>
+        </div>
+        <div class="medium-6 columns" *ngIf="cbTactile">
+          <div class="form-field">
+            <label>NUMB. OF TACTILE INT. NEEDED *
+              <span mdTooltip="Enter the Number of Tactile Interpreters needed">
+                <i class="inline-icon-tip"></i>
+              </span>
+            </label>
+            <input [(ngModel)]="bookingModel.number_of_tactile_interpreters_required"
+                   name="tactile_count"
+                   #tactile_count="ngModel"
+                   placeholder="Enter the Number of Tactile Interpreters needed"
+                   (click)="fireNotification($event)"
+                   type="tel" min="1" required digits>
+            <span *ngIf="tactile_count.touched && !tactile_count.errors?.required && !tactile_count.errors?.digits;"
+                  class="inline-icon inline-icon-valid valid"></span>
+            <span *ngIf="tactile_count.touched && (tactile_count.errors?.required || tactile_count.errors?.digits);"
+                  class="inline-icon error">
+              <span>Minimum 1 digit required.</span>!
+            </span>
+            <span *ngIf="tactile_count.touched && tactile_count.errors?.min"
+                  class="inline-icon error">
+              <span>Minimum value should be 1.</span>!
+            </span>
+            <span *ngIf="bookingModel.number_of_tactile_interpreters_required < 2  && isMoreInterpreterNeeded()"
+                  class="inline-icon error">
+              <span>You may require more than 1 tactile interpreter for this booking.</span>!
+            </span>
+          </div>
+        </div>
+        <div class="medium-6 columns" *ngIf="cbPlatform">
+          <div class="form-field">
+            <label>NUMB. OF PLATFORM INT. NEEDED *
+              <span mdTooltip="Enter the Number of Platform Interpreters needed">
+                <i class="inline-icon-tip"></i>
+              </span>
+            </label>
+            <input [(ngModel)]="bookingModel.number_of_platform_interpreters_required"
+                   name="platform_count"
+                   #platform_count="ngModel"
+                   placeholder="Enter the Number of Platform Interpreters needed"
+                   (click)="fireNotification($event)"
+                   type="tel" min="1" required digits>
+            <span *ngIf="platform_count.touched && !platform_count.errors?.required && !platform_count.errors?.digits;"
+                  class="inline-icon inline-icon-valid valid"></span>
+            <span *ngIf="platform_count.touched && (platform_count.errors?.required || platform_count.errors?.digits);"
+                  class="inline-icon error">
+              <span>Minimum 1 digit required.</span>!
+            </span>
+            <span *ngIf="platform_count.touched && platform_count.errors?.min"
+                  class="inline-icon error">
+              <span>Minimum value should be 1.</span>!
+            </span>
+            <span *ngIf="bookingModel.number_of_platform_interpreters_required < 2  && isMoreInterpreterNeeded()"
+                  class="inline-icon error">
+              <span>You may require more than 1 platform interpreter for this booking.</span>!
+            </span>
+          </div>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="cbOtherLanguageNeeds">
+        <div class="medium-6 columns" *ngIf="cbAsl">
+          <div class="form-field">
+            <label>NUMB. OF ASL INT. NEEDED *
+              <span mdTooltip="Enter the Number of ASL Interpreters needed">
+                <i class="inline-icon-tip"></i>
+              </span>
+            </label>
+            <input [(ngModel)]="bookingModel.number_of_asl_interpreters_required"
+                   name="asl_count"
+                   #asl_count="ngModel"
+                   placeholder="Enter the Number of ASL Interpreters needed"
+                   (click)="fireNotification($event)"
+                   type="tel" min="1" required digits>
+            <span *ngIf="asl_count.touched && !asl_count.errors?.required && !asl_count.errors?.digits;"
+                  class="inline-icon inline-icon-valid valid"></span>
+            <span *ngIf="asl_count.touched && (asl_count.errors?.required || asl_count.errors?.digits);"
+                  class="inline-icon error">
+              <span>Minimum 1 digit required.</span>!
+            </span>
+            <span *ngIf="asl_count.touched && asl_count.errors?.min"
+                  class="inline-icon error">
+              <span>Minimum value should be 1.</span>!
+            </span>
+            <span *ngIf="bookingModel.number_of_asl_interpreters_required < 2  && isMoreInterpreterNeeded()"
+                  class="inline-icon error">
+              <span>You may require more than 1 ASL interpreter for this booking.</span>!
+            </span>
+          </div>
+        </div>
+        <div class="medium-6 columns" *ngIf="cbBsl">
+          <div class="form-field">
+            <label>NUMB. OF BSL INT. NEEDED *
+              <span mdTooltip="Enter the Number of BSL Interpreters needed">
+                <i class="inline-icon-tip"></i>
+              </span>
+            </label>
+            <input [(ngModel)]="bookingModel.number_of_bsl_interpreters_required"
+                   name="bsl_count"
+                   #bsl_count="ngModel"
+                   placeholder="Enter the Number of BSL Interpreters needed"
+                   (click)="fireNotification($event)"
+                   type="tel" min="1" required digits>
+            <span *ngIf="bsl_count.touched && !bsl_count.errors?.required && !bsl_count.errors?.digits;"
+                  class="inline-icon inline-icon-valid valid"></span>
+            <span *ngIf="bsl_count.touched && (bsl_count.errors?.required || bsl_count.errors?.digits);"
+                  class="inline-icon error">
+              <span>Minimum 1 digit required.</span>!
+            </span>
+            <span *ngIf="bsl_count.touched && bsl_count.errors?.min"
+                  class="inline-icon error">
+              <span>Minimum value should be 1.</span>!
+            </span>
+            <span *ngIf="bookingModel.number_of_bsl_interpreters_required < 2  && isMoreInterpreterNeeded()"
+                  class="inline-icon error">
+              <span>You may require more than 1 BSL interpreter for this booking.</span>!
+            </span>
+          </div>
+        </div>
+        <div class="medium-6 columns" *ngIf="cbIsl">
+          <div class="form-field">
+            <label>NUMB. OF ISL INT. NEEDED *
+              <span mdTooltip="Enter the Number of ISL Interpreters needed">
+                <i class="inline-icon-tip"></i>
+              </span>
+            </label>
+            <input [(ngModel)]="bookingModel.number_of_isl_interpreters_required"
+                   name="isl_count"
+                   #isl_count="ngModel"
+                   placeholder="Enter the Number of ISL Interpreters needed"
+                   (click)="fireNotification($event)"
+                   type="tel" min="1" required digits>
+            <span *ngIf="isl_count.touched && !isl_count.errors?.required && !isl_count.errors?.digits;"
+                  class="inline-icon inline-icon-valid valid"></span>
+            <span *ngIf="isl_count.touched && (isl_count.errors?.required || isl_count.errors?.digits);"
+                  class="inline-icon error">
+              <span>Minimum 1 digit required.</span>!
+            </span>
+            <span *ngIf="isl_count.touched && isl_count.errors?.min"
+                  class="inline-icon error">
+              <span>Minimum value should be 1.</span>!
+            </span>
+            <span *ngIf="bookingModel.number_of_isl_interpreters_required < 2  && isMoreInterpreterNeeded()"
+                  class="inline-icon error">
+              <span>You may require more than 1 ISL interpreter for this booking.</span>!
+            </span>
+          </div>
+        </div>
+        <div class="medium-6 columns" *ngIf="cbSignedEnglish">
+          <div class="form-field">
+            <label>NUMB. OF SIGNED ENGLISH INT. NEEDED *
+              <span mdTooltip="Enter the Number of Signed English Interpreters needed">
+                <i class="inline-icon-tip"></i>
+              </span>
+            </label>
+            <input [(ngModel)]="bookingModel.number_of_signed_english_interpreters_required"
+                   name="signedEnglish_count"
+                   #signedEnglish_count="ngModel"
+                   placeholder="Enter the Number of Signed English Interpreters needed"
+                   (click)="fireNotification($event)"
+                   type="tel" min="1" required digits>
+            <span *ngIf="signedEnglish_count.touched && !signedEnglish_count.errors?.required && !signedEnglish_count.errors?.digits;"
+                  class="inline-icon inline-icon-valid valid"></span>
+            <span *ngIf="signedEnglish_count.touched && (signedEnglish_count.errors?.required || signedEnglish_count.errors?.digits);"
+                  class="inline-icon error">
+              <span>Minimum 1 digit required.</span>!
+            </span>
+            <span *ngIf="signedEnglish_count.touched && signedEnglish_count.errors?.min"
+                  class="inline-icon error">
+              <span>Minimum value should be 1.</span>!
+            </span>
+            <span *ngIf="bookingModel.number_of_signed_english_interpreters_required < 2  && isMoreInterpreterNeeded()"
+                  class="inline-icon error">
+              <span>You may require more than 1 Signed English interpreter for this booking.</span>!
+            </span>
+          </div>
+        </div>
+        <div class="medium-6 columns" *ngIf="cbIndigenousSign">
+          <div class="form-field">
+            <label>NUMB. OF INDIGENOUS SIGN INT. NEEDED *
+              <span mdTooltip="Enter the Number of Indigenous Sign Interpreters needed">
+                <i class="inline-icon-tip"></i>
+              </span>
+            </label>
+            <input [(ngModel)]="bookingModel.number_of_indigenous_sign_interpreters_required"
+                   name="indigenousSign_count"
+                   #indigenousSign_count="ngModel"
+                   placeholder="Enter the Number of Indigenous Sign Interpreters needed"
+                   (click)="fireNotification($event)"
+                   type="tel" min="1" required digits>
+            <span *ngIf="indigenousSign_count.touched && !indigenousSign_count.errors?.required && !indigenousSign_count.errors?.digits;"
+                  class="inline-icon inline-icon-valid valid"></span>
+            <span *ngIf="indigenousSign_count.touched && (indigenousSign_count.errors?.required || indigenousSign_count.errors?.digits);"
+                  class="inline-icon error">
+              <span>Minimum 1 digit required.</span>!
+            </span>
+            <span *ngIf="indigenousSign_count.touched && indigenousSign_count.errors?.min"
+                  class="inline-icon error">
+              <span>Minimum value should be 1.</span>!
+            </span>
+            <span *ngIf="bookingModel.number_of_indigenous_sign_interpreters_required < 2  && isMoreInterpreterNeeded()"
+                  class="inline-icon error">
+              <span>You may require more than 1 Indigenous Sign interpreter for this booking.</span>!
+            </span>
+          </div>
+        </div>
+      </ng-container>
         <div class="medium-6 columns">
           <div class="form-field">
             <label>PARKING AVAILABILITY
@@ -384,6 +745,110 @@
         </div>
       </div>
     </ng-container>
+
+  <ng-container *ngIf="cbCaptioning || cbNotetaking || bookingModel.method_type === 'vri'">
+    <div class="separator"></div>
+    <h4 class="text-center">ADDITIONAL FIELDS</h4>
+
+    <div class="row">
+      <div class="row-wrapper" *ngIf="cbCaptioning" name="captioningAdditionalFields"> 
+        <div class="medium-6 columns">
+          <div class="form-field">
+            <label>TECH CONTACT FIRST NAME
+            </label>
+            <input [(ngModel)]="bookingModel.tech_contact_first_name"
+                   name='tech_contact_first_name'
+                   type='text' placeholder="Enter Tech First Name">
+          </div>
+        </div>
+        <div class="medium-6 columns">
+          <div class="form-field">
+            <label>TECH CONTACT LAST NAME
+            </label>
+            <input [(ngModel)]="bookingModel.tech_contact_last_name"
+                   name='tech_contact_last_name'
+                   type='text' placeholder="Enter Tech First Name">
+          </div>
+        </div>
+        <div class="medium-6 columns">
+          <div class="form-field">
+            <label>TECH CONTACT EMAIL
+            </label>
+            <input [(ngModel)]="bookingModel.tech_contact_email"
+                   name='tech_contact_email'
+                   type='text' placeholder="Enter Tech Email">
+          </div>
+        </div>
+        <div class="medium-6 columns">
+          <div class="form-field">
+            <label>TECH CONTACT PHONE NUMBER
+            </label>
+            <input [(ngModel)]="bookingModel.tech_contact_phone_number"
+                   name='tech_contact_phone_number'
+                   type='text' placeholder="Enter Tech Phone Number">
+          </div>
+        </div>
+        <div class="medium-6 columns">
+            <div class="form-field">
+              <label>AUDIO SOURCE
+              </label>
+              <input [(ngModel)]="bookingModel.audio_source"
+                     name='audio_source'
+                     type='text' placeholder="Enter Audio Source">
+            </div>
+          </div>
+        </div> 
+      <div class="row-wrapper" *ngIf="cbCaptioning || bookingModel.method_type === 'vri'" name="captioningAndVriAdditionalFields"> 
+        <div class="medium-6 columns">
+          <div class="form-field">
+            <label>TECH PLATFORM
+            </label>
+            <input [(ngModel)]="bookingModel.tech_platform"
+                   name='tech_platform'
+                   type='text' placeholder="Enter Tech Platform">
+          </div>
+        </div>
+        <div class="medium-6 columns">
+          <div class="form-field">
+            <label>LOGIN ID LINK
+            </label>
+            <input [(ngModel)]="bookingModel.login_id_link"
+                   name='login_id_link'
+                   type='text' placeholder="Enter Login ID Link">
+          </div>
+        </div>
+      </div> 
+      <div class="row-wrapper" *ngIf="bookingModel.method_type === 'vri'" name="vriAdditionalFields"> 
+          <div class="medium-6 columns">
+            <div class="form-field">
+              <label>HARDWARE
+              </label>
+              <input [(ngModel)]="bookingModel.hardware"
+                     name='hardware'
+                     type='text' placeholder="Enter Hardware">
+            </div>
+          </div>
+          <div class="medium-6 columns">
+            <div class="form-field">
+              <label>WHO WILL INITIATE THE CALL
+              </label>
+              <input [(ngModel)]="bookingModel.who_will_initiate_call"
+                     name='who_will_initiate_call'
+                     type='text' placeholder="Enter Who Will Initiate The Call">
+            </div>
+          </div>
+        </div> 
+        <div class="medium-6 columns" *ngIf="cbNotetaking">
+            <div class="form-field">
+              <label>HOW WOULD YOU LIKE TO RECEIVE NOTES
+              </label>
+              <input [(ngModel)]="bookingModel.how_would_you_like_to_receive_notes"
+                     name='how_would_you_like_to_receive_notes'
+                     type='text' placeholder="Enter How Would You Like To Receive Notes">
+            </div>
+        </div>
+    </div>
+  </ng-container> 
     <br>
     <div class="separator"></div>
 

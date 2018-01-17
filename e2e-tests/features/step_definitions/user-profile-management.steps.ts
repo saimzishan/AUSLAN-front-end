@@ -19,6 +19,7 @@ defineSupportCode(({Given, Then, When}) => {
     Given(/^Assign (.*) with preferred Interpreters$/, Heroku.createUserWithPreferedInterpreters);
 
     When(/^I click on my name in the top corner$/, bookingPage.clickOnProfile);
+    When(/^I click on the option  profile$/, bookingPage.clickOnOptionProfile);
 
     Then(/^I will be taken to my individual (.*) page$/, takeToIndividualPage);
     function takeToIndividualPage(individual_type: string) {

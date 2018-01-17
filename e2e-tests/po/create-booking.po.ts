@@ -259,7 +259,7 @@ export class BookingPage extends PageObject {
         ].join('/');
     }
     createBookingWithTimeAndInterpreter = (standard: string, startTime: string, endTime: string, interpreterNum: string) => {
-        const dateToSend = this.previousDate ? this.getDateAfterNDays(-1) : this.getDateAfterNDays(7);
+        const dateToSend = this.previousDate ? this.getDateAfterNDays(-1) : this.getDateAfterNDays(8);
         this.setDate(dateToSend);
         this.setStartEndTime('start', startTime);
         this.setStartEndTime('end', endTime);
@@ -270,8 +270,8 @@ export class BookingPage extends PageObject {
         this.setElementsValueByName('address_state', 'VIC'); // dropdown
 
         this.getElementByName('attendee_count').sendKeys('1');
-        this.getElementByName('interpreters_count').clear();
-        this.getElementByName('interpreters_count').sendKeys(interpreterNum);
+        this.getElementByName('auslanInterpreters_count').clear();
+        this.getElementByName('auslanInterpreters_count').sendKeys(interpreterNum);
 
         this.getElementByName('nature_of_appointment').sendKeys('COURT');
         this.getElementByName('specific_nature_of_appointment').sendKeys('DHS ORDER');
@@ -316,8 +316,8 @@ export class BookingPage extends PageObject {
         this.setElementsValueByName('address_state', 'WA'); // dropdown
 
         this.getElementByName('attendee_count').sendKeys('1');
-        this.getElementByName('interpreters_count').clear();
-        this.getElementByName('interpreters_count').sendKeys(interpreterNum);
+        this.getElementByName('auslanInterpreters_count').clear();
+        this.getElementByName('auslanInterpreters_count').sendKeys(interpreterNum);
 
         this.getElementByName('nature_of_appointment').sendKeys('COURT');
         this.getElementByName('specific_nature_of_appointment').sendKeys('DHS ORDER');

@@ -81,6 +81,7 @@ Feature: Booking Filter
     Then I am shown with 1 booking
     Then I see one row with status 'red'
     And I click on my name in the top corner
+    When I click on the option  profile
     And I will be taken to my individual profile page
     Then I click on Bookings
     And I am on the bookings page
@@ -164,3 +165,15 @@ Feature: Booking Filter
     Then I fill the field 'search' with value 'thisiswrongvalue'
     And I click out of the text box
     Then I am shown with 0 booking
+
+  @ignoreThis
+  Scenario: As a Administrator, filter for date should only submit date after clicked out or pressed enter
+    Given I sign in with valid Administrator credentials
+    When I am on the bookings page
+    Then I am shown with 5 booking
+    When I query search with future date
+    And I click out of the text box
+    Then I am shown with 0 booking
+    When I query search with current date manually
+    And I press enter
+    Then I am shown with 5 booking

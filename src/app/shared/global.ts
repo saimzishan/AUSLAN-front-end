@@ -6,6 +6,7 @@ import {User} from './model/user.entity';
 export interface ModalOptions {
     cancelTitle: string;
     okTitle: string;
+    closeVal: string;
 }
 /* Change this class to use Using Application Providers import { Data } from "../../providers/data/data" */
 export class GLOBAL {

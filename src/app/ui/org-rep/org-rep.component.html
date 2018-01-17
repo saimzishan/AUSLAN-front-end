@@ -71,28 +71,7 @@
         </div>
     </div>
 </div>
-<div class="row small-collapse">
-    <div class="row-wrapper">
-        <div class="medium-6 columns">
-            <div class="form-field">
-                <label>{{'Would you like the system to send email on receipt of a request?'.toUpperCase()}}</label>
-                <md-checkbox type="checkbox"  [disabled]="isDuplicate"
-                             [(ngModel)]="userModel.email_receipt" name="email_receipt" #email_receipt="ngModel">Yes
-                </md-checkbox>
 
-            </div>
-        </div>
-        <div class="medium-6 columns">
-            <div class="form-field">
-                <label>{{'When an interpreter is allocated would you like to receive confirmation via Email?'.toUpperCase()}}</label>
-                <md-checkbox type="checkbox" [disabled]="isDuplicate"
-                             [(ngModel)]="userModel.email_confirmation" name="email_confirmation"
-                             #email_confirmation="ngModel">Yes
-                </md-checkbox>
-            </div>
-        </div>
-    </div>
-</div>
 
 <br>
 

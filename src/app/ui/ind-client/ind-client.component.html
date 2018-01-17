@@ -53,28 +53,6 @@
     </div>
   </div>
 </div>
-<div class="row small-collapse">
-  <div class="row-wrapper">
-    <div class="medium-6 columns">
-      <div class="form-field">
-        <label>{{'WOULD YOU LIKE THE SYSTEM TO SEND EMAIL ON RECEIPT OF A REQUEST?'}}</label>
-        <md-checkbox type="checkbox"
-                     [(ngModel)]="userModel.email_receipt" name="email_receipt" #email_receipt="ngModel">Yes
-        </md-checkbox>
-
-      </div>
-    </div>
-    <div class="medium-6 columns">
-      <div class="form-field">
-        <label>{{'WHEN AN INTERPRETER IS ALLOCATED WOULD YOU LIKE TO RECEIVE CONFIRMATION VIA EMAIL?'}}</label>
-        <md-checkbox type="checkbox"
-                     [(ngModel)]="userModel.email_confirmation" name="email_confirmation"
-                     #email_confirmation="ngModel">Yes
-        </md-checkbox>
-      </div>
-    </div>
-  </div>
-</div>
 <br>
 
 <app-address [prefix]="address_title" [address]="userModel.address_attributes" [canCalculateDistance]="canCalculateDistance"></app-address>
