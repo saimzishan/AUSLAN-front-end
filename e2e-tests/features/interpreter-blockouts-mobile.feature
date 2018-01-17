@@ -9,4 +9,3 @@ Feature: As INTERPRETER, I can create blockout on mobile
   Scenario: As INTERPRETER, I can create edit and delete blockout on desktop
     And I sign in with valid Interpreter credentials
     Then I will be shown the bookings page
-    
