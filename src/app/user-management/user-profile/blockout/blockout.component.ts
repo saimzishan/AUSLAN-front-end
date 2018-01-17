@@ -1,13 +1,15 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, ViewContainerRef} from '@angular/core';
 import {blockout_availability, Interpreter} from '../../../shared/model/user.entity';
 import {FormGroup} from '@angular/forms';
 import {SpinnerService} from '../../../spinner/spinner.service';
 import {NotificationServiceBus} from '../../../notification/notification.service';
 import {UserService} from '../../../api/user.service';
-import {GLOBAL} from '../../../shared/global';
+import {GLOBAL, ModalOptions} from '../../../shared/global';
 import {ActivatedRoute} from '@angular/router';
 import {AvailabilityBlock} from '../../../shared/model/availability-block.entity';
 import {AuthGuard} from '../../../auth/auth.guard';
+import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
+import {PopupComponent} from '../../../shared/popup/popup.component';
 
 @Component({
     selector: 'app-blockout',
@@ -22,11 +24,14 @@ export class BlockoutComponent implements OnDestroy, OnInit {
     end_time: Date = new Date();
     end_date: Date = this.start_time;
     public availabilityBlock: AvailabilityBlock = new AvailabilityBlock();
-
+    dialogRef: MdDialogRef<any>;
+    dialogSub;
     constructor(public userDataService: UserService,
                 public notificationServiceBus: NotificationServiceBus,
                 public spinnerService: SpinnerService,
-                private route: ActivatedRoute) {
+                private route: ActivatedRoute,
+                public dialog: MdDialog,
+                public viewContainerRef: ViewContainerRef) {
     }
 
     ngOnInit() {
@@ -54,7 +59,18 @@ export class BlockoutComponent implements OnDestroy, OnInit {
     ngOnDestroy() {
         return this.sub && this.sub.unsubscribe();
     }
+    createModal(title: string, message: string, options?: ModalOptions) {
+        let config: MdDialogConfig = {
+            disableClose: true
+        };
+        config.viewContainerRef = this.viewContainerRef;
+        this.dialogRef = this.dialog.open(PopupComponent, config);
+        this.dialogRef.componentInstance.title = title;
+        this.dialogRef.componentInstance.cancelTitle = (options && options.cancelTitle) || 'BACK';
+        this.dialogRef.componentInstance.okTitle = (options && options.okTitle) || 'DELETE';
+        this.dialogRef.componentInstance.popupMessage = message;
 
+    }
     onStartTimeChanged() {
         let dt = new Date();
         dt.setDate(this.start_time.getDate());
@@ -66,27 +82,33 @@ export class BlockoutComponent implements OnDestroy, OnInit {
     }
 
     deleteBlockout() {
-        this.spinnerService.requestInProcess(true);
-        this.userDataService.deleteBlockout(GLOBAL.currentUser.id, this.availabilityBlock.id)
-            .subscribe((res: any) => {
-                if (res.status === 204) {
-                    // UI Notification
-                    let idx = this.interpreter.availability_blocks_attributes.indexOf(this.availabilityBlock);
-                    this.interpreter.availability_blocks_attributes.splice(idx, 1);
-                    this.availabilityBlock = new AvailabilityBlock();
-                    this.param_id = -1;
-                    this.spinnerService.requestInProcess(false);
-                    AuthGuard.refreshUser(this.interpreter);
-                    this.notificationServiceBus.launchNotification(false, 'Blockout deleted Successfully');
-                }
-            }, errors => {
-                this.spinnerService.requestInProcess(false);
+        let message = `Do you really want to delete this blockout?`;
+        let title = 'Delete Blockouts';
+        this.createModal(title, message);
+        this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                this.spinnerService.requestInProcess(true);
+                this.userDataService.deleteBlockout(GLOBAL.currentUser.id, this.availabilityBlock.id)
+                    .subscribe((res: any) => {
+                        if (res.status === 204) {
+                            // UI Notification
+                            let idx = this.interpreter.availability_blocks_attributes.indexOf(this.availabilityBlock);
+                            this.interpreter.availability_blocks_attributes.splice(idx, 1);
+                            this.availabilityBlock = new AvailabilityBlock();
+                            this.param_id = -1;
+                            this.spinnerService.requestInProcess(false);
+                            AuthGuard.refreshUser(this.interpreter);
+                            this.notificationServiceBus.launchNotification(false, 'Blockout successfully deleted');
+                        }
+                    }, errors => {
+                        this.spinnerService.requestInProcess(false);
 
-                let e = errors.json();
-                this.notificationServiceBus.launchNotification(true, errors.statusText + ' '
-                    + JSON.stringify(e || e.errors).replace(/]|[[]/g, '').replace(/({|})/g, ''));
-            });
-
+                        let e = errors.json();
+                        this.notificationServiceBus.launchNotification(true, errors.statusText + ' '
+                            + JSON.stringify(e || e.errors).replace(/]|[[]/g, '').replace(/({|})/g, ''));
+                    });
+            }
+        });
     }
 
     editBlockouts(form: FormGroup) {
@@ -108,7 +130,7 @@ export class BlockoutComponent implements OnDestroy, OnInit {
                         .map(o => o = this.availabilityBlock);
                     this.spinnerService.requestInProcess(false);
                     AuthGuard.refreshUser(this.interpreter);
-                    this.notificationServiceBus.launchNotification(false, 'Blockout updated Successfully');
+                    this.notificationServiceBus.launchNotification(false, 'Blockout successfully updated');
                 }
             }, errors => {
                 this.spinnerService.requestInProcess(false);
@@ -147,7 +169,7 @@ export class BlockoutComponent implements OnDestroy, OnInit {
                     this.spinnerService.requestInProcess(false);
                     this.interpreter.availability_blocks_attributes.push(this.availabilityBlock);
                     AuthGuard.refreshUser(this.interpreter);
-                    this.notificationServiceBus.launchNotification(false, 'Blockout added Successfully');
+                    this.notificationServiceBus.launchNotification(false, 'Blockout successfully added');
                 }
             }, errors => {
                 this.spinnerService.requestInProcess(false);
