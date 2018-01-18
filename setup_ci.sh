@@ -13,7 +13,7 @@ bundle exec rake db:drop
 bundle exec rake db:create
 bundle exec rake db:migrate
 nohup bundle exec rails s -b 0.0.0.0 > rails_server.log 2>&1 &
-nohup bundle exec rake jobs:work > worker.log 2>&1 &
+nohup bundle exec QUEUE=calculate_distance_job rake jobs:work > worker.log 2>&1 &
 sleep 5
 ps -ef | grep "puma"
 cd ../booking-system-frontend

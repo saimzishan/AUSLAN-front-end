@@ -10,6 +10,9 @@ export class Address {
   public state: string;
   public post_code: number;
 
+  public isValid(): boolean {
+      return [this.street_number, this.street_name, this.suburb, this.state, this.post_code].every((ele: any) => ele);
+  }
 }
 
 export class Venue extends Address {
