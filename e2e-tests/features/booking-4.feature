@@ -21,7 +21,7 @@ Feature: Booking Management
 
 # ---------------------------------------- AUSLAN1-727 -> END ----------------------------------------
 
-# ---------------------------------------- AUSLAN1-736, 737 -> START ----------------------------------------
+# ---------------------------------------- AUSLAN1-736, 737, 741, 901, 905 -> START ----------------------------------------
   @runThis
   Scenario: Given 1 verified Individual Client, Booking Officer can create a booking and travel cost should save
     Given I exist as an Booking Officer
@@ -47,7 +47,7 @@ Feature: Booking Management
     When I query search with empty date
     And I will be shown with bookings
     Then I am shown with 1 booking
-# ---------------------------------------- AUSLAN1-736, 737 -> END ----------------------------------------
+# ---------------------------------------- AUSLAN1-736, 737, 741, 901, 905 -> END ----------------------------------------
 
   @runThis
   Scenario: Given an Individual Client, Booking Officer should get a popup when the booking needs more interpreters
