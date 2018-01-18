@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewContainerRef, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewContainerRef, ViewChild, ChangeDetectorRef} from '@angular/core';
 import {Booking} from '../../shared/model/booking.entity';
 import {BookingService} from '../../api/booking.service';
 import {BA, BOOKING_NATURE} from '../../shared/model/booking-nature.enum';
@@ -61,7 +61,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     showBlocked = false;
     showProfileBlocked = false;
     bookingHeading = '';
-    shouldEdit = '';
+    forEdit = false;
     assignedInterpreter = 0;
     oldDocuments = [];
     deleteDocuments = [];
@@ -78,27 +78,27 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     bookingStartTime: Date;
     bookingEndTime: Date;
     isDuplicate: boolean;
-    cbCaptioning = false;
-    cbNotetaking = false;
+    cbCaptioner = false;
+    cbNotetaker = false;
     cbAuslanInterpreter = true;
     cbDeafInterpreter = false;
     cbDeafBlindInterpreter = false;
     cbOtherLanguageNeeds = false;
-    cbVisualFrame = false;
-    cbTactile = false;
-    cbPlatform = false;
-    cbAsl = false;
-    cbBsl = false;
-    cbIsl = false;
-    cbSignedEnglish = false;
-    cbIndigenousSign = false;
+    cbVisualFrameInterpreter = false;
+    cbTactileInterpreter = false;
+    cbPlatformInterpreter = false;
+    cbAslInterpreter = false;
+    cbBslInterpreter = false;
+    cbIslInterpreter = false;
+    cbSignedEnglishInterpreter = false;
+    cbIndigenousSignInterpreter = false;
     defaultDateTime: Date;
     @ViewChild('addressForm') private bookingAddress: AddressComponent;
 
     constructor(public bookingService: BookingService, private router: Router,
                 private route: ActivatedRoute, private rolePermission: RolePermission,
                 public notificationServiceBus: NotificationServiceBus, public spinnerService: SpinnerService,
-                private datePipe: DatePipe, public dialog: MdDialog,
+                private datePipe: DatePipe, public dialog: MdDialog, private changeDetector: ChangeDetectorRef,
                 public viewContainerRef: ViewContainerRef, public userService: UserService, private _sharedPreferedAllocationService: PreferedAllocationService) {
         BA.loadItems();
 
@@ -108,9 +108,10 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         /** http://stackoverflow.com/questions/38008334/angular2-rxjs-when-should-i-unsubscribe-from-subscription */
         this.sub = this.route.queryParams.subscribe(params => {
             let param = params['bookingModel'] || '';
-            this.shouldEdit = params['shouldEdit'] || '';
+            let shouldEdit = params['shouldEdit'] || '';
+            this.forEdit = Boolean(shouldEdit.length > 0 && shouldEdit === 'edit');
             this.assignedInterpreter = params['assignedInterpreter'] || '';
-            if (param.length > 0 && this.shouldEdit === '') {
+            if (param.length > 0 && shouldEdit === '') {
                 this.isDuplicate = true;
             } else {
                 this.isDuplicate = false;
@@ -133,7 +134,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 this.onSpecialInstruction();
             }
 
-            if (this.forEdit()) {
+            if (this.forEdit) {
                 this.bookingHeading = 'EDIT BOOKING';
                 this.termsAndConditionAccepted = true;
                 this.checkInterpreterBoxes();
@@ -146,7 +147,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     private isCurrentUserContact(): boolean {
-        if (this.forEdit()) {
+        if (this.forEdit) {
             return this.bookingModel.client.email === this.bookingModel.primaryContact.email
                 || GLOBAL.currentUser.email === this.bookingModel.primaryContact.email;
         } else {
@@ -155,7 +156,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     private isCurrentUserClient(): boolean {
-        if (this.forEdit()) {
+        if (this.forEdit) {
             return this.bookingModel.deaf_person.email === this.bookingModel.primaryContact.email
                 || GLOBAL.currentUser.email === this.bookingModel.primaryContact.email;
         } else {
@@ -163,8 +164,32 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         }
     }
 
-    serviceTypeClick(serviceType: string) {
-        this.bookingModel.method_type = serviceType;
+    serviceTypeChange(serviceType: string, cbName) {
+        if (this.forEdit) {
+            if (this.assignedInterpreter > 0) {
+                this[serviceType] = cbName.checked = false;
+                this.notificationServiceBus.launchNotification(true, 'Oops. Deallocate interpreters before changing the interpreting type.');
+                return;
+            }
+            let allServiceTypes = ['cbAuslanInterpreter', 'cbDeafInterpreter', 'cbDeafBlindInterpreter', 'cbCaptioner', 'cbNotetaker', 'cbOtherLanguageNeeds',
+                                   'cbVisualFrameInterpreter', 'cbTactileInterpreter', 'cbPlatformInterpreter', 'cbAslInterpreter', 'cbBslInterpreter',
+                                   'cbIslInterpreter', 'cbSignedEnglishInterpreter', 'cbIndigenousSignInterpreter'];
+
+            allServiceTypes.forEach(type => {
+                if (serviceType !== type) {
+                    this[type] = false;
+                }
+            });
+
+            ['number_of_auslan_interpreters_required', 'number_of_deaf_interpreters_required', 'number_of_deaf_blind_interpreters_required',
+             'number_of_captioners_required', 'number_of_note_takers_required', 'number_of_visual_frame_interpreters_required', 'number_of_tactile_interpreters_required',
+             'number_of_platform_interpreters_required', 'number_of_asl_interpreters_required', 'number_of_bsl_interpreters_required',
+             'number_of_isl_interpreters_required', 'number_of_signed_english_interpreters_required',
+             'number_of_indigenous_sign_interpreters_required'].forEach(modelVal => {
+                    this.bookingModel[modelVal] = 0;
+                });
+            this.changeDetector.detectChanges();
+        }
     }
 
     getOrgName(item) {
@@ -196,12 +221,12 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         if (GLOBAL.currentUser !== undefined) {
-            this.isDisabledForOrgRepIndClient = Boolean(this.isUserOrgRepORIndClientTemp() && this.forEdit());
+            this.isDisabledForOrgRepIndClient = Boolean(this.isUserOrgRepORIndClientTemp() && this.forEdit);
             this.isUserAdminORBookOfficer = <boolean> this.checkUserAdminORBookOfficer();
-            this.isDisabledForAdmin = (this.forEdit() && !this.bookingModel.created_by_admin);
+            this.isDisabledForAdmin = (this.forEdit && !this.bookingModel.created_by_admin);
             this.currentUserIsContact = this.isCurrentUserContact();
             this.currentUserIsClient = this.isCurrentUserClient();
-            if (!this.forEdit()) {
+            if (!this.forEdit) {
                 this.onSelectionChange();
                 this.onClientSelectionChange();
             }
@@ -213,7 +238,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             } else {
                 this.oldBookingModel = this.deepCopy(this.bookingModel);
             }
-            if (!this.forEdit() && !this.isDuplicate) {
+            if (!this.forEdit && !this.isDuplicate) {
                 this.onBookingAddressChange();
             }
         }
@@ -325,7 +350,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     public onProfilePreferredSelectionChange() {
-        if (!this.forEdit()) {
+        if (!this.forEdit) {
             let prefInt = this.userModel.prefferedInterpreters.filter(itm => itm.preference === 'preferred');
             if (this.showProfilePreferred) {
                 this.oldInterpreterPreference = this.oldInterpreterPreference.concat(prefInt);
@@ -344,7 +369,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     public onProfileBlockedSelectionChange() {
-        if (!this.forEdit()) {
+        if (!this.forEdit) {
             let blockInt = this.userModel.prefferedInterpreters.filter(itm => itm.preference === 'blocked');
             if (this.showProfileBlocked) {
                 this.oldInterpreterPreference = this.oldInterpreterPreference.concat(blockInt);
@@ -391,10 +416,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             GLOBAL.currentUser instanceof BookingOfficer);
     }
 
-    forEdit(): Boolean {
-        return Boolean(this.shouldEdit.length > 0 && this.shouldEdit === 'edit');
-    }
-
     public onStandardInvoice() {
         if (GLOBAL.currentUser instanceof OrganisationalRepresentative) {
             let currentUser = <OrganisationalRepresentative>GLOBAL.currentUser;
@@ -426,7 +447,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.notificationServiceBus.launchNotification(true, 'Travel cost must be applicable as your booking distance is more than 40 kms');
             return;
         }
-        if (!this.termsAndConditionAccepted && !this.forEdit()) {
+        if (!this.termsAndConditionAccepted && !this.forEdit) {
             this.notificationServiceBus.launchNotification(true, 'Kindly accept Terms and Conditions');
             return;
         }
@@ -473,7 +494,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.createModal(title, message);
             this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
                 if (result) {
-                    if (this.shouldEdit.length > 0 && this.shouldEdit === 'edit') {
+                    if (this.forEdit) {
                         this.updateLinkedBookings();
                     } else {
                         this.createBooking();
@@ -481,7 +502,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 }
             });
         } else {
-            if (this.shouldEdit.length > 0 && this.shouldEdit === 'edit') {
+            if (this.forEdit) {
                 this.updateLinkedBookings();
             } else {
                 this.createBooking();
@@ -497,25 +518,25 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             return true;
         } else if (this.cbDeafBlindInterpreter && this.bookingModel.number_of_deaf_blind_interpreters_required < 2) {
             return true;
-        } else if (this.cbCaptioning && this.bookingModel.number_of_captioners_required < 2) {
+        } else if (this.cbCaptioner && this.bookingModel.number_of_captioners_required < 2) {
             return true;
-        } else if (this.cbNotetaking && this.bookingModel.number_of_note_takers_required < 2) {
+        } else if (this.cbNotetaker && this.bookingModel.number_of_note_takers_required < 2) {
             return true;
-        } else if (this.cbVisualFrame && this.bookingModel.number_of_visual_frame_interpreters_required < 2) {
+        } else if (this.cbVisualFrameInterpreter && this.bookingModel.number_of_visual_frame_interpreters_required < 2) {
             return true;
-        } else if (this.cbTactile && this.bookingModel.number_of_tactile_interpreters_required < 2) {
+        } else if (this.cbTactileInterpreter && this.bookingModel.number_of_tactile_interpreters_required < 2) {
             return true;
-        } else if (this.cbPlatform && this.bookingModel.number_of_platform_interpreters_required < 2) {
+        } else if (this.cbPlatformInterpreter && this.bookingModel.number_of_platform_interpreters_required < 2) {
             return true;
-        } else if (this.cbAsl && this.bookingModel.number_of_asl_interpreters_required < 2) {
+        } else if (this.cbAslInterpreter && this.bookingModel.number_of_asl_interpreters_required < 2) {
             return true;
-        } else if (this.cbBsl && this.bookingModel.number_of_bsl_interpreters_required < 2) {
+        } else if (this.cbBslInterpreter && this.bookingModel.number_of_bsl_interpreters_required < 2) {
             return true;
-        } else if (this.cbIsl && this.bookingModel.number_of_isl_interpreters_required < 2) {
+        } else if (this.cbIslInterpreter && this.bookingModel.number_of_isl_interpreters_required < 2) {
             return true;
-        } else if (this.cbSignedEnglish && this.bookingModel.number_of_signed_english_interpreters_required < 2) {
+        } else if (this.cbSignedEnglishInterpreter && this.bookingModel.number_of_signed_english_interpreters_required < 2) {
             return true;
-        } else if (this.cbIndigenousSign && this.bookingModel.number_of_indigenous_sign_interpreters_required < 2) {
+        } else if (this.cbIndigenousSignInterpreter && this.bookingModel.number_of_indigenous_sign_interpreters_required < 2) {
             return true;
         } else {
             return false;
@@ -526,18 +547,19 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         this.cbAuslanInterpreter = this.bookingModel.number_of_auslan_interpreters_required > 0;
         this.cbDeafInterpreter = this.bookingModel.number_of_deaf_interpreters_required > 0;
         this.cbDeafBlindInterpreter = this.bookingModel.number_of_deaf_blind_interpreters_required > 0;
-        this.cbCaptioning = this.bookingModel.number_of_captioners_required > 0;
-        this.cbNotetaking = this.bookingModel.number_of_note_takers_required > 0;
-        this.cbVisualFrame = this.bookingModel.number_of_visual_frame_interpreters_required > 0;
-        this.cbTactile = this.bookingModel.number_of_tactile_interpreters_required > 0;
-        this.cbPlatform = this.bookingModel.number_of_platform_interpreters_required > 0;
-        this.cbAsl = this.bookingModel.number_of_asl_interpreters_required > 0;
-        this.cbBsl = this.bookingModel.number_of_bsl_interpreters_required > 0;
-        this.cbIsl = this.bookingModel.number_of_isl_interpreters_required > 0;
-        this.cbSignedEnglish = this.bookingModel.number_of_signed_english_interpreters_required > 0;
-        this.cbIndigenousSign = this.bookingModel.number_of_indigenous_sign_interpreters_required > 0;
+        this.cbCaptioner = this.bookingModel.number_of_captioners_required > 0;
+        this.cbNotetaker = this.bookingModel.number_of_note_takers_required > 0;
+        this.cbVisualFrameInterpreter = this.bookingModel.number_of_visual_frame_interpreters_required > 0;
+        this.cbTactileInterpreter = this.bookingModel.number_of_tactile_interpreters_required > 0;
+        this.cbPlatformInterpreter = this.bookingModel.number_of_platform_interpreters_required > 0;
+        this.cbAslInterpreter = this.bookingModel.number_of_asl_interpreters_required > 0;
+        this.cbBslInterpreter = this.bookingModel.number_of_bsl_interpreters_required > 0;
+        this.cbIslInterpreter = this.bookingModel.number_of_isl_interpreters_required > 0;
+        this.cbSignedEnglishInterpreter = this.bookingModel.number_of_signed_english_interpreters_required > 0;
+        this.cbIndigenousSignInterpreter = this.bookingModel.number_of_indigenous_sign_interpreters_required > 0;
 
-        this.cbOtherLanguageNeeds = this.cbAsl || this.cbBsl || this.cbIsl || this.cbSignedEnglish || this.cbIndigenousSign;
+        this.cbOtherLanguageNeeds = this.cbAslInterpreter || this.cbBslInterpreter || this.cbIslInterpreter || this.cbSignedEnglishInterpreter
+                                    || this.cbIndigenousSignInterpreter;
     }
 
     isMoreInterpreterNeeded() {
@@ -646,8 +668,9 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     saveBooking() {
-        if (this.assignedInterpreter > this.bookingModel.number_of_auslan_interpreters_required) {
-            this.notificationServiceBus.launchNotification(true, 'Oops! Too many interpreters already allocated. Please unassign first.');
+        if (this.isAssignInterpGreaterThanRequested()) {
+            let msg = this.cbCaptioner ? 'captioners' : this.cbNotetaker ? 'notetakers' : 'interpreters';
+            this.notificationServiceBus.launchNotification(true, 'Oops! Too many ' + msg + ' already allocated. Please unassign first.');
             return;
         } else {
             this.spinnerService.requestInProcess(true);
@@ -672,6 +695,13 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                             'Error occurred on server side. ' + errors.statusText + ' ' + JSON.stringify(e || e.errors));
                     });
         }
+    }
+
+    isAssignInterpGreaterThanRequested() {
+       return this.cbCaptioner ? this.assignedInterpreter > this.bookingModel.number_of_captioners_required :
+                                  this.cbNotetaker ? this.assignedInterpreter > this.bookingModel.number_of_note_takers_required :
+                                  this.assignedInterpreter > this.bookingModel.number_of_auslan_interpreters_required;
+
     }
 
     gotoBookingInfo() {
@@ -781,7 +811,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     filterUserPreference(interpreters) {
-        if (this.forEdit()) {
+        if (this.forEdit) {
             this.bookingModel.preference_allocations_attributes = interpreters;
         } else {
             this.bookingModel.preference_allocations_attributes = [];
@@ -828,7 +858,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     deepCopy(oldObj: any) {
-        if (this.forEdit()) {
+        if (this.forEdit) {
             let newObj = JSON.parse(JSON.stringify(oldObj));
             return newObj;
         }

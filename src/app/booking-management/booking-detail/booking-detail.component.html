@@ -6,7 +6,7 @@
   <section>
     <span>Fields with * are required</span>
   </section>
-    <div class="common-form"  *ngIf="!forEdit()">
+    <div class="common-form"  *ngIf="!forEdit">
       <div style="float:right;">
         <section class="file-uploader bulk-upload">
           <button md-button>
@@ -29,7 +29,7 @@
       </div>
     </div>
   <form #booking_form="ngForm" class="common-form compact">
-    <div class="row" *ngIf="!forEdit() && isUserAdminORBookOfficer ">
+    <div class="row" *ngIf="!forEdit && isUserAdminORBookOfficer ">
       <h2>CUSTOMER</h2>
       <div class="medium-12 columns">
         <div class="form-field">
@@ -42,7 +42,7 @@
       </div> 
     </div>
 
-    <div class="row" *ngIf="!forEdit() && isUserAdminORBookOfficer">
+    <div class="row" *ngIf="!forEdit && isUserAdminORBookOfficer">
       <div class="medium-6 columns">
         <div class="form-field">
           <label>PLEASE SELECT THE {{bookingModel.bookable_type ==='IndividualClient' ? "CLIENT":"ORGANISATION"}}*
@@ -67,11 +67,11 @@
       <h2>Type of Booking</h2>
       <p name="serviceMsg">What kind of services {{isUserAdminORBookOfficer ? (bookingModel.bookable_type ==='IndividualClient' ? "does the client":"does the organisation") :"do you"}} need? Select multiple if relevant</p>
       <section id="services">
-        <button md-button name="btnOnsite" [ngClass]="bookingModel.method_type === 'onsite' ? 'active' : ''" (click)="serviceTypeClick('onsite')">
+        <button md-button name="btnOnsite" [ngClass]="bookingModel.method_type === 'onsite' ? 'active' : ''" (click)="bookingModel.method_type = 'onsite'">
           <i class="icon-service-interpreting"></i>
           <span>On Site</span>
         </button>
-        <button md-button name="btnVri" [ngClass]="bookingModel.method_type === 'vri' ? 'active' : ''" (click)="serviceTypeClick('vri')">
+        <button md-button name="btnVri" [ngClass]="bookingModel.method_type === 'vri' ? 'active' : ''" (click)="bookingModel.method_type = 'vri'">
           <i class="icon-service-vri"></i>
           <span>VRI</span>
         </button>
@@ -79,24 +79,24 @@
       <ng-container>
       <p name="interpreterMsg">What kind of interpreter(s) {{isUserAdminORBookOfficer ? (bookingModel.bookable_type ==='IndividualClient' ? "does the client":"does the organisation") :"do you"}} need? Select multiple if relevant</p>
       <div class="row" id="interpreters-kind">
-        <div class="medium-3 columns"> <md-checkbox name="cbAuslan" [(ngModel)]="cbAuslanInterpreter">AUSLAN</md-checkbox> </div>
-        <div class="medium-3 columns"> <md-checkbox name="cbDeaf" [(ngModel)]="cbDeafInterpreter">DEAF</md-checkbox> </div>
-        <div class="medium-3 columns"> <md-checkbox name="cbDeafBlind" [(ngModel)]="cbDeafBlindInterpreter">DEAF BLIND</md-checkbox> </div>
-        <div class="medium-3 columns"> <md-checkbox name="cbCaptioning" [(ngModel)]="cbCaptioning">CAPTIONING</md-checkbox> </div>
-        <div class="medium-3 columns"> <md-checkbox name="cbNotetaking" [(ngModel)]="cbNotetaking">NOTETAKING</md-checkbox> </div>
-        <div class="medium-3 columns"> <md-checkbox name="cbOtherLanguage" [(ngModel)]="cbOtherLanguageNeeds">OTHER LANGUAGE NEEDS</md-checkbox> </div>
+        <div class="medium-3 columns"> <md-checkbox name="cbAuslan" #cbAuslan [(ngModel)]="cbAuslanInterpreter" (change)="serviceTypeChange('cbAuslanInterpreter',cbAuslan)" [disabled]="cbAuslanInterpreter && forEdit">AUSLAN</md-checkbox> </div>
+        <div class="medium-3 columns"> <md-checkbox name="cbDeaf" #cbDeaf [(ngModel)]="cbDeafInterpreter" (change)="serviceTypeChange('cbDeafInterpreter',cbDeaf)" [disabled]="cbDeafInterpreter && forEdit">DEAF</md-checkbox> </div>
+        <div class="medium-3 columns"> <md-checkbox name="cbDeafBlind" #cbDeafBlind [(ngModel)]="cbDeafBlindInterpreter" (change)="serviceTypeChange('cbDeafBlindInterpreter',cbDeafBlind)" [disabled]="cbDeafBlindInterpreter && forEdit">DEAF BLIND</md-checkbox> </div>
+        <div class="medium-3 columns"> <md-checkbox name="cbCaptioning" #cbCaptioning [(ngModel)]="cbCaptioner" (change)="serviceTypeChange('cbCaptioner',cbCaptioning)" [disabled]="cbCaptioner && forEdit">CAPTIONING</md-checkbox> </div>
+        <div class="medium-3 columns"> <md-checkbox name="cbNotetaking" #cbNotetaking [(ngModel)]="cbNotetaker" (change)="serviceTypeChange('cbNotetaker',cbNotetaking)" [disabled]="cbNotetaker && forEdit">NOTETAKING</md-checkbox> </div>
+        <div class="medium-3 columns"> <md-checkbox name="cbOtherLanguage" #cbOtherLanguage [(ngModel)]="cbOtherLanguageNeeds" (change)="serviceTypeChange('cbOtherLanguageNeeds',cbOtherLanguage)" [disabled]="cbOtherLanguageNeeds && forEdit">OTHER LANGUAGE NEEDS</md-checkbox> </div>
+     </div> 
+      <div class="row" *ngIf="cbDeafBlindInterpreter || cbVisualFrameInterpreter || cbTactileInterpreter || cbPlatformInterpreter" name="deafBlindInterpreterTypes">
+          <div class="medium-3 columns"> <md-checkbox name="cbVisualFrame" #cbVisualFrame [(ngModel)]="cbVisualFrameInterpreter" (change)="serviceTypeChange('cbVisualFrameInterpreter',cbVisualFrame)" [disabled]="cbVisualFrameInterpreter && forEdit">VISUAL FRAME</md-checkbox> </div>
+          <div class="medium-3 columns"> <md-checkbox name="cbTactile" #cbTactile [(ngModel)]="cbTactileInterpreter" (change)="serviceTypeChange('cbTactileInterpreter',cbTactile)" [disabled]="cbTactileInterpreter && forEdit">TACTILE</md-checkbox> </div>
+          <div class="medium-3 columns"> <md-checkbox name="cbPlatform" #cbPlatform [(ngModel)]="cbPlatformInterpreter" (change)="serviceTypeChange('cbPlatformInterpreter',cbPlatform)" [disabled]="cbPlatformInterpreter && forEdit">PLATFORM</md-checkbox> </div>
       </div>
-      <div class="row" *ngIf="cbDeafBlindInterpreter || cbVisualFrame || cbTactile || cbPlatform" name="deafBlindInterpreterTypes">
-          <div class="medium-3 columns"> <md-checkbox name="cbVisualFrame" [(ngModel)]="cbVisualFrame">VISUAL FRAME</md-checkbox> </div>
-          <div class="medium-3 columns"> <md-checkbox name="cbTactile" [(ngModel)]="cbTactile">TACTILE</md-checkbox> </div>
-          <div class="medium-3 columns"> <md-checkbox name="cbPlatform" [(ngModel)]="cbPlatform">PLATFORM</md-checkbox> </div>
-      </div>
-      <div class="row" *ngIf="cbOtherLanguageNeeds" name="otherLanguageTypes">
-          <div class="medium-3 columns"> <md-checkbox name="cbAsl" [(ngModel)]="cbAsl">ASL</md-checkbox> </div>
-          <div class="medium-3 columns"> <md-checkbox name="cbBsl" [(ngModel)]="cbBsl">BSL</md-checkbox> </div>
-          <div class="medium-3 columns"> <md-checkbox name="cbIsl" [(ngModel)]="cbIsl">ISL</md-checkbox> </div>
-          <div class="medium-3 columns"> <md-checkbox name="cbSignedEnglish" [(ngModel)]="cbSignedEnglish">SIGNED ENGLISH</md-checkbox> </div>
-          <div class="medium-3 columns"> <md-checkbox name="cbIndigenousSign" [(ngModel)]="cbIndigenousSign">INDIGENOUS SIGN</md-checkbox> </div>
+      <div class="row" *ngIf="cbOtherLanguageNeeds || cbAslInterpreter || cbBslInterpreter || cbIslInterpreter || cbSignedEnglishInterpreter || cbIndigenousSignInterpreter" name="otherLanguageTypes">
+          <div class="medium-3 columns"> <md-checkbox name="cbAsl" [(ngModel)]="cbAslInterpreter" (change)="serviceTypeChange('cbAslInterpreter',cbAsl)" [disabled]="cbAslInterpreter && forEdit">ASL</md-checkbox> </div>
+          <div class="medium-3 columns"> <md-checkbox name="cbBsl" [(ngModel)]="cbBslInterpreter" (change)="serviceTypeChange('cbBslInterpreter',cbBsl)" [disabled]="cbBslInterpreter && forEdit">BSL</md-checkbox> </div>
+          <div class="medium-3 columns"> <md-checkbox name="cbIsl" [(ngModel)]="cbIslInterpreter" (change)="serviceTypeChange('cbIslInterpreter',cbIsl)" [disabled]="cbIslInterpreter && forEdit">ISL</md-checkbox> </div>
+          <div class="medium-3 columns"> <md-checkbox name="cbSignedEnglish" [(ngModel)]="cbSignedEnglishInterpreter" (change)="serviceTypeChange('cbSignedEnglishInterpreter',cbSignedEnglish)" [disabled]="cbSignedEnglishInterpreter && forEdit">SIGNED ENGLISH</md-checkbox> </div>
+          <div class="medium-3 columns"> <md-checkbox name="cbIndigenousSign" [(ngModel)]="cbIndigenousSignInterpreter" (change)="serviceTypeChange('cbIndigenousSignInterpreter',cbIndigenousSign)" [disabled]="cbIndigenousSignInterpreter && forEdit">INDIGENOUS SIGN</md-checkbox> </div>
       </div>
       </ng-container>
     </div>
@@ -169,7 +169,7 @@
         </div>
       </div>
 
-      <div class="medium-12 columns" *ngIf="isUserOrgRepORIndClientTemp() && !forEdit()">
+      <div class="medium-12 columns" *ngIf="isUserOrgRepORIndClientTemp() && !forEdit">
         <div class="form-field">
           <label name="lblQuestionBookAddr">Do you want to use your profile address for this booking?
             <span mdTooltip="Tooltip!">
@@ -334,7 +334,7 @@
             </span>
           </div>
         </div>
-        <div class="medium-6 columns" *ngIf="cbCaptioning">
+        <div class="medium-6 columns" *ngIf="cbCaptioner">
           <div class="form-field">
             <label>NUMB. OF CAPTIONERS NEEDED *
               <span mdTooltip="Enter the Number of Captioners needed">
@@ -342,24 +342,24 @@
               </span>
             </label>
             <input [(ngModel)]="bookingModel.number_of_captioners_required"
-                   name="captioning_count"
-                   #captioning_count="ngModel"
+                   name="captioner_count"
+                   #captioner_count="ngModel"
                    placeholder="Enter the Number of Captioners needed"
                    (click)="fireNotification($event)"
                    type="tel" min="1" required digits>
-            <span *ngIf="captioning_count.touched && !captioning_count.errors?.required && !captioning_count.errors?.digits;"
+            <span *ngIf="captioner_count.touched && !captioner_count.errors?.required && !captioner_count.errors?.digits;"
                   class="inline-icon inline-icon-valid valid"></span>
-            <span *ngIf="captioning_count.touched && (captioning_count.errors?.required || captioning_count.errors?.digits);"
+            <span *ngIf="captioner_count.touched && (captioner_count.errors?.required || captioner_count.errors?.digits);"
                   class="inline-icon error">
               <span>Minimum 1 digit required.</span>!
             </span>
-            <span *ngIf="captioning_count.touched && captioning_count.errors?.min"
+            <span *ngIf="captioner_count.touched && captioner_count.errors?.min"
                   class="inline-icon error">
               <span>Minimum value should be 1.</span>!
             </span>
           </div>
         </div>
-        <div class="medium-6 columns" *ngIf="cbNotetaking">
+        <div class="medium-6 columns" *ngIf="cbNotetaker">
           <div class="form-field">
             <label>NUMB. OF NOTETAKERS NEEDED *
               <span mdTooltip="Enter the Number of Notetakers needed">
@@ -367,18 +367,18 @@
               </span>
             </label>
             <input [(ngModel)]="bookingModel.number_of_note_takers_required"
-                   name="notetaking_count"
-                   #notetaking_count="ngModel"
+                   name="noteTaker_count"
+                   #noteTaker_count="ngModel"
                    placeholder="Enter the Number of Notetaker needed"
                    (click)="fireNotification($event)"
                    type="tel" min="1" required digits>
-            <span *ngIf="notetaking_count.touched && !notetaking_count.errors?.required && !notetaking_count.errors?.digits;"
+            <span *ngIf="noteTaker_count.touched && !noteTaker_count.errors?.required && !noteTaker_count.errors?.digits;"
                   class="inline-icon inline-icon-valid valid"></span>
-            <span *ngIf="notetaking_count.touched && (notetaking_count.errors?.required || notetaking_count.errors?.digits);"
+            <span *ngIf="noteTaker_count.touched && (noteTaker_count.errors?.required || noteTaker_count.errors?.digits);"
                   class="inline-icon error">
               <span>Minimum 1 digit required.</span>!
             </span>
-            <span *ngIf="notetaking_count.touched && notetaking_count.errors?.min"
+            <span *ngIf="noteTaker_count.touched && noteTaker_count.errors?.min"
                   class="inline-icon error">
               <span>Minimum value should be 1.</span>!
             </span>
@@ -417,7 +417,7 @@
             </span>
           </div>
         </div>
-      <ng-container *ngIf="cbDeafBlindInterpreter || cbVisualFrame || cbTactile || cbPlatform">
+      <ng-container *ngIf="cbDeafBlindInterpreter || cbVisualFrameInterpreter || cbTactileInterpreter || cbPlatformInterpreter">
         <div class="medium-6 columns" *ngIf="cbDeafBlindInterpreter">
           <div class="form-field">
             <label>NUMB. OF DEAF BLIND INT. NEEDED *
@@ -447,7 +447,7 @@
             </span>
           </div>
         </div>
-        <div class="medium-6 columns" *ngIf="cbVisualFrame">
+        <div class="medium-6 columns" *ngIf="cbVisualFrameInterpreter">
           <div class="form-field">
             <label>NUMB. OF VISUAL FRAME INT. NEEDED *
               <span mdTooltip="Enter the Number of Visual Frame Interpreters needed">
@@ -476,7 +476,7 @@
             </span>
           </div>
         </div>
-        <div class="medium-6 columns" *ngIf="cbTactile">
+        <div class="medium-6 columns" *ngIf="cbTactileInterpreter">
           <div class="form-field">
             <label>NUMB. OF TACTILE INT. NEEDED *
               <span mdTooltip="Enter the Number of Tactile Interpreters needed">
@@ -505,7 +505,7 @@
             </span>
           </div>
         </div>
-        <div class="medium-6 columns" *ngIf="cbPlatform">
+        <div class="medium-6 columns" *ngIf="cbPlatformInterpreter">
           <div class="form-field">
             <label>NUMB. OF PLATFORM INT. NEEDED *
               <span mdTooltip="Enter the Number of Platform Interpreters needed">
@@ -535,8 +535,8 @@
           </div>
         </div>
       </ng-container>
-      <ng-container *ngIf="cbOtherLanguageNeeds">
-        <div class="medium-6 columns" *ngIf="cbAsl">
+      <ng-container *ngIf="cbOtherLanguageNeeds || cbAslInterpreter || cbBslInterpreter || cbIslInterpreter || cbSignedEnglishInterpreter || cbIndigenousSignInterpreter">
+        <div class="medium-6 columns" *ngIf="cbAslInterpreter">
           <div class="form-field">
             <label>NUMB. OF ASL INT. NEEDED *
               <span mdTooltip="Enter the Number of ASL Interpreters needed">
@@ -565,7 +565,7 @@
             </span>
           </div>
         </div>
-        <div class="medium-6 columns" *ngIf="cbBsl">
+        <div class="medium-6 columns" *ngIf="cbBslInterpreter">
           <div class="form-field">
             <label>NUMB. OF BSL INT. NEEDED *
               <span mdTooltip="Enter the Number of BSL Interpreters needed">
@@ -594,7 +594,7 @@
             </span>
           </div>
         </div>
-        <div class="medium-6 columns" *ngIf="cbIsl">
+        <div class="medium-6 columns" *ngIf="cbIslInterpreter">
           <div class="form-field">
             <label>NUMB. OF ISL INT. NEEDED *
               <span mdTooltip="Enter the Number of ISL Interpreters needed">
@@ -623,7 +623,7 @@
             </span>
           </div>
         </div>
-        <div class="medium-6 columns" *ngIf="cbSignedEnglish">
+        <div class="medium-6 columns" *ngIf="cbSignedEnglishInterpreter">
           <div class="form-field">
             <label>NUMB. OF SIGNED ENGLISH INT. NEEDED *
               <span mdTooltip="Enter the Number of Signed English Interpreters needed">
@@ -652,7 +652,7 @@
             </span>
           </div>
         </div>
-        <div class="medium-6 columns" *ngIf="cbIndigenousSign">
+        <div class="medium-6 columns" *ngIf="cbIndigenousSignInterpreter">
           <div class="form-field">
             <label>NUMB. OF INDIGENOUS SIGN INT. NEEDED *
               <span mdTooltip="Enter the Number of Indigenous Sign Interpreters needed">
@@ -746,12 +746,12 @@
       </div>
     </ng-container>
 
-  <ng-container *ngIf="cbCaptioning || cbNotetaking || bookingModel.method_type === 'vri'">
+  <ng-container *ngIf="cbCaptioner || cbNotetaker || bookingModel.method_type === 'vri'">
     <div class="separator"></div>
     <h4 class="text-center">ADDITIONAL FIELDS</h4>
 
     <div class="row">
-      <div class="row-wrapper" *ngIf="cbCaptioning" name="captioningAdditionalFields"> 
+      <div class="row-wrapper" *ngIf="cbCaptioner" name="captioningAdditionalFields"> 
         <div class="medium-6 columns">
           <div class="form-field">
             <label>TECH CONTACT FIRST NAME
@@ -797,8 +797,8 @@
                      type='text' placeholder="Enter Audio Source">
             </div>
           </div>
-        </div> 
-      <div class="row-wrapper" *ngIf="cbCaptioning || bookingModel.method_type === 'vri'" name="captioningAndVriAdditionalFields"> 
+      </div> 
+      <div class="row-wrapper" *ngIf="cbCaptioner || bookingModel.method_type === 'vri'" name="captioningAndVriAdditionalFields"> 
         <div class="medium-6 columns">
           <div class="form-field">
             <label>TECH PLATFORM
@@ -838,7 +838,7 @@
             </div>
           </div>
         </div> 
-        <div class="medium-6 columns" *ngIf="cbNotetaking">
+        <div class="medium-6 columns" *ngIf="cbNotetaker">
             <div class="form-field">
               <label>HOW WOULD YOU LIKE TO RECEIVE NOTES
               </label>

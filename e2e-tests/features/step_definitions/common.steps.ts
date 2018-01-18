@@ -82,7 +82,7 @@ defineSupportCode(({Given, When, Then}) => {
     Given(/^I fill New Booking form fields with address greater than 40 kilometers$/, bookingPage.createBookingForPerth);
     Given(/^I select the bookable for client$/, bookingPage.selectClientAsBookbable);
     Given(/^I select the bookable for org rep/, bookingPage.selectOrgRepAsBookbable);
-    Given(/^I fill New Booking form fields correctly with (.*) time from (.*) to (.*) with (.*) interpreters$/,
+    Given(/^I fill New Booking form fields correctly with (.*) time from (.*) to (.*) with (.*) '(.*)'$/,
         bookingPage.createBookingWithTimeAndInterpreter);
 
 
@@ -359,6 +359,13 @@ defineSupportCode(({Given, When, Then}) => {
         });
     }
 
+    When(/^I can see the button '(.*)' is '(.*)'$/, isElementActive);
+    function isElementActive(btnName: string, active: string) {
+        let activeVal = active.toLowerCase() === 'active' ? active.toLowerCase() : '';
+        return page.getElementByName(btnName).getAttribute('ng-reflect-ng-class').then(val => {
+            expect(val).to.be.eq(activeVal);
+        });
+    }
 
     When(/^I can see the (.*) with name '(.*)' has text '(.*)'$/, isElementHasText);
     function isElementHasText(elemType: string, nam: string, txt: string) {
@@ -421,11 +428,11 @@ defineSupportCode(({Given, When, Then}) => {
         return browser.actions().mouseMove(page.getElementByName(btnName)).perform();
     }
 
-    When(/^I verify checkbox name '(.*)' and is checked '(.*)'$/, verifyOnCBByName);
+    When(/^I verify checkbox name '(.*)' is checked '(.*)'$/, verifyOnCBByName);
     function verifyOnCBByName(btnName: string, checkedState: string) {
         let bVal = ((checkedState === 'True') || (checkedState === 'true'));
-        return page.getElementByName(btnName).isSelected().then(val => {
-            expect(val).to.be.eq(bVal);
+        return page.getElementByName(btnName).getAttribute('ng-reflect-model').then(val => {
+            expect(val).to.be.eq(bVal+'');
         });
     }
     When(/^I verify radiobutton name '(.*)' and is checked$/, verifyOnRBByName);
