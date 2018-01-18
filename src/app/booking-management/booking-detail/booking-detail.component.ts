@@ -4,7 +4,7 @@ import {BookingService} from '../../api/booking.service';
 import {BA, BOOKING_NATURE} from '../../shared/model/booking-nature.enum';
 import {SpinnerService} from '../../spinner/spinner.service';
 import {BOOKING_STATE} from '../../shared/model/booking-state.enum';
-import {GLOBAL} from '../../shared/global';
+import {GLOBAL, ModalOptions} from '../../shared/global';
 import {NotificationServiceBus} from '../../notification/notification.service';
 import {Router, ActivatedRoute} from '@angular/router';
 import {RolePermission} from '../../shared/role-permission/role-permission';
@@ -26,10 +26,6 @@ const _ONE_HOUR = 1000 /*milliseconds*/
     * 60 /*seconds*/
     * 60 /*minutes*/;
 
-interface ModalOptions {
-    cancelTitle: string;
-    okTitle: string;
-}
 
 @Component({
     selector: 'app-booking-detail',
@@ -82,6 +78,20 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     bookingStartTime: Date;
     bookingEndTime: Date;
     isDuplicate: boolean;
+    cbCaptioning = false;
+    cbNotetaking = false;
+    cbAuslanInterpreter = true;
+    cbDeafInterpreter = false;
+    cbDeafBlindInterpreter = false;
+    cbOtherLanguageNeeds = false;
+    cbVisualFrame = false;
+    cbTactile = false;
+    cbPlatform = false;
+    cbAsl = false;
+    cbBsl = false;
+    cbIsl = false;
+    cbSignedEnglish = false;
+    cbIndigenousSign = false;
     defaultDateTime: Date;
     @ViewChild('addressForm') private bookingAddress: AddressComponent;
 
@@ -126,6 +136,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             if (this.forEdit()) {
                 this.bookingHeading = 'EDIT BOOKING';
                 this.termsAndConditionAccepted = true;
+                this.checkInterpreterBoxes();
             } else {
                 this.bookingHeading = 'NEW BOOKING';
                 this.bookingModel.bookable_type = this.bookingModel.bookable_type || 'IndividualClient';
@@ -150,6 +161,10 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         } else {
             return true;
         }
+    }
+
+    serviceTypeClick(serviceType: string) {
+        this.bookingModel.method_type = serviceType;
     }
 
     getOrgName(item) {
@@ -423,10 +438,10 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.notificationServiceBus.launchNotification(true, 'Sorry. The field(s) underneath are filled in incorrectly. END TIME');
             return;
         }
-        if (this.bookingModel.interpreters_required < 2 && this.isMoreInterpreterNeeded()) {
-            let message = `This booking might require more than 1 interpreter. You've only requested 1 interpreter.
+        if (this.isInterpreterLessThanTwo() && this.isMoreInterpreterNeeded()) {
+            let message = `This booking might require more than 1 professional. You've only requested 1.
                             Are you sure you want to create this booking?`;
-            let title = 'Warning: this interpreter might require more interpreters';
+            let title = 'Warning: this booking might require more professionals';
             this.createModal(title, message);
             this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
                 if (result) {
@@ -474,6 +489,57 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         }
     }
 
+    isInterpreterLessThanTwo() {
+
+        if (this.cbAuslanInterpreter && this.bookingModel.number_of_auslan_interpreters_required < 2) {
+            return true;
+        } else if (this.cbDeafInterpreter && this.bookingModel.number_of_deaf_interpreters_required < 2) {
+            return true;
+        } else if (this.cbDeafBlindInterpreter && this.bookingModel.number_of_deaf_blind_interpreters_required < 2) {
+            return true;
+        } else if (this.cbCaptioning && this.bookingModel.number_of_captioners_required < 2) {
+            return true;
+        } else if (this.cbNotetaking && this.bookingModel.number_of_note_takers_required < 2) {
+            return true;
+        } else if (this.cbVisualFrame && this.bookingModel.number_of_visual_frame_interpreters_required < 2) {
+            return true;
+        } else if (this.cbTactile && this.bookingModel.number_of_tactile_interpreters_required < 2) {
+            return true;
+        } else if (this.cbPlatform && this.bookingModel.number_of_platform_interpreters_required < 2) {
+            return true;
+        } else if (this.cbAsl && this.bookingModel.number_of_asl_interpreters_required < 2) {
+            return true;
+        } else if (this.cbBsl && this.bookingModel.number_of_bsl_interpreters_required < 2) {
+            return true;
+        } else if (this.cbIsl && this.bookingModel.number_of_isl_interpreters_required < 2) {
+            return true;
+        } else if (this.cbSignedEnglish && this.bookingModel.number_of_signed_english_interpreters_required < 2) {
+            return true;
+        } else if (this.cbIndigenousSign && this.bookingModel.number_of_indigenous_sign_interpreters_required < 2) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    checkInterpreterBoxes() {
+        this.cbAuslanInterpreter = this.bookingModel.number_of_auslan_interpreters_required > 0;
+        this.cbDeafInterpreter = this.bookingModel.number_of_deaf_interpreters_required > 0;
+        this.cbDeafBlindInterpreter = this.bookingModel.number_of_deaf_blind_interpreters_required > 0;
+        this.cbCaptioning = this.bookingModel.number_of_captioners_required > 0;
+        this.cbNotetaking = this.bookingModel.number_of_note_takers_required > 0;
+        this.cbVisualFrame = this.bookingModel.number_of_visual_frame_interpreters_required > 0;
+        this.cbTactile = this.bookingModel.number_of_tactile_interpreters_required > 0;
+        this.cbPlatform = this.bookingModel.number_of_platform_interpreters_required > 0;
+        this.cbAsl = this.bookingModel.number_of_asl_interpreters_required > 0;
+        this.cbBsl = this.bookingModel.number_of_bsl_interpreters_required > 0;
+        this.cbIsl = this.bookingModel.number_of_isl_interpreters_required > 0;
+        this.cbSignedEnglish = this.bookingModel.number_of_signed_english_interpreters_required > 0;
+        this.cbIndigenousSign = this.bookingModel.number_of_indigenous_sign_interpreters_required > 0;
+
+        this.cbOtherLanguageNeeds = this.cbAsl || this.cbBsl || this.cbIsl || this.cbSignedEnglish || this.cbIndigenousSign;
+    }
+
     isMoreInterpreterNeeded() {
         return this.calculateTimeDiff() > _ONE_HOUR;
         /* One hour */
@@ -501,8 +567,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         this.dialogRef.componentInstance.title = title;
         this.dialogRef.componentInstance.cancelTitle = (options && options.cancelTitle) || 'BACK';
         this.dialogRef.componentInstance.okTitle = (options && options.okTitle) || 'CREATE';
+        this.dialogRef.componentInstance.closeVal = (options && options.closeVal) || false;
         this.dialogRef.componentInstance.popupMessage = message;
-
     }
 
     private isBookingTimeInNonStandardHours() {
@@ -524,8 +590,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         this.bookingModel.state = BOOKING_STATE.Requested; // res.data.state;
         this.bookingService.createBooking(this.bookingModel)
             .subscribe((res: any) => {
-                    if (res.status === 201 && res.data.id && 0 < res.data.id) {
-                        this.bookingModel.id = res.data.id;
+                    if (res.status === 204) {
                         this.notificationServiceBus.launchNotification(false, 'The Booking has been created.');
                         let route = this.rolePermission.getDefaultRouteForCurrentUser();
                         this.router.navigate([route]);
@@ -544,10 +609,12 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         if (this.isUserAdminORBookOfficer && !!this.bookingModel.link_id) {
             const message = 'Would you like to save these changes for all bookings or only for this one?';
             const title = 'Change all bookings?';
-            this.createModal(title, message, {okTitle: 'Update only this booking', cancelTitle: 'Update all bookings'});
+            this.createModal(title, message, {okTitle: 'Update only this booking', cancelTitle: 'Update all bookings', closeVal: 'cancel'});
             this.dialogSub = this.dialogRef.afterClosed().subscribe(updateOnlyThisBooking => {
-                this.bookingModel.update_all_linked_bookings = !updateOnlyThisBooking;
-                this.updateBooking();
+                if (updateOnlyThisBooking !== 'cancel') {
+                    this.bookingModel.update_all_linked_bookings = !updateOnlyThisBooking;
+                    this.updateBooking();
+                }
             });
         } else {
             this.updateBooking();
@@ -579,7 +646,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     saveBooking() {
-        if (this.assignedInterpreter > this.bookingModel.interpreters_required) {
+        if (this.assignedInterpreter > this.bookingModel.number_of_auslan_interpreters_required) {
             this.notificationServiceBus.launchNotification(true, 'Oops! Too many interpreters already allocated. Please unassign first.');
             return;
         } else {

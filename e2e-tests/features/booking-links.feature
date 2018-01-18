@@ -54,7 +54,11 @@ Feature: Linked Bookings
     And If I am shown a popup message 'This booking is not within the standard booking hours (8AM - 6PM). Do you still want to create booking?', I approve it
     Then I wait for 1200 milli-seconds
     Then I will be shown a popup message 'Would you like to save these changes for all bookings or only for this one?'
-    When I click on button 'Update only this booking'
+    When I click on BUTTON name 'cancel-popup'
+    Then I will be shown the booking job page
+    When I click the create booking button
+    And I wait for 1200 milli-seconds
+    And If I am shown popups, I approve all of them
     Then I should get a valid booking update notification
 
     @runThis

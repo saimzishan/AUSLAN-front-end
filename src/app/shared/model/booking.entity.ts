@@ -36,6 +36,30 @@ export class Booking {
     public travel_cost_applicable: boolean;
     public update_all_linked_bookings: boolean;
     public is_metro: boolean;
+    public method_type: string;
+    public number_of_auslan_interpreters_required: number;
+    public number_of_deaf_interpreters_required: number;
+    public number_of_deaf_blind_interpreters_required: number;
+    public number_of_captioners_required: number;
+    public number_of_note_takers_required: number;
+    public number_of_visual_frame_interpreters_required: number;
+    public number_of_tactile_interpreters_required: number;
+    public number_of_platform_interpreters_required: number;
+    public number_of_asl_interpreters_required: number;
+    public number_of_bsl_interpreters_required: number;
+    public number_of_isl_interpreters_required: number;
+    public number_of_signed_english_interpreters_required: number;
+    public number_of_indigenous_sign_interpreters_required: number;
+    public tech_contact_first_name: string;
+    public tech_contact_last_name: string;
+    public tech_contact_email: string;
+    public tech_contact_phone_number: string;
+    public tech_platform: string;
+    public login_id_link: string;
+    public audio_source: string;
+    public hardware: string;
+    public who_will_initiate_call: string;
+    public how_would_you_like_to_receive_notes: string;
     public new_link_id_required: boolean;
     // Is it a limitation on interpreters invitation.
 
@@ -69,6 +93,7 @@ export class Booking {
         this.created_by_admin = false;
         this.travel_cost_applicable = false;
         this.update_all_linked_bookings = false;
+        this.method_type = 'onsite';
         this.new_link_id_required = false;
     }
 
@@ -96,7 +121,31 @@ export class Booking {
         this.venue.start_time_iso = new Date(data.start_time).toISOString();
         this.venue.end_time_iso = new Date(data.end_time).toISOString();
         this.venue.parking_type = data.parking_availability;
-        this.interpreters_required = data.number_of_interpreters_required;
+        this.method_type = data.method_type;
+        this.number_of_auslan_interpreters_required = data.number_of_auslan_interpreters_required;
+        this.number_of_deaf_interpreters_required = data.number_of_deaf_interpreters_required;
+        this.number_of_deaf_blind_interpreters_required = data.number_of_deaf_blind_interpreters_required;
+        this.number_of_captioners_required = data.number_of_captioners_required;
+        this.number_of_note_takers_required = data.number_of_note_takers_required;
+        this.number_of_visual_frame_interpreters_required = data.number_of_visual_frame_interpreters_required;
+        this.number_of_tactile_interpreters_required = data.number_of_tactile_interpreters_required;
+        this.number_of_platform_interpreters_required = data.number_of_platform_interpreters_required;
+        this.number_of_asl_interpreters_required = data.number_of_asl_interpreters_required;
+        this.number_of_bsl_interpreters_required = data.number_of_bsl_interpreters_required;
+        this.number_of_isl_interpreters_required = data.number_of_isl_interpreters_required;
+        this.number_of_signed_english_interpreters_required = data.number_of_signed_english_interpreters_required;
+        this.number_of_indigenous_sign_interpreters_required = data.number_of_indigenous_sign_interpreters_required;
+        this.interpreters_required = this.getInterpreters();
+        this.tech_contact_first_name = data.tech_contact_first_name;
+        this.tech_contact_last_name = data.tech_contact_last_name;
+        this.tech_contact_email = data.tech_contact_email;
+        this.tech_contact_phone_number = data.tech_contact_phone_number;
+        this.tech_platform = data.tech_platform;
+        this.login_id_link = data.login_id_link;
+        this.audio_source = data.audio_source;
+        this.hardware = data.hardware;
+        this.who_will_initiate_call = data.who_will_initiate_call;
+        this.how_would_you_like_to_receive_notes = data.how_would_you_like_to_receive_notes;
         this.requested_by.first_name = data.requested_by_first_name;
         this.requested_by.last_name = data.requested_by_last_name;
         this.primaryContact.first_name = data.contact_first_name;
@@ -205,7 +254,31 @@ export class Booking {
             venue: this.venue.title,
             requested_by_first_name: this.requested_by.first_name,
             requested_by_last_name: this.requested_by.last_name,
-            number_of_interpreters_required: this.interpreters_required,
+            method_type: this.method_type,
+            number_of_auslan_interpreters_required: this.number_of_auslan_interpreters_required,
+            number_of_deaf_interpreters_required: this.number_of_deaf_interpreters_required,
+            number_of_deaf_blind_interpreters_required: this.number_of_deaf_blind_interpreters_required,
+            number_of_captioners_required: this.number_of_captioners_required,
+            number_of_note_takers_required: this.number_of_note_takers_required,
+            number_of_visual_frame_interpreters_required: this.number_of_visual_frame_interpreters_required,
+            number_of_tactile_interpreters_required: this.number_of_tactile_interpreters_required,
+            number_of_platform_interpreters_required: this.number_of_platform_interpreters_required,
+            number_of_asl_interpreters_required: this.number_of_asl_interpreters_required,
+            number_of_bsl_interpreters_required: this.number_of_bsl_interpreters_required,
+            number_of_isl_interpreters_required: this.number_of_isl_interpreters_required,
+            number_of_signed_english_interpreters_required: this.number_of_signed_english_interpreters_required,
+            number_of_indigenous_sign_interpreters_required: this.number_of_indigenous_sign_interpreters_required,
+            number_of_interpreters_required: this.getInterpreters(),
+            tech_contact_first_name: this.tech_contact_first_name,
+            tech_contact_last_name: this.tech_contact_last_name,
+            tech_contact_email: this.tech_contact_email,
+            tech_contact_phone_number: this.tech_contact_phone_number,
+            tech_platform: this.tech_platform,
+            login_id_link: this.login_id_link,
+            audio_source: this.audio_source,
+            hardware: this.hardware,
+            who_will_initiate_call: this.who_will_initiate_call,
+            how_would_you_like_to_receive_notes: this.how_would_you_like_to_receive_notes,
             nature_of_appointment: _nature_of_appointment,
             specific_nature_of_appointment: _specific_nature_of_appointment,
             contact_first_name: this.primaryContact.first_name,
@@ -249,6 +322,16 @@ export class Booking {
             travel_cost_applicable: this.travel_cost_applicable
         });
         return o;
+    }
+
+    getInterpreters() {
+       return +this.number_of_auslan_interpreters_required + +this.number_of_deaf_interpreters_required  +
+              +this.number_of_deaf_blind_interpreters_required + +this.number_of_captioners_required +
+              +this.number_of_note_takers_required + +this.number_of_visual_frame_interpreters_required +
+              +this.number_of_tactile_interpreters_required + +this.number_of_platform_interpreters_required +
+              +this.number_of_asl_interpreters_required + +this.number_of_bsl_interpreters_required +
+              +this.number_of_isl_interpreters_required + +this.number_of_signed_english_interpreters_required +
+              +this.number_of_indigenous_sign_interpreters_required ;
     }
 
     getNamedTimeZone(state: string, postCode: string) {

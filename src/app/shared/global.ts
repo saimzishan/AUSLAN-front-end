@@ -3,6 +3,11 @@ import {AuthHttp, AuthConfig} from 'angular2-jwt';
 import {Http, RequestOptions, URLSearchParams} from '@angular/http';
 import {User} from './model/user.entity';
 
+export interface ModalOptions {
+    cancelTitle: string;
+    okTitle: string;
+    closeVal: string;
+}
 /* Change this class to use Using Application Providers import { Data } from "../../providers/data/data" */
 export class GLOBAL {
     public static MOCK_BOOKING_SERVER_PORT = 1233;

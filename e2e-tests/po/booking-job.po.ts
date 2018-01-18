@@ -57,7 +57,7 @@ export class BookingJobPage extends PageObject {
                 cols.each((col, index) => {
                     if (index === 8) {
                         col.getText().then((txt) => {
-                            expect(txt.trim()).to.be.eq('0.8 KM');
+                            expect(txt.trim()).to.be.eq('-');
                         })
                     }
 

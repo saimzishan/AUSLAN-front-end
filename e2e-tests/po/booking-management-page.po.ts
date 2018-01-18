@@ -68,6 +68,9 @@ export class BookingManagementPage extends PageObject {
     clickOnProfile = () => {
         return this.getElementByID('lnkProfile').click();
     }
+    clickOnProfileMobile = () => {
+        return this.getElementByID('lnkProfile_mobile').click();
+    }
     clickOnOptionProfile = () => {
         return this.getElementByID('lnkProfile1').click();
     }

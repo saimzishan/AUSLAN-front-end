@@ -19,6 +19,7 @@ defineSupportCode(({Given, When, Then}) => {
     let resetPage = new ResetPage();
     let bookingPage = new BookingPage();
     let bookingJob = new BookingJobPage();
+    const EC = protractor.ExpectedConditions;
     // // ================================== GIVEN PART ========================================
     Given(/^There is (.*) (.*) (.*)/, preloadANumberOfUser);
 
@@ -319,6 +320,22 @@ defineSupportCode(({Given, When, Then}) => {
             expect(val).to.be.eq(isEnabled);
         });
     }
+    When(/^I can see the element with css '(.*)' and text (.*)$/, isElementWithCSSAndTextPresent);
+    function isElementWithCSSAndTextPresent(css: string, txt: string) {
+        let elm = page.getAllByCSSandText(css, txt).first();
+        browser.actions().mouseMove(elm).perform().then( () => {
+            return elm.isDisplayed().then((val) => {
+                expect(val).to.be.eq(true);
+            });
+        });
+    }
+    When(/^I can click the element with css '(.*)' and text (.*)$/, clickElementWithCSSAndTextPresent);
+    function clickElementWithCSSAndTextPresent(css: string, txt: string) {
+        let elm = page.getAllByCSSandText(css, txt).first();
+        return browser.actions().mouseMove(elm).perform().then( () => {
+            elm.click();
+        });
+    }
     When(/^I can see the button state with css '(.*)' is '(.*)'$/, isButtonWithCSSVisible);
     When(/^I can see the element with css '(.*)' is '(.*)'$/, isButtonWithCSSVisible);
     function isButtonWithCSSVisible(css: string, visible: string) {
@@ -374,7 +391,8 @@ defineSupportCode(({Given, When, Then}) => {
         let btn = page.getElementByName(btnName);
         return btn.isPresent().then(presence => {
             expect(presence).to.be.true;
-            btn.click();
+            // Waits for the element to be clickable.
+            browser.wait(EC.elementToBeClickable(btn), 5000).then(() => btn.click());
         });
     }
 

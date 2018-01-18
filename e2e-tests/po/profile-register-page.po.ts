@@ -58,8 +58,6 @@ export class ProfileRegisterPage extends PageObject {
             this.getElementByName('ndis_budget_limit').sendKeys('10000');
             this.getElementByName('dpEventDateStart').sendKeys('01-30-2015');
             this.getElementByName('dpEventDateEnd').sendKeys('01-30-2015');
-            this.getElementByName('email_receipt').click(); //  email on receipt
-            this.getElementByName('email_confirmation').click(); //  email on receipt
             this.getElementByName('cn_first_name').sendKeys('George');
             this.getElementByName('cn_last_name').sendKeys('Charalambous');
             this.getElementByName('cn_email').sendKeys('george@curvetomorrow.com.au');
@@ -79,8 +77,6 @@ export class ProfileRegisterPage extends PageObject {
             this.getElementByName('business_name').sendKeys('Curve');
             this.getElementByName('business_branch_office').sendKeys('Melbourne');
             this.getElementByName('preferred_contact_method').sendKeys('Email'); // DROPDOWN
-            this.getElementByName('email_receipt').click(); //  email on receipt
-            this.getElementByName('email_confirmation').click(); //  email on receipt
             this.getElementByName('cn_first_name').sendKeys('George');
             this.getElementByName('cn_last_name').sendKeys('Charalambous');
             this.getElementByName('cn_email').sendKeys('george@curvetomorrow.com.au');
