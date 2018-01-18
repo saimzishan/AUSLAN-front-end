@@ -37,6 +37,8 @@ export class GLOBAL {
     public static FAKE_TOKEN = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.' +
         'eyJpc3MiOiJPbmxpbmUgSldUIEJ1aWxkZXIiLCJpYXQiOjE0ODgxOTM0MTAsImV4cCI6MzMwNzY2M' +
         'zgyMTAsImF1ZCI6Ind3dy5wYWN0LmNvbSIsInN1YiI6Imthcm1hQHBhY3QuY29tIn0.lVWLJAYQRZcQTMtdDrxTHMwboSOqNQPISLDAKDkPy58';
+    public static DSQ_STATES = ['ACT', 'NSW', 'QLD', 'NT', 'AUSTRALIAN\ CAPITAL\ TERRITORY', 'NEW\ SOUTH\ WALES', 'NORTHERN\ TERRITORY', 'QUEENSLAND'];
+    public static VICDEAF_STATES = ['VIC', 'TAS', 'SA', 'WA', 'SOUTH\ AUSTRALIA', 'TASMANIA', 'VICTORIA', 'WESTERN\ AUSTRALIA'];
     public static GPO_ADDRESS_ONE = '350 Bourke Street, Melbourne VIC, 3000, Australia';
     public static GPO_ADDRESS_TWO = '261 Queens Street, Brisbane City QLD, 4000, Australia';
     public static MISSING_FIELDS_ERROR_MESSAGE = 'Oops! Please fill in all the fields correctly.';
