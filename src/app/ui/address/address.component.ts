@@ -60,6 +60,6 @@ export class AddressComponent implements AfterViewInit {
         } else {
             this.isTravelCostApplicable = false;
         }
-        return true;
+        return this.isTravelCostApplicable;
     };
 }

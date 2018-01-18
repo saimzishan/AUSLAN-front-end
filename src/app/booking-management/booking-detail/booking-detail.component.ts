@@ -241,6 +241,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             if (!this.forEdit && !this.isDuplicate) {
                 this.onBookingAddressChange();
             }
+            this.bookingAddress.isTravelCostApplicable = this.bookingModel.travel_cost_applicable;
         }
         this.dateRestrictions();
     }
