@@ -176,8 +176,9 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER BOOK
     And I will be taken to my individual profile page
     And I click on BUTTON name 'modify_blockouts'
     And I will be taken to blockout page
-    And I enter blockout name 'singleEvent'
     And I enter blockout details with booking time same as booking
+    And I enter blockout name 'singleEvent'
+    And I wait for 300 milli-seconds
     And I click on BUTTON name 'save_blockout'
     And I get success message: 'Blockout successfully added'
     And I click on my name in the top corner
@@ -204,4 +205,20 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER BOOK
     And I am on the bookings page
     Then I see one row with state 'In progress'
     Then I click on an individual booking of type 'In progress'
-
+    And I click on my name
+    And I click on logout
+    And I go to the website
+    And I am shown the login screen, with picture and signup button
+    And I sign in with valid Interpreter credentials
+    Then I will be shown the bookings page
+    Then I see one row with state 'In progress'
+    And  I click on an individual booking of type 'In progress'
+    Then I will be shown the booking detail page with id -1
+    Then I can see the booking state ' In Progress ' in booking job page
+    Then I can see the button state 'Accept' is visible
+    Then I can see the button state 'Decline' is visible
+    Then I click on BUTTON 'Accept'
+    Then I will be shown a popup message
+    Then I click on BUTTON name 'yesBtn'
+    And I wait for 3000 milli-seconds
+    And I get error message: 'Unprocessable Entity You have a blockout at this time. Please remove the blockout before accepting the booking'

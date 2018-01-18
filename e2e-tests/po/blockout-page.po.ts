@@ -38,18 +38,19 @@ export class BlockoutPagePo extends PageObject {
         let today = new Date();
         today.setDate(today.getDate() + 5);
         const currentDate = [
-            today.getFullYear().toString(),
             Heroku.prettyDate(today.getMonth() + 1), // January is 0!,
-            Heroku.prettyDate(today.getDate())
-        ].join('-');
+            Heroku.prettyDate(today.getDate()),
+            today.getFullYear().toString()
+        ].join('/');
 
 
         let st_input_field = this.getElementByCss('input[name="dpEventDate_st"]');
-        st_input_field.sendKeys(currentDate);
-        st_input_field.sendKeys('06:26 AM');
+        st_input_field.clear();
+        st_input_field.sendKeys(currentDate + ' 06:26 AM'); // 23/01/2018 06:26 AM //01/23/2018 06:34 AM
 
-        let end_input_field = this.getElementByCss('input[name="dpEventDate_endtime"]');
-        return end_input_field.sendKeys('07:26 AM');
+        return browser.sleep(100).then( () => {
+            this.getElementByName('blockout_name').click();
+        });
     }
 
 
