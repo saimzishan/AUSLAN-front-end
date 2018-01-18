@@ -9,6 +9,7 @@ Feature: Create Booking with preferred or blocked interpreters
     Given I exist as an Organisational Representative
     And I sign in with valid Organisational Representative credentials
     When I click on my name in the top corner
+    When I click on the option  profile
     Then I will be taken to my individual profile page
     Then I can see the element with name 'interpreter_block_prefered' is 'visible'
     Then I can see the element with css '.btnYes_prefered' is 'visible'
@@ -71,6 +72,7 @@ Feature: Create Booking with preferred or blocked interpreters
     Given I exist as an Organisational Representative
     And I sign in with valid Organisational Representative credentials
     When I click on my name in the top corner
+    When I click on the option  profile
     Then I will be taken to my individual profile page
     Then I can see the element with name 'interpreter_block_blocked' is 'visible'
     Then I can see the element with css '.btnYes_blocked' is 'visible'
@@ -132,6 +134,7 @@ Feature: Create Booking with preferred or blocked interpreters
     Given I exist as an Organisational Representative
     And I sign in with valid Organisational Representative credentials
     When I click on my name in the top corner
+    When I click on the option  profile
     Then I will be taken to my individual profile page
     Then I can see the element with name 'interpreter_block_prefered' is 'visible'
     And I can see the element with css '.btnYes_prefered' is 'visible'

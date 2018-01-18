@@ -68,6 +68,12 @@ export class BookingManagementPage extends PageObject {
     clickOnProfile = () => {
         return this.getElementByID('lnkProfile').click();
     }
+    clickOnProfileMobile = () => {
+        return this.getElementByID('lnkProfile_mobile').click();
+    }
+    clickOnOptionProfile = () => {
+        return this.getElementByID('lnkProfile1').click();
+    }
 
     didFinishedRendering = () => {
         let el = this.getElementByID('jobs-responsive');
@@ -245,6 +251,15 @@ export class BookingManagementPage extends PageObject {
     }
     querySearchWithEmptyDate = () => {
         this.getElementByName('date_from').sendKeys(protractor.Key.BACK_SPACE);
+    }
+    queryManualSearchWithFutureDate = () => {
+        this.getElementByName('date_from').sendKeys(protractor.Key.ARROW_RIGHT,protractor.Key.ARROW_UP);
+    }
+    queryManualSearchWithCurrentDate = () => {
+        this.getElementByName('date_from').sendKeys(protractor.Key.ARROW_RIGHT,protractor.Key.ARROW_DOWN);
+    }
+    enterPressed = () => {
+        this.getElementByName('date_from').sendKeys(protractor.Key.ENTER);
     }
     emptyTheField = (elementName: string) => {
         this.getElementByName(elementName).clear();

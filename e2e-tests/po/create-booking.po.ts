@@ -259,7 +259,7 @@ export class BookingPage extends PageObject {
         ].join('/');
     }
     createBookingWithTimeAndInterpreter = (standard: string, startTime: string, endTime: string, interpreterNum: string, interpreterFieldName: string) => {
-        const dateToSend = this.previousDate ? this.getDateAfterNDays(-1) : this.getDateAfterNDays(7);
+        const dateToSend = this.previousDate ? this.getDateAfterNDays(-1) : this.getDateAfterNDays(8);
         this.setDate(dateToSend);
         this.setStartEndTime('start', startTime);
         this.setStartEndTime('end', endTime);

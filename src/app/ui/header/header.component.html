@@ -11,7 +11,7 @@
 		<ul class="dropdown menu" data-dropdown-menu data-disable-hover="true" data-click-open="true">
 			<li>
 				<a id="lnkProfile" [ngClass]="{'active':isActiveLink(linkName.profile)}"
-				   (click)="setActiveLink(linkName.profile)" [routerLink]="['user-management','profile']">
+				   (click)="setActiveLink(linkName.profile)">
 					<img src={{getPicturePath()}}>{{fullName}}</a>
 				<ul class="menu">
 					<li><a id="lnkProfile1" [ngClass]="{'active':isActiveLink(linkName.profile)}" (click)="setActiveLink(linkName.profile)" [routerLink]="['user-management','profile']"><i class="icon-user"></i> Profile</a></li>
