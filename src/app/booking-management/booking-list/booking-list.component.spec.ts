@@ -9,6 +9,7 @@ import { PrettyIDPipe } from '../../shared/pipe/pretty-id.pipe';
 import { FormsModule }   from '@angular/forms';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {DatePipe} from '@angular/common';
+import {MomentModule} from 'angular2-moment/moment.module';
 
 describe('BookingListComponent' ,  () => {
   let component:  BookingListComponent;
@@ -47,7 +48,7 @@ describe('BookingListComponent' ,  () => {
     TestBed.configureTestingModule({
       declarations :  [ BookingListComponent, PrettyIDPipe ],
       providers: [DatePipe ],
-      imports: [RouterTestingModule, FormsModule, NgxPaginationModule]
+      imports: [RouterTestingModule, FormsModule, NgxPaginationModule, MomentModule]
     }).compileComponents();
   }));
 

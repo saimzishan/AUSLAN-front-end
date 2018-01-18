@@ -73,6 +73,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
 import {RemoveSpacePipe} from './shared/pipe/remove-space.pipe';
 import {CalendarModule as PrimeNgCalendarModule} from 'primeng/primeng';
 import {MobileHeaderComponent} from './ui/mobile-header/mobile-header.component';
+import {MomentModule} from 'angular2-moment/moment.module';
 
 describe('AppComponent', () => {
   beforeEach(() => {
@@ -93,7 +94,7 @@ describe('AppComponent', () => {
       ],
       imports: [CustomFormsModule, NgxPaginationModule, FileuploaderModule, RouterTestingModule, Md2Module.forRoot(),
       MaterialModule, FormsModule, SimpleNotificationsModule.forRoot(), MobileFooterModule,
-        HttpModule, CalendarModule, PrimeNgCalendarModule
+        HttpModule, CalendarModule, PrimeNgCalendarModule, MomentModule
       ],  providers: [ NotificationServiceBus,
             PreferedAllocationService,
          UserNameService, Title, SpinnerService, UserService, {provide: APP_BASE_HREF, useValue : '/' }, {
