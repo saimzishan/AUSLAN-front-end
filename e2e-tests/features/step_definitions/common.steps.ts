@@ -19,6 +19,7 @@ defineSupportCode(({Given, When, Then}) => {
     let resetPage = new ResetPage();
     let bookingPage = new BookingPage();
     let bookingJob = new BookingJobPage();
+    const EC = protractor.ExpectedConditions;
     // // ================================== GIVEN PART ========================================
     Given(/^There is (.*) (.*) (.*)/, preloadANumberOfUser);
 
@@ -390,7 +391,8 @@ defineSupportCode(({Given, When, Then}) => {
         let btn = page.getElementByName(btnName);
         return btn.isPresent().then(presence => {
             expect(presence).to.be.true;
-            btn.click();
+            // Waits for the element to be clickable.
+            browser.wait(EC.elementToBeClickable(btn), 5000).then(() => btn.click());
         });
     }
 
