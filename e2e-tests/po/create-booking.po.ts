@@ -11,7 +11,7 @@ interface TestDateFormat {
 }
 
 export class BookingPage extends PageObject {
-    previousDate:boolean=false;
+    previousDate: Boolean = false;
     list_of_object = {};
     browse = () => {
         return this.currentPath().then((currentPath) => {
@@ -200,7 +200,7 @@ export class BookingPage extends PageObject {
             'start': 'dpEventDate',
             'end': 'dpEventEndTime'
         }[field];
-        this.getElementByCss('input[name='+elementName+']').sendKeys(time);
+        this.getElementByCss('input[name=' + elementName + ']').sendKeys(time);
     }
     setDateOnly = (field: string, date: TestDateFormat) => {
         this.getElementByName(field).sendKeys(protractor.Key.BACK_SPACE);
@@ -209,7 +209,6 @@ export class BookingPage extends PageObject {
         this.getElementByName(field).sendKeys(date.yy);
     }
     setDate= (date: string) => {
-        let elementName = 'dpDate';
         this.getElementByCss('input[name="dpDate"]').sendKeys(date);
     }
     createBooking = () => {

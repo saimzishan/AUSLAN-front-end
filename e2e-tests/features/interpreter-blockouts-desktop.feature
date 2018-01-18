@@ -164,3 +164,44 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER BOOK
     And I will be taken to my individual profile page
     And I can count the element with css 'span.fc-title' to be '0'
 
+  @runThis
+  Scenario: As INTERPRETER, I can create a blockout and cannot be allocated to a booking, a booking is created and Booking Officer, Individual Client exists
+    Given I go to the website
+    And I am on a computer
+    And I am shown the login screen, with picture and signup button
+    And I sign in with valid Interpreter credentials
+    Then I will be shown the bookings page
+    And I click on my name in the top corner
+    And I click on the option  profile
+    And I will be taken to my individual profile page
+    And I click on BUTTON name 'modify_blockouts'
+    And I will be taken to blockout page
+    And I enter blockout name 'singleEvent'
+    And I enter blockout details with booking time same as booking
+    And I click on BUTTON name 'save_blockout'
+    And I get success message: 'Blockout successfully added'
+    And I click on my name in the top corner
+    And I click on the option  profile
+    And I will be taken to my individual profile page
+    And I can count the element with css 'span.fc-title' to be '1'
+    And I can see the element with css 'span.fc-title' and text singleEvent
+    And I click on my name in the top corner
+    And I click on logout
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    And I am on the bookings page
+    Then I see one row with state 'Requested'
+    Then I will be shown with bookings
+    Then I click on an individual booking of type 'Requested'
+    Then I will be shown the booking job page
+    Then I can see the button 'Save' is disabled
+    Then I select 1 Interpreter
+    And I click on BUTTON name 'inviteBtn'
+    Then I can see the button 'Save' is enabled
+    And I click on BUTTON 'Save'
+    Then I get a valid invite notification
+    Then I click on Bookings
+    And I am on the bookings page
+    Then I see one row with state 'In progress'
+    Then I click on an individual booking of type 'In progress'
+
