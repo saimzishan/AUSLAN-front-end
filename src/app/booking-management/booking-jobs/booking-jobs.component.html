@@ -59,9 +59,9 @@
                             </span>
                         </td>
                         <td data-title="TIME">
-                            <span>{{selectedBookingModel.venue.start_time_iso | date:'shortTime'}} - {{selectedBookingModel.venue.end_time_iso | date:'shortTime'}}</span>
+                            <span>{{selectedBookingModel.venue.start_time_iso | amDateFormat:'h:mm A'}} - {{selectedBookingModel.venue.end_time_iso | amDateFormat:'h:mm A'}}</span>
                         </td>
-                        <td data-title="DATE"><span>{{selectedBookingModel.venue.start_time_iso | date:'EEE d MMM yy'}}</span></td>
+                        <td data-title="DATE"><span>{{selectedBookingModel.venue.start_time_iso | amDateFormat:'ddd D MMM YY'}}</span></td>
                         <td data-title="ORGANISATION">{{selectedBookingModel.client.organisation_name}}</td>
                         <td data-title="CLIENT">
                             {{selectedBookingModel.deaf_person.first_name +
