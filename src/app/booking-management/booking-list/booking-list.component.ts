@@ -124,7 +124,7 @@ export class BookingListComponent implements OnInit {
 
     private formatterValueFor(field: string, value: string) {
         let formattedValue: string;
-        if (value.toLowerCase() === 'all') {
+        if (value !== undefined && value.toLowerCase() === 'all') {
             return '';
         }
         if (value && value.length) {
