@@ -63,6 +63,45 @@ export class Booking {
     public new_link_id_required: boolean;
     // Is it a limitation on interpreters invitation.
 
+    static getNamedTimeZone(state: string, postCode: string) {
+        let namedTimeZone;
+        if (postCode === '2880') { // Broken Hill exception
+            namedTimeZone = 'Australia/Adelaide';
+            return namedTimeZone;
+        }
+
+        switch (state) {
+            case 'ACT':
+                namedTimeZone = 'Australia/Canberra';
+                break;
+            case 'NSW':
+                namedTimeZone = 'Australia/Sydney';
+                break;
+            case 'QLD':
+                namedTimeZone = 'Australia/Brisbane';
+                break;
+            case 'SA':
+                namedTimeZone = 'Australia/Adelaide';
+                break;
+            case 'TAS':
+                namedTimeZone = 'Australia/Hobart';
+                break;
+            case 'VIC':
+                namedTimeZone = 'Australia/Melbourne';
+                break;
+            case 'WA':
+                namedTimeZone = 'Australia/Perth';
+                break;
+            case 'NT':
+                namedTimeZone = 'Australia/Darwin';
+                break;
+            default:
+                namedTimeZone = '';
+                break;
+        }
+        return namedTimeZone;
+    }
+
     constructor() {
         this.id = '0';
         this.venue.expected_attendance = 0;
@@ -334,47 +373,8 @@ export class Booking {
               +this.number_of_indigenous_sign_interpreters_required ;
     }
 
-    getNamedTimeZone(state: string, postCode: string) {
-        let namedTimeZone;
-        if (postCode === '2880') { // Broken Hill exception
-            namedTimeZone = 'Australia/Adelaide';
-            return namedTimeZone;
-        }
-
-        switch (state) {
-            case 'ACT':
-                namedTimeZone = 'Australia/Canberra';
-                break;
-            case 'NSW':
-                namedTimeZone = 'Australia/Sydney';
-                break;
-            case 'QLD':
-                namedTimeZone = 'Australia/Brisbane';
-                break;
-            case 'SA':
-                namedTimeZone = 'Australia/Adelaide';
-                break;
-            case 'TAS':
-                namedTimeZone = 'Australia/Hobart';
-                break;
-            case 'VIC':
-                namedTimeZone = 'Australia/Melbourne';
-                break;
-            case 'WA':
-                namedTimeZone = 'Australia/Perth';
-                break;
-            case 'NT':
-                namedTimeZone = 'Australia/Darwin';
-                break;
-            default:
-                namedTimeZone = '';
-                break;
-        }
-        return namedTimeZone;
-    }
-
     utcToBookingTimeZone(time: string) {
-        let timeZone = this.getNamedTimeZone(this.venue.state, this.venue.post_code.toString());
+        let timeZone = Booking.getNamedTimeZone(this.venue.state, this.venue.post_code.toString());
         return momentTimeZone(time).tz(timeZone).format();
     }
 }

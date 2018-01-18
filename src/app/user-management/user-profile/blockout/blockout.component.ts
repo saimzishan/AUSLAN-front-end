@@ -11,6 +11,8 @@ import {AuthGuard} from '../../../auth/auth.guard';
 import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
 import {PopupComponent} from '../../../shared/popup/popup.component';
 import {ROLE} from '../../../shared/model/role.enum';
+import * as momentTimeZone from 'moment-timezone';
+import {Booking} from '../../../shared/model/booking.entity';
 
 @Component({
     selector: 'app-blockout',
@@ -126,7 +128,10 @@ export class BlockoutComponent implements OnDestroy, OnInit {
             }
         });
     }
-
+    interpreterStateTimeZone (time) {
+        let timeZone = Booking.getNamedTimeZone(this.interpreter.address_attributes.state, this.interpreter.address_attributes.post_code.toString());
+        return momentTimeZone(time).tz(timeZone).format();
+    }
     editBlockouts(form: FormGroup) {
         if (form.invalid) {
             this.notificationServiceBus.launchNotification(true, GLOBAL.MISSING_FIELDS_ERROR_MESSAGE);
@@ -134,9 +139,9 @@ export class BlockoutComponent implements OnDestroy, OnInit {
         }
         this.spinnerService.requestInProcess(true);
 
-        this.availabilityBlock.start_time = this.start_time.toISOString();
-        this.availabilityBlock.end_time = this.end_time.toISOString();
-        this.availabilityBlock.end_date = Boolean(this.end_date) ? this.end_date.toISOString() : this.start_time.toISOString();
+        this.availabilityBlock.start_time = this.interpreterStateTimeZone(this.start_time);
+        this.availabilityBlock.end_time = this.interpreterStateTimeZone(this.end_time);
+        this.availabilityBlock.end_date = Boolean(this.end_date) ? this.interpreterStateTimeZone(this.end_date) : this.interpreterStateTimeZone(this.start_time);
         this.userDataService.editBlockout(this.userID,
             this.availabilityBlock)
             .subscribe((res: any) => {
@@ -175,9 +180,9 @@ export class BlockoutComponent implements OnDestroy, OnInit {
         }
         this.spinnerService.requestInProcess(true);
         delete this.availabilityBlock.booking_id;
-        this.availabilityBlock.start_time = this.start_time.toISOString();
-        this.availabilityBlock.end_time = this.end_time.toISOString();
-        this.availabilityBlock.end_date = this.end_date.toISOString();
+        this.availabilityBlock.start_time = this.interpreterStateTimeZone(this.start_time);
+        this.availabilityBlock.end_time = this.interpreterStateTimeZone(this.end_time);
+        this.availabilityBlock.end_date = this.interpreterStateTimeZone(this.end_date)
 
         this.userDataService.addBlockout(this.userID, this.availabilityBlock)
             .subscribe((res: any) => {
