@@ -43,7 +43,7 @@ export class AddressComponent implements AfterViewInit {
         }
     }
 
-    public calculateDistance(): boolean {
+    calculateDistance(): boolean {
         if (this.address.isValid()) {
             let originAddress = [this.address.unit_number, this.address.street_number, this.address.street_name,
                 this.address.suburb, this.address.state, this.address.post_code, 'Australia'];

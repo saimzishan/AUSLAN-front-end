@@ -1,5 +1,4 @@
 import {PARKING} from './parking.enum';
-import {isNullOrUndefined} from 'util';
 
 export class Address {
   public id: number;
