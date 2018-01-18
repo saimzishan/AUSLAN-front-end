@@ -27,6 +27,7 @@ import {InterpreterPopupComponent} from '../../shared/ui/interpreter-popup/inter
 import {InterpreterBoxComponent} from '../../shared/ui/interpreter-box/interpreter-box.component';
 import {PreferedAllocationService} from '../../shared/prefered-allocation.service';
 import {RemoveSpacePipe} from '../../shared/pipe/remove-space.pipe';
+import {MobileHeaderComponent} from '../../ui/mobile-header/mobile-header.component';
 
 describe('UserProfileComponent', () => {
   let component: UserProfileComponent;
@@ -36,6 +37,7 @@ describe('UserProfileComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ UserProfileComponent, UserHeaderComponent, InterpreterComponent,
         OrgRepComponent, InterpreterComponent, AddressComponent,
+          MobileHeaderComponent,
         IndClientComponent, BillingAccountComponent, AccountantComponent,
           InterpreterPopupComponent, InterpreterBoxComponent, RemoveSpacePipe],
       providers: [PreferedAllocationService, UserNameService, LinkHelper, LinkAuth, RolePermission,

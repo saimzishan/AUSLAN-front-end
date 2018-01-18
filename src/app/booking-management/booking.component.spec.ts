@@ -14,6 +14,7 @@ import {SpinnerService} from '../spinner/spinner.service';
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
 import { RolePermission } from '../shared/role-permission/role-permission';
 import {HttpModule} from '@angular/http';
+import {MobileHeaderComponent} from '../ui/mobile-header/mobile-header.component';
 
 describe('BookingComponent', () => {
     let component: BookingComponent;
@@ -21,7 +22,7 @@ describe('BookingComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [BookingComponent],
+            declarations: [BookingComponent, MobileHeaderComponent],
             imports: [FormsModule, HttpModule, RouterTestingModule, CustomFormsModule],
             providers: [RolePermission, { provide: BookingService, useClass: MockBookingService },
                 SpinnerService, { provide: AuthHttp, useClass: MockBackend }]

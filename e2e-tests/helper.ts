@@ -110,8 +110,6 @@ export class User {
 
         switch (type) {
             case 'Individual Client':
-                data_to_sent['send_email_on_receipt_of_request'] = true;
-                data_to_sent['email_confirmation_on_interpreter_allocation'] = true;
                 data_to_sent['business_hours_phone'] = data_to_sent['mobile'];
                 billing_account_attributes_fields['primary_contact_first_name'] = 'MOH';
                 billing_account_attributes_fields['primary_contact_last_name'] = 'JAY';
@@ -130,8 +128,6 @@ export class User {
                 data_to_sent['address_attributes'] = address_attributes_fields;
                 break;
             case 'Organisational Representative':
-                data_to_sent['send_email_on_receipt_of_request'] = true;
-                data_to_sent['email_confirmation_on_interpreter_allocation'] = true;
                 data_to_sent['business_hours_phone'] = data_to_sent['mobile'];
                 let organisation_attributes_fields = {};
                 organisation_attributes_fields['abn'] = 12345678900;
@@ -603,13 +599,15 @@ export class Heroku {
     private static createBooking(int_required: number) {
 
         let today = new Date();
-        today.setDate(today.getDate() + 1);
+        today.setDate(today.getDate() + 5);
         const currentDate = [
             today.getFullYear().toString(),
             this.prettyDate(today.getMonth() + 1), // January is 0!,
             this.prettyDate(today.getDate())
         ].join('-');
         return new Object({
+            'method_type': 'onsite',
+            'type': 'AuslanInterpreting',
             'venue': 'Fed Square',
             'requested_by_first_name': 'Georgious',
             'requested_by_last_name': 'Chara',
@@ -626,8 +624,8 @@ export class Heroku {
             'deaf_persons_eaf_no': '124',
             'number_of_people_attending': 1,
             'number_of_interpreters_required': int_required,
-            'start_time': currentDate + 'T01:26:00+11:00',
-            'end_time': currentDate + 'T02:26:00+11:00',
+            'start_time': currentDate + 'T06:26:00+11:00',
+            'end_time': currentDate + 'T07:26:00+11:00',
             'billing_account_attributes': {
                 'primary_contact_first_name': 'Paul',
                 'primary_contact_last_name': 'Biller',
