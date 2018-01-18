@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewContainerRef, ViewChild, ChangeDetectionStrategy} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewContainerRef, ViewChild, ChangeDetectorRef} from '@angular/core';
 import {Booking} from '../../shared/model/booking.entity';
 import {BookingService} from '../../api/booking.service';
 import {BA, BOOKING_NATURE} from '../../shared/model/booking-nature.enum';
@@ -28,7 +28,6 @@ const _ONE_HOUR = 1000 /*milliseconds*/
 
 
 @Component({
-    changeDetection: ChangeDetectionStrategy.OnPush,
     selector: 'app-booking-detail',
     templateUrl: './booking-detail.component.html',
     styleUrls: ['./booking-detail.component.css']
@@ -99,7 +98,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     constructor(public bookingService: BookingService, private router: Router,
                 private route: ActivatedRoute, private rolePermission: RolePermission,
                 public notificationServiceBus: NotificationServiceBus, public spinnerService: SpinnerService,
-                private datePipe: DatePipe, public dialog: MdDialog,
+                private datePipe: DatePipe, public dialog: MdDialog, private changeDetector: ChangeDetectorRef,
                 public viewContainerRef: ViewContainerRef, public userService: UserService, private _sharedPreferedAllocationService: PreferedAllocationService) {
         BA.loadItems();
 
@@ -189,6 +188,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
              'number_of_indigenous_sign_interpreters_required'].forEach(modelVal => {
                     this.bookingModel[modelVal] = 0;
                 });
+            this.changeDetector.detectChanges();
         }
     }
 
