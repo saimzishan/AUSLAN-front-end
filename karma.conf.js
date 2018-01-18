@@ -97,7 +97,7 @@ module.exports = function(config) {
                 flags: ['--disable-web-security']
             }
         },
-        browserNoActivityTimeout: 30000,
+        browserNoActivityTimeout: 300000,
 
         singleRun: true
     });
