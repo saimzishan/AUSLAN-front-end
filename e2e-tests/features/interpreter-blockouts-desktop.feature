@@ -165,6 +165,50 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER BOOK
     And I can count the element with css 'span.fc-title' to be '0'
 
   @runThis
+  Scenario: As INTERPRETER, I cannot create a blockout and if i have accepted same time booking alread, a booking is created and Booking Officer, Individual Client exists
+    Given I am on a computer
+    And I go to the website
+    And I am shown the login screen, with picture and signup button
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    And I am on the bookings page
+    Then I see one row with state 'Requested'
+    Then I click on an individual booking of type 'Requested'
+    Then I will be shown the booking job page
+    Then I can see the button 'Save' is disabled
+    Then I select 1 Interpreter
+    And I click on BUTTON name 'inviteBtn'
+    Then I can see the button 'Save' is enabled
+    And I click on BUTTON 'Save'
+    Then I click on Bookings
+    And I am on the bookings page
+    Then I see one row with state 'In progress'
+    Then I click on an individual booking of type 'In progress'
+    Then I will be shown the booking job page
+    Then I can see the booking state 'In Progress'
+    Then I hover on the 'Profile'
+    And I click on logout
+    And I sign in with valid Interpreter credentials
+    Then I see one row with state 'In progress'
+    Then I click on an individual booking of type 'In progress'
+    Then I can see the booking state 'In Progress'
+    Then I can see the button 'Accept' is enabled
+    Then I click on button 'Accept'
+    Then I will be shown a popup message
+    Then I click on BUTTON name 'yesBtn'
+    Then I can see the booking state 'Allocated'
+    And I click on my name in the top corner
+    And I click on the option  profile
+    And I will be taken to my individual profile page
+    And I click on BUTTON name 'modify_blockouts'
+    And I will be taken to blockout page
+    And I enter blockout details with booking time same as booking
+    And I enter blockout name 'singleEvent'
+    And I wait for 300 milli-seconds
+    And I click on BUTTON name 'save_blockout'
+    And I get error message: 'Existing booking during blockout time. Blockout not changed'
+
+  @runThis
   Scenario: As INTERPRETER, I can create a blockout and cannot be allocated to a booking, a booking is created and Booking Officer, Individual Client exists
     Given I go to the website
     And I am on a computer
