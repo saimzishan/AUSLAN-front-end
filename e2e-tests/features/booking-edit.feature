@@ -234,7 +234,7 @@ Feature: Edit Booking
 
     #----------------------------------------- AUSLAN1-979 -> START ----------------------------------------
   @runThis
-  Scenario: Booking Officer can select only 1 service type at a time
+  Scenario: Booking Officer can select only 1 service type at a time and is able to change the service type of booking
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
     Then I am on the bookings page
@@ -258,6 +258,16 @@ Feature: Edit Booking
     Then I click on checkbox name 'cbDeafBlind'
     And I verify checkbox name 'cbDeafBlind' is checked 'true'
     And I verify checkbox name 'cbDeaf' is checked 'false'
+    Then I fill the field 'deafBlind_count' with value '2'
+    When I click on BUTTON 'SAVE'
+    Then If I am shown a popup message 'Would you like to save these changes for all bookings or only for this one?', I approve it
+    Then I should get a valid booking update notification
+    And I am on the individual booking page
+    When I click on link 'Booking details'
+    Then I should be on the edit booking page
+    And I verify checkbox name 'cbAuslan' is checked 'false'
+    And I verify checkbox name 'cbDeafBlind' is checked 'true'
+    And I can verify the field 'deafBlind_count' will have the value '2'
 
     #----------------------------------------- AUSLAN1-979 -> END ----------------------------------------
 
