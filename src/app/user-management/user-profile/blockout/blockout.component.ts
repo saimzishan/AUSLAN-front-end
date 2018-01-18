@@ -182,7 +182,7 @@ export class BlockoutComponent implements OnDestroy, OnInit {
         delete this.availabilityBlock.booking_id;
         this.availabilityBlock.start_time = this.interpreterStateTimeZone(this.start_time);
         this.availabilityBlock.end_time = this.interpreterStateTimeZone(this.end_time);
-        this.availabilityBlock.end_date = this.interpreterStateTimeZone(this.end_date)
+        this.availabilityBlock.end_date = this.interpreterStateTimeZone(this.end_date);
 
         this.userDataService.addBlockout(this.userID, this.availabilityBlock)
             .subscribe((res: any) => {
