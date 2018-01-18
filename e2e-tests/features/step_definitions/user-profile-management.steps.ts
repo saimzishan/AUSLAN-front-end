@@ -30,7 +30,7 @@ defineSupportCode(({Given, Then, When}) => {
             return userProfilePage.browse();
         }
     }
-    Then(/^I will be taken to my blockout page$/, blockoutPage.browse);
+    Then(/^I will be taken to blockout page$/, blockoutPage.browse);
     Then(/^I enter blockout name '(.*)'$/, blockoutPage.enterBlockoutName);
 
     When(/^I change some input (.*) fields of the (.*)/, userProfilePage.updateMandatoryFields);

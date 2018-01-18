@@ -91,7 +91,9 @@ export class BlockoutComponent implements OnDestroy, OnInit {
         this.end_time = dt;
         console.log(this.end_time);
     }
-
+    getRoute () {
+        this.router.navigate([ this.isUserAdminOrBO() ? '/user-management' : '/user-management/profile']);
+    }
     deleteBlockout() {
         let message = `Do you really want to delete this blockout?`;
         let title = 'Delete Blockouts';
