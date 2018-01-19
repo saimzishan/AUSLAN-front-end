@@ -233,7 +233,7 @@ Feature: Edit Booking
     #----------------------------------------- AUSLAN1-978 -> END ----------------------------------------
 
     #----------------------------------------- AUSLAN1-979 -> START ----------------------------------------
-  @runThis
+  @ignoreThis
   Scenario: Booking Officer can select only 1 service type at a time and is able to change the service type of booking
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
