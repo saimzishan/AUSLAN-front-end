@@ -44,13 +44,11 @@ export class AddressComponent implements AfterViewInit {
     }
 
     calculateDistance(): boolean {
-        let originAddress: Array<string> = [];
-        if (this.form.valid) {
-            for (let i in this.form.value) {
-                if (!isNullOrUndefined(this.form.value[i])) { originAddress.push(this.form.value[i]); }
-            }
-            originAddress.push('Australia');
-            this.gmapApi.getMinDistance([originAddress.join(', ')], [GLOBAL.GPO_ADDRESS_ONE, GLOBAL.GPO_ADDRESS_TWO]).then(value => {
+        if (this.address.isValid()) {
+            let originAddress = [this.address.unit_number, this.address.street_number, this.address.street_name,
+                this.address.suburb, this.address.state, this.address.post_code, 'Australia'];
+            let dedicatedGpo = GLOBAL.VICDEAF_STATES.includes(this.address.state) ? GLOBAL.GPO_ADDRESS_ONE : GLOBAL.GPO_ADDRESS_TWO;
+            this.gmapApi.getMinDistance([originAddress.join(', ')], [dedicatedGpo]).then(value => {
                 let travelCost = Number((value / 1000).toFixed(2)) > 40;
                 if (this.userModel) {
                     this.userModel.interpreter_type = travelCost ? 'Rural' : 'Metro';

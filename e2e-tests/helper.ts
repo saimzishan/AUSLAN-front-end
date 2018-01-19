@@ -126,6 +126,7 @@ export class User {
                 data_to_sent['date_of_birth'] = '20/05/1987';
                 data_to_sent['naati_id'] = 12345;
                 data_to_sent['address_attributes'] = address_attributes_fields;
+                data_to_sent['skill_level'] = 'Captioning';
                 break;
             case 'Organisational Representative':
                 data_to_sent['business_hours_phone'] = data_to_sent['mobile'];
