@@ -122,7 +122,7 @@ Feature: Booking Sort
     When I click on table header 'Org'
     Then I should see the bookings in descending order of Org
 
-     @runThis
+  @runThis
   Scenario: Given 1 verified Booking Officer, I should be able to sort by date in ascending order
     Given One booking has start and end dates as first and last days of next week
     Given I exist as an Booking Officer
