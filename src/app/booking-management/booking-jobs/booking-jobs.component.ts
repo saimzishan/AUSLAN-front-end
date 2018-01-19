@@ -75,9 +75,6 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                 case 'showDialogBoxInterpreter':
                     this.showDialogBoxInterpreter(res.value);
                     break;
-                case 'editBooking':
-                    this.editBooking();
-                    break;
                 case 'duplicateBooking':
                     this.duplicateBooking();
                     break;
@@ -243,16 +240,6 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         this.selectedBookingModel.link_id = null;
         this.selectedBookingModel.update_all_linked_bookings = false;
         this.selectedBookingModel.new_link_id_required = false;
-    }
-
-    editBooking() {
-        let navigationExtras: NavigationExtras = {
-            queryParams: {
-                bookingModel: JSON.stringify(this.selectedBookingModel),
-                shouldEdit: 'edit', assignedInterpreter: this.selectedBookingModel.interpreters.filter(i => i.state === 'Accepted').length
-            }
-        };
-        this.router.navigate(['/booking-management', 'edit-booking'], navigationExtras);
     }
 
     onChange($event, user, ind) {
