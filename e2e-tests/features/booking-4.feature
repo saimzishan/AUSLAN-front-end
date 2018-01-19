@@ -227,6 +227,7 @@ Feature: Booking Management
     Then I get a valid create booking notification
     And I am on the bookings page
     And I am shown with 1 bookings
+    And I wait for 2000 milli-seconds
     When I click on an individual booking
     Then I am on the individual booking page
     Then I select 2 Interpreter
@@ -260,6 +261,7 @@ Feature: Booking Management
     Then I get a valid create booking notification
     And I am on the bookings page
     And I am shown with 1 bookings
+    And I wait for 2000 milli-seconds
     When I click on an individual booking
     Then I am on the individual booking page
     Then I select 2 Interpreter
