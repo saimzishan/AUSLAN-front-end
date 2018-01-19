@@ -24,12 +24,16 @@ jobs:
             if [ $CIRCLE_BRANCH = 'master' ];
               then
                 circleci tests glob "/var/www/booking-system-frontend/e2e-tests/features/*.feature" | circleci tests split > /var/www/booking-system-frontend/test_features_for_split_container.txt
-                cat /var/www/booking-system-frontend/test_features_for_split_container.txt
             else
               PR=$(git rev-parse --abbrev-ref HEAD)
-              git diff --name-only origin/$PR `git merge-base origin/$PR origin/master` | grep "\.feature" | circleci tests split > /var/www/booking-system-frontend/test_features_for_split_container.txt
-              cat /var/www/booking-system-frontend/test_features_for_split_container.txt
+              FILES=$(git diff --name-only origin/$PR `git merge-base origin/$PR origin/master` | grep "booking")
+              if [[ -z $FILES ]] ; then
+                circleci tests glob "/var/www/booking-system-frontend/e2e-tests/features/*.feature" | grep -v "booking" |circleci tests split > /var/www/booking-system-frontend/test_features_for_split_container.txt
+              else
+                circleci tests glob "/var/www/booking-system-frontend/e2e-tests/features/*booking*.feature" | circleci tests split > /var/www/booking-system-frontend/test_features_for_split_container.txt
+              fi
             fi
+            cat /var/www/booking-system-frontend/test_features_for_split_container.txt
       - run:
           name: NPM Install
           environment:
