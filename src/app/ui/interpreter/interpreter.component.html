@@ -79,8 +79,10 @@
         <select placeholder="Enter the Skill level" aria-label="A" [(ngModel)]="userModel.skill_level"
                 name="skill_level" #skill_level="ngModel" required>
 
-          <option *ngFor="let skill_name of ['Auslan Paraprofessional','Auslan Professional','ASL Certified', 'BSL Certified', 'Deaf Interpreter Accredited','Deaf Interpreter Non-Accredited', 'Notetaker']"
-                  [selected]="skill_name === 'Auslan Paraprofessional'" [value]="skill_name">{{skill_name.toUpperCase()}}</option>
+          <option *ngFor="let skill_name of ['Certified Conference Interpreter','Certified Specialist Interpreter - Health & Legal','Certified Specialist Interpreter - Health', 'Certified Specialist Interpreter - Legal', 'Certified Interpreter', 'Certified Provisional Interpreter', 'Recognised Practising', 
+          'Professional Level', 'Paraprofessional Level', 'Recognised', 'Captioning', 'Notetaking']"
+
+                  [selected]="skill_name === 'Certified Conference Interpreter'" [value]="skill_name">{{skill_name.toUpperCase()}}</option>
 
         </select>
         <span *ngIf="skill_level.touched && !skill_level.errors?.required && !skill_level.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>

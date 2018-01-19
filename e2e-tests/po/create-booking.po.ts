@@ -212,11 +212,11 @@ export class BookingPage extends PageObject {
         this.getElementByCss('input[name="dpDate"]').sendKeys(date);
     }
     createBooking = () => {
-        return this.createBookingWithTimeAndInterpreter('standard', '10:15 AM', '11:15 AM', '2');
+        return this.createBookingWithTimeAndInterpreter('standard', '10:15 AM', '11:15 AM', '2', 'auslanInterpreters_count');
     }
     createBookingWithYesterdayDate = () => {
         this.previousDate = true;
-        return this.createBookingWithTimeAndInterpreter('standard', '10:15 AM', '11:15 AM', '2');
+        return this.createBookingWithTimeAndInterpreter('standard', '10:15 AM', '11:15 AM', '2', 'auslanInterpreters_count');
     }
     createBookingForPerth = () => {
         return this.createBookingWithAddressTimeAndInterpreter('standard', '10:15 AM', '11:15 AM', '2');
@@ -257,7 +257,7 @@ export class BookingPage extends PageObject {
             dateStart.getFullYear().toString()
         ].join('/');
     }
-    createBookingWithTimeAndInterpreter = (standard: string, startTime: string, endTime: string, interpreterNum: string) => {
+    createBookingWithTimeAndInterpreter = (standard: string, startTime: string, endTime: string, interpreterNum: string, interpreterFieldName: string) => {
         const dateToSend = this.previousDate ? this.getDateAfterNDays(-1) : this.getDateAfterNDays(8);
         this.setDate(dateToSend);
         this.setStartEndTime('start', startTime);
@@ -269,8 +269,8 @@ export class BookingPage extends PageObject {
         this.setElementsValueByName('address_state', 'VIC'); // dropdown
 
         this.getElementByName('attendee_count').sendKeys('1');
-        this.getElementByName('auslanInterpreters_count').clear();
-        this.getElementByName('auslanInterpreters_count').sendKeys(interpreterNum);
+        this.getElementByName(interpreterFieldName).clear();
+        this.getElementByName(interpreterFieldName).sendKeys(interpreterNum);
 
         this.getElementByName('nature_of_appointment').sendKeys('COURT');
         this.getElementByName('specific_nature_of_appointment').sendKeys('DHS ORDER');

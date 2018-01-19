@@ -75,7 +75,7 @@ import {RemoveSpacePipe} from './shared/pipe/remove-space.pipe';
 import {CalendarModule as PrimeNgCalendarModule} from 'primeng/primeng';
 import {LinkidPopupComponent} from './booking-management/linkid-popup/linkid-popup.component';
 import { MobileHeaderComponent } from './ui/mobile-header/mobile-header.component';
-
+import {MomentModule} from 'angular2-moment/moment.module';
 
 @NgModule({
     declarations: [
@@ -112,7 +112,7 @@ import { MobileHeaderComponent } from './ui/mobile-header/mobile-header.componen
         FormsModule, BrowserAnimationsModule, NgxPaginationModule,
         HttpModule, SimpleNotificationsModule.forRoot(),
         ReactiveFormsModule, Md2Module.forRoot(),
-        MaterialModule, CalendarModule, PrimeNgCalendarModule
+        MaterialModule, CalendarModule, PrimeNgCalendarModule, MomentModule
     ], providers: [DatePipe, LinkAuth, UserNameService, RolePermission, AuthGuard, NoAuthGuard, Title, LinkHelper,
         NotificationServiceBus, SpinnerService, BookingService, UserService,
         PreferedAllocationService, BookingHeaderService, GmapsApiService,
