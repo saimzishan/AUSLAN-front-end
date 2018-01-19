@@ -93,6 +93,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     cbSignedEnglishInterpreter = false;
     cbIndigenousSignInterpreter = false;
     defaultDateTime: Date;
+    isRecurringBooking = false;
     @ViewChild('addressForm') private bookingAddress: AddressComponent;
 
     constructor(public bookingService: BookingService, private router: Router,
@@ -652,6 +653,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         }
         this.spinnerService.requestInProcess(true);
         this.bookingModel.state = BOOKING_STATE.Requested; // res.data.state;
+        this.bookingModel.new_link_id_required = this.isRecurringBooking;
         this.bookingService.createBooking(this.bookingModel)
             .subscribe((res: any) => {
                     if (res.status === 204) {

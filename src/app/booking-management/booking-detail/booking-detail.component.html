@@ -104,7 +104,7 @@
     <h4 class="text-center">BOOKING DETAILS</h4>
     <div class="row small-collapse">
       <div class="row-wrapper">
-          <div class=" medium-6 columns">
+          <div class="medium-4 columns">
               <div class="form-field">
                 <label>DATE OF APPOINTMENT *</label>
                 <p-calendar name='dpDate' 
@@ -165,6 +165,21 @@
                   class="inline-icon error">
               <span>End time can't be before start time</span>!
             </span>
+          </div>
+        </div>
+        <div class='medium-2 columns'>
+          <div class='form-feild'>
+            <div class="switch tiny round">
+              <label for='recurring-booking'>RECURRING BOOKING?</label>
+              <input class="switch-input"
+                     id="recurring-booking"
+                     type="checkbox"
+                     name="recurring-booking"
+                     [(ngModel)]="isRecurringBooking">
+              <label class="switch-paddle" for="recurring-booking">
+                <span class="show-for-sr">RECURRING BOOKING?</span>
+              </label>
+            </div>
           </div>
         </div>
       </div>
