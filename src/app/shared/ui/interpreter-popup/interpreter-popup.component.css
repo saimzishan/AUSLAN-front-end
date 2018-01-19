@@ -1,0 +1,6 @@
+.missingImageSize{
+    display: inline-block;
+    vertical-align: middle;
+    max-width: 100%;
+    height: 65 !important;  
+}

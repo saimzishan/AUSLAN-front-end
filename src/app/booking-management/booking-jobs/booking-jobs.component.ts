@@ -346,7 +346,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                             if (this.selectedBookingModel.state === BOOKING_STATE.Service_completed) {
                             this.disableReject = true;
                             this.disableAccept = true;
-                        } 
+                            }
                             this.getStateString();
                         }
                     }
