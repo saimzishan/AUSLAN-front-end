@@ -441,3 +441,4 @@ Feature: Create Booking with preferred or blocked interpreters
     Then I should be on the edit booking page
     And I can count the element with css 'section.interpreter_selected_blocked' to be '0'
     And I can count the element with css 'section.interpreter_selected_prefered' to be '1'
+ 
