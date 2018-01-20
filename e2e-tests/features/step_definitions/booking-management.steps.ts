@@ -87,7 +87,6 @@ defineSupportCode(({Given, Then, When}) => {
     Then(/^I can verify the image of myself in the list of interpreter start with '(.*)'$/, bookingJobPO.verifyPictureOfYourself);
 
     // Filling in specific fields in the booking form
-    Then(/^I set the (\w+) time as (\d+) days (?:(\d+) hours?)?\s?from now$/, createBookingPO.setTime);
     Then(/^All required booking fields should be filled$/, bookingEditPO.checkValueInAllRequiredFields);
     Then(/^The cell of (.*) will be populated with (.*)$/, createBookingPO.checkTheDropDown);
 

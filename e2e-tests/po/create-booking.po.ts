@@ -12,6 +12,7 @@ interface TestDateFormat {
 
 export class BookingPage extends PageObject {
     previousDate:boolean=false;
+    nDaysAfterTomorrow:number=8;
     list_of_object = {};
     browse = () => {
         return this.currentPath().then((currentPath) => {
@@ -219,6 +220,10 @@ export class BookingPage extends PageObject {
         this.previousDate = true;
         return this.createBookingWithTimeAndInterpreter('standard', '10:15 AM', '11:15 AM', '2', 'auslanInterpreters_count');
     }
+    createBookingWithNDaysAfterTomorrow = (days: number) => {
+        this.nDaysAfterTomorrow = days;
+        return this.createBookingWithTimeAndInterpreter('standard', '10:15 AM', '11:15 AM', '2', 'auslanInterpreters_count');
+    }
     createBookingForPerth = () => {
         return this.createBookingWithAddressTimeAndInterpreter('standard', '10:15 AM', '11:15 AM', '2');
     }
@@ -259,7 +264,7 @@ export class BookingPage extends PageObject {
         ].join('/');
     }
     createBookingWithTimeAndInterpreter = (standard: string, startTime: string, endTime: string, interpreterNum: string, interpreterFieldName: string) => {
-        const dateToSend = this.previousDate ? this.getDateAfterNDays(-1) : this.getDateAfterNDays(8);
+        const dateToSend = this.previousDate ? this.getDateAfterNDays(-1) : this.getDateAfterNDays(this.nDaysAfterTomorrow);
         this.setDate(dateToSend);
         this.setStartEndTime('start', startTime);
         this.setStartEndTime('end', endTime);
