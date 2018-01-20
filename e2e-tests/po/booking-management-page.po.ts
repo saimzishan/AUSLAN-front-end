@@ -250,10 +250,10 @@ export class BookingManagementPage extends PageObject {
         return searchForm.submit();
     }
     querySearchWithEmptyDate = () => {
-        this.getElementByName('date_from').sendKeys(protractor.Key.BACK_SPACE);
+        this.getElementByName('date_from').sendKeys("2018-01-19");
     }
     queryManualSearchWithFutureDate = () => {
-        this.getElementByName('date_from').sendKeys(protractor.Key.ARROW_RIGHT,protractor.Key.ARROW_UP);
+        this.getElementByName('date_from').sendKeys(protractor.Key.ARROW_RIGHT, protractor.Key.ARROW_UP);
     }
     queryManualSearchWithCurrentDate = () => {
         this.getElementByName('date_from').sendKeys(protractor.Key.ARROW_RIGHT,protractor.Key.ARROW_DOWN);

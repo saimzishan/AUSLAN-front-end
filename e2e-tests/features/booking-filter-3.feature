@@ -166,7 +166,7 @@ Feature: Booking Filter
     And I click out of the text box
     Then I am shown with 0 booking
 
-  @ignoreThis
+  @runThis
   Scenario: As a Administrator, filter for date should only submit date after clicked out or pressed enter
     Given I sign in with valid Administrator credentials
     When I am on the bookings page

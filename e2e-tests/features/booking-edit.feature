@@ -182,7 +182,7 @@ Feature: Edit Booking
   # Contact last name: Donavan
   # Contact email: jimmy@donavan.com
   # Contact phone number: 03 9876 4321
-  @ignoreThis
+  @runThis
   Scenario: As a Booking Officer, When editing a booking, I should see the contact details as given by api
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
@@ -208,7 +208,7 @@ Feature: Edit Booking
     And I can verify the input 'contact_last_name' will have the value 'Castle'
 
     #----------------------------------------- AUSLAN1-978 -> START ----------------------------------------
-  @ignoreThis
+  @runThis
   Scenario: Booking Officer can change the booking method
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
@@ -233,7 +233,7 @@ Feature: Edit Booking
     #----------------------------------------- AUSLAN1-978 -> END ----------------------------------------
 
     #----------------------------------------- AUSLAN1-979 -> START ----------------------------------------
-  @ignoreThis
+  @runThis
   Scenario: Booking Officer can select only 1 service type at a time and is able to change the service type of booking
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
