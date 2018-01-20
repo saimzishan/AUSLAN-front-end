@@ -118,7 +118,7 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER BOOK
     And I will be taken to the 'INTERPRETER Signup' page
     And I can count the element with css 'span.fc-title' to be '0'
 
-  @runThis
+  @ignoreThis
   Scenario: As INTERPRETER, I can create edit and delete blockout on desktop
     Given I go to the website
     And I am on a computer

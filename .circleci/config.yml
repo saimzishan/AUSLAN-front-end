@@ -28,10 +28,10 @@ jobs:
               PR=$(git rev-parse --abbrev-ref HEAD)
               FILES=$(git diff --name-only origin/$PR `git merge-base origin/$PR origin/master` | grep "booking")
               if [[ -z $FILES ]] ; then
-                (echo $FILES;circleci tests glob "e2e-tests/features/*.feature" | grep -v "booking";) | cat | sed '/^\s*$/d' | tr " " "\n" | sort -u  |circleci tests split > /var/www/booking-system-frontend/test_features_for_split_container.txt
+                (echo $FILES;circleci tests glob "e2e-tests/features/*.feature" | grep -v "booking";) | cat | sed '/^\s*$/d' | tr " " "\n" | sort -u  | grep "\.feature" | circleci tests split > /var/www/booking-system-frontend/test_features_for_split_container.txt
               else
-                (echo $FILES;circleci tests glob "e2e-tests/features/*booking*.feature";) | cat | sed '/^\s*$/d' | tr " " "\n" | sort -u  | circleci tests split > /var/www/booking-system-frontend/test_features_for_split_container.txt
-              fi
+                (echo $FILES;circleci tests glob "e2e-tests/features/*booking*.feature";) | cat | sed '/^\s*$/d' | tr " " "\n" | sort -u  | grep "\.feature" | circleci tests split > /var/www/booking-system-frontend/test_features_for_split_container.txt
+             fi
             fi
             cat /var/www/booking-system-frontend/test_features_for_split_container.txt
       - run:
@@ -41,17 +41,17 @@ jobs:
           shell: /bin/bash -l
           command: |
             npm install
-      - run:
-          name: Test Deployment Package
-          environment:
-            E2E_ENV: "localhost"
-          shell: /bin/bash -l
-          command: |
-            if [ "${CIRCLE_NODE_INDEX}" == "0" ]; then
-              rm -rf dist
-              npm install enhanced-resolve@3.3.0
-              ng build --aot --env=canary
-            fi
+#      - run:
+#          name: Test Deployment Package
+#          environment:
+#            E2E_ENV: "localhost"
+#          shell: /bin/bash -l
+#          command: |
+#            if [ "${CIRCLE_NODE_INDEX}" == "0" ]; then
+#              rm -rf dist
+#              npm install enhanced-resolve@3.3.0
+#              ng build --aot --env=canary
+#            fi
       - run:
           name: Running the unit tests
           environment:

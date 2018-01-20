@@ -343,7 +343,10 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                                 /* Also Redirects */
                                 this.router.navigate(['/booking-management']);
                             }
-
+                            if (this.selectedBookingModel.state === BOOKING_STATE.Service_completed) {
+                            this.disableReject = true;
+                            this.disableAccept = true;
+                            }
                             this.getStateString();
                         }
                     }
