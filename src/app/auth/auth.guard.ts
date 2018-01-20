@@ -31,6 +31,7 @@ export class AuthGuard implements CanActivate {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
         GLOBAL.currentUser = undefined;
+        GLOBAL.currentInterpreter = undefined;
     }
 
     public static login(user) {
