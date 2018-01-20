@@ -658,7 +658,7 @@ export class Heroku {
     }
 
     // Adds a '0' in the start if the date < 10
-    private static prettyDate = (date: number | string): string => {
+    public static prettyDate = (date: number | string): string => {
         date = date.toString();
         return ('00' + date).slice(date.length);
     }
