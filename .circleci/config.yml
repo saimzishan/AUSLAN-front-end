@@ -47,7 +47,7 @@ jobs:
             E2E_ENV: "localhost"
           shell: /bin/bash -l
           command: |
-            if [ "${CIRCLE_NODE_INDEX}" == "0" ]; then
+            if [[  "${CIRCLE_BRANCH}" == "master"  && "${CIRCLE_NODE_INDEX}" == "0" ]]; then
               rm -rf dist
               npm install enhanced-resolve@3.3.0
               ng build --aot --env=canary
