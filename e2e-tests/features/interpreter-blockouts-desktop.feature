@@ -5,7 +5,7 @@ Feature: As INTERPRETER, I can create blockout on desktop
     And I am on a computer
     And I am shown the login screen, with picture and signup button
 
-  @runThis
+  @ignoreThis
   Scenario: As INTERPRETER, I can create edit and delete blockout on desktop
     And I sign in with valid Interpreter credentials
     Then I will be shown the bookings page

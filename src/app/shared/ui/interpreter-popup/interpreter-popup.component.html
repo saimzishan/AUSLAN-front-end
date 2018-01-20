@@ -10,7 +10,7 @@
                  [ngClass]="{'selected': interpreter.interpreter_id === checkedInterpreter,
                  'interpreter_added': !isLocallyRemovedFromArray(interpreter.interpreter_id) && isAlreadyAdded(interpreter.interpreter_id)  === true}"
                  (click)="isInterpreterSelectable(interpreter.interpreter_id)">
-          <img (click)="checkedInterpreter = interpreter.interpreter_id ;" src="{{interpreter.photo_url}}"  alt="">
+          <img class="ImgSize" (click)="checkedInterpreter = interpreter.interpreter_id ;" src="{{interpreter.photo_url}}"  alt="">
           <span>{{interpreter.first_name}} {{interpreter.last_name}}</span>
         </section>
       </section>
