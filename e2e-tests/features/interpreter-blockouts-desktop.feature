@@ -1,6 +1,6 @@
 Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER BOOKING ON DESKTOP
 
-  @runThis
+  @ignoreThis
   Scenario: As Administrator I can crud INTERPRETER blockouts on desktop
     Given I go to the website
     And I am on a computer
@@ -59,7 +59,7 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER BOOK
     And I will be taken to the 'INTERPRETER Signup' page
     And I can count the element with css 'span.fc-title' to be '0'
 
-  @runThis
+  @ignoreThis
   Scenario: As Booking Officer I can crud INTERPRETER blockouts on desktop
     Given I go to the website
     And I am on a computer
@@ -164,7 +164,7 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER BOOK
     And I will be taken to my individual profile page
     And I can count the element with css 'span.fc-title' to be '0'
 
-  @runThis
+  @ignoreThis
   Scenario: As INTERPRETER, I cannot create a blockout and if i have accepted same time booking alread, a booking is created and Booking Officer, Individual Client exists
     Given I am on a computer
     And I go to the website
@@ -208,7 +208,7 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER BOOK
     And I click on BUTTON name 'save_blockout'
     And I get error message: 'Existing booking during blockout time. Blockout not changed'
 
-  @runThis
+  @ignoreThis
   Scenario: As INTERPRETER, I can create a blockout and cannot be allocated to a booking, a booking is created and Booking Officer, Individual Client exists
     Given I go to the website
     And I am on a computer
