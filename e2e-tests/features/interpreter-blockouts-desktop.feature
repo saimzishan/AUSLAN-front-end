@@ -204,7 +204,7 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER BOOK
     And I will be taken to blockout page
     And I enter blockout details with booking time same as booking
     And I enter blockout name 'singleEvent'
-    And I wait for 300 milli-seconds
+    And I wait for 250 milli-seconds
     And I click on BUTTON name 'save_blockout'
     And I get error message: 'Existing booking during blockout time. Blockout not changed'
 
