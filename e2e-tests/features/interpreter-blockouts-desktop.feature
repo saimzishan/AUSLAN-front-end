@@ -208,6 +208,8 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER BOOK
     And I click on BUTTON name 'save_blockout'
     And I get error message: 'Existing booking during blockout time. Blockout not changed'
 
+
+    
   @runThis
   Scenario: As INTERPRETER, I can create a blockout and cannot be allocated to a booking, a booking is created and Booking Officer, Individual Client exists
     Given I go to the website
