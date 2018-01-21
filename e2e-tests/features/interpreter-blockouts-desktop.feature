@@ -1,5 +1,34 @@
 Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER BOOKING ON DESKTOP
 
+
+  @runThis
+  Scenario: As Administrator I can add INTERPRETER blockouts on desktop
+    Given I go to the website
+    And I am on a computer
+    And I am shown the login screen, with picture and signup button
+    And I sign in with valid Administrator credentials
+    Then I will be shown the bookings page
+    When I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then The valid Interpreter should be in the list
+    When I hover on the 'Actions' of the Interpreter
+    Then I click on edit for an active existing Interpreter
+    And I will be taken to the 'INTERPRETER Signup' page
+    And I click on BUTTON name 'modify_blockouts'
+    And I will be taken to blockout page
+    And I click on BUTTON name 'save_blockout'
+    And I get error message: 'Oops! Please fill in all the fields correctly.'
+    And I click on BUTTON name 'cancel_blockout'
+    And I am on the 'User Management' list page
+    When I hover on the 'Actions' of the Interpreter
+    Then I click on edit for an active existing Interpreter
+    And I will be taken to the 'INTERPRETER Signup' page
+    And I click on BUTTON name 'modify_blockouts'
+    And I will be taken to blockout page
+    And I enter blockout name 'singleEvent'
+    And I click on BUTTON name 'save_blockout'
+    And I get success message: 'Blockout successfully added'
+
   @ignoreThis
   Scenario: As Administrator I can crud INTERPRETER blockouts on desktop
     Given I go to the website
