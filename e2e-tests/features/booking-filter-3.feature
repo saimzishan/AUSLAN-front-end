@@ -104,7 +104,7 @@ Feature: Booking Filter
     And I am on the bookings page
     Then I can see that date_from is preseleted with current date
 
-  @ignoreThis
+  @runThis
   Scenario: As a Booking Officer, I can create a booking for Organisational Representative with old date and I should be able to filter the bookings by today's date onward
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
@@ -177,4 +177,3 @@ Feature: Booking Filter
     When I query search with current date manually
     And I press enter
     Then I am shown with 5 booking
-    
