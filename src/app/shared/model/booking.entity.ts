@@ -39,7 +39,6 @@ export class Booking {
     public method_type: string;
     public number_of_auslan_interpreters_required: number;
     public number_of_deaf_interpreters_required: number;
-    public number_of_deaf_blind_interpreters_required: number;
     public number_of_captioners_required: number;
     public number_of_note_takers_required: number;
     public number_of_visual_frame_interpreters_required: number;
@@ -163,7 +162,6 @@ export class Booking {
         this.method_type = data.method_type;
         this.number_of_auslan_interpreters_required = data.number_of_auslan_interpreters_required;
         this.number_of_deaf_interpreters_required = data.number_of_deaf_interpreters_required;
-        this.number_of_deaf_blind_interpreters_required = data.number_of_deaf_blind_interpreters_required;
         this.number_of_captioners_required = data.number_of_captioners_required;
         this.number_of_note_takers_required = data.number_of_note_takers_required;
         this.number_of_visual_frame_interpreters_required = data.number_of_visual_frame_interpreters_required;
@@ -296,7 +294,6 @@ export class Booking {
             method_type: this.method_type,
             number_of_auslan_interpreters_required: this.number_of_auslan_interpreters_required,
             number_of_deaf_interpreters_required: this.number_of_deaf_interpreters_required,
-            number_of_deaf_blind_interpreters_required: this.number_of_deaf_blind_interpreters_required,
             number_of_captioners_required: this.number_of_captioners_required,
             number_of_note_takers_required: this.number_of_note_takers_required,
             number_of_visual_frame_interpreters_required: this.number_of_visual_frame_interpreters_required,
@@ -364,13 +361,12 @@ export class Booking {
     }
 
     getInterpreters() {
-       return +this.number_of_auslan_interpreters_required + +this.number_of_deaf_interpreters_required  +
-              +this.number_of_deaf_blind_interpreters_required + +this.number_of_captioners_required +
-              +this.number_of_note_takers_required + +this.number_of_visual_frame_interpreters_required +
-              +this.number_of_tactile_interpreters_required + +this.number_of_platform_interpreters_required +
-              +this.number_of_asl_interpreters_required + +this.number_of_bsl_interpreters_required +
-              +this.number_of_isl_interpreters_required + +this.number_of_signed_english_interpreters_required +
-              +this.number_of_indigenous_sign_interpreters_required ;
+       return +this.number_of_auslan_interpreters_required + +this.number_of_deaf_interpreters_required +
+              +this.number_of_captioners_required + +this.number_of_note_takers_required +
+              +this.number_of_visual_frame_interpreters_required + +this.number_of_tactile_interpreters_required +
+              +this.number_of_platform_interpreters_required + +this.number_of_asl_interpreters_required +
+              +this.number_of_bsl_interpreters_required + +this.number_of_isl_interpreters_required +
+              +this.number_of_signed_english_interpreters_required + +this.number_of_indigenous_sign_interpreters_required ;
     }
 
     utcToBookingTimeZone(time: string) {

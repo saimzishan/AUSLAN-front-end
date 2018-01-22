@@ -418,35 +418,6 @@
           </div>
         </div>
       <ng-container *ngIf="cbDeafBlindInterpreter || cbVisualFrameInterpreter || cbTactileInterpreter || cbPlatformInterpreter">
-        <div class="medium-6 columns" *ngIf="cbDeafBlindInterpreter">
-          <div class="form-field">
-            <label>NUMB. OF DEAF BLIND INT. NEEDED *
-              <span mdTooltip="Enter the Number of Deaf Interpreters needed">
-                <i class="inline-icon-tip"></i>
-              </span>
-            </label>
-            <input [(ngModel)]="bookingModel.number_of_deaf_blind_interpreters_required"
-                   name="deafBlind_count"
-                   #deafBlind_count="ngModel"
-                   placeholder="Enter the Number of Deaf Blind Interpreters needed"
-                   (click)="fireNotification($event)"
-                   type="tel" min="1" required digits>
-            <span *ngIf="deafBlind_count.touched && !deafBlind_count.errors?.required && !deafBlind_count.errors?.digits;"
-                  class="inline-icon inline-icon-valid valid"></span>
-            <span *ngIf="deafBlind_count.touched && (deafBlind_count.errors?.required || deafBlind_count.errors?.digits);"
-                  class="inline-icon error">
-              <span>Minimum 1 digit required.</span>!
-            </span>
-            <span *ngIf="deafBlind_count.touched && deafBlind_count.errors?.min"
-                  class="inline-icon error">
-              <span>Minimum value should be 1.</span>!
-            </span>
-            <span *ngIf="bookingModel.number_of_deaf_blind_interpreters_required < 2  && isMoreInterpreterNeeded()"
-                  class="inline-icon error">
-              <span>You may require more than 1 deaf blind interpreter for this booking.</span>!
-            </span>
-          </div>
-        </div>
         <div class="medium-6 columns" *ngIf="cbVisualFrameInterpreter">
           <div class="form-field">
             <label>NUMB. OF VISUAL FRAME INT. NEEDED *
@@ -748,7 +719,7 @@
 
   <ng-container *ngIf="cbCaptioner || cbNotetaker || bookingModel.method_type === 'vri'">
     <div class="separator"></div>
-    <h4 class="text-center">ADDITIONAL FIELDS</h4>
+    <h4 class="text-center">TECHNICAL DETAILS</h4>
 
     <div class="row">
       <div class="row-wrapper" *ngIf="cbCaptioner" name="captioningAdditionalFields"> 
@@ -792,9 +763,10 @@
             <div class="form-field">
               <label>AUDIO SOURCE
               </label>
-              <input [(ngModel)]="bookingModel.audio_source"
-                     name='audio_source'
-                     type='text' placeholder="Enter Audio Source">
+              <select [(ngModel)]="bookingModel.audio_source" name='audio_source'>
+                     <option *ngFor="let audio_src of ['Smartphone / Tablet', 'Desktop Computer', 'Laptop', 'AV System Patch-In', 'Telephone Link', 'Other (specify in notes)']"
+                             [value]="audio_src">{{audio_src}}</option>
+              </select>
             </div>
           </div>
       </div> 
@@ -803,9 +775,10 @@
           <div class="form-field">
             <label>TECH PLATFORM
             </label>
-            <input [(ngModel)]="bookingModel.tech_platform"
-                   name='tech_platform'
-                   type='text' placeholder="Enter Tech Platform">
+            <select [(ngModel)]="bookingModel.tech_platform" name='tech_platform'>
+                   <option *ngFor="let platform of ['Skype', 'Google Hangouts', 'Zoom', 'Adobe Connect', 'Echo360', 'Livestream', 'Webex', 'Gotomeeting', 'Gotowebinar', 'Youtube Live', 'Other (specify in notes)']"
+                           [value]="platform">{{platform}}</option>
+            </select>
           </div>
         </div>
         <div class="medium-6 columns">
@@ -823,9 +796,10 @@
             <div class="form-field">
               <label>HARDWARE
               </label>
-              <input [(ngModel)]="bookingModel.hardware"
-                     name='hardware'
-                     type='text' placeholder="Enter Hardware">
+              <select [(ngModel)]="bookingModel.hardware" name='hardware'>
+                     <option *ngFor="let hard_ware of ['Computer', 'Laptop', 'iPad', 'Smartphone', 'VC system', 'Other (specify in notes)']"
+                             [value]="hard_ware">{{hard_ware}}</option>
+              </select>
             </div>
           </div>
           <div class="medium-6 columns">
@@ -842,9 +816,11 @@
             <div class="form-field">
               <label>HOW WOULD YOU LIKE TO RECEIVE NOTES
               </label>
-              <input [(ngModel)]="bookingModel.how_would_you_like_to_receive_notes"
-                     name='how_would_you_like_to_receive_notes'
-                     type='text' placeholder="Enter How Would You Like To Receive Notes">
+              <select [(ngModel)]="bookingModel.how_would_you_like_to_receive_notes" 
+                     name='how_would_you_like_to_receive_notes'>
+                     <option value="Digitally">Digitally</option>
+                     <option value="Hand Written">Hand Written</option>
+              </select>
             </div>
         </div>
     </div>
