@@ -75,6 +75,7 @@ jobs:
             fi
       - deploy:
           name: Deploy to S3 if tests pass and branch is Master
+          shell: /bin/bash -l
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               rm -rf dist
