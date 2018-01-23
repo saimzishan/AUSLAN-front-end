@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewContainerRef, OnDestroy} from '@angular/core';
+import {Component, OnInit, ViewContainerRef, OnDestroy, ViewChild} from '@angular/core';
 import {BookingService} from '../../api/booking.service';
 import {Booking} from '../../shared/model/booking.entity';
 import {UserService} from '../../api/user.service';
@@ -16,6 +16,9 @@ import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
 import {GLOBAL} from '../../shared/global';
 import {BookingHeaderService} from '../booking-header/booking-header.service';
 import {LinkidPopupComponent} from '../linkid-popup/linkid-popup.component';
+import * as moment from 'moment';
+import * as $ from "jquery";
+import {CalendarComponent} from 'ap-angular2-fullcalendar';
 
 @Component({
     selector: 'app-booking-jobs',
@@ -43,6 +46,8 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     disableReject = false;
     private currentStatus = 'Invited';
     stateStr = '';
+    calendarOptions: Object = {};
+    @ViewChild('mycal') myCal: CalendarComponent;
 
     constructor(public dialog: MdDialog,
                 public viewContainerRef: ViewContainerRef, public spinnerService: SpinnerService,
@@ -64,6 +69,57 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         this.headerSubscription = this.bookingHeaderService.notifyObservable$.subscribe((res) => {
             this.callRelatedFunctions(res);
         });
+        this.calendarOptions = {
+            schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
+            scrollTime: '08:00',
+            header: {
+                right: 'timelineDay'
+            },
+            defaultView: 'timelineDay',
+
+            events: [
+            ]
+        };
+
+        for (let inte of this.interpreterList) {
+            for (let avail_block of (<Interpreter>inte).availability_blocks_attributes) {
+
+                let sd = new Date(avail_block.start_time);
+                let ed = new Date(avail_block.end_date || avail_block.start_time);
+                let edt = new Date(avail_block.end_time);
+
+
+                let event: any = ({
+                    title: avail_block.name,
+                    color: avail_block.recurring ? '#00ff00' : '#257e4a',
+                    id: avail_block.id,
+                    booking_id: avail_block.booking_id,
+                    start: avail_block.recurring === false ? sd.toISOString() : `${sd.getHours()}:${sd.getMinutes()}`,
+                    end: avail_block.recurring === false ? ed.toISOString() : `${edt.getHours()}:${edt.getMinutes()}`,
+                    recurring: avail_block.recurring,
+                    frequency: avail_block.frequency
+                });
+                if (avail_block.recurring === true) {
+                    event.dow = avail_block.frequency === 'daily' ? [1, 2, 3, 4, 5] : [sd.getDay()];
+                    event.ranges = [
+                        {
+                            start: moment().endOf(avail_block.frequency === 'daily' ? 'day' :
+                                avail_block.frequency === 'weekly' ? 'week' :
+                                    avail_block.frequency === 'monthly' ? 'month' : 'week'),
+                            end: moment().endOf(avail_block.frequency === 'daily' ? 'day' :
+                                avail_block.frequency === 'weekly' ? 'week' :
+                                    avail_block.frequency === 'monthly' ? 'month' : 'week')
+                        },
+                        {
+                            start: moment(sd.toISOString()).format('YYYY-MM-DD'),
+                            end: moment(ed.toISOString()).format('YYYY-MM-DD')
+                        }
+                    ];
+                }
+
+                this.calendarOptions['events'].push(event);
+            }
+        }
     }
 
     callRelatedFunctions(res) {
@@ -539,11 +595,34 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         return false;
     }
 
-    public travelPayStatus(interpreter) {
+    travelPayStatus(interpreter) {
         if (interpreter.distance === '-') {
             return '-';
         }else {
             return interpreter.travel_pay ? 'Yes' : 'No';
         }
+    }
+    isPreferred(user) {
+        let preferred_int =
+            this.selectedBookingModel.preference_allocations_attributes;
+        return preferred_int.filter(
+            i => i.interpreter_id === user.id
+        ).length > 0;
+    }
+
+    isStaff(user) {
+        return false;
+    }
+    getLevel(user) {
+        return '';
+    }
+    getNotes(user: Interpreter) {
+        return user.booking_office_notes;
+    }
+    getSuburb (user: Interpreter) {
+        return user.address_attributes.suburb;
+    }
+    stringifyUser(user) {
+        return JSON.stringify(user);
     }
 }
