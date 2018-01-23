@@ -133,6 +133,7 @@ export class Booking {
         this.update_all_linked_bookings = false;
         this.method_type = 'onsite';
         this.new_link_id_required = false;
+        this.how_would_you_like_to_receive_notes = 'Digitally';
     }
 
     clean(theObject) {
