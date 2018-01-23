@@ -1,9 +1,45 @@
 <section id="page-common">
   <app-booking-header [showButtons]='false' [bookingModel]='bookingModel'></app-booking-header>
-  <section>
+  <section id="job-booking">
     <main>
       <app-booking-info [selectedBookingModel]="bookingModel"></app-booking-info>
+      <ng-container>
+        <h2>Payroll details</h2>
 
+        
+          <section id="filters" class="box">
+              <div class="box-heading">
+                  <h2>Interpreter 1 :</h2>
+              </div>
+              <section class="search-bar">
+                    <label>PAYROLL AS</label>
+                    <select #booking_for name="booking_for" aria-label="A">
+                      <option [value]="Casual">Casual</option>
+                    </select>
+              </section>
+
+              <section class="filters">
+                  <div class="separator"></div>
+                  <div class="search-bar">
+                    <md-checkbox name="cbPayInterpreter">Pay interpreter <br> <span class="clr-green fnt-size">RECOMMENDED</span></md-checkbox>
+                    <br>
+                    <md-checkbox name="cbPayTravel">Pay travel <br> <span class="fnt-size">NOT RECOMMENDED</span></md-checkbox>
+                  </div>
+              </section>
+          </section>
+ 
+          <section id="filters" class="box">
+              <div class="box-heading">
+                  <h2>Melbourne Univeristy</h2>
+              </div>
+              <section class="search-bar">
+                  <md-checkbox name="cbInvoiceClient">Invoice client<br> <span class="clr-green fnt-size">RECOMMENDED</span></md-checkbox>
+                  <br>
+                  <md-checkbox name="cbChargeTravel">Charge travel <br> <span class="fnt-size">NOT RECOMMENDED</span></md-checkbox>
+              </section> 
+          </section>
+
+      </ng-container>
     </main>
   </section>
 </section>

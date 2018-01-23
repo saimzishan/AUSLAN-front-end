@@ -1,0 +1,16 @@
+.clr-green {
+    color: #02b86e;
+}
+
+.fnt-size {
+    font-size: 10px;
+}
+
+.box {
+    width: 50%;
+    float: left;
+}
+
+.box-heading {
+    width: 50%;
+}
