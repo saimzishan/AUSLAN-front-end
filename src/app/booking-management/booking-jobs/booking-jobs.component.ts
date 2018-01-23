@@ -16,6 +16,7 @@ import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
 import {GLOBAL} from '../../shared/global';
 import {BookingHeaderService} from '../booking-header/booking-header.service';
 import {LinkidPopupComponent} from '../linkid-popup/linkid-popup.component';
+import {DatePipe} from '@angular/common';
 
 @Component({
     selector: 'app-booking-jobs',
@@ -44,12 +45,13 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     private currentStatus = 'Invited';
     stateStr = '';
     isVicdeaf = false;
+    diffInHours: number;
 
     constructor(public dialog: MdDialog,
                 public viewContainerRef: ViewContainerRef, public spinnerService: SpinnerService,
                 public notificationServiceBus: NotificationServiceBus,
                 public userDataService: UserService, public bookingService: BookingService, public bookingHeaderService: BookingHeaderService,
-                private router: Router, private route: ActivatedRoute) {
+                private router: Router, private route: ActivatedRoute, private datePipe: DatePipe) {
 
         /** http://stackoverflow.com/questions/38008334/angular2-rxjs-when-should-i-unsubscribe-from-subscription */
         this.sub = this.route.params.subscribe(params => {
@@ -165,16 +167,25 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         this.dialogRef.componentInstance.title = isCancel ? 'Cancel linked booking' : 'Unable to service linked booking';
         this.dialogRef.componentInstance.cancelTitle = isCancel ? 'Cancelled Chargeable' : 'Unable to service all bookings';
         this.dialogRef.componentInstance.okTitle = isCancel ? 'Cancelled No Charge' : 'Unable to service this booking';
-        if(this.isVicdeaf) {
-        this.dialogRef.componentInstance.popupMessage =
-             isCancel ? `Are you sure you want to cancel this booking? This is permanent. We recommend to cancel this
-              booking as Cancelled Chargeable since the start date is within 24 hours.` :
+
+        if (this.isVicdeaf && (this.diffInHours < 48)) {
+        this.dialogRef.componentInstance.popupMessage = isCancel ? `Are you sure you want to cancel this booking? This is permanent. We recommend to cancel this
+              booking as Cancelled Chargeable since the start date is within 48 hours.` :
           `Would you like to mark this booking as unable to service, or
           all linked bookings?`;
-        } else {
-            this.dialogRef.componentInstance.popupMessage =
-            isCancel ? `Are you sure you want to cancel this booking? This is permanent. We recommend to cancel this
-             booking as Cancelled Chargeable since the start date is within 48 hours.` :
+        } else if (!this.isVicdeaf && (this.diffInHours < 24)) {
+            this.dialogRef.componentInstance.popupMessage = isCancel ? `Are you sure you want to cancel this booking? This is permanent. We recommend to cancel this
+             booking as Cancelled Chargeable since the start date is within 24 hours.` :
+         `Would you like to mark this booking as unable to service, or
+         all linked bookings?`;
+        } else if (this.isVicdeaf && (this.diffInHours > 48)) {
+            this.dialogRef.componentInstance.popupMessage = isCancel ? `Are you sure you want to cancel this booking? This is permanent. We recommend to cancel this
+             booking as Cancelled No Charge since the start date is not within 48 hours.` :
+         `Would you like to mark this booking as unable to service, or
+         all linked bookings?`;
+        } else if (!this.isVicdeaf && (this.diffInHours > 24)) {
+            this.dialogRef.componentInstance.popupMessage = isCancel ? `Are you sure you want to cancel this booking? This is permanent. We recommend to cancel this
+             booking as Cancelled No Charge since the start date is not within 24 hours.` :
          `Would you like to mark this booking as unable to service, or
          all linked bookings?`;
         }
@@ -197,24 +208,21 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     changeBookingState(isCancel: Boolean, update_all_linked_bookings?: boolean) {
        let state;
        let stateMsg;
-        if(update_all_linked_bookings) {
+        if (update_all_linked_bookings) {
              state = isCancel ? 'cancelled_chargeable' : 'unable_to_service';
              stateMsg = isCancel ? 'Cancelled with No Charge' : 'Unable to Service';
         } else {
             state = isCancel ? 'cancelled_no_charge' : 'unable_to_service';
             stateMsg = isCancel ? 'Cancelled with Charge' : 'Unable to Service';
         }
-      
-      
-
         this.spinnerService.requestInProcess(true);
-        this.bookingService.updateBookingByTransitioning(this.selectedBookingModel.id, state, update_all_linked_bookings)
+        this.bookingService.updateBookingByTransitioning(this.selectedBookingModel.id, state)
             .subscribe((res: any) => {
                     if (res.status === 204) {
-                        if(update_all_linked_bookings){
+                    if (update_all_linked_bookings) {
                         this.selectedBookingModel.state = isCancel ? BOOKING_STATE.Cancelled_chargeable : BOOKING_STATE.Service_completed;
                         } else {
-                            this.selectedBookingModel.state = isCancel ? BOOKING_STATE.Cancelled_no_charge : BOOKING_STATE.Service_completed;     
+                        this.selectedBookingModel.state = isCancel ? BOOKING_STATE.Cancelled_no_charge : BOOKING_STATE.Service_completed;
                         }
                         this.isCancelledOrUnableToServe = true;
                         this.notificationServiceBus.launchNotification(false, 'The booking has been transitioned to \"' + stateMsg + '\" state');
@@ -333,10 +341,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                         this.selectedBookingModel.interpreters.sort((i, j) =>
                             i.state === 'Accepted' ? -1 : j.state === 'Accepted' ? 1 : 0
                         );
-                       
-                         this.isVicdeaf = GLOBAL.VICDEAF_STATES.filter(teststate => teststate === this.selectedBookingModel.venue.state).length > 0;
-                         console.log('Vicdeaf length: '+ this.isVicdeaf);
-                         
+                        this.isVicdeaf = GLOBAL.VICDEAF_STATES.filter(teststate => teststate === this.selectedBookingModel.venue.state).length > 0;
                         this.fetchNearbyinterpreters(param_id);
                         this.isCancelledOrUnableToServe = this.isActiveState('Cancelled_no_charge')
                             || this.isActiveState('Unable_to_service') || this.isActiveState('Cancelled_chargeable');
@@ -344,6 +349,12 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                         this.selectedBookingModel.venue.start_time_iso = this.selectedBookingModel.utcToBookingTimeZone(this.selectedBookingModel.venue.start_time_iso);
                         this.selectedBookingModel.venue.end_time_iso = this.selectedBookingModel.utcToBookingTimeZone(this.selectedBookingModel.venue.end_time_iso);
 
+                        let currentDateTime = this.selectedBookingModel.utcToBookingTimeZone(this.datePipe.transform(Date.now()));
+                        let diffInMs: number = Date.parse(currentDateTime) - Date.parse(this.selectedBookingModel.venue.start_time_iso);
+                        this.diffInHours = diffInMs / 1000 / 60 / 60;
+                        if (this.diffInHours < 0) {
+                            this.diffInHours = (-1) * this.diffInHours;
+                        }
                         if (this.isCurrentUserInterpreter()) {
                             this.selectedBookingModel.interpreters.filter(i => i.id === GLOBAL.currentUser.id)
                                 .map(i => this.currentStatus = i.state || 'Invited');
