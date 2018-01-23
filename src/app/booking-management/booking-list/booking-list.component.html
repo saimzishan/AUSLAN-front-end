@@ -55,7 +55,8 @@
                     <div class="oneRow">
                         <span>To:</span>
                         <input type="date" name="date_to" [(ngModel)]="bookingFilter.date_to"
-                               (change)="filter('date_to', bookingFilter.date_to)">
+                        (blur)="filter('date_to', bookingFilter.date_to)"
+                        (keyup.enter)="filter('date_to', bookingFilter.date_to)">
                     </div>
                 </th>
 
