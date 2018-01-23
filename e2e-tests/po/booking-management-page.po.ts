@@ -3,7 +3,7 @@ import {browser, by, element, $, $$, protractor} from 'protractor';
 import {expect} from '../config/helpers/chai-imports';
 import {User} from '../helper';
 import {BookingPage} from './create-booking.po';
-import { debug } from 'util';
+import * as moment from 'moment';
 
 enum BookingTableHeaders {
     None, Empty, Job, Status, State, Date, Org,
@@ -300,6 +300,13 @@ export class BookingManagementPage extends PageObject {
         };
         this.booking.setDateOnly('date_from', dateFrom);
         return this.booking.setDateOnly('date_to', dateTo);
+    }
+
+    filterByFirstNLastDaysOfNextWeek = () => {
+        let firstDay = moment().add(1, 'weeks').startOf('isoWeek').format('DDMMYYYY');
+        let lastDay = moment().add(1, 'weeks').endOf('isoWeek').format('DDMMYYYY');
+        this.getElementByName('date_from').sendKeys(firstDay, protractor.Key.TAB);
+        return this.getElementByName('date_to').sendKeys(lastDay, protractor.Key.TAB);
     }
 
     filterBookingByCurrentDate = () => {

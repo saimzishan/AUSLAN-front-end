@@ -56,7 +56,7 @@ defineSupportCode(({Given, Then, When}) => {
     When(/^I query booking with interpreter name '(.*)'$/, bookingManagementPO.queryBookingByInterpreterName);
     When(/^I query booking with org name '(.*)'$/, bookingManagementPO.queryBookingByOrgName);
     When(/^I query booking with suburb '(.*)'$/, bookingManagementPO.queryBookingBySuburb);
-    When(/^I filter booking by date range first and last days of next week$/, bookingManagementPO.filterBookingByDateRange);
+    When(/^I filter booking by date range first and last days of next week$/, bookingManagementPO.filterByFirstNLastDaysOfNextWeek);
     When(/^I hover on the (.*) dropdown and select '(.*)'$/, bookingManagementPO.hoverOnTableHeader);
     When(/^I hover on the (.*) dropdown and I do not see '(.*)'$/, bookingManagementPO.selectionNotPresent);
     When(/^I change the street number to (\d+)$/, createBookingPO.setStreetNumber);

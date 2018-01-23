@@ -440,8 +440,9 @@ export class Heroku {
     }
 
     static preloadOrgBookings() {
-        let task = 'seed:test_data:preloaded_org_bookings';
-        Heroku.sendTaskToHeroku(task);
+        let command = 'org_rep = FactoryGirl.create(:alana_org_rep);';
+        command += 'Booking.first.update_attributes(bookable_id: org_rep.id, bookable_type: "OrganisationalRepresentative");';
+        Heroku.sendCommandToHeroku(command);
     }
 
     static createSingleUser(data) {

@@ -267,7 +267,7 @@ Feature: Edit Booking
     Then I should be on the edit booking page
     And I verify checkbox name 'cbAuslan' is checked 'false'
     And I verify checkbox name 'cbDeafBlind' is checked 'true'
-    And I can verify the field 'deafBlind_count' will have the value '2'
+#    And I can verify the field 'deafBlind_count' will have the value '2'
 
     #----------------------------------------- AUSLAN1-979 -> END ----------------------------------------
 
