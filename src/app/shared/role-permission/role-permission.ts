@@ -14,7 +14,6 @@ export class RolePermission {
     "default-route": "booking-management",
     "booking-officer":{
     "not-allowed-routes": [
-    "block_out"
     ],
         "routes-with-data-permissions": {
             "user-management": {
@@ -84,7 +83,6 @@ export class RolePermission {
     },
     "administrator": {
        "not-allowed-routes": [
-         "block_out"
         ]
     }
 }`;

@@ -208,7 +208,7 @@ Feature: Edit Booking
     And I can verify the input 'contact_last_name' will have the value 'Castle'
 
     #----------------------------------------- AUSLAN1-978 -> START ----------------------------------------
-  @runThis
+  @ignoreThis
   Scenario: Booking Officer can change the booking method
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials

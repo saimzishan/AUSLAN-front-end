@@ -28,10 +28,10 @@ jobs:
               PR=$(git rev-parse --abbrev-ref HEAD)
               FILES=$(git diff --name-only origin/$PR `git merge-base origin/$PR origin/master` | grep "booking")
               if [[ -z $FILES ]] ; then
-                circleci tests glob "/var/www/booking-system-frontend/e2e-tests/features/*.feature" | grep -v "booking" |circleci tests split > /var/www/booking-system-frontend/test_features_for_split_container.txt
+                (echo $FILES;circleci tests glob "e2e-tests/features/*.feature" | grep -v "booking";) | cat | sed '/^\s*$/d' | tr " " "\n" | sort -u  | grep "\.feature" | circleci tests split > /var/www/booking-system-frontend/test_features_for_split_container.txt
               else
-                circleci tests glob "/var/www/booking-system-frontend/e2e-tests/features/*booking*.feature" | circleci tests split > /var/www/booking-system-frontend/test_features_for_split_container.txt
-              fi
+                (echo $FILES;circleci tests glob "e2e-tests/features/*booking*.feature";) | cat | sed '/^\s*$/d' | tr " " "\n" | sort -u  | grep "\.feature" | circleci tests split > /var/www/booking-system-frontend/test_features_for_split_container.txt
+             fi
             fi
             cat /var/www/booking-system-frontend/test_features_for_split_container.txt
       - run:
@@ -47,7 +47,7 @@ jobs:
             E2E_ENV: "localhost"
           shell: /bin/bash -l
           command: |
-            if [ "${CIRCLE_NODE_INDEX}" == "0" ]; then
+            if [[  "${CIRCLE_BRANCH}" == "master"  && "${CIRCLE_NODE_INDEX}" == "0" ]]; then
               rm -rf dist
               npm install enhanced-resolve@3.3.0
               ng build --aot --env=canary
@@ -75,6 +75,7 @@ jobs:
             fi
       - deploy:
           name: Deploy to S3 if tests pass and branch is Master
+          shell: /bin/bash -l
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               rm -rf dist

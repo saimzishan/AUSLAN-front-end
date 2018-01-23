@@ -1,6 +1,6 @@
 import {Component, ViewChild, OnInit, Input, ElementRef} from '@angular/core';
 import {DatePipe} from '@angular/common';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import * as $ from 'jquery';
 import * as moment from 'moment';
 import {Interpreter, BookingOfficer, Administrator} from '../../shared/model/user.entity';
@@ -20,7 +20,7 @@ export class InterpreterComponent implements OnInit {
     updateCalendar = false;
     calendarOptions: Object = {};
 
-    constructor(private router: Router) {}
+    constructor(private routes: ActivatedRoute, private router: Router) {}
 
     ngOnInit() {
         let d = new DatePipe('en-us');
@@ -38,7 +38,7 @@ export class InterpreterComponent implements OnInit {
             this.calendarOptions = {
                 height: 'parent',
                 fixedWeekCount: false,
-                weekends: false, // will hide Saturdays and Sundays
+                weekends: true, // will hide Saturdays and Sundays
                 timezone: 'local',
                 header: {
                     left: 'title',
@@ -77,7 +77,7 @@ export class InterpreterComponent implements OnInit {
 
             for (let avail_block of this.userModel.availability_blocks_attributes) {
                 let sd = new Date(avail_block.start_time);
-                let ed = new Date(avail_block.end_date);
+                let ed = new Date(avail_block.end_date || avail_block.start_time);
                 let edt = new Date(avail_block.end_time);
 
 
@@ -93,9 +93,6 @@ export class InterpreterComponent implements OnInit {
                 });
                 if (avail_block.recurring === true) {
                     event.dow = avail_block.frequency === 'daily' ? [1, 2, 3, 4, 5] : [sd.getDay()];
-                    // let offSet = 1;
-                    // ed.setDate(ed.getDate() + offSet);
-
                     event.ranges = [
                         {
                             start: moment().endOf(avail_block.frequency === 'daily' ? 'day' :
