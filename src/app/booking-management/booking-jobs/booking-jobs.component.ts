@@ -322,6 +322,12 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         }
     }
 
+    getInterpreterIconClass(user) {
+        return this.hasDeclined(user) ? 'fa fa-times-circle' :
+            this.isBlocked(user.id) ? 'fa fa-ban' :
+                this.hasBlockout(user) ? 'fa fa-exclamation-circle fa-danger' :
+                    '';
+    }
     fetchAllInterpreters() {
         // this.spinnerService.requestInProcess(true);
         this.userDataService.fetchUsersOfType('interpreters')
@@ -366,9 +372,6 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                         this.selectedBookingModel.interpreters.sort((i, j) =>
                             i.state === 'Accepted' ? -1 : j.state === 'Accepted' ? 1 : 0
                         );
-                        if (this.isCurrentUserAdminOrBookingOfficer()) {
-                            this.fetchNearbyinterpreters(param_id);
-                        }
                         this.isCancelledOrUnableToServe = this.isActiveState('Cancelled_no_charge')
                             || this.isActiveState('Unable_to_service') || this.isActiveState('Cancelled_chargeable');
 
@@ -405,7 +408,11 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                             this.getStateString();
                         }
                     }
-                    // this.spinnerService.requestInProcess(false);
+                    if (this.isCurrentUserAdminOrBookingOfficer()) {
+                        this.fetchNearbyinterpreters(param_id);
+                    } else {
+                        this.spinnerService.requestInProcess(false);
+                    }
                 },
                 err => {
                     this.jobAccessError = true;

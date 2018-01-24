@@ -316,9 +316,7 @@
                             <td>{{user.id}}</td>
                             <td align="center">
                                 <!-- i [ngClass]="{'icon-check-green' : isInvited(user.id), 'icon-check-yellow' : !isInvited(user.id)}"><i -->
-                                <i aria-hidden="true" [ngClass]="{'fa fa-exclamation-circle fa-danger' : hasBlockout(user),
-                                 'fa fa-times-circle' : hasDeclined(user) ,
-                                  'fa fa-ban' : isBlocked(user.id)}"></i>
+                                <i aria-hidden="true" [ngClass]="getInterpreterIconClass(user)"></i>
 
                             </td>
                             <td align="center">
