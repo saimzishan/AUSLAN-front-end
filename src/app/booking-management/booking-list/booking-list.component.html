@@ -49,7 +49,8 @@
                     <div class="oneRow">
                         <span>From:</span>
                         <input type="date" name="date_from" [(ngModel)]="bookingFilter.date_from"
-                               (change)="filter('date_from', bookingFilter.date_from)">
+                               (blur)="filter('date_from', bookingFilter.date_from)"
+                               (keyup.enter)="filter('date_from', bookingFilter.date_from)">
                     </div>
                     <div class="oneRow">
                         <span>To:</span>
@@ -159,11 +160,11 @@
                             <i class="icon-time hidden-desktop"></i>
                             <span>
                                 <span>
-                                    {{booking.venue.start_time_iso | date:'shortTime'}} -
-                                    {{booking.venue.end_time_iso | date:'shortTime'}}
+                                    {{booking.venue.start_time_iso | amDateFormat:'h:mm A'}} -
+                                    {{booking.venue.end_time_iso | amDateFormat:'h:mm A'}}
                                 </span>
                                 <span>
-                                    {{booking.venue.start_time_iso | date:'EEE d MMM yy'}}
+                                    {{booking.venue.start_time_iso | amDateFormat:'ddd D MMM YY'}}
                                 </span>
                             </span>
                         </span>
@@ -178,7 +179,7 @@
                 </td>
                 <td>{{booking.venue.suburb}}</td>
                 <td class="truncated">
-                    <ng-container *ngIf="booking.interpreters.length > 0;">
+                    <ng-container *ngIf="booking.interpreters_required <= 2 && didInterpreterAccepted(booking.interpreters).length > 0 ;">
                         <span *ngFor="let user of didInterpreterAccepted(booking.interpreters)">
                                     <strong *ngIf="isCurrentUser(user.id); else sim_user_Block">
                                         {{user?.first_name  + ' ' + user?.last_name}}
@@ -190,7 +191,12 @@
 								</span>
                     </ng-container>
 
-                    <span *ngIf="didInterpreterAccepted(booking.interpreters).length <1 ;">To be filled</span>
+                    <span *ngIf="booking.interpreters_required >= 3 && booking.interpreters_required != didInterpreterAccepted(booking.interpreters).length ;">Needs to be filled ({{didInterpreterAccepted(booking.interpreters).length }}/{{booking.interpreters_required}})</span>
+                    <span *ngIf="booking.interpreters_required >= 3 && booking.interpreters_required == didInterpreterAccepted(booking.interpreters).length ;">Multiple ({{didInterpreterAccepted(booking.interpreters).length}}/{{booking.interpreters_required}})</span>
+                    <span *ngIf="booking.interpreters_required == 2 && didInterpreterAccepted(booking.interpreters).length == 1 ;"><br/>To be filled </span>
+                    <span *ngIf="booking.interpreters_required == 2 && didInterpreterAccepted(booking.interpreters).length < 1 ;">To be filled<br/>To be filled </span>
+                    <span *ngIf="booking.interpreters_required == 1 && didInterpreterAccepted(booking.interpreters).length < 1 ;">To be filled </span>
+                    
                 </td>
                 <td class="truncated">
                     <ng-container *ngIf="booking.documents_attributes.length > 0">

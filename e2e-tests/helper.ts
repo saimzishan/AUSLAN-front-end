@@ -1,5 +1,3 @@
-import {execSync} from 'child_process';
-import {environment} from '../src/environments/environment';
 import {browser} from 'protractor';
 
 /**
@@ -112,8 +110,6 @@ export class User {
 
         switch (type) {
             case 'Individual Client':
-                data_to_sent['send_email_on_receipt_of_request'] = true;
-                data_to_sent['email_confirmation_on_interpreter_allocation'] = true;
                 data_to_sent['business_hours_phone'] = data_to_sent['mobile'];
                 billing_account_attributes_fields['primary_contact_first_name'] = 'MOH';
                 billing_account_attributes_fields['primary_contact_last_name'] = 'JAY';
@@ -130,10 +126,9 @@ export class User {
                 data_to_sent['date_of_birth'] = '20/05/1987';
                 data_to_sent['naati_id'] = 12345;
                 data_to_sent['address_attributes'] = address_attributes_fields;
+                data_to_sent['skill_level'] = 'Captioning';
                 break;
             case 'Organisational Representative':
-                data_to_sent['send_email_on_receipt_of_request'] = true;
-                data_to_sent['email_confirmation_on_interpreter_allocation'] = true;
                 data_to_sent['business_hours_phone'] = data_to_sent['mobile'];
                 let organisation_attributes_fields = {};
                 organisation_attributes_fields['abn'] = 12345678900;
@@ -398,14 +393,13 @@ export class Booking {
 }
 
 
-
 export class Heroku {
 
     static sendCommandToHeroku(command) {
         const exec = require('child_process').execSync;
-
-        command = 'ActiveRecord::Base.logger.level = Logger::INFO;' + command + ';nil;exit';
-        let herokuCommand =  'cd ../booking-system-api/ && echo  \'' + command + '\' | bundle exec rails c && cd ../booking-system-frontend/';
+        console.log(command);
+        command = /*'ActiveRecord::Base.logger.level = Logger::INFO;' + */ command + ';nil;exit';
+        let herokuCommand = 'cd ../booking-system-api/ && echo  \'' + command + '\' | bundle exec rails c && cd ../booking-system-frontend/';
         exec(herokuCommand);
     }
 
@@ -413,11 +407,11 @@ export class Heroku {
         const exec = require('child_process').execSync;
         let herokuCommand = 'cd ../booking-system-api/ && bundle exec rails ' + task + ' && cd ../booking-system-frontend/';
 
-        exec(herokuCommand , (o1, o2, o3) => {
-                console.log('Heroku Command => Output', o1);
-                console.log('Heroku Command => StdError', o2);
-                console.log('Heroku Command => Error', o3);
-            });
+        exec(herokuCommand, (o1, o2, o3) => {
+            console.log('Heroku Command => Output', o1);
+            console.log('Heroku Command => StdError', o2);
+            console.log('Heroku Command => Error', o3);
+        });
     }
 
     static createSingleBooking() {
@@ -431,16 +425,20 @@ export class Heroku {
         let command = 'b = Booking.new(' + JSON.stringify(data) + '); b.bookable = IndividualClient.first; b.save';
         Heroku.sendCommandToHeroku(command);
     }
+
     static createBulkBookings(count: string) {
         let command = 'i=IndividualClient.first;FactoryGirl.create(:ted_individual_client) if !i;';
         command += 'FactoryGirl.create_list(:booking, ' + count + ', bookable: IndividualClient.first)';
         Heroku.sendCommandToHeroku(command);
     }
-    static createBulkBookingsWithLinkId(count: number) {
+
+    static createBulkBookingsWithLinkId(count: number, negate: string) {
+        const newLinkIdRequired = String(!(negate === 'out'));
         let command = 'i=IndividualClient.first;FactoryGirl.create(:ted_individual_client) if !i;';
-        command += 'FactoryGirl.create_list(:booking, ' + count + ', bookable: IndividualClient.first, new_link_id_required: true)';
+        command += 'FactoryGirl.create_list(:booking, ' + count + ', bookable: IndividualClient.first, new_link_id_required: ' + newLinkIdRequired + ')';
         Heroku.sendCommandToHeroku(command);
     }
+
     static preloadOrgBookings() {
         let task = 'seed:test_data:preloaded_org_bookings';
         Heroku.sendTaskToHeroku(task);
@@ -465,6 +463,7 @@ export class Heroku {
                 '").update_attributes(verified:' + true + ')');
         }
     }
+
     static createBulkAdministrator(numberOfUser: string) {
         const num_of_user = parseInt(numberOfUser, 10);
         for (let i = 0; i < num_of_user; i++) {
@@ -507,6 +506,7 @@ export class Heroku {
         command += 'b.save;';
         Heroku.sendCommandToHeroku(command);
     }
+
     static specialOrgRepSetup() {
         let command = 'o=OrganisationalRepresentative.first;';
         command += 'o.special_instructions="I am special";';
@@ -599,15 +599,16 @@ export class Heroku {
 
     private static createBooking(int_required: number) {
 
-      let today = new Date();
-      today.setDate(today.getDate() + 5);
-      let todayDate = {
-          mm: this.prettyDate(today.getMonth() + 1), //January is 0!
-          dd: this.prettyDate(today.getDate()),
-          yy: today.getFullYear().toString()
-      };
-      let currentDate = todayDate.yy + '-' + todayDate.mm + '-' + todayDate.dd;
+        let today = new Date();
+        today.setDate(today.getDate() + 5);
+        const currentDate = [
+            today.getFullYear().toString(),
+            this.prettyDate(today.getMonth() + 1), // January is 0!,
+            this.prettyDate(today.getDate())
+        ].join('-');
         return new Object({
+            'method_type': 'onsite',
+            'type': 'AuslanInterpreting',
             'venue': 'Fed Square',
             'requested_by_first_name': 'Georgious',
             'requested_by_last_name': 'Chara',
@@ -624,8 +625,8 @@ export class Heroku {
             'deaf_persons_eaf_no': '124',
             'number_of_people_attending': 1,
             'number_of_interpreters_required': int_required,
-            'start_time': currentDate + ' 01:26 +11:00',
-            'end_time': currentDate + ' 02:26 +11:00',
+            'start_time': currentDate + 'T06:26:00+11:00',
+            'end_time': currentDate + 'T07:26:00+11:00',
             'billing_account_attributes': {
                 'primary_contact_first_name': 'Paul',
                 'primary_contact_last_name': 'Biller',
@@ -655,8 +656,9 @@ export class Heroku {
             'bookable_type': 'OrganisationalRepresentative'
         });
     }
-      // Adds a '0' in the start if the date < 10
-      private static prettyDate = (date: number|string): string => {
+
+    // Adds a '0' in the start if the date < 10
+    public static prettyDate = (date: number | string): string => {
         date = date.toString();
         return ('00' + date).slice(date.length);
     }

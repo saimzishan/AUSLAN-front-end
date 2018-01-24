@@ -1,8 +1,13 @@
 import {environment} from '../../environments/environment';
 import {AuthHttp, AuthConfig} from 'angular2-jwt';
 import {Http, RequestOptions, URLSearchParams} from '@angular/http';
-import {User} from './model/user.entity';
+import {Interpreter, User} from './model/user.entity';
 
+export interface ModalOptions {
+    cancelTitle: string;
+    okTitle: string;
+    closeVal: string;
+}
 /* Change this class to use Using Application Providers import { Data } from "../../providers/data/data" */
 export class GLOBAL {
     public static MOCK_BOOKING_SERVER_PORT = 1233;
@@ -29,9 +34,12 @@ export class GLOBAL {
     public static TITLE = 'Auslan Booking System';
     public static VERSION = ' => 0.1.9'; // This should be broken into MAJOR and MINOR version?
     private static _currentUser: any;
+    private static _interpreter: Interpreter;
     public static FAKE_TOKEN = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.' +
         'eyJpc3MiOiJPbmxpbmUgSldUIEJ1aWxkZXIiLCJpYXQiOjE0ODgxOTM0MTAsImV4cCI6MzMwNzY2M' +
         'zgyMTAsImF1ZCI6Ind3dy5wYWN0LmNvbSIsInN1YiI6Imthcm1hQHBhY3QuY29tIn0.lVWLJAYQRZcQTMtdDrxTHMwboSOqNQPISLDAKDkPy58';
+    public static DSQ_STATES = ['ACT', 'NSW', 'QLD', 'NT', 'AUSTRALIAN\ CAPITAL\ TERRITORY', 'NEW\ SOUTH\ WALES', 'NORTHERN\ TERRITORY', 'QUEENSLAND'];
+    public static VICDEAF_STATES = ['VIC', 'TAS', 'SA', 'WA', 'SOUTH\ AUSTRALIA', 'TASMANIA', 'VICTORIA', 'WESTERN\ AUSTRALIA'];
     public static GPO_ADDRESS_ONE = '350 Bourke Street, Melbourne VIC, 3000, Australia';
     public static GPO_ADDRESS_TWO = '261 Queens Street, Brisbane City QLD, 4000, Australia';
     public static MISSING_FIELDS_ERROR_MESSAGE = 'Oops! Please fill in all the fields correctly.';
@@ -65,6 +73,13 @@ export class GLOBAL {
         this._currentUser = user;
     }
 
+    public static get currentInterpreter(): Interpreter {
+        return this._interpreter;
+    }
+
+    public static set currentInterpreter(interpreter: Interpreter) {
+        this._interpreter = interpreter;
+    }
     static fixDateFormat(d: Date) {
 
         let dateStr = d.toString();

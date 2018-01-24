@@ -21,7 +21,7 @@ Feature: Booking Management
 
 # ---------------------------------------- AUSLAN1-727 -> END ----------------------------------------
 
-# ---------------------------------------- AUSLAN1-736, 737 -> START ----------------------------------------
+# ---------------------------------------- AUSLAN1-736, 737, 741, 901, 905 -> START ----------------------------------------
   @runThis
   Scenario: Given 1 verified Individual Client, Booking Officer can create a booking and travel cost should save
     Given I exist as an Booking Officer
@@ -47,7 +47,7 @@ Feature: Booking Management
     When I query search with empty date
     And I will be shown with bookings
     Then I am shown with 1 booking
-# ---------------------------------------- AUSLAN1-736, 737 -> END ----------------------------------------
+# ---------------------------------------- AUSLAN1-736, 737, 741, 901, 905 -> END ----------------------------------------
 
   @runThis
   Scenario: Given an Individual Client, Booking Officer should get a popup when the booking needs more interpreters
@@ -56,12 +56,12 @@ Feature: Booking Management
     When I am on the bookings page
     And I click on 'New Booking'
     Then I will be taken to the 'New Booking' form
-    When I fill New Booking form fields correctly with standard time from 09:00 AM to 11:00 AM with 1 interpreters
+    When I fill New Booking form fields correctly with standard time from 09:00 AM to 11:00 AM with 1 'auslanInterpreters_count'
     And I select the bookable for client
     Then I move to element name 'tnc'
     And I click on checkbox name 'tnc'
     When I click the create booking button
-    Then I will be shown a popup message 'This booking might require more than 1 interpreter. You've only requested 1 interpreter. Are you sure you want to create this booking?'
+    Then I will be shown a popup message 'This booking might require more than 1 professional. You've only requested 1. Are you sure you want to create this booking?'
 
   @runThis
   Scenario: As an Administrator, I should specify notes when I don't specify what will be discussed
@@ -150,3 +150,132 @@ Feature: Booking Management
     Then I can see the booking address is 'auto populated'
 
 # ---------------------------------------- AUSLAN1-711 -> END ----------------------------------------
+
+#----------------------------------------- AUSLAN1-312 -> START ----------------------------------------
+
+  @runThis
+  Scenario: Given 1 verified Individual Client, Administrator can create a booking with all types of interpreters
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    Then I am on the bookings page
+    And I am shown with 0 bookings
+    When I click on 'New Booking'
+    Then I will be taken to the 'New Booking' form
+    And I can see the element with name 'captioningAdditionalFields' is 'not visible'
+    And I can see the element with name 'captioningAndVriAdditionalFields' is 'not visible'
+    And I can see the element with name 'vriAdditionalFields' is 'not visible'
+    And I can see the element with name 'how_would_you_like_to_receive_notes' is 'not visible'
+    And I fill New Booking form fields correctly
+    And I select the bookable for client
+    When I click on BUTTON name 'btnVri'
+    Then I can see the element with name 'vriAdditionalFields' is 'visible'
+    And I can see the element with name 'captioningAndVriAdditionalFields' is 'visible'
+    Then I click on checkbox name 'cbDeaf'
+    And I fill the field 'deaf_count' with value '1'
+    When I click on checkbox name 'cbDeafBlind'
+    Then I can see the element with name 'deafBlindInterpreterTypes' is 'visible'
+    And I fill the field 'deafBlind_count' with value '2'
+    When I click on checkbox name 'cbCaptioning'
+    Then I can see the element with name 'captioningAdditionalFields' is 'visible'
+    And I can see the element with name 'captioningAndVriAdditionalFields' is 'visible'
+    And I fill the field 'captioner_count' with value '3'
+    When I click on checkbox name 'cbNotetaking'
+    Then I can see the element with name 'how_would_you_like_to_receive_notes' is 'visible'
+    And I fill the field 'noteTaker_count' with value '1'
+    When I click on checkbox name 'cbOtherLanguage'
+    Then I can see the element with name 'otherLanguageTypes' is 'visible'
+    Then I click on checkbox name 'cbVisualFrame'
+    And I fill the field 'visualFrame_count' with value '2'
+    Then I click on checkbox name 'cbTactile'
+    And I fill the field 'tactile_count' with value '3'
+    Then I click on checkbox name 'cbPlatform'
+    And I fill the field 'platform_count' with value '1'
+    Then I click on checkbox name 'cbAsl'
+    And I fill the field 'asl_count' with value '2'
+    Then I click on checkbox name 'cbBsl'
+    And I fill the field 'bsl_count' with value '3'
+    Then I click on checkbox name 'cbIsl'
+    And I fill the field 'isl_count' with value '1'
+    Then I click on checkbox name 'cbSignedEnglish'
+    And I fill the field 'signedEnglish_count' with value '2'
+    Then I click on checkbox name 'cbIndigenousSign'
+    And I fill the field 'indigenousSign_count' with value '3'
+    Then I move to element name 'tnc'
+    And I click on checkbox name 'tnc'
+    And I click the create booking button
+    Then I get a valid create booking notification
+    And I am on the bookings page
+    And I am shown with 10 bookings
+    And I can see the element with id 'displayTxt' has text 'Displaying 1 - 10 of 13 Bookings'
+#----------------------------------------- AUSLAN1-312 -> END ----------------------------------------
+
+#----------------------------------------- AUSLAN1-977 -> START ----------------------------------------
+  @ignoreThis
+  Scenario: Given 1 verified Individual Client, Booking Officer will get error notification when changing notetakers to less number than assigned. Interpreter and Interpreter1 exists.
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    And I am on the bookings page
+    And I am shown with 0 bookings
+    When I click on 'New Booking'
+    Then I will be taken to the 'New Booking' form
+    Then I click on checkbox name 'cbAuslan'
+    Then I click on checkbox name 'cbNotetaking'
+    When I fill New Booking form fields correctly with standard time from 09:00 AM to 10:00 AM with 2 'noteTaker_count'
+    And I select the bookable for client
+    Then I click on checkbox name 'tnc'
+    And I click the create booking button
+    Then I get a valid create booking notification
+    And I am on the bookings page
+    And I am shown with 1 bookings
+    And I wait for 2000 milli-seconds
+    When I click on an individual booking
+    Then I am on the individual booking page
+    Then I select 2 Interpreter
+    Then I wait for 1000 milli-seconds
+    And I click on BUTTON name 'reassingBtn'
+    And I click on BUTTON 'Save'
+    Then I wait for 1000 milli-seconds
+    Then I get valid message: 'The interpreter have been assigned'
+    When I click on link 'Booking details'
+    Then I should be on the edit booking page
+    And I fill the field 'noteTaker_count' with value '1'
+    When I click on BUTTON 'SAVE'
+    And If I am shown a popup, I approve it
+    Then I wait for 1000 milli-seconds
+    Then I will get an error notification saying "Oops! Too many notetakers already allocated. Please unassign first."
+
+  @ignoreThis
+  Scenario: Given 1 verified Individual Client, Booking Officer will get error notification when changing captioners to less number than assigned. Interpreter and Interpreter1 exists.
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    And I am on the bookings page
+    And I am shown with 0 bookings
+    When I click on 'New Booking'
+    Then I will be taken to the 'New Booking' form
+    Then I click on checkbox name 'cbAuslan'
+    Then I click on checkbox name 'cbCaptioning'
+    When I fill New Booking form fields correctly with standard time from 09:00 AM to 10:00 AM with 2 'captioner_count'
+    And I select the bookable for client
+    Then I click on checkbox name 'tnc'
+    And I click the create booking button
+    Then I get a valid create booking notification
+    And I am on the bookings page
+    And I am shown with 1 bookings
+    And I wait for 2000 milli-seconds
+    When I click on an individual booking
+    Then I am on the individual booking page
+    Then I select 2 Interpreter
+    Then I wait for 1000 milli-seconds
+    And I click on BUTTON name 'reassingBtn'
+    And I click on BUTTON 'Save'
+    Then I wait for 1000 milli-seconds
+    Then I get valid message: 'The interpreter have been assigned'
+    When I click on link 'Booking details'
+    Then I should be on the edit booking page
+    And I fill the field 'captioner_count' with value '1'
+    When I click on BUTTON 'SAVE'
+    And If I am shown a popup, I approve it
+    Then I wait for 1000 milli-seconds
+    Then I will get an error notification saying "Oops! Too many captioners already allocated. Please unassign first."
+
+        #----------------------------------------- AUSLAN1-977 -> END ----------------------------------------

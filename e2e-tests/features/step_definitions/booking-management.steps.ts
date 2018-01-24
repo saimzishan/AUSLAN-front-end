@@ -1,15 +1,9 @@
-import {expect} from '../../config/helpers/chai-imports';
-// import * from 'chai';
-// import {} from 'jasmine';
 import {defineSupportCode} from 'cucumber';
-import {browser, by, element, $, $$} from 'protractor';
-
-import {PageObject} from '../../po/app.po';
 import {BookingManagementPage} from '../../po/booking-management-page.po';
-import {CONSTANT, Booking, Heroku} from '../../helper';
+import {Heroku} from '../../helper';
 import {BookingPage} from '../../po/create-booking.po';
 import {BookingJobPage} from '../../po/booking-job.po';
-import {BookingEditPage} from "../../po/booking-edit.po";
+import {BookingEditPage} from '../../po/booking-edit.po';
 
 defineSupportCode(({Given, Then, When}) => {
 
@@ -22,72 +16,37 @@ defineSupportCode(({Given, Then, When}) => {
     Given(/^The booking has status '(.*)'$/, Heroku.updateBookingWithStatus);
     Given(/^The booking has assignment category '(.*)'$/, Heroku.updateBookingWithCategory);
     Given(/^There exist (\d+) bookings$/, Heroku.createBulkBookings);
-    Given(/^There exist (\d+) bookings? with link id$/, Heroku.createBulkBookingsWithLinkId);
+    Given(/^There exist (\d+) bookings? with(out)? link id$/, Heroku.createBulkBookingsWithLinkId);
     Given(/^There exist (\d+) admins/, Heroku.createBulkAdministrator);
     Given(/^I have preloaded bookings with different org values$/, Heroku.preloadOrgBookings);
-    Given(/^One booking has client name as '(.*)'$/, Heroku.updateBookingWithClientName)
-    Given(/^One booking has client last name as '(.*)'$/, Heroku.updateBookingWithLastClientName)
-    Given(/^One booking has interpreter first name as '(.*)'$/, Heroku.updateBookingWithInterpreterFirstName)
-    Given(/^One booking has interpreter last name as '(.*)'$/, Heroku.updateBookingWithInterpreterLastName)
-    Given(/^One booking has org name as '(.*)'$/, Heroku.updateBookingWithOrgName)
-    Given(/^One booking has suburb as '(.*)'$/, Heroku.updateBookingWithSuburb)
-    Given(/^One booking has start and end dates as first and last days of next week$/, Heroku.updateBookingStartAndEndDateTime)
-//  BE ABLE TO VIEW BOOKING PAGE
-    Then(/^I will be shown with bookings$/, bookingManagementPO.atleastABookingExists);
-    Then(/^I store the current url$/, bookingJobPO.storePath);
-    Then(/^I go to stored url$/, bookingJobPO.gotoStorePath);
-    Then(/^I see the error page$/, bookingJobPO.errorPage);
-//    CLick on Request bookings
-    Then(/^I am shown with (\d+) (.*[^\s])?\s?[bB]ookings?$/, bookingManagementPO.showTheNumberofBooking);
+    Given(/^One booking has client name as '(.*)'$/, Heroku.updateBookingWithClientName);
+    Given(/^One booking has client last name as '(.*)'$/, Heroku.updateBookingWithLastClientName);
+    Given(/^One booking has interpreter first name as '(.*)'$/, Heroku.updateBookingWithInterpreterFirstName);
+    Given(/^One booking has interpreter last name as '(.*)'$/, Heroku.updateBookingWithInterpreterLastName);
+    Given(/^One booking has org name as '(.*)'$/, Heroku.updateBookingWithOrgName);
+    Given(/^One booking has suburb as '(.*)'$/, Heroku.updateBookingWithSuburb);
+    Given(/^One booking has start and end dates as first and last days of next week$/, Heroku.updateBookingStartAndEndDateTime);
+    Given(/^I can see the '(.*)' auto populated$/, createBookingPO.sectionAutoPopulated);
+    Given(/^I can see the booking address is '(.*)'$/, createBookingPO.bookingAddressPopulated);
 
     When(/^I click at the (.*) one of (.*) (.*) Bookings$/, bookingManagementPO.clickAtOneofTheBooking);
-
     When(/^I click on 'New Booking'$/, bookingManagementPO.clickOnNewBooking);
-    // When(/^I click on Bookings$/, bookingManagementPO.clickOnBookings);
     When(/^I see (one|\d+) rows? with state '(.*)'$/, bookingManagementPO.bookingWithStateExists);
     When(/^I see (one|\d+) rows? with status '(.*)'$/, bookingManagementPO.bookingWithStatusExists);
     When(/^I see (one|\d+) rows? with type '(.*)'$/, bookingManagementPO.bookingWithTypeExists);
     When(/^I do not see any row with state '(.*)'$/, bookingManagementPO.noBookingWithStateExists);
-
     When(/^I click on an individual booking of type '(.*)'$/, bookingManagementPO.clickOnIndividualBookingOfType);
     When(/^I do not see any booking rows$/, bookingManagementPO.noBookingExists);
-
     When(/^I click on an individual booking$/, bookingManagementPO.clickOnIndividualBooking);
-    Then(/^I am back on booking page$/, bookingManagementPO.onBookingListPage);
 
     // --------------------------------- AUTO POPULATE CLIENT DETAILS
-    Then(/^I will be taken to the 'New Booking' form$/, createBookingPO.browse);
-
     When(/^I specify i am the client of this booking$/, createBookingPO.specifyAsClientOfBooking);
     When(/^I specify i have special instruction$/, createBookingPO.specifyAsHavingSepcialInstruction);
 
-    Then(/^The field '(.*)' will be populated with '(.*)'$/, createBookingPO.theFieldWillBePopulated);
-
-    Then(/^I can verify the field '(.*)' will have the value '(.*)'$/, createBookingPO.theFieldInBookingWillHaveValue);
-    Then(/^I can verify the input '(.*)' will have the value '(.*)'$/, createBookingPO.theInputInBookingFormWillHaveValue);
-
-    Then(/^The booking form will be automatically populated with the details.$/, createBookingPO.populatedUserDetails);
-
-    Given(/^I can see the '(.*)' auto populated$/, createBookingPO.sectionAutoPopulated);
-    Given(/^I can see the booking address is '(.*)'$/, createBookingPO.bookingAddressPopulated);
-    // Filling in specific fields in the booking form
-    Then(/^I set the (\w+) time as (\d+) days (?:(\d+) hours?)?\s?from now$/, createBookingPO.setTime);
-
-    //    CANCEL BOOKING
+    //  CANCEL BOOKING
     When(/^I press '(.*)'$/, createBookingPO.clickOnButton);
 
-    // ---------------------------------   INDIVIDUAL BOOKING PAGE
-
-    Then(/^The version history with name '(.*)' at index '(.*)' with text '(.*)'$/, bookingJobPO.verifyVersionInfo);
-    Then(/^I am on the individual booking page$/, bookingJobPO.browse);
-
-    Then(/^I can see a list of (.*) (.*) interpreters with distance and travel pay$/, bookingJobPO.checkListOfInterpretersOnBookingScreen);
-    Then(/^I can see a list of (.*) (.*) interpreters$/, bookingJobPO.checkListofInterpreterIndividualBookingScreen);
-    Then(/^I can not see a list of interpreters$/, bookingJobPO.listofInterpreterDoesNotExists);
-
-    Then(/^I can verify the image of myself in the list of interpreter start with '(.*)'$/, bookingJobPO.verifyPictureOfYourself);
-
-//    POPULATE DROP DOWN
+    //  POPULATE DROP DOWN
     When(/^I click dropdown (.*)$/, createBookingPO.clickOnDropDown);
     When(/^I select option (.*) from dropdown (.*)$/, createBookingPO.selectOptionFromDropdown);
 
@@ -104,13 +63,32 @@ defineSupportCode(({Given, Then, When}) => {
     When(/^I click on one non-editable field$/, bookingEditPO.clickOnNonEditableField);
     When(/^I query search with '(.*)'$/, bookingManagementPO.querySearchWith);
     When(/^I query search with empty date$/, bookingManagementPO.querySearchWithEmptyDate);
+    When(/^I query search with future date$/, bookingManagementPO.queryManualSearchWithFutureDate);
+    When(/^I query search with current date manually$/, bookingManagementPO.queryManualSearchWithCurrentDate);
+    When(/^I press enter$/, bookingManagementPO.enterPressed);
     When(/^I can see that date_from is preseleted with current date$/, bookingManagementPO.filterBookingByCurrentDate);
     When(/^I empty the search field '(.*)'$/, bookingManagementPO.emptyTheField);
-
     When(/^I click out of the text box$/, bookingManagementPO.clickOutSide);
+    When(/^I click on Booking$/, bookingManagementPO.clickOnBooking);
 
+
+    Then(/^I will be taken to the 'New Booking' form$/, createBookingPO.browse);
+    Then(/^The field '(.*)' will be populated with '(.*)'$/, createBookingPO.theFieldWillBePopulated);
+    Then(/^I can verify the field '(.*)' will have the value '(.*)'$/, createBookingPO.theFieldInBookingWillHaveValue);
+    Then(/^I can verify the input '(.*)' will have the value '(.*)'$/, createBookingPO.theInputInBookingFormWillHaveValue);
+    Then(/^The booking form will be automatically populated with the details.$/, createBookingPO.populatedUserDetails);
+
+    // ---------------------------------   INDIVIDUAL BOOKING PAGE
+    Then(/^The version history with name '(.*)' at index '(.*)' with text '(.*)'$/, bookingJobPO.verifyVersionInfo);
+    Then(/^I am on the individual booking page$/, bookingJobPO.browse);
+    Then(/^I can see a list of (.*) (.*) interpreters with distance and travel pay$/, bookingJobPO.checkListOfInterpretersOnBookingScreen);
+    Then(/^I can see a list of (.*) (.*) interpreters$/, bookingJobPO.checkListofInterpreterIndividualBookingScreen);
+    Then(/^I can not see a list of interpreters$/, bookingJobPO.listofInterpreterDoesNotExists);
+    Then(/^I can verify the image of myself in the list of interpreter start with '(.*)'$/, bookingJobPO.verifyPictureOfYourself);
+
+    // Filling in specific fields in the booking form
+    Then(/^I set the (\w+) time as (\d+) days (?:(\d+) hours?)?\s?from now$/, createBookingPO.setTime);
     Then(/^All required booking fields should be filled$/, bookingEditPO.checkValueInAllRequiredFields);
-
     Then(/^The cell of (.*) will be populated with (.*)$/, createBookingPO.checkTheDropDown);
 
     // Can't click on drop down
@@ -119,6 +97,15 @@ defineSupportCode(({Given, Then, When}) => {
     // Click the create booking button
     Then(/^I click the create booking button$/, createBookingPO.clickCreateBtn);
 
+    //  BE ABLE TO VIEW BOOKING PAGE
+    Then(/^I will be shown with bookings$/, bookingManagementPO.atleastABookingExists);
+    Then(/^I store the current url$/, bookingJobPO.storePath);
+    Then(/^I go to stored url$/, bookingJobPO.gotoStorePath);
+    Then(/^I see the error page$/, bookingJobPO.errorPage);
+
+    //  Click on Request bookings
+    Then(/^I am shown with (\d+) (.*[^\s])?\s?[bB]ookings?$/, bookingManagementPO.showTheNumberofBooking);
+    Then(/^I am back on booking page$/, bookingManagementPO.onBookingListPage);
     Then(/^I (.*) see the (.*) field$/, createBookingPO.checkTheFieldExist);
     Then(/^I see one row with the booking id$/, bookingManagementPO.bookingExistsWithId);
     Then(/^I see one row with the link id$/, bookingManagementPO.bookingExistsWithLinkId);

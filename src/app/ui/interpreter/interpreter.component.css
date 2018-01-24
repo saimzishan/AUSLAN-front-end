@@ -1,0 +1,8 @@
+.fc-agendaWeek-button, .fc-agendaDay-button, .fc-listYear-button {
+    display: none;
+}
+@media screen and ( min-width: 768px ){
+    .fc-agendaWeek-button, .fc-agendaDay-button, .fc-listYear-button {
+        display: block;
+    }
+}

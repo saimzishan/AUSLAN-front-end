@@ -50,17 +50,20 @@ export class AddressComponent implements AfterViewInit, OnInit {
     ngOnInit() {
         this.mapsAPILoader.load().then(() => {
             let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
-                types: ['address']
+                types: ['address'],
+                componentRestrictions: {country: 'au'}
             });
             autocomplete.addListener('place_changed', () => {
                 this.ngZone.run(() => {
                     let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+                    debugger;
                     if (place.geometry !== undefined || place.geometry !== null) {
                         this.address.street_number = place.address_components[0]['short_name'];
                         this.address.street_name = place.address_components[1]['long_name'];
                         this.address.suburb = place.address_components[2]['long_name'];
                         this.address.state = place.address_components[4]['short_name'];
                         this.address.post_code = Number(place.address_components[6]['short_name']);
+                        this.calculateDistance();
                     }
                 });
             });
@@ -75,14 +78,11 @@ export class AddressComponent implements AfterViewInit, OnInit {
     }
 
     calculateDistance(): boolean {
-        debugger;
-        let originAddress: Array<string> = [];
-        if (this.form.valid) {
-            for (let i in this.form.value) {
-                if (!isNullOrUndefined(this.form.value[i])) { originAddress.push(this.form.value[i]); }
-            }
-            originAddress.push('Australia');
-            this.gmapApi.getMinDistance([originAddress.join(', ')], [GLOBAL.GPO_ADDRESS_ONE, GLOBAL.GPO_ADDRESS_TWO]).then(value => {
+        if (this.address.isValid()) {
+            let originAddress = [this.address.unit_number, this.address.street_number, this.address.street_name,
+                this.address.suburb, this.address.state, this.address.post_code, 'Australia'];
+            let dedicatedGpo = GLOBAL.VICDEAF_STATES.includes(this.address.state) ? GLOBAL.GPO_ADDRESS_ONE : GLOBAL.GPO_ADDRESS_TWO;
+            this.gmapApi.getMinDistance([originAddress.join(', ')], [dedicatedGpo]).then(value => {
                 let travelCost = Number((value / 1000).toFixed(2)) > 40;
                 if (this.userModel) {
                     this.userModel.interpreter_type = travelCost ? 'Rural' : 'Metro';

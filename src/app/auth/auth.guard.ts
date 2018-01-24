@@ -31,6 +31,7 @@ export class AuthGuard implements CanActivate {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
         GLOBAL.currentUser = undefined;
+        GLOBAL.currentInterpreter = undefined;
     }
 
     public static login(user) {
@@ -40,7 +41,7 @@ export class AuthGuard implements CanActivate {
         localStorage.setItem('user', JSON.stringify(GLOBAL.currentUser));
     }
 
-    public static refreshUser(user) {
+    public static   refreshUser(user) {
         GLOBAL.currentUser = user;
         user.password = '************';
         localStorage.setItem('user', JSON.stringify(GLOBAL.currentUser));

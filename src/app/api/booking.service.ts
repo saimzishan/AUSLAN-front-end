@@ -162,6 +162,16 @@ export class BookingService extends ApiService {
             .catch((err) => { return this.handleError(err); });
     }
 
+    getAvailableLinkIds(id: any): Observable<Object> {
+        let headers = new Headers({'Accept': 'application/json'});
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http
+            .get([GLOBAL.BOOKING_API , id, 'link_ids'].join('/'), options)
+            .map(this.extractData)
+            .catch((err) => { return this.handleError(err); });
+    }
+
 
     /*
       The Api should be get booking by its ID (The Id should be email)

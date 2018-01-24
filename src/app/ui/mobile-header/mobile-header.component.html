@@ -1,0 +1,21 @@
+<header id="header-mobile">
+    <button *ngIf="showBackLink" routerLink="{{ [backLink] }}" class="icon-back"></button>
+
+    <h1>{{title}}</h1>
+
+    <section>
+        <a href="#" class="header__message"><i class="icon-messages"></i></a>
+        <ul class="dropdown menu" data-disable-hover="true" data-click-open="true" data-dropdown-menu>
+            <li>
+                <a class="header__profile">
+                    <img src={{getPicturePath()}}></a>
+                <ul class="menu">
+                    <li><a id="lnkProfile_mobile" [routerLink]="['/user-management','profile']"><i class="icon-user"></i>
+                        Profile</a></li>
+                    <li><a id="lnkLogout_mobile" [routerLink]="['/authenticate','logout']"><i class="icon-logout"></i>
+                        Log Out</a></li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+</header>

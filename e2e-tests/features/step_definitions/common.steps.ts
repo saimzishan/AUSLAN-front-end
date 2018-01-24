@@ -19,6 +19,7 @@ defineSupportCode(({Given, When, Then}) => {
     let resetPage = new ResetPage();
     let bookingPage = new BookingPage();
     let bookingJob = new BookingJobPage();
+    const EC = protractor.ExpectedConditions;
     // // ================================== GIVEN PART ========================================
     Given(/^There is (.*) (.*) (.*)/, preloadANumberOfUser);
 
@@ -81,7 +82,7 @@ defineSupportCode(({Given, When, Then}) => {
     Given(/^I fill New Booking form fields with address greater than 40 kilometers$/, bookingPage.createBookingForPerth);
     Given(/^I select the bookable for client$/, bookingPage.selectClientAsBookbable);
     Given(/^I select the bookable for org rep/, bookingPage.selectOrgRepAsBookbable);
-    Given(/^I fill New Booking form fields correctly with (.*) time from (.*) to (.*) with (.*) interpreters$/,
+    Given(/^I fill New Booking form fields correctly with (.*) time from (.*) to (.*) with (.*) '(.*)'$/,
         bookingPage.createBookingWithTimeAndInterpreter);
 
 
@@ -197,8 +198,8 @@ defineSupportCode(({Given, When, Then}) => {
     Given(/^I will be shown a popup message '(.*)'$/, showPopupWithMessage);
 
     function showPopupWithMessage(message) {
-        return page.getElementByCss('app-popup').isPresent().then(() => {
-            let elm = page.getElementByCss('app-popup main > div > p');
+        return page.getElementByCss('md-dialog-content').isPresent().then(() => {
+            let elm = page.getElementByCss('md-dialog-content main > div > p');
             return elm.getText().then((text) => {
                 return expect(text).to.eq(message);
             });
@@ -283,7 +284,7 @@ defineSupportCode(({Given, When, Then}) => {
     When(/^I can see the booking state '(.*)'$/, bookingJob.confirmBookingState);
 
 
-    When(/^I can see the button '(.*)' is (.*)$/, isButtonDisabled);
+    When(/^I can see the button '(.*)' is (disabled|enabled)$/, isButtonDisabled);
 
     function isButtonDisabled(btnLabel: string, disabled: string) {
         let isEnabled = disabled.toLowerCase() === 'enabled';
@@ -319,6 +320,22 @@ defineSupportCode(({Given, When, Then}) => {
             expect(val).to.be.eq(isEnabled);
         });
     }
+    When(/^I can see the element with css '(.*)' and text (.*)$/, isElementWithCSSAndTextPresent);
+    function isElementWithCSSAndTextPresent(css: string, txt: string) {
+        let elm = page.getAllByCSSandText(css, txt).first();
+        browser.actions().mouseMove(elm).perform().then( () => {
+            return elm.isDisplayed().then((val) => {
+                expect(val).to.be.eq(true);
+            });
+        });
+    }
+    When(/^I can click the element with css '(.*)' and text (.*)$/, clickElementWithCSSAndTextPresent);
+    function clickElementWithCSSAndTextPresent(css: string, txt: string) {
+        let elm = page.getAllByCSSandText(css, txt).first();
+        return browser.actions().mouseMove(elm).perform().then( () => {
+            elm.click();
+        });
+    }
     When(/^I can see the button state with css '(.*)' is '(.*)'$/, isButtonWithCSSVisible);
     When(/^I can see the element with css '(.*)' is '(.*)'$/, isButtonWithCSSVisible);
     function isButtonWithCSSVisible(css: string, visible: string) {
@@ -342,6 +359,13 @@ defineSupportCode(({Given, When, Then}) => {
         });
     }
 
+    When(/^I can see the button '(.*)' is '(.*)'$/, isElementActive);
+    function isElementActive(btnName: string, active: string) {
+        let activeVal = active.toLowerCase() === 'active' ? active.toLowerCase() : '';
+        return page.getElementByName(btnName).getAttribute('ng-reflect-ng-class').then(val => {
+            expect(val).to.be.eq(activeVal);
+        });
+    }
 
     When(/^I can see the (.*) with name '(.*)' has text '(.*)'$/, isElementHasText);
     function isElementHasText(elemType: string, nam: string, txt: string) {
@@ -374,7 +398,8 @@ defineSupportCode(({Given, When, Then}) => {
         let btn = page.getElementByName(btnName);
         return btn.isPresent().then(presence => {
             expect(presence).to.be.true;
-            btn.click();
+            // Waits for the element to be clickable.
+            browser.wait(EC.elementToBeClickable(btn), 5000).then(() => btn.click());
         });
     }
 
@@ -403,11 +428,11 @@ defineSupportCode(({Given, When, Then}) => {
         return browser.actions().mouseMove(page.getElementByName(btnName)).perform();
     }
 
-    When(/^I verify checkbox name '(.*)' and is checked '(.*)'$/, verifyOnCBByName);
+    When(/^I verify checkbox name '(.*)' is checked '(.*)'$/, verifyOnCBByName);
     function verifyOnCBByName(btnName: string, checkedState: string) {
         let bVal = ((checkedState === 'True') || (checkedState === 'true'));
-        return page.getElementByName(btnName).isSelected().then(val => {
-            expect(val).to.be.eq(bVal);
+        return page.getElementByName(btnName).getAttribute('ng-reflect-model').then(val => {
+            expect(val).to.be.eq(bVal+'');
         });
     }
     When(/^I verify radiobutton name '(.*)' and is checked$/, verifyOnRBByName);

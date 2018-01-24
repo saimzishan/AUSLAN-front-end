@@ -2,6 +2,8 @@
   <app-user-header id="main-submenu-links">
   </app-user-header>
 </section>
+
+<app-mobile-header title="USER PROFILE" backLink="/booking-management"></app-mobile-header>
 <div id="page-common">
 <main>
   <form #user_profile_form="ngForm"  class="common-form reduced-top">
@@ -70,7 +72,7 @@
         </ng-container>
         <div class="medium-6 columns">
           <div class="form-field">
-            <label>Change picture:</label>
+            <label>CHANGE PICTURE:</label>
             <input type="file" accept="image/*" (change)="handleFileSelect($event)"
                    name="uploader"/>
           </div>

@@ -17,7 +17,7 @@ describe('Booking Entity', () => {
      'contact_phone_number': '03 2342 2343', 'deaf_persons_first_name': 'Clifford',
     'deaf_persons_last_name': 'Yan', 'deaf_persons_mobile': '0444 555 666',
     'deaf_persons_email': 'clifford@vicdeaf.org.au', 'deaf_persons_eaf_no': '1231 0900',
-    'number_of_people_attending': '1', 'number_of_interpreters_required' : '2',
+    'number_of_people_attending': '1', 'number_of_auslan_interpreters_required' : '2',
     'start_time': '2017-04-02T07:50:19.212+00:00', 'end_time': '2017-04-02T08:50:19.212+00:00',
     'created_by': {'id': '12', 'email': 'something@creator.com', 'name': 'Fake Name',
     'type': 'OrganisationalRepresentative', 'organisation': 'Melb Uni'},
@@ -33,10 +33,10 @@ describe('Booking Entity', () => {
       expect(mock_booking.venue.expected_attendance).toEqual('1');
       expect(mock_booking.venue.unit_number).toEqual('12');
       expect(mock_booking.venue.street_number).toEqual('50');
-      expect(mock_booking.interpreters_required).toEqual('2');
+      expect(mock_booking.number_of_auslan_interpreters_required).toEqual('2');
       expect(mock_booking.venue.street_name).toEqual('Flemington Rd');
-      expect(mock_booking.venue.start_time_iso).toEqual('2017-04-02T07:50:19.212Z');
-      expect(mock_booking.venue.end_time_iso).toEqual('2017-04-02T08:50:19.212Z');
+      expect(mock_booking.utcToBookingTimeZone(mock_booking.venue.start_time_iso)).toEqual('2017-04-02T17:50:19+10:00');
+      expect(mock_booking.utcToBookingTimeZone(mock_booking.venue.end_time_iso)).toEqual('2017-04-02T18:50:19+10:00');
       expect(mock_booking.requested_by.first_name).toEqual('Georgious');
       expect(mock_booking.requested_by.last_name).toEqual('George');
       expect(mock_booking.primaryContact.first_name).toEqual('Hadrian');
@@ -66,12 +66,12 @@ describe('Booking Entity', () => {
       mock_booking.deaf_person.eaf = '1231 0900';
       mock_booking.deaf_person.email = 'clifford@vicdeaf.org.au';
       mock_booking.deaf_person.mobile_number = '0444 555 666';
-      mock_booking.interpreters_required = '2';
+      mock_booking.number_of_auslan_interpreters_required = '2';
       mock_booking.venue.street_name = 'Flemington Rd';
 
       let data = mock_booking.toJSON();
       expect(data.number_of_people_attending).toEqual('1');
-      expect(data.number_of_interpreters_required).toEqual('2');
+      expect(data.number_of_auslan_interpreters_required).toEqual('2');
       expect(data.address_attributes.unit_number).toEqual('12');
       expect(data.address_attributes.street_number).toEqual('50');
       expect(data.address_attributes.street_name).toEqual('Flemington Rd');

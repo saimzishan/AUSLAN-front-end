@@ -12,6 +12,7 @@ Feature: User Profile Management
       And I sign in with valid Individual Client credentials
       And I am on the bookings page
       And I click on my name in the top corner
+      When I click on the option  profile
       And I will be taken to my individual profile page
       When I change the dropwdown field COMM. PREFERENCE * with EMAIL
       And I click on BUTTON 'SAVE'
@@ -22,6 +23,7 @@ Feature: User Profile Management
     And I sign in with valid Individual Client credentials
       And I am on the bookings page
       And I click on my name in the top corner
+      When I click on the option  profile
       And I will be taken to my individual profile page
       And The dropdown field COMM. PREFERENCE * will be updated with email_only
 
@@ -32,6 +34,7 @@ Feature: User Profile Management
       And I sign in with valid Individual Client credentials
       And I am on the bookings page
       And I click on my name in the top corner
+      When I click on the option  profile
       And I will be taken to my individual profile page
       When I change the dropwdown field COMM. PREFERENCE * with SMS AND EMAIL
       And I click on BUTTON 'SAVE'
@@ -42,6 +45,7 @@ Feature: User Profile Management
       And I sign in with valid Individual Client credentials
       And I am on the bookings page
       And I click on my name in the top corner
+      When I click on the option  profile
       And I will be taken to my individual profile page
       And The dropdown field COMM. PREFERENCE * will be updated with email_and_sms
 
@@ -52,6 +56,7 @@ Feature: User Profile Management
       And I sign in with valid Individual Client credentials
       And I am on the bookings page
       And I click on my name in the top corner
+      When I click on the option  profile
       And I will be taken to my individual profile page
       And I click on BUTTON 'SAVE'
       Then I get valid message: 'User details updated Successfully'
@@ -61,6 +66,7 @@ Feature: User Profile Management
       And I sign in with valid Individual Client credentials
       And I am on the bookings page
       And I click on my name in the top corner
+      When I click on the option  profile
       And I will be taken to my individual profile page
 
 
@@ -71,6 +77,7 @@ Feature: User Profile Management
       And I sign in with valid Organisational Representative credentials
       And I am on the bookings page
       And I click on my name in the top corner
+      When I click on the option  profile
       And I will be taken to my individual profile page
       When I change the dropwdown field COMM. PREFERENCE * with EMAIL
       And I click on BUTTON 'SAVE'
@@ -81,6 +88,7 @@ Feature: User Profile Management
     And I sign in with valid Organisational Representative credentials
       And I am on the bookings page
       And I click on my name in the top corner
+      When I click on the option  profile
       And I will be taken to my individual profile page
       And The dropdown field COMM. PREFERENCE * will be updated with email_only
 
@@ -91,6 +99,7 @@ Feature: User Profile Management
       And I sign in with valid Organisational Representative credentials
       And I am on the bookings page
       And I click on my name in the top corner
+      When I click on the option  profile
       And I will be taken to my individual profile page
       When I change the dropwdown field PREFFERED CONTACT METHOD with PHONE
       And I click on BUTTON 'SAVE'
@@ -101,6 +110,7 @@ Feature: User Profile Management
       And I sign in with valid Organisational Representative credentials
       And I am on the bookings page
       And I click on my name in the top corner
+      When I click on the option  profile
       And I will be taken to my individual profile page
       And The dropdown field PREFFERED CONTACT METHOD will be updated with phone
 
@@ -111,6 +121,7 @@ Feature: User Profile Management
       And I sign in with valid Organisational Representative credentials
       And I am on the bookings page
       And I click on my name in the top corner
+      When I click on the option  profile
       And I will be taken to my individual profile page
       And I click on BUTTON 'SAVE'
       Then I get valid message: 'User details updated Successfully'
@@ -120,6 +131,7 @@ Feature: User Profile Management
       And I sign in with valid Organisational Representative credentials
       And I am on the bookings page
       And I click on my name in the top corner
+      When I click on the option  profile
       And I will be taken to my individual profile page
 # ---------------------------------------- AUSLAN1-53 -> End ----------------------------------------
 
@@ -141,6 +153,7 @@ Feature: User Profile Management
     And I am on the bookings page
     And I can verify my profile pic is same with link 'missing.svg'
     And I click on my name in the top corner
+    When I click on the option  profile
     And I will be taken to my individual profile page
     When I will upload a document 'sanji_not_sushi.png'
     And I click on BUTTON 'SAVE'
@@ -155,6 +168,7 @@ Feature: User Profile Management
     And I am on the bookings page
     And I can verify my profile pic is same with link 'missing.svg'
     And I click on my name in the top corner
+    When I click on the option  profile
     And I will be taken to my individual profile page
     When I will upload a document 'sanji_not_sushi.png'
     And I click on BUTTON 'SAVE'
@@ -173,6 +187,7 @@ Feature: User Profile Management
     And I am on the bookings page
     And I can verify my profile pic is same with link 'missing.svg'
     And I click on my name in the top corner
+    When I click on the option  profile
     And I will be taken to my individual profile page
     When I will upload a document 'sanji_not_sushi.png'
     And I click on BUTTON 'SAVE'

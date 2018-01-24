@@ -5,6 +5,7 @@ import {BOOKING_STATE} from './booking-state.enum';
 import {PARKING} from './parking.enum';
 import {OrganisationalRepresentative} from './user.entity';
 import {BookingVersion} from './booking-version.entity';
+import * as momentTimeZone from 'moment-timezone';
 export class Booking {
 
     public id: any;
@@ -35,7 +36,71 @@ export class Booking {
     public travel_cost_applicable: boolean;
     public update_all_linked_bookings: boolean;
     public is_metro: boolean;
+    public method_type: string;
+    public number_of_auslan_interpreters_required: number;
+    public number_of_deaf_interpreters_required: number;
+    public number_of_deaf_blind_interpreters_required: number;
+    public number_of_captioners_required: number;
+    public number_of_note_takers_required: number;
+    public number_of_visual_frame_interpreters_required: number;
+    public number_of_tactile_interpreters_required: number;
+    public number_of_platform_interpreters_required: number;
+    public number_of_asl_interpreters_required: number;
+    public number_of_bsl_interpreters_required: number;
+    public number_of_isl_interpreters_required: number;
+    public number_of_signed_english_interpreters_required: number;
+    public number_of_indigenous_sign_interpreters_required: number;
+    public tech_contact_first_name: string;
+    public tech_contact_last_name: string;
+    public tech_contact_email: string;
+    public tech_contact_phone_number: string;
+    public tech_platform: string;
+    public login_id_link: string;
+    public audio_source: string;
+    public hardware: string;
+    public who_will_initiate_call: string;
+    public how_would_you_like_to_receive_notes: string;
+    public new_link_id_required: boolean;
     // Is it a limitation on interpreters invitation.
+
+    static getNamedTimeZone(state: string, postCode: string) {
+        let namedTimeZone;
+        if (postCode === '2880') { // Broken Hill exception
+            namedTimeZone = 'Australia/Adelaide';
+            return namedTimeZone;
+        }
+
+        switch (state) {
+            case 'ACT':
+                namedTimeZone = 'Australia/Canberra';
+                break;
+            case 'NSW':
+                namedTimeZone = 'Australia/Sydney';
+                break;
+            case 'QLD':
+                namedTimeZone = 'Australia/Brisbane';
+                break;
+            case 'SA':
+                namedTimeZone = 'Australia/Adelaide';
+                break;
+            case 'TAS':
+                namedTimeZone = 'Australia/Hobart';
+                break;
+            case 'VIC':
+                namedTimeZone = 'Australia/Melbourne';
+                break;
+            case 'WA':
+                namedTimeZone = 'Australia/Perth';
+                break;
+            case 'NT':
+                namedTimeZone = 'Australia/Darwin';
+                break;
+            default:
+                namedTimeZone = '';
+                break;
+        }
+        return namedTimeZone;
+    }
 
     constructor() {
         this.id = '0';
@@ -67,6 +132,8 @@ export class Booking {
         this.created_by_admin = false;
         this.travel_cost_applicable = false;
         this.update_all_linked_bookings = false;
+        this.method_type = 'onsite';
+        this.new_link_id_required = false;
     }
 
     clean(theObject) {
@@ -93,7 +160,31 @@ export class Booking {
         this.venue.start_time_iso = new Date(data.start_time).toISOString();
         this.venue.end_time_iso = new Date(data.end_time).toISOString();
         this.venue.parking_type = data.parking_availability;
-        this.interpreters_required = data.number_of_interpreters_required;
+        this.method_type = data.method_type;
+        this.number_of_auslan_interpreters_required = data.number_of_auslan_interpreters_required;
+        this.number_of_deaf_interpreters_required = data.number_of_deaf_interpreters_required;
+        this.number_of_deaf_blind_interpreters_required = data.number_of_deaf_blind_interpreters_required;
+        this.number_of_captioners_required = data.number_of_captioners_required;
+        this.number_of_note_takers_required = data.number_of_note_takers_required;
+        this.number_of_visual_frame_interpreters_required = data.number_of_visual_frame_interpreters_required;
+        this.number_of_tactile_interpreters_required = data.number_of_tactile_interpreters_required;
+        this.number_of_platform_interpreters_required = data.number_of_platform_interpreters_required;
+        this.number_of_asl_interpreters_required = data.number_of_asl_interpreters_required;
+        this.number_of_bsl_interpreters_required = data.number_of_bsl_interpreters_required;
+        this.number_of_isl_interpreters_required = data.number_of_isl_interpreters_required;
+        this.number_of_signed_english_interpreters_required = data.number_of_signed_english_interpreters_required;
+        this.number_of_indigenous_sign_interpreters_required = data.number_of_indigenous_sign_interpreters_required;
+        this.interpreters_required = this.getInterpreters();
+        this.tech_contact_first_name = data.tech_contact_first_name;
+        this.tech_contact_last_name = data.tech_contact_last_name;
+        this.tech_contact_email = data.tech_contact_email;
+        this.tech_contact_phone_number = data.tech_contact_phone_number;
+        this.tech_platform = data.tech_platform;
+        this.login_id_link = data.login_id_link;
+        this.audio_source = data.audio_source;
+        this.hardware = data.hardware;
+        this.who_will_initiate_call = data.who_will_initiate_call;
+        this.how_would_you_like_to_receive_notes = data.how_would_you_like_to_receive_notes;
         this.requested_by.first_name = data.requested_by_first_name;
         this.requested_by.last_name = data.requested_by_last_name;
         this.primaryContact.first_name = data.contact_first_name;
@@ -196,12 +287,37 @@ export class Booking {
             id: this.id,
             link_id: this.link_id,
             update_all_linked_bookings: this.update_all_linked_bookings || false,
+            new_link_id_required: this.new_link_id_required || false,
             state: _state,
             special_instructions: this.special_instructions,
             venue: this.venue.title,
             requested_by_first_name: this.requested_by.first_name,
             requested_by_last_name: this.requested_by.last_name,
-            number_of_interpreters_required: this.interpreters_required,
+            method_type: this.method_type,
+            number_of_auslan_interpreters_required: this.number_of_auslan_interpreters_required,
+            number_of_deaf_interpreters_required: this.number_of_deaf_interpreters_required,
+            number_of_deaf_blind_interpreters_required: this.number_of_deaf_blind_interpreters_required,
+            number_of_captioners_required: this.number_of_captioners_required,
+            number_of_note_takers_required: this.number_of_note_takers_required,
+            number_of_visual_frame_interpreters_required: this.number_of_visual_frame_interpreters_required,
+            number_of_tactile_interpreters_required: this.number_of_tactile_interpreters_required,
+            number_of_platform_interpreters_required: this.number_of_platform_interpreters_required,
+            number_of_asl_interpreters_required: this.number_of_asl_interpreters_required,
+            number_of_bsl_interpreters_required: this.number_of_bsl_interpreters_required,
+            number_of_isl_interpreters_required: this.number_of_isl_interpreters_required,
+            number_of_signed_english_interpreters_required: this.number_of_signed_english_interpreters_required,
+            number_of_indigenous_sign_interpreters_required: this.number_of_indigenous_sign_interpreters_required,
+            number_of_interpreters_required: this.getInterpreters(),
+            tech_contact_first_name: this.tech_contact_first_name,
+            tech_contact_last_name: this.tech_contact_last_name,
+            tech_contact_email: this.tech_contact_email,
+            tech_contact_phone_number: this.tech_contact_phone_number,
+            tech_platform: this.tech_platform,
+            login_id_link: this.login_id_link,
+            audio_source: this.audio_source,
+            hardware: this.hardware,
+            who_will_initiate_call: this.who_will_initiate_call,
+            how_would_you_like_to_receive_notes: this.how_would_you_like_to_receive_notes,
             nature_of_appointment: _nature_of_appointment,
             specific_nature_of_appointment: _specific_nature_of_appointment,
             contact_first_name: this.primaryContact.first_name,
@@ -212,8 +328,8 @@ export class Booking {
             deaf_persons_last_name: this.deaf_person.last_name, deaf_persons_mobile: this.deaf_person.mobile_number,
             deaf_persons_email: this.deaf_person.email, deaf_persons_eaf_no: this.deaf_person.eaf,
             number_of_people_attending: _expected_attendance,
-            start_time: new Date(this.venue.start_time_iso).toISOString(),
-            end_time: new Date(this.venue.end_time_iso).toISOString(),
+            start_time: this.venue.start_time_iso,
+            end_time: this.venue.end_time_iso,
             billing_account_attributes: {
                 id: this.client.organisation_primary_contact.id,
                 primary_contact_first_name: this.client.organisation_primary_contact.first_name,
@@ -245,5 +361,20 @@ export class Booking {
             travel_cost_applicable: this.travel_cost_applicable
         });
         return o;
+    }
+
+    getInterpreters() {
+       return +this.number_of_auslan_interpreters_required + +this.number_of_deaf_interpreters_required  +
+              +this.number_of_deaf_blind_interpreters_required + +this.number_of_captioners_required +
+              +this.number_of_note_takers_required + +this.number_of_visual_frame_interpreters_required +
+              +this.number_of_tactile_interpreters_required + +this.number_of_platform_interpreters_required +
+              +this.number_of_asl_interpreters_required + +this.number_of_bsl_interpreters_required +
+              +this.number_of_isl_interpreters_required + +this.number_of_signed_english_interpreters_required +
+              +this.number_of_indigenous_sign_interpreters_required ;
+    }
+
+    utcToBookingTimeZone(time: string) {
+        let timeZone = Booking.getNamedTimeZone(this.venue.state, this.venue.post_code.toString());
+        return momentTimeZone(time).tz(timeZone).format();
     }
 }

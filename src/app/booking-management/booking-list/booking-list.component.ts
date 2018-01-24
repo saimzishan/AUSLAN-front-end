@@ -40,12 +40,17 @@ export class BookingListComponent implements OnInit {
         this.filterParams = GLOBAL._filterVal;
         this.filterParams.paramsMap.forEach((value: string[], key: string) => {
             for (let v of value) {
+            if (key !== 'sort' && key !== 'direction') {
                 key = key.match(/filter\[(\w+)\]/)[1];
+            }
                 this.bookingFilter[key] = v;
                 break;
             }
         });
-        this.bookingFilter.date_from = this.datePipe.transform(Date.now(), 'yyyy-MM-dd');
+        if (this.filterParams.paramsMap.size === 0) {
+            this.sort('start_time');
+            this.bookingFilter.date_from = this.datePipe.transform(Date.now(), 'yyyy-MM-dd');
+            }
         this.filter('date_from', this.bookingFilter.date_from);
     }
 
@@ -119,7 +124,7 @@ export class BookingListComponent implements OnInit {
 
     private formatterValueFor(field: string, value: string) {
         let formattedValue: string;
-        if (value.toLowerCase() === 'all') {
+        if (value !== undefined && value.toLowerCase() === 'all') {
             return '';
         }
         if (value && value.length) {

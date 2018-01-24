@@ -96,8 +96,6 @@ export class Organisational extends User {
     public group_email = '';
     public branch_office = '';
     public preferred_contact_method = 'email_only';
-    public email_receipt = false;
-    public email_confirmation = false;
     public reffered_by: string;
     public reffered_other: string;
     public customer_ref: string;
@@ -138,8 +136,6 @@ export class OrganisationalRepresentative extends Organisational {
             'password': this.password,
             'business_hours_phone': this.phone,
             'mobile': this.mobile,
-            'send_email_on_receipt_of_request': this.email_receipt,
-            'email_confirmation_on_interpreter_allocation': this.email_confirmation,
             'special_instructions': this.special_instructions,
             'discovery_of_auslan': this.reffered_by === 'OTHER' ?
                 'O:' + this.reffered_other : this.reffered_by,
@@ -179,8 +175,6 @@ export class OrganisationalRepresentative extends Organisational {
             'email': this.email,
             'password': this.password,
             'business_hours_phone': this.phone,
-            'send_email_on_receipt_of_request': this.email_receipt,
-            'email_confirmation_on_interpreter_allocation': this.email_confirmation,
             'communication_preference': this.preferred_contact_method,
             'mobile': this.mobile,
             'special_instructions': this.special_instructions,
@@ -232,8 +226,6 @@ export class OrganisationalRepresentative extends Organisational {
     * "suburb":"CRAIGIEBURN","state":"VIC","post_code":"3064"}}}}
     * */
     fromJSON(obj) {
-        this.email_receipt = obj.send_email_on_receipt_of_request;
-        this.email_confirmation = obj.email_confirmation_on_interpreter_allocation;
         this.phone = obj.business_hours_phone;
         obj.organisation = obj.organisation || obj.organisation_attributes;
         obj.organisation.billing_account = obj.organisation.billing_account ||
@@ -292,8 +284,6 @@ export class IndividualClient extends User {
     public individual_client_primary_contact: Contact = new Contact();
     public address_attributes: Address = new Address();
     public individual_client_billing_account: Accountant = new Accountant();
-    public email_receipt: boolean;
-    public email_confirmation: boolean;
     public reffered_by: string;
     public billingAddressIsSame = true;
     public reffered_other: string;
@@ -329,9 +319,7 @@ export class IndividualClient extends User {
             'id': this.id,
             'photo_url': this.photo_url,
             'first_name': this.first_name, 'last_name': this.last_name, 'email': this.email, 'password': this.password,
-            'type': this.type, 'send_email_on_receipt_of_request': this.email_receipt,
-            'email_confirmation_on_interpreter_allocation': this.email_confirmation,
-            'special_instructions': this.special_instructions,
+            'type': this.type, 'special_instructions': this.special_instructions,
             'avatar': this.avatar,
             'discovery_of_auslan': this.reffered_by === 'OTHER' ?
                 'O:' + this.reffered_other : this.reffered_by,
@@ -381,8 +369,6 @@ export class IndividualClient extends User {
             'Other' : obj.discovery_of_auslan : '';
         this.reffered_other = this.reffered_by === 'OTHER' ?
             obj.discovery_of_auslan.replaceAll('O:') : '';
-        this.email_receipt = obj.send_email_on_receipt_of_request;
-        this.email_confirmation = obj.email_confirmation_on_interpreter_allocation;
         this.address_attributes = obj.address_attributes;
         this.individual_client_primary_contact.first_name = obj.billing_account_attributes.primary_contact_first_name;
         this.individual_client_primary_contact.last_name = obj.billing_account_attributes.primary_contact_last_name;
@@ -427,7 +413,7 @@ export class Interpreter extends User {
     public address_attributes: Address = new Address();
     public long_term_availability: interpreter_avalability;
     public override_availabilty: blockout_availability;
-    public skill_level = 'ASL Certified';
+    public skill_level = 'Certified Conference Interpreter';
     public highest_level_edu = 'Diploma of Interpreting Auslan/English';
     public location_pref = 'VIC';
     public communication_preference = 'email_and_sms';

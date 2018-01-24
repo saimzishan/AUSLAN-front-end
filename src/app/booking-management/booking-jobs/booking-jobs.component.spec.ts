@@ -25,6 +25,7 @@ import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
 import { PrettyIDPipe } from '../../shared/pipe/pretty-id.pipe';
 import {BookingHeaderService} from '../booking-header/booking-header.service';
 import {BookingHeaderComponent} from '../booking-header/booking-header.component';
+import {MomentModule} from 'angular2-moment/moment.module';
 
 describe('BookingJobsComponent', () => {
   let component: BookingJobsComponent;
@@ -43,7 +44,7 @@ describe('BookingJobsComponent', () => {
         },
         { provide: BookingService, useClass: MockBookingService },
         { provide: UserService, useClass: MockUserService }, { provide: AuthHttp, useClass: MockBackend }],
-      imports: [SimpleNotificationsModule, MaterialModule, FormsModule,
+      imports: [SimpleNotificationsModule, MaterialModule, FormsModule, MomentModule,
         RouterTestingModule, CustomFormsModule]
     }).compileComponents();
   }));

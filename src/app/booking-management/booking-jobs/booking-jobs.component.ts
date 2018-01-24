@@ -15,6 +15,7 @@ import {PopupComponent} from '../../shared/popup/popup.component';
 import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
 import {GLOBAL} from '../../shared/global';
 import {BookingHeaderService} from '../booking-header/booking-header.service';
+import {LinkidPopupComponent} from '../linkid-popup/linkid-popup.component';
 
 @Component({
     selector: 'app-booking-jobs',
@@ -82,6 +83,9 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                     break;
                 case 'unlinkBooking':
                     this.unlinkBooking();
+                    break;
+                case 'linkBooking':
+                    this.linkBooking();
                     break;
                 case 'saveChanges':
                     this.saveChanges();
@@ -159,7 +163,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         this.dialogRef = this.dialog.open(PopupComponent, config);
         this.dialogRef.componentInstance.title = isCancel ? 'Cancel linked booking' : 'Unable to service linked booking';
         this.dialogRef.componentInstance.cancelTitle = isCancel ? 'Cancel all bookings' : 'Unable to service all bookings';
-        this.dialogRef.componentInstance.okTitle = isCancel ? 'Cancel only this booking' : 'Unable to service this bookings';
+        this.dialogRef.componentInstance.okTitle = isCancel ? 'Cancel only this booking' : 'Unable to service this booking';
         this.dialogRef.componentInstance.popupMessage =
              isCancel ? `Would you like to cancel only this booking, or
           all linked bookings?` :
@@ -167,11 +171,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
           all linked bookings?`;
 
         this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
-            if (result) {
-                this.changeBookingState(isCancel, false);
-            } else {
-                this.changeBookingState(isCancel, true);
-            }
+            this.changeBookingState(isCancel, !result);
         });
     }
 
@@ -214,10 +214,35 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         this.router.navigate(['/booking-management', 'create-booking'], navigationExtras);
     }
 
+    linkBooking() {
+        let config: MdDialogConfig = {
+            disableClose: true
+        };
+        config.viewContainerRef = this.viewContainerRef;
+        this.dialogRef = this.dialog.open(LinkidPopupComponent, config);
+        this.dialogRef.componentInstance.bookingId = this.selectedBookingModel.id;
+        this.dialogSub = this.dialogRef.afterClosed().subscribe((selectedLinkId: any) => {
+            if (+selectedLinkId) {
+                this.selectedBookingModel.link_id = Number(selectedLinkId);
+                this.selectedBookingModel.new_link_id_required = false;
+                this.selectedBookingModel.update_all_linked_bookings = false;
+            } else if (selectedLinkId === 'New linked booking') {
+                this.selectedBookingModel.link_id = null;
+                this.selectedBookingModel.new_link_id_required = true;
+                this.selectedBookingModel.update_all_linked_bookings = false;
+            }
+
+            if (selectedLinkId) {
+                this.saveChanges();
+            }
+        });
+    }
+
     unlinkBooking() {
         this.unlinkPressed = true;
         this.selectedBookingModel.link_id = null;
         this.selectedBookingModel.update_all_linked_bookings = false;
+        this.selectedBookingModel.new_link_id_required = false;
     }
 
     editBooking() {
@@ -290,7 +315,10 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
 
                         this.fetchNearbyinterpreters(param_id);
                         this.isCancelledOrUnableToServe = this.isActiveState('Cancelled_no_charge')
-                            || this.isActiveState('Unable_to_service');
+                            || this.isActiveState('Unable_to_service') || this.isActiveState('Cancelled_chargeable');
+
+                        this.selectedBookingModel.venue.start_time_iso = this.selectedBookingModel.utcToBookingTimeZone(this.selectedBookingModel.venue.start_time_iso);
+                        this.selectedBookingModel.venue.end_time_iso = this.selectedBookingModel.utcToBookingTimeZone(this.selectedBookingModel.venue.end_time_iso);
 
                         if (this.isCurrentUserInterpreter()) {
                             this.selectedBookingModel.interpreters.filter(i => i.id === GLOBAL.currentUser.id)
@@ -315,7 +343,10 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                                 /* Also Redirects */
                                 this.router.navigate(['/booking-management']);
                             }
-
+                            if (this.selectedBookingModel.state === BOOKING_STATE.Service_completed) {
+                            this.disableReject = true;
+                            this.disableAccept = true;
+                            }
                             this.getStateString();
                         }
                     }
@@ -392,17 +423,18 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                 });
     }
 
-    private removeLinkFromBooking = () => {
+    private updateSelectedBookingModel = () => {
         this.bookingService.updateBooking(this.selectedBookingModel.id, this.selectedBookingModel)
             .subscribe((res: any) => {
                     if (res.status === 204) {
                         this.spinnerService.requestInProcess(false);
                         this.notificationServiceBus.launchNotification(false, 'The Booking has been Updated.');
+                        this.fetchBookingInterpreters(this.selectedBookingModel.id);
                     }
                 },
                 err => {
                     this.spinnerService.requestInProcess(false);
-                    let e = err.json() || 'There is some error on server side';
+                    let e = err.json() || {errors: 'There booking could not be updated. Please try after some time.'};
                     this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
                 });
     }
@@ -436,7 +468,9 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
             this.selectedActionableInterpreterID = -1;
         } else if (this.unlinkPressed) {
             this.unlinkPressed = false;
-            this.removeLinkFromBooking();
+            this.updateSelectedBookingModel();
+        } else {
+            this.updateSelectedBookingModel();
         }
     }
 
@@ -506,12 +540,10 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     }
 
     public travelPayStatus(interpreter) {
-        if (!this.selectedBookingModel.is_metro && interpreter.interpreter_type === 'Metro') {
-            return 'Yes';
-        } else if (!this.selectedBookingModel.is_metro && (interpreter.distance > 40 && interpreter.interpreter_type === 'Rural')) {
-            return 'Yes';
-        } else {
-            return 'No';
+        if (interpreter.distance === '-') {
+            return '-';
+        }else {
+            return interpreter.travel_pay ? 'Yes' : 'No';
         }
     }
 }

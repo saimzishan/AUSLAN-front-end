@@ -50,10 +50,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
             jsonData.id = params['uid'] || '';
             switch (this.selectedRole) {
                 case 'Interpreter'.toUpperCase():
-                    let int1 = this.isEdit ? UserFactory.createUser(jsonData) : new Interpreter();
+                    let int1: Interpreter = this.isEdit ? <Interpreter>UserFactory.createUser(jsonData) : new Interpreter();
                     this.model = int1;
                     this.model.role = ROLE.Interpreter;
-
+                    GLOBAL.currentInterpreter = this.isEdit ? int1 : GLOBAL.currentInterpreter;
                     break;
 
                 case 'IndividualClient'.toUpperCase():
@@ -185,7 +185,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
             });
     }
 
-
+    checkUserAdminORBookOfficer(): Boolean {
+        return Boolean(GLOBAL.currentUser instanceof Administrator ||
+            GLOBAL.currentUser instanceof BookingOfficer) ;
+    }
     handleFileSelect(evt) {
         let files = evt.target.files;
         let file = files[0];
