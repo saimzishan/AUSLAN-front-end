@@ -39,7 +39,7 @@ export class AddressComponent implements AfterViewInit, OnInit {
         'locality' : 'long_name',
         'administrative_area_level_1' : 'short_name',
         'postal_code' : 'short_name'
-    }
+    };
     addressAttrs = {
         'premise' : 'unit_number',
         'street_number' : 'street_number',
@@ -47,7 +47,7 @@ export class AddressComponent implements AfterViewInit, OnInit {
         'locality' : 'suburb',
         'administrative_area_level_1' : 'state',
         'postal_code' : 'post_code'
-    }
+    };
 
     constructor(
         public notificationServiceBus: NotificationServiceBus,
@@ -76,8 +76,8 @@ export class AddressComponent implements AfterViewInit, OnInit {
                     if (place.geometry !== undefined || place.geometry !== null) {
                         this.address.unit_number = '';
                         for (let component of place.address_components) {
-                            let addressType = this.addressTypes[component['types'][0]]
-                            let addressArrr = this.addressAttrs[component['types'][0]]
+                            let addressType = this.addressTypes[component['types'][0]];
+                            let addressArrr = this.addressAttrs[component['types'][0]];
                             if (!isNullOrUndefined(addressArrr)) {
                                 this.address[addressArrr] = component[addressType];
                             }
@@ -111,19 +111,6 @@ export class AddressComponent implements AfterViewInit, OnInit {
         } else {
             this.isTravelCostApplicable = false;
         }
-        return true;
+        return this.isTravelCostApplicable;
     };
-
-    autoFillAddress(): boolean {
-        debugger;
-        // for (let i of place.address_components.length) {
-        //     let addressType = place.address_components[i].types[0];
-            // debugger;
-            // if (this.addressComponents[addressType]) {
-            //     let val = place.address_components[i][this.addressComponents[addressType]];
-            //     document.getElementById(addressType).value = val;
-            // }
-        // }
-        return true;
-    }
 }
