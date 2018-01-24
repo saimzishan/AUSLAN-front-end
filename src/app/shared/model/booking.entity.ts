@@ -60,6 +60,10 @@ export class Booking {
     public who_will_initiate_call: string;
     public how_would_you_like_to_receive_notes: string;
     public new_link_id_required: boolean;
+    public frequency: 'weekly' | 'biweekly' | 'fourweekly';
+    public recurring: boolean;
+    public recurrence_end_date: Date;
+    public repeat_booking_on_days: Array<string>;
     // Is it a limitation on interpreters invitation.
 
     static getNamedTimeZone(state: string, postCode: string) {
@@ -134,6 +138,7 @@ export class Booking {
         this.method_type = 'onsite';
         this.new_link_id_required = false;
         this.how_would_you_like_to_receive_notes = 'Digitally';
+        this.frequency = 'weekly';
     }
 
     clean(theObject) {
@@ -293,6 +298,10 @@ export class Booking {
             requested_by_first_name: this.requested_by.first_name,
             requested_by_last_name: this.requested_by.last_name,
             method_type: this.method_type,
+            frequency: this.frequency,
+            recurrence_end_date: this.recurrence_end_date,
+            recurring: this.recurring,
+            repeat_booking_on_days: this.repeat_booking_on_days,
             number_of_auslan_interpreters_required: this.number_of_auslan_interpreters_required,
             number_of_deaf_interpreters_required: this.number_of_deaf_interpreters_required,
             number_of_captioners_required: this.number_of_captioners_required,
