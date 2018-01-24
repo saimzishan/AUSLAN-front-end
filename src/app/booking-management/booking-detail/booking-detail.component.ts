@@ -73,7 +73,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     oldInterpreterPreference = [];
     isDisabledForAdmin: boolean;
     bookingDate: Date;
-    minDate: Date;
+    minDate = new Date();
+    minDateForRecurrenceEnd = this.minDate;
     maxDate: Date;
     bookingStartTime: Date;
     bookingEndTime: Date;
@@ -93,6 +94,44 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     cbSignedEnglishInterpreter = false;
     cbIndigenousSignInterpreter = false;
     defaultDateTime: Date;
+    isRecurringBooking = false;
+    repeat_days = [
+        {
+            display: 'S',
+            value: 'Sunday',
+            selected: false
+        },
+        {
+            display: 'M',
+            value: 'Monday',
+            selected: false
+        },
+        {
+            display: 'T',
+            value: 'Tuesday',
+            selected: false
+        },
+        {
+            display: 'W',
+            value: 'Wednesday',
+            selected: false
+        },
+        {
+            display: 'T',
+            value: 'Thursday',
+            selected: false
+        },
+        {
+            display: 'F',
+            value: 'Friday',
+            selected: false
+        },
+        {
+            display: 'S',
+            value: 'Saturday',
+            selected: false
+        }
+    ];
     @ViewChild('addressForm') private bookingAddress: AddressComponent;
 
     constructor(public bookingService: BookingService, private router: Router,
@@ -285,6 +324,11 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         this.isUserAdminORBookOfficer ? this.minDate.setFullYear(year - 5) : this.minDate.setDate(today.getDate());
         this.maxDate = new Date();
         this.maxDate.setFullYear(year + 5);
+        this.minDateForRecurrenceEnd = this.getMinDateForRecurringBookingEnd();
+    }
+
+    getMinDateForRecurringBookingEnd() {
+        return this.bookingDate || this.minDate;
     }
 
     setDayMonthYear() {
@@ -644,6 +688,16 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 || endDate.getSeconds() > 0)) || endDate.getHours() > 20);
     }
 
+    public isRecurrenceDayCheckboxDisabled(day) {
+        return this.bookingDate && this.bookingDate.getDay() === this.repeat_days.indexOf(day);
+    }
+
+    private getRecurrenceDays() {
+        return this.repeat_days
+            .filter(day => day.selected)
+            .map(day => day.value);
+    }
+
     createBooking() {
         this.timeFormatting();
         if (!this.bookingModel.bookable_id) {
@@ -652,6 +706,11 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         }
         this.spinnerService.requestInProcess(true);
         this.bookingModel.state = BOOKING_STATE.Requested; // res.data.state;
+        this.bookingModel.new_link_id_required = this.isRecurringBooking;
+        this.bookingModel.recurring = this.isRecurringBooking;
+        if (this.isRecurringBooking) {
+            this.bookingModel.repeat_booking_on_days = this.getRecurrenceDays();
+        }
         this.bookingService.createBooking(this.bookingModel)
             .subscribe((res: any) => {
                     if (res.status === 204) {
@@ -780,6 +839,14 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         if ((evnt.target as Element).hasAttribute('readonly')) {
             this.notificationServiceBus.launchNotification(true, 'In order to change this field, please contact the booking office.');
         }
+    }
+
+    resetRecurringDays() {
+        for (const day of this.repeat_days) {
+            day.selected = false
+        }
+        this.repeat_days[this.bookingDate.getDay()].selected = true;
+        this.minDateForRecurrenceEnd = this.getMinDateForRecurringBookingEnd();
     }
 
     _handleReaderLoaded(readerEvt) {
