@@ -17,9 +17,8 @@ import {GLOBAL} from '../../shared/global';
 import {BookingHeaderService} from '../booking-header/booking-header.service';
 import {LinkidPopupComponent} from '../linkid-popup/linkid-popup.component';
 import * as moment from 'moment';
-import * as $ from "jquery";
+import * as $ from 'jquery';
 import {CalendarComponent} from 'ap-angular2-fullcalendar';
-
 @Component({
     selector: 'app-booking-jobs',
     templateUrl: './booking-jobs.component.html',
@@ -47,8 +46,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     private currentStatus = 'Invited';
     stateStr = '';
     calendarOptions: Object = {};
-    showCalendar = false;
-    @ViewChild('mycal') myCal: CalendarComponent;
+    showCalendar = true;
 
     constructor(public dialog: MdDialog,
                 public viewContainerRef: ViewContainerRef, public spinnerService: SpinnerService,
@@ -76,9 +74,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
             header: {
                 right: 'timelineDay'
             },
-
-            events: [
-            ]
+            events: []
         };
 
         for (let inte of this.interpreterList) {
@@ -221,9 +217,9 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         this.dialogRef.componentInstance.cancelTitle = isCancel ? 'Cancel all bookings' : 'Unable to service all bookings';
         this.dialogRef.componentInstance.okTitle = isCancel ? 'Cancel only this booking' : 'Unable to service this booking';
         this.dialogRef.componentInstance.popupMessage =
-             isCancel ? `Would you like to cancel only this booking, or
+            isCancel ? `Would you like to cancel only this booking, or
           all linked bookings?` :
-          `Would you like to mark this booking as unable to service, or
+                `Would you like to mark this booking as unable to service, or
           all linked bookings?`;
 
         this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
@@ -234,11 +230,13 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     isCurrentUserInterpreter() {
         return GLOBAL.currentUser instanceof Interpreter;
     }
+
     isCurrentUserAdminOrBookingOfficer(): boolean {
         return Boolean(GLOBAL.currentUser instanceof Administrator ||
             GLOBAL.currentUser instanceof BookingOfficer);
     }
-    showActions () {
+
+    showActions() {
         return this.selectedBookingModel.state === BOOKING_STATE.In_progress && this.isCurrentUserInterpreter();
     }
 
@@ -368,8 +366,9 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                         this.selectedBookingModel.interpreters.sort((i, j) =>
                             i.state === 'Accepted' ? -1 : j.state === 'Accepted' ? 1 : 0
                         );
-
-                        this.fetchNearbyinterpreters(param_id);
+                        if (this.isCurrentUserAdminOrBookingOfficer()) {
+                            this.fetchNearbyinterpreters(param_id);
+                        }
                         this.isCancelledOrUnableToServe = this.isActiveState('Cancelled_no_charge')
                             || this.isActiveState('Unable_to_service') || this.isActiveState('Cancelled_chargeable');
 
@@ -400,8 +399,8 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                                 this.router.navigate(['/booking-management']);
                             }
                             if (this.selectedBookingModel.state === BOOKING_STATE.Service_completed) {
-                            this.disableReject = true;
-                            this.disableAccept = true;
+                                this.disableReject = true;
+                                this.disableAccept = true;
                             }
                             this.getStateString();
                         }
@@ -598,31 +597,68 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     travelPayStatus(interpreter) {
         if (interpreter.distance === '-') {
             return '-';
-        }else {
+        } else {
             return interpreter.travel_pay ? 'Yes' : 'No';
         }
     }
-    isPreferred(user) {
-        let preferred_int =
-            this.selectedBookingModel.preference_allocations_attributes;
-        return preferred_int.filter(
-            i => i.interpreter_id === user.id
-        ).length > 0;
+
+    isPreferred(user_id) {
+        return this.interpreterOfTypeExists('preferred', user_id);
+
     }
 
     isStaff(user) {
         return false;
     }
+
     getLevel(user) {
         return '';
     }
+
     getNotes(user: Interpreter) {
         return user.booking_office_notes;
     }
-    getSuburb (user: Interpreter) {
+
+    getSuburb(user: Interpreter) {
         return user.address_attributes.suburb;
     }
+
     stringifyUser(user) {
         return JSON.stringify(user);
+    }
+
+    hasBlockout(user: Interpreter) {
+        let blockouts = user.availability_blocks_attributes;
+        return blockouts.filter(b => {
+            let startBO = new Date(b.start_time).getTime();
+            let startBK = new Date(this.selectedBookingModel.venue.start_time_iso).getTime();
+            let endBO = new Date(b.end_time).getTime();
+            let endBK = new Date(this.selectedBookingModel.venue.end_time_iso).getTime();
+
+            return (startBO >= startBK && startBO <= endBK)
+                || (endBO >= startBK && endBO <= endBK)
+                || (startBK >= startBO && startBK <= endBO)
+                || (endBK >= startBO && endBK <= endBO);
+        });
+    }
+
+    hasDeclined(user) {
+        let currentStatus = '';
+        this.selectedBookingModel.interpreters.filter(i => i.id === user.id)
+            .map(i => currentStatus = i.state || '');
+        return currentStatus === 'Rejected';
+
+    }
+
+    isBlocked(user_id) {
+        return this.interpreterOfTypeExists('blocked', user_id);
+    }
+    interpreterOfTypeExists ( type: string, user_id: string) {
+        let blocked_int =
+            this.selectedBookingModel.preference_allocations_attributes.filter(i =>
+                i.preference === type);
+        return blocked_int.filter(
+            i => i.interpreter_id === user_id
+        ).length > 0;
     }
 }

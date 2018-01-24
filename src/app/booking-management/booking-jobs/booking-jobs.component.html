@@ -249,13 +249,8 @@
                 <section *ngIf='!isCancelledOrUnableToServe && !isCurrentUserInterpreter()' id="invite-interpreters">
                     <section id="filters">
                         <section class="search-bar" style="width:150%">
-                            <!--<input type="text" name="search" placeholder="Search...">-->
-                            <!--<button><i class="icon-glass"></i></button>-->
                         </section>
                         <section class="filters">
-                            <!--<button class="button">Select Top 10</button>-->
-                            <!--<button class="button">Select All Available</button>-->
-                            <!--<button class="button">Filter Only Available</button>-->
 
                             <div class="separator"></div>
 
@@ -321,9 +316,13 @@
                             <td>{{user.id}}</td>
                             <td align="center">
                                 <!-- i [ngClass]="{'icon-check-green' : isInvited(user.id), 'icon-check-yellow' : !isInvited(user.id)}"><i -->
+                                <i aria-hidden="true" [ngClass]="{'fa fa-exclamation-circle fa-danger' : hasBlockout(user),
+                                 'fa fa-times-circle' : hasDeclined(user) ,
+                                  'fa fa-ban' : isBlocked(user.id)}"></i>
+
                             </td>
                             <td align="center">
-                                {{isPreferred(user) ? 'Preferred' : 'Non Preferred'}}
+                                {{isPreferred(user.id) ? 'Preferred' : ' - '}}
                             </td>
                             <td><!-- i [ngClass]="{'icon-check-yellow' : isNotConfirmed(user.id)}"></i -->
                                <a name="lnkEditUser" [routerLink]="['/init']" [queryParams]="{selectedRole:'INTERPRETER',uid:user.id, edit_user:
@@ -340,7 +339,6 @@
                         </tbody>
                     </table>
                     <section *ngIf="showCalendar">
-                        <angular2-fullcalendar id="mycal" #mycal [options]="calendarOptions"></angular2-fullcalendar>
 
                     </section>
                 </section>
