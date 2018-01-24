@@ -78,6 +78,7 @@ import { MobileHeaderComponent } from './ui/mobile-header/mobile-header.componen
 import {MomentModule} from 'angular2-moment/moment.module';
 import {BookingInfoComponent} from './booking-management/booking-info/booking-info.component';
 import {BookingPayrollComponent} from './booking-management/booking-payroll/booking-payroll.component';
+import {PayrollTimeComponent} from './booking-management/payroll-time/payroll-time.component';
 
 @NgModule({
     declarations: [
@@ -106,7 +107,8 @@ import {BookingPayrollComponent} from './booking-management/booking-payroll/book
         InterpreterComponent, BillingAccountComponent,
         SkillMatrixComponent, AddressComponent, AccountantComponent,
         UserPasswordComponent, PreComponent, BlockoutComponent, TermandconditionComponent,
-        InterpreterBoxComponent, InterpreterPopupComponent, RemoveSpacePipe, LinkidPopupComponent, MobileHeaderComponent, BookingInfoComponent, BookingPayrollComponent
+        InterpreterBoxComponent, InterpreterPopupComponent, RemoveSpacePipe, LinkidPopupComponent, MobileHeaderComponent,
+        BookingInfoComponent, BookingPayrollComponent, PayrollTimeComponent
     ],
     entryComponents: [PopupComponent, InterpreterPopupComponent, LinkidPopupComponent],
     imports: [CustomFormsModule, routing, FileUploadModule,

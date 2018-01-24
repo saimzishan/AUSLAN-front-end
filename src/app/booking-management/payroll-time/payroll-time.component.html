@@ -1,0 +1,26 @@
+<footer class="payroll-card__footer common-form">
+    <div class="payroll-card__measure">
+        <span class="payroll-card__measure-name">Inter. time*</span>
+        <div class="form-field">
+            <input type="text" name="interpreterTime" placeholder="1:42" class="payroll-card__measure-input" [(ngModel)]="payrollInvoice.interpreting_time">
+        </div>
+    </div>
+    <div class="payroll-card__measure">
+        <span class="payroll-card__measure-name">Prep. time</span>
+        <div class="form-field">
+            <input type="text" name="prepTime" placeholder="0:00" class="payroll-card__measure-input" [(ngModel)]="payrollInvoice.preparation_time">
+        </div>
+    </div>
+    <div class="payroll-card__measure">
+        <span class="payroll-card__measure-name">KM*</span>
+        <div class="form-field">
+            <input type="text" name="kiloMeters" value="1:30" class="payroll-card__measure-input" [(ngModel)]="payrollInvoice.distance">
+        </div>
+    </div>
+    <div class="payroll-card__measure">
+        <span class="payroll-card__measure-name">Travel time*</span>
+        <div class="form-field">
+            <input type="text" name="travelTime" value="78" class="payroll-card__measure-input" [(ngModel)]="payrollInvoice.travel_time">
+        </div>
+    </div>
+</footer>
