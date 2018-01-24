@@ -32,6 +32,23 @@ export class AddressComponent implements AfterViewInit, OnInit {
     @Input() userModel: Interpreter;
 
     isTravelCostApplicable = false;
+    addressTypes = {
+        'premise' : 'short_name',
+        'street_number' : 'short_name',
+        'route' : 'long_name',
+        'locality' : 'long_name',
+        'administrative_area_level_1' : 'short_name',
+        'postal_code' : 'short_name'
+    }
+    addressAttrs = {
+        'premise' : 'unit_number',
+        'street_number' : 'street_number',
+        'route' : 'street_name',
+        'locality' : 'suburb',
+        'administrative_area_level_1' : 'state',
+        'postal_code' : 'post_code'
+    }
+
     constructor(
         public notificationServiceBus: NotificationServiceBus,
         public gmapApi: GmapsApiService,
@@ -56,13 +73,15 @@ export class AddressComponent implements AfterViewInit, OnInit {
             autocomplete.addListener('place_changed', () => {
                 this.ngZone.run(() => {
                     let place: google.maps.places.PlaceResult = autocomplete.getPlace();
-                    debugger;
                     if (place.geometry !== undefined || place.geometry !== null) {
-                        this.address.street_number = place.address_components[0]['short_name'];
-                        this.address.street_name = place.address_components[1]['long_name'];
-                        this.address.suburb = place.address_components[2]['long_name'];
-                        this.address.state = place.address_components[4]['short_name'];
-                        this.address.post_code = Number(place.address_components[6]['short_name']);
+                        this.address.unit_number = '';
+                        for (let component of place.address_components) {
+                            let addressType = this.addressTypes[component['types'][0]]
+                            let addressArrr = this.addressAttrs[component['types'][0]]
+                            if (!isNullOrUndefined(addressArrr)) {
+                                this.address[addressArrr] = component[addressType];
+                            }
+                        }
                         this.calculateDistance();
                     }
                 });
