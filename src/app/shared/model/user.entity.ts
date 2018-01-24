@@ -395,7 +395,7 @@ export class Administrator extends User {
 * {"user":{"address_attributes":
 * {"unit_number":"22","street_number":"62","street_name":"DIANNE AVE",
 * "suburb":"CRAIGIEBURN","post_code":"3064","state":"VIC"},
-* "skill_level":"Deaf Interpreter Accredited","highest_level_edu":"Diploma of Interpreting Auslan/English",
+* "skill_level":"Deaf Interpreter Accredited",
 * "location_pref":"QLD","comm_pref":"SMS and Email","role":6,"first_name":"Nauman","last_name":"Interpreter",
 * "password":"Abcd#1234","confirm_password":"Abcd#1234","email":"nauman+int@curvetomorrow.com.au","phone":"0490398821",
 * "mobile":"xxxx xxx xxx","naati_id":"NA-234","naati_validity_start_date":"2017-06-30",
@@ -414,7 +414,6 @@ export class Interpreter extends User {
     public long_term_availability: interpreter_avalability;
     public override_availabilty: blockout_availability;
     public skill_level = 'Certified Conference Interpreter';
-    public highest_level_edu = 'Diploma of Interpreting Auslan/English';
     public location_pref = 'VIC';
     public communication_preference = 'email_and_sms';
     public assignments_attributes = [];
