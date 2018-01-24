@@ -843,7 +843,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
 
     resetRecurringDays() {
         for (const day of this.repeat_days) {
-            day.selected = false
+            day.selected = false;
         }
         this.repeat_days[this.bookingDate.getDay()].selected = true;
         this.minDateForRecurrenceEnd = this.getMinDateForRecurringBookingEnd();
