@@ -339,7 +339,7 @@
                         </tr>
                         </tbody>
                     </table>
-                    <section>
+                    <section *ngIf="showCalendar">
                         <angular2-fullcalendar id="mycal" #mycal [options]="calendarOptions"></angular2-fullcalendar>
 
                     </section>

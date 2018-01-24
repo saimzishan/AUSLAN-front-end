@@ -47,6 +47,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     private currentStatus = 'Invited';
     stateStr = '';
     calendarOptions: Object = {};
+    showCalendar = false;
     @ViewChild('mycal') myCal: CalendarComponent;
 
     constructor(public dialog: MdDialog,
@@ -75,7 +76,6 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
             header: {
                 right: 'timelineDay'
             },
-            defaultView: 'timelineDay',
 
             events: [
             ]
