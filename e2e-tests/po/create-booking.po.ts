@@ -12,6 +12,7 @@ interface TestDateFormat {
 
 export class BookingPage extends PageObject {
     previousDate: Boolean = false;
+    tommorowDate: Boolean = false;
     list_of_object = {};
     browse = () => {
         return this.currentPath().then((currentPath) => {
@@ -218,6 +219,17 @@ export class BookingPage extends PageObject {
         this.previousDate = true;
         return this.createBookingWithTimeAndInterpreter('standard', '10:15 AM', '11:15 AM', '2', 'auslanInterpreters_count');
     }
+    editBookingWithTomorrowDateWith_VICDEAF_STATE =() =>{
+        this.getElementByCss('input[name="dpDate"]').clear();
+        this.setDate( this.getDateAfterNDays(1));
+        this.setElementsValueByName('address_state', 'VIC');
+    }
+    editBookingWithTomorrowDateWith_DSQ_STATES =() =>{
+        this.setElementsValueByName('address_state', 'ACT');
+    }
+    editBookingWith_DSQ_STATES =() =>{
+        this.setElementsValueByName('address_state', 'VIC');
+    }
     createBookingForPerth = () => {
         return this.createBookingWithAddressTimeAndInterpreter('standard', '10:15 AM', '11:15 AM', '2');
     }
@@ -258,7 +270,7 @@ export class BookingPage extends PageObject {
         ].join('/');
     }
     createBookingWithTimeAndInterpreter = (standard: string, startTime: string, endTime: string, interpreterNum: string, interpreterFieldName: string) => {
-        const dateToSend = this.previousDate ? this.getDateAfterNDays(-1) : this.getDateAfterNDays(8);
+        const dateToSend = this.previousDate ? this.getDateAfterNDays(-1) : this.tommorowDate? this.getDateAfterNDays(1) : this.getDateAfterNDays(8);
         this.setDate(dateToSend);
         this.setStartEndTime('start', startTime);
         this.setStartEndTime('end', endTime);

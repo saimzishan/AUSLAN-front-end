@@ -173,7 +173,11 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
               `Would you like to mark this booking as unable to service, or
               all linked bookings?`;
         this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
+            if (isCancel) {
             this.cancelBooking(isCancel, !result);
+            } else {
+                this.changeBookingState(isCancel, !result);
+            }
         });
     }
     cancelBooking(isCancel: Boolean, update_all_linked_bookings?: boolean) {
