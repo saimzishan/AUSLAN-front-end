@@ -56,8 +56,8 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
         this.spinnerService.requestInProcess(true);
         this.bookingService.getBookingPayments(bookingID).subscribe((res: any) => {
             if (res.status === 200) {
-                this.payments.payrolls = res.data.payments.payrolls;
-                this.payments.invoices = res.data.payments.invoices;
+                this.payments.payroll_attributes = res.data.payments.payrolls;
+                this.payments.invoice_attributes = res.data.payments.invoices;
             }
             this.spinnerService.requestInProcess(false);
         },
@@ -71,8 +71,8 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
     updatePayment() {
         this.spinnerService.requestInProcess(true);
         this.bookingService.updateBookingPayments(this.bookingModel.id, this.payments).subscribe((res: any) => {
-            if (res.status === 200) {
-                this.notificationServiceBus.launchNotification(false, 'Booking payroll updated successfully');
+            if (res.status === 204) {
+                this.notificationServiceBus.launchNotification(false, 'Hurray! Changes saved successfully.');
             }
             this.spinnerService.requestInProcess(false);
         },
@@ -86,6 +86,6 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
 }
 
 export class Payments {
-    public payrolls = [];
-    public invoices = [];
+    public payroll_attributes = [];
+    public invoice_attributes = [];
 }

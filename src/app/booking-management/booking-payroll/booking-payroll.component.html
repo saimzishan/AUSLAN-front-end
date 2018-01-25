@@ -6,28 +6,28 @@
       <app-booking-info [selectedBookingModel]="bookingModel"></app-booking-info>
       
         <h2>Payroll details</h2>
-        <ng-container *ngFor="let payroll of payments.payrolls; let i = index">
+        <ng-container *ngFor="let payroll of payments.payroll_attributes; let i = index">
         <section class="payroll-card">
             <section class="payroll-card__interpreter">
-                <header class="payroll-card__header">Interpreter 1: Tim Johnson</header>
+                <header class="payroll-card__header">Interpreter {{i+1}}: {{payroll.interpreter_first_name +' '+payroll.interpreter_last_name}}</header>
                 <section class="payroll-card__content">
                     <section class="common-form">
                         PAYROLL AS
-                        <select name="payrollAs" class="menu custom gray">
+                        <select name="{{'payrollAs_' + i}}" class="menu custom gray">
                             <option [value]="Casual">Casual</option>
                         </select>
  
                     </section>
                     <section>
                         <div class="payroll-card__option">
-                            <md-checkbox name="cbPayInterpreter" [(ngModel)]="payroll.pay_interpreter"></md-checkbox>
+                            <md-checkbox name="{{'cbPayInterpreter_' + i}}" [(ngModel)]="payroll.pay_interpreter"></md-checkbox>
                             <label>
                                 Pay interpreter
                                 <span class="note note_block note_green note_small">RECOMMENDED</span>
                             </label>
                         </div>
                         <div class="payroll-card__option payroll-card__option_with-offset">
-                            <md-checkbox name="cbPayTravel" [(ngModel)]="payroll.pay_travel"></md-checkbox>
+                            <md-checkbox name="{{'cbPayTravel_' + i}}" [(ngModel)]="payroll.pay_travel"></md-checkbox>
                             <label>
                                 Pay travel
                                 <span class="note note_block note_small">NOT RECOMMENDED</span>
@@ -36,23 +36,23 @@
                     </section>
                 </section>
 
-                <app-payroll-time [payrollInvoice]="payroll"></app-payroll-time>
+                <app-payroll-time [payrollInvoice]="payroll" [index]="i"></app-payroll-time>
 
             </section>
 
             <section class="payroll-card__client">
-                <header class="payroll-card__header">Melbourne University</header>
+                <header class="payroll-card__header">{{payments.invoice_attributes[i].organisation_name}}</header>
                 <section class="payroll-card__content">
                     <section>
                         <div class="payroll-card__option">
-                            <md-checkbox name="cbInvoiceClient" [(ngModel)]="payments.invoices[i].invoice_client"></md-checkbox>
+                            <md-checkbox name="{{'cbInvoiceClient_' + i}}" [(ngModel)]="payments.invoice_attributes[i].invoice_client"></md-checkbox>
                             <label>
                                 Invoice client
                                 <span class="note note_block note_green note_small">RECOMMENDED</span>
                             </label>
                         </div>
                         <div class="payroll-card__option payroll-card__option_with-offset">
-                            <md-checkbox name="cbChargeTravel" [(ngModel)]="payments.invoices[i].charge_travel"></md-checkbox>
+                            <md-checkbox name="{{'cbChargeTravel_' +i}}" [(ngModel)]="payments.invoice_attributes[i].charge_travel"></md-checkbox>
                             <label for="option-4">
                                 Charge travel
                                 <span class="note note_block note_small">NOT RECOMMENDED</span>
@@ -61,7 +61,7 @@
                     </section>
                 </section>
 
-                <app-payroll-time [payrollInvoice]="payments.invoices[i]"></app-payroll-time>
+                <app-payroll-time [payrollInvoice]="payments.invoice_attributes[i]" [isClient]="true" [index]="i"></app-payroll-time>
 
             </section>
         </section>
