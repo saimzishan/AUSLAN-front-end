@@ -10,6 +10,7 @@ import {SimpleNotificationsModule} from 'angular2-notifications/src/simple-notif
 import {GmapsApiService} from '../../api/gmaps-api.service';
 import {AuthHttp} from 'angular2-jwt';
 import {MockBackend} from '@angular/http/testing';
+import {MapsAPILoader} from '@agm/core';
 
 describe('AddressComponent', () => {
     let component: AddressComponent;
@@ -18,7 +19,7 @@ describe('AddressComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [AddressComponent],
-            providers: [NotificationServiceBus, GmapsApiService, {provide: AuthHttp, useClass: MockBackend}],
+            providers: [NotificationServiceBus, GmapsApiService, {provide: AuthHttp, useClass: MockBackend}, MapsAPILoader],
             imports: [FormsModule, CustomFormsModule, SimpleNotificationsModule]
         })
             .compileComponents();

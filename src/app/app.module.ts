@@ -113,7 +113,7 @@ import {MomentModule} from 'angular2-moment/moment.module';
         HttpModule, SimpleNotificationsModule.forRoot(),
         ReactiveFormsModule, Md2Module.forRoot(),
         MaterialModule, CalendarModule, PrimeNgCalendarModule, MomentModule, AgmCoreModule.forRoot({
-            apiKey: 'AIzaSyD6AdcxpDfXs_UN2BrOn70oVXeWh7VnxOY',
+            apiKey: 'AIzaSyA-BDtGjVcaDl5VrgsGiwDLEvDQ1XOsWAw',
             libraries: ['places']
         })
     ], providers: [DatePipe, LinkAuth, UserNameService, RolePermission, AuthGuard, NoAuthGuard, Title, LinkHelper,

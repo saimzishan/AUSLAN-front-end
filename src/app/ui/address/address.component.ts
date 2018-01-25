@@ -22,10 +22,6 @@ export class AddressComponent implements AfterViewInit, OnInit {
     @Input() prefix = '';
     @ViewChild('addressFields') public form: NgForm;
     @ViewChild('searchAddress') public searchElementRef: ElementRef;
-    // @ViewChild('address_street_number') addressStreetNum: ElementRef;
-    // @ViewChild('address_street') addressStreet: ElementRef;
-    // @ViewChild('address_state') public addressState: ElementRef;
-    // @ViewChild('address_state') public addressState: ElementRef;
     @Input() canCalculateDistance: boolean;
     @Input() isReadOnly = false;
     @Input() parentForm: NgForm;
@@ -77,9 +73,9 @@ export class AddressComponent implements AfterViewInit, OnInit {
                         this.address.unit_number = '';
                         for (let component of place.address_components) {
                             let addressType = this.addressTypes[component['types'][0]];
-                            let addressArrr = this.addressAttrs[component['types'][0]];
-                            if (!isNullOrUndefined(addressArrr)) {
-                                this.address[addressArrr] = component[addressType];
+                            let addressAttr = this.addressAttrs[component['types'][0]];
+                            if (!isNullOrUndefined(addressAttr)) {
+                                this.address[addressAttr] = component[addressType];
                             }
                         }
                         this.calculateDistance();
