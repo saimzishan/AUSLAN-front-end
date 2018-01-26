@@ -39,7 +39,6 @@ export class Booking {
     public method_type: string;
     public number_of_auslan_interpreters_required: number;
     public number_of_deaf_interpreters_required: number;
-    public number_of_deaf_blind_interpreters_required: number;
     public number_of_captioners_required: number;
     public number_of_note_takers_required: number;
     public number_of_visual_frame_interpreters_required: number;
@@ -61,6 +60,10 @@ export class Booking {
     public who_will_initiate_call: string;
     public how_would_you_like_to_receive_notes: string;
     public new_link_id_required: boolean;
+    public frequency: 'weekly' | 'biweekly' | 'fourweekly';
+    public recurring: boolean;
+    public recurrence_end_date: Date;
+    public repeat_booking_on_days: Array<string>;
     // Is it a limitation on interpreters invitation.
 
     static getNamedTimeZone(state: string, postCode: string) {
@@ -134,6 +137,8 @@ export class Booking {
         this.update_all_linked_bookings = false;
         this.method_type = 'onsite';
         this.new_link_id_required = false;
+        this.how_would_you_like_to_receive_notes = 'Digitally';
+        this.frequency = 'weekly';
     }
 
     clean(theObject) {
@@ -163,7 +168,6 @@ export class Booking {
         this.method_type = data.method_type;
         this.number_of_auslan_interpreters_required = data.number_of_auslan_interpreters_required;
         this.number_of_deaf_interpreters_required = data.number_of_deaf_interpreters_required;
-        this.number_of_deaf_blind_interpreters_required = data.number_of_deaf_blind_interpreters_required;
         this.number_of_captioners_required = data.number_of_captioners_required;
         this.number_of_note_takers_required = data.number_of_note_takers_required;
         this.number_of_visual_frame_interpreters_required = data.number_of_visual_frame_interpreters_required;
@@ -294,9 +298,12 @@ export class Booking {
             requested_by_first_name: this.requested_by.first_name,
             requested_by_last_name: this.requested_by.last_name,
             method_type: this.method_type,
+            frequency: this.frequency,
+            recurrence_end_date: this.recurrence_end_date,
+            recurring: this.recurring,
+            repeat_booking_on_days: this.repeat_booking_on_days,
             number_of_auslan_interpreters_required: this.number_of_auslan_interpreters_required,
             number_of_deaf_interpreters_required: this.number_of_deaf_interpreters_required,
-            number_of_deaf_blind_interpreters_required: this.number_of_deaf_blind_interpreters_required,
             number_of_captioners_required: this.number_of_captioners_required,
             number_of_note_takers_required: this.number_of_note_takers_required,
             number_of_visual_frame_interpreters_required: this.number_of_visual_frame_interpreters_required,
@@ -364,13 +371,12 @@ export class Booking {
     }
 
     getInterpreters() {
-       return +this.number_of_auslan_interpreters_required + +this.number_of_deaf_interpreters_required  +
-              +this.number_of_deaf_blind_interpreters_required + +this.number_of_captioners_required +
-              +this.number_of_note_takers_required + +this.number_of_visual_frame_interpreters_required +
-              +this.number_of_tactile_interpreters_required + +this.number_of_platform_interpreters_required +
-              +this.number_of_asl_interpreters_required + +this.number_of_bsl_interpreters_required +
-              +this.number_of_isl_interpreters_required + +this.number_of_signed_english_interpreters_required +
-              +this.number_of_indigenous_sign_interpreters_required ;
+       return +this.number_of_auslan_interpreters_required + +this.number_of_deaf_interpreters_required +
+              +this.number_of_captioners_required + +this.number_of_note_takers_required +
+              +this.number_of_visual_frame_interpreters_required + +this.number_of_tactile_interpreters_required +
+              +this.number_of_platform_interpreters_required + +this.number_of_asl_interpreters_required +
+              +this.number_of_bsl_interpreters_required + +this.number_of_isl_interpreters_required +
+              +this.number_of_signed_english_interpreters_required + +this.number_of_indigenous_sign_interpreters_required ;
     }
 
     utcToBookingTimeZone(time: string) {
