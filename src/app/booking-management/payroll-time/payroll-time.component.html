@@ -2,8 +2,8 @@
     <div class="payroll-card__measure">
         <span class="payroll-card__measure-name">Inter. time*</span>
         <div class="form-field">
-            <input type="text" name="{{'interpreterTime' + (isClient ? 'client_' : 'interpreter_') + index}}" #interpreterTime="ngModel"
-                   placeholder="1:42" class="payroll-card__measure-input" [(ngModel)]="payrollInvoice.interpreting_time" pattern="(\d+|\d+(\.|\:)\d+)">
+            <input type="text" name="{{'interpreterTime' + (isClient ? 'client_' : 'interpreter_') + index}}" #interpreterTime="ngModel" [readonly]="isReadOnly"
+                   placeholder="2:25" class="payroll-card__measure-input" [(ngModel)]="payrollInvoice.interpreting_time" pattern="(\d+|\d+(\.|\:)\d+)">
             <span *ngIf="interpreterTime.touched && (interpreterTime.errors?.pattern);"
                    class="inline-icon error">
                    <span>Oops! Only numerical values, "." and ":" are allowed.</span>!
@@ -13,7 +13,7 @@
     <div class="payroll-card__measure">
         <span class="payroll-card__measure-name">Prep. time</span>
         <div class="form-field">
-            <input type="text" name="{{'prepTime_' + (isClient ? 'client_' : 'interpreter_') + index}}" #prepTime="ngModel"
+            <input type="text" name="{{'prepTime_' + (isClient ? 'client_' : 'interpreter_') + index}}" #prepTime="ngModel" [readonly]="isReadOnly"
                    placeholder="0:00" class="payroll-card__measure-input" [(ngModel)]="payrollInvoice.preparation_time" pattern="(\d+|\d+(\.|\:)\d+)">
             <span *ngIf="prepTime.touched && (prepTime.errors?.pattern);"
                    class="inline-icon error">
@@ -24,8 +24,8 @@
     <div class="payroll-card__measure">
         <span class="payroll-card__measure-name">KM*</span>
         <div class="form-field">
-            <input type="text" name="{{'kiloMeters_' + (isClient ? 'client_' : 'interpreter_') + index}}" #kiloMeters="ngModel"
-                   placeholder="1:30" class="payroll-card__measure-input" [(ngModel)]="payrollInvoice.distance" pattern="(\d+|\d+(\.|\:)\d+)">
+            <input type="text" name="{{'kiloMeters_' + (isClient ? 'client_' : 'interpreter_') + index}}" #kiloMeters="ngModel" [readonly]="isReadOnly || !(isClient ? payrollInvoice.charge_travel : payrollInvoice.pay_travel)"
+                   placeholder="78" class="payroll-card__measure-input" [(ngModel)]="payrollInvoice.distance" pattern="(\d+|\d+(\.|\:)\d+)">
             <span *ngIf="kiloMeters.touched && (kiloMeters.errors?.pattern);"
                    class="inline-icon error">
                    <span>Oops! Only numerical values, "." and ":" are allowed.</span>!
@@ -35,8 +35,8 @@
     <div class="payroll-card__measure">
         <span class="payroll-card__measure-name">Travel time*</span>
         <div class="form-field">
-            <input type="text" name="{{'travelTime_' + (isClient ? 'client_' : 'interpreter_') + index}}" #travelTime="ngModel"
-                   placeholder="78" class="payroll-card__measure-input" [(ngModel)]="payrollInvoice.travel_time" pattern="(\d+|\d+(\.|\:)\d+)">
+            <input type="text" name="{{'travelTime_' + (isClient ? 'client_' : 'interpreter_') + index}}" #travelTime="ngModel" [readonly]="isReadOnly || !(isClient ? payrollInvoice.charge_travel : payrollInvoice.pay_travel)"
+                   placeholder="1:30" class="payroll-card__measure-input" [(ngModel)]="payrollInvoice.travel_time" pattern="(\d+|\d+(\.|\:)\d+)">
             <span *ngIf="travelTime.touched && (travelTime.errors?.pattern);"
                    class="inline-icon error">
                    <span>Oops! Only numerical values, "." and ":" are allowed.</span>!

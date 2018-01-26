@@ -20,14 +20,15 @@
                     </section>
                     <section>
                         <div class="payroll-card__option">
-                            <md-checkbox name="{{'cbPayInterpreter_' + i}}" [(ngModel)]="payroll.pay_interpreter"></md-checkbox>
+                            <md-checkbox name="{{'cbPayInterpreter_' + i}}" [(ngModel)]="payroll.pay_interpreter" (change)="cbChanged('payroll_attributes','pay_interpreter',i)"></md-checkbox>
                             <label>
                                 Pay interpreter
                                 <span class="note note_block note_green note_small">RECOMMENDED</span>
                             </label>
                         </div>
                         <div class="payroll-card__option payroll-card__option_with-offset">
-                            <md-checkbox name="{{'cbPayTravel_' + i}}" [(ngModel)]="payroll.pay_travel"></md-checkbox>
+                            <md-checkbox name="{{'cbPayTravel_' + i}}" [(ngModel)]="payroll.pay_travel" [disabled]="!payroll.pay_interpreter"
+                                                                        (change)="cbChanged('payroll_attributes','pay_travel',i)"></md-checkbox>
                             <label>
                                 Pay travel
                                 <span class="note note_block note_small">NOT RECOMMENDED</span>
@@ -36,7 +37,7 @@
                     </section>
                 </section>
 
-                <app-payroll-time [payrollInvoice]="payroll" [index]="i"></app-payroll-time>
+                <app-payroll-time [payrollInvoice]="payroll" [index]="i" [parentForm]="payroll_form" [isReadOnly]="!payroll.pay_interpreter"></app-payroll-time>
 
             </section>
 
@@ -45,14 +46,16 @@
                 <section class="payroll-card__content">
                     <section>
                         <div class="payroll-card__option">
-                            <md-checkbox name="{{'cbInvoiceClient_' + i}}" [(ngModel)]="payments.invoice_attributes[i].invoice_client"></md-checkbox>
+                            <md-checkbox name="{{'cbInvoiceClient_' + i}}" [(ngModel)]="payments.invoice_attributes[i].invoice_client"
+                                                                            (change)="cbChanged('invoice_attributes','invoice_client',i)"></md-checkbox>
                             <label>
                                 Invoice client
                                 <span class="note note_block note_green note_small">RECOMMENDED</span>
                             </label>
                         </div>
                         <div class="payroll-card__option payroll-card__option_with-offset">
-                            <md-checkbox name="{{'cbChargeTravel_' +i}}" [(ngModel)]="payments.invoice_attributes[i].charge_travel"></md-checkbox>
+                            <md-checkbox name="{{'cbChargeTravel_' +i}}" [(ngModel)]="payments.invoice_attributes[i].charge_travel" [disabled]="!payments.invoice_attributes[i].invoice_client"
+                                                                          (change)="cbChanged('invoice_attributes','charge_travel',i)"></md-checkbox>
                             <label for="option-4">
                                 Charge travel
                                 <span class="note note_block note_small">NOT RECOMMENDED</span>
@@ -61,13 +64,14 @@
                     </section>
                 </section>
 
-                <app-payroll-time [payrollInvoice]="payments.invoice_attributes[i]" [isClient]="true" [index]="i"></app-payroll-time>
+                <app-payroll-time [payrollInvoice]="payments.invoice_attributes[i]" [isClient]="true" [index]="i" [parentForm]="payroll_form"
+                                  [isReadOnly]="!payments.invoice_attributes[i].invoice_client"></app-payroll-time>
 
             </section>
         </section>
     </ng-container>
         <div class="actions">
-                <button name="btnClaim" (click)="updatePayment()">Claim</button>
+                <button name="btnClaim" (click)="updatePayment(payroll_form)">Claim</button>
         </div>
     </form>  
     </main>

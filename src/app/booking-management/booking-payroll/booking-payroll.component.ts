@@ -5,6 +5,7 @@ import {SpinnerService} from '../../spinner/spinner.service';
 import {GLOBAL} from '../../shared/global';
 import {NotificationServiceBus} from '../../notification/notification.service';
 import {ActivatedRoute} from '@angular/router';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-booking-payroll',
@@ -68,7 +69,11 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
         });
     }
 
-    updatePayment() {
+    updatePayment(payroll_form: any) {
+        if (payroll_form.invalid) {
+            this.notificationServiceBus.launchNotification(true, 'Oops! Only numbers and dots allowed. Please try again.');
+            return;
+        }
         this.spinnerService.requestInProcess(true);
         this.bookingService.updateBookingPayments(this.bookingModel.id, this.payments).subscribe((res: any) => {
             if (res.status === 204) {
@@ -81,6 +86,42 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
             let e = err.json() || 'There is some error on server side';
             this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
         });
+    }
+
+    cbChanged(payrollInvoice: string, field: string, index) {
+            if (payrollInvoice === 'payroll_attributes') {
+                if (field === 'pay_interpreter') {
+                    if (this.payments[payrollInvoice][index][field]) {
+                         let startDate = moment(this.bookingModel.venue.start_time_iso);
+                         let endDate = moment(this.bookingModel.venue.end_time_iso);
+                         let duration = moment.duration(endDate.diff(startDate));
+
+                        this.payments[payrollInvoice][index]['interpreting_time'] = duration.hours() + ':' + duration.minutes();
+                    } else {
+                        this.payments[payrollInvoice][index]['pay_travel'] = false;
+                        ['interpreting_time', 'preparation_time', 'distance', 'travel_time'].forEach(distTime => {
+                            this.payments[payrollInvoice][index][distTime] = 0;
+                        });
+                    }
+                } else {
+                    if (!this.payments[payrollInvoice][index][field]) {
+                        this.payments[payrollInvoice][index]['distance'] = this.payments[payrollInvoice][index]['travel_time'] = 0;
+                    }
+                }
+            } else {
+                if (field === 'invoice_client') {
+                    if (!this.payments[payrollInvoice][index][field]) {
+                        this.payments[payrollInvoice][index]['charge_travel'] = false;
+                        ['interpreting_time', 'preparation_time', 'distance', 'travel_time'].forEach(distTime => {
+                            this.payments[payrollInvoice][index][distTime] = 0;
+                        });
+                    }
+                } else {
+                    if (!this.payments[payrollInvoice][index][field]) {
+                        this.payments[payrollInvoice][index]['distance'] = this.payments[payrollInvoice][index]['travel_time'] = 0;
+                    }
+                }
+            }
     }
 
 }
