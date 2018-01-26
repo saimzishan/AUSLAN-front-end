@@ -312,8 +312,6 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                         this.selectedBookingModel.interpreters.sort((i, j) =>
                             i.state === 'Accepted' ? -1 : j.state === 'Accepted' ? 1 : 0
                         );
-
-                        this.fetchNearbyinterpreters(param_id);
                         this.isCancelledOrUnableToServe = this.isActiveState('Cancelled_no_charge')
                             || this.isActiveState('Unable_to_service') || this.isActiveState('Cancelled_chargeable');
 
@@ -343,11 +341,19 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                                 /* Also Redirects */
                                 this.router.navigate(['/booking-management']);
                             }
-
+                            if (this.selectedBookingModel.state === BOOKING_STATE.Service_completed) {
+                            this.disableReject = true;
+                            this.disableAccept = true;
+                            }
                             this.getStateString();
                         }
                     }
-                    // this.spinnerService.requestInProcess(false);
+                    if (this.isCurrentUserAdminOrBookingOfficer()) {
+
+                        this.fetchNearbyinterpreters(param_id);
+                    } else {
+                        this.spinnerService.requestInProcess(false);
+                    }
                 },
                 err => {
                     this.jobAccessError = true;

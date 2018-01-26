@@ -1,7 +1,7 @@
 import {PageObject} from './app.po';
 import {browser, by, element, $, $$, protractor} from 'protractor';
 import {expect} from '../config/helpers/chai-imports';
-import {User} from '../helper';
+import {Heroku, User} from '../helper';
 import {NotificationObject} from './notification';
 
 export class BlockoutPagePo extends PageObject {
@@ -34,6 +34,25 @@ export class BlockoutPagePo extends PageObject {
         input_field.clear();
         return this.setValue(input_field, blockout_name);
     }
+    createBlockoutWithBookingTime = () => {
+        let today = new Date();
+        today.setDate(today.getDate() + 5);
+        const currentDate = [
+            Heroku.prettyDate(today.getMonth() + 1), // January is 0!,
+            Heroku.prettyDate(today.getDate()),
+            today.getFullYear().toString()
+        ].join('/');
+
+
+        let st_input_field = this.getElementByCss('input[name="dpEventDate_st"]');
+        st_input_field.clear();
+        st_input_field.sendKeys(currentDate + ' 06:26 AM'); // 23/01/2018 06:26 AM //01/23/2018 06:34 AM
+
+        return browser.sleep(100).then( () => {
+            this.getElementByName('blockout_name').click();
+        });
+    }
+
 
 }
 

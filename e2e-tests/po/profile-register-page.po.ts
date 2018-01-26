@@ -67,7 +67,6 @@ export class ProfileRegisterPage extends PageObject {
             this.getElementByName('naati_validity_start_date').sendKeys('01-30-2015');
             this.getElementByName('naati_validity_end_date').sendKeys('01-30-2015');
             this.getElementByName('date_of_birth').sendKeys('01-30-2015');
-            this.getElementByName('highest_level_edu').sendKeys('Bachelor Degree'.toUpperCase());
             this.getElementByName('location_pref').sendKeys('ACT');
             this.getElementByName('skill_level').sendKeys('Certified Conference Interpreter'.toUpperCase());
             // this.getElementByName('comm_pref').sendKeys(prefComm);
