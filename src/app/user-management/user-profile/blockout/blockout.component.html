@@ -33,9 +33,9 @@
                             <label>START DATE TIME *</label>
 
                             <p-calendar name='dpEventDate_st' (onClose)="onStartTimeChanged()" [(ngModel)]="start_time"
-                                        required #dpEventDate_st="ngModel" showTime="true" hourFormat="12"></p-calendar>
-
-
+                            [stepMinute]="5" [defaultDate]="defaultDateTime" required #dpEventDate_st="ngModel" 
+                            showTime="true" hourFormat="12"></p-calendar>
+                            
                             <span *ngIf="dpEventDate_st.touched &&  (!dpEventDate_st.errors?.required);"
                                   class="inline-icon inline-icon-valid valid"></span>
                             <span *ngIf="dpEventDate_st.touched && (dpEventDate_st.errors?.required);"
@@ -48,7 +48,8 @@
                             <label>END TIME *</label>
 
                             <p-calendar name='dpEventDate_endtime' [(ngModel)]="end_time"
-                                        required #dpEventDate_endtime="ngModel" [timeOnly]="true"
+                            [stepMinute]="5" [defaultDate]="defaultDateTime" 
+                            required #dpEventDate_endtime="ngModel" [timeOnly]="true"
                                         hourFormat="12"></p-calendar>
 
                             <span *ngIf="dpEventDate_endtime.touched &&  (!dpEventDate_endtime.errors?.required);"
@@ -115,7 +116,7 @@
         </form>
         <div >
             <div class="manage-buttons">
-                <button name="cancel_blockout" (click)="getRoute()"  class="button decline">CANEL</button>
+                <button name="cancel_blockout" (click)="getRoute()"  class="button decline">CANCEL</button>
                 <button *ngIf="availabilityBlock.id > 0" name="delete_blockout" (click)="deleteBlockout()" class="button decline">DELETE</button>
                 <button name="save_blockout" (click)="saveBlockouts(user_blockout_form)"  class="button">SAVE</button>
             </div>

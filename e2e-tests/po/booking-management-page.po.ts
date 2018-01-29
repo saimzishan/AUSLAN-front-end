@@ -284,13 +284,13 @@ export class BookingManagementPage extends PageObject {
         let dateStart = new Date(new Date(currentDate).setDate(currentDate.getDate() + 12));
         let dateEnd = new Date(new Date(dateStart).setDate(dateStart.getDate() + 4));
         let dateFrom = {
-            mm: this.prettyDate(dateStart.getMonth() + 1),
             dd: this.prettyDate(dateStart.getDate()),
+            mm: this.prettyDate(dateStart.getMonth() + 1),            
             yy: dateStart.getFullYear().toString()
         };
         let dateTo = {
-            mm: this.prettyDate(dateEnd.getMonth() + 1),
             dd: this.prettyDate(dateEnd.getDate()),
+            mm: this.prettyDate(dateEnd.getMonth() + 1),
             yy: dateEnd.getFullYear().toString()
         };
         this.booking.setDateOnly('date_from', dateFrom);
@@ -300,8 +300,8 @@ export class BookingManagementPage extends PageObject {
     filterBookingByCurrentDate = () => {
         let today = new Date();
         let todayDate = {
-            mm: this.prettyDate(today.getMonth() + 1), //January is 0!
             dd: this.prettyDate(today.getDate()),
+            mm: this.prettyDate(today.getMonth() + 1), //January is 0!
             yy: today.getFullYear().toString()
         };
         let datefrom = this.getElementByName('date_from');
