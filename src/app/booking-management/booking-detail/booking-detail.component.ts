@@ -208,7 +208,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         if (this.forEdit) {
             if (this.assignedInterpreter > 0) {
                 this[serviceType] = cbName.checked = false;
-                this.notificationServiceBus.launchNotification(true, 'Oops. Deallocate interpreters before changing the interpreting type.');
+                this.notificationServiceBus.launchNotification(true, 'Oops. Deallocate interpreters before changing the service type.');
                 return;
             }
             let allServiceTypes = ['cbAuslanInterpreter', 'cbDeafInterpreter', 'cbDeafBlindInterpreter', 'cbCaptioner', 'cbNotetaker', 'cbOtherLanguageNeeds',
