@@ -224,10 +224,10 @@ export class BookingPage extends PageObject {
         this.setDate( this.getDateAfterNDays(1));
         this.setElementsValueByName('address_state', 'VIC');
     }
-    editBookingWithWith_DSQ_STATES =() =>{
+    editBookingWith_DSQ_STATES =() =>{
         this.setElementsValueByName('address_state', 'ACT');
     }
-    editBookingWith_DSQ_STATES =() =>{
+    editBookingWith_VICDEAF_STATE =() =>{
         this.setElementsValueByName('address_state', 'VIC');
     }
     createBookingForPerth = () => {
