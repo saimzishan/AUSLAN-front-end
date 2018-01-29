@@ -224,7 +224,7 @@ export class BookingPage extends PageObject {
         this.setDate( this.getDateAfterNDays(1));
         this.setElementsValueByName('address_state', 'VIC');
     }
-    editBookingWithTomorrowDateWith_DSQ_STATES =() =>{
+    editBookingWithWith_DSQ_STATES =() =>{
         this.setElementsValueByName('address_state', 'ACT');
     }
     editBookingWith_DSQ_STATES =() =>{
@@ -270,7 +270,7 @@ export class BookingPage extends PageObject {
         ].join('/');
     }
     createBookingWithTimeAndInterpreter = (standard: string, startTime: string, endTime: string, interpreterNum: string, interpreterFieldName: string) => {
-        const dateToSend = this.previousDate ? this.getDateAfterNDays(-1) : this.tommorowDate? this.getDateAfterNDays(1) : this.getDateAfterNDays(8);
+        const dateToSend = this.previousDate ? this.getDateAfterNDays(-1) : this.getDateAfterNDays(8);
         this.setDate(dateToSend);
         this.setStartEndTime('start', startTime);
         this.setStartEndTime('end', endTime);
