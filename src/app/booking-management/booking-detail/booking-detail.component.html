@@ -113,7 +113,7 @@
                   [(ngModel)]="bookingDate"
                   [minDate]="minDate" [maxDate]="maxDate"
                   (click)="fireNotification($event)"
-                  dateFormat="dd.mm.yy"
+                  dateFormat="dd/mm/yy"
                   (onSelect)="resetRecurringDays()"
                   required #dpDate="ngModel" dateOnly="true" ></p-calendar>
                 <span *ngIf="dpDate.touched && !dpDate.errors?.required;"

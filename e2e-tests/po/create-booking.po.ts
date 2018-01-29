@@ -204,8 +204,8 @@ export class BookingPage extends PageObject {
     }
     setDateOnly = (field: string, date: TestDateFormat) => {
         this.getElementByName(field).sendKeys(protractor.Key.BACK_SPACE);
-        this.getElementByName(field).sendKeys(date.mm);
         this.getElementByName(field).sendKeys(date.dd);
+        this.getElementByName(field).sendKeys(date.mm);
         this.getElementByName(field).sendKeys(date.yy);
     }
     setDate= (date: string) => {
@@ -252,8 +252,8 @@ export class BookingPage extends PageObject {
         n = dayOfWeek === 0 ? n + 1 : (dayOfWeek === 6 ? n - 1 : n); // Saturday and Sunday
         const dateStart = new Date(new Date(currentDate).setDate(currentDate.getDate() + n));
         return [
-            this.prettyDate(dateStart.getMonth() + 1),
             this.prettyDate(dateStart.getDate()),
+            this.prettyDate(dateStart.getMonth() + 1),
             dateStart.getFullYear().toString()
         ].join('/');
     }
