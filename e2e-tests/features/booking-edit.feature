@@ -288,10 +288,10 @@ Feature: Edit Booking
     When I click on link 'Booking details'
     Then I should be on the edit booking page
     When I click on checkbox name 'cbDeaf'
-    Then I will get an error notification saying "Oops. Deallocate interpreters before changing the interpreting type."
+    Then I will get an error notification saying "Oops. Deallocate interpreters before changing the service type."
     And I verify checkbox name 'cbDeaf' is checked 'false'
     And I verify checkbox name 'cbAuslan' is checked 'true'
     When I click on checkbox name 'cbOtherLanguage'
-    Then I will get an error notification saying "Oops. Deallocate interpreters before changing the interpreting type."
+    Then I will get an error notification saying "Oops. Deallocate interpreters before changing the service type."
     And I verify checkbox name 'cbOtherLanguage' is checked 'false'
     And I verify checkbox name 'cbAuslan' is checked 'true'

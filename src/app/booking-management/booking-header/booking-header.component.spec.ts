@@ -10,6 +10,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpModule} from '@angular/http';
 import {FormsModule} from '@angular/forms';
 import {Md2Module} from 'md2';
+import {NotificationServiceBus} from '../../notification/notification.service';
 
 describe('BookingHeaderComponent', () => {
     let component: BookingHeaderComponent;
@@ -19,7 +20,7 @@ describe('BookingHeaderComponent', () => {
         TestBed.configureTestingModule({
             declarations: [BookingHeaderComponent],
             providers: [MdDialog,
-                ViewContainerRef, BookingHeaderService],
+                ViewContainerRef, BookingHeaderService, NotificationServiceBus],
             imports: [CustomFormsModule,
                 FormsModule, BrowserAnimationsModule, RouterTestingModule, HttpModule,
                 Md2Module.forRoot(),
