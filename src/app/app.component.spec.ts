@@ -74,6 +74,7 @@ import {RemoveSpacePipe} from './shared/pipe/remove-space.pipe';
 import {CalendarModule as PrimeNgCalendarModule} from 'primeng/primeng';
 import {MobileHeaderComponent} from './ui/mobile-header/mobile-header.component';
 import {MomentModule} from 'angular2-moment/moment.module';
+import {BookingInfoComponent} from './booking-management/booking-info/booking-info.component';
 
 describe('AppComponent', () => {
   beforeEach(() => {
@@ -89,7 +90,7 @@ describe('AppComponent', () => {
         BookingDetailComponent, BlockoutComponent, MobileHeaderComponent,
         SpinnerComponent, OrgRepComponent, InterpreterComponent, AddressComponent,
           IndClientComponent, BillingAccountComponent, AccountantComponent, PreComponent,
-          InterpreterBoxComponent, InterpreterPopupComponent, RemoveSpacePipe
+          InterpreterBoxComponent, InterpreterPopupComponent, RemoveSpacePipe, BookingInfoComponent
 
       ],
       imports: [CustomFormsModule, NgxPaginationModule, FileuploaderModule, RouterTestingModule, Md2Module.forRoot(),

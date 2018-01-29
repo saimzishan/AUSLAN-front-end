@@ -6,6 +6,7 @@ import {GLOBAL} from '../../shared/global';
 import {NotificationServiceBus} from '../../notification/notification.service';
 import {ActivatedRoute} from '@angular/router';
 import * as moment from 'moment';
+import {Payments} from '../../shared/model/payment.entity';
 
 @Component({
   selector: 'app-booking-payroll',
@@ -54,11 +55,13 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
     }
 
     fetchBookingPayment(bookingID) {
+        this.payments.payroll_attributes = [];
+        this.payments.invoice_attributes = [];
         this.spinnerService.requestInProcess(true);
         this.bookingService.getBookingPayments(bookingID).subscribe((res: any) => {
             if (res.status === 200) {
-                this.payments.payroll_attributes = res.data.payments.payrolls;
-                this.payments.invoice_attributes = res.data.payments.invoices;
+                this.payments.fromJSON('payroll', res.data.payments.payrolls);
+                this.payments.fromJSON('invoice', res.data.payments.invoices);
             }
             this.spinnerService.requestInProcess(false);
         },
@@ -75,9 +78,12 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
             return;
         }
         this.spinnerService.requestInProcess(true);
+        this.payments.timeDistanceConversion('payroll', this.payments.payroll_attributes);
+        this.payments.timeDistanceConversion('invoice', this.payments.invoice_attributes);
         this.bookingService.updateBookingPayments(this.bookingModel.id, this.payments).subscribe((res: any) => {
             if (res.status === 204) {
                 this.notificationServiceBus.launchNotification(false, 'Hurray! Changes saved successfully.');
+                this.fetchBookingPayment(this.bookingModel.id);
             }
             this.spinnerService.requestInProcess(false);
         },
@@ -97,6 +103,7 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
                          let duration = moment.duration(endDate.diff(startDate));
 
                         this.payments[payrollInvoice][index]['interpreting_time'] = duration.hours() + ':' + duration.minutes();
+                        this.payments[payrollInvoice][index]['preparation_time'] = 0;
                     } else {
                         this.payments[payrollInvoice][index]['pay_travel'] = false;
                         ['interpreting_time', 'preparation_time', 'distance', 'travel_time'].forEach(distTime => {
@@ -110,23 +117,26 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
                 }
             } else {
                 if (field === 'invoice_client') {
-                    if (!this.payments[payrollInvoice][index][field]) {
+                    if (this.payments[payrollInvoice][index][field]) {
+                        ['interpreting_time', 'preparation_time', 'travel_time'].forEach(time => {
+                            this.payments[payrollInvoice][index][time] = this.payments.payroll_attributes[index][time];
+                        });
+                    } else {
                         this.payments[payrollInvoice][index]['charge_travel'] = false;
                         ['interpreting_time', 'preparation_time', 'distance', 'travel_time'].forEach(distTime => {
                             this.payments[payrollInvoice][index][distTime] = 0;
                         });
                     }
                 } else {
-                    if (!this.payments[payrollInvoice][index][field]) {
+                    if (this.payments[payrollInvoice][index][field]) {
+                        ['distance', 'travel_time'].forEach(distTime => {
+                            this.payments[payrollInvoice][index][distTime] = this.payments.payroll_attributes[index][distTime];
+                        });
+                    } else {
                         this.payments[payrollInvoice][index]['distance'] = this.payments[payrollInvoice][index]['travel_time'] = 0;
                     }
                 }
             }
     }
 
-}
-
-export class Payments {
-    public payroll_attributes = [];
-    public invoice_attributes = [];
 }
