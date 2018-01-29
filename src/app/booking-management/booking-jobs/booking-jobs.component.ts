@@ -46,14 +46,29 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     private currentStatus = 'Invited';
     stateStr = '';
     calendarOptions: Object = {};
-    showCalendar = true;
+    showCalendar = false;
+    timelineChartData = {
+        chartType: 'Timeline',
+        dataTable: [],
+        colors: ['#cbb69d', '#603913', '#c69c6e'],
+        options: {
+            avoidOverlappingGridLines: true,
+            timeline: { groupByRowLabel: true , singleColor: '#8d8'},
+            hAxis: {
+                minValue: new Date(0, 0, 0, 8, 30, 0),
+                maxValue: new Date(0, 0, 0, 18, 30, 0)
+            }
+        },
+    };
+
+
+    @ViewChild('cchart') cchart;
 
     constructor(public dialog: MdDialog,
                 public viewContainerRef: ViewContainerRef, public spinnerService: SpinnerService,
                 public notificationServiceBus: NotificationServiceBus,
                 public userDataService: UserService, public bookingService: BookingService, public bookingHeaderService: BookingHeaderService,
                 private router: Router, private route: ActivatedRoute) {
-
         /** http://stackoverflow.com/questions/38008334/angular2-rxjs-when-should-i-unsubscribe-from-subscription */
         this.sub = this.route.params.subscribe(params => {
             let param_id = params['id'] || '';
@@ -64,58 +79,13 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
 
     }
 
+
     ngOnInit() {
+
+
         this.headerSubscription = this.bookingHeaderService.notifyObservable$.subscribe((res) => {
             this.callRelatedFunctions(res);
         });
-        this.calendarOptions = {
-            schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
-            scrollTime: '08:00',
-            header: {
-                right: 'timelineDay'
-            },
-            events: []
-        };
-
-        for (let inte of this.interpreterList) {
-            for (let avail_block of (<Interpreter>inte).availability_blocks_attributes) {
-
-                let sd = new Date(avail_block.start_time);
-                let ed = new Date(avail_block.end_date || avail_block.start_time);
-                let edt = new Date(avail_block.end_time);
-
-
-                let event: any = ({
-                    title: avail_block.name,
-                    color: avail_block.recurring ? '#00ff00' : '#257e4a',
-                    id: avail_block.id,
-                    booking_id: avail_block.booking_id,
-                    start: avail_block.recurring === false ? sd.toISOString() : `${sd.getHours()}:${sd.getMinutes()}`,
-                    end: avail_block.recurring === false ? ed.toISOString() : `${edt.getHours()}:${edt.getMinutes()}`,
-                    recurring: avail_block.recurring,
-                    frequency: avail_block.frequency
-                });
-                if (avail_block.recurring === true) {
-                    event.dow = avail_block.frequency === 'daily' ? [1, 2, 3, 4, 5] : [sd.getDay()];
-                    event.ranges = [
-                        {
-                            start: moment().endOf(avail_block.frequency === 'daily' ? 'day' :
-                                avail_block.frequency === 'weekly' ? 'week' :
-                                    avail_block.frequency === 'monthly' ? 'month' : 'week'),
-                            end: moment().endOf(avail_block.frequency === 'daily' ? 'day' :
-                                avail_block.frequency === 'weekly' ? 'week' :
-                                    avail_block.frequency === 'monthly' ? 'month' : 'week')
-                        },
-                        {
-                            start: moment(sd.toISOString()).format('YYYY-MM-DD'),
-                            end: moment(ed.toISOString()).format('YYYY-MM-DD')
-                        }
-                    ];
-                }
-
-                this.calendarOptions['events'].push(event);
-            }
-        }
     }
 
     callRelatedFunctions(res) {
@@ -321,7 +291,6 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
 
         }
     }
-
     getInterpreterIconClass(user) {
         return this.hasDeclined(user) ? 'fa fa-times-circle' :
             this.isBlocked(user.id) ? 'fa fa-ban' :
@@ -343,13 +312,51 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                     this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
                 });
     }
-
+    getTimeLineTitle () {
+        let dt = new Date(this.selectedBookingModel.venue.start_time_iso);
+        let edt = new Date(this.selectedBookingModel.venue.end_time_iso);
+        return dt.toLocaleDateString() + dt.toLocaleTimeString() + ' ' + edt.toLocaleTimeString();
+    }
     fetchNearbyinterpreters(booking_id) {
         this.bookingService.nearbyBookings(booking_id)
             .subscribe((res: any) => {
                     if (res.status === 200) {
                         this.interpreterList = res.data.users;
                     }
+                    let data = [];
+                    for (let inte of this.interpreterList) {
+                        for (let avail_block of (<Interpreter>inte).availability_blocks_attributes) {
+
+                            let sd = new Date(avail_block.start_time);
+                            let edt = new Date(avail_block.end_time);
+                            let ed = new Date(avail_block.end_date);
+
+                            let currentDR =
+                                [inte.first_name[0] + inte.id, new Date(0, 0, 0, sd.getHours(), sd.getMinutes(), 0), new Date(0, 0, 0, edt.getHours(), edt.getMinutes(), 0)];
+                            if (data.length > 0) {
+                                let prevDR = data[data.length - 1];
+                                if (currentDR[0] === prevDR [0]) {
+                                    if (prevDR[2] > currentDR [1]) {
+                                        if (prevDR[2] > currentDR [2]) {
+                                            continue;
+                                        } else {
+                                            prevDR[2] = currentDR [2];
+                                            continue;
+                                        }
+                                    }
+                                    data.push(currentDR);
+                                } else {
+                                    data.push(currentDR);
+                                }
+                            } else {
+                                data.push(currentDR);
+                            }
+                        }
+                    }
+                    this.timelineChartData.dataTable = data;
+                    this.showCalendar = true;
+
+
                     this.spinnerService.requestInProcess(false);
                 },
                 err => {

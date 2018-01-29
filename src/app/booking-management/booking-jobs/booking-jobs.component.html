@@ -315,15 +315,15 @@
                             </td>
                             <td>{{user.id}}</td>
                             <td align="center">
-                                <!-- i [ngClass]="{'icon-check-green' : isInvited(user.id), 'icon-check-yellow' : !isInvited(user.id)}"><i -->
                                 <i aria-hidden="true" [ngClass]="getInterpreterIconClass(user)"></i>
 
                             </td>
                             <td align="center">
                                 {{isPreferred(user.id) ? 'Preferred' : ' - '}}
                             </td>
-                            <td><!-- i [ngClass]="{'icon-check-yellow' : isNotConfirmed(user.id)}"></i -->
-                               <a name="lnkEditUser" [routerLink]="['/init']" [queryParams]="{selectedRole:'INTERPRETER',uid:user.id, edit_user:
+                            <td>
+
+                                <a name="lnkEditUser" [routerLink]="['/init']" [queryParams]="{selectedRole:'INTERPRETER',uid:user.id, edit_user:
 												stringifyUser(user)}"> {{user.first_name}} </a>
                             </td>
                             <td>{{user.last_name}}</td>
@@ -337,7 +337,20 @@
                         </tbody>
                     </table>
                     <section *ngIf="showCalendar">
+                        <section id="time">{{ getTimeLineTitle()}}</section>
+                        <section>
+                                <section>
+                                    <span>6 am</span>
+                                    <span>7 am</span>
+                                    <span>8 am</span>
+                                    <span>9 am</span>
+                                    <span>11 am</span>
+                                    <span>12 am</span>
+                                    <span>1 pm</span>
+                                </section>
 
+                        </section>
+                        <google-chart [data]="timelineChartData"></google-chart>
                     </section>
                 </section>
                 <ng-container *ngIf='!isCurrentUserInterpreter()'>
