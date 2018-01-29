@@ -11,6 +11,7 @@ import {GmapsApiService} from '../../api/gmaps-api.service';
 import {AuthHttp} from 'angular2-jwt';
 import {MockBackend} from '@angular/http/testing';
 import {MapsAPILoader} from '@agm/core';
+import {FakeOpMapsAPILoader} from '../../shared/test/Mock';
 
 describe('AddressComponent', () => {
     let component: AddressComponent;
@@ -19,7 +20,7 @@ describe('AddressComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [AddressComponent],
-            providers: [NotificationServiceBus, GmapsApiService, {provide: AuthHttp, useClass: MockBackend}, MapsAPILoader],
+            providers: [NotificationServiceBus, GmapsApiService, {provide: AuthHttp, useClass: MockBackend}, { provide: MapsAPILoader, useClass: FakeOpMapsAPILoader}],
             imports: [FormsModule, CustomFormsModule, SimpleNotificationsModule]
         })
             .compileComponents();
