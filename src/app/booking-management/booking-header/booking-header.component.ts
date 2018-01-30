@@ -7,6 +7,7 @@ import {Administrator, BookingOfficer, Interpreter, OrganisationalRepresentative
 import {Router, NavigationExtras} from '@angular/router';
 import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
 import {PopupComponent} from '../../shared/popup/popup.component';
+import {NotificationServiceBus} from '../../notification/notification.service';
 
 @Component({
     selector: 'app-booking-header',
@@ -29,7 +30,8 @@ export class BookingHeaderComponent implements OnInit, OnDestroy {
     @Input() disableReject = false;
     @Input() hasLinkId: boolean;
 
-    constructor(private bookingHeaderService: BookingHeaderService, private router: Router, public dialog: MdDialog, public viewContainerRef: ViewContainerRef) {
+    constructor(private bookingHeaderService: BookingHeaderService, private router: Router, public dialog: MdDialog, public viewContainerRef: ViewContainerRef,
+         public notificationService: NotificationServiceBus) {
     }
 
     ngOnInit() {
@@ -43,7 +45,11 @@ export class BookingHeaderComponent implements OnInit, OnDestroy {
     }
 
     showDialogBoxClick(data) {
+        if (this.isCurrentUserAdminOrBookingOfficer()) {
         this.bookingHeaderService.notifyOther({option: 'showDialogBox', value: data});
+        } else {
+            this.notificationService.launchNotification(true, ' If you want to cancel this booking, please contact the booking office');
+        }
     }
 
     showDialogBoxInterpreter(data) {

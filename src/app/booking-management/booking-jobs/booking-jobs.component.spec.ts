@@ -27,6 +27,7 @@ import {BookingHeaderService} from '../booking-header/booking-header.service';
 import {BookingHeaderComponent} from '../booking-header/booking-header.component';
 import {MomentModule} from 'angular2-moment/moment.module';
 import {BookingInfoComponent} from '../booking-info/booking-info.component';
+import {DatePipe} from '@angular/common';
 
 describe('BookingJobsComponent', () => {
   let component: BookingJobsComponent;
@@ -36,7 +37,7 @@ describe('BookingJobsComponent', () => {
     TestBed.configureTestingModule({
       declarations: [BookingJobsComponent, BookingHeaderComponent, PrettyIDPipe, BookingInfoComponent],
       providers: [MdDialog,
-        ViewContainerRef, SpinnerService, NotificationServiceBus, BookingHeaderService,
+        ViewContainerRef, SpinnerService, NotificationServiceBus, DatePipe, BookingHeaderService,
         {
           provide: ActivatedRoute,
           useValue: {

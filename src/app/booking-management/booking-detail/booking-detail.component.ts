@@ -73,7 +73,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     oldInterpreterPreference = [];
     isDisabledForAdmin: boolean;
     bookingDate: Date;
-    minDate: Date;
+    minDate = new Date();
+    minDateForRecurrenceEnd = this.minDate;
     maxDate: Date;
     bookingStartTime: Date;
     bookingEndTime: Date;
@@ -93,6 +94,44 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     cbSignedEnglishInterpreter = false;
     cbIndigenousSignInterpreter = false;
     defaultDateTime: Date;
+    isRecurringBooking = false;
+    repeat_days = [
+        {
+            display: 'S',
+            value: 'Sunday',
+            selected: false
+        },
+        {
+            display: 'M',
+            value: 'Monday',
+            selected: false
+        },
+        {
+            display: 'T',
+            value: 'Tuesday',
+            selected: false
+        },
+        {
+            display: 'W',
+            value: 'Wednesday',
+            selected: false
+        },
+        {
+            display: 'T',
+            value: 'Thursday',
+            selected: false
+        },
+        {
+            display: 'F',
+            value: 'Friday',
+            selected: false
+        },
+        {
+            display: 'S',
+            value: 'Saturday',
+            selected: false
+        }
+    ];
     @ViewChild('addressForm') private bookingAddress: AddressComponent;
 
     constructor(public bookingService: BookingService, private router: Router,
@@ -128,6 +167,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 this.bookingEndTime = new Date(this.bookingModel.venue.end_time_iso);
                 this.setDayMonthYear();
                 this.natureOfApptChange(null);
+                this.checkInterpreterBoxes();
             } else {
                 this.bookingModel = new Booking();
                 this.resetPrefBlockInterpreters();
@@ -168,7 +208,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         if (this.forEdit) {
             if (this.assignedInterpreter > 0) {
                 this[serviceType] = cbName.checked = false;
-                this.notificationServiceBus.launchNotification(true, 'Oops. Deallocate interpreters before changing the interpreting type.');
+                this.notificationServiceBus.launchNotification(true, 'Oops. Deallocate interpreters before changing the service type.');
                 return;
             }
             let allServiceTypes = ['cbAuslanInterpreter', 'cbDeafInterpreter', 'cbDeafBlindInterpreter', 'cbCaptioner', 'cbNotetaker', 'cbOtherLanguageNeeds',
@@ -189,6 +229,37 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                     this.bookingModel[modelVal] = 0;
                 });
             this.changeDetector.detectChanges();
+        } else {
+            if (serviceType === 'cbAuslanInterpreter') {
+                this.bookingModel.number_of_auslan_interpreters_required = 0;
+            } else if (serviceType === 'cbDeafInterpreter') {
+                this.bookingModel.number_of_deaf_interpreters_required = 0;
+            } else if (serviceType === 'cbDeafBlindInterpreter') {
+                this.cbVisualFrameInterpreter = this.cbTactileInterpreter = this.cbPlatformInterpreter = false;
+            } else if (serviceType === 'cbCaptioner') {
+                this.bookingModel.number_of_captioners_required = 0;
+            } else if (serviceType === 'cbNotetaker') {
+                this.bookingModel.number_of_note_takers_required = 0;
+            } else if (serviceType === 'cbVisualFrameInterpreter') {
+                this.bookingModel.number_of_visual_frame_interpreters_required = 0;
+            } else if (serviceType === 'cbTactileInterpreter') {
+                this.bookingModel.number_of_tactile_interpreters_required = 0;
+            } else if (serviceType === 'cbPlatformInterpreter') {
+                this.bookingModel.number_of_platform_interpreters_required = 0;
+            } else if (serviceType === 'cbOtherLanguageNeeds') {
+                this.cbAslInterpreter = this.cbBslInterpreter = this.cbIslInterpreter = this.cbSignedEnglishInterpreter =
+                                                                                this.cbIndigenousSignInterpreter = false;
+            } else if (serviceType === 'cbAslInterpreter') {
+                this.bookingModel.number_of_asl_interpreters_required = 0;
+            } else if (serviceType === 'cbBslInterpreter') {
+                this.bookingModel.number_of_bsl_interpreters_required = 0;
+            } else if (serviceType === 'cbIslInterpreter') {
+                this.bookingModel.number_of_isl_interpreters_required = 0;
+            } else if (serviceType === 'cbSignedEnglishInterpreter') {
+                this.bookingModel.number_of_signed_english_interpreters_required = 0;
+            } else if (serviceType === 'cbIndigenousSignInterpreter') {
+                this.bookingModel.number_of_indigenous_sign_interpreters_required = 0;
+            }
         }
     }
 
@@ -241,6 +312,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             if (!this.forEdit && !this.isDuplicate) {
                 this.onBookingAddressChange();
             }
+            this.bookingAddress.isTravelCostApplicable = this.bookingModel.travel_cost_applicable;
         }
         this.dateRestrictions();
     }
@@ -252,6 +324,11 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         this.isUserAdminORBookOfficer ? this.minDate.setFullYear(year - 5) : this.minDate.setDate(today.getDate());
         this.maxDate = new Date();
         this.maxDate.setFullYear(year + 5);
+        this.minDateForRecurrenceEnd = this.getMinDateForRecurringBookingEnd();
+    }
+
+    getMinDateForRecurringBookingEnd() {
+        return this.bookingDate || this.minDate;
     }
 
     setDayMonthYear() {
@@ -447,6 +524,11 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.notificationServiceBus.launchNotification(true, 'Travel cost must be applicable as your booking distance is more than 40 kms');
             return;
         }
+        if (this.shouldSelectDeafBlindOtherLanguage()) {
+            let msg = this.cbDeafBlindInterpreter ? 'Deaf Blind' : 'Other Language Needs';
+            this.notificationServiceBus.launchNotification(true, 'Kindly select at least one option from ' + msg);
+            return;
+        }
         if (!this.termsAndConditionAccepted && !this.forEdit) {
             this.notificationServiceBus.launchNotification(true, 'Kindly accept Terms and Conditions');
             return;
@@ -516,8 +598,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             return true;
         } else if (this.cbDeafInterpreter && this.bookingModel.number_of_deaf_interpreters_required < 2) {
             return true;
-        } else if (this.cbDeafBlindInterpreter && this.bookingModel.number_of_deaf_blind_interpreters_required < 2) {
-            return true;
         } else if (this.cbCaptioner && this.bookingModel.number_of_captioners_required < 2) {
             return true;
         } else if (this.cbNotetaker && this.bookingModel.number_of_note_takers_required < 2) {
@@ -546,7 +626,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     checkInterpreterBoxes() {
         this.cbAuslanInterpreter = this.bookingModel.number_of_auslan_interpreters_required > 0;
         this.cbDeafInterpreter = this.bookingModel.number_of_deaf_interpreters_required > 0;
-        this.cbDeafBlindInterpreter = this.bookingModel.number_of_deaf_blind_interpreters_required > 0;
         this.cbCaptioner = this.bookingModel.number_of_captioners_required > 0;
         this.cbNotetaker = this.bookingModel.number_of_note_takers_required > 0;
         this.cbVisualFrameInterpreter = this.bookingModel.number_of_visual_frame_interpreters_required > 0;
@@ -558,8 +637,15 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         this.cbSignedEnglishInterpreter = this.bookingModel.number_of_signed_english_interpreters_required > 0;
         this.cbIndigenousSignInterpreter = this.bookingModel.number_of_indigenous_sign_interpreters_required > 0;
 
+        this.cbDeafBlindInterpreter = this.cbVisualFrameInterpreter || this.cbTactileInterpreter || this.cbPlatformInterpreter;
         this.cbOtherLanguageNeeds = this.cbAslInterpreter || this.cbBslInterpreter || this.cbIslInterpreter || this.cbSignedEnglishInterpreter
                                     || this.cbIndigenousSignInterpreter;
+    }
+
+    shouldSelectDeafBlindOtherLanguage() {
+        return (this.cbDeafBlindInterpreter && !(this.cbVisualFrameInterpreter || this.cbTactileInterpreter || this.cbPlatformInterpreter))
+            || (this.cbOtherLanguageNeeds && !(this.cbAslInterpreter || this.cbBslInterpreter || this.cbIslInterpreter
+                || this.cbSignedEnglishInterpreter || this.cbIndigenousSignInterpreter));
     }
 
     isMoreInterpreterNeeded() {
@@ -602,6 +688,16 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 || endDate.getSeconds() > 0)) || endDate.getHours() > 20);
     }
 
+    public isRecurrenceDayCheckboxDisabled(day) {
+        return this.bookingDate && this.bookingDate.getDay() === this.repeat_days.indexOf(day);
+    }
+
+    private getRecurrenceDays() {
+        return this.repeat_days
+            .filter(day => day.selected)
+            .map(day => day.value);
+    }
+
     createBooking() {
         this.timeFormatting();
         if (!this.bookingModel.bookable_id) {
@@ -610,6 +706,11 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         }
         this.spinnerService.requestInProcess(true);
         this.bookingModel.state = BOOKING_STATE.Requested; // res.data.state;
+        this.bookingModel.new_link_id_required = this.isRecurringBooking;
+        this.bookingModel.recurring = this.isRecurringBooking;
+        if (this.isRecurringBooking) {
+            this.bookingModel.repeat_booking_on_days = this.getRecurrenceDays();
+        }
         this.bookingService.createBooking(this.bookingModel)
             .subscribe((res: any) => {
                     if (res.status === 204) {
@@ -738,6 +839,14 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         if ((evnt.target as Element).hasAttribute('readonly')) {
             this.notificationServiceBus.launchNotification(true, 'In order to change this field, please contact the booking office.');
         }
+    }
+
+    resetRecurringDays() {
+        for (const day of this.repeat_days) {
+            day.selected = false;
+        }
+        this.repeat_days[this.bookingDate.getDay()].selected = true;
+        this.minDateForRecurrenceEnd = this.getMinDateForRecurringBookingEnd();
     }
 
     _handleReaderLoaded(readerEvt) {

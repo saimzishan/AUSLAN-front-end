@@ -7,7 +7,7 @@ declare var google: any;
 export class GmapsApiService extends ApiService {
 
     getDistance(origin: Array<string>, destination: Array<string>, unit = 'km'): Promise<any> {
-        return this.distanceWithLocation(origin, destination, unit).then(data => {
+        return this.fetchDistanceAndDuration(origin, destination, unit).then(data => {
             return data[0].elements[0].distance;
         }, error => {
             return error;
@@ -16,7 +16,7 @@ export class GmapsApiService extends ApiService {
 
     getMinDistance(origin: Array<string>, destination: Array<string>, unit = 'km'): Promise<any> {
         return new Promise((resolve, reject) => {
-            return this.distanceWithLocation(origin, destination, unit).then(data => {
+            return this.fetchDistanceAndDuration(origin, destination, unit).then(data => {
                 resolve(Math.min.apply(Math, data[0].elements.map(e => { return e.distance && e.distance.value; })));
             }, error => {
                 reject(error);
@@ -24,7 +24,7 @@ export class GmapsApiService extends ApiService {
         });
     }
 
-    distanceWithLocation(origin: Array<string>, destination: Array<string>, unit = 'km'): Promise<any> {
+    fetchDistanceAndDuration(origin: Array<string>, destination: Array<string>, unit = 'km'): Promise<any> {
         let promise = new Promise((resolve, reject) => {
             let distanceMatrixObject = new google.maps.DistanceMatrixService();
             return distanceMatrixObject.getDistanceMatrix(

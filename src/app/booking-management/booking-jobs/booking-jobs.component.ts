@@ -16,6 +16,7 @@ import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
 import {GLOBAL} from '../../shared/global';
 import {BookingHeaderService} from '../booking-header/booking-header.service';
 import {LinkidPopupComponent} from '../linkid-popup/linkid-popup.component';
+import {DatePipe} from '@angular/common';
 
 @Component({
     selector: 'app-booking-jobs',
@@ -43,12 +44,14 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     disableReject = false;
     private currentStatus = 'Invited';
     stateStr = '';
+    isVicdeaf = false;
+    diffInHours: number;
 
     constructor(public dialog: MdDialog,
                 public viewContainerRef: ViewContainerRef, public spinnerService: SpinnerService,
                 public notificationServiceBus: NotificationServiceBus,
                 public userDataService: UserService, public bookingService: BookingService, public bookingHeaderService: BookingHeaderService,
-                private router: Router, private route: ActivatedRoute) {
+                private router: Router, private route: ActivatedRoute, private datePipe: DatePipe) {
 
         /** http://stackoverflow.com/questions/38008334/angular2-rxjs-when-should-i-unsubscribe-from-subscription */
         this.sub = this.route.params.subscribe(params => {
@@ -152,24 +155,52 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         }
     }
 
-    linkedBookingConfirmation(isCancel: Boolean) {
+        linkedBookingConfirmation(isCancel: Boolean) {
+            let config: MdDialogConfig = {
+                disableClose: true
+            };
+            config.viewContainerRef = this.viewContainerRef;
+            this.dialogRef = this.dialog.open(PopupComponent, config);
+            this.dialogRef.componentInstance.title = isCancel ? 'Cancel linked booking' : 'Unable to service linked booking';
+            this.dialogRef.componentInstance.cancelTitle = isCancel ? 'Cancel all bookings' : 'Unable to service all bookings';
+            this.dialogRef.componentInstance.okTitle = isCancel ? 'Cancel only this booking' : 'Unable to service this booking';
+            this.dialogRef.componentInstance.popupMessage =
+                 isCancel ? `Would you like to cancel only this booking, or
+              all linked bookings?` :
+              `Would you like to mark this booking as unable to service, or
+              all linked bookings?`;
+        this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
+            if (isCancel) {
+            this.cancelBooking(isCancel, !result);
+            } else {
+                this.changeBookingState(isCancel, !result);
+            }
+        });
+    }
+    cancelBooking(isCancel: Boolean, update_all_linked_bookings?: boolean) {
         let config: MdDialogConfig = {
             disableClose: true
         };
         config.viewContainerRef = this.viewContainerRef;
         this.dialogRef = this.dialog.open(PopupComponent, config);
         this.dialogRef.componentInstance.title = isCancel ? 'Cancel linked booking' : 'Unable to service linked booking';
-        this.dialogRef.componentInstance.cancelTitle = isCancel ? 'Cancel all bookings' : 'Unable to service all bookings';
-        this.dialogRef.componentInstance.okTitle = isCancel ? 'Cancel only this booking' : 'Unable to service this booking';
-        this.dialogRef.componentInstance.popupMessage =
-             isCancel ? `Would you like to cancel only this booking, or
-          all linked bookings?` :
-          `Would you like to mark this booking as unable to service, or
-          all linked bookings?`;
+        this.dialogRef.componentInstance.cancelTitle = isCancel ? 'Cancelled Chargeable' : 'Unable to service all bookings';
+        this.dialogRef.componentInstance.okTitle = isCancel ? 'Cancelled No Charge' : 'Unable to service this booking';
+        if (isCancel) {
+            let statement = this.isVicdeaf && (this.diffInHours < 48) ? 'Cancelled Chargeable since the start date is within 48 hours.'
+                         : !this.isVicdeaf && (this.diffInHours < 24) ? 'Cancelled Chargeable since the start date is within 24 hours.'
+                         : this.isVicdeaf && (this.diffInHours > 48) ? 'Cancelled No Charge since the start date is not within 48 hours.'
+                         : !this.isVicdeaf && (this.diffInHours > 24) ? 'Cancelled No Charge since the start date is not within 24 hours.' : '';
 
-        this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
-            this.changeBookingState(isCancel, !result);
-        });
+            this.dialogRef.componentInstance.popupMessage = `Are you sure you want to cancel this booking? This is permanent. We recommend to cancel this
+                                                            booking as ` + statement;
+        } else {
+            this.dialogRef.componentInstance.popupMessage = `Would you like to mark this booking as unable to service, or
+            all linked bookings?` ;
+        }
+            this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
+                this.changeBookingState(isCancel, !result, update_all_linked_bookings);
+            });
     }
 
     isCurrentUserInterpreter() {
@@ -183,15 +214,25 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         return this.selectedBookingModel.state === BOOKING_STATE.In_progress && this.isCurrentUserInterpreter();
     }
 
-    changeBookingState(isCancel: Boolean, update_all_linked_bookings?: boolean) {
-        let state = isCancel ? 'cancelled_no_charge' : 'unable_to_service';
-        let stateMsg = isCancel ? 'Cancelled with No Charge' : 'Unable to Service';
-
+    changeBookingState(isCancel: Boolean, isChargeable?: boolean, update_all_linked_bookings?: boolean) {
+       let state;
+       let stateMsg;
+        if (isChargeable) {
+             state = isCancel ? 'cancelled_chargeable' : 'unable_to_service';
+             stateMsg = isCancel ? 'Cancelled with Charge' : 'Unable to Service';
+        } else {
+            state = isCancel ? 'cancelled_no_charge' : 'unable_to_service';
+            stateMsg = isCancel ? 'Cancelled with No Charge' : 'Unable to Service';
+        }
         this.spinnerService.requestInProcess(true);
         this.bookingService.updateBookingByTransitioning(this.selectedBookingModel.id, state, update_all_linked_bookings)
             .subscribe((res: any) => {
                     if (res.status === 204) {
+                    if (isChargeable) {
+                        this.selectedBookingModel.state = isCancel ? BOOKING_STATE.Cancelled_chargeable : BOOKING_STATE.Unable_to_service;
+                        } else {
                         this.selectedBookingModel.state = isCancel ? BOOKING_STATE.Cancelled_no_charge : BOOKING_STATE.Unable_to_service;
+                        }
                         this.isCancelledOrUnableToServe = true;
                         this.notificationServiceBus.launchNotification(false, 'The booking has been transitioned to \"' + stateMsg + '\" state');
                     }
@@ -299,14 +340,18 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                         this.selectedBookingModel.interpreters.sort((i, j) =>
                             i.state === 'Accepted' ? -1 : j.state === 'Accepted' ? 1 : 0
                         );
-
+                        this.isVicdeaf = GLOBAL.VICDEAF_STATES.filter(teststate => teststate === this.selectedBookingModel.venue.state).length > 0;
                         this.fetchNearbyinterpreters(param_id);
                         this.isCancelledOrUnableToServe = this.isActiveState('Cancelled_no_charge')
                             || this.isActiveState('Unable_to_service') || this.isActiveState('Cancelled_chargeable');
 
                         this.selectedBookingModel.venue.start_time_iso = this.selectedBookingModel.utcToBookingTimeZone(this.selectedBookingModel.venue.start_time_iso);
                         this.selectedBookingModel.venue.end_time_iso = this.selectedBookingModel.utcToBookingTimeZone(this.selectedBookingModel.venue.end_time_iso);
-
+                        let diffInMs: number = Date.now() - Date.parse(this.selectedBookingModel.venue.start_time_iso);
+                        this.diffInHours = diffInMs / 1000 / 60 / 60;
+                        if (this.diffInHours < 0) {
+                            this.diffInHours = (-1) * this.diffInHours;
+                        }
                         if (this.isCurrentUserInterpreter()) {
                             this.selectedBookingModel.interpreters.filter(i => i.id === GLOBAL.currentUser.id)
                                 .map(i => this.currentStatus = i.state || 'Invited');
@@ -330,11 +375,19 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                                 /* Also Redirects */
                                 this.router.navigate(['/booking-management']);
                             }
-
+                            if (this.selectedBookingModel.state === BOOKING_STATE.Service_completed) {
+                            this.disableReject = true;
+                            this.disableAccept = true;
+                            }
                             this.getStateString();
                         }
                     }
-                    // this.spinnerService.requestInProcess(false);
+                    if (this.isCurrentUserAdminOrBookingOfficer()) {
+
+                        this.fetchNearbyinterpreters(param_id);
+                    } else {
+                        this.spinnerService.requestInProcess(false);
+                    }
                 },
                 err => {
                     this.jobAccessError = true;

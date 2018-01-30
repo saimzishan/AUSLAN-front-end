@@ -208,7 +208,7 @@ Feature: Edit Booking
     And I can verify the input 'contact_last_name' will have the value 'Castle'
 
     #----------------------------------------- AUSLAN1-978 -> START ----------------------------------------
-  @runThis
+  @ignoreThis
   Scenario: Booking Officer can change the booking method
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
@@ -252,13 +252,13 @@ Feature: Edit Booking
     Then I click on checkbox name 'cbDeaf'
     And I verify checkbox name 'cbDeaf' is checked 'true'
     And I verify checkbox name 'cbAuslan' is checked 'false'
-    Then I click on checkbox name 'cbDeafBlind'
-    And I verify checkbox name 'cbDeafBlind' is checked 'true'
+    Then I click on checkbox name 'cbCaptioning'
+    And I verify checkbox name 'cbCaptioning' is checked 'true'
     And I verify checkbox name 'cbDeaf' is checked 'false'
-    Then I click on checkbox name 'cbDeafBlind'
-    And I verify checkbox name 'cbDeafBlind' is checked 'true'
+    Then I click on checkbox name 'cbCaptioning'
+    And I verify checkbox name 'cbCaptioning' is checked 'true'
     And I verify checkbox name 'cbDeaf' is checked 'false'
-    Then I fill the field 'deafBlind_count' with value '2'
+    Then I fill the field 'captioner_count' with value '2'
     When I click on BUTTON 'SAVE'
     Then If I am shown a popup message 'Would you like to save these changes for all bookings or only for this one?', I approve it
     Then I should get a valid booking update notification
@@ -266,8 +266,8 @@ Feature: Edit Booking
     When I click on link 'Booking details'
     Then I should be on the edit booking page
     And I verify checkbox name 'cbAuslan' is checked 'false'
-    And I verify checkbox name 'cbDeafBlind' is checked 'true'
-    And I can verify the field 'deafBlind_count' will have the value '2'
+    And I verify checkbox name 'cbCaptioning' is checked 'true'
+    And I can verify the field 'captioner_count' will have the value '2'
 
     #----------------------------------------- AUSLAN1-979 -> END ----------------------------------------
 
@@ -288,10 +288,10 @@ Feature: Edit Booking
     When I click on link 'Booking details'
     Then I should be on the edit booking page
     When I click on checkbox name 'cbDeaf'
-    Then I will get an error notification saying "Oops. Deallocate interpreters before changing the interpreting type."
+    Then I will get an error notification saying "Oops. Deallocate interpreters before changing the service type."
     And I verify checkbox name 'cbDeaf' is checked 'false'
     And I verify checkbox name 'cbAuslan' is checked 'true'
     When I click on checkbox name 'cbOtherLanguage'
-    Then I will get an error notification saying "Oops. Deallocate interpreters before changing the interpreting type."
+    Then I will get an error notification saying "Oops. Deallocate interpreters before changing the service type."
     And I verify checkbox name 'cbOtherLanguage' is checked 'false'
     And I verify checkbox name 'cbAuslan' is checked 'true'

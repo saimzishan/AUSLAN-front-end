@@ -104,7 +104,7 @@
     <h4 class="text-center">BOOKING DETAILS</h4>
     <div class="row small-collapse">
       <div class="row-wrapper">
-          <div class=" medium-6 columns">
+          <div class="medium-4 columns">
               <div class="form-field">
                 <label>DATE OF APPOINTMENT *</label>
                 <p-calendar name='dpDate' 
@@ -113,6 +113,7 @@
                   [(ngModel)]="bookingDate"
                   [minDate]="minDate" [maxDate]="maxDate"
                   (click)="fireNotification($event)"
+                  (onSelect)="resetRecurringDays()"
                   required #dpDate="ngModel" dateOnly="true" ></p-calendar>
                 <span *ngIf="dpDate.touched && !dpDate.errors?.required;"
                       class="inline-icon inline-icon-valid valid"></span>
@@ -165,6 +166,59 @@
                   class="inline-icon error">
               <span>End time can't be before start time</span>!
             </span>
+          </div>
+        </div>
+        <div class='medium-2 columns'>
+          <div class='form-feild'>
+            <label for='recurring-booking'>RECURRING?</label>
+            <md-slide-toggle id="recurring-booking"
+                             name="recurring-booking"
+                             aria-label="Recurring booking"
+                             [(ngModel)]="isRecurringBooking">
+            </md-slide-toggle>
+          </div>
+        </div>
+      </div>
+
+      <div class="medium-12 columns" *ngIf="isRecurringBooking">
+        <div class='medium-6 columns'>
+          <div class='form-field'>
+            <label>FREQUENCY*</label>
+            <select [(ngModel)]="bookingModel.frequency"
+                    name='recurring_booking_frequency'
+                    [required]='isRecurringBooking'>
+              <option value='weekly'>Weekly</option>
+              <option value='biweekly'>Every 2 weeks</option>
+              <option value='fourweekly'>Every 4 weeks</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="medium-12 columns" *ngIf="isRecurringBooking">
+        <div class='form-field'>
+          <label>REPEAT ON*</label>
+          <div *ngFor="let day of repeat_days" class='medium-1 columns'>
+            <md-checkbox [(ngModel)]="day.selected"
+                         name="{{day.value}}"
+                         [disabled]="isRecurrenceDayCheckboxDisabled(day)"
+                         [align]='right'
+                         [required]='isRecurringBooking'>
+              {{day.display}}
+            </md-checkbox>
+          </div>
+        </div>
+      </div>
+
+      <div class='medium-12 columns' *ngIf="isRecurringBooking">
+        <div class="form-field">
+          <div class='medium-6 columns'>
+            <label>END DATE*</label>
+            <p-calendar name="recurrence_end_date"
+                        [(ngModel)]="bookingModel.recurrence_end_date"
+                        [minDate]="minDateForRecurrenceEnd"
+                        [required]="isRecurringBooking">
+            </p-calendar>
           </div>
         </div>
       </div>
@@ -418,35 +472,6 @@
           </div>
         </div>
       <ng-container *ngIf="cbDeafBlindInterpreter || cbVisualFrameInterpreter || cbTactileInterpreter || cbPlatformInterpreter">
-        <div class="medium-6 columns" *ngIf="cbDeafBlindInterpreter">
-          <div class="form-field">
-            <label>NUMB. OF DEAF BLIND INT. NEEDED *
-              <span mdTooltip="Enter the Number of Deaf Interpreters needed">
-                <i class="inline-icon-tip"></i>
-              </span>
-            </label>
-            <input [(ngModel)]="bookingModel.number_of_deaf_blind_interpreters_required"
-                   name="deafBlind_count"
-                   #deafBlind_count="ngModel"
-                   placeholder="Enter the Number of Deaf Blind Interpreters needed"
-                   (click)="fireNotification($event)"
-                   type="tel" min="1" required digits>
-            <span *ngIf="deafBlind_count.touched && !deafBlind_count.errors?.required && !deafBlind_count.errors?.digits;"
-                  class="inline-icon inline-icon-valid valid"></span>
-            <span *ngIf="deafBlind_count.touched && (deafBlind_count.errors?.required || deafBlind_count.errors?.digits);"
-                  class="inline-icon error">
-              <span>Minimum 1 digit required.</span>!
-            </span>
-            <span *ngIf="deafBlind_count.touched && deafBlind_count.errors?.min"
-                  class="inline-icon error">
-              <span>Minimum value should be 1.</span>!
-            </span>
-            <span *ngIf="bookingModel.number_of_deaf_blind_interpreters_required < 2  && isMoreInterpreterNeeded()"
-                  class="inline-icon error">
-              <span>You may require more than 1 deaf blind interpreter for this booking.</span>!
-            </span>
-          </div>
-        </div>
         <div class="medium-6 columns" *ngIf="cbVisualFrameInterpreter">
           <div class="form-field">
             <label>NUMB. OF VISUAL FRAME INT. NEEDED *
@@ -748,7 +773,7 @@
 
   <ng-container *ngIf="cbCaptioner || cbNotetaker || bookingModel.method_type === 'vri'">
     <div class="separator"></div>
-    <h4 class="text-center">ADDITIONAL FIELDS</h4>
+    <h4 class="text-center">TECHNICAL DETAILS</h4>
 
     <div class="row">
       <div class="row-wrapper" *ngIf="cbCaptioner" name="captioningAdditionalFields"> 
@@ -792,9 +817,10 @@
             <div class="form-field">
               <label>AUDIO SOURCE
               </label>
-              <input [(ngModel)]="bookingModel.audio_source"
-                     name='audio_source'
-                     type='text' placeholder="Enter Audio Source">
+              <select [(ngModel)]="bookingModel.audio_source" name='audio_source'>
+                     <option *ngFor="let audio_src of ['Smartphone / Tablet', 'Desktop Computer', 'Laptop', 'AV System Patch-In', 'Telephone Link', 'Other (specify in notes)']"
+                             [value]="audio_src">{{audio_src}}</option>
+              </select>
             </div>
           </div>
       </div> 
@@ -803,9 +829,10 @@
           <div class="form-field">
             <label>TECH PLATFORM
             </label>
-            <input [(ngModel)]="bookingModel.tech_platform"
-                   name='tech_platform'
-                   type='text' placeholder="Enter Tech Platform">
+            <select [(ngModel)]="bookingModel.tech_platform" name='tech_platform'>
+                   <option *ngFor="let platform of ['Skype', 'Google Hangouts', 'Zoom', 'Adobe Connect', 'Echo360', 'Livestream', 'Webex', 'Gotomeeting', 'Gotowebinar', 'Youtube Live', 'Other (specify in notes)']"
+                           [value]="platform">{{platform}}</option>
+            </select>
           </div>
         </div>
         <div class="medium-6 columns">
@@ -823,9 +850,10 @@
             <div class="form-field">
               <label>HARDWARE
               </label>
-              <input [(ngModel)]="bookingModel.hardware"
-                     name='hardware'
-                     type='text' placeholder="Enter Hardware">
+              <select [(ngModel)]="bookingModel.hardware" name='hardware'>
+                     <option *ngFor="let hard_ware of ['Computer', 'Laptop', 'iPad', 'Smartphone', 'VC system', 'Other (specify in notes)']"
+                             [value]="hard_ware">{{hard_ware}}</option>
+              </select>
             </div>
           </div>
           <div class="medium-6 columns">
@@ -842,9 +870,11 @@
             <div class="form-field">
               <label>HOW WOULD YOU LIKE TO RECEIVE NOTES
               </label>
-              <input [(ngModel)]="bookingModel.how_would_you_like_to_receive_notes"
-                     name='how_would_you_like_to_receive_notes'
-                     type='text' placeholder="Enter How Would You Like To Receive Notes">
+              <select [(ngModel)]="bookingModel.how_would_you_like_to_receive_notes" 
+                     name='how_would_you_like_to_receive_notes'>
+                     <option value="Digitally">Digitally</option>
+                     <option value="Hand Written">Hand Written</option>
+              </select>
             </div>
         </div>
     </div>

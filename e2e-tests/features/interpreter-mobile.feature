@@ -16,13 +16,13 @@ Feature: As INTERPRETER, I can login on mobile
     And I sign in with valid Interpreter credentials
     Then I will be shown the bookings page
 
-  @runThis
+  @ignoreThis
   Scenario: As INTERPRETER and a booking is created and INTERPRETER can open the link directly even if previously logged out
     And I click on booking job detail page
     And I sign in with valid Interpreter credentials
     Then I will be shown the booking detail page with id 1
 
-  @runThis
+  @ignoreThis
   Scenario: As INTERPRETER, I can accept the booking, if a booking is created and INTERPRETER Invited then
     And I sign in with valid Interpreter credentials
     Then I will be shown the bookings page
@@ -115,7 +115,7 @@ Feature: As INTERPRETER, I can login on mobile
 
 
 # ---------------------------------------- AUSLAN 1-350 -> START ----------------------------------------
-  @runThis
+  @ignoreThis
   Scenario: As INTERPRETER, I can  accept the booking, if a booking is created and INTERPRETER Invited and Interpreter1 exists then
     And I sign in with valid Interpreter credentials
     And I will be shown the bookings page
@@ -132,7 +132,7 @@ Feature: As INTERPRETER, I can login on mobile
     And I go to stored url
     Then I see the error page
 
-  @runThis
+  @ignoreThis
   Scenario: As INTERPRETER, I can  accept the booking, if a booking is created and INTERPRETER_ALL Invited and INTERPRETER1 exists then
     And I sign in with valid Interpreter credentials
     And I will be shown the bookings page
@@ -175,7 +175,7 @@ Feature: As INTERPRETER, I can login on mobile
     Then I will be shown the bookings page
 
 
-  @runThis
+  @ignoreThis
   Scenario: As INTERPRETER, I can  accept the booking, if a booking is created and INTERPRETER_ALL Invited and INTERPRETER1 exists then
     And I sign in with valid Interpreter credentials
     And I will be shown the bookings page

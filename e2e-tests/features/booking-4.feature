@@ -174,7 +174,6 @@ Feature: Booking Management
     And I fill the field 'deaf_count' with value '1'
     When I click on checkbox name 'cbDeafBlind'
     Then I can see the element with name 'deafBlindInterpreterTypes' is 'visible'
-    And I fill the field 'deafBlind_count' with value '2'
     When I click on checkbox name 'cbCaptioning'
     Then I can see the element with name 'captioningAdditionalFields' is 'visible'
     And I can see the element with name 'captioningAndVriAdditionalFields' is 'visible'
@@ -206,7 +205,7 @@ Feature: Booking Management
     Then I get a valid create booking notification
     And I am on the bookings page
     And I am shown with 10 bookings
-    And I can see the element with id 'displayTxt' has text 'Displaying 1 - 10 of 13 Bookings'
+    And I can see the element with id 'displayTxt' has text 'Displaying 1 - 10 of 12 Bookings'
 #----------------------------------------- AUSLAN1-312 -> END ----------------------------------------
 
 #----------------------------------------- AUSLAN1-977 -> START ----------------------------------------
@@ -244,7 +243,7 @@ Feature: Booking Management
     Then I wait for 1000 milli-seconds
     Then I will get an error notification saying "Oops! Too many notetakers already allocated. Please unassign first."
 
-  ignoreThis
+  @ignoreThis
   Scenario: Given 1 verified Individual Client, Booking Officer will get error notification when changing captioners to less number than assigned. Interpreter and Interpreter1 exists.
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
