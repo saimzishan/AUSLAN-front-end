@@ -20,19 +20,17 @@
                     </section>
                     <section>
                         <div class="payroll-card__option">
-                            <md-checkbox name="{{'cbPayInterpreter_' + i}}" [(ngModel)]="payroll.pay_interpreter" (change)="cbChanged('payroll_attributes','pay_interpreter',i)"></md-checkbox>
-                            <label>
+                            <md-checkbox name="{{'cbPayInterpreter_' + i}}" [(ngModel)]="payroll.pay_interpreter" (change)="cbChanged('payroll_attributes','pay_interpreter',i)">
                                 Pay interpreter
                                 <span class="note note_block note_green note_small">RECOMMENDED</span>
-                            </label>
+                        </md-checkbox>
                         </div>
                         <div class="payroll-card__option payroll-card__option_with-offset">
                             <md-checkbox name="{{'cbPayTravel_' + i}}" [(ngModel)]="payroll.pay_travel" [disabled]="!payroll.pay_interpreter"
-                                                                        (change)="cbChanged('payroll_attributes','pay_travel',i)"></md-checkbox>
-                            <label>
+                                                                        (change)="cbChanged('payroll_attributes','pay_travel',i)">
                                 Pay travel
                                 <span class="note note_block note_small">NOT RECOMMENDED</span>
-                            </label>
+                        </md-checkbox>
                         </div>
                     </section>
                 </section>
@@ -47,19 +45,17 @@
                     <section>
                         <div class="payroll-card__option">
                             <md-checkbox name="{{'cbInvoiceClient_' + i}}" [(ngModel)]="payments.invoice_attributes[i].invoice_client"
-                                                                            (change)="cbChanged('invoice_attributes','invoice_client',i)"></md-checkbox>
-                            <label>
+                                                                            (change)="cbChanged('invoice_attributes','invoice_client',i)">
                                 Invoice client
                                 <span class="note note_block note_green note_small">RECOMMENDED</span>
-                            </label>
+                        </md-checkbox>
                         </div>
                         <div class="payroll-card__option payroll-card__option_with-offset">
                             <md-checkbox name="{{'cbChargeTravel_' +i}}" [(ngModel)]="payments.invoice_attributes[i].charge_travel" [disabled]="!payments.invoice_attributes[i].invoice_client"
-                                                                          (change)="cbChanged('invoice_attributes','charge_travel',i)"></md-checkbox>
-                            <label for="option-4">
+                                                                          (change)="cbChanged('invoice_attributes','charge_travel',i)">
                                 Charge travel
                                 <span class="note note_block note_small">NOT RECOMMENDED</span>
-                            </label>
+                        </md-checkbox>
                         </div>
                     </section>
                 </section>

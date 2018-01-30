@@ -2,7 +2,7 @@
     <div class="payroll-card__measure">
         <span class="payroll-card__measure-name">Inter. time*</span>
         <div class="form-field">
-            <input type="text" name="{{'interpreterTime' + (isClient ? 'client_' : 'interpreter_') + index}}" #interpreterTime="ngModel" [readonly]="isReadOnly"
+            <input type="text" name="{{'interpreterTime_' + (isClient ? 'client_' : 'interpreter_') + index}}" #interpreterTime="ngModel" [readonly]="isReadOnly"
                    placeholder="2:25" class="payroll-card__measure-input" [(ngModel)]="payrollInvoice.interpreting_time" pattern="(\d+|\d+(\.|\:)\d+)">
             <span *ngIf="interpreterTime.touched && (interpreterTime.errors?.pattern);"
                    class="inline-icon error">

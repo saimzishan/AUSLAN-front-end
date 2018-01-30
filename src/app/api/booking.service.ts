@@ -231,7 +231,7 @@ export class BookingService extends ApiService {
         let options = new RequestOptions({ headers: headers });
         let obj = { 'payments': payment };
 
-        return this.http.post(GLOBAL.BOOKING_API + '/' + booking_id + '/payments', JSON.stringify(obj), options)
+        return this.http.put(GLOBAL.BOOKING_API + '/' + booking_id + '/payments/group_update', JSON.stringify(obj), options)
             .map(this.extractData)
             .catch((err) => { return this.handleError(err); });
     }
