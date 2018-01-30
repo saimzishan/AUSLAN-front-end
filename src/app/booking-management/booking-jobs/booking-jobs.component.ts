@@ -641,7 +641,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         return JSON.stringify(user);
     }
     getTimelineBlockoutStyle (avail_block) {
-        let toRet = ''
+        let toRet = '';
         let sd = new Date(avail_block.start_time);
         if (sd.toLocaleDateString() === this.startTime.toLocaleDateString()) {
             let edt = new Date(avail_block.end_time);
