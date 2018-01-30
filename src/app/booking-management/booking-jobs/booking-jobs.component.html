@@ -5,7 +5,7 @@
 
 <ng-container *ngIf="!jobAccessError">
     <section id="page-common">
-        <app-booking-header [bookingState]="selectedBookingModel.state"
+        <app-booking-header [bookingModel]="selectedBookingModel"
                             [hasLinkId]="!!selectedBookingModel.link_id"
                             [isCancelOrUnable]="isCancelledOrUnableToServe"
                             [invitePress]="invitePressed"
