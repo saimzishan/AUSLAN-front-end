@@ -100,8 +100,8 @@ export class BlockoutComponent implements OnDestroy, OnInit {
         this.defaultDateTime = currentDate;
         let minute = Math.ceil(currentDate.getMinutes() / 5) * 5;
         this.defaultDateTime.setMinutes(minute);
-        this.start_time =this.defaultDateTime;
-        this.end_time =this.defaultDateTime;
+        this.start_time = this.defaultDateTime;
+        this.end_time = this.defaultDateTime;
     }
     getRoute () {
         this.router.navigate([ this.isUserAdminOrBO() ? '/user-management' : '/user-management/profile']);
