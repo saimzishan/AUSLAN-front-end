@@ -323,11 +323,13 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                     let data = []
                     data.push(['ID', 'Start Time', 'End Time']);
                     for (let inte of this.interpreterList) {
-                        const ab = new AvailabilityBlock();
-                        ab.start_time = this.selectedBookingModel.venue.start_time_iso;
-                        ab.end_time =  this.selectedBookingModel.venue.end_time_iso;
-                        (<Interpreter>inte).availability_blocks_attributes.push(ab);
                         let blocks = (<Interpreter>inte).availability_blocks_attributes;
+                        if (blocks.length === 0) {
+                            const ab = new AvailabilityBlock();
+                            ab.start_time = this.selectedBookingModel.venue.start_time_iso;
+                            ab.end_time =  this.selectedBookingModel.venue.end_time_iso;
+                            (<Interpreter>inte).availability_blocks_attributes.push(ab);
+                        }
                         for (let avail_block of blocks) {
 
                             let sd = new Date(avail_block.start_time);
@@ -375,8 +377,8 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                         this.selectedBookingModel.venue.end_time_iso = this.selectedBookingModel.utcToBookingTimeZone(this.selectedBookingModel.venue.end_time_iso);
                         this.startTime = new Date(this.selectedBookingModel.venue.start_time_iso);
                         this.endTime = new Date(this.selectedBookingModel.venue.end_time_iso);
-                        this.timelineChartData.options.hAxis.minValue = new Date(0, 0, 0, this.startTime.getHours() - 1 , 0, 0);
-                        this.timelineChartData.options.hAxis.maxValue = new Date(0, 0, 0, this.endTime.getHours() + 8 , 0, 0);
+                        this.timelineChartData.options.hAxis.minValue = new Date(0, 0, 0, this.startTime.getHours() - 2 , 0, 0);
+                        this.timelineChartData.options.hAxis.maxValue = new Date(0, 0, 0, this.endTime.getHours() + 2 , 0, 0);
                         if (this.isCurrentUserInterpreter()) {
                             this.selectedBookingModel.interpreters.filter(i => i.id === GLOBAL.currentUser.id)
                                 .map(i => this.currentStatus = i.state || 'Invited');
@@ -499,9 +501,24 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                     this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
                 });
     }
+    interpreterHasBlockoutDialog () {
+            if (this.dialogSub) {
+                this.dialogSub.unsubscribe();
+            }
 
+            let config: MdDialogConfig = {
+                disableClose: true
+            };
+            config.viewContainerRef = this.viewContainerRef;
+            this.dialogRef = this.dialog.open(PopupComponent, config);
+            this.dialogRef.componentInstance.title = 'Interpreter With A Blockout';
+            this.dialogRef.componentInstance.cancelTitle = 'Back to job';
+            this.dialogRef.componentInstance.okTitle = 'YES';
+            this.dialogRef.componentInstance.popupMessage = `One or more interpreters have a blockout within the booking time. Do you still want to assign?`;
+    }
     saveChanges() {
         let selectedInt = [];
+        let warnInterpreterWithBlockout = false;
         this.checkList = {};
         this.spinnerService.requestInProcess(true);
         if (this.invitePressed) {
@@ -518,6 +535,27 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
             this.sendUnAssign();
             this.selectedActionableInterpreterID = -1;
         } else if (this.reAssignPressed) {
+            for (let inte of this.interpreterList) {
+                if ( this.hasBlockout(<Interpreter>inte)) {
+                    warnInterpreterWithBlockout = true;
+                    break;
+                }
+            }
+            if (warnInterpreterWithBlockout) {
+                this.interpreterHasBlockoutDialog();
+                this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
+                    for (let _id of this.selectedInterpreterIDs) {
+                        selectedInt.push(new Object({
+                            id: _id
+                        }));
+                    }
+                    this.selectedInterpreterIDs = [];
+                    this.reAssignPressed = false;
+                    this.sendReAssign(selectedInt);
+                    this.selectedActionableInterpreterID = -1;
+                });
+            }
+
             for (let _id of this.selectedInterpreterIDs) {
                 selectedInt.push(new Object({
                     id: _id
