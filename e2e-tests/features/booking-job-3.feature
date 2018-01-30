@@ -306,3 +306,58 @@ Feature: Booking Admin Management
     And I am on the bookings page
     Then I see one row with state 'Cancelled no charge'
   
+  @runThis
+  Scenario: Booking Officer can CANCEL a booking having linked id with option Cancel only this booking and then Cancelled no charge for DSQ  with time greater then 24 hours
+    Given There exist 1 booking with link id
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    And I am on the bookings page
+    And I see one row with the link id
+    When I click on an individual booking
+    Then I will be shown the booking job page
+    When I click on link 'Booking details'
+    Then I should be on the edit booking page
+    Then I fill New Booking form fields correctly with DSQ state
+    And I click on checkbox name 'tnc'
+    And I click on BUTTON 'SAVE'
+    And If I am shown popups, I approve all of them
+    Then I should get a valid booking update notification
+    When I click on BUTTON 'Cancel Booking'
+    Then I will be shown a popup message 'Would you like to cancel only this booking, or all linked bookings?'
+    Then I click on BUTTON name 'yesBtn'
+    Then I wait for 1200 milli-seconds
+    Then I will be shown a popup message 'Are you sure you want to cancel this booking? This is permanent. We recommend to cancel this booking as Cancelled No Charge since the start date is not within 24 hours.'
+    Then I click on BUTTON name 'yesBtn'
+    Then I get a valid 'Cancelled with No Charge' notification for state
+    Then I can see the button state 'Cancel Booking' is hidden
+    Then I can see the button state 'Unable to Service' is hidden
+    When I click on BUTTON 'Undo cancel'
+    Then I can see the booking state 'In Progress'
+
+    @runThis
+  Scenario: Booking Officer can Undo a booking having state Cancelled chargeable
+    Given There exist 1 booking with link id
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    And I am on the bookings page
+    And I see one row with the link id
+    When I click on an individual booking
+    Then I will be shown the booking job page
+    When I click on link 'Booking details'
+    Then I should be on the edit booking page
+    Then I fill New Booking form fields correctly with DSQ state
+    And I click on checkbox name 'tnc'
+    And I click on BUTTON 'SAVE'
+    And If I am shown popups, I approve all of them
+    Then I should get a valid booking update notification
+    When I click on BUTTON 'Cancel Booking'
+    Then I will be shown a popup message 'Would you like to cancel only this booking, or all linked bookings?'
+    Then I click on BUTTON name 'yesBtn'
+    Then I wait for 1200 milli-seconds
+    Then I will be shown a popup message 'Are you sure you want to cancel this booking? This is permanent. We recommend to cancel this booking as Cancelled No Charge since the start date is not within 24 hours.'
+    Then I click on BUTTON name 'noBtn'
+    Then I get a valid 'Cancelled with Charge' notification for state
+    Then I can see the button state 'Cancel Booking' is hidden
+    Then I can see the button state 'Unable to Service' is hidden
+    When I click on BUTTON 'Undo cancel'
+    Then I can see the booking state 'In Progress'

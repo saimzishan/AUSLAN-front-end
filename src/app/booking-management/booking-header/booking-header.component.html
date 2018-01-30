@@ -7,7 +7,7 @@
         <div *ngIf='showButtons'>
             <button *ngIf='isCurrentUserAdminOrBookingOfficer() && !hasLinkId && !unlinkPress' (click)="linkBooking()" class="button inverse">Link booking</button>
             <button *ngIf='isCurrentUserAdminOrBookingOfficer() && hasLinkId' (click)="unlinkBooking()" class="button pink">Unlink</button>
-            <button *ngIf='isCurrentUserAdminOrBookingOfficer() && isUnableToServiceOrCanceled_States()' (click)="undoCancelClick()" class="button pink">Undo cancel</button>
+            <button *ngIf='isCurrentUserAdminOrBookingOfficer() && isUnableToServiceOrCanceled_States()' (click)="undoCancelClick()" id="undoCancelBtn" class="button pink">Undo cancel</button>
             <button *ngIf='!isCancelOrUnable' (click)="showDialogBoxClick(false)" class="button pink">Unable to Service</button>
             <button *ngIf='!isCancelOrUnable' (click)="showDialogBoxClick(true)" class="button pink">Cancel Booking</button>
             <button name="dupBtn" (click)="duplicateClick()" class="button inverse">Duplicate</button>

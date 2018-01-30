@@ -282,7 +282,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         });
     }
     undoCancel() {
-        let state = 'In_progress';
+        let state = 'in_progress';
         let stateMsg = 'Cancelled with Charge';
         this.spinnerService.requestInProcess(true);
         this.bookingService.updateBookingByTransitioning(this.selectedBookingModel.id, state)
