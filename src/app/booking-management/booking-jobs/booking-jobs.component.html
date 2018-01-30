@@ -337,19 +337,8 @@
                         </tbody>
                     </table>
                     <section *ngIf="showCalendar">
-                        <section id="time">{{ getTimeLineTitle()}}</section>
-                        <section>
-                                <section>
-                                    <span>6 am</span>
-                                    <span>7 am</span>
-                                    <span>8 am</span>
-                                    <span>9 am</span>
-                                    <span>11 am</span>
-                                    <span>12 am</span>
-                                    <span>1 pm</span>
-                                </section>
-
-                        </section>
+                        <section id="time"></section>
+                        <section id="time">{{ startTime | date}} {{ startTime | date:'shortTime'}} - {{ endTime | date:'shortTime'}}</section>
                         <google-chart [data]="timelineChartData"></google-chart>
                     </section>
                 </section>

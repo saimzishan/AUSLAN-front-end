@@ -19,6 +19,7 @@ import {LinkidPopupComponent} from '../linkid-popup/linkid-popup.component';
 import * as moment from 'moment';
 import * as $ from 'jquery';
 import {CalendarComponent} from 'ap-angular2-fullcalendar';
+import {AvailabilityBlock} from '../../shared/model/availability-block.entity';
 @Component({
     selector: 'app-booking-jobs',
     templateUrl: './booking-jobs.component.html',
@@ -47,16 +48,17 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     stateStr = '';
     calendarOptions: Object = {};
     showCalendar = false;
+    startTime: Date;
+    endTime: Date;
     timelineChartData = {
         chartType: 'Timeline',
         dataTable: [],
-        colors: ['#cbb69d', '#603913', '#c69c6e'],
         options: {
-            avoidOverlappingGridLines: true,
-            timeline: { groupByRowLabel: true , singleColor: '#8d8'},
+            colors: ['red'],
+            timeline: { groupByRowLabel: true },
             hAxis: {
-                minValue: new Date(0, 0, 0, 8, 30, 0),
-                maxValue: new Date(0, 0, 0, 18, 30, 0)
+                minValue: new Date(0, 0, 0, 5, 30, 0),
+                maxValue: new Date(0, 0, 0, 13, 30, 0)
             }
         },
     };
@@ -312,47 +314,34 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                     this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
                 });
     }
-    getTimeLineTitle () {
-        let dt = new Date(this.selectedBookingModel.venue.start_time_iso);
-        let edt = new Date(this.selectedBookingModel.venue.end_time_iso);
-        return dt.toLocaleDateString() + dt.toLocaleTimeString() + ' ' + edt.toLocaleTimeString();
-    }
     fetchNearbyinterpreters(booking_id) {
         this.bookingService.nearbyBookings(booking_id)
             .subscribe((res: any) => {
                     if (res.status === 200) {
                         this.interpreterList = res.data.users;
                     }
-                    let data = [];
+                    let data = []
+                    data.push(['ID', 'Start Time', 'End Time']);
                     for (let inte of this.interpreterList) {
-                        for (let avail_block of (<Interpreter>inte).availability_blocks_attributes) {
+                        const ab = new AvailabilityBlock();
+                        ab.start_time = this.selectedBookingModel.venue.start_time_iso;
+                        ab.end_time =  this.selectedBookingModel.venue.end_time_iso;
+                        (<Interpreter>inte).availability_blocks_attributes.push(ab);
+                        let blocks = (<Interpreter>inte).availability_blocks_attributes;
+                        for (let avail_block of blocks) {
 
                             let sd = new Date(avail_block.start_time);
-                            let edt = new Date(avail_block.end_time);
-                            let ed = new Date(avail_block.end_date);
+                            if (sd.toLocaleDateString() === this.startTime.toLocaleDateString()) {
+                                let edt = new Date(avail_block.end_time);
 
-                            let currentDR =
-                                [inte.first_name[0] + inte.id, new Date(0, 0, 0, sd.getHours(), sd.getMinutes(), 0), new Date(0, 0, 0, edt.getHours(), edt.getMinutes(), 0)];
-                            if (data.length > 0) {
-                                let prevDR = data[data.length - 1];
-                                if (currentDR[0] === prevDR [0]) {
-                                    if (prevDR[2] > currentDR [1]) {
-                                        if (prevDR[2] > currentDR [2]) {
-                                            continue;
-                                        } else {
-                                            prevDR[2] = currentDR [2];
-                                            continue;
-                                        }
-                                    }
-                                    data.push(currentDR);
-                                } else {
-                                    data.push(currentDR);
-                                }
-                            } else {
+                                let currentDR = [inte.first_name[0] + inte.id, new Date(0, 0, 0,
+                                    sd.getHours(), sd.getMinutes(), 0), new Date(0, 0,
+                                    0, edt.getHours(), edt.getMinutes(), 0)];
                                 data.push(currentDR);
                             }
                         }
                     }
+
                     this.timelineChartData.dataTable = data;
                     this.showCalendar = true;
 
@@ -384,7 +373,10 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
 
                         this.selectedBookingModel.venue.start_time_iso = this.selectedBookingModel.utcToBookingTimeZone(this.selectedBookingModel.venue.start_time_iso);
                         this.selectedBookingModel.venue.end_time_iso = this.selectedBookingModel.utcToBookingTimeZone(this.selectedBookingModel.venue.end_time_iso);
-
+                        this.startTime = new Date(this.selectedBookingModel.venue.start_time_iso);
+                        this.endTime = new Date(this.selectedBookingModel.venue.end_time_iso);
+                        this.timelineChartData.options.hAxis.minValue = new Date(0, 0, 0, this.startTime.getHours() - 1 , 0, 0);
+                        this.timelineChartData.options.hAxis.maxValue = new Date(0, 0, 0, this.endTime.getHours() + 8 , 0, 0);
                         if (this.isCurrentUserInterpreter()) {
                             this.selectedBookingModel.interpreters.filter(i => i.id === GLOBAL.currentUser.id)
                                 .map(i => this.currentStatus = i.state || 'Invited');
