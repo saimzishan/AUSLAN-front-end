@@ -293,10 +293,10 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
 
         }
     }
-    getInterpreterIconClass(user) {
-        return this.hasDeclined(user) ? 'fa fa-times-circle' :
-            this.isBlocked(user.id) ? 'fa fa-ban' :
-                this.hasBlockout(user) ? 'fa fa-exclamation-circle fa-danger' :
+    getInterpreterIconClass(user: Interpreter) {
+        return user.is_booked ? 'fa fa-times-circle' :
+            user.is_blocked ? 'fa fa-ban' :
+                user.has_blockout ? 'fa fa-exclamation-circle fa-danger' :
                     '';
     }
     fetchAllInterpreters() {
@@ -320,34 +320,12 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                     if (res.status === 200) {
                         this.interpreterList = res.data.users;
                     }
-                    /*let data = []
-                    data.push(['ID', 'Start Time', 'End Time']);
                     for (let inte of this.interpreterList) {
-                        let blocks = (<Interpreter>inte).availability_blocks_attributes;
-                        if (blocks.length === 0) {
-                            const ab = new AvailabilityBlock();
-                            ab.start_time = this.selectedBookingModel.venue.start_time_iso;
-                            ab.end_time =  this.selectedBookingModel.venue.end_time_iso;
-                            (<Interpreter>inte).availability_blocks_attributes.push(ab);
-                        }
-                        for (let avail_block of blocks) {
-
-                            let sd = new Date(avail_block.start_time);
-                            if (sd.toLocaleDateString() === this.startTime.toLocaleDateString()) {
-                                let edt = new Date(avail_block.end_time);
-
-                                let currentDR = [inte.first_name[0] + inte.id, new Date(0, 0, 0,
-                                    sd.getHours(), sd.getMinutes(), 0), new Date(0, 0,
-                                    0, edt.getHours(), edt.getMinutes(), 0)];
-                                data.push(currentDR);
-                            }
-                        }
+                        (<Interpreter>inte).is_blocked = Math.random() >= 0.5;
+                        (<Interpreter>inte).is_booked = Math.random() >= 0.5;
+                        (<Interpreter>inte).has_blockout = Math.random() >= 0.5;
                     }
-
-                    this.timelineChartData.dataTable = data;
-                    */
                     this.showCalendar = true;
-
                     this.spinnerService.requestInProcess(false);
                 },
                 err => {
@@ -536,7 +514,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
             this.selectedActionableInterpreterID = -1;
         } else if (this.reAssignPressed) {
             for (let inte of this.interpreterList) {
-                if ( this.hasBlockout(<Interpreter>inte)) {
+                if ( (<Interpreter>inte).has_blockout) {
                     warnInterpreterWithBlockout = true;
                     break;
                 }
@@ -655,14 +633,6 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         return false;
     }
 
-    getLevel(user) {
-        return '';
-    }
-
-    getNotes(user: Interpreter) {
-        return user.booking_office_notes;
-    }
-
     getSuburb(user: Interpreter) {
         return user.address_attributes.suburb;
     }
@@ -678,12 +648,17 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
             let cells = '';
             let offset = '';
             let st = this.startTime.getHours() - 2;
-            if (sd.getHours() > st && (sd.getHours() - st) < 6) {
+            if (sd.getHours() >= st) {
                 offset = 'offset' + (sd.getHours() - st);
                 cells = 'cells' + (edt.getHours() - sd.getHours());
 
+            }  else if (sd.getHours() < st) {
+
+                offset = 'offset' + (st - sd.getHours() > 1 ? '' : (st - sd.getHours()));
+                cells = 'cells' + (edt.getHours() - sd.getHours());
+
             }
-            toRet = cells + ' ' + offset;
+            toRet = cells + ' ' + offset + ' pink';
         }
         console.log(toRet);
         return toRet;
@@ -704,32 +679,6 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
 
         }
         return array;
-    }
-    hasBlockout(user: Interpreter) {
-        let blockouts = user.availability_blocks_attributes;
-        return blockouts.filter(b => {
-            let startBO = new Date(b.start_time).getTime();
-            let startBK = new Date(this.selectedBookingModel.venue.start_time_iso).getTime();
-            let endBO = new Date(b.end_time).getTime();
-            let endBK = new Date(this.selectedBookingModel.venue.end_time_iso).getTime();
-
-            return (startBO >= startBK && startBO <= endBK)
-                || (endBO >= startBK && endBO <= endBK)
-                || (startBK >= startBO && startBK <= endBO)
-                || (endBK >= startBO && endBK <= endBO);
-        });
-    }
-
-    hasDeclined(user) {
-        let currentStatus = '';
-        this.selectedBookingModel.interpreters.filter(i => i.id === user.id)
-            .map(i => currentStatus = i.state || '');
-        return currentStatus === 'Rejected';
-
-    }
-
-    isBlocked(user_id) {
-        return this.interpreterOfTypeExists('blocked', user_id);
     }
     interpreterOfTypeExists ( type: string, user_id: string) {
         let blocked_int =

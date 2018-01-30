@@ -328,11 +328,11 @@
                             </td>
                             <td>{{user.last_name}}</td>
                             <td>{{isStaff(user) ? 'Staff' : 'Casual'}}</td>
-                            <td>{{getLevel(user)}}</td>
+                            <td>{{user.skill_level}}</td>
                             <td>{{getSuburb(user)}}</td>
                             <td>{{user.distance}}</td>
                             <td>{{ travelPayStatus(user)}}</td>
-                            <td>{{getNotes(user)}}</td>
+                            <td>{{user.booking_office_notes}}</td>
                         </tr>
                         </tbody>
                     </table>
@@ -352,7 +352,7 @@
                                     <section>
                                         <ng-container *ngFor="let avail_block of inte.availability_blocks_attributes">
                                             <ng-container *ngIf="getTimelineBlockoutStyle(avail_block).length > 2">
-                                            <span class="{{getTimelineBlockoutStyle(avail_block)}}"></span>
+                                                <span class="{{getTimelineBlockoutStyle(avail_block)}}"></span>
                                             </ng-container>
                                         </ng-container>
                                     </section>
