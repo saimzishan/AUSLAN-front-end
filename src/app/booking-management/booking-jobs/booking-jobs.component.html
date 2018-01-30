@@ -337,9 +337,31 @@
                         </tbody>
                     </table>
                     <section *ngIf="showCalendar">
-                        <section id="time"></section>
                         <section id="time">{{ startTime | date}} {{ startTime | date:'shortTime'}} - {{ endTime | date:'shortTime'}}</section>
-                        <google-chart [data]="timelineChartData"></google-chart>
+                        <!-- google-chart [data]="timelineChartData"></google-chart -->
+                        <section>
+                            <section id="time-range">
+                                <button type="button">&lt;</button>
+                                <section>
+                                    <span *ngFor="let t of getTimelineStartTime()">{{t}}</span>
+                                </section>
+                                <button type="button">&gt;</button>
+                            </section>
+                            <section class="flow">
+                                <div *ngFor="let inte of interpreterList">
+                                    <section>
+                                        <ng-container *ngFor="let avail_block of inte.availability_blocks_attributes">
+                                            <ng-container *ngIf="getTimelineBlockoutStyle(avail_block).length > 2">
+                                            <span class="{{getTimelineBlockoutStyle(avail_block)}}"></span>
+                                            </ng-container>
+                                        </ng-container>
+                                    </section>
+                                </div>
+                            </section>
+                            <div id="mover">
+                                <div class="{{getTimelineMoverStyle()}}"></div>
+                            </div>
+                        </section>
                     </section>
                 </section>
                 <ng-container *ngIf='!isCurrentUserInterpreter()'>

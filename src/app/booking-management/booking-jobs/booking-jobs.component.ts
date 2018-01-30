@@ -320,7 +320,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                     if (res.status === 200) {
                         this.interpreterList = res.data.users;
                     }
-                    let data = []
+                    /*let data = []
                     data.push(['ID', 'Start Time', 'End Time']);
                     for (let inte of this.interpreterList) {
                         let blocks = (<Interpreter>inte).availability_blocks_attributes;
@@ -345,8 +345,8 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                     }
 
                     this.timelineChartData.dataTable = data;
+                    */
                     this.showCalendar = true;
-
 
                     this.spinnerService.requestInProcess(false);
                 },
@@ -670,7 +670,41 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     stringifyUser(user) {
         return JSON.stringify(user);
     }
+    getTimelineBlockoutStyle (avail_block) {
+        let toRet = ''
+        let sd = new Date(avail_block.start_time);
+        if (sd.toLocaleDateString() === this.startTime.toLocaleDateString()) {
+            let edt = new Date(avail_block.end_time);
+            let cells = '';
+            let offset = '';
+            let st = this.startTime.getHours() - 2;
+            if (sd.getHours() > st && (sd.getHours() - st) < 6) {
+                offset = 'offset' + (sd.getHours() - st);
+                cells = 'cells' + (edt.getHours() - sd.getHours());
 
+            }
+            toRet = cells + ' ' + offset;
+        }
+        console.log(toRet);
+        return toRet;
+    }
+    getTimelineMoverStyle () {
+        let diff = this.endTime.getHours() - this.startTime.getHours();
+        return 'cells' + (diff > 0 ? diff : '') + ' offset2';
+    }
+    getTimelineStartTime () {
+        let array = [];
+        let dt = new Date();
+        dt.setTime(this.startTime.getTime());
+        dt.setHours( dt.getHours() - 2 );
+        for (let i = 0; i < 7; i++) {
+            let amPm = dt.getHours() >= 12 ? 'pm' : 'am';
+            array.push(dt.getHours() + ' ' + amPm);
+            dt.setHours( dt.getHours() + 1 );
+
+        }
+        return array;
+    }
     hasBlockout(user: Interpreter) {
         let blockouts = user.availability_blocks_attributes;
         return blockouts.filter(b => {
