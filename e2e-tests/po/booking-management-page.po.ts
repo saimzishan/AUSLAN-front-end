@@ -293,8 +293,6 @@ export class BookingManagementPage extends PageObject {
             mm: this.prettyDate(dateEnd.getMonth() + 1),
             yy: dateEnd.getFullYear().toString()
         };
-        console.log('date from: '+ JSON.stringify(dateFrom));
-        console.log('date_to: '+JSON.stringify(dateTo));
         this.booking.setDateOnly('date_from', dateFrom);
         return this.booking.setDateOnly('date_to', dateTo);
     }
