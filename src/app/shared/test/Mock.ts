@@ -6,6 +6,7 @@ import {GLOBAL} from '../global';
 import {Response, ResponseOptions} from '@angular/http';
 import {NgModule} from '@angular/core';
 import {User} from '../model/user.entity';
+import {MapsAPILoader} from '@agm/core';
 
 @Component({
     template: ''
@@ -148,4 +149,11 @@ export class MockBookingService extends ApiService {
         });
     }
 
+}
+
+@Injectable()
+export class FakeOpMapsAPILoader implements MapsAPILoader {
+    load(): Promise<void> {
+        return Promise.resolve();
+    }
 }

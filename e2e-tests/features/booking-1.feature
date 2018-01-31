@@ -72,6 +72,29 @@ Feature: Booking Management
     Then I am shown with 1 booking
     Then I see one row with org name 'Curve Tomorrow'
 
+# ---------------------------------------- AUSLAN1-903 -> START ----------------------------------------
+  @runThis
+  Scenario: Given 1 verified Individual Client, Administrator can duplicate a booking then original booking travel cost status should be apply
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on the bookings page
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    When I fill New Booking form fields with address greater than 40 kilometers
+    And I select the bookable for client
+    And I click on checkbox name 'travel_cost_applicable'
+    Then I click on checkbox name 'tnc'
+    And I click the create booking button
+    Then I get a valid create booking notification
+    And I am on the bookings page
+    Then I click on an individual booking of type 'Requested'
+    Then I will be shown the booking job page
+    Then I can see the button 'Save' is disabled
+    And I click on BUTTON 'Duplicate'
+    Then I will be taken to the 'New Booking' form
+    Then I can see the travel_cost_applicable field
+
+# ---------------------------------------- AUSLAN1-903 -> END ----------------------------------------
 
   @runThis
   Scenario: Given 1 verified Individual Client, Booking Officer can create a booking
@@ -210,6 +233,4 @@ Feature: Booking Management
     And I click the create booking button
     Then I will be shown a popup message
 
-
-
-
+# ---------------------------------------- AUSLAN1-252 -> END ----------------------------------------

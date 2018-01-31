@@ -80,6 +80,9 @@ defineSupportCode(({Given, When, Then}) => {
     Given(/^I am on my dashboard screen$/, bookingManagementPage.verify);
     Given(/^I fill New Booking form fields correctly$/, bookingPage.createBooking);
     Given(/^I fill New Booking form fields correctly with yesterday date$/, bookingPage.createBookingWithYesterdayDate);
+    Given(/^I fill New Booking form fields correctly with tomorrow date with vicdeaf$/, bookingPage.editBookingWithTomorrowDateWith_VICDEAF_STATE);
+    Given(/^I fill New Booking form fields correctly with DSQ state$/, bookingPage.editBookingWith_DSQ_STATES);
+    Given(/^I fill New Booking form fields correctly with just vicdeaf$/, bookingPage.editBookingWith_VICDEAF_STATE);
     Given(/^I fill New Booking form fields with address greater than 40 kilometers$/, bookingPage.createBookingForPerth);
     Given(/^I select the bookable for client$/, bookingPage.selectClientAsBookbable);
     Given(/^I select the bookable for org rep/, bookingPage.selectOrgRepAsBookbable);

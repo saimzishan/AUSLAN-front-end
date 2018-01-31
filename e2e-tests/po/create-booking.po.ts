@@ -12,6 +12,7 @@ interface TestDateFormat {
 
 export class BookingPage extends PageObject {
     previousDate: Boolean = false;
+    tommorowDate: Boolean = false;
     list_of_object = {};
     browse = () => {
         return this.currentPath().then((currentPath) => {
@@ -173,7 +174,7 @@ export class BookingPage extends PageObject {
             return single_input.getAttribute('value').then((val) => {
 
                 return single_input.getAttribute('name').then((nam) => {
-                    if (['ext_ref_num', 'deaf_person_eaf'].indexOf(nam) === -1) {
+                    if (['ext_ref_num', 'deaf_person_eaf', 'search_address'].indexOf(nam) === -1) {
                         expect(!!val).to.be.true;
                     }
 
@@ -217,6 +218,17 @@ export class BookingPage extends PageObject {
     createBookingWithYesterdayDate = () => {
         this.previousDate = true;
         return this.createBookingWithTimeAndInterpreter('standard', '10:15 AM', '11:15 AM', '2', 'auslanInterpreters_count');
+    }
+    editBookingWithTomorrowDateWith_VICDEAF_STATE =() =>{
+        this.getElementByCss('input[name="dpDate"]').clear();
+        this.setDate( this.getDateAfterNDays(1));
+        this.setElementsValueByName('address_state', 'VIC');
+    }
+    editBookingWith_DSQ_STATES =() =>{
+        this.setElementsValueByName('address_state', 'ACT');
+    }
+    editBookingWith_VICDEAF_STATE =() =>{
+        this.setElementsValueByName('address_state', 'VIC');
     }
     createBookingForPerth = () => {
         return this.createBookingWithAddressTimeAndInterpreter('standard', '10:15 AM', '11:15 AM', '2');

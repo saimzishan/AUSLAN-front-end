@@ -10,7 +10,7 @@
 	<section *ngIf="userIsActive">
 		<ul class="dropdown menu" data-dropdown-menu data-disable-hover="true" data-click-open="true">
 			<li>
-				<a id="lnkProfile" [ngClass]="{'active':isActiveLink(linkName.profile)}"
+				<a class = "ImgSize" id="lnkProfile" [ngClass]="{'active':isActiveLink(linkName.profile)}"
 				   (click)="setActiveLink(linkName.profile)">
 					<img src={{getPicturePath()}}>{{fullName}}</a>
 				<ul class="menu">
