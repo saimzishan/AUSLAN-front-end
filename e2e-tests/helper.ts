@@ -398,7 +398,7 @@ export class Heroku {
     static sendCommandToHeroku(command) {
         const exec = require('child_process').execSync;
         console.log(command);
-        command = /*'ActiveRecord::Base.logger.level = Logger::INFO;' + */ command + ';nil;exit';
+        command = 'ActiveRecord::Base.logger.level = Logger::INFO;' + command + ';nil;exit';
         let herokuCommand = 'cd ../booking-system-api/ && echo  \'' + command + '\' | bundle exec rails c && cd ../booking-system-frontend/';
         exec(herokuCommand);
     }
@@ -413,7 +413,11 @@ export class Heroku {
             console.log('Heroku Command => Error', o3);
         });
     }
-
+    static createInterpreterOfType (type: string) {
+        // blocked, booked, blockout
+        let task = 'seed:test_data:preload_booking:with_' + type + '_interpreter'; // Will create one booking with one interpreter as type
+        Heroku.sendTaskToHeroku(task);
+    }
     static createSingleBooking() {
         const data = Heroku.createBooking(1);
         let command = 'b = Booking.new(' + JSON.stringify(data) + '); b.bookable = IndividualClient.first; b.save';
@@ -463,6 +467,12 @@ export class Heroku {
                 '").update_attributes(verified:' + true + ')');
         }
     }
+
+    static verifyAllInterpreter() {
+        Heroku.sendCommandToHeroku('Interpreter.first.update_attributes(verified:' + true + ')');
+
+    }
+
 
     static createBulkAdministrator(numberOfUser: string) {
         const num_of_user = parseInt(numberOfUser, 10);

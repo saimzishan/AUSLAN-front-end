@@ -254,10 +254,10 @@
 
                             <div class="separator"></div>
 
-                            <button class="button active" name='inviteBtn' (click)="inviteInterpreters()">
+                            <button *ngIf="!hideInvite" class="button active" name='inviteBtn' (click)="inviteInterpreters()">
                                 <i class="icon-shape"></i> Invite
                             </button>
-                            <button class="button red" (click)="reAssignInterpreters()" name="reassingBtn">
+                            <button *ngIf="!hideAccept" class="button red" (click)="reAssignInterpreters()" name="reassingBtn">
                                 <i class="icon-assign"></i> Assign
                             </button>
                         </section>

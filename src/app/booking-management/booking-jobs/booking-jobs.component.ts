@@ -46,7 +46,8 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     disableReject = false;
     private currentStatus = 'Invited';
     stateStr = '';
-    calendarOptions: Object = {};
+    hideInvite = false;
+    hideAccept = false;
     showCalendar = false;
     startTime: Date;
     endTime: Date;
@@ -282,21 +283,39 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     }
 
     onChange($event, user, ind) {
+
         let index = this.selectedInterpreterIDs.indexOf(user.id);
-        if (index < 0) {
+         if (index < 0) {
             this.selectedInterpreterIDs.push(user.id);
             this.checkList[ind] = true;
         } else {
             // delete this.selectedInterpreterIDs[user.id];
             this.selectedInterpreterIDs.splice(index, 1);
             this.checkList[ind] = false;
-
         }
+        let hide_invite = false;
+        let hide_accept = this.selectedInterpreterIDs.length > this.selectedBookingModel.interpreters_required;
+        for (let uid of this.selectedInterpreterIDs) {
+            let inte: Interpreter;
+            this.interpreterList.filter(i => i.id === uid).map(u => inte = <Interpreter>u);
+            hide_invite = hide_invite === false ?
+                inte && (inte.booked || inte.blocked || inte.blockout
+                ||  this.selectedBookingModel.interpreters
+                    .filter(i => i.state === 'Accepted' &&
+                        inte.id === i.id).length > 0) : hide_invite;
+            hide_accept = hide_accept === false ?
+                inte && (inte.booked || inte.blocked
+                ||  this.selectedBookingModel.interpreters
+                    .filter(i => i.state === 'Accepted' &&
+                        inte.id === i.id).length > 0) : hide_accept;
+        }
+        this.hideAccept = hide_accept;
+        this.hideInvite = hide_invite;
     }
     getInterpreterIconClass(user: Interpreter) {
-        return user.is_booked ? 'fa fa-times-circle' :
-            user.is_blocked ? 'fa fa-ban' :
-                user.has_blockout ? 'fa fa-exclamation-circle fa-danger' :
+        return user.booked ? 'fa fa-times-circle' :
+            user.blocked ? 'fa fa-ban' :
+                user.blockout ? 'fa fa-exclamation-circle fa-danger' :
                     '';
     }
     fetchAllInterpreters() {
@@ -319,11 +338,6 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
             .subscribe((res: any) => {
                     if (res.status === 200) {
                         this.interpreterList = res.data.users;
-                    }
-                    for (let inte of this.interpreterList) {
-                        (<Interpreter>inte).is_blocked = Math.random() >= 0.5;
-                        (<Interpreter>inte).is_booked = Math.random() >= 0.5;
-                        (<Interpreter>inte).has_blockout = Math.random() >= 0.5;
                     }
                     this.showCalendar = true;
                     this.spinnerService.requestInProcess(false);
@@ -531,8 +545,8 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
             this.selectedActionableInterpreterID = -1;
         } else if (this.reAssignPressed) {
             for (let inte of this.interpreterList) {
-                if ( (<Interpreter>inte).has_blockout) {
-                    warnInterpreterWithBlockout = false; // Making it false till i get the api
+                if ( (<Interpreter>inte).blockout) {
+                    warnInterpreterWithBlockout = true;
                     break;
                 }
             }
@@ -675,8 +689,8 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         return toRet;
     }
     getTimelineMoverStyle () {
-        let diff = this.endTime.getHours() - this.startTime.getHours();
-        return 'cells' + (diff > 0 ? diff : '') + ' offset2';
+        let diff = Math.abs(this.endTime.getTime() - this.startTime.getTime()) / 36e5;
+        return 'cells' + diff  + ' offset2';
     }
     getTimelineStartTime () {
         let array = [];

@@ -421,9 +421,9 @@ export class Interpreter extends User {
     public availability_blocks_attributes: Array<AvailabilityBlock> = [];
     public interpreter_type = 'Metro';
     public booking_office_notes = '';
-    public is_blocked = false;
-    public is_booked = false;
-    public has_blockout = false;
+    public blocked = false;
+    public booked = false;
+    public blockout = false;
 
 
     get user_type() {
