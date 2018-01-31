@@ -134,3 +134,4 @@ Feature: Booking Management
     And I click on 'New Booking'
     When I will be taken to the 'New Booking' form
     Then I can see the txtSpecialInstruction field
+    
