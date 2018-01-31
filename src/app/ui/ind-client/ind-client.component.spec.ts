@@ -13,6 +13,8 @@ import {MockBackend} from '@angular/http/testing';
 import {AuthHttp} from 'angular2-jwt';
 import {GmapsApiService} from '../../api/gmaps-api.service';
 import {RemoveSpacePipe} from '../../shared/pipe/remove-space.pipe';
+import {FakeOpMapsAPILoader} from '../../shared/test/Mock';
+import {MapsAPILoader} from '@agm/core';
 
 describe('IndClientComponent', () => {
     let component: IndClientComponent;
@@ -21,7 +23,7 @@ describe('IndClientComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [IndClientComponent, AddressComponent, BillingAccountComponent, RemoveSpacePipe],
-            providers: [NotificationServiceBus, GmapsApiService, {provide: AuthHttp, useClass: MockBackend}],
+            providers: [NotificationServiceBus, GmapsApiService, {provide: AuthHttp, useClass: MockBackend}, { provide: MapsAPILoader, useClass: FakeOpMapsAPILoader}],
             imports: [FormsModule, CustomFormsModule, SimpleNotificationsModule, MaterialModule]
         })
             .compileComponents();

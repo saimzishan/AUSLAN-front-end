@@ -321,7 +321,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         let today = new Date();
         let year = today.getFullYear();
         this.minDate = new Date();
-        this.isUserAdminORBookOfficer ? this.minDate.setFullYear(year) : this.minDate.setDate(today.getDate());
+        this.isUserAdminORBookOfficer ? this.minDate.setFullYear(year - 5) : this.minDate.setDate(today.getDate());
         this.maxDate = new Date();
         this.maxDate.setFullYear(year + 5);
         this.minDateForRecurrenceEnd = this.getMinDateForRecurringBookingEnd();

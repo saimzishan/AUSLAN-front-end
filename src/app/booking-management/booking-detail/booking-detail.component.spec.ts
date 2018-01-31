@@ -11,7 +11,7 @@ import { EnumValPipe } from '../../shared/pipe/enum-val.pipe';
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
 import {MaterialModule, MdDialog} from '@angular/material';
 import { MockBackend, MockConnection } from '@angular/http/testing';
-import {DummyComponent, MockBookingService, MockUserService} from '../../shared/test/Mock';
+import {DummyComponent, FakeOpMapsAPILoader, MockBookingService, MockUserService} from '../../shared/test/Mock';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BookingComponent } from '../booking.component';
 import { CustomFormsModule } from 'ng2-validation';
@@ -38,6 +38,7 @@ import {BookingHeaderService} from '../booking-header/booking-header.service';
 import {GmapsApiService} from '../../api/gmaps-api.service';
 import {RemoveSpacePipe} from '../../shared/pipe/remove-space.pipe';
 import {CalendarModule as PrimeNgCalendarModule} from 'primeng/primeng';
+import {MapsAPILoader} from '@agm/core';
 
 describe('BookingDetailComponent', () => {
   let component: BookingDetailComponent;
@@ -57,7 +58,7 @@ describe('BookingDetailComponent', () => {
             ViewContainerRef,
             DatePipe, RolePermission, PreferedAllocationService, BookingHeaderService,
             NotificationServiceBus, { provide: BookingService, useClass: MockBookingService },
-            { provide: UserService, useClass: MockUserService },
+            { provide: UserService, useClass: MockUserService }, { provide: MapsAPILoader, useClass: FakeOpMapsAPILoader},
           SpinnerService, { provide: AuthHttp, useClass: MockBackend }, GmapsApiService,
           {
                     provide: ActivatedRoute,
