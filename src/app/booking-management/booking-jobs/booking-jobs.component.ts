@@ -479,7 +479,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                     this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
                 });
     }
-    interpreterHasBlockoutDialog () {
+    interpreterHasBlockoutDialog (selectedInt) {
             if (this.dialogSub) {
                 this.dialogSub.unsubscribe();
             }
@@ -493,13 +493,29 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
             this.dialogRef.componentInstance.cancelTitle = 'Back to job';
             this.dialogRef.componentInstance.okTitle = 'YES';
             this.dialogRef.componentInstance.popupMessage = `One or more interpreters have a blockout within the booking time. Do you still want to assign?`;
+        this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
+            if (result === true) {
+                this.spinnerService.requestInProcess(true);
+
+                for (let _id of this.selectedInterpreterIDs) {
+                    selectedInt.push(new Object({
+                        id: _id
+                    }));
+                }
+                this.selectedInterpreterIDs = [];
+                this.reAssignPressed = false;
+                this.sendReAssign(selectedInt);
+                this.selectedActionableInterpreterID = -1;
+            }
+        });
     }
     saveChanges() {
         let selectedInt = [];
         let warnInterpreterWithBlockout = false;
         this.checkList = {};
-        this.spinnerService.requestInProcess(true);
         if (this.invitePressed) {
+            this.spinnerService.requestInProcess(true);
+
             for (let _id of this.selectedInterpreterIDs) {
                 selectedInt.push(new Object({
                     id: _id
@@ -509,44 +525,39 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
             this.invitePressed = false;
             this.sendInvite(selectedInt);
         } else if (this.unAssignPressed) {
+            this.spinnerService.requestInProcess(true);
             this.unAssignPressed = false;
             this.sendUnAssign();
             this.selectedActionableInterpreterID = -1;
         } else if (this.reAssignPressed) {
             for (let inte of this.interpreterList) {
                 if ( (<Interpreter>inte).has_blockout) {
-                    warnInterpreterWithBlockout = true;
+                    warnInterpreterWithBlockout = false; // Making it false till i get the api
                     break;
                 }
             }
             if (warnInterpreterWithBlockout) {
-                this.interpreterHasBlockoutDialog();
-                this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
-                    for (let _id of this.selectedInterpreterIDs) {
-                        selectedInt.push(new Object({
-                            id: _id
-                        }));
-                    }
-                    this.selectedInterpreterIDs = [];
-                    this.reAssignPressed = false;
-                    this.sendReAssign(selectedInt);
-                    this.selectedActionableInterpreterID = -1;
-                });
-            }
+                this.interpreterHasBlockoutDialog(selectedInt);
 
-            for (let _id of this.selectedInterpreterIDs) {
-                selectedInt.push(new Object({
-                    id: _id
-                }));
+            } else {
+                this.spinnerService.requestInProcess(true);
+
+                for (let _id of this.selectedInterpreterIDs) {
+                    selectedInt.push(new Object({
+                        id: _id
+                    }));
+                }
+                this.selectedInterpreterIDs = [];
+                this.reAssignPressed = false;
+                this.sendReAssign(selectedInt);
+                this.selectedActionableInterpreterID = -1;
             }
-            this.selectedInterpreterIDs = [];
-            this.reAssignPressed = false;
-            this.sendReAssign(selectedInt);
-            this.selectedActionableInterpreterID = -1;
         } else if (this.unlinkPressed) {
+            this.spinnerService.requestInProcess(true);
             this.unlinkPressed = false;
             this.updateSelectedBookingModel();
         } else {
+            this.spinnerService.requestInProcess(true);
             this.updateSelectedBookingModel();
         }
     }

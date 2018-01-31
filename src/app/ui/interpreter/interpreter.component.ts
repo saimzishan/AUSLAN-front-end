@@ -43,8 +43,9 @@ export class InterpreterComponent implements OnInit {
                 header: {
                     left: 'title',
                     center: '',
-                    right: 'month,agendaWeek,agendaDay,listYear,today,prev,next'
+                    right: $(window).width() >= 768 ? 'month,agendaWeek,agendaDay,listYear,today,prev,next' : 'today,prev,next'
                 },
+                textColor: '#ffffff',
                 contentHeight: 'auto',
                 navLinks: true, // can click day/week names to navigate views
                 selectable: true,
@@ -55,8 +56,8 @@ export class InterpreterComponent implements OnInit {
                 // customize the button names,
                 // otherwise they'd all just say "list"
                 views: {
-                    listMonth: {buttonText: 'list Month'},
-                    month: {buttonText: 'Grid Month'}
+
+                    month: {buttonText: 'month'}
                 },
                 eventRender: function (event, elm, view) {
                     return event.recurring === false || (event.ranges.filter(function(range){ // test event against all the ranges
@@ -83,8 +84,9 @@ export class InterpreterComponent implements OnInit {
 
                 let event: any = ({
                     title: avail_block.name,
-                    color: avail_block.recurring ? '#00ff00' : '#257e4a',
+                    color: avail_block.recurring ? '#00ff00' : '#02b86e',
                     id: avail_block.id,
+                    textColor: '#ffffff',
                     booking_id: avail_block.booking_id,
                     start: avail_block.recurring === false ? sd.toISOString() : `${sd.getHours()}:${sd.getMinutes()}`,
                     end: avail_block.recurring === false ? ed.toISOString() :  `${edt.getHours()}:${edt.getMinutes()}`,
