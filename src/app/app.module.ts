@@ -76,7 +76,6 @@ import {CalendarModule as PrimeNgCalendarModule} from 'primeng/primeng';
 import {LinkidPopupComponent} from './booking-management/linkid-popup/linkid-popup.component';
 import { MobileHeaderComponent } from './ui/mobile-header/mobile-header.component';
 import {MomentModule} from 'angular2-moment/moment.module';
-import { Ng2GoogleChartsModule } from 'ng2-google-charts';
 
 @NgModule({
     declarations: [
@@ -109,8 +108,7 @@ import { Ng2GoogleChartsModule } from 'ng2-google-charts';
     ],
     entryComponents: [PopupComponent, InterpreterPopupComponent, LinkidPopupComponent],
     imports: [CustomFormsModule, routing, FileUploadModule,
-        BrowserModule,
-        Ng2GoogleChartsModule, RouterModule, CommonModule, MobileFooterModule,
+        BrowserModule, RouterModule, CommonModule, MobileFooterModule,
         FormsModule, BrowserAnimationsModule, NgxPaginationModule,
         HttpModule, SimpleNotificationsModule.forRoot(),
         ReactiveFormsModule, Md2Module.forRoot(),

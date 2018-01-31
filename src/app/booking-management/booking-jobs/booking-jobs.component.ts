@@ -16,10 +16,8 @@ import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
 import {GLOBAL} from '../../shared/global';
 import {BookingHeaderService} from '../booking-header/booking-header.service';
 import {LinkidPopupComponent} from '../linkid-popup/linkid-popup.component';
-import * as moment from 'moment';
-import * as $ from 'jquery';
-import {CalendarComponent} from 'ap-angular2-fullcalendar';
-import {AvailabilityBlock} from '../../shared/model/availability-block.entity';
+import {DatePipe} from '@angular/common';
+
 @Component({
     selector: 'app-booking-jobs',
     templateUrl: './booking-jobs.component.html',
@@ -32,6 +30,8 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     unAssignPressed = false;
     reAssignPressed = false;
     unlinkPressed = false;
+    isVicdeaf = false;
+    diffInHours: number;
     isCancelledOrUnableToServe = false;
     selectedActionableInterpreterID = -1;
     interpreterList: User[] = [];
@@ -51,19 +51,6 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     showCalendar = false;
     startTime: Date;
     endTime: Date;
-    timelineChartData = {
-        chartType: 'Timeline',
-        dataTable: [],
-        options: {
-            colors: ['red'],
-            timeline: { groupByRowLabel: true },
-            hAxis: {
-                minValue: new Date(0, 0, 0, 5, 30, 0),
-                maxValue: new Date(0, 0, 0, 13, 30, 0)
-            }
-        },
-    };
-
 
     @ViewChild('cchart') cchart;
 
@@ -71,7 +58,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                 public viewContainerRef: ViewContainerRef, public spinnerService: SpinnerService,
                 public notificationServiceBus: NotificationServiceBus,
                 public userDataService: UserService, public bookingService: BookingService, public bookingHeaderService: BookingHeaderService,
-                private router: Router, private route: ActivatedRoute) {
+                private router: Router, private route: ActivatedRoute, private datePipe: DatePipe) {
         /** http://stackoverflow.com/questions/38008334/angular2-rxjs-when-should-i-unsubscribe-from-subscription */
         this.sub = this.route.params.subscribe(params => {
             let param_id = params['id'] || '';
@@ -191,15 +178,42 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         this.dialogRef.componentInstance.okTitle = isCancel ? 'Cancel only this booking' : 'Unable to service this booking';
         this.dialogRef.componentInstance.popupMessage =
             isCancel ? `Would you like to cancel only this booking, or
-          all linked bookings?` :
+              all linked bookings?` :
                 `Would you like to mark this booking as unable to service, or
-          all linked bookings?`;
-
+              all linked bookings?`;
         this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
-            this.changeBookingState(isCancel, !result);
+            if (isCancel) {
+                this.cancelBooking(isCancel, !result);
+            } else {
+                this.changeBookingState(isCancel, !result);
+            }
         });
     }
+    cancelBooking(isCancel: Boolean, update_all_linked_bookings?: boolean) {
+        let config: MdDialogConfig = {
+            disableClose: true
+        };
+        config.viewContainerRef = this.viewContainerRef;
+        this.dialogRef = this.dialog.open(PopupComponent, config);
+        this.dialogRef.componentInstance.title = isCancel ? 'Cancel linked booking' : 'Unable to service linked booking';
+        this.dialogRef.componentInstance.cancelTitle = isCancel ? 'Cancelled Chargeable' : 'Unable to service all bookings';
+        this.dialogRef.componentInstance.okTitle = isCancel ? 'Cancelled No Charge' : 'Unable to service this booking';
+        if (isCancel) {
+            let statement = this.isVicdeaf && (this.diffInHours < 48) ? 'Cancelled Chargeable since the start date is within 48 hours.'
+                : !this.isVicdeaf && (this.diffInHours < 24) ? 'Cancelled Chargeable since the start date is within 24 hours.'
+                    : this.isVicdeaf && (this.diffInHours > 48) ? 'Cancelled No Charge since the start date is not within 48 hours.'
+                        : !this.isVicdeaf && (this.diffInHours > 24) ? 'Cancelled No Charge since the start date is not within 24 hours.' : '';
 
+            this.dialogRef.componentInstance.popupMessage = `Are you sure you want to cancel this booking? This is permanent. We recommend to cancel this
+                                                            booking as ` + statement;
+        } else {
+            this.dialogRef.componentInstance.popupMessage = `Would you like to mark this booking as unable to service, or
+            all linked bookings?` ;
+        }
+        this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
+            this.changeBookingState(isCancel, !result, update_all_linked_bookings);
+        });
+    }
     isCurrentUserInterpreter() {
         return GLOBAL.currentUser instanceof Interpreter;
     }
@@ -213,15 +227,25 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         return this.selectedBookingModel.state === BOOKING_STATE.In_progress && this.isCurrentUserInterpreter();
     }
 
-    changeBookingState(isCancel: Boolean, update_all_linked_bookings?: boolean) {
-        let state = isCancel ? 'cancelled_no_charge' : 'unable_to_service';
-        let stateMsg = isCancel ? 'Cancelled with No Charge' : 'Unable to Service';
-
+    changeBookingState(isCancel: Boolean, isChargeable?: boolean, update_all_linked_bookings?: boolean) {
+        let state;
+        let stateMsg;
+        if (isChargeable) {
+            state = isCancel ? 'cancelled_chargeable' : 'unable_to_service';
+            stateMsg = isCancel ? 'Cancelled with Charge' : 'Unable to Service';
+        } else {
+            state = isCancel ? 'cancelled_no_charge' : 'unable_to_service';
+            stateMsg = isCancel ? 'Cancelled with No Charge' : 'Unable to Service';
+        }
         this.spinnerService.requestInProcess(true);
         this.bookingService.updateBookingByTransitioning(this.selectedBookingModel.id, state, update_all_linked_bookings)
             .subscribe((res: any) => {
                     if (res.status === 204) {
-                        this.selectedBookingModel.state = isCancel ? BOOKING_STATE.Cancelled_no_charge : BOOKING_STATE.Unable_to_service;
+                        if (isChargeable) {
+                            this.selectedBookingModel.state = isCancel ? BOOKING_STATE.Cancelled_chargeable : BOOKING_STATE.Unable_to_service;
+                        } else {
+                            this.selectedBookingModel.state = isCancel ? BOOKING_STATE.Cancelled_no_charge : BOOKING_STATE.Unable_to_service;
+                        }
                         this.isCancelledOrUnableToServe = true;
                         this.notificationServiceBus.launchNotification(false, 'The booking has been transitioned to \"' + stateMsg + '\" state');
                     }
@@ -233,6 +257,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                     this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
                 });
     }
+
 
     duplicateBooking() {
         let navigationExtras: NavigationExtras = {
@@ -285,7 +310,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     onChange($event, user, ind) {
 
         let index = this.selectedInterpreterIDs.indexOf(user.id);
-         if (index < 0) {
+        if (index < 0) {
             this.selectedInterpreterIDs.push(user.id);
             this.checkList[ind] = true;
         } else {
@@ -299,24 +324,26 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
             this.interpreterList.filter(i => i.id === uid).map(u => inte = <Interpreter>u);
             hide_invite = hide_invite === false ?
                 inte && (inte.booked || inte.blocked || inte.blockout
-                ||  this.selectedBookingModel.interpreters
+                || this.selectedBookingModel.interpreters
                     .filter(i => i.state === 'Accepted' &&
                         inte.id === i.id).length > 0) : hide_invite;
             hide_accept = hide_accept === false ?
                 inte && (inte.booked || inte.blocked
-                ||  this.selectedBookingModel.interpreters
+                || this.selectedBookingModel.interpreters
                     .filter(i => i.state === 'Accepted' &&
                         inte.id === i.id).length > 0) : hide_accept;
         }
         this.hideAccept = hide_accept;
         this.hideInvite = hide_invite;
     }
+
     getInterpreterIconClass(user: Interpreter) {
         return user.booked ? 'fa fa-times-circle' :
             user.blocked ? 'fa fa-ban' :
                 user.blockout ? 'fa fa-exclamation-circle fa-danger' :
                     '';
     }
+
     fetchAllInterpreters() {
         // this.spinnerService.requestInProcess(true);
         this.userDataService.fetchUsersOfType('interpreters')
@@ -332,6 +359,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                     this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
                 });
     }
+
     fetchNearbyinterpreters(booking_id) {
         this.bookingService.nearbyBookings(booking_id)
             .subscribe((res: any) => {
@@ -361,15 +389,19 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                         this.selectedBookingModel.interpreters.sort((i, j) =>
                             i.state === 'Accepted' ? -1 : j.state === 'Accepted' ? 1 : 0
                         );
+                        this.isVicdeaf = GLOBAL.VICDEAF_STATES.filter(teststate => teststate === this.selectedBookingModel.venue.state).length > 0;
+                        this.fetchNearbyinterpreters(param_id);
                         this.isCancelledOrUnableToServe = this.isActiveState('Cancelled_no_charge')
                             || this.isActiveState('Unable_to_service') || this.isActiveState('Cancelled_chargeable');
 
                         this.selectedBookingModel.venue.start_time_iso = this.selectedBookingModel.utcToBookingTimeZone(this.selectedBookingModel.venue.start_time_iso);
                         this.selectedBookingModel.venue.end_time_iso = this.selectedBookingModel.utcToBookingTimeZone(this.selectedBookingModel.venue.end_time_iso);
-                        this.startTime = new Date(this.selectedBookingModel.venue.start_time_iso);
+                        let diffInMs: number = Date.now() - Date.parse(this.selectedBookingModel.venue.start_time_iso);
+                        this.diffInHours = diffInMs / 1000 / 60 / 60;
+                        if (this.diffInHours < 0) {
+                            this.diffInHours = (-1) * this.diffInHours;
+                        }this.startTime = new Date(this.selectedBookingModel.venue.start_time_iso);
                         this.endTime = new Date(this.selectedBookingModel.venue.end_time_iso);
-                        this.timelineChartData.options.hAxis.minValue = new Date(0, 0, 0, this.startTime.getHours() - 2 , 0, 0);
-                        this.timelineChartData.options.hAxis.maxValue = new Date(0, 0, 0, this.endTime.getHours() + 2 , 0, 0);
                         if (this.isCurrentUserInterpreter()) {
                             this.selectedBookingModel.interpreters.filter(i => i.id === GLOBAL.currentUser.id)
                                 .map(i => this.currentStatus = i.state || 'Invited');
@@ -492,20 +524,21 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                     this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
                 });
     }
-    interpreterHasBlockoutDialog (selectedInt) {
-            if (this.dialogSub) {
-                this.dialogSub.unsubscribe();
-            }
 
-            let config: MdDialogConfig = {
-                disableClose: true
-            };
-            config.viewContainerRef = this.viewContainerRef;
-            this.dialogRef = this.dialog.open(PopupComponent, config);
-            this.dialogRef.componentInstance.title = 'Interpreter With A Blockout';
-            this.dialogRef.componentInstance.cancelTitle = 'Back to job';
-            this.dialogRef.componentInstance.okTitle = 'YES';
-            this.dialogRef.componentInstance.popupMessage = `One or more interpreters have a blockout within the booking time. Do you still want to assign?`;
+    interpreterHasBlockoutDialog(selectedInt) {
+        if (this.dialogSub) {
+            this.dialogSub.unsubscribe();
+        }
+
+        let config: MdDialogConfig = {
+            disableClose: true
+        };
+        config.viewContainerRef = this.viewContainerRef;
+        this.dialogRef = this.dialog.open(PopupComponent, config);
+        this.dialogRef.componentInstance.title = 'Interpreter With A Blockout';
+        this.dialogRef.componentInstance.cancelTitle = 'Back to job';
+        this.dialogRef.componentInstance.okTitle = 'YES';
+        this.dialogRef.componentInstance.popupMessage = `One or more interpreters have a blockout within the booking time. Do you still want to assign?`;
         this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
             if (result === true) {
                 this.spinnerService.requestInProcess(true);
@@ -522,6 +555,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
             }
         });
     }
+
     saveChanges() {
         let selectedInt = [];
         let warnInterpreterWithBlockout = false;
@@ -544,7 +578,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
             this.selectedActionableInterpreterID = -1;
         } else if (this.reAssignPressed) {
             for (let inte of this.interpreterList) {
-                if ( (<Interpreter>inte).blockout) {
+                if ((<Interpreter>inte).blockout) {
                     warnInterpreterWithBlockout = true;
                     break;
                 }
@@ -664,7 +698,8 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     stringifyUser(user) {
         return JSON.stringify(user);
     }
-    getTimelineBlockoutStyle (avail_block) {
+
+    getTimelineBlockoutStyle(avail_block) {
         let toRet = '';
         let sd = new Date(avail_block.start_time);
         if (sd.toLocaleDateString() === this.startTime.toLocaleDateString()) {
@@ -676,7 +711,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                 offset = 'offset' + (sd.getHours() - st);
                 cells = 'cells' + (edt.getHours() - sd.getHours());
 
-            }  else if (sd.getHours() < st) {
+            } else if (sd.getHours() < st) {
 
                 offset = 'offset' + (st - sd.getHours() > 1 ? '' : (st - sd.getHours()));
                 cells = 'cells' + (edt.getHours() - sd.getHours());
@@ -687,24 +722,27 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         console.log(toRet);
         return toRet;
     }
-    getTimelineMoverStyle () {
+
+    getTimelineMoverStyle() {
         let diff = Math.abs(this.endTime.getTime() - this.startTime.getTime()) / 36e5;
-        return 'cells' + diff  + ' offset2';
+        return 'cells' + diff + ' offset2';
     }
-    getTimelineStartTime () {
+
+    getTimelineStartTime() {
         let array = [];
         let dt = new Date();
         dt.setTime(this.startTime.getTime());
-        dt.setHours( dt.getHours() - 2 );
+        dt.setHours(dt.getHours() - 2);
         for (let i = 0; i < 7; i++) {
             let amPm = dt.getHours() >= 12 ? 'pm' : 'am';
             array.push(dt.getHours() + ' ' + amPm);
-            dt.setHours( dt.getHours() + 1 );
+            dt.setHours(dt.getHours() + 1);
 
         }
         return array;
     }
-    interpreterOfTypeExists ( type: string, user_id: string) {
+
+    interpreterOfTypeExists(type: string, user_id: string) {
         let blocked_int =
             this.selectedBookingModel.preference_allocations_attributes.filter(i =>
                 i.preference === type);
