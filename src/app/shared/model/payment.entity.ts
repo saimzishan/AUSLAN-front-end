@@ -62,7 +62,10 @@ export class Payments {
         }
     }
 
-    convertToMinutes(time: string) {
+    convertToMinutes(time) {
+        if (time.toString() === '0') {
+            return time;
+        }
         if (time.indexOf(':') !== -1) {
             let split = time.split(':');
             let hours = split[0];
