@@ -73,7 +73,8 @@ Feature: Booking Admin Management
     Then I can see the button state 'Assign' is visible
     Then I can see the button state 'Invite' is visible
     Then I select 1 Interpreter
-    And I click on BUTTON name 'Assign'
+    Then I can see the button state 'Assign' is visible
+    And I click on BUTTON name 'reassingBtn'
     Then I can see the button 'Save' is enabled
     And I click on BUTTON 'Save'
     Then I will be shown a popup message
@@ -97,3 +98,31 @@ Feature: Booking Admin Management
     Then I can see the button state 'Assign' is hidden
     Then I select 1 Interpreter
     Then I can see the button state 'Assign' is visible
+
+
+  @runThis
+  Scenario: Given 1 verified Booking Officer and INTERPRETER, INTERPRETER1 created, a booking with two Interpreters is created then assign hides when allocated interp is selected
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    When I am on the bookings page
+    Then I see one row with state 'Requested'
+    Then I click on an individual booking of type 'Requested'
+    Then I will be shown the booking job page
+    Then I can see the button 'Save' is disabled
+    Then I can see the button state 'Assign' is visible
+    Then I can see the button state 'Invite' is visible
+    Then I select 2 Interpreter
+    Then I can see the button state 'Invite' is visible
+    Then I can see the button state 'Assign' is visible
+    Then I select 1 Interpreter
+    Then I can see the button state 'Assign' is visible
+    And I click on BUTTON name 'reassingBtn'
+    Then I can see the button 'Save' is enabled
+    And I click on BUTTON 'Save'
+    Then I get valid message: 'The interpreter have been assigned'
+    Then I can see the button state 'Assign' is visible
+    Then I can see the button state 'Invite' is visible
+    Then I wait for 4000 milli-seconds
+    Then I select 2 Interpreter
+    Then I can see the button state 'Invite' is hidden
+    Then I can see the button state 'Assign' is hidden

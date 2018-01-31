@@ -289,7 +289,6 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
             this.selectedInterpreterIDs.push(user.id);
             this.checkList[ind] = true;
         } else {
-            // delete this.selectedInterpreterIDs[user.id];
             this.selectedInterpreterIDs.splice(index, 1);
             this.checkList[ind] = false;
         }
