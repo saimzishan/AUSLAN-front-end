@@ -15,6 +15,8 @@ import { Observable } from 'rxjs/Observable';
 import {MockBookingService} from '../../shared/test/Mock';
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
 import { MockBackend } from '@angular/http/testing';
+import {BookingHeaderService} from '../booking-header/booking-header.service';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('BookingPayrollComponent', () => {
   let component: BookingPayrollComponent;
@@ -23,7 +25,7 @@ describe('BookingPayrollComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ BookingPayrollComponent, BookingHeaderComponent, BookingInfoComponent, PayrollTimeComponent, PrettyIDPipe ],
-      providers: [SpinnerService, NotificationServiceBus,
+      providers: [SpinnerService, NotificationServiceBus, BookingHeaderService,
         {
           provide: ActivatedRoute,
           useValue: {
@@ -32,7 +34,7 @@ describe('BookingPayrollComponent', () => {
         },
         { provide: BookingService, useClass: MockBookingService },
         { provide: AuthHttp, useClass: MockBackend }],
-      imports: [FormsModule, MaterialModule, MomentModule]
+      imports: [FormsModule, MaterialModule, MomentModule, RouterTestingModule]
     })
     .compileComponents();
   }));

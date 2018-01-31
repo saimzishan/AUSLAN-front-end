@@ -19,17 +19,17 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
   payments = new Payments();
 
   constructor(public spinnerService: SpinnerService, public bookingService: BookingService,
-              private route: ActivatedRoute, public notificationServiceBus: NotificationServiceBus) {
-                this.sub = this.route.params.subscribe(params => {
-                  let bookingID = params['id'] || '';
-                  if (Boolean(bookingID) && parseInt(bookingID, 10) > 0) {
-                      this.fetchBookingPayment(bookingID);
-                      this.fetchBooking(bookingID);
-                  }
-              });
-      }
+              private route: ActivatedRoute, public notificationServiceBus: NotificationServiceBus) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+      this.sub = this.route.params.subscribe(params => {
+          let bookingID = params['id'] || '';
+          if (Boolean(bookingID) && parseInt(bookingID, 10) > 0) {
+              this.fetchBookingPayment(bookingID);
+              this.fetchBooking(bookingID);
+          }
+      });
+  }
 
   ngOnDestroy() {
        return this.sub && this.sub.unsubscribe();

@@ -13,6 +13,10 @@ export class PayrollTimeComponent implements OnInit, AfterViewInit {
   @ViewChild('payrollTimeFields') public form: NgForm;
   @Input() parentForm: NgForm;
   @Input() isReadOnly = false;
+  interpTimePlaceHolder = '';
+  prepTimePlaceHolder = '';
+  kmPlaceHolder = '';
+  travelTimePlaceHolder = '';
 
   constructor() { }
 
@@ -27,6 +31,10 @@ export class PayrollTimeComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.interpTimePlaceHolder = this.payrollInvoice.interpreting_time;
+    this.prepTimePlaceHolder = this.payrollInvoice.preparation_time;
+    this.kmPlaceHolder = this.payrollInvoice.distance;
+    this.travelTimePlaceHolder = this.payrollInvoice.travel_time;
   }
 
 }
