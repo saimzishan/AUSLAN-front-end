@@ -44,7 +44,7 @@ Feature: User Profile Management
     And I will be taken to my individual profile page
     And I verify input text fields of the ADMINISTRATOR is updated
 
-  @runThis
+  @ignoreThis
 #  Show profile page
   Scenario: Be able to update the profile as Interpreter
     Given I exist as an Interpreter
@@ -63,7 +63,7 @@ Feature: User Profile Management
     And I will be taken to my individual profile page
     And I verify input text fields of the INTERPRETER is updated
 
-  @runThis
+  @ignoreThis
 #  Show profile page
   Scenario: Be able to update the profile as Organisational Representative
     Given I exist as an Organisational Representative
@@ -82,7 +82,7 @@ Feature: User Profile Management
     And I will be taken to my individual profile page
     And I verify input text fields of the ORGANISATIONALREPRESENTATIVE is updated
 
-  @runThis
+  @ignoreThis
 #  Show profile page
   Scenario: Be able to update the profile as Individual Client
     Given I exist as an Individual Client

@@ -112,7 +112,7 @@ Feature: Booking Admin Management
     And I am on the bookings page
     Then I see one row with state 'Unable to service'
 
-  @runThis
+  @ignoreThis
   Scenario: Given 1 verified Interpreter, Interpreter1 and Interpreter2 exists and a booking is created, Administrator can see distance and travel pay status
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
