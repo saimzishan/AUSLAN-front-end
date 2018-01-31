@@ -174,7 +174,7 @@ export class BookingPage extends PageObject {
             return single_input.getAttribute('value').then((val) => {
 
                 return single_input.getAttribute('name').then((nam) => {
-                    if (['ext_ref_num', 'deaf_person_eaf'].indexOf(nam) === -1) {
+                    if (['ext_ref_num', 'deaf_person_eaf', 'search_address'].indexOf(nam) === -1) {
                         expect(!!val).to.be.true;
                     }
 
