@@ -602,8 +602,10 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
             this.sendUnAssign();
             this.selectedActionableInterpreterID = -1;
         } else if (this.reAssignPressed) {
-            for (let inte of this.interpreterList) {
-                if ((<Interpreter>inte).blockout) {
+            for (let uid of this.selectedInterpreterIDs) {
+                let inte: Interpreter;
+                this.interpreterList.filter(i => i.id === uid).map(u => inte = <Interpreter>u);
+                if (Boolean (inte) && (<Interpreter>inte).blockout) {
                     warnInterpreterWithBlockout = true;
                     break;
                 }
