@@ -21,6 +21,7 @@ import { InterpreterComponent } from './ui/interpreter/interpreter.component';
 import {UserPasswordComponent} from './user-management/user-password/user-password.component';
 import {PreComponent} from './register/pre/pre.component';
 import {BlockoutComponent} from './user-management/user-profile/blockout/blockout.component';
+import {BookingPayrollComponent} from './booking-management/booking-payroll/booking-payroll.component';
 
 const appRoutes: Routes = [
   { path: 'demo', component: OrgRepComponent },
@@ -36,6 +37,7 @@ const appRoutes: Routes = [
   { path: 'booking-management/:id/booking-job', component: BookingJobsComponent, canActivate: [AuthGuard]},
   { path: 'booking-management/:id/job-detail', component: BookingJobsComponent, canActivate: [AuthGuard]},
   { path: 'booking-management/edit-booking', component: BookingDetailComponent, canActivate: [AuthGuard]},
+  { path: 'booking-management/:id/payroll-billing', component: BookingPayrollComponent, canActivate: [AuthGuard]},
   { path: 'authenticate', component: AuthComponent , canActivate: [NoAuthGuard] },
   { path: 'authenticate/logout', component: AuthComponent },
   { path: '404', component: NotFoundComponent },

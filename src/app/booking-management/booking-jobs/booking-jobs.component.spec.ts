@@ -26,6 +26,7 @@ import { PrettyIDPipe } from '../../shared/pipe/pretty-id.pipe';
 import {BookingHeaderService} from '../booking-header/booking-header.service';
 import {BookingHeaderComponent} from '../booking-header/booking-header.component';
 import {MomentModule} from 'angular2-moment/moment.module';
+import {BookingInfoComponent} from '../booking-info/booking-info.component';
 import {DatePipe} from '@angular/common';
 
 describe('BookingJobsComponent', () => {
@@ -34,7 +35,7 @@ describe('BookingJobsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [BookingJobsComponent, BookingHeaderComponent, PrettyIDPipe],
+      declarations: [BookingJobsComponent, BookingHeaderComponent, PrettyIDPipe, BookingInfoComponent],
       providers: [MdDialog,
         ViewContainerRef, SpinnerService, NotificationServiceBus, DatePipe, BookingHeaderService,
         {
@@ -52,6 +53,7 @@ describe('BookingJobsComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(BookingJobsComponent);
     component = fixture.componentInstance;
+    component.selectedBookingModel = new Booking();
     fixture.detectChanges();
   });
 

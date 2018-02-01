@@ -215,4 +215,24 @@ export class BookingService extends ApiService {
             .catch((err) => { return this.handleError(err); });
     }
 
+    getBookingPayments(booking_id: number): Observable<Object> {
+        let headers = new Headers({'Accept': 'application/json'});
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http
+            .get(GLOBAL.BOOKING_API + '/' + booking_id + '/payments', options)
+            .map(this.extractData)
+            .catch((err) => { return this.handleError(err); });
+    }
+
+    updateBookingPayments(booking_id: number, payment): Observable<Object> {
+        let headers = new Headers({'Accept': 'application/json',
+        'Content-Type': 'application/json'});
+        let options = new RequestOptions({ headers: headers });
+        let obj = { 'payments': payment };
+
+        return this.http.put(GLOBAL.BOOKING_API + '/' + booking_id + '/payments/group_update', JSON.stringify(obj), options)
+            .map(this.extractData)
+            .catch((err) => { return this.handleError(err); });
+    }
 }
