@@ -200,7 +200,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             return this.bookingModel.deaf_person.email === this.bookingModel.primaryContact.email
                 || GLOBAL.currentUser.email === this.bookingModel.primaryContact.email;
         } else {
-            return true;
+            return !this.isUserOrgRep();
         }
     }
 

@@ -1000,7 +1000,7 @@
             </span>
           </label>
           <md-radio-group name="rdcurrentUserIsClient" (change)='onClientSelectionChange()' 
-                          [disabled]="isDisabledForOrgRepIndClient || !isUserAdminORBookOfficer" [(ngModel)]="currentUserIsClient">
+                          [disabled]="isDisabledForOrgRepIndClient" [(ngModel)]="currentUserIsClient">
             <md-radio-button [value]="true">YES</md-radio-button>
             <md-radio-button [value]="false">NO</md-radio-button>
           </md-radio-group>
