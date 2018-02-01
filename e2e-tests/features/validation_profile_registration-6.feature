@@ -140,3 +140,4 @@ Feature: Validation of Profile Registration.
     When I fill the field 'cn_phone' with value '0946300001'
     And I jump to 'address_unit_num' element
     Then I will get a valid notification
+    
