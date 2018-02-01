@@ -3,7 +3,7 @@
         <nav>
             <a href="javascript:void(0);" (click)="infoClick()" [ngClass]="{'active' : isActive('booking-job') || isActive('job-detail')}">Booking info</a>
             <a href="javascript:void(0);" *ngIf="!isCurrentUserInterpreter()" (click)="bookingDetailClick()" [ngClass]="{'active' : isActive('edit-booking')}">Booking details</a>
-            <a href="javascript:void(0);" *ngIf="!isCurrentUserInterpreter() && !isActiveState('Cancelled_no_charge')" name="linkPayroll" (click)="payrollClick()" [ngClass]="{'active' : isActive('payroll-billing')}">Payroll & Billing</a>
+            <a href="javascript:void(0);" *ngIf="isCurrentUserAdminOrBookingOfficer() && !isActiveState('Cancelled_no_charge')" name="linkPayroll" (click)="payrollClick()" [ngClass]="{'active' : isActive('payroll-billing')}">Payroll & Billing</a>
         </nav>
         <div *ngIf='showButtons'>
             <button *ngIf='isCurrentUserAdminOrBookingOfficer() && !hasLinkId && !unlinkPress' (click)="linkBooking()" class="button inverse">Link booking</button>
