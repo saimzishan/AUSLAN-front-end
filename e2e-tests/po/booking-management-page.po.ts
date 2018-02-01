@@ -285,7 +285,7 @@ export class BookingManagementPage extends PageObject {
         let dateEnd = new Date(new Date(dateStart).setDate(dateStart.getDate() + 4));
         let dateFrom = {
             dd: this.prettyDate(dateStart.getDate()),
-            mm: this.prettyDate(dateStart.getMonth() + 1),            
+            mm: this.prettyDate(dateStart.getMonth() + 1),
             yy: dateStart.getFullYear().toString()
         };
         let dateTo = {

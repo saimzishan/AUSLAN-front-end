@@ -34,7 +34,7 @@
 
                             <p-calendar name='dpEventDate_st' (onClose)="onStartTimeChanged()" [(ngModel)]="start_time"
                             [stepMinute]="5" [defaultDate]="defaultDateTime" required #dpEventDate_st="ngModel" 
-                            showTime="true" hourFormat="12"></p-calendar>
+                            showTime="true"  dateFormat="dd/mm/yy" hourFormat="12"></p-calendar>
                             
                             <span *ngIf="dpEventDate_st.touched &&  (!dpEventDate_st.errors?.required);"
                                   class="inline-icon inline-icon-valid valid"></span>

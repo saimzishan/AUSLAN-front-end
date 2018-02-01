@@ -14,6 +14,8 @@ import {MockBackend} from '@angular/http/testing';
 import {AuthHttp} from 'angular2-jwt';
 import {GmapsApiService} from '../../api/gmaps-api.service';
 import {RemoveSpacePipe} from '../../shared/pipe/remove-space.pipe';
+import {FakeOpMapsAPILoader} from '../../shared/test/Mock';
+import {MapsAPILoader} from '@agm/core';
 
 describe('BillingAccountComponent', () => {
     let component: BillingAccountComponent;
@@ -22,7 +24,7 @@ describe('BillingAccountComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [BillingAccountComponent, AddressComponent, RemoveSpacePipe],
-            providers: [NotificationServiceBus, GmapsApiService, {provide: AuthHttp, useClass: MockBackend}],
+            providers: [NotificationServiceBus, GmapsApiService, {provide: AuthHttp, useClass: MockBackend}, { provide: MapsAPILoader, useClass: FakeOpMapsAPILoader}],
             imports: [FormsModule, CustomFormsModule, SimpleNotificationsModule, MaterialModule]
         }).compileComponents();
     }));

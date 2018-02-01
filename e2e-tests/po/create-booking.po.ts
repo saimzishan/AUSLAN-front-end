@@ -174,7 +174,7 @@ export class BookingPage extends PageObject {
             return single_input.getAttribute('value').then((val) => {
 
                 return single_input.getAttribute('name').then((nam) => {
-                    if (['ext_ref_num', 'deaf_person_eaf'].indexOf(nam) === -1) {
+                    if (['ext_ref_num', 'deaf_person_eaf', 'search_address'].indexOf(nam) === -1) {
                         expect(!!val).to.be.true;
                     }
 
@@ -264,8 +264,8 @@ export class BookingPage extends PageObject {
         n = dayOfWeek === 0 ? n + 1 : (dayOfWeek === 6 ? n - 1 : n); // Saturday and Sunday
         const dateStart = new Date(new Date(currentDate).setDate(currentDate.getDate() + n));
         return [
-            this.prettyDate(dateStart.getMonth() + 1),
             this.prettyDate(dateStart.getDate()),
+            this.prettyDate(dateStart.getMonth() + 1),
             dateStart.getFullYear().toString()
         ].join('/');
     }
@@ -360,7 +360,7 @@ export class BookingPage extends PageObject {
         let mm = ('0' + (date.getMonth() + 1)).slice(-2);
         let yy = date.getFullYear();
         let hh = Number(14 + Number(hours)); // date.getHours();
-        let dateString = [mm, dd, yy].join('/');
+        let dateString = [dd, mm, yy].join('/');
         let timeString = hh.toString() + ':00PM';
         this.setDate(dateString);
         this.setStartEndTime(field, timeString);

@@ -178,3 +178,4 @@ Feature: Booking Management
     And I see an option 'ted Individual Client' in 'booking_for' dropdown
     Then I click on element by name 'OrganisationalRepresentative'
     And I see an option 'CURVE TOMORROW - alana Organisational' in 'booking_for' dropdown
+    

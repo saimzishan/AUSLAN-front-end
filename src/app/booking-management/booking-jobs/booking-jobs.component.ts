@@ -90,6 +90,9 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                 case 'linkBooking':
                     this.linkBooking();
                     break;
+                case 'undoCancel':
+                    this.undoCancel();
+                    break;
                 case 'saveChanges':
                     this.saveChanges();
                     break;
@@ -277,6 +280,25 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                 this.saveChanges();
             }
         });
+    }
+    undoCancel() {
+        let state = 'in_progress';
+        let stateMsg = 'Cancelled with Charge';
+        this.spinnerService.requestInProcess(true);
+        this.bookingService.updateBookingByTransitioning(this.selectedBookingModel.id, state)
+             .subscribe((res: any) => {
+                     if (res.status === 204) {
+                         this.selectedBookingModel.state = BOOKING_STATE.In_progress;
+                         this.isCancelledOrUnableToServe = false;
+                         this.notificationServiceBus.launchNotification(false, 'The booking has been transitioned to \"' + stateMsg + '\" state');
+                     }
+                     this.spinnerService.requestInProcess(false);
+                 },
+                 err => {
+                     this.spinnerService.requestInProcess(false);
+                     let e = err.json() || 'There is some error on server side';
+                     this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
+                 });
     }
 
     unlinkBooking() {
