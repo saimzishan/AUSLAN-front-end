@@ -94,7 +94,7 @@
                         <input type="text" name="interpreter_name"  (blur) ="filter('interpreter', filterByInterpreter.value.interpreter_name)" [(ngModel)]="bookingFilter.interpreter_name">
                     </form>
                 </th>
-                <th width="12%">
+                <th width="15%">
                     <span class="order" [ngClass]="getSortOrder('booking_type')" (click)="sort('booking_type')">Booking Type</span>
                     <ul class="dropdown menu custom" id="booking-type" data-dropdown-menu>
                         <li>

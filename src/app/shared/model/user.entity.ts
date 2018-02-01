@@ -420,6 +420,10 @@ export class Interpreter extends User {
     public availability_blocks_attributes: Array<AvailabilityBlock> = [];
     public interpreter_type = 'Metro';
     public booking_office_notes = '';
+    public blocked = false;
+    public booked = false;
+    public blockout = false;
+
 
     get user_type() {
         return 'Interpreter';

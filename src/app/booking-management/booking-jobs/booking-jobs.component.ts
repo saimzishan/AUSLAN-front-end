@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewContainerRef, OnDestroy} from '@angular/core';
+import {Component, OnInit, ViewContainerRef, OnDestroy, ViewChild} from '@angular/core';
 import {BookingService} from '../../api/booking.service';
 import {Booking} from '../../shared/model/booking.entity';
 import {UserService} from '../../api/user.service';
@@ -30,6 +30,8 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     unAssignPressed = false;
     reAssignPressed = false;
     unlinkPressed = false;
+    isVicdeaf = false;
+    diffInHours: number;
     isCancelledOrUnableToServe = false;
     selectedActionableInterpreterID = -1;
     interpreterList: User[] = [];
@@ -44,15 +46,19 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     disableReject = false;
     private currentStatus = 'Invited';
     stateStr = '';
-    isVicdeaf = false;
-    diffInHours: number;
+    hideInvite = false;
+    hideAccept = false;
+    showCalendar = false;
+    startTime: Date;
+    endTime: Date;
+
+    @ViewChild('cchart') cchart;
 
     constructor(public dialog: MdDialog,
                 public viewContainerRef: ViewContainerRef, public spinnerService: SpinnerService,
                 public notificationServiceBus: NotificationServiceBus,
                 public userDataService: UserService, public bookingService: BookingService, public bookingHeaderService: BookingHeaderService,
                 private router: Router, private route: ActivatedRoute, private datePipe: DatePipe) {
-
         /** http://stackoverflow.com/questions/38008334/angular2-rxjs-when-should-i-unsubscribe-from-subscription */
         this.sub = this.route.params.subscribe(params => {
             let param_id = params['id'] || '';
@@ -63,7 +69,10 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
 
     }
 
+
     ngOnInit() {
+
+
         this.headerSubscription = this.bookingHeaderService.notifyObservable$.subscribe((res) => {
             this.callRelatedFunctions(res);
         });
@@ -86,6 +95,9 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                     break;
                 case 'linkBooking':
                     this.linkBooking();
+                    break;
+                case 'undoCancel':
+                    this.undoCancel();
                     break;
                 case 'saveChanges':
                     this.saveChanges();
@@ -155,23 +167,23 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         }
     }
 
-        linkedBookingConfirmation(isCancel: Boolean) {
-            let config: MdDialogConfig = {
-                disableClose: true
-            };
-            config.viewContainerRef = this.viewContainerRef;
-            this.dialogRef = this.dialog.open(PopupComponent, config);
-            this.dialogRef.componentInstance.title = isCancel ? 'Cancel linked booking' : 'Unable to service linked booking';
-            this.dialogRef.componentInstance.cancelTitle = isCancel ? 'Cancel all bookings' : 'Unable to service all bookings';
-            this.dialogRef.componentInstance.okTitle = isCancel ? 'Cancel only this booking' : 'Unable to service this booking';
-            this.dialogRef.componentInstance.popupMessage =
-                 isCancel ? `Would you like to cancel only this booking, or
+    linkedBookingConfirmation(isCancel: Boolean) {
+        let config: MdDialogConfig = {
+            disableClose: true
+        };
+        config.viewContainerRef = this.viewContainerRef;
+        this.dialogRef = this.dialog.open(PopupComponent, config);
+        this.dialogRef.componentInstance.title = isCancel ? 'Cancel linked booking' : 'Unable to service linked booking';
+        this.dialogRef.componentInstance.cancelTitle = isCancel ? 'Cancel all bookings' : 'Unable to service all bookings';
+        this.dialogRef.componentInstance.okTitle = isCancel ? 'Cancel only this booking' : 'Unable to service this booking';
+        this.dialogRef.componentInstance.popupMessage =
+            isCancel ? `Would you like to cancel only this booking, or
               all linked bookings?` :
-              `Would you like to mark this booking as unable to service, or
+                `Would you like to mark this booking as unable to service, or
               all linked bookings?`;
         this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
             if (isCancel) {
-            this.cancelBooking(isCancel, !result);
+                this.cancelBooking(isCancel, !result);
             } else {
                 this.changeBookingState(isCancel, !result);
             }
@@ -188,9 +200,9 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         this.dialogRef.componentInstance.okTitle = isCancel ? 'Cancelled No Charge' : 'Unable to service this booking';
         if (isCancel) {
             let statement = this.isVicdeaf && (this.diffInHours < 48) ? 'Cancelled Chargeable since the start date is within 48 hours.'
-                         : !this.isVicdeaf && (this.diffInHours < 24) ? 'Cancelled Chargeable since the start date is within 24 hours.'
-                         : this.isVicdeaf && (this.diffInHours > 48) ? 'Cancelled No Charge since the start date is not within 48 hours.'
-                         : !this.isVicdeaf && (this.diffInHours > 24) ? 'Cancelled No Charge since the start date is not within 24 hours.' : '';
+                : !this.isVicdeaf && (this.diffInHours < 24) ? 'Cancelled Chargeable since the start date is within 24 hours.'
+                    : this.isVicdeaf && (this.diffInHours > 48) ? 'Cancelled No Charge since the start date is not within 48 hours.'
+                        : !this.isVicdeaf && (this.diffInHours > 24) ? 'Cancelled No Charge since the start date is not within 24 hours.' : '';
 
             this.dialogRef.componentInstance.popupMessage = `Are you sure you want to cancel this booking? This is permanent. We recommend to cancel this
                                                             booking as ` + statement;
@@ -198,28 +210,29 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
             this.dialogRef.componentInstance.popupMessage = `Would you like to mark this booking as unable to service, or
             all linked bookings?` ;
         }
-            this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
-                this.changeBookingState(isCancel, !result, update_all_linked_bookings);
-            });
+        this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
+            this.changeBookingState(isCancel, !result, update_all_linked_bookings);
+        });
     }
-
     isCurrentUserInterpreter() {
         return GLOBAL.currentUser instanceof Interpreter;
     }
+
     isCurrentUserAdminOrBookingOfficer(): boolean {
         return Boolean(GLOBAL.currentUser instanceof Administrator ||
             GLOBAL.currentUser instanceof BookingOfficer);
     }
-    showActions () {
+
+    showActions() {
         return this.selectedBookingModel.state === BOOKING_STATE.In_progress && this.isCurrentUserInterpreter();
     }
 
     changeBookingState(isCancel: Boolean, isChargeable?: boolean, update_all_linked_bookings?: boolean) {
-       let state;
-       let stateMsg;
+        let state;
+        let stateMsg;
         if (isChargeable) {
-             state = isCancel ? 'cancelled_chargeable' : 'unable_to_service';
-             stateMsg = isCancel ? 'Cancelled with Charge' : 'Unable to Service';
+            state = isCancel ? 'cancelled_chargeable' : 'unable_to_service';
+            stateMsg = isCancel ? 'Cancelled with Charge' : 'Unable to Service';
         } else {
             state = isCancel ? 'cancelled_no_charge' : 'unable_to_service';
             stateMsg = isCancel ? 'Cancelled with No Charge' : 'Unable to Service';
@@ -228,10 +241,10 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         this.bookingService.updateBookingByTransitioning(this.selectedBookingModel.id, state, update_all_linked_bookings)
             .subscribe((res: any) => {
                     if (res.status === 204) {
-                    if (isChargeable) {
-                        this.selectedBookingModel.state = isCancel ? BOOKING_STATE.Cancelled_chargeable : BOOKING_STATE.Unable_to_service;
+                        if (isChargeable) {
+                            this.selectedBookingModel.state = isCancel ? BOOKING_STATE.Cancelled_chargeable : BOOKING_STATE.Unable_to_service;
                         } else {
-                        this.selectedBookingModel.state = isCancel ? BOOKING_STATE.Cancelled_no_charge : BOOKING_STATE.Unable_to_service;
+                            this.selectedBookingModel.state = isCancel ? BOOKING_STATE.Cancelled_no_charge : BOOKING_STATE.Unable_to_service;
                         }
                         this.isCancelledOrUnableToServe = true;
                         this.notificationServiceBus.launchNotification(false, 'The booking has been transitioned to \"' + stateMsg + '\" state');
@@ -244,6 +257,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                     this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
                 });
     }
+
 
     duplicateBooking() {
         let navigationExtras: NavigationExtras = {
@@ -275,6 +289,25 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
             }
         });
     }
+    undoCancel() {
+        let state = 'in_progress';
+        let stateMsg = 'Cancelled with Charge';
+        this.spinnerService.requestInProcess(true);
+        this.bookingService.updateBookingByTransitioning(this.selectedBookingModel.id, state)
+             .subscribe((res: any) => {
+                     if (res.status === 204) {
+                         this.selectedBookingModel.state = BOOKING_STATE.In_progress;
+                         this.isCancelledOrUnableToServe = false;
+                         this.notificationServiceBus.launchNotification(false, 'The booking has been transitioned to \"' + stateMsg + '\" state');
+                     }
+                     this.spinnerService.requestInProcess(false);
+                 },
+                 err => {
+                     this.spinnerService.requestInProcess(false);
+                     let e = err.json() || 'There is some error on server side';
+                     this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
+                 });
+    }
 
     unlinkBooking() {
         this.unlinkPressed = true;
@@ -284,16 +317,40 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     }
 
     onChange($event, user, ind) {
+
         let index = this.selectedInterpreterIDs.indexOf(user.id);
         if (index < 0) {
             this.selectedInterpreterIDs.push(user.id);
             this.checkList[ind] = true;
         } else {
-            // delete this.selectedInterpreterIDs[user.id];
             this.selectedInterpreterIDs.splice(index, 1);
             this.checkList[ind] = false;
-
         }
+        let hide_invite = false;
+        let hide_accept = this.selectedInterpreterIDs.length > this.selectedBookingModel.interpreters_required;
+        for (let uid of this.selectedInterpreterIDs) {
+            let inte: Interpreter;
+            this.interpreterList.filter(i => i.id === uid).map(u => inte = <Interpreter>u);
+            hide_invite = hide_invite === false ?
+                inte && (inte.booked || inte.blocked || inte.blockout
+                || this.selectedBookingModel.interpreters
+                    .filter(i => i.state === 'Accepted' &&
+                        inte.id === i.id).length > 0) : hide_invite;
+            hide_accept = hide_accept === false ?
+                inte && (inte.booked || inte.blocked
+                || this.selectedBookingModel.interpreters
+                    .filter(i => i.state === 'Accepted' &&
+                        inte.id === i.id).length > 0) : hide_accept;
+        }
+        this.hideAccept = hide_accept;
+        this.hideInvite = hide_invite;
+    }
+
+    getInterpreterIconClass(user: Interpreter) {
+        return user.booked ? 'fa fa-times-circle' :
+            user.blocked ? 'fa fa-ban' :
+                user.blockout ? 'fa fa-exclamation-circle fa-danger' :
+                    '';
     }
 
     fetchAllInterpreters() {
@@ -318,6 +375,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                     if (res.status === 200) {
                         this.interpreterList = res.data.users;
                     }
+                    this.showCalendar = true;
                     this.spinnerService.requestInProcess(false);
                 },
                 err => {
@@ -341,7 +399,6 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                             i.state === 'Accepted' ? -1 : j.state === 'Accepted' ? 1 : 0
                         );
                         this.isVicdeaf = GLOBAL.VICDEAF_STATES.filter(teststate => teststate === this.selectedBookingModel.venue.state).length > 0;
-                        this.fetchNearbyinterpreters(param_id);
                         this.isCancelledOrUnableToServe = this.isActiveState('Cancelled_no_charge')
                             || this.isActiveState('Unable_to_service') || this.isActiveState('Cancelled_chargeable');
 
@@ -351,7 +408,8 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                         this.diffInHours = diffInMs / 1000 / 60 / 60;
                         if (this.diffInHours < 0) {
                             this.diffInHours = (-1) * this.diffInHours;
-                        }
+                        }this.startTime = new Date(this.selectedBookingModel.venue.start_time_iso);
+                        this.endTime = new Date(this.selectedBookingModel.venue.end_time_iso);
                         if (this.isCurrentUserInterpreter()) {
                             this.selectedBookingModel.interpreters.filter(i => i.id === GLOBAL.currentUser.id)
                                 .map(i => this.currentStatus = i.state || 'Invited');
@@ -376,14 +434,13 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                                 this.router.navigate(['/booking-management']);
                             }
                             if (this.selectedBookingModel.state === BOOKING_STATE.Service_completed) {
-                            this.disableReject = true;
-                            this.disableAccept = true;
+                                this.disableReject = true;
+                                this.disableAccept = true;
                             }
                             this.getStateString();
                         }
                     }
                     if (this.isCurrentUserAdminOrBookingOfficer()) {
-
                         this.fetchNearbyinterpreters(param_id);
                     } else {
                         this.spinnerService.requestInProcess(false);
@@ -476,11 +533,48 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                 });
     }
 
+    interpreterHasBlockoutDialog(selectedInt) {
+        if (this.dialogSub) {
+            this.dialogSub.unsubscribe();
+        }
+
+        let config: MdDialogConfig = {
+            disableClose: true
+        };
+        config.viewContainerRef = this.viewContainerRef;
+        this.dialogRef = this.dialog.open(PopupComponent, config);
+        this.dialogRef.componentInstance.title = 'Interpreter With A Blockout';
+        this.dialogRef.componentInstance.cancelTitle = 'Back to job';
+        this.dialogRef.componentInstance.okTitle = 'YES';
+        this.dialogRef.componentInstance.popupMessage = `One or more interpreters have a blockout within the booking time. Do you still want to assign?`;
+        this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
+            if (result === true) {
+                this.spinnerService.requestInProcess(true);
+
+                for (let _id of this.selectedInterpreterIDs) {
+                    selectedInt.push(new Object({
+                        id: _id
+                    }));
+                }
+                this.selectedInterpreterIDs = [];
+                this.reAssignPressed = false;
+                this.sendReAssign(selectedInt);
+                this.selectedActionableInterpreterID = -1;
+            } else {
+                this.selectedInterpreterIDs = [];
+                this.reAssignPressed = false;
+                this.selectedActionableInterpreterID = -1;
+            }
+        });
+    }
+
     saveChanges() {
         let selectedInt = [];
+        let warnInterpreterWithBlockout = false;
         this.checkList = {};
-        this.spinnerService.requestInProcess(true);
         if (this.invitePressed) {
+            this.spinnerService.requestInProcess(true);
+
             for (let _id of this.selectedInterpreterIDs) {
                 selectedInt.push(new Object({
                     id: _id
@@ -490,23 +584,41 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
             this.invitePressed = false;
             this.sendInvite(selectedInt);
         } else if (this.unAssignPressed) {
+            this.spinnerService.requestInProcess(true);
             this.unAssignPressed = false;
             this.sendUnAssign();
             this.selectedActionableInterpreterID = -1;
         } else if (this.reAssignPressed) {
-            for (let _id of this.selectedInterpreterIDs) {
-                selectedInt.push(new Object({
-                    id: _id
-                }));
+            for (let uid of this.selectedInterpreterIDs) {
+                let inte: Interpreter;
+                this.interpreterList.filter(i => i.id === uid).map(u => inte = <Interpreter>u);
+                if (Boolean (inte) && (<Interpreter>inte).blockout) {
+                    warnInterpreterWithBlockout = true;
+                    break;
+                }
             }
-            this.selectedInterpreterIDs = [];
-            this.reAssignPressed = false;
-            this.sendReAssign(selectedInt);
-            this.selectedActionableInterpreterID = -1;
+            if (warnInterpreterWithBlockout) {
+                this.interpreterHasBlockoutDialog(selectedInt);
+
+            } else {
+                this.spinnerService.requestInProcess(true);
+
+                for (let _id of this.selectedInterpreterIDs) {
+                    selectedInt.push(new Object({
+                        id: _id
+                    }));
+                }
+                this.selectedInterpreterIDs = [];
+                this.reAssignPressed = false;
+                this.sendReAssign(selectedInt);
+                this.selectedActionableInterpreterID = -1;
+            }
         } else if (this.unlinkPressed) {
+            this.spinnerService.requestInProcess(true);
             this.unlinkPressed = false;
             this.updateSelectedBookingModel();
         } else {
+            this.spinnerService.requestInProcess(true);
             this.updateSelectedBookingModel();
         }
     }
@@ -576,11 +688,80 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         return false;
     }
 
-    public travelPayStatus(interpreter) {
+    travelPayStatus(interpreter) {
         if (interpreter.distance === '-') {
             return '-';
-        }else {
+        } else {
             return interpreter.travel_pay ? 'Yes' : 'No';
         }
+    }
+
+    isPreferred(user_id) {
+        return this.interpreterOfTypeExists('preferred', user_id);
+
+    }
+
+    isStaff(user) {
+        return false;
+    }
+
+    getSuburb(user: Interpreter) {
+        return user.address_attributes.suburb;
+    }
+
+    stringifyUser(user) {
+        return JSON.stringify(user);
+    }
+
+    getTimelineBlockoutStyle(avail_block) {
+        let toRet = '';
+        let sd = new Date(avail_block.start_time);
+        if (sd.toLocaleDateString() === this.startTime.toLocaleDateString()) {
+            let edt = new Date(avail_block.end_time);
+            let cells = '';
+            let offset = '';
+            let st = this.startTime.getHours() - 2;
+            if (sd.getHours() >= st) {
+                offset = 'offset' + (sd.getHours() - st);
+                cells = 'cells' + (edt.getHours() - sd.getHours());
+
+            } else if (sd.getHours() < st) {
+
+                offset = 'offset' + (st - sd.getHours() > 1 ? '' : (st - sd.getHours()));
+                cells = 'cells' + (edt.getHours() - sd.getHours());
+
+            }
+            toRet = cells + ' ' + offset + ' pink';
+        }
+        console.log(toRet);
+        return toRet;
+    }
+
+    getTimelineMoverStyle() {
+        let diff = Math.abs(this.endTime.getTime() - this.startTime.getTime()) / 36e5;
+        return 'cells' + diff + ' offset2';
+    }
+
+    getTimelineStartTime() {
+        let array = [];
+        let dt = new Date();
+        dt.setTime(this.startTime.getTime());
+        dt.setHours(dt.getHours() - 2);
+        for (let i = 0; i < 13; i++) {
+            let amPm = dt.getHours() >= 12 ? 'pm' : 'am';
+            array.push(dt.getHours() % 12 + ' ' + amPm);
+            dt.setHours(dt.getHours() + 1);
+
+        }
+        return array;
+    }
+
+    interpreterOfTypeExists(type: string, user_id: string) {
+        let blocked_int =
+            this.selectedBookingModel.preference_allocations_attributes.filter(i =>
+                i.preference === type);
+        return blocked_int.filter(
+            i => i.interpreter_id === user_id
+        ).length > 0;
     }
 }

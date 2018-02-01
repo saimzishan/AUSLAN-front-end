@@ -39,7 +39,7 @@ Feature: Booking Admin Management
     Then I can see the booking state 'Allocated'
 
     # =================== IN PROGRESS to ALLOCATED ===============================
-  @runThis
+  @ignoreThis
   Scenario: As INTERPRETER, I have not accept or decline, but admin can Assign directly, if a booking is created and INTERPRETER Invited and Administrator exists then
     And I sign in with valid Administrator credentials
     When I am on the bookings page
@@ -254,7 +254,7 @@ Feature: Booking Admin Management
     Then I see one row with state 'Allocated'
 
   ########### ERROR HANDLING #######################################
-  @runThis
+  @ignoreThis
   Scenario: As Administrator, I cannot assign two interpreter if booking need one and if a booking is created and INTERPRETER_ALL Invited and INTERPRETER1 exists then
     And I sign in with valid Administrator credentials
     When I am on the bookings page
@@ -440,7 +440,7 @@ Feature: Booking Admin Management
 
   ########### IN PROGRESS TO ALLOCATED SINGLE INTERPRETER #######################################
 
-  @runThis
+  @ignoreThis
   Scenario: As INTERPRETER, I have not accept or decline, but admin can Assign directly, if a booking is created and INTERPRETER Invited and Administrator exists then
     And I sign in with valid Administrator credentials
     When I am on the bookings page
@@ -477,7 +477,7 @@ Feature: Booking Admin Management
 
   ########### IN PROGRESS TO ALLOCATED MULTIPLE INTERPRETER #######################################
 
-  @runThis
+  @ignoreThis
   Scenario: As INTERPRETER, I have not accept or decline, but Administrator can Assign directly, if a booking with two interpreters is created and INTERPRETER and INTERPRETER1 exists and INTERPRETER_ALL Invited then
     And I sign in with valid Administrator credentials
     When I am on the bookings page

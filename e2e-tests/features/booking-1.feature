@@ -234,3 +234,4 @@ Feature: Booking Management
     Then I will be shown a popup message
 
 # ---------------------------------------- AUSLAN1-252 -> END ----------------------------------------
+

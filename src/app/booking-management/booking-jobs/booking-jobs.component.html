@@ -5,7 +5,7 @@
 
 <ng-container *ngIf="!jobAccessError">
     <section id="page-common">
-        <app-booking-header [bookingModel]='selectedBookingModel'
+        <app-booking-header [bookingModel]="selectedBookingModel"
                             [hasLinkId]="!!selectedBookingModel.link_id"
                             [isCancelOrUnable]="isCancelledOrUnableToServe"
                             [invitePress]="invitePressed"
@@ -171,20 +171,15 @@
                 <section *ngIf='!isCancelledOrUnableToServe && !isCurrentUserInterpreter()' id="invite-interpreters">
                     <section id="filters">
                         <section class="search-bar" style="width:150%">
-                            <!--<input type="text" name="search" placeholder="Search...">-->
-                            <!--<button><i class="icon-glass"></i></button>-->
                         </section>
                         <section class="filters">
-                            <!--<button class="button">Select Top 10</button>-->
-                            <!--<button class="button">Select All Available</button>-->
-                            <!--<button class="button">Filter Only Available</button>-->
 
                             <div class="separator"></div>
 
-                            <button class="button active" name='inviteBtn' (click)="inviteInterpreters()">
+                            <button *ngIf="!hideInvite" class="button active" name='inviteBtn' (click)="inviteInterpreters()">
                                 <i class="icon-shape"></i> Invite
                             </button>
-                            <button class="button red" (click)="reAssignInterpreters()" name="reassingBtn">
+                            <button *ngIf="!hideAccept" class="button red" (click)="reAssignInterpreters()" name="reassingBtn">
                                 <i class="icon-assign"></i> Assign
                             </button>
                         </section>
@@ -196,67 +191,39 @@
                         <thead>
                         <tr>
                             <th width="10%">
-                                <!--md-checkbox></md-checkbox -->
                             </th>
                             <th width="7%">
                                 <span class="">#</span>
                             </th>
                             <th width="12%">
                                 <span class="">Status</span>
-                                <!--<ul class="dropdown menu custom" data-dropdown-menu>-->
-                                <!--<li>-->
-                                <!--<a href="#">All</a>-->
-                                <!--<ul class="menu smaller">-->
-                                <!--<li><a href="#"><i></i> Option 1</a></li>-->
-                                <!--<li><a href="#"><i></i> Option 2</a></li>-->
-                                <!--<li><a href="#"><i></i> Option 3</a></li>-->
-                                <!--</ul>-->
-                                <!--</li>-->
-                                <!--</ul>-->
+                            </th>
+                            <th width="12%">
+                                <span class="">Preferred</span>
                             </th>
                             <th width="17%">
                                 <span class="">First Name</span>
-                                <!--<input type="text" name="">-->
                             </th>
                             <th width="17%">
                                 <span class="">Last Name</span>
-                                <!--<input type="text" name="">-->
                             </th>
                             <th width="9%">
-                                <span class="">Role</span>
-                                <!--<ul class="dropdown menu custom" data-dropdown-menu>-->
-                                <!--<li>-->
-                                <!--<a href="#">All</a>-->
-                                <!--<ul class="menu smaller">-->
-                                <!--<li><a href="#"><i></i> Option 1</a></li>-->
-                                <!--<li><a href="#"><i></i> Option 2</a></li>-->
-                                <!--<li><a href="#"><i></i> Option 3</a></li>-->
-                                <!--</ul>-->
-                                <!--</li>-->
-                                <!--</ul>-->
+                                <span class="">Role (S,C)</span>
                             </th>
                             <th width="9%">
                                 <span class="">Lvl</span>
-                                <!--<ul class="dropdown menu custom" data-dropdown-menu>-->
-                                <!--<li>-->
-                                <!--<a href="#">All</a>-->
-                                <!--<ul class="menu smaller">-->
-                                <!--<li><a href="#"><i></i> Option 1</a></li>-->
-                                <!--<li><a href="#"><i></i> Option 2</a></li>-->
-                                <!--<li><a href="#"><i></i> Option 3</a></li>-->
-                                <!--</ul>-->
-                                <!--</li>-->
-                                <!--</ul>-->
                             </th>
                             <th width="15%">
                                 <span class="">Suburb</span>
-                                <!--<input type="text" name="">-->
                             </th>
                             <th width="9%">
-                                <span class="">Distance</span>
+                                <span class="">Km</span>
                             </th>
                             <th width="9%">
-                                <span class="">Travel Pay</span>
+                                <span class="">Pay Travel (Y/N)</span>
+                            </th>
+                            <th width="9%">
+                                <span class="">Notes</span>
                             </th>
                         </tr>
                         </thead>
@@ -270,44 +237,51 @@
                             </td>
                             <td>{{user.id}}</td>
                             <td align="center">
-                                <!-- i [ngClass]="{'icon-check-green' : isInvited(user.id), 'icon-check-yellow' : !isInvited(user.id)}"><i -->
+                                <i aria-hidden="true" [ngClass]="getInterpreterIconClass(user)"></i>
+
                             </td>
-                            <td><!-- i [ngClass]="{'icon-check-yellow' : isNotConfirmed(user.id)}"></i -->
-                                {{user.first_name}}
+                            <td align="center">
+                                {{isPreferred(user.id) ? 'Preferred' : ' - '}}
+                            </td>
+                            <td>
+
+                                <a name="lnkEditUser" [routerLink]="['/init']" [queryParams]="{selectedRole:'INTERPRETER',uid:user.id, edit_user:
+												stringifyUser(user)}"> {{user.first_name}} </a>
                             </td>
                             <td>{{user.last_name}}</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td>{{isStaff(user) ? 'Staff' : 'Casual'}}</td>
+                            <td>{{user.skill_level}}</td>
+                            <td>{{getSuburb(user)}}</td>
                             <td>{{user.distance}}</td>
                             <td>{{ travelPayStatus(user)}}</td>
+                            <td>{{user.booking_office_notes}}</td>
                         </tr>
                         </tbody>
                     </table>
-                    <section>
-                        <section id="time">11 September 9:15 AM - 11:15 AM</section>
+                    <section *ngIf="showCalendar">
+                        <section id="time">{{ startTime | date}} {{ startTime | date:'shortTime'}} - {{ endTime | date:'shortTime'}}</section>
                         <section>
                             <section id="time-range">
                                 <button type="button">&lt;</button>
                                 <section>
-                                    <span>6 am</span>
-                                    <span>7 am</span>
-                                    <span>8 am</span>
-                                    <span>9 am</span>
-                                    <span>11 am</span>
-                                    <span>12 am</span>
-                                    <span>1 pm</span>
+                                    <span *ngFor="let t of getTimelineStartTime()">{{t}}</span>
                                 </section>
                                 <button type="button">&gt;</button>
                             </section>
                             <section class="flow">
-                                <div><span></span></div>
-                                <div><span style="margin-left: 2%"></span></div>
-                                <div><span style="margin-left: 15%"></span></div>
-                                <div><span style="margin-left: 3%"></span></div>
-                                <div><span style="margin-left: 22%"></span></div>
+                                <div *ngFor="let inte of interpreterList">
+                                    <section>
+                                        <ng-container *ngFor="let avail_block of inte.availability_blocks_attributes">
+                                            <ng-container *ngIf="getTimelineBlockoutStyle(avail_block).length > 2">
+                                                <span class="{{getTimelineBlockoutStyle(avail_block)}}"></span>
+                                            </ng-container>
+                                        </ng-container>
+                                    </section>
+                                </div>
                             </section>
-                            <div id="mover"></div>
+                            <div id="mover">
+                                <div class="{{getTimelineMoverStyle()}}"></div>
+                            </div>
                         </section>
                     </section>
                 </section>

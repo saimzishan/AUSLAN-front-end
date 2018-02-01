@@ -36,7 +36,8 @@ defineSupportCode(({Given, When, Then}) => {
             browser.sleep(1000);
         });
     });
-
+    Given(/^I verify all Interpreters/, Heroku.verifyAllInterpreter);
+    Given(/^I create the interpreter of type '(.*)'/, Heroku.createInterpreterOfType);
     Given(/^I click on logout$/, bookingManagementPage.logoutClick);
     Given(/^I hover on the 'Profile'$/, bookingManagementPage.clickOnProfile);
     Given(/^I go to the 'User Management' list page$/, clickOnUserManagementPage);

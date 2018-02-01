@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="120px" height="120px" viewBox="0 0 120 120" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 46.2 (44496) - http://www.bohemiancoding.com/sketch -->
+    <title>Pop Up/Icon 2</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="OLD---keep" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="134_Error-message" transform="translate(-100.000000, -94.000000)">
+            <g id="Group" transform="translate(26.000000, 94.000000)">
+                <g id="Group-2">
+                    <g id="Pop-Up/Icon-2" transform="translate(74.000000, 0.000000)">
+                        <g>
+                            <circle id="Oval" fill-opacity="0.05" fill="#FD4163" cx="60" cy="60" r="60"></circle>
+                            <circle id="Oval" fill-opacity="0.65" fill="#FD4163" cx="60.5" cy="60.5" r="47.5"></circle>
+                            <path d="M73.4528238,70.7961712 L63.7022165,61.0285022 L73.3972964,51.3980143 C74.1284068,50.6731787 74.1284068,49.4997237 73.3972964,48.7767419 C72.6680368,48.0537602 71.4834528,48.0537602 70.7541933,48.7767419 L61.0720698,58.3942532 L51.2455751,48.5505784 C50.5163156,47.8164739 49.3317316,47.8164739 48.602472,48.5505784 C47.8732125,49.2828292 47.8732125,50.4729684 48.602472,51.2052192 L58.4141594,61.0340636 L48.5469447,70.835101 C47.8176851,71.5599365 47.8176851,72.7333916 48.5469447,73.4563733 C49.2762042,74.1812089 50.4607882,74.1812089 51.1918987,73.4563733 L61.046157,63.6683125 L70.8115716,73.4489581 C71.5408311,74.1830627 72.7254151,74.1830627 73.4546747,73.4489581 C74.1820833,72.7185612 74.1820833,71.5302758 73.4528238,70.7961712 Z" id="Shape" fill="#FFFFFF"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
