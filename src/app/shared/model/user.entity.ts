@@ -102,6 +102,7 @@ export class Organisational extends User {
     public special_instructions = '';
     public billingAddressIsSame = true;
     public prefferedInterpreters = [];
+    public displayName: string;
 
     constructor(data) {
         super(data);
@@ -288,6 +289,7 @@ export class IndividualClient extends User {
     public billingAddressIsSame = true;
     public reffered_other: string;
     public prefferedInterpreters = [];
+    public displayName: string;
 
     constructor(data) {
         super(data);

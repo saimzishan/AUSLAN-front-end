@@ -72,10 +72,10 @@ import {BookingHeaderService} from './booking-management/booking-header/booking-
 import {GmapsApiService} from './api/gmaps-api.service';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {RemoveSpacePipe} from './shared/pipe/remove-space.pipe';
-import {CalendarModule as PrimeNgCalendarModule} from 'primeng/primeng';
-import { AgmCoreModule } from '@agm/core';
+import {AgmCoreModule} from '@agm/core';
+import {AutoCompleteModule, CalendarModule as PrimeNgCalendarModule} from 'primeng/primeng';
 import {LinkidPopupComponent} from './booking-management/linkid-popup/linkid-popup.component';
-import { MobileHeaderComponent } from './ui/mobile-header/mobile-header.component';
+import {MobileHeaderComponent} from './ui/mobile-header/mobile-header.component';
 import {MomentModule} from 'angular2-moment/moment.module';
 import {BookingInfoComponent} from './booking-management/booking-info/booking-info.component';
 import {BookingPayrollComponent} from './booking-management/booking-payroll/booking-payroll.component';
@@ -120,7 +120,8 @@ import {PayrollTimeComponent} from './booking-management/payroll-time/payroll-ti
         MaterialModule, CalendarModule, PrimeNgCalendarModule, MomentModule, AgmCoreModule.forRoot({
             apiKey: 'AIzaSyA-BDtGjVcaDl5VrgsGiwDLEvDQ1XOsWAw',
             libraries: ['places']
-        })
+        }),
+        AutoCompleteModule
     ], providers: [DatePipe, LinkAuth, UserNameService, RolePermission, AuthGuard, NoAuthGuard, Title, LinkHelper,
         NotificationServiceBus, SpinnerService, BookingService, UserService,
         PreferedAllocationService, BookingHeaderService, GmapsApiService,

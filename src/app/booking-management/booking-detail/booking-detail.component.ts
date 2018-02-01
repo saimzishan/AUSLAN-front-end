@@ -26,7 +26,6 @@ const _ONE_HOUR = 1000 /*milliseconds*/
     * 60 /*seconds*/
     * 60 /*minutes*/;
 
-
 @Component({
     selector: 'app-booking-detail',
     templateUrl: './booking-detail.component.html',
@@ -37,6 +36,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     private sub: any;
     public uploader: FileUploader = new FileUploader({url: '', maxFileSize: 20 * 1024 * 1024});
     bookingModel: Booking;
+    bookable: IndividualClient | OrganisationalRepresentative;
     standardInvoice = true;
     rdgSpecialInstruction = true;
     oldBookingModel;
@@ -66,7 +66,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     oldDocuments = [];
     deleteDocuments = [];
     allClientsOrg = [];
-    bookingForItems = [];
     isDisabledForOrgRepIndClient: boolean;
     isUserAdminORBookOfficer: boolean;
     preferAllocSub: any;
@@ -263,9 +262,9 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         }
     }
 
-    getOrgName(item) {
-        return (item instanceof OrganisationalRepresentative ?
-            (item.organisation_name.toUpperCase() + ' - ') : '') + item.first_name + ' ' + item.last_name;
+    getOrgName(item): string | undefined {
+        return item && ((item instanceof OrganisationalRepresentative ?
+            (item.organisation_name.toUpperCase() + ' - ') : '') + item.first_name + ' ' + item.last_name);
     }
 
     timeFormatting() {
@@ -304,7 +303,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.getUser();
             this.bookingModel.bookable_type = this.bookingModel.bookable_type || 'IndividualClient';
             if (this.isUserAdminORBookOfficer) {
-                this.getAllUsers();
                 this.bookingModel.created_by_admin = true;
             } else {
                 this.oldBookingModel = this.deepCopy(this.bookingModel);
@@ -347,7 +345,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     public onClientSelectionChange() {
-        let user = this.isUserAdminORBookOfficer ? this.getBookableUser() : GLOBAL.currentUser;
+        let user = this.isUserAdminORBookOfficer ? this.bookable : GLOBAL.currentUser;
         if (user) {
             ['first_name', 'last_name', 'email', 'mobile_number', 'ndis_id'].forEach((field) => {
                 let currentUserFieldMap = {mobile_number: 'mobile'};
@@ -361,7 +359,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     public onSelectionChange() {
-        let user = this.isUserAdminORBookOfficer ? this.getBookableUser() : GLOBAL.currentUser;
+        let user = this.isUserAdminORBookOfficer ? this.bookable : GLOBAL.currentUser;
         if (user) {
             ['first_name', 'last_name', 'email', 'mobile_number'].forEach((field) => {
                 let currentUserFieldMap = {mobile_number: 'mobile'};
@@ -385,9 +383,9 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     public setInvoiceField() {
-        let user = this.getBookableUser();
+        let user = this.bookable;
         if (user) {
-            if (user['type'] === 'IndividualClient') {
+            if (user instanceof IndividualClient) {
                 this.bookingModel.client.organisation_primary_contact = this.standardInvoice ?
                     user.individual_client_primary_contact : new Contact();
                 this.bookingModel.client.organisation_billing_account.organisation_billing_address = this.standardInvoice ?
@@ -407,12 +405,10 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         }
     }
 
-    private getBookableUser() {
-        return this.allClientsOrg.find(u => u.type === this.bookingModel.bookable_type && +u.id === +this.bookingModel.bookable_id);
-    }
-
-    public onBookingForSelectionChange() {
-        this.userModel = this.isUserAdminORBookOfficer ? this.getBookableUser() : this.userModel;
+    public onBookingForSelectionChange(selectedObject: IndividualClient | OrganisationalRepresentative) {
+        this.bookingModel.preference_allocations_attributes = [];
+        this.bookingModel.bookable_id = selectedObject.id;
+        this.userModel = this.isUserAdminORBookOfficer ? this.bookable : this.userModel;
         this.onSelectionChange();
         this.onClientSelectionChange();
         this.setInvoiceField();
@@ -432,7 +428,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             if (this.showProfilePreferred) {
                 this.oldInterpreterPreference = this.oldInterpreterPreference.concat(prefInt);
             } else {
-                this.oldInterpreterPreference = this.oldInterpreterPreference.filter(item => prefInt.every(item2 => item2.interpreter_id !== item.interpreter_id));
+                this.oldInterpreterPreference = this.oldInterpreterPreference.filter(item => prefInt.every(item2 => item2.interpreter_id !== item.interpreter_id))
             }
             this.filterUserPreference(this.oldInterpreterPreference);
         }
@@ -457,11 +453,24 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         }
     }
 
-    public onBookingForChange() {
-        this.bookingModel.preference_allocations_attributes = [];
-        this.bookingForItems = this.bookingModel.bookable_type === 'IndividualClient' ?
-            this.allClientsOrg.filter(u => u.type === 'IndividualClient') :
-            this.allClientsOrg.filter(u => u.type === 'OrganisationalRepresentative');
+    private camelCaseToUnderScore(bookable_type: string): string {
+        return bookable_type.replace(/([a-zA-Z])(?=[A-Z])/g, '$1_').toLowerCase();
+    }
+
+    private filterBookingForItems(event: any): any {
+        const name = event.query;
+        const api_path = this.camelCaseToUnderScore(this.bookingModel.bookable_type) + 's';
+        return this.userService.fetchUsersOfType(api_path, {
+            pagination: false,
+            search_text: name
+        }).subscribe((res: any) => {
+            this.allClientsOrg = res.data.users.map(u => {
+                const singleUser = <IndividualClient | OrganisationalRepresentative>UserFactory.createUser(u);
+                singleUser.displayName = this.getOrgName(singleUser);
+                return singleUser;
+            });
+            return this.allClientsOrg;
+        });
     }
 
     isNotIndClient() {
@@ -975,25 +984,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
 
     isNewBooking() {
         return this.router.url.includes('create-booking');
-    }
-
-    getAllUsers() {
-        this.spinnerService.requestInProcess(true);
-        this.userService.fetchUsers()
-            .subscribe((res: any) => {
-                    this.spinnerService.requestInProcess(false);
-                    if (res.status === 200) {
-                        this.allClientsOrg = res.data.users.map(u => UserFactory.createUser(u));
-                        this.oldBookingModel = this.deepCopy(this.bookingModel);
-                        this.onBookingForChange();
-                    }
-                },
-                errors => {
-                    this.spinnerService.requestInProcess(false);
-                    let e = errors.json() || '';
-                    this.notificationServiceBus.launchNotification(true,
-                        'Error occured on server side. ' + errors.statusText + ' ' + JSON.stringify(e || e.errors));
-                });
     }
 
     resetPrefBlockInterpreters() {

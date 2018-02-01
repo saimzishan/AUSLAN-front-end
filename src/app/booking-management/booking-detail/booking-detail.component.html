@@ -34,7 +34,7 @@
       <div class="medium-12 columns">
         <div class="form-field">
           <label>ARE YOU MAKING A BOOKING FOR AN INDIVIDUAL CLIENT OR ORGANISATION?*</label>
-          <md-radio-group name="rdBookingFor" (change)='onBookingForChange()' [(ngModel)]="bookingModel.bookable_type" [disabled]="isDisabledForAdmin">
+          <md-radio-group name="rdBookingFor" [(ngModel)]="bookingModel.bookable_type" [disabled]="isDisabledForAdmin">
             <md-radio-button id ="IndividualClient" name ="IndividualClient" value="IndividualClient">CLIENT</md-radio-button>
             <md-radio-button id="OrganisationalRepresentative" name="OrganisationalRepresentative" value="OrganisationalRepresentative">ORGANISATION</md-radio-button>
           </md-radio-group>
@@ -43,23 +43,22 @@
     </div>
 
     <div class="row" *ngIf="!forEdit && isUserAdminORBookOfficer">
-      <div class="medium-6 columns">
+      <div class="medium-12 columns">
         <div class="form-field">
           <label>PLEASE SELECT THE {{bookingModel.bookable_type ==='IndividualClient' ? "CLIENT":"ORGANISATION"}}*
             <span mdTooltip="Select the Client/Org"><i class="inline-icon-tip"></i></span>
           </label>
-          <select [(ngModel)]="bookingModel.bookable_id" (change)='onBookingForSelectionChange()'
-                  #booking_for="ngModel" name="booking_for" [disabled]="isDisabledForAdmin"
-                  aria-label="A" required>
-            <option *ngFor="let item of bookingForItems" [value]="item.id">
-            {{ getOrgName(item) }}
-            </option>
-          </select>
-            <span *ngIf="booking_for.touched && !booking_for.errors?.required;"
-                  class="inline-icon inline-icon-valid valid"></span>
-            <span *ngIf="booking_for.touched && (booking_for.errors?.required);"
-                  class="inline-icon error">!
-            </span>
+          <p-autoComplete name='bookable'
+            [(ngModel)]="bookable"
+            [suggestions]="allClientsOrg"
+            (completeMethod)="filterBookingForItems($event)"
+            (onSelect)='onBookingForSelectionChange($event)'
+            field='displayName'
+            [style]="{'width':'100%'}">
+            <ng-template let-bookable pTemplate='item'>
+              <span>{{ getOrgName(bookable) }}</span>
+            </ng-template>
+          </p-autoComplete>
         </div>
       </div>
     </div>
