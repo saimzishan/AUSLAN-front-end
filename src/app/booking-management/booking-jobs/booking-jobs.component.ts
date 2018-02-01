@@ -412,7 +412,6 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                             i.state === 'Accepted' ? -1 : j.state === 'Accepted' ? 1 : 0
                         );
                         this.isVicdeaf = GLOBAL.VICDEAF_STATES.filter(teststate => teststate === this.selectedBookingModel.venue.state).length > 0;
-                        this.fetchNearbyinterpreters(param_id);
                         this.isCancelledOrUnableToServe = this.isActiveState('Cancelled_no_charge')
                             || this.isActiveState('Unable_to_service') || this.isActiveState('Cancelled_chargeable');
 
@@ -573,6 +572,10 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                 this.selectedInterpreterIDs = [];
                 this.reAssignPressed = false;
                 this.sendReAssign(selectedInt);
+                this.selectedActionableInterpreterID = -1;
+            } else {
+                this.selectedInterpreterIDs = [];
+                this.reAssignPressed = false;
                 this.selectedActionableInterpreterID = -1;
             }
         });
