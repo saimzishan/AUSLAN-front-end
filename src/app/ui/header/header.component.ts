@@ -1,4 +1,4 @@
-import { Component, OnDestroy, Input } from '@angular/core';
+import {Component, OnDestroy, Input, OnInit} from '@angular/core';
 import {GLOBAL} from '../../shared/global';
 import {UserNameService} from '../../shared/user-name.service';
 import {LinkHelper, LINK, LinkAuth} from '../../shared/router/linkhelper';
@@ -8,19 +8,25 @@ import {LinkHelper, LINK, LinkAuth} from '../../shared/router/linkhelper';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnDestroy {
+export class HeaderComponent implements OnDestroy, OnInit {
   linkName= LINK;
   private sub: any;
   userIsActive = false;
-  @Input() fullName = Boolean(GLOBAL.currentUser) ? GLOBAL.currentUser.first_name + ' '  + GLOBAL.currentUser.last_name : '';
+  fullName = '';
 
   constructor(public userNameService: UserNameService, private linkAuth: LinkAuth) {
+  }
+  ngOnInit () {
       this.sub = this.userNameService.loggedInUser$.subscribe(
         u => {
           this.fullName = u.first_name + ' ' + u.last_name;
           this.userIsActive = GLOBAL.currentUser.verified && (GLOBAL.currentUser.disabled === false);
 
         });
+        this.fullName = Boolean(GLOBAL.currentUser) && Boolean(GLOBAL.currentUser.first_name)
+            && Boolean(GLOBAL.currentUser.first_name.length > 0 ) ?
+            GLOBAL.currentUser.first_name + ' '  + GLOBAL.currentUser.last_name :
+      '';
         this.userIsActive = Boolean(GLOBAL.currentUser && this.fullName && this.fullName.length > 0
         && this.fullName === GLOBAL.currentUser.first_name + ' '  + GLOBAL.currentUser.last_name);
   }
