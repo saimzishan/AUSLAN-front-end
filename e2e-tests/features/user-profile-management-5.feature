@@ -198,3 +198,4 @@ Feature: User Profile Management
     Then I get valid message: 'User details updated Successfully'
     And I can verify my profile pic is different with link 'missing.svg'
 # --------------------------------------------- AUSLAN1-165 -> END ---------------------------------------------
+
