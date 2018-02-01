@@ -61,7 +61,7 @@ export class UserProfilePage extends PageObject {
         // browser.explore();
         return this.getAllElementByCSS('input[type="' + type + '"]').each((el, index) => {
             return el.getAttribute('name').then((val) => {
-                if (val === 'mobile' || val === 'phone') {
+                if (val === 'mobile' || val === 'phone' || val === 'search_address') {
                     return;
                 } else {
                     el.getAttribute('value').then((val1) => {

@@ -76,20 +76,31 @@ export class BookingHeaderComponent implements OnInit, OnDestroy {
     saveClick() {
         this.bookingHeaderService.notifyOther({option: 'saveChanges', value: ''});
     }
-
-    isActiveState(bookingStatus: string) {
-        return BOOKING_STATE[this.bookingState].toLowerCase() === bookingStatus.toLowerCase();
+    undoCancelClick() {
+        this.bookingHeaderService.notifyOther({option: 'undoCancel', value: ''});
     }
 
+    isActiveState(bookingStatus: string) {
+        return BOOKING_STATE[this.bookingModel.state].toLowerCase() === bookingStatus.toLowerCase();
+    }
+    isUnableToServiceOrCanceled_States() {
+        let isState = false ;
+        if (Date.now() < Date.parse(this.bookingModel.venue.start_time_iso)) {
+        isState = this.bookingModel.state === BOOKING_STATE.Cancelled_chargeable ? true :
+                this.bookingModel.state === BOOKING_STATE.Unable_to_service ? true :
+                this.bookingModel.state === BOOKING_STATE.Cancelled_no_charge ? true : false ;
+            }
+        return isState;
+    }
     isPassedState(bookingStatus: string) {
-        return parseInt(this.bookingState.toString(), 10) >
+        return parseInt(this.bookingModel.state.toString(), 10) >
             parseInt(BOOKING_STATE[bookingStatus].toString(), 10);
     }
 
     infoClick() {
         if (this.isActive('booking-job') || this.isActive('job-detail')) {
             return;
-        } else {
+       } else {
             if (this.isModelChanged(this.oldBookingModel, this.bookingModel)) {
                 let config: MdDialogConfig = {
                     disableClose: true
