@@ -43,7 +43,7 @@ Feature: Booking Admin Management
     Then I can see the button state 'Invite' is hidden
     Then I can see the button state 'Assign' is hidden
 
-  @runThis
+  @ignoreThis
   Scenario: Given 1 verified Booking Officer, The invite button should be hidden
     Given I exist as an Booking Officer
     Given I create the interpreter of type 'blockout'
@@ -61,7 +61,7 @@ Feature: Booking Admin Management
     Then I select 1 Interpreter
     Then I can see the button state 'Invite' is hidden
 
-  @runThis
+  @ignoreThis
   Scenario: Given 1 verified Booking Officer, The accept should show a dialogbox
     Given I exist as an Booking Officer
     Given I create the interpreter of type 'blockout'
