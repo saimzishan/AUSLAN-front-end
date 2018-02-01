@@ -85,14 +85,14 @@
         <div class="medium-3 columns"> <md-checkbox name="cbCaptioning" #cbCaptioning [(ngModel)]="cbCaptioner" (change)="serviceTypeChange('cbCaptioner',cbCaptioning)" [disabled]="cbCaptioner && forEdit">CAPTIONING</md-checkbox> </div>
         <div class="medium-3 columns"> <md-checkbox name="cbNotetaking" #cbNotetaking [(ngModel)]="cbNotetaker" (change)="serviceTypeChange('cbNotetaker',cbNotetaking)" [disabled]="cbNotetaker && forEdit">NOTETAKING</md-checkbox> </div>
         <div class="medium-3 columns"> <md-checkbox name="cbOtherLanguage" #cbOtherLanguage [(ngModel)]="cbOtherLanguageNeeds" (change)="serviceTypeChange('cbOtherLanguageNeeds',cbOtherLanguage)" [disabled]="cbOtherLanguageNeeds && forEdit">OTHER LANGUAGE NEEDS</md-checkbox> </div>
-     </div> 
+     </div>
       <div class="row" *ngIf="cbDeafBlindInterpreter || cbVisualFrameInterpreter || cbTactileInterpreter || cbPlatformInterpreter" name="deafBlindInterpreterTypes">
-          <div class="medium-3 columns"> <md-checkbox name="cbVisualFrame" #cbVisualFrame [(ngModel)]="cbVisualFrameInterpreter" (change)="serviceTypeChange('cbVisualFrameInterpreter',cbVisualFrame)" [disabled]="cbVisualFrameInterpreter && forEdit">VISUAL FRAME</md-checkbox> </div>
+        <br><div class="medium-3 columns"> <md-checkbox name="cbVisualFrame" #cbVisualFrame [(ngModel)]="cbVisualFrameInterpreter" (change)="serviceTypeChange('cbVisualFrameInterpreter',cbVisualFrame)" [disabled]="cbVisualFrameInterpreter && forEdit">VISUAL FRAME</md-checkbox> </div>
           <div class="medium-3 columns"> <md-checkbox name="cbTactile" #cbTactile [(ngModel)]="cbTactileInterpreter" (change)="serviceTypeChange('cbTactileInterpreter',cbTactile)" [disabled]="cbTactileInterpreter && forEdit">TACTILE</md-checkbox> </div>
           <div class="medium-3 columns"> <md-checkbox name="cbPlatform" #cbPlatform [(ngModel)]="cbPlatformInterpreter" (change)="serviceTypeChange('cbPlatformInterpreter',cbPlatform)" [disabled]="cbPlatformInterpreter && forEdit">PLATFORM</md-checkbox> </div>
       </div>
       <div class="row" *ngIf="cbOtherLanguageNeeds || cbAslInterpreter || cbBslInterpreter || cbIslInterpreter || cbSignedEnglishInterpreter || cbIndigenousSignInterpreter" name="otherLanguageTypes">
-          <div class="medium-3 columns"> <md-checkbox name="cbAsl" [(ngModel)]="cbAslInterpreter" (change)="serviceTypeChange('cbAslInterpreter',cbAsl)" [disabled]="cbAslInterpreter && forEdit">ASL</md-checkbox> </div>
+        <br> <div class="medium-3 columns"> <md-checkbox name="cbAsl" [(ngModel)]="cbAslInterpreter" (change)="serviceTypeChange('cbAslInterpreter',cbAsl)" [disabled]="cbAslInterpreter && forEdit">ASL</md-checkbox> </div>
           <div class="medium-3 columns"> <md-checkbox name="cbBsl" [(ngModel)]="cbBslInterpreter" (change)="serviceTypeChange('cbBslInterpreter',cbBsl)" [disabled]="cbBslInterpreter && forEdit">BSL</md-checkbox> </div>
           <div class="medium-3 columns"> <md-checkbox name="cbIsl" [(ngModel)]="cbIslInterpreter" (change)="serviceTypeChange('cbIslInterpreter',cbIsl)" [disabled]="cbIslInterpreter && forEdit">ISL</md-checkbox> </div>
           <div class="medium-3 columns"> <md-checkbox name="cbSignedEnglish" [(ngModel)]="cbSignedEnglishInterpreter" (change)="serviceTypeChange('cbSignedEnglishInterpreter',cbSignedEnglish)" [disabled]="cbSignedEnglishInterpreter && forEdit">SIGNED ENGLISH</md-checkbox> </div>

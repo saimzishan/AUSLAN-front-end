@@ -525,8 +525,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             return;
         }
         if (this.shouldSelectDeafBlindOtherLanguage()) {
-            let msg = this.cbDeafBlindInterpreter ? 'Deaf Blind' : 'Other Language Needs';
-            this.notificationServiceBus.launchNotification(true, 'Kindly select at least one option from ' + msg);
+            let msg = this.cbDeafBlindInterpreter ? 'deaf blind interpreter' : '"Other Language Needs"';
+            this.notificationServiceBus.launchNotification(true, 'Select at least one type of ' + msg);
             return;
         }
         if (!this.termsAndConditionAccepted && !this.forEdit) {

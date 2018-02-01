@@ -100,3 +100,4 @@ Feature: Validation of Profile Registration.
     When I fill the field 'address_post_code' with value '3054'
     And I jump to 'address_unit_num' element
     Then I will get a valid notification
+    
