@@ -30,6 +30,7 @@ defineSupportCode(({Given, Then, When}) => {
     Given(/^One booking has start and end dates as first and last days of next week$/, Heroku.updateBookingStartAndEndDateTime);
     Given(/^I can see the '(.*)' auto populated$/, createBookingPO.sectionAutoPopulated);
     Given(/^I can see the booking address is '(.*)'$/, createBookingPO.bookingAddressPopulated);
+    Given(/^There exist (\d+) verified interpreters$/, Heroku.preloadVerifiedInterpreters);
 
     When(/^I click at the (.*) one of (.*) (.*) Bookings$/, bookingManagementPO.clickAtOneofTheBooking);
     When(/^I click on 'New Booking'$/, bookingManagementPO.clickOnNewBooking);
