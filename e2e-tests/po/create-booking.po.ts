@@ -234,13 +234,24 @@ export class BookingPage extends PageObject {
         return this.createBookingWithAddressTimeAndInterpreter('standard', '10:15 AM', '11:15 AM', '2');
     }
 
+    private autocompleteAndChooseFirstWith(searchTerm: string) {
+        this.enterSearchTermInAutocomplete(searchTerm);
+        const suggestions = this.getAllElementByCSS('ul.ui-autocomplete-items.ui-autocomplete-list li');
+        return suggestions.first().click();
+    }
+
+    enterSearchTermInAutocomplete(searchTerm: string) {
+        const autocompleteEl = this.getElementByCss('input.ui-autocomplete-input');
+        return autocompleteEl.sendKeys(searchTerm);
+    }
+
     selectClientAsBookbable = () => {
-        return this.getElementByName('booking_for').sendKeys('ted');
+        return this.autocompleteAndChooseFirstWith('ted');
     }
 
     selectOrgRepAsBookbable = () => {
         element(by.name('rdBookingFor')).all(by.tagName('md-radio-button')).get(1).click();
-        return this.getElementByName('booking_for').sendKeys('Curve');
+        return this.autocompleteAndChooseFirstWith('Curve');
     }
 
     checkTheFieldExist = (cant: string, fieldName: string) => {

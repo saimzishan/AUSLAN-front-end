@@ -496,11 +496,7 @@ defineSupportCode(({Given, When, Then}) => {
         return el.click();
     }
 
-    When(/^I search for '(.*)' in autocomplete$/, enterSearchTermInAutocomplete);
-    function enterSearchTermInAutocomplete(searchTerm: string) {
-        const autocompleteEl = page.getElementByCss('input.ui-autocomplete-input');
-        return autocompleteEl.sendKeys(searchTerm);
-    }
+    When(/^I search for '(.*)' in autocomplete$/, bookingPage.enterSearchTermInAutocomplete);
 
     Then(/^I am shown (.*) as a suggestion$/, isAutocompleteSuggestionShown);
     function isAutocompleteSuggestionShown(suggestionTerm: string) {
