@@ -66,9 +66,10 @@
             </section>
         </section>
     </ng-container>
-        <div class="actions">
-                <button name="btnSave">Save</button>
-                <button name="btnClaim" (click)="updatePayment(payroll_form)">Claim</button>
+        <div *ngIf="payments.payroll_attributes.length > 0" class="actions">
+                <button name="btnSave" (click)="updatePayment(payroll_form)">Save</button>
+                <button *ngIf="isCurrentUserAdmin() && isStateCompleteOrCancelCharge()" name="btnClaim" (click)="claimPressed = true">Claim</button>
+                <button *ngIf="isCurrentUserAdmin() && isActiveState('Claimed')" name="btnUndoClaim" (click)="undoClaimPressed = true">Undo claim</button>
         </div>
     </form>  
     </main>

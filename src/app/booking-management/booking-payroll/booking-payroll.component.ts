@@ -7,6 +7,8 @@ import {NotificationServiceBus} from '../../notification/notification.service';
 import {ActivatedRoute} from '@angular/router';
 import * as moment from 'moment';
 import {Payments} from '../../shared/model/payment.entity';
+import {BOOKING_STATE} from '../../shared/model/booking-state.enum';
+import {Administrator} from '../../shared/model/user.entity';
 
 @Component({
   selector: 'app-booking-payroll',
@@ -17,6 +19,8 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
   bookingModel: Booking = new Booking();
   private sub: any;
   payments = new Payments();
+  claimPressed = false;
+  undoClaimPressed = false;
 
   constructor(public spinnerService: SpinnerService, public bookingService: BookingService,
               private route: ActivatedRoute, public notificationServiceBus: NotificationServiceBus) { }
@@ -77,12 +81,22 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
             this.notificationServiceBus.launchNotification(true, 'Oops! Only numbers and dots allowed. Please try again.');
             return;
         }
+
+        if (this.claimPressed || this.undoClaimPressed) {
+            let state = this.claimPressed ? 'claimed' : 'service_completed';
+            this.changeBookingState(state);
+        } else {
+            this.savePayment();
+        }
+    }
+
+    savePayment() {
         this.spinnerService.requestInProcess(true);
         this.payments.timeDistanceConversion('payroll', this.payments.payroll_attributes);
         this.payments.timeDistanceConversion('invoice', this.payments.invoice_attributes);
         this.bookingService.updateBookingPayments(this.bookingModel.id, this.payments).subscribe((res: any) => {
             if (res.status === 204) {
-                this.notificationServiceBus.launchNotification(false, 'Hurray! Changes saved successfully.');
+                this.notificationServiceBus.launchNotification(false, 'Hurray! Payroll & Billing details have been updated.');
                 this.fetchBookingPayment(this.bookingModel.id);
             }
             this.spinnerService.requestInProcess(false);
@@ -92,6 +106,25 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
             let e = err.json() || 'There is some error on server side';
             this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
         });
+    }
+
+    changeBookingState(state: string) {
+        this.spinnerService.requestInProcess(true);
+        this.bookingService.updateBookingByTransitioning(this.bookingModel.id, state)
+            .subscribe((res: any) => {
+                    if (res.status === 204) {
+                        let msg = this.claimPressed ? 'Claimed' : 'Service Completed';
+                        this.notificationServiceBus.launchNotification(false, 'The booking has been transitioned to ' + msg + ' state');
+                        this.claimPressed = this.undoClaimPressed = false;
+                        this.fetchBooking(this.bookingModel.id);
+                    }
+                    this.spinnerService.requestInProcess(false);
+                },
+                err => {
+                    this.spinnerService.requestInProcess(false);
+                    let e = err.json() || 'There is some error on server side';
+                    this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
+                });
     }
 
     cbChanged(payrollInvoice: string, field: string, index) {
@@ -139,4 +172,16 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
             }
     }
 
+    isStateCompleteOrCancelCharge() {
+        return this.bookingModel.state === BOOKING_STATE.Service_completed ||
+                this.bookingModel.state === BOOKING_STATE.Cancelled_chargeable;
+    }
+
+    isActiveState(bookingState: string) {
+        return BOOKING_STATE[this.bookingModel.state].toLowerCase() === bookingState.toLowerCase();
+    }
+
+    isCurrentUserAdmin() {
+        return GLOBAL.currentUser instanceof Administrator;
+    }
 }

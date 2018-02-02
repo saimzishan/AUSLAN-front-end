@@ -84,7 +84,9 @@ export class BookingListComponent implements OnInit {
     }
 
     isStateCancelClaimOrComplete(state) {
-           return state === BOOKING_STATE.Service_completed || state === BOOKING_STATE.Cancelled_chargeable;
+           return state === BOOKING_STATE.Service_completed || state === BOOKING_STATE.Cancelled_chargeable ||
+                  state === BOOKING_STATE.Claimed || state === BOOKING_STATE.Claimed_exported || state === BOOKING_STATE.Cancelled_claimed ||
+                  state === BOOKING_STATE.Cancelled_claimed_exported;
     }
 
     isCurrentUser(id) {
