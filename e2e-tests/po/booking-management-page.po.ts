@@ -300,8 +300,8 @@ export class BookingManagementPage extends PageObject {
     filterBookingByCurrentDate = () => {
         let today = new Date();
         let todayDate = {
-            mm: this.prettyDate(today.getMonth() + 1), //January is 0!
             dd: this.prettyDate(today.getDate()),
+            mm: this.prettyDate(today.getMonth() + 1), //January is 0!
             yy: today.getFullYear().toString()
         };
         let datefrom = this.getElementByName('date_from');

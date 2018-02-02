@@ -278,3 +278,4 @@ Feature: Booking Management
     Then I will get an error notification saying "Oops! Too many captioners already allocated. Please unassign first."
 
         #----------------------------------------- AUSLAN1-977 -> END ----------------------------------------
+        

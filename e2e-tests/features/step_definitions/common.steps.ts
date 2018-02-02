@@ -9,6 +9,7 @@ import {BookingManagementPage} from '../../po/booking-management-page.po';
 import {ResetPage} from '../../po/reset-page.po';
 import {BookingPage} from '../../po/create-booking.po';
 import {BookingJobPage} from '../../po/booking-job.po';
+import {BookingPayrollPage} from '../../po/booking-payroll.po';
 import * as path from 'path';
 
 defineSupportCode(({Given, When, Then}) => {
@@ -19,6 +20,7 @@ defineSupportCode(({Given, When, Then}) => {
     let resetPage = new ResetPage();
     let bookingPage = new BookingPage();
     let bookingJob = new BookingJobPage();
+    let bookingPayroll = new BookingPayrollPage();
     const EC = protractor.ExpectedConditions;
     // // ================================== GIVEN PART ========================================
     Given(/^There is (.*) (.*) (.*)/, preloadANumberOfUser);
@@ -175,6 +177,32 @@ defineSupportCode(({Given, When, Then}) => {
         expect(input).to.exist;
         input.clear();
         return page.setValue(input, value);
+    }
+
+    Given(/^I fill the payroll field '(.*)' with value '(.*)'/, fillPayrollField);
+    
+        function fillPayrollField(lblString: string, value: string) {
+            let input = page.getElementByCss('input[ng-reflect-name="'+lblString+'"]');
+            expect(input).to.exist;
+            input.clear();
+            return page.setValue(input, value);
+    }
+
+    Given(/^I clear the payroll input field '(.*)'/, clearPayrollField);
+
+    function clearPayrollField(fieldName: string) {
+            let input = bookingPayroll.getElementByCss('input[ng-reflect-name="'+fieldName+'"]');
+            expect(input).to.exist;
+            input.clear();
+    }
+
+    Given(/^I can see the payroll element '(.*)' has text '(.*)'/, checkPayrollFieldText);
+    
+    function checkPayrollFieldText(fieldName: string, text: string) {
+                let input = bookingPayroll.getElementByCss('input[ng-reflect-name="'+fieldName+'"]');
+                        return input.getAttribute('value').then(elmTxt => {
+                            return expect(elmTxt).to.be.eq(text);
+                    });
     }
 
     Given(/^I jump to '(.*)' element$/, toNextElement);
@@ -439,6 +467,20 @@ defineSupportCode(({Given, When, Then}) => {
             expect(val).to.be.eq(bVal+'');
         });
     }
+
+    When(/^I verify material checkbox name '(.*)' is checked '(.*)'$/, verifyMaterialCB);
+    function verifyMaterialCB(btnName: string, checkedState: string) {
+        let bVal = ((checkedState === 'True') || (checkedState === 'true'));
+        return page.getElementByCss('md-checkbox[ng-reflect-name="'+btnName+'"]').getAttribute('ng-reflect-model').then(val => {
+            expect(val).to.be.eq(bVal+'');
+        });
+    }
+
+    When(/^I click on material checkbox name '(.*)'$/, clickMaterialCB);
+    function clickMaterialCB(cbName: string) {
+        return page.getElementByCss('md-checkbox[ng-reflect-name="'+cbName+'"]').click();
+    }
+
     When(/^I verify radiobutton name '(.*)' and is checked$/, verifyOnRBByName);
     function verifyOnRBByName(name: string) {
         let elm = page.getElementByName(name);

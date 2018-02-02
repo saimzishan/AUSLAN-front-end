@@ -31,6 +31,7 @@ export class BlockoutComponent implements OnDestroy, OnInit {
     dialogSub;
     userID = -1;
     queryParamSub;
+    defaultDateTime: Date;
     constructor(public userDataService: UserService,
                 public notificationServiceBus: NotificationServiceBus,
                 public spinnerService: SpinnerService,
@@ -64,6 +65,7 @@ export class BlockoutComponent implements OnDestroy, OnInit {
                     new Date(this.availabilityBlock.start_time);
             }
         });
+        this.roundOffMinutes();
     }
     isUserAdminOrBO () {
         return GLOBAL.currentUser instanceof Administrator ||
@@ -92,6 +94,16 @@ export class BlockoutComponent implements OnDestroy, OnInit {
         dt.setTime(this.start_time.getTime() + (1 * 60 * 60 * 1000));
         this.end_time = dt;
         console.log(this.end_time);
+    }
+    roundOffMinutes() {
+        let dt = new Date();
+        let currentDate = new Date();
+        this.defaultDateTime = currentDate;
+        let minute = Math.ceil(currentDate.getMinutes() / 5) * 5;
+        this.defaultDateTime.setMinutes(minute);
+        this.start_time = this.defaultDateTime;
+        dt.setTime(this.defaultDateTime.getTime() + (1 * 60 * 60 * 1000));
+        this.end_time = dt;
     }
     getRoute () {
         this.router.navigate([ this.isUserAdminOrBO() ? '/user-management' : '/user-management/profile']);

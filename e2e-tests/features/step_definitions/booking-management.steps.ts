@@ -4,6 +4,7 @@ import {Heroku} from '../../helper';
 import {BookingPage} from '../../po/create-booking.po';
 import {BookingJobPage} from '../../po/booking-job.po';
 import {BookingEditPage} from '../../po/booking-edit.po';
+import {BookingPayrollPage} from '../../po/booking-payroll.po';
 
 defineSupportCode(({Given, Then, When}) => {
 
@@ -12,6 +13,7 @@ defineSupportCode(({Given, Then, When}) => {
     let createBookingPO = new BookingPage();
     let bookingJobPO = new BookingJobPage();
     let bookingEditPO = new BookingEditPage();
+    let bookingPayrollPO = new BookingPayrollPage();
 
     Given(/^The booking has status '(.*)'$/, Heroku.updateBookingWithStatus);
     Given(/^The booking has assignment category '(.*)'$/, Heroku.updateBookingWithCategory);
@@ -126,4 +128,8 @@ defineSupportCode(({Given, Then, When}) => {
     Then(/^I note the value under (.*) column$/, bookingJobPO.noteTableDetails);
     Then(/^The value under the (.*) column is the same as I noted above$/, bookingJobPO.checkNotedTableDetails);
     Then(/^I should\s?(not)? see the attachment icons under Attached column$/, bookingJobPO.checkAttachmentIcons);
+    Then(/^I should be on the payroll and billing page$/, bookingPayrollPO.verify);
+    Then(/^I verify that payroll '(.*)' input fields are non editable$/, bookingPayrollPO.checkReadonlyFields);
+    Then(/^I verify that payroll '(.*)' input fields have zero value$/, bookingPayrollPO.checkInputValues);
+    Then(/^I should get a valid payroll save notification$/, bookingPayrollPO.getSuccessNotificationContent);
 });

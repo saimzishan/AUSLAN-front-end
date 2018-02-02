@@ -1,0 +1,75 @@
+<section id="page-common">
+  <app-booking-header [showButtons]='false' [bookingModel]='bookingModel'></app-booking-header>
+  <section id="job-booking">
+    <main>
+    <form #payroll_form="ngForm" class="common-form reduced-top">
+      <app-booking-info [selectedBookingModel]="bookingModel"></app-booking-info>
+      
+        <h2>Payroll details</h2>
+        <ng-container *ngFor="let payroll of payments.payroll_attributes; let i = index">
+        <section class="payroll-card">
+            <section class="payroll-card__interpreter">
+                <header class="payroll-card__header">Interpreter {{i+1}}: {{payroll.interpreter_first_name +' '+payroll.interpreter_last_name}}</header>
+                <section class="payroll-card__content">
+                    <section class="common-form">
+                        PAYROLL AS
+                        <select name="{{'payrollAs_' + i}}" class="menu custom gray">
+                            <option [value]="Casual">Casual</option>
+                        </select>
+ 
+                    </section>
+                    <section>
+                        <div class="payroll-card__option">
+                            <md-checkbox name="{{'cbPayInterpreter_' + i}}" [(ngModel)]="payroll.pay_interpreter" (change)="cbChanged('payroll_attributes','pay_interpreter',i)">
+                                Pay interpreter
+                                <span class="note note_block note_green note_small">RECOMMENDED</span>
+                        </md-checkbox>
+                        </div>
+                        <div class="payroll-card__option payroll-card__option_with-offset">
+                            <md-checkbox name="{{'cbPayTravel_' + i}}" [(ngModel)]="payroll.pay_travel" [disabled]="!payroll.pay_interpreter"
+                                                                        (change)="cbChanged('payroll_attributes','pay_travel',i)">
+                                Pay travel
+                                <span class="note note_block note_small">NOT RECOMMENDED</span>
+                        </md-checkbox>
+                        </div>
+                    </section>
+                </section>
+
+                <app-payroll-time [payrollInvoice]="payroll" [index]="i" [parentForm]="payroll_form" [isReadOnly]="!payroll.pay_interpreter"></app-payroll-time>
+
+            </section>
+
+            <section class="payroll-card__client">
+                <header class="payroll-card__header">{{payments.invoice_attributes[i].organisation_name}}</header>
+                <section class="payroll-card__content">
+                    <section>
+                        <div class="payroll-card__option">
+                            <md-checkbox name="{{'cbInvoiceClient_' + i}}" [(ngModel)]="payments.invoice_attributes[i].invoice_client"
+                                                                            (change)="cbChanged('invoice_attributes','invoice_client',i)">
+                                Invoice client
+                                <span class="note note_block note_green note_small">RECOMMENDED</span>
+                        </md-checkbox>
+                        </div>
+                        <div class="payroll-card__option payroll-card__option_with-offset">
+                            <md-checkbox name="{{'cbChargeTravel_' +i}}" [(ngModel)]="payments.invoice_attributes[i].charge_travel" [disabled]="!payments.invoice_attributes[i].invoice_client"
+                                                                          (change)="cbChanged('invoice_attributes','charge_travel',i)">
+                                Charge travel
+                                <span class="note note_block note_small">NOT RECOMMENDED</span>
+                        </md-checkbox>
+                        </div>
+                    </section>
+                </section>
+
+                <app-payroll-time [payrollInvoice]="payments.invoice_attributes[i]" [isClient]="true" [index]="i" [parentForm]="payroll_form"
+                                  [isReadOnly]="!payments.invoice_attributes[i].invoice_client"></app-payroll-time>
+
+            </section>
+        </section>
+    </ng-container>
+        <div class="actions">
+                <button name="btnClaim" (click)="updatePayment(payroll_form)">Claim</button>
+        </div>
+    </form>  
+    </main>
+  </section>
+</section>
