@@ -146,4 +146,3 @@ Feature: User Profile Management
     When I click on the option  profile
     Then I will be taken to my individual profile page
     
-    

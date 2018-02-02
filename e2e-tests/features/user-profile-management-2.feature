@@ -161,4 +161,3 @@ Feature: User Profile Management
     And I will be taken to my individual profile page
     When I click on Profile 'Change Password'
     Then I will be taken to my individual secure_pass page
-    
