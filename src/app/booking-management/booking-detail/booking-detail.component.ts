@@ -428,7 +428,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             if (this.showProfilePreferred) {
                 this.oldInterpreterPreference = this.oldInterpreterPreference.concat(prefInt);
             } else {
-                this.oldInterpreterPreference = this.oldInterpreterPreference.filter(item => prefInt.every(item2 => item2.interpreter_id !== item.interpreter_id))
+                this.oldInterpreterPreference = this.oldInterpreterPreference.filter(item => prefInt.every(item2 => item2.interpreter_id !== item.interpreter_id));
             }
             this.filterUserPreference(this.oldInterpreterPreference);
         }
