@@ -260,8 +260,6 @@ export class BookingPage extends PageObject {
     }
     private getDateAfterNDays = (n: number): string => {
         const currentDate = new Date();
-        const dayOfWeek = currentDate.getDay();
-        n = dayOfWeek === 0 ? n + 1 : (dayOfWeek === 6 ? n - 1 : n); // Saturday and Sunday
         const dateStart = new Date(new Date(currentDate).setDate(currentDate.getDate() + n));
         return [
             this.prettyDate(dateStart.getDate()),
