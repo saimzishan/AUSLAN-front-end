@@ -186,78 +186,92 @@
                     </section>
                 </section>
 
-                <section *ngIf='!isCancelledOrUnableToServe && !isCurrentUserInterpreter()' id="invited-interpreters">
-                    <table class="custom custom-small-table">
-                        <thead>
-                        <tr>
-                            <th width="10%">
-                            </th>
-                            <th width="7%">
-                                <span class="">#</span>
-                            </th>
-                            <th width="12%">
-                                <span class="">Status</span>
-                            </th>
-                            <th width="12%">
-                                <span class="">Preferred</span>
-                            </th>
-                            <th width="17%">
-                                <span class="">First Name</span>
-                            </th>
-                            <th width="17%">
-                                <span class="">Last Name</span>
-                            </th>
-                            <th width="9%">
-                                <span class="">Role (S,C)</span>
-                            </th>
-                            <th width="9%">
-                                <span class="">Lvl</span>
-                            </th>
-                            <th width="15%">
-                                <span class="">Suburb</span>
-                            </th>
-                            <th width="9%">
-                                <span class="">Km</span>
-                            </th>
-                            <th width="9%">
-                                <span class="">Pay Travel (Y/N)</span>
-                            </th>
-                            <th width="9%">
-                                <span class="">Notes</span>
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr *ngFor="let user of interpreterList; let ind = index">
-                            <td width="10%">
-                                <md-checkbox name='{{"Check" + ind}}'
-                                             [checked]="checkList[ind]===true"
-                                             (change)="onChange($event,user, ind)">
-                                </md-checkbox>
-                            </td>
-                            <td>{{user.id}}</td>
-                            <td align="center">
-                                <i aria-hidden="true" [ngClass]="getInterpreterIconClass(user)"></i>
+                <section *ngIf='!isCancelledOrUnableToServe && !isCurrentUserInterpreter()' id="invited-interpreters"  class="interpreters-list">
+                    <section class="section-left">
+                        <table class="custom custom-small-table">
+                            <thead>
+                            <tr>
+                                <th width="10%">
+                                </th>
+                                <th width="7%">
+                                    <span class="">#</span>
+                                </th>
+                                <th width="12%">
+                                    <span class="">Status</span>
+                                </th>
+                                <th width="12%">
+                                    <span class="">Preferred</span>
+                                </th>
+                                <th width="17%">
+                                    <span class="">First Name</span>
+                                </th>
+                                <th width="17%">
+                                    <span class="">Last Name</span>
+                                </th>
+                                <th width="9%">
+                                    <span class="">Role (S,C)</span>
+                                </th>
+                                <th width="9%">
+                                    <span class="">Lvl</span>
+                                </th>
+                                <th width="15%">
+                                    <span class="">Suburb</span>
+                                </th>
+                                <th width="9%">
+                                    <span class="">Km</span>
+                                </th>
+                                <th width="9%">
+                                    <span class="">Pay Travel (Y/N)</span>
+                                </th>
+                                <th width="9%">
+                                    <span class="">Notes</span>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let user of interpreterList | paginate: { itemsPerPage: 20, currentPage: currentPage, totalItems: totalItems } let ind = index">
+                                <td width="10%">
+                                    <md-checkbox name='{{"Check" + ind}}'
+                                                 [checked]="checkList[ind]===true"
+                                                 (change)="onChange($event,user, ind)">
+                                    </md-checkbox>
+                                </td>
+                                <td>{{user.id}}</td>
+                                <td align="center">
+                                    <i aria-hidden="true" [ngClass]="getInterpreterIconClass(user)"></i>
 
-                            </td>
-                            <td align="center">
-                                {{isPreferred(user.id) ? 'Preferred' : ' - '}}
-                            </td>
-                            <td>
+                                </td>
+                                <td align="center">
+                                    {{isPreferred(user.id) ? 'Preferred' : ' - '}}
+                                </td>
+                                <td>
 
-                                <a name="lnkEditUser" [routerLink]="['/init']" [queryParams]="{selectedRole:'INTERPRETER',uid:user.id, edit_user:
+                                    <a name="lnkEditUser" [routerLink]="['/init']" [queryParams]="{selectedRole:'INTERPRETER',uid:user.id, edit_user:
 												stringifyUser(user)}"> {{user.first_name}} </a>
-                            </td>
-                            <td>{{user.last_name}}</td>
-                            <td>{{isStaff(user) ? 'Staff' : 'Casual'}}</td>
-                            <td>{{user.skill_level}}</td>
-                            <td>{{getSuburb(user)}}</td>
-                            <td>{{user.distance}}</td>
-                            <td>{{ travelPayStatus(user)}}</td>
-                            <td>{{user.booking_office_notes}}</td>
-                        </tr>
-                        </tbody>
-                    </table>
+                                </td>
+                                <td>{{user.last_name}}</td>
+                                <td>{{isStaff(user) ? 'Staff' : 'Casual'}}</td>
+                                <td>{{user.skill_level}}</td>
+                                <td>{{getSuburb(user)}}</td>
+                                <td>{{user.distance}}</td>
+                                <td>{{ travelPayStatus(user)}}</td>
+                                <td>{{user.booking_office_notes}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="pagination">
+                            <div class="element element_inline ui-grid-col-6 left text-left" id="displayTxt" *ngIf="totalItems > 0">
+                                {{'Displaying ' + (((currentPage - 1) * 20) + 1) + ' - '
+                                + ( interpreterList.length < 20 ? totalItems : (currentPage * 20)) + ' of ' + totalItems + ' Interpreter' +
+                                (interpreterList.length > 1 ? 's' : '')}}
+                            </div>
+                            <div class="element element_inline ui-grid-col-6 right text-right">
+                                <pagination-controls class="my-pagination" *ngIf="totalItems >= 10"
+                                                     (pageChange)="getPage($event)"></pagination-controls>
+                            </div>
+                        </div>
+                    </section>
+
                     <section *ngIf="showCalendar">
                         <section id="time">{{ startTime | date}} {{ startTime | date:'shortTime'}} - {{ endTime | date:'shortTime'}}</section>
                         <section>

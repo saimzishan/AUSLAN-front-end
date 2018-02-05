@@ -448,6 +448,11 @@ export class Heroku {
         Heroku.sendTaskToHeroku(task);
     }
 
+    static preloadVerifiedInterpreters(count: string) {
+        let task = 'seed:test_data:preloaded_interpreters[' + count + ']';
+        Heroku.sendTaskToHeroku(task);
+    }
+
     static createSingleUser(data) {
         let return_command = '';
         let userType = User.user_type(data.type);

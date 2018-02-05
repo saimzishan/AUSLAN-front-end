@@ -51,8 +51,9 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     showCalendar = false;
     startTime: Date;
     endTime: Date;
-
     @ViewChild('cchart') cchart;
+    currentPage = 1;
+    totalItems;
 
     constructor(public dialog: MdDialog,
                 public viewContainerRef: ViewContainerRef, public spinnerService: SpinnerService,
@@ -369,10 +370,21 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                 });
     }
 
+
+    getPage(page: number) {
+        this.currentPage = page;
+        console.log(page);
+        this.route.params.subscribe(params => {
+            let param_id = params['id'] || '';
+            this.fetchNearbyinterpreters(param_id);
+        });
+    }
+
     fetchNearbyinterpreters(booking_id) {
-        this.bookingService.nearbyBookings(booking_id)
+        this.bookingService.nearbyBookings(booking_id, this.currentPage)
             .subscribe((res: any) => {
                     if (res.status === 200) {
+                        this.totalItems = Boolean(res.data.paginates) ? res.data.paginates.total_records : res.data.users.length;
                         this.interpreterList = res.data.users;
                     }
                     this.showCalendar = true;
