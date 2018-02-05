@@ -12,7 +12,8 @@ export class Booking {
     public link_id: number;
     public venue: Venue = new Venue();
     public requested_by: Contact = new Contact();
-    public last_updated: Date;
+    public created_at: Date;
+    public updated_at: Date;
     public update_by: string;
     public status: string;
     public deaf_person: DEAFContact = new DEAFContact();
@@ -65,6 +66,7 @@ export class Booking {
     public recurring: boolean;
     public recurrence_end_date: Date;
     public repeat_booking_on_days: Array<string>;
+    public service_type: string;
     // Is it a limitation on interpreters invitation.
 
     static getNamedTimeZone(state: string, postCode: string) {
@@ -156,6 +158,9 @@ export class Booking {
         this.venue.expected_attendance = data.number_of_people_attending;
         this.venue.title = data.venue || '';
         this.status = data.status;
+        this.service_type = data.service_type;
+        this.created_at = data.created_at;
+        this.updated_at = data.updated_at;
         this.venue.id = data.address_attributes.id || '';
         this.venue.unit_number = data.address_attributes.unit_number || '';
         this.venue.street_number = data.address_attributes.street_number;
