@@ -95,6 +95,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     cbIndigenousSignInterpreter = false;
     defaultDateTime: Date;
     isRecurringBooking = false;
+    isReadonlyForBO = false;
     repeat_days = [
         {
             display: 'S',
@@ -178,6 +179,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 this.bookingHeading = 'EDIT BOOKING';
                 this.termsAndConditionAccepted = true;
                 this.checkInterpreterBoxes();
+                this.isReadonlyForBO = (GLOBAL.currentUser instanceof BookingOfficer &&
+                                        this.bookingModel.state === BOOKING_STATE.Claimed);
             } else {
                 this.bookingHeading = 'NEW BOOKING';
                 this.bookingModel.bookable_type = this.bookingModel.bookable_type || 'IndividualClient';

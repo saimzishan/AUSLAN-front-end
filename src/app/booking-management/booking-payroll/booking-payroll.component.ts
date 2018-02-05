@@ -8,7 +8,7 @@ import {ActivatedRoute} from '@angular/router';
 import * as moment from 'moment';
 import {Payments} from '../../shared/model/payment.entity';
 import {BOOKING_STATE} from '../../shared/model/booking-state.enum';
-import {Administrator} from '../../shared/model/user.entity';
+import {Administrator, BookingOfficer} from '../../shared/model/user.entity';
 
 @Component({
   selector: 'app-booking-payroll',
@@ -21,6 +21,7 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
   payments = new Payments();
   claimPressed = false;
   undoClaimPressed = false;
+  isReadonlyForBO = false;
 
   constructor(public spinnerService: SpinnerService, public bookingService: BookingService,
               private route: ActivatedRoute, public notificationServiceBus: NotificationServiceBus) { }
@@ -48,6 +49,8 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
                     this.bookingModel.fromJSON(data);
                     this.bookingModel.venue.start_time_iso = this.bookingModel.utcToBookingTimeZone(this.bookingModel.venue.start_time_iso);
                     this.bookingModel.venue.end_time_iso = this.bookingModel.utcToBookingTimeZone(this.bookingModel.venue.end_time_iso);
+                    this.isReadonlyForBO = (GLOBAL.currentUser instanceof BookingOfficer &&
+                                            this.bookingModel.state === BOOKING_STATE.Claimed);
                 }
                 this.spinnerService.requestInProcess(false);
             },
@@ -114,7 +117,7 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
             .subscribe((res: any) => {
                     if (res.status === 204) {
                         let msg = this.claimPressed ? 'Claimed' : 'Service Completed';
-                        this.notificationServiceBus.launchNotification(false, 'The booking has been transitioned to ' + msg + ' state');
+                        this.notificationServiceBus.launchNotification(false, 'The booking has been transitioned to \"' + msg + '\" state');
                         this.claimPressed = this.undoClaimPressed = false;
                         this.fetchBooking(this.bookingModel.id);
                     }

@@ -39,7 +39,7 @@ export class BookingPayrollPage extends PageObject {
 
     getSuccessNotificationContent = () => {
         return browser.sleep(1200).then(() => {
-            NotificationObject.getNotificationContent('Hurray! Changes saved successfully.');
+            NotificationObject.getNotificationContent('Hurray! Payroll & Billing details have been updated.');
         });
     }
 }
