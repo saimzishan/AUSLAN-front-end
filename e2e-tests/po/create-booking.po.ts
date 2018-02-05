@@ -241,7 +241,7 @@ export class BookingPage extends PageObject {
     }
 
     enterSearchTermInAutocomplete(searchTerm: string) {
-        const autocompleteEl = this.getElementByCss('input.ui-autocomplete-input');
+        const autocompleteEl = element(by.css('input.ui-autocomplete-input'));
         return autocompleteEl.sendKeys(searchTerm);
     }
 
