@@ -94,8 +94,8 @@
                         <input type="text" name="interpreter_name"  (blur) ="filter('interpreter', filterByInterpreter.value.interpreter_name)" [(ngModel)]="bookingFilter.interpreter_name">
                     </form>
                 </th>
-                <th width="15%">
-                    <span class="order" [ngClass]="getSortOrder('booking_type')" (click)="sort('booking_type')">Booking Type</span>
+                <th width="10%">
+                    <span class="order" [ngClass]="getSortOrder('booking_type')" (click)="sort('booking_type')">Nature</span>
                     <ul class="dropdown menu custom" id="booking-type" data-dropdown-menu>
                         <li>
                             <a href="javascript:void(0)">{{underScoreToSpaces(bookingFilter.booking_type)}}</a>
@@ -106,9 +106,36 @@
                             </ul>
                         </li>
                     </ul>
-                </th><!-- th>
-                <span class="order asc">Updated</span>
-            </th -->
+                </th>
+                <th>
+                    <span class="order" [ngClass]="getSortOrder('method_type')" (click)="sort('method_type')">Method</span>
+                    <ul class="dropdown menu custom" id="method" data-dropdown-menu>
+                        <li>
+                            <a href="javascript:void(0)">{{filterMethodType(bookingFilter.method_type)}}</a>
+                            <ul class="menu smaller">
+                                <li *ngFor="let method_type of bookingMethodTypes()">
+                                    <a href="javascript:void(0)" (click)="filter('method_type', method_type)"><i></i>{{filterMethodType(method_type)}}</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </th>
+                <th>
+                    <span class="order" [ngClass]="getSortOrder('service_type')" (click)="sort('service_type')">Service Type</span>
+                    <ul class="dropdown menu custom" id="service-type" data-dropdown-menu>
+                        <li>
+                            <a href="javascript:void(0)">{{underScoreToSpaces(bookingFilter.service_type)}}</a>
+                            <ul class="menu smaller">
+                                <li *ngFor="let service_type of bookingServiceTypes()">
+                                    <a href="javascript:void(0)" (click)="filter('service_type', service_type)"><i></i>{{service_type}}</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </th>
+                <!-- th>
+                    <span class="order asc">Updated</span>
+                </th -->
                 <th *ngIf="isCurrentUserAllowed()" width="7%">
                     <span>Actions</span>
                 </th>
@@ -205,6 +232,8 @@
                     </ng-container>
                     {{booking.raw_nature_of_appointment}}
                 </td>
+                <td>{{filterMethodType(booking.method_type)}}</td>
+                <td>{{booking.service_type}}</td>
                 <!-- td><span class="underline">02-06 TS<br>7:15 A</span></td -->
 
                 <td *ngIf="isCurrentUserAllowed()">

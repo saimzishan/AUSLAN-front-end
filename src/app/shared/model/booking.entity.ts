@@ -37,6 +37,7 @@ export class Booking {
     public update_all_linked_bookings: boolean;
     public is_metro: boolean;
     public method_type: string;
+    public service_type: string;
     public number_of_auslan_interpreters_required: number;
     public number_of_deaf_interpreters_required: number;
     public number_of_captioners_required: number;
@@ -166,6 +167,7 @@ export class Booking {
         this.venue.end_time_iso = new Date(data.end_time).toISOString();
         this.venue.parking_type = data.parking_availability;
         this.method_type = data.method_type;
+        this.service_type = data.service_type;
         this.number_of_auslan_interpreters_required = data.number_of_auslan_interpreters_required;
         this.number_of_deaf_interpreters_required = data.number_of_deaf_interpreters_required;
         this.number_of_captioners_required = data.number_of_captioners_required;
