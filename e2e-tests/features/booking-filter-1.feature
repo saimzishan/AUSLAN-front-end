@@ -142,3 +142,37 @@ Feature: Booking Filter
     When I query booking with client name 'Papu'
     Then I am shown with 1 booking
     Then I see one row with client last name 'Papu'
+
+  @runThis
+  Scenario: Given 1 verified Booking Officer, I should be able to filter by booking method
+    Given The booking has method type 'VRI'
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    When I am on the bookings page
+    Then I am shown with 5 bookings
+    When I hover on the Method dropdown and select 'VRI'
+    Then I am shown with 1 booking
+    Then I see one row with method 'VRI'
+
+  @runThis
+  Scenario: Given 1 verified Booking Officer, I should be able to filter by booking status
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    When I am on the bookings page
+    Then I am shown with 5 bookings
+    When I click on an individual booking
+    Then I am on the individual booking page
+    When I click on link 'Booking details'
+    Then I click on checkbox name 'cbCaptioning'
+    And I verify checkbox name 'cbCaptioning' is checked 'true'
+    And I verify checkbox name 'cbAuslan' is checked 'false'
+    Then I fill the field 'captioner_count' with value '2'
+    When I click on BUTTON 'SAVE'
+    Then If I am shown a popup message 'Would you like to save these changes for all bookings or only for this one?', I approve it
+    Then I should get a valid booking update notification
+    When I click on Bookings
+    Then I am on the bookings page
+    And I am shown with 5 bookings
+    When I hover on the Service Type dropdown and select 'CAPTIONING'
+    Then I am shown with 1 booking
+#    Then I see one row with status 'VRI'

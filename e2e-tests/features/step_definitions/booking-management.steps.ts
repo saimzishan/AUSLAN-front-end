@@ -16,6 +16,7 @@ defineSupportCode(({Given, Then, When}) => {
     let bookingPayrollPO = new BookingPayrollPage();
 
     Given(/^The booking has status '(.*)'$/, Heroku.updateBookingWithStatus);
+    Given(/^The booking has method type '(.*)'$/, Heroku.updateBookingWithMethodType);
     Given(/^The booking has assignment category '(.*)'$/, Heroku.updateBookingWithCategory);
     Given(/^There exist (\d+) bookings$/, Heroku.createBulkBookings);
     Given(/^There exist (\d+) bookings? with(out)? link id$/, Heroku.createBulkBookingsWithLinkId);
@@ -37,6 +38,7 @@ defineSupportCode(({Given, Then, When}) => {
     When(/^I see (one|\d+) rows? with state '(.*)'$/, bookingManagementPO.bookingWithStateExists);
     When(/^I see (one|\d+) rows? with status '(.*)'$/, bookingManagementPO.bookingWithStatusExists);
     When(/^I see (one|\d+) rows? with type '(.*)'$/, bookingManagementPO.bookingWithTypeExists);
+    When(/^I see (one|\d+) rows? with method '(.*)'$/, bookingManagementPO.bookingWithMethodExists);
     When(/^I do not see any row with state '(.*)'$/, bookingManagementPO.noBookingWithStateExists);
     When(/^I click on an individual booking of type '(.*)'$/, bookingManagementPO.clickOnIndividualBookingOfType);
     When(/^I do not see any booking rows$/, bookingManagementPO.noBookingExists);

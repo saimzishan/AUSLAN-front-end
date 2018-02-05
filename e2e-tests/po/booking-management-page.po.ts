@@ -53,7 +53,9 @@ export class BookingManagementPage extends PageObject {
             'Status': 'booking-status',
             'State': 'booking-state',
             'Type': 'booking-type',
-            'userlist': 'user-roles'
+            'userlist': 'user-roles',
+            'Method': 'method',
+            'Service Type': 'service-type',
         }[headerTitle];
         let el = this.getElementByCss(headerCss);
         return browser.actions().mouseMove(el).perform().then(() => {
@@ -94,6 +96,7 @@ export class BookingManagementPage extends PageObject {
     clickOnNewBooking = () => {
         return this.getElementByID('lnkNewBooking').click();
     }
+
     showPopup = () => {
         return browser.wait(protractor.ExpectedConditions.presenceOf(this.getElementByCss('app-popup')), 30000).then(() => {
 
@@ -161,6 +164,13 @@ export class BookingManagementPage extends PageObject {
             'orange': 'status-allocated'
         }[booking_status];
         return this.getAllElementByCSS('i[class="status ' + className + '"]').count().then((cnt) => {
+            expect(cnt.toString()).to.be.eq(count);
+        });
+    }
+
+    bookingWithMethodExists = (count: string, bookingMethod: string) => {
+        if (count === 'one') { count = '1'; }
+        return this.getAllByCSSandText('tbody td', bookingMethod).count().then((cnt) => {
             expect(cnt.toString()).to.be.eq(count);
         });
     }
