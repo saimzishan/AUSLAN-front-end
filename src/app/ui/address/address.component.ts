@@ -30,6 +30,7 @@ export class AddressComponent implements AfterViewInit, OnInit {
     isTravelCostApplicable = false;
     addressTypes = {
         'premise' : 'short_name',
+        'subpremise' : 'short_name',
         'street_number' : 'short_name',
         'route' : 'long_name',
         'locality' : 'long_name',
@@ -38,6 +39,7 @@ export class AddressComponent implements AfterViewInit, OnInit {
     };
     addressAttrs = {
         'premise' : 'unit_number',
+        'subpremise' : 'unit_number',
         'street_number' : 'street_number',
         'route' : 'street_name',
         'locality' : 'suburb',
