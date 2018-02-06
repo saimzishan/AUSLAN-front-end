@@ -17,6 +17,7 @@ import {GLOBAL} from '../../shared/global';
 import {BookingHeaderService} from '../booking-header/booking-header.service';
 import {LinkidPopupComponent} from '../linkid-popup/linkid-popup.component';
 import {DatePipe} from '@angular/common';
+import {URLSearchParams} from '@angular/http';
 
 @Component({
     selector: 'app-booking-jobs',
@@ -45,6 +46,8 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     disableAccept = false;
     disableReject = false;
     private currentStatus = 'Invited';
+    private filterInterpreterParams = new URLSearchParams();
+    private currentSort = {'field': 'distance', 'order': 'asc'};
     stateStr = '';
     hideInvite = false;
     hideAccept = false;
@@ -387,7 +390,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     }
 
     fetchNearbyinterpreters(booking_id) {
-        this.bookingService.nearbyBookings(booking_id, this.currentPage)
+        this.bookingService.nearbyBookings(booking_id, this.currentPage, GLOBAL.getInterpreterSearchParameters())
             .subscribe((res: any) => {
                     if (res.status === 200) {
                         this.totalItems = Boolean(res.data.paginates) ? res.data.paginates.total_records : res.data.users.length;
@@ -781,5 +784,33 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         return blocked_int.filter(
             i => i.interpreter_id === user_id
         ).length > 0;
+    }
+
+    private isCurrentSort(field: string) {
+        return this.currentSort.field === field;
+    }
+
+    private setCurrentSort(field: string) {
+        let order = 'asc';
+        if (this.isCurrentSort(field)) {
+            order = this.currentSort.order === 'asc' ? 'desc' : 'asc';
+        }
+        this.currentSort.field = field;
+        this.currentSort.order = order;
+    }
+
+    getSortOrder(field: string) {
+        return this.isCurrentSort(field) ? this.currentSort.order : '';
+    }
+
+    sortInterpreters(field: string) {
+        this.setCurrentSort(field);
+        this.filterInterpreterParams.set('sort', this.currentSort.field);
+        this.filterInterpreterParams.set('direction', this.currentSort.order);
+        GLOBAL._filterInterpreterVal = this.filterInterpreterParams;
+        this.route.params.subscribe(params => {
+            let param_id = params['id'] || '';
+            this.fetchNearbyinterpreters(param_id);
+        });
     }
 }

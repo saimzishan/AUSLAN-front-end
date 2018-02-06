@@ -194,7 +194,7 @@
                                 <th width="10%">
                                 </th>
                                 <th width="7%">
-                                    <span class="">#</span>
+                                    <span class="order" [ngClass]="getSortOrder('interpreter_ids')" (click)="sortInterpreters('interpreter_ids')">Id</span>
                                 </th>
                                 <th width="12%">
                                     <span class="">Status</span>
@@ -203,22 +203,22 @@
                                     <span class="">Preferred</span>
                                 </th>
                                 <th width="17%">
-                                    <span class="">First Name</span>
+                                    <span class="order" [ngClass]="getSortOrder('first_name')" (click)="sortInterpreters('first_name')">First Name</span>
                                 </th>
                                 <th width="17%">
-                                    <span class="">Last Name</span>
+                                    <span class="order" [ngClass]="getSortOrder('last_name')" (click)="sortInterpreters('last_name')">Last Name</span>
                                 </th>
                                 <th width="9%">
                                     <span class="">Role (S,C)</span>
                                 </th>
                                 <th width="9%">
-                                    <span class="">Lvl</span>
+                                    <span class="order" [ngClass]="getSortOrder('skill_level')" (click)="sortInterpreters('skill_level')">Lvl</span>
                                 </th>
                                 <th width="15%">
-                                    <span class="">Suburb</span>
+                                    <span class="order" [ngClass]="getSortOrder('suburb')" (click)="sortInterpreters('suburb')">Suburb</span>
                                 </th>
                                 <th width="9%">
-                                    <span class="">Km</span>
+                                    <span class="order" [ngClass]="getSortOrder('distance')" (click)="sortInterpreters('distance')">Km</span>
                                 </th>
                                 <th width="9%">
                                     <span class="">Pay Travel (Y/N)</span>
