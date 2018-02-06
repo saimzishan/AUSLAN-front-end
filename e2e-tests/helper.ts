@@ -555,6 +555,12 @@ export class Heroku {
         Heroku.sendCommandToHeroku(command);
     }
 
+    static updateBookingWithMethodType(method: string) {
+        let method_type = method === 'VRI' ? '1' : '0';
+        let command = 'Booking.last.update(method_type: ' + method_type + ')';
+        Heroku.sendCommandToHeroku(command);
+    }
+
     static updateBookingWithClientName(client_name: string) {
         let command = 'Booking.last.update(deaf_persons_first_name: "' + client_name + '")';
         Heroku.sendCommandToHeroku(command);
