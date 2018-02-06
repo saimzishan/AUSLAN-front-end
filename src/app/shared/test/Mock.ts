@@ -115,6 +115,11 @@ export class MockUserService extends ApiService {
         });
     }
 
+    getUser(id: number): Observable<Object> {
+        return Observable.of(mock_empty_response).map(res => {
+            return res;
+        });
+    }
 }
 
 
