@@ -9,3 +9,7 @@
     font-size: 0.820rem !important;
     margin: 5px  10px;
 }
+
+.my-pagination /deep/ .ngx-pagination .current {
+    background: #02b86e !important;
+}
