@@ -192,7 +192,7 @@ Feature: Booking Payroll and Billing
     And I can see the element with name 'linkPayroll' is 'not visible'
 
   @runThis
-  Scenario: Given 1 verified Administrator and Booking Officer, As an Administrator I can see the save and claim buttons when booking is in Cancelled charge state and I can not see the claim button as a Booking Officer, INTERPRETER exists
+  Scenario: Given 1 verified Administrator and Booking Officer, As an admin I can see the save and claim buttons when booking is in Cancelled charge state and I can not see the claim button as book officer, INTERPRETER exists
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
     And I am on the bookings page
@@ -225,7 +225,7 @@ Feature: Booking Payroll and Billing
     And I can see the element with name 'btnClaim' is 'not visible'
 
   @runThis
-  Scenario: Given 1 verified Administrator, As an Administrator i will be moved to payroll tab when booking is in Cancelled charge, service completed or claimed state, INTERPRETER exists
+  Scenario: Given 1 verified Administrator, As an admin i will be moved to payroll tab when booking is in Cancelled charge, service completed or claimed state, INTERPRETER exists
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
     And I am on the bookings page
