@@ -21,8 +21,13 @@ export class Payments {
     minutesToTime(minutes: string) {
         let min = +minutes;
         let hours = Math.floor(min / 60);
-        let remainingMinutes = (min % 60).toString();
+        let remainingMinutes = this.roundOffMinutes(min % 60).toString();
         return hours + ':' + (remainingMinutes.length === 1 ? '0' + remainingMinutes : remainingMinutes);
+    }
+
+    roundOffMinutes(minutes: number) {
+        let minute = Math.ceil(minutes / 5) * 5;
+        return minute;
     }
 
     timeDistanceConversion(type: string, data: any) {
@@ -48,9 +53,9 @@ export class Payments {
 
     meterToKm(meters: string) {
         if (meters === '0.0') {
-            return meters;
+            return 0;
         } else {
-            return (+meters / 1000);
+            return Math.ceil((+meters / 1000));
         }
     }
 

@@ -17,6 +17,7 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
   bookingModel: Booking = new Booking();
   private sub: any;
   payments = new Payments();
+  oldPayments;
 
   constructor(public spinnerService: SpinnerService, public bookingService: BookingService,
               private route: ActivatedRoute, public notificationServiceBus: NotificationServiceBus) { }
@@ -62,6 +63,7 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
             if (res.status === 200) {
                 this.payments.fromJSON('payroll', res.data.payments.payrolls);
                 this.payments.fromJSON('invoice', res.data.payments.invoices);
+                this.oldPayments = this.deepCopy(this.payments);
             }
             this.spinnerService.requestInProcess(false);
         },
@@ -137,6 +139,11 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
                     }
                 }
             }
+    }
+
+    deepCopy(oldObj: any) {
+            let newObj = JSON.parse(JSON.stringify(oldObj));
+            return newObj;
     }
 
 }
