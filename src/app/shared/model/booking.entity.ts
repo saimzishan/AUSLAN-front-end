@@ -37,6 +37,7 @@ export class Booking {
     public update_all_linked_bookings: boolean;
     public is_metro: boolean;
     public method_type: string;
+    public service_type: string;
     public number_of_auslan_interpreters_required: number;
     public number_of_deaf_interpreters_required: number;
     public number_of_captioners_required: number;
@@ -165,7 +166,8 @@ export class Booking {
         this.venue.start_time_iso = new Date(data.start_time).toISOString();
         this.venue.end_time_iso = new Date(data.end_time).toISOString();
         this.venue.parking_type = data.parking_availability;
-        this.method_type = data.method_type;
+        this.method_type = this.displayMethodType(data.method_type);
+        this.service_type = data.service_type;
         this.number_of_auslan_interpreters_required = data.number_of_auslan_interpreters_required;
         this.number_of_deaf_interpreters_required = data.number_of_deaf_interpreters_required;
         this.number_of_captioners_required = data.number_of_captioners_required;
@@ -297,7 +299,7 @@ export class Booking {
             venue: this.venue.title,
             requested_by_first_name: this.requested_by.first_name,
             requested_by_last_name: this.requested_by.last_name,
-            method_type: this.method_type,
+            method_type: this.setMethodType(this.method_type),
             frequency: this.frequency,
             recurrence_end_date: this.recurrence_end_date,
             recurring: this.recurring,
@@ -382,5 +384,27 @@ export class Booking {
     utcToBookingTimeZone(time: string) {
         let timeZone = Booking.getNamedTimeZone(this.venue.state, this.venue.post_code.toString());
         return momentTimeZone(time).tz(timeZone).format();
+    }
+
+    setMethodType(method: string) {
+        switch (method) {
+            case 'On Site':
+                return 'onsite';
+            case 'VRI':
+                return 'vri';
+            default:
+                return method;
+        }
+    }
+
+    displayMethodType(method: string) {
+        switch (method) {
+            case 'onsite':
+                return 'On Site';
+            case 'vri':
+                return 'VRI';
+            default:
+                return method;
+        }
     }
 }

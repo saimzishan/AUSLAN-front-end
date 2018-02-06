@@ -118,6 +118,25 @@ export class BookingListComponent implements OnInit {
         return ['All', ...keys];
     }
 
+    filterMethodType(methodType: string) {
+        switch (methodType) {
+            case 'onsite':
+                return 'On Site';
+            case 'vri':
+                return 'VRI';
+            default:
+                return 'All';
+        }
+    }
+    bookingMethodTypes() {
+        return ['All', 'onsite', 'vri'];
+    }
+    bookingServiceTypes() {
+        let keys = ['ASL', 'AUSLAN', 'BSL', 'CAPTIONING', 'NOTETAKING', 'DEAF', 'DEAF BLIND', 'INDIGENOUS SIGN',
+            'ISL', 'PLATFORM', 'SIGNED ENGLISH', 'TACTILE', 'VISUAL FRAME'];
+        return ['All', ...keys];
+    }
+
     filterStatus() {
         return BOOKING_STATUS[this.bookingFilter.booking_status];
     }

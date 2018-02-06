@@ -154,6 +154,18 @@ export class MockBookingService extends ApiService {
         });
     }
 
+    getBookingPayments(booking_id: number): Observable<Object> {
+        return Observable.of(mock_fetch_booking_response).map(res => {
+            return res;
+        });
+    }
+
+    updateBookingPayments(booking_id: number, payment): Observable<Object> {
+        return Observable.of(mock_fetch_booking_response).map(res => {
+            return res;
+        });
+    }
+
 }
 
 @Injectable()

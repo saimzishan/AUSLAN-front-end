@@ -4,7 +4,7 @@ import {BOOKING_STATE} from '../../shared/model/booking-state.enum';
 import {Booking} from '../../shared/model/booking.entity';
 import {GLOBAL} from '../../shared/global';
 import {Administrator, BookingOfficer, Interpreter, OrganisationalRepresentative} from '../../shared/model/user.entity';
-import {Router} from '@angular/router';
+import {Router, NavigationExtras} from '@angular/router';
 import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
 import {PopupComponent} from '../../shared/popup/popup.component';
 import {NotificationServiceBus} from '../../notification/notification.service';
@@ -23,7 +23,6 @@ export class BookingHeaderComponent implements OnInit, OnDestroy {
     @Input() unAssignPress = false;
     @Input() reAssignPress = false;
     @Input() unlinkPress = false;
-    @Input() bookingState = BOOKING_STATE.None;
     @Input() showButtons = false;
     dialogRef: MdDialogRef<any>;
     dialogSub;
@@ -58,7 +57,17 @@ export class BookingHeaderComponent implements OnInit, OnDestroy {
     }
 
     bookingDetailClick() {
-        this.bookingHeaderService.notifyOther({option: 'editBooking', value: ''});
+            let navigationExtras: NavigationExtras = {
+                queryParams: {
+                    bookingModel: JSON.stringify(this.bookingModel),
+                    shouldEdit: 'edit', assignedInterpreter: this.bookingModel.interpreters.filter(i => i.state === 'Accepted').length
+                }
+            };
+            this.router.navigate(['/booking-management', 'edit-booking'], navigationExtras);
+    }
+
+    payrollClick() {
+        this.router.navigate(['/booking-management/' + this.bookingModel.id, 'payroll-billing']);
     }
 
     duplicateClick() {

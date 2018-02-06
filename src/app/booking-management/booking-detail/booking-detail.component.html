@@ -1,5 +1,5 @@
 <section id="page-booking">
-  <app-booking-header *ngIf="!isNewBooking()" [bookingState]="bookingModel.state" [showButtons]='false' [bookingModel]='bookingModel' [oldBookingModel]='oldBookingModel'></app-booking-header>
+  <app-booking-header *ngIf="!isNewBooking()" [showButtons]='false' [bookingModel]='bookingModel' [oldBookingModel]='oldBookingModel'></app-booking-header>
   <h1>{{bookingHeading}}</h1>
 
   <main>
@@ -34,7 +34,7 @@
       <div class="medium-12 columns">
         <div class="form-field">
           <label>ARE YOU MAKING A BOOKING FOR AN INDIVIDUAL CLIENT OR ORGANISATION?*</label>
-          <md-radio-group name="rdBookingFor" (change)='onBookingForChange()' [(ngModel)]="bookingModel.bookable_type" [disabled]="isDisabledForAdmin">
+          <md-radio-group name="rdBookingFor" [(ngModel)]="bookingModel.bookable_type" [disabled]="isDisabledForAdmin">
             <md-radio-button id ="IndividualClient" name ="IndividualClient" value="IndividualClient">CLIENT</md-radio-button>
             <md-radio-button id="OrganisationalRepresentative" name="OrganisationalRepresentative" value="OrganisationalRepresentative">ORGANISATION</md-radio-button>
           </md-radio-group>
@@ -43,23 +43,22 @@
     </div>
 
     <div class="row" *ngIf="!forEdit && isUserAdminORBookOfficer">
-      <div class="medium-6 columns">
+      <div class="medium-12 columns">
         <div class="form-field">
           <label>PLEASE SELECT THE {{bookingModel.bookable_type ==='IndividualClient' ? "CLIENT":"ORGANISATION"}}*
             <span mdTooltip="Select the Client/Org"><i class="inline-icon-tip"></i></span>
           </label>
-          <select [(ngModel)]="bookingModel.bookable_id" (change)='onBookingForSelectionChange()'
-                  #booking_for="ngModel" name="booking_for" [disabled]="isDisabledForAdmin"
-                  aria-label="A" required>
-            <option *ngFor="let item of bookingForItems" [value]="item.id">
-            {{ getOrgName(item) }}
-            </option>
-          </select>
-            <span *ngIf="booking_for.touched && !booking_for.errors?.required;"
-                  class="inline-icon inline-icon-valid valid"></span>
-            <span *ngIf="booking_for.touched && (booking_for.errors?.required);"
-                  class="inline-icon error">!
-            </span>
+          <p-autoComplete name='bookable'
+            [(ngModel)]="bookable"
+            [suggestions]="allClientsOrg"
+            (completeMethod)="filterBookingForItems($event)"
+            (onSelect)='onBookingForSelectionChange($event)'
+            field='displayName'
+            [style]="{'width':'100%'}">
+            <ng-template let-bookable pTemplate='item'>
+              <span>{{ getOrgName(bookable) }}</span>
+            </ng-template>
+          </p-autoComplete>
         </div>
       </div>
     </div>
@@ -85,14 +84,14 @@
         <div class="medium-3 columns"> <md-checkbox name="cbCaptioning" #cbCaptioning [(ngModel)]="cbCaptioner" (change)="serviceTypeChange('cbCaptioner',cbCaptioning)" [disabled]="cbCaptioner && forEdit">CAPTIONING</md-checkbox> </div>
         <div class="medium-3 columns"> <md-checkbox name="cbNotetaking" #cbNotetaking [(ngModel)]="cbNotetaker" (change)="serviceTypeChange('cbNotetaker',cbNotetaking)" [disabled]="cbNotetaker && forEdit">NOTETAKING</md-checkbox> </div>
         <div class="medium-3 columns"> <md-checkbox name="cbOtherLanguage" #cbOtherLanguage [(ngModel)]="cbOtherLanguageNeeds" (change)="serviceTypeChange('cbOtherLanguageNeeds',cbOtherLanguage)" [disabled]="cbOtherLanguageNeeds && forEdit">OTHER LANGUAGE NEEDS</md-checkbox> </div>
-     </div> 
+     </div>
       <div class="row" *ngIf="cbDeafBlindInterpreter || cbVisualFrameInterpreter || cbTactileInterpreter || cbPlatformInterpreter" name="deafBlindInterpreterTypes">
-          <div class="medium-3 columns"> <md-checkbox name="cbVisualFrame" #cbVisualFrame [(ngModel)]="cbVisualFrameInterpreter" (change)="serviceTypeChange('cbVisualFrameInterpreter',cbVisualFrame)" [disabled]="cbVisualFrameInterpreter && forEdit">VISUAL FRAME</md-checkbox> </div>
+        <br><div class="medium-3 columns"> <md-checkbox name="cbVisualFrame" #cbVisualFrame [(ngModel)]="cbVisualFrameInterpreter" (change)="serviceTypeChange('cbVisualFrameInterpreter',cbVisualFrame)" [disabled]="cbVisualFrameInterpreter && forEdit">VISUAL FRAME</md-checkbox> </div>
           <div class="medium-3 columns"> <md-checkbox name="cbTactile" #cbTactile [(ngModel)]="cbTactileInterpreter" (change)="serviceTypeChange('cbTactileInterpreter',cbTactile)" [disabled]="cbTactileInterpreter && forEdit">TACTILE</md-checkbox> </div>
           <div class="medium-3 columns"> <md-checkbox name="cbPlatform" #cbPlatform [(ngModel)]="cbPlatformInterpreter" (change)="serviceTypeChange('cbPlatformInterpreter',cbPlatform)" [disabled]="cbPlatformInterpreter && forEdit">PLATFORM</md-checkbox> </div>
       </div>
       <div class="row" *ngIf="cbOtherLanguageNeeds || cbAslInterpreter || cbBslInterpreter || cbIslInterpreter || cbSignedEnglishInterpreter || cbIndigenousSignInterpreter" name="otherLanguageTypes">
-          <div class="medium-3 columns"> <md-checkbox name="cbAsl" [(ngModel)]="cbAslInterpreter" (change)="serviceTypeChange('cbAslInterpreter',cbAsl)" [disabled]="cbAslInterpreter && forEdit">ASL</md-checkbox> </div>
+        <br> <div class="medium-3 columns"> <md-checkbox name="cbAsl" [(ngModel)]="cbAslInterpreter" (change)="serviceTypeChange('cbAslInterpreter',cbAsl)" [disabled]="cbAslInterpreter && forEdit">ASL</md-checkbox> </div>
           <div class="medium-3 columns"> <md-checkbox name="cbBsl" [(ngModel)]="cbBslInterpreter" (change)="serviceTypeChange('cbBslInterpreter',cbBsl)" [disabled]="cbBslInterpreter && forEdit">BSL</md-checkbox> </div>
           <div class="medium-3 columns"> <md-checkbox name="cbIsl" [(ngModel)]="cbIslInterpreter" (change)="serviceTypeChange('cbIslInterpreter',cbIsl)" [disabled]="cbIslInterpreter && forEdit">ISL</md-checkbox> </div>
           <div class="medium-3 columns"> <md-checkbox name="cbSignedEnglish" [(ngModel)]="cbSignedEnglishInterpreter" (change)="serviceTypeChange('cbSignedEnglishInterpreter',cbSignedEnglish)" [disabled]="cbSignedEnglishInterpreter && forEdit">SIGNED ENGLISH</md-checkbox> </div>
@@ -1000,7 +999,7 @@
             </span>
           </label>
           <md-radio-group name="rdcurrentUserIsClient" (change)='onClientSelectionChange()' 
-                          [disabled]="isDisabledForOrgRepIndClient || !isUserAdminORBookOfficer" [(ngModel)]="currentUserIsClient">
+                          [disabled]="isDisabledForOrgRepIndClient" [(ngModel)]="currentUserIsClient">
             <md-radio-button [value]="true">YES</md-radio-button>
             <md-radio-button [value]="false">NO</md-radio-button>
           </md-radio-group>

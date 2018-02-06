@@ -4,6 +4,7 @@ import {Heroku} from '../../helper';
 import {BookingPage} from '../../po/create-booking.po';
 import {BookingJobPage} from '../../po/booking-job.po';
 import {BookingEditPage} from '../../po/booking-edit.po';
+import {BookingPayrollPage} from '../../po/booking-payroll.po';
 
 defineSupportCode(({Given, Then, When}) => {
 
@@ -12,8 +13,10 @@ defineSupportCode(({Given, Then, When}) => {
     let createBookingPO = new BookingPage();
     let bookingJobPO = new BookingJobPage();
     let bookingEditPO = new BookingEditPage();
+    let bookingPayrollPO = new BookingPayrollPage();
 
     Given(/^The booking has status '(.*)'$/, Heroku.updateBookingWithStatus);
+    Given(/^The booking has method type '(.*)'$/, Heroku.updateBookingWithMethodType);
     Given(/^The booking has assignment category '(.*)'$/, Heroku.updateBookingWithCategory);
     Given(/^There exist (\d+) bookings$/, Heroku.createBulkBookings);
     Given(/^There exist (\d+) bookings? with(out)? link id$/, Heroku.createBulkBookingsWithLinkId);
@@ -28,12 +31,15 @@ defineSupportCode(({Given, Then, When}) => {
     Given(/^One booking has start and end dates as first and last days of next week$/, Heroku.updateBookingStartAndEndDateTime);
     Given(/^I can see the '(.*)' auto populated$/, createBookingPO.sectionAutoPopulated);
     Given(/^I can see the booking address is '(.*)'$/, createBookingPO.bookingAddressPopulated);
+    Given(/^There exist (\d+) verified interpreters$/, Heroku.preloadVerifiedInterpreters);
 
     When(/^I click at the (.*) one of (.*) (.*) Bookings$/, bookingManagementPO.clickAtOneofTheBooking);
     When(/^I click on 'New Booking'$/, bookingManagementPO.clickOnNewBooking);
     When(/^I see (one|\d+) rows? with state '(.*)'$/, bookingManagementPO.bookingWithStateExists);
     When(/^I see (one|\d+) rows? with status '(.*)'$/, bookingManagementPO.bookingWithStatusExists);
     When(/^I see (one|\d+) rows? with type '(.*)'$/, bookingManagementPO.bookingWithTypeExists);
+    When(/^I see (one|\d+) rows? with method '(.*)'$/, bookingManagementPO.bookingWithMethodExists);
+    When(/^I see (one|\d+) rows? with service type '(.*)'$/, bookingManagementPO.bookingWithServiceTypeExists);
     When(/^I do not see any row with state '(.*)'$/, bookingManagementPO.noBookingWithStateExists);
     When(/^I click on an individual booking of type '(.*)'$/, bookingManagementPO.clickOnIndividualBookingOfType);
     When(/^I do not see any booking rows$/, bookingManagementPO.noBookingExists);
@@ -126,4 +132,8 @@ defineSupportCode(({Given, Then, When}) => {
     Then(/^I note the value under (.*) column$/, bookingJobPO.noteTableDetails);
     Then(/^The value under the (.*) column is the same as I noted above$/, bookingJobPO.checkNotedTableDetails);
     Then(/^I should\s?(not)? see the attachment icons under Attached column$/, bookingJobPO.checkAttachmentIcons);
+    Then(/^I should be on the payroll and billing page$/, bookingPayrollPO.verify);
+    Then(/^I verify that payroll '(.*)' input fields are non editable$/, bookingPayrollPO.checkReadonlyFields);
+    Then(/^I verify that payroll '(.*)' input fields have zero value$/, bookingPayrollPO.checkInputValues);
+    Then(/^I should get a valid payroll save notification$/, bookingPayrollPO.getSuccessNotificationContent);
 });

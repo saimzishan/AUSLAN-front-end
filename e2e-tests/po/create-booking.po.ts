@@ -234,13 +234,24 @@ export class BookingPage extends PageObject {
         return this.createBookingWithAddressTimeAndInterpreter('standard', '10:15 AM', '11:15 AM', '2');
     }
 
+    private autocompleteAndChooseFirstWith(searchTerm: string) {
+        this.enterSearchTermInAutocomplete(searchTerm);
+        const suggestions = this.getAllElementByCSS('ul.ui-autocomplete-items.ui-autocomplete-list li');
+        return suggestions.first().click();
+    }
+
+    enterSearchTermInAutocomplete(searchTerm: string) {
+        const autocompleteEl = element(by.css('input.ui-autocomplete-input'));
+        return autocompleteEl.sendKeys(searchTerm);
+    }
+
     selectClientAsBookbable = () => {
-        return this.getElementByName('booking_for').sendKeys('ted');
+        return this.autocompleteAndChooseFirstWith('ted');
     }
 
     selectOrgRepAsBookbable = () => {
         element(by.name('rdBookingFor')).all(by.tagName('md-radio-button')).get(1).click();
-        return this.getElementByName('booking_for').sendKeys('Curve');
+        return this.autocompleteAndChooseFirstWith('Curve');
     }
 
     checkTheFieldExist = (cant: string, fieldName: string) => {
@@ -260,8 +271,6 @@ export class BookingPage extends PageObject {
     }
     private getDateAfterNDays = (n: number): string => {
         const currentDate = new Date();
-        const dayOfWeek = currentDate.getDay();
-        n = dayOfWeek === 0 ? n + 1 : (dayOfWeek === 6 ? n - 1 : n); // Saturday and Sunday
         const dateStart = new Date(new Date(currentDate).setDate(currentDate.getDate() + n));
         return [
             this.prettyDate(dateStart.getDate()),

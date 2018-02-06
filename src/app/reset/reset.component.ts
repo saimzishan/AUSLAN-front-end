@@ -18,14 +18,13 @@ export class ResetComponent {
       this.service.resetUser(this.emailAddress)
       .subscribe((res: any) => {
         if (res.status === 200) {
-            this.spinnerService.requestInProcess(false);
-
             let msg = 'The password has been reset for ' + this.emailAddress;
           this.notificationServiceBus.launchNotification(false, msg);
         }
+        this.spinnerService.requestInProcess(false);
       },
       err => {
-          this.spinnerService.requestInProcess(true);
+          this.spinnerService.requestInProcess(false);
         this.notificationServiceBus.launchNotification(true, 'The email address is not registered with us.');
       });
   }

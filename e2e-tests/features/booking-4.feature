@@ -5,20 +5,6 @@ Feature: Booking Management
     And I am on a computer
     And I am shown the login screen, with picture and signup button
 
-
-
-  @runThis
-  Scenario: Booking Officer can see  list of org reps, when making a booking, Organisational Representative , Individual Client exists
-    Given I exist as an Booking Officer
-    And I sign in with valid Booking Officer credentials
-    And I am on the bookings page
-    And I click on 'New Booking'
-    And I will be taken to the 'New Booking' form
-    Then I can see the booking_for field
-    And I see an option 'ted Individual Client' in 'booking_for' dropdown
-    Then I click on element by name 'OrganisationalRepresentative'
-    And I see an option 'CURVE TOMORROW - alana Organisational' in 'booking_for' dropdown
-
 # ---------------------------------------- AUSLAN1-727 -> END ----------------------------------------
 
 # ---------------------------------------- AUSLAN1-736, 737, 741, 901, 905 -> START ----------------------------------------

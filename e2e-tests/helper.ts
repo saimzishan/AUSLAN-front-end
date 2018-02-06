@@ -448,6 +448,11 @@ export class Heroku {
         Heroku.sendTaskToHeroku(task);
     }
 
+    static preloadVerifiedInterpreters(count: string) {
+        let task = 'seed:test_data:preloaded_interpreters[' + count + ']';
+        Heroku.sendTaskToHeroku(task);
+    }
+
     static createSingleUser(data) {
         let return_command = '';
         let userType = User.user_type(data.type);
@@ -547,6 +552,12 @@ export class Heroku {
         let daysToAdd = status === 'red' ? '2' : '4';
         let command = 'd = ' + daysToAdd + '.business_days.after(DateTime.now.change(hour: 10));';
         command += 'Booking.last.update(start_time: d, end_time: d + 1.hour);Booking.last.update_status';
+        Heroku.sendCommandToHeroku(command);
+    }
+
+    static updateBookingWithMethodType(method: string) {
+        let method_type = method === 'VRI' ? '1' : '0';
+        let command = 'Booking.last.update(method_type: ' + method_type + ')';
         Heroku.sendCommandToHeroku(command);
     }
 

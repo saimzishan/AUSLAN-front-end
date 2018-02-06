@@ -5,6 +5,8 @@ export interface BookingFilter {
     client_name?: string;
     interpreter_name?: string;
     booking_type?: string;
+    method_type?: string;
+    service_type?: string;
     suburb?: string;
     organisation?: string;
     date_from?: string;

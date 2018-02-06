@@ -1,0 +1,15 @@
+.interpreters-list {
+    width: 100% !important;
+}
+.interpreters-list .section-left {
+   width: 60% !important;
+}
+
+.interpreters-list .pagination {
+    font-size: 0.820rem !important;
+    margin: 5px  10px;
+}
+
+.my-pagination /deep/ .ngx-pagination .current {
+    background: #02b86e !important;
+}

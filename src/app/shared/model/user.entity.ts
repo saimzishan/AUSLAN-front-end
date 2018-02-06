@@ -102,6 +102,7 @@ export class Organisational extends User {
     public special_instructions = '';
     public billingAddressIsSame = true;
     public prefferedInterpreters = [];
+    public displayName: string;
 
     constructor(data) {
         super(data);
@@ -288,6 +289,7 @@ export class IndividualClient extends User {
     public billingAddressIsSame = true;
     public reffered_other: string;
     public prefferedInterpreters = [];
+    public displayName: string;
 
     constructor(data) {
         super(data);
@@ -413,7 +415,7 @@ export class Interpreter extends User {
     public address_attributes: Address = new Address();
     public long_term_availability: interpreter_avalability;
     public override_availabilty: blockout_availability;
-    public skill_level = 'Certified Conference Interpreter';
+    public skill_level;
     public location_pref = 'VIC';
     public communication_preference = 'email_and_sms';
     public assignments_attributes = [];

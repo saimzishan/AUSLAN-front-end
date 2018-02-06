@@ -37,30 +37,30 @@ import {PreferedAllocationService} from '../../shared/prefered-allocation.servic
 import {BookingHeaderService} from '../booking-header/booking-header.service';
 import {GmapsApiService} from '../../api/gmaps-api.service';
 import {RemoveSpacePipe} from '../../shared/pipe/remove-space.pipe';
-import {CalendarModule as PrimeNgCalendarModule} from 'primeng/primeng';
+import {AutoCompleteModule, CalendarModule as PrimeNgCalendarModule} from 'primeng/primeng';
 import {MapsAPILoader} from '@agm/core';
 
 describe('BookingDetailComponent', () => {
-  let component: BookingDetailComponent;
-  let fixture: ComponentFixture<BookingDetailComponent>;
+    let component: BookingDetailComponent;
+    let fixture: ComponentFixture<BookingDetailComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ BookingDetailComponent, EnumValPipe, AddressComponent,
-          BillingAccountComponent, TermandconditionComponent, BookingHeaderComponent,
-          InterpreterBoxComponent, InterpreterPopupComponent, RemoveSpacePipe
-      ],
-      imports: [CustomFormsModule, FileuploaderModule,
-        FormsModule, BrowserAnimationsModule, RouterTestingModule, HttpModule,
-        Md2Module.forRoot(),
-        MaterialModule, PrimeNgCalendarModule
-      ],  providers: [MdDialog,
-            ViewContainerRef,
-            DatePipe, RolePermission, PreferedAllocationService, BookingHeaderService,
-            NotificationServiceBus, { provide: BookingService, useClass: MockBookingService },
-            { provide: UserService, useClass: MockUserService }, { provide: MapsAPILoader, useClass: FakeOpMapsAPILoader},
-          SpinnerService, { provide: AuthHttp, useClass: MockBackend }, GmapsApiService,
-          {
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            declarations: [ BookingDetailComponent, EnumValPipe, AddressComponent,
+                BillingAccountComponent, TermandconditionComponent, BookingHeaderComponent,
+                InterpreterBoxComponent, InterpreterPopupComponent, RemoveSpacePipe
+            ],
+            imports: [CustomFormsModule, FileuploaderModule,
+                FormsModule, BrowserAnimationsModule, RouterTestingModule, HttpModule,
+                Md2Module.forRoot(),
+                MaterialModule, PrimeNgCalendarModule, AutoCompleteModule
+            ],  providers: [MdDialog,
+                ViewContainerRef,
+                DatePipe, RolePermission, PreferedAllocationService, BookingHeaderService,
+                NotificationServiceBus, { provide: BookingService, useClass: MockBookingService },
+                { provide: UserService, useClass: MockUserService }, { provide: MapsAPILoader, useClass: FakeOpMapsAPILoader},
+                SpinnerService, { provide: AuthHttp, useClass: MockBackend }, GmapsApiService,
+                {
                     provide: ActivatedRoute,
                     useValue: {
                         queryParams: {
@@ -70,19 +70,19 @@ describe('BookingDetailComponent', () => {
                         }
                     }
                 }]
-    })
-    .compileComponents();
-  }));
+        })
+            .compileComponents();
+    }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(BookingDetailComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    beforeEach(() => {
+        fixture = TestBed.createComponent(BookingDetailComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 
     it('should save the file name correctly when upload of file is complete', () => {
         component.fileName = 'test.png';

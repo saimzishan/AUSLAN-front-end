@@ -13,7 +13,7 @@ export class ApiService {
     */
     protected extractData(res: Response) {
       if (res.status < 200 || res.status >= 300) {
-        throw new Error(this.handleError(res));
+        return this.handleError(res);
       }
       return { status: res.status , data: res.json() || ''};
     }
