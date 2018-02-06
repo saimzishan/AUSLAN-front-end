@@ -7,7 +7,7 @@ import { debug } from 'util';
 
 enum BookingTableHeaders {
     None, Empty, Job, Status, State, Date, Org,
-    Client, Suburb, Interpreter, 'Booking Type'
+    Client, Suburb, Interpreter, Nature, Method, 'Service Type'
 }
 
 export class BookingManagementPage extends PageObject {
@@ -171,6 +171,13 @@ export class BookingManagementPage extends PageObject {
     bookingWithMethodExists = (count: string, bookingMethod: string) => {
         if (count === 'one') { count = '1'; }
         return this.getAllByCSSandText('tbody td', bookingMethod).count().then((cnt) => {
+            expect(cnt.toString()).to.be.eq(count);
+        });
+    }
+
+    bookingWithServiceTypeExists = (count: string, serviceType: string) => {
+        if (count === 'one') { count = '1'; }
+        return this.getAllByCSSandText('tbody td', serviceType).count().then((cnt) => {
             expect(cnt.toString()).to.be.eq(count);
         });
     }
@@ -449,7 +456,10 @@ export class BookingManagementPage extends PageObject {
             Org: 'compareByText', // Ted Bear > Adam Jones
             Client: 'compareByText', // John > Charles
             Suburb: 'compareByText', // Terabithia > Parkville
-            Interpreter: 'compareByText' // Dragana < 'To be filled' - default text
+            Interpreter: 'compareByText', // Dragana < 'To be filled' - default text
+            Nature: 'compareByText', // Dragana < 'To be filled' - default text
+            Method: 'compareByText', // Dragana < 'To be filled' - default text
+            'Service Type': 'compareByText' // Dragana < 'To be filled' - default text
         }[tableHeader];
 
         return this[compareMethod].call(BookingManagementPage, firstEl, lastEl, isAscending);
