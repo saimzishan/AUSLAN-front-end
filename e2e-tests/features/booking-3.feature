@@ -102,7 +102,6 @@ Feature: Booking Management
     And I click on 'New Booking'
     Then I will be taken to the 'New Booking' form
     And I can see the rdBookingFor field
-    And I can see the booking_for field
     And I select the bookable for client
     Then I can see the 'CONTACT DETAILS' auto populated
     And I can see the 'CLIENT DETAILS' auto populated
@@ -120,7 +119,6 @@ Feature: Booking Management
     And I click on 'New Booking'
     Then I will be taken to the 'New Booking' form
     And I can see the rdBookingFor field
-    And I can see the booking_for field
     And I select the bookable for org rep
     Then I can see the 'CONTACT DETAILS' auto populated
     And I can see the 'CLIENT DETAILS' auto populated
@@ -138,7 +136,6 @@ Feature: Booking Management
     And I click on 'New Booking'
     Then I will be taken to the 'New Booking' form
     And I can see the rdBookingFor field
-    And I can see the booking_for field
     And I select the bookable for client
     Then I can see the 'CONTACT DETAILS' auto populated
     And I can see the 'CLIENT DETAILS' auto populated
@@ -156,9 +153,7 @@ Feature: Booking Management
     And I click on 'New Booking'
     Then I will be taken to the 'New Booking' form
     And I can see the rdBookingFor field
-    And I can see the booking_for field
     And I select the bookable for org rep
-    And I see an option 'CURVE TOMORROW - alana Organisational' in 'booking_for' dropdown
     Then I can see the 'CONTACT DETAILS' auto populated
     And I can see the 'CLIENT DETAILS' auto populated
     And I can see the 'INVOICE DETAILS' auto populated
@@ -167,15 +162,3 @@ Feature: Booking Management
     And I can see the element with name 'contactMsg' has text 'DO YOU WANT TO USE THE STANDARD CONTACT PERSON FOR THIS BOOKING? *'
     And I can see the element with name 'invoiceMsg' has text 'Do you want to use standard invoice details for this booking? *'
 # ---------------------------------------- AUSLAN1-727 -> START ----------------------------------------
-  @runThis
-  Scenario: Given an Organisational Representative and an Individual Client, Administrator can see list of org reps, when making a booking
-    Given I exist as an Administrator
-    And I sign in with valid Administrator credentials
-    And I am on the bookings page
-    And I click on 'New Booking'
-    And I will be taken to the 'New Booking' form
-    Then I can see the booking_for field
-    And I see an option 'ted Individual Client' in 'booking_for' dropdown
-    Then I click on element by name 'OrganisationalRepresentative'
-    And I see an option 'CURVE TOMORROW - alana Organisational' in 'booking_for' dropdown
-    
