@@ -83,7 +83,7 @@ export class InterpreterComponent implements OnInit {
 
                     }).length)  > 0; // if it isn't in one of the ranges, don't render it (by returning false
                 },
-                defaultView: $(window).width() < 768 ? 'listMonth' : 'month',
+                defaultView: 'listMonth',
                 eventClick: (calEvent, jsEvent, view) => {
                     this.router.navigate(['/user-management/', calEvent.id, 'block_out']);
                 },
