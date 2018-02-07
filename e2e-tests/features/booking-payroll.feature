@@ -169,7 +169,7 @@ Feature: Booking Payroll and Billing
     And I can see the payroll element 'travelTime_client_0' has text '0:05'
     And I click on BUTTON 'Claim'
     Then I should get a valid payroll save notification
-    Then I can see the payroll element 'kiloMeters_interpreter_0' has text '1.4'
+    Then I can see the payroll element 'kiloMeters_interpreter_0' has text '1'
     And I can see the payroll element 'travelTime_interpreter_0' has text '0:05'
 
   @runThis
@@ -190,3 +190,33 @@ Feature: Booking Payroll and Billing
     Then I can see the button state 'Cancel Booking' is hidden
     Then I can see the button state 'Unable to Service' is hidden
     And I can see the element with name 'linkPayroll' is 'not visible'
+
+  @runThis
+  Scenario: Given 1 verified Booking Officer, I will get a warning popup when I move to bookng info or booking detail if there are unsaved changes on payroll page, INTERPRETER exists
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    And I am on the bookings page
+    When I click on an individual booking
+    Then I am on the individual booking page
+    Then I select 1 Interpreter
+    And I click on BUTTON name 'reassingBtn'
+    Then I can see the button 'Save' is enabled
+    And I click on BUTTON 'Save'
+    Then I wait for 1000 milli-seconds
+    Then I get valid message: 'The interpreter have been assigned'
+    When I click on link 'Payroll & Billing'
+    Then I should be on the payroll and billing page
+    When I click on link 'Booking details'
+    Then I should be on the edit booking page
+    When I click on link 'Payroll & Billing'
+    Then I should be on the payroll and billing page
+    When I click on link 'Booking info'
+    Then I am on the individual booking page
+    When I click on link 'Payroll & Billing'
+    Then I should be on the payroll and billing page
+    Then I click on material checkbox name 'cbPayTravel_0'
+    When I click on link 'Booking details'
+    Then I will be shown a popup message 'There are unsaved changes on this page. Are you sure you want to leave?'
+    When I click on BUTTON name 'noBtn'
+    When I click on link 'Booking info'
+    Then I will be shown a popup message 'There are unsaved changes on this page. Are you sure you want to leave?'

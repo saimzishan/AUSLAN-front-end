@@ -55,7 +55,7 @@ export class Payments {
         if (meters === '0.0') {
             return 0;
         } else {
-            return Math.ceil((+meters / 1000));
+            return Math.round((+meters / 1000));
         }
     }
 
