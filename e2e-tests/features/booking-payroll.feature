@@ -248,8 +248,8 @@ Feature: Booking Payroll and Billing
     And I am on the bookings page
     When I click on an individual booking
     Then I should be on the payroll and billing page
-    Then I wait for 1200 milli-seconds
     And I can see the element with name 'btnClaim' is 'visible'
+    Then I wait for 3000 milli-seconds
     Then I click on BUTTON 'Claim'
     When I click on BUTTON 'Save'
     Then I get a valid 'Claimed' notification for state
@@ -257,8 +257,8 @@ Feature: Booking Payroll and Billing
     And I am on the bookings page
     When I click on an individual booking
     Then I should be on the payroll and billing page
-    Then I wait for 1200 milli-seconds
     And I can see the element with name 'btnUndoClaim' is 'visible'
+    Then I wait for 3000 milli-seconds
     Then I click on BUTTON 'Undo claim'
     When I click on BUTTON 'Save'
     Then I get a valid 'Service Completed' notification for state
@@ -294,7 +294,7 @@ Feature: Booking Payroll and Billing
     Then I get a valid 'Claimed' notification for state
     And I can see the element with name 'btnClaim' is 'not visible'
     And I can see the element with name 'btnUndoClaim' is 'visible'
+    Then I wait for 3000 milli-seconds
     Then I click on BUTTON 'Undo claim'
     When I click on BUTTON 'Save'
-    Then I wait for 2000 milli-seconds
     Then I get a valid 'Service Completed' notification for state
