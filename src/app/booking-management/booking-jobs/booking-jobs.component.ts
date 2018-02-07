@@ -18,6 +18,7 @@ import {BookingHeaderService} from '../booking-header/booking-header.service';
 import {LinkidPopupComponent} from '../linkid-popup/linkid-popup.component';
 import {DatePipe} from '@angular/common';
 import {URLSearchParams} from '@angular/http';
+import {InterpreterFilter} from '../../shared/model/interpreter-filter.interface';
 
 @Component({
     selector: 'app-booking-jobs',
@@ -48,6 +49,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     private currentStatus = 'Invited';
     private filterInterpreterParams = new URLSearchParams();
     private currentSort = {'field': 'distance', 'order': 'asc'};
+    interpreterFilter: InterpreterFilter = {};
     stateStr = '';
     hideInvite = false;
     hideAccept = false;
@@ -806,5 +808,75 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
             let param_id = params['id'] || '';
             this.fetchNearbyinterpreters(param_id);
         });
+    }
+
+    private formatterValueFor(field: string, value: string) {
+        let formattedValue: string;
+        if (value !== undefined && value.toLowerCase() === 'all') {
+            return '';
+        }
+        // if (value && value.length) {
+        //     value = value.trim();
+        //     value = value.replace(/,$/g, '');
+        //     switch (field) {
+        //         case 'booking_status':
+        //             formattedValue = BOOKING_STATUS.hasOwnProperty(value) ? BOOKING_STATUS[value].toString() : '';
+        //             break;
+        //         case 'booking_type':
+        //             formattedValue = BOOKING_NATURE.hasOwnProperty(value) ? BOOKING_NATURE[value].toString() : '';
+        //             break;
+        //         default:
+        //             formattedValue = value;
+        //             break;
+        //     }
+        // }
+        return value;
+    }
+
+    filterInterpreters(field: string, value: string) {
+        this.interpreterFilter[field] = this.formatterValueFor(field, value);
+        for (let k in this.interpreterFilter) {
+            if (this.interpreterFilter.hasOwnProperty(k)) {
+                this.filterInterpreterParams.set('filter[' + k + ']', this.interpreterFilter[k]);
+            }
+        }
+        GLOBAL._filterInterpreterVal = this.filterInterpreterParams;
+        this.route.params.subscribe(params => {
+            let param_id = params['id'] || '';
+            this.fetchNearbyinterpreters(param_id);
+        });
+    }
+
+    preferredStatuses() {
+        return ['All', 'Yes', 'No'];
+    }
+    filterPreferredStatus() {
+        return this.interpreterFilter.preferred_status;
+    }
+
+    skillLevelList() {
+        let keys = ['Captioning', 'Certified Conference Interpreter', 'Certified Interpreter', 'Certified Provisional Interpreter',
+            'Certified Specialist Interpreter - Health', 'Certified Specialist Interpreter - Health & Legal', 'Certified Specialist Interpreter - Legal',
+            'Notetaking', 'Paraprofessional Level', 'Professional Level', 'Recognised', 'Recognised Practising'];
+        return ['All', ...keys];
+    }
+
+    filterSkillLevel() {
+        return this.interpreterFilter.skill_level;
+    }
+
+    travelPayStatuses() {
+        return ['All', 'Yes', 'No'];
+    }
+
+    filterPayStatus() {
+        return this.interpreterFilter.travel_pay_status;
+    }
+
+    underScoreToSpaces(str: string) {
+        if (!str) {
+            return 'All';
+        }
+        return str.replace(/_/g, ' ');
     }
 }
