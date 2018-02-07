@@ -180,7 +180,7 @@ defineSupportCode(({Given, When, Then}) => {
     }
 
     Given(/^I fill the payroll field '(.*)' with value '(.*)'/, fillPayrollField);
-    
+
         function fillPayrollField(lblString: string, value: string) {
             let input = page.getElementByCss('input[ng-reflect-name="'+lblString+'"]');
             expect(input).to.exist;
@@ -197,7 +197,7 @@ defineSupportCode(({Given, When, Then}) => {
     }
 
     Given(/^I can see the payroll element '(.*)' has text '(.*)'/, checkPayrollFieldText);
-    
+
     function checkPayrollFieldText(fieldName: string, text: string) {
                 let input = bookingPayroll.getElementByCss('input[ng-reflect-name="'+fieldName+'"]');
                         return input.getAttribute('value').then(elmTxt => {
@@ -494,6 +494,14 @@ defineSupportCode(({Given, When, Then}) => {
     function clickOnTableHeader(text: string) {
         let el = page.getElementByCSSandText('table thead tr th > span', text);
         return el.click();
+    }
+
+    When(/^I search for '(.*)' in autocomplete$/, bookingPage.enterSearchTermInAutocomplete);
+
+    Then(/^I am shown (.*) as a suggestion$/, isAutocompleteSuggestionShown);
+    function isAutocompleteSuggestionShown(suggestionTerm: string) {
+        const suggestionElement = page.getElementByCSSandText('ul.ui-autocomplete-items.ui-autocomplete-list li span', suggestionTerm);
+        return expect(suggestionElement.isPresent()).to.eventually.equal(true);
     }
 
     Then(/^I should not be able to navigate to '(.*)'$/, notNavigateToUrl);

@@ -37,7 +37,10 @@ Feature: Booking Admin Management
     When I click on link 'Booking details'
     Then I should be on the edit booking page
     When I click on link 'Booking info'
+    Then I will be shown a popup message
+    When I click on BUTTON name 'noBtn'
     Then I am on the individual booking page
+    And I wait for 1000 milli-seconds
     And The value under the Job column is the same as I noted above
 
   @runThis

@@ -31,7 +31,7 @@
         <section id="job-booking">
             <main>
                 <app-booking-info [selectedBookingModel]="selectedBookingModel"></app-booking-info>
-                <ng-container *ngIf="anyInterpreterAccepted() && !isCurrentUserInterpreter()">
+                <ng-container *ngIf="anyInterpreterAccepted()">
                     <div class="manage-interpreters-wrapper">
                         <section name="manage-interpreters-a" class="manage-interpreters">
                             <section>
