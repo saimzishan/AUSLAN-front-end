@@ -17,6 +17,7 @@ defineSupportCode(({Given, Then, When}) => {
 
     Given(/^The booking has status '(.*)'$/, Heroku.updateBookingWithStatus);
     Given(/^The booking has method type '(.*)'$/, Heroku.updateBookingWithMethodType);
+    Given(/^The booking has service type '(.*)'$/, Heroku.updateBookingWithServiceType);
     Given(/^The booking has assignment category '(.*)'$/, Heroku.updateBookingWithCategory);
     Given(/^There exist (\d+) bookings$/, Heroku.createBulkBookings);
     Given(/^There exist (\d+) bookings? with(out)? link id$/, Heroku.createBulkBookingsWithLinkId);

@@ -122,7 +122,7 @@ Feature: Booking Sort
     When I click on table header 'Org'
     Then I should see the bookings in descending order of Org
 
-     @runThis
+  @runThis
   Scenario: Given 1 verified Booking Officer, I should be able to sort by date in ascending order
     Given One booking has start and end dates as first and last days of next week
     Given I exist as an Booking Officer
@@ -153,22 +153,10 @@ Feature: Booking Sort
 
   @runThis
   Scenario: Given 1 verified Booking Officer, I should be able to sort by service type
+    Given The booking has service type 'Captioning'
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
     When I am on the bookings page
-    Then I am shown with 5 bookings
-    When I click on an individual booking
-    Then I am on the individual booking page
-    When I click on link 'Booking details'
-    Then I click on checkbox name 'cbCaptioning'
-    And I verify checkbox name 'cbCaptioning' is checked 'true'
-    And I verify checkbox name 'cbAuslan' is checked 'false'
-    Then I fill the field 'captioner_count' with value '2'
-    When I click on BUTTON 'SAVE'
-    Then If I am shown a popup message 'Would you like to save these changes for all bookings or only for this one?', I approve it
-    Then I should get a valid booking update notification
-    When I click on Bookings
-    Then I am on the bookings page
     Then I will be shown with bookings
     When I click on table header 'Service Type'
     Then I should see the bookings in ascending order of Service Type
