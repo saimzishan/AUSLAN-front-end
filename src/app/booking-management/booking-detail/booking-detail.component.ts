@@ -94,7 +94,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     cbIndigenousSignInterpreter = false;
     defaultDateTime: Date;
     isRecurringBooking = false;
-    isReadonlyForBO = false;
+    isDisableForClientOrgBookOfficer = false;
     repeat_days = [
         {
             display: 'S',
@@ -178,14 +178,20 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 this.bookingHeading = 'EDIT BOOKING';
                 this.termsAndConditionAccepted = true;
                 this.checkInterpreterBoxes();
-                this.isReadonlyForBO = (GLOBAL.currentUser instanceof BookingOfficer &&
-                                        this.bookingModel.state === BOOKING_STATE.Claimed);
+                this.isDisableForClientOrgBookOfficer = ((GLOBAL.currentUser instanceof BookingOfficer || this.isUserOrgRepORIndClientTemp()) &&
+                                                         this.isStateCancelClaimExportedUnableService(this.bookingModel.state));
             } else {
                 this.bookingHeading = 'NEW BOOKING';
                 this.bookingModel.bookable_type = this.bookingModel.bookable_type || 'IndividualClient';
                 this.roundOffMinutes();
             }
         });
+    }
+
+    isStateCancelClaimExportedUnableService(state) {
+        return state === BOOKING_STATE.Claimed || state === BOOKING_STATE.Cancelled_claimed ||
+               state === BOOKING_STATE.Claimed_exported || state === BOOKING_STATE.Cancelled_claimed_exported ||
+               state === BOOKING_STATE.Cancelled_no_charge || state === BOOKING_STATE.Unable_to_service;
     }
 
     private isCurrentUserContact(): boolean {

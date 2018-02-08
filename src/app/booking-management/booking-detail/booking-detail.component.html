@@ -29,7 +29,7 @@
       </div>
     </div>
   <form #booking_form="ngForm" class="common-form compact">
-   <fieldset [disabled]="isReadonlyForBO">
+   <fieldset [disabled]="isDisableForClientOrgBookOfficer" onclick="fireNotification($event)">
     <div class="row" *ngIf="!forEdit && isUserAdminORBookOfficer ">
       <h2>CUSTOMER</h2>
       <div class="medium-12 columns">
@@ -1305,7 +1305,7 @@
       </section>
     </div>
 
-    <div class="actions" *ngIf="!isReadonlyForBO">
+    <div class="actions" *ngIf="!isDisableForClientOrgBookOfficer">
       <button name="btnCreateBooking" (click)="onCreateBooking(booking_form,addressForm,billingForm,uploader);">SAVE</button>
       <button name="btnCancelBooking" (click)="onCancelBooking();">CANCEL</button>
     </div>
