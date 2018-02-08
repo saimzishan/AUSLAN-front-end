@@ -8,7 +8,7 @@ Feature: User Profile Management
     # ---------------------------------------- AUSLAN1-504 -> START ----------------------------------------
   @runThis
 #  Change pass
-  Scenario: Be able to change password as Administrator
+  Scenario: Be able to change the password as Administrator
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
     And I am on the bookings page
