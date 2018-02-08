@@ -36,7 +36,7 @@ export class InterpreterComponent implements OnInit {
 
         if (this.displayCalendar) {
             this.calendarOptions = {
-                height: 'parent',
+                height: 'auto',
                 fixedWeekCount: false,
                 weekends: true, // will hide Saturdays and Sundays
                 timezone: 'local',
