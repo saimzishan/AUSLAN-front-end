@@ -10,9 +10,10 @@ defineSupportCode(({Given, Then, When}) => {
     Given(/^The (.*) (\d+) interpreters have skill level '(.*)'$/, Heroku.updateInterpretersSkillLevel);
     Given(/^The (.*) (\d+) interpreters have travel pay status '(.*)'$/, Heroku.updateInterpretersTravelPayStatus);
 
-    // ---------------------------------   INDIVIDUAL BOOKING PAGE
-
     When(/^I hover on the (.*) dropdown on interpreter table header and select '(.*)'$/, intManagementPO.hoverOnInterpreterTableHeader);
     When(/^I query interpreter by form field (.*) and value '(.*)'$/, intManagementPO.queryInterpreterByFormField);
+    When(/^I click on the interpreter table header '(.*)'$/, intManagementPO.clickOnInterpreterTableHeader);
+
+    Then(/^I should see the verified interpreters in (ascending|descending) order of (.*)$/, intManagementPO.checkInterpreterOrder);
 
 });
