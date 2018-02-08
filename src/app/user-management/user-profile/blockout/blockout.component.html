@@ -47,7 +47,7 @@
                         <div class="form-field">
                             <label>END TIME *</label>
 
-                            <p-calendar name='dpEventDate_endtime' [(ngModel)]="end_time"
+                            <p-calendar name='dpEventDate_endtime' [(ngModel)]="end_time"  (onClose)="setDayMonthYear()"
                             [stepMinute]="5" [defaultDate]="defaultDateTime" 
                             required #dpEventDate_endtime="ngModel" [timeOnly]="true"
                                         hourFormat="12"></p-calendar>
