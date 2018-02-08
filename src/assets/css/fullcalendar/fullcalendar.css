@@ -738,6 +738,11 @@ tr:first-child > td > .fc-day-grid-event {
 
 .fc-day-grid-event .fc-time {
 	font-weight: bold;
+	color: #ffffff;
+}
+
+.fc-content .fc-title{
+	color: #ffffff;
 }
 
 /* resizer (cursor devices) */
