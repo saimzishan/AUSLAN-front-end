@@ -194,12 +194,7 @@
                                 <th width="10%">
                                 </th>
                                 <th width="7%">
-                                    <span class="order" [ngClass]="getSortOrder('interpreter_ids')" (click)="sortInterpreters('interpreter_ids')">Id</span>
-                                    <form #filterByInterpreterIds="ngForm" class="common-form compact"
-                                          (ngSubmit)="filterInterpreters('interpreter_ids', filterByInterpreterIds.value.interpreter_ids)" novalidate>
-                                        <input type="text" name="interpreter_ids" (blur)="filterInterpreters('interpreter_ids', filterByInterpreterIds.value.interpreter_ids)"
-                                               [(ngModel)]="interpreterFilter.interpreter_ids">
-                                    </form>
+                                    <span>#</span>
                                 </th>
                                 <th width="12%">
                                     <span class="">Status</span>
