@@ -177,17 +177,20 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         this.dialogRef.componentInstance.title = isCancel ? 'Cancel linked booking' : 'Unable to service linked booking';
         this.dialogRef.componentInstance.cancelTitle = isCancel ? 'Cancel all bookings' : 'Unable to service all bookings';
         this.dialogRef.componentInstance.okTitle = isCancel ? 'Cancel only this booking' : 'Unable to service this booking';
+        this.dialogRef.componentInstance.closeVal = 'close';
         this.dialogRef.componentInstance.popupMessage =
             isCancel ? `Would you like to cancel only this booking, or
               all linked bookings?` :
                 `Would you like to mark this booking as unable to service, or
               all linked bookings?`;
         this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
+        if (result !== 'close') {
             if (isCancel) {
                 this.cancelBooking(isCancel, !result);
             } else {
                 this.changeBookingState(isCancel, !result);
             }
+        }
         });
     }
     cancelBooking(isCancel: Boolean, update_all_linked_bookings?: boolean) {
@@ -199,6 +202,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         this.dialogRef.componentInstance.title = isCancel ? 'Cancel linked booking' : 'Unable to service linked booking';
         this.dialogRef.componentInstance.cancelTitle = isCancel ? 'Cancelled Chargeable' : 'Unable to service all bookings';
         this.dialogRef.componentInstance.okTitle = isCancel ? 'Cancelled No Charge' : 'Unable to service this booking';
+        this.dialogRef.componentInstance.closeVal = 'close';
         if (isCancel) {
             let statement = this.isVicdeaf && (this.diffInHours < 48) ? 'Cancelled Chargeable since the start date is within 48 hours.'
                 : !this.isVicdeaf && (this.diffInHours < 24) ? 'Cancelled Chargeable since the start date is within 24 hours.'
@@ -212,7 +216,9 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
             all linked bookings?` ;
         }
         this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
+        if (result !== 'close') {
             this.changeBookingState(isCancel, !result, update_all_linked_bookings);
+        }
         });
     }
     isCurrentUserInterpreter() {
