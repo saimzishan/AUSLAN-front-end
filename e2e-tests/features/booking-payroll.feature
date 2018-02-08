@@ -47,7 +47,7 @@ Feature: Booking Payroll and Billing
     When I fill the payroll field 'prepTime_interpreter_0' with value '=-09'
     Then I click out of the text box
     Then I am shown a validation error with the text 'Oops! Only numerical values, "." and ":" are allowed.'
-    And I click on BUTTON 'Claim'
+    And I click on BUTTON 'Save'
     Then I will get an error notification saying "Oops! Only numbers and dots allowed. Please try again."
 
   @runThis
@@ -167,7 +167,7 @@ Feature: Booking Payroll and Billing
     Then I verify material checkbox name 'cbChargeTravel_0' is checked 'true'
     And I can see the payroll element 'kiloMeters_client_0' has text '1.4'
     And I can see the payroll element 'travelTime_client_0' has text '0:05'
-    And I click on BUTTON 'Claim'
+    And I click on BUTTON 'Save'
     Then I should get a valid payroll save notification
     Then I can see the payroll element 'kiloMeters_interpreter_0' has text '1'
     And I can see the payroll element 'travelTime_interpreter_0' has text '0:05'
@@ -190,6 +190,114 @@ Feature: Booking Payroll and Billing
     Then I can see the button state 'Cancel Booking' is hidden
     Then I can see the button state 'Unable to Service' is hidden
     And I can see the element with name 'linkPayroll' is 'not visible'
+
+  @runThis
+  Scenario: Given 1 verified Administrator and Booking Officer, As an admin I can see the save and claim buttons when booking is in Cancelled charge state and I can not see the claim button as book officer, INTERPRETER exists
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on the bookings page
+    When I click on an individual booking
+    Then I am on the individual booking page
+    Then I select 1 Interpreter
+    And I click on BUTTON name 'reassingBtn'
+    Then I can see the button 'Save' is enabled
+    And I click on BUTTON 'Save'
+    Then I wait for 1000 milli-seconds
+    Then I get valid message: 'The interpreter have been assigned'
+    When I click on BUTTON 'Cancel Booking'
+    Then I will be shown a popup message 'Would you like to cancel only this booking, or all linked bookings?'
+    Then I click on BUTTON name 'yesBtn'
+    Then I wait for 1200 milli-seconds
+    Then I will be shown a popup message 'Are you sure you want to cancel this booking? This is permanent. We recommend to cancel this booking as Cancelled No Charge since the start date is not within 48 hours.'
+    Then I click on BUTTON name 'noBtn'
+    Then I get a valid 'Cancelled with Charge' notification for state
+    When I click on link 'Payroll & Billing'
+    Then I can see the element with name 'btnSave' is 'visible'
+    And I can see the element with name 'btnClaim' is 'visible'
+    Then I click on my name in the top corner
+    And I click on logout
+    When I sign in with valid Booking Officer credentials
+    And I am on the bookings page
+    When I click on an individual booking
+    Then I am on the individual booking page
+    When I click on link 'Payroll & Billing'
+    Then I can see the element with name 'btnSave' is 'visible'
+    And I can see the element with name 'btnClaim' is 'not visible'
+
+  @runThis
+  Scenario: Given 1 verified Administrator, As an admin i will be moved to payroll tab when booking is in Cancelled charge, service completed or claimed state, INTERPRETER exists
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on the bookings page
+    When I click on an individual booking
+    Then I am on the individual booking page
+    Then I select 1 Interpreter
+    And I click on BUTTON name 'reassingBtn'
+    Then I can see the button 'Save' is enabled
+    And I click on BUTTON 'Save'
+    Then I wait for 1000 milli-seconds
+    Then I get valid message: 'The interpreter have been assigned'
+    When I click on BUTTON 'Cancel Booking'
+    Then I will be shown a popup message 'Would you like to cancel only this booking, or all linked bookings?'
+    Then I click on BUTTON name 'yesBtn'
+    Then I wait for 1200 milli-seconds
+    Then I will be shown a popup message 'Are you sure you want to cancel this booking? This is permanent. We recommend to cancel this booking as Cancelled No Charge since the start date is not within 48 hours.'
+    Then I click on BUTTON name 'noBtn'
+    Then I get a valid 'Cancelled with Charge' notification for state
+    Then I click on Bookings
+    And I am on the bookings page
+    When I click on an individual booking
+    Then I should be on the payroll and billing page
+    And I can see the element with name 'btnClaim' is 'visible'
+    Then I wait for 3000 milli-seconds
+    Then I click on BUTTON 'Claim'
+    When I click on BUTTON 'Save'
+    Then I get a valid 'Claimed' notification for state
+    Then I click on Bookings
+    And I am on the bookings page
+    When I click on an individual booking
+    Then I should be on the payroll and billing page
+    And I can see the element with name 'btnUndoClaim' is 'visible'
+    Then I wait for 3000 milli-seconds
+    Then I click on BUTTON 'Undo claim'
+    When I click on BUTTON 'Save'
+    Then I get a valid 'Service Completed' notification for state
+    Then I click on Bookings
+    And I am on the bookings page
+    When I click on an individual booking
+    Then I should be on the payroll and billing page
+
+  @runThis
+  Scenario: Given 1 verified Administrator, I can move the booking to state claimed and back to service completed state, INTERPRETER exists
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on the bookings page
+    When I click on an individual booking
+    Then I am on the individual booking page
+    Then I select 1 Interpreter
+    And I click on BUTTON name 'reassingBtn'
+    Then I can see the button 'Save' is enabled
+    And I click on BUTTON 'Save'
+    Then I wait for 1000 milli-seconds
+    Then I get valid message: 'The interpreter have been assigned'
+    When I click on BUTTON 'Cancel Booking'
+    Then I will be shown a popup message 'Would you like to cancel only this booking, or all linked bookings?'
+    Then I click on BUTTON name 'yesBtn'
+    Then I wait for 1200 milli-seconds
+    Then I will be shown a popup message 'Are you sure you want to cancel this booking? This is permanent. We recommend to cancel this booking as Cancelled No Charge since the start date is not within 48 hours.'
+    Then I click on BUTTON name 'noBtn'
+    Then I get a valid 'Cancelled with Charge' notification for state
+    When I click on link 'Payroll & Billing'
+    And I can see the element with name 'btnClaim' is 'visible'
+    Then I click on BUTTON 'Claim'
+    When I click on BUTTON 'Save'
+    Then I get a valid 'Claimed' notification for state
+    And I can see the element with name 'btnClaim' is 'not visible'
+    And I can see the element with name 'btnUndoClaim' is 'visible'
+    Then I wait for 3000 milli-seconds
+    Then I click on BUTTON 'Undo claim'
+    When I click on BUTTON 'Save'
+    Then I get a valid 'Service Completed' notification for state
 
   @runThis
   Scenario: Given 1 verified Booking Officer, I will get a warning popup when I move to bookng info or booking detail if there are unsaved changes on payroll page, INTERPRETER exists

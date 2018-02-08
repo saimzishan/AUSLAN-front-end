@@ -561,6 +561,11 @@ export class Heroku {
         Heroku.sendCommandToHeroku(command);
     }
 
+    static updateBookingWithServiceType(serviceType: string) {
+        let command = 'Booking.last.update(type: ' + serviceType + ')';
+        Heroku.sendCommandToHeroku(command);
+    }
+
     static updateBookingWithClientName(client_name: string) {
         let command = 'Booking.last.update(deaf_persons_first_name: "' + client_name + '")';
         Heroku.sendCommandToHeroku(command);
