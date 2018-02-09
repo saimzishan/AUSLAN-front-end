@@ -18,7 +18,7 @@ Feature: Booking Sort
 
   @runThis
   Scenario: Given 1 verified Booking Officer, I should be able to sort by booking status
-    Given The booking has status 'red'
+    Given The booking has status 'green'
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
     When I am on the bookings page
