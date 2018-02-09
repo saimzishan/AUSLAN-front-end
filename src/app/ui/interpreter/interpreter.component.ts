@@ -34,8 +34,8 @@ export class InterpreterComponent implements OnInit {
 
         delete this.userModel.assignments_attributes;
         delete this.userModel.password;
-        if (GLOBAL.currentUser) {
-            this.userDataService.getUser(GLOBAL.currentUser.id)
+        if (this.userModel) {
+            this.userDataService.getUser(this.userModel.id)
                 .subscribe((res: any) => {
                     if (res.status === 200) {
                         delete res.data.assignments_attributes;
