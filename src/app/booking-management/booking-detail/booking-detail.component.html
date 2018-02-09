@@ -6,6 +6,9 @@
   <section>
     <span>Fields with * are required</span>
   </section>
+  <section *ngIf="isDisableForClientOrgBookOfficer">
+    <span>This booking can’t be changed anymore. Please contact the booking office<br>in case changes to this booking are needed.</span>
+  </section>
     <div class="common-form"  *ngIf="!forEdit">
       <div style="float:right;">
         <section class="file-uploader bulk-upload">
@@ -29,7 +32,7 @@
       </div>
     </div>
   <form #booking_form="ngForm" class="common-form compact">
-   <fieldset [disabled]="isDisableForClientOrgBookOfficer" onclick="fireNotification($event)">
+   <fieldset name="bookingDetailFieldset" [disabled]="isDisableForClientOrgBookOfficer">
     <div class="row" *ngIf="!forEdit && isUserAdminORBookOfficer ">
       <h2>CUSTOMER</h2>
       <div class="medium-12 columns">
