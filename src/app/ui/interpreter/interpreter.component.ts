@@ -56,6 +56,7 @@ export class InterpreterComponent implements OnInit {
                 fixedWeekCount: false,
                 weekends: true, // will hide Saturdays and Sundays
                 timezone: 'local',
+                slotDuration: '01:00:00',
                 header: {
                     left: 'title',
                     center: '',
@@ -102,6 +103,7 @@ export class InterpreterComponent implements OnInit {
                     color: avail_block.recurring ? '#00ff00' : '#02b86e',
                     id: avail_block.id,
                     textColor: '#ffffff',
+                    Duration: '01:00:00',
                     booking_id: avail_block.booking_id,
                     start: avail_block.recurring === false ? sd.toISOString() : `${sd.getHours()}:${sd.getMinutes()}`,
                     end: avail_block.recurring === false ? ed.toISOString() :  `${edt.getHours()}:${edt.getMinutes()}`,
