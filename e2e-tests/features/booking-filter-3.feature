@@ -72,21 +72,21 @@ Feature: Booking Filter
 
   @runThis
   Scenario: Given 1 verified Booking Officer, I should be able to filter by job ids
-    Given The booking has status 'red'
+    Given The booking has status 'green'
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
     When I am on the bookings page
     Then I am shown with 5 booking
-    When I hover on the Status dropdown and select 'Red'
+    When I hover on the Status dropdown and select 'Green'
     Then I am shown with 1 booking
-    Then I see one row with status 'red'
+    Then I see one row with status 'green'
     And I click on my name in the top corner
     When I click on the option  profile
     And I will be taken to my individual profile page
     Then I click on Bookings
     And I am on the bookings page
     Then I am shown with 1 booking
-    Then I see one row with status 'red'
+    Then I see one row with status 'green'
 
   @runThis
   Scenario: As Administrator, I should be able to filter bookings when I click on linked id
