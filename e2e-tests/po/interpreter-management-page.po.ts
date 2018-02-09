@@ -33,6 +33,13 @@ export class InterpreterManagementPage extends PageObject {
         return interpreterNameForm.submit();
     }
 
+    searchInterpretersWithText = (value: string) => {
+        let searchInput = this.getElementByCss('form input[name=search]');
+        let searchForm = this.getParent(searchInput);
+        value === 'empty' ? searchInput.click() : searchInput.sendKeys(value);
+        return searchForm.submit();
+    }
+
     clickOnInterpreterTableHeader = (text: string) => {
         let el = this.getElementByCSSandText('table thead tr th > span', text);
         return el.click();

@@ -59,6 +59,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     @ViewChild('cchart') cchart;
     currentPage = 1;
     totalItems;
+    searchParams: string;
 
     constructor(public dialog: MdDialog,
                 public viewContainerRef: ViewContainerRef, public spinnerService: SpinnerService,
@@ -837,6 +838,19 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         //     }
         // }
         return value;
+    }
+
+    search() {
+        GLOBAL._filterInterpreterVal.set('search', this.searchParams);
+        this.route.params.subscribe(params => {
+            let param_id = params['id'] || '';
+            this.fetchNearbyinterpreters(param_id);
+        });
+    }
+
+    clearSearch() {
+        this.searchParams = '';
+        this.search();
     }
 
     filterInterpreters(field: string, value: string) {
