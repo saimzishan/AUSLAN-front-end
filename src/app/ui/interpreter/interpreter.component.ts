@@ -34,15 +34,16 @@ export class InterpreterComponent implements OnInit {
 
         delete this.userModel.assignments_attributes;
         delete this.userModel.password;
-        this.userDataService.getUser(GLOBAL.currentUser.id)
-        .subscribe((res: any) => {
-                if (res.status === 200) {
-                    delete res.data.assignments_attributes;
-                    this.userModel.availability_blocks_attributes =  res.data.availability_blocks_attributes;
-                    this.BlockoutToUpdate();
-                }
-            }, (errors) => {
-            });
+        if (GLOBAL.currentUser) {
+            this.userDataService.getUser(GLOBAL.currentUser.id)
+                .subscribe((res: any) => {
+                    if (res.status === 200) {
+                        delete res.data.assignments_attributes;
+                        this.userModel.availability_blocks_attributes =  res.data.availability_blocks_attributes;
+                        this.BlockoutToUpdate();
+                    }
+                });
+        }
     }
     isUserAdminORBookOfficer(): Boolean {
         return Boolean(GLOBAL.currentUser instanceof Administrator ||
@@ -113,10 +114,10 @@ export class InterpreterComponent implements OnInit {
                         {
                             start: moment().endOf(avail_block.frequency === 'daily' ? 'day' :
                                 avail_block.frequency === 'weekly' ? 'week' :
-                                    avail_block.frequency === 'monthly' ? 'month' : 'week'),
+                                avail_block.frequency === 'monthly' ? 'month' : 'week'),
                             end: moment().endOf(avail_block.frequency === 'daily' ? 'day' :
                                 avail_block.frequency === 'weekly' ? 'week' :
-                                    avail_block.frequency === 'monthly' ? 'month' : 'week')
+                                avail_block.frequency === 'monthly' ? 'month' : 'week')
                         },
                         {
                             start: moment(sd.toISOString()).format('YYYY-MM-DD'),
