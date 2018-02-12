@@ -13,6 +13,8 @@ import {PopupComponent} from '../../../shared/popup/popup.component';
 import {ROLE} from '../../../shared/model/role.enum';
 import * as momentTimeZone from 'moment-timezone';
 import {Booking} from '../../../shared/model/booking.entity';
+import { Interpolation } from '@angular/compiler';
+import {Location} from '@angular/common';
 
 @Component({
     selector: 'app-blockout',
@@ -38,7 +40,7 @@ export class BlockoutComponent implements OnDestroy, OnInit {
                 private route: ActivatedRoute,
                 private router: Router,
                 public dialog: MdDialog,
-                public viewContainerRef: ViewContainerRef) {
+                public viewContainerRef: ViewContainerRef, private _location: Location) {
     }
 
     ngOnInit() {
@@ -51,6 +53,9 @@ export class BlockoutComponent implements OnDestroy, OnInit {
         this.userID = this.interpreter !== null ? this.interpreter.id : -1;
         this.end_time.setTime(this.start_time.getTime() + (1 * 60 * 60 * 1000));
         this.sub = this.route.params.subscribe(params => {
+            // let interpreterUserModel = params['interpreterUserModel'] || '';
+            // let jsonData = JSON.parse(interpreterUserModel);
+            // console.log('interpreter: '+ JSON.stringify(interpreterUserModel));
             let param_id = params['id'] || '';
             if (Boolean(param_id) && parseInt(param_id, 10) > 0) {
                 this.param_id = parseInt(param_id, 10);
@@ -128,7 +133,7 @@ export class BlockoutComponent implements OnDestroy, OnInit {
                                 AuthGuard.refreshUser(this.interpreter);
                             }
                             this.notificationServiceBus.launchNotification(false, 'Blockout successfully deleted');
-                            this.router.navigate([ this.isUserAdminOrBO() ? '/user-management' : '/user-management/profile']);
+                            this._location.back();
                         }
                     }, errors => {
                         this.spinnerService.requestInProcess(false);
@@ -165,8 +170,8 @@ export class BlockoutComponent implements OnDestroy, OnInit {
                     if (this.isUserAdminOrBO() === false) {
                         AuthGuard.refreshUser(this.interpreter);
                     }
-                    this.router.navigate([ this.isUserAdminOrBO() ? '/user-management' : '/user-management/profile']);
                     this.notificationServiceBus.launchNotification(false, 'Blockout successfully updated');
+                    this._location.back();
                 }
             }, errors => {
                 this.spinnerService.requestInProcess(false);
@@ -207,7 +212,7 @@ export class BlockoutComponent implements OnDestroy, OnInit {
                     if (this.isUserAdminOrBO() === false) {
                         AuthGuard.refreshUser(this.interpreter);
                     }
-                    this.router.navigate([ this.isUserAdminOrBO() ? '/user-management' : '/user-management/profile']);
+                    this._location.back();
                     this.notificationServiceBus.launchNotification(false, 'Blockout successfully added');
                 }
             }, errors => {

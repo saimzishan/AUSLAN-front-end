@@ -1,6 +1,6 @@
 import {Component, ViewChild, OnInit, Input, ElementRef} from '@angular/core';
 import {DatePipe} from '@angular/common';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, Router, NavigationExtras} from '@angular/router';
 import * as $ from 'jquery';
 import * as moment from 'moment';
 import {Interpreter, BookingOfficer, Administrator} from '../../shared/model/user.entity';
@@ -21,8 +21,8 @@ export class InterpreterComponent implements OnInit {
     updateCalendar = false;
     calendarOptions: Object = {};
 
-    constructor(private routes: ActivatedRoute, private router: Router, public userDataService: UserService) {}
-
+    constructor(private routes: ActivatedRoute, private router: Router, public userDataService: UserService) {
+    }
     ngOnInit() {
         let d = new DatePipe('en-us');
         this.userModel.naati_validity_start_date =
