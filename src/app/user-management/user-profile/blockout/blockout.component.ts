@@ -13,7 +13,6 @@ import {PopupComponent} from '../../../shared/popup/popup.component';
 import {ROLE} from '../../../shared/model/role.enum';
 import * as momentTimeZone from 'moment-timezone';
 import {Booking} from '../../../shared/model/booking.entity';
-import { Interpolation } from '@angular/compiler';
 import {Location} from '@angular/common';
 
 @Component({
