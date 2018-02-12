@@ -325,6 +325,7 @@ Feature: Booking Payroll and Billing
     Then I click on material checkbox name 'cbPayTravel_0'
     When I click on link 'Booking details'
     Then I will be shown a popup message 'There are unsaved changes on this page. Are you sure you want to leave?'
-    When I click on BUTTON name 'noBtn'
+    And I click on BUTTON name 'noBtn'
+    Then I wait for 1500 milli-seconds
     When I click on link 'Booking info'
     Then I will be shown a popup message 'There are unsaved changes on this page. Are you sure you want to leave?'
