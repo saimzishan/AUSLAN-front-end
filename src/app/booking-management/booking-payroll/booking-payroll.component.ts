@@ -168,7 +168,7 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
                 } else {
                     if (this.payments[payrollInvoice][index][field]) {
                         ['distance', 'travel_time'].forEach(distTime => {
-                            this.payments[payrollInvoice][index][distTime] = this.payments.payroll_attributes[index][distTime];
+                            this.payments[payrollInvoice][index][distTime] = this.payments.invoice_attributes[index]['recommended'][distTime];
                         });
                     } else {
                         this.payments[payrollInvoice][index]['distance'] = this.payments[payrollInvoice][index]['travel_time'] = 0;

@@ -1,3 +1,4 @@
+const _numbFive = 5;
 
 export class Payments {
     public payroll_attributes = [];
@@ -9,6 +10,8 @@ export class Payments {
             payrollInvoice.preparation_time = this.minutesToTime(payrollInvoice.preparation_time);
             payrollInvoice.travel_time = this.minutesToTime(payrollInvoice.travel_time);
             payrollInvoice.distance = this.meterToKm(payrollInvoice.distance);
+            payrollInvoice.recommended.travel_time = this.minutesToTime(payrollInvoice.recommended.travel_time);
+            payrollInvoice.recommended.distance = this.meterToKm(payrollInvoice.recommended.distance);
 
             if (type === 'payroll') {
                 this.payroll_attributes.push(payrollInvoice);
@@ -26,8 +29,7 @@ export class Payments {
     }
 
     roundOffMinutes(minutes: number) {
-        let minute = Math.ceil(minutes / 5) * 5;
-        return minute;
+        return Math.ceil(minutes / _numbFive) * _numbFive;
     }
 
     timeDistanceConversion(type: string, data: any) {

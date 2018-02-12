@@ -59,9 +59,7 @@ export class BookingHeaderComponent implements OnInit, OnDestroy {
     }
 
     bookingDetailClick() {
-        if (this.isActive('edit-booking')) {
-            return;
-        } else if (this.isActive('payroll-billing') && this.isModelChanged(this.oldModel, this.paymentModel)) {
+        if (this.isActive('payroll-billing') && this.isModelChanged(this.oldModel, this.paymentModel)) {
                 this.showUnsavedWarningPopup();
                 this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
                     if (result) {
@@ -70,7 +68,7 @@ export class BookingHeaderComponent implements OnInit, OnDestroy {
                         this.gotoBookingDetail();
                     }
                 });
-        } else {
+        } else if (!this.isActive('edit-booking')) {
             this.gotoBookingDetail();
         }
     }
