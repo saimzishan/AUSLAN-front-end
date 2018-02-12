@@ -6,6 +6,7 @@ import * as moment from 'moment';
 import {Interpreter, BookingOfficer, Administrator} from '../../shared/model/user.entity';
 import {GLOBAL} from '../../shared/global';
 import {CalendarComponent} from 'ap-angular2-fullcalendar';
+import {UserService} from '../../api/user.service';
 
 @Component({
     selector: 'app-interpreter',
@@ -20,7 +21,7 @@ export class InterpreterComponent implements OnInit {
     updateCalendar = false;
     calendarOptions: Object = {};
 
-    constructor(private routes: ActivatedRoute, private router: Router) {}
+    constructor(private routes: ActivatedRoute, private router: Router, public userDataService: UserService) {}
 
     ngOnInit() {
         let d = new DatePipe('en-us');
@@ -33,7 +34,22 @@ export class InterpreterComponent implements OnInit {
 
         delete this.userModel.assignments_attributes;
         delete this.userModel.password;
-
+        if (this.userModel) {
+            this.userDataService.getUser(this.userModel.id)
+                .subscribe((res: any) => {
+                    if (res.status === 200) {
+                        delete res.data.assignments_attributes;
+                        this.userModel.availability_blocks_attributes =  res.data.availability_blocks_attributes;
+                        this.BlockoutToUpdate();
+                    }
+                });
+        }
+    }
+    isUserAdminORBookOfficer(): Boolean {
+        return Boolean(GLOBAL.currentUser instanceof Administrator ||
+            GLOBAL.currentUser instanceof BookingOfficer);
+    }
+    BlockoutToUpdate() {
         if (this.displayCalendar) {
             this.calendarOptions = {
                 height: 'parent',
@@ -75,7 +91,6 @@ export class InterpreterComponent implements OnInit {
                 eventLimit: 2, // allow "more" link when too many events
                 events: []
             };
-
             for (let avail_block of this.userModel.availability_blocks_attributes) {
                 let sd = new Date(avail_block.start_time);
                 let ed = new Date(avail_block.end_date || avail_block.start_time);
@@ -99,10 +114,10 @@ export class InterpreterComponent implements OnInit {
                         {
                             start: moment().endOf(avail_block.frequency === 'daily' ? 'day' :
                                 avail_block.frequency === 'weekly' ? 'week' :
-                                    avail_block.frequency === 'monthly' ? 'month' : 'week'),
+                                avail_block.frequency === 'monthly' ? 'month' : 'week'),
                             end: moment().endOf(avail_block.frequency === 'daily' ? 'day' :
                                 avail_block.frequency === 'weekly' ? 'week' :
-                                    avail_block.frequency === 'monthly' ? 'month' : 'week')
+                                avail_block.frequency === 'monthly' ? 'month' : 'week')
                         },
                         {
                             start: moment(sd.toISOString()).format('YYYY-MM-DD'),
@@ -113,15 +128,9 @@ export class InterpreterComponent implements OnInit {
 
                 this.calendarOptions['events'].push(event);
             }
-
             this.updateCalendar = true;
         }
 
-    }
-
-    isUserAdminORBookOfficer(): Boolean {
-        return Boolean(GLOBAL.currentUser instanceof Administrator ||
-            GLOBAL.currentUser instanceof BookingOfficer) ;
     }
 
 }
