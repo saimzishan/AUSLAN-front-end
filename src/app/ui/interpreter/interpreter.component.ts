@@ -86,7 +86,9 @@ export class InterpreterComponent implements OnInit {
                 },
                 defaultView: $(window).width() < 768 ? 'listMonth' : 'month',
                 eventClick: (calEvent, jsEvent, view) => {
-                    this.router.navigate(['/user-management/', calEvent.id, 'block_out']);
+                    if (view.name !== 'listYear' && view.name !== 'listMonth') {
+                        this.router.navigate(['/user-management/', calEvent.id, 'block_out']);
+                    }
                 },
                 editable: true,
                 eventLimit: 2, // allow "more" link when too many events
