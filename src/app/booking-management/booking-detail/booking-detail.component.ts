@@ -183,6 +183,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             } else {
                 this.bookingHeading = 'NEW BOOKING';
                 this.bookingModel.bookable_type = this.bookingModel.bookable_type || 'IndividualClient';
+                this.bookingModel.bookable_id = 0;
                 this.roundOffMinutes();
             }
         });

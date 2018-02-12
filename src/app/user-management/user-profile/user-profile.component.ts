@@ -47,7 +47,6 @@ export class UserProfileComponent implements OnInit {
         this.selectedStatus = Boolean(this.userModel && this.userModel.disabled === false) ?
             this.userStatusArray[0].name : this.userStatusArray[1].name;
     }
-
     editUser(form: FormGroup) {
         if ( form.invalid ) {
             this.notificationServiceBus.
