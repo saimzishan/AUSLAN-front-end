@@ -47,3 +47,4 @@ Feature: As INTERPRETER, I can create blockout on mobile
     And I get success message: 'Blockout successfully deleted'
     And I will be taken to my individual profile page
     And I can count the element with css 'td.fc-list-item-title.fc-widget-content' to be '0'
+
