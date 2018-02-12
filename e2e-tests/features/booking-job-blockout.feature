@@ -135,3 +135,4 @@ Feature: Booking Admin Management
     Then I select 2 Interpreter
     Then I can see the button state 'Invite' is hidden
     Then I can see the button state 'Assign' is hidden
+

@@ -21,8 +21,8 @@ export class InterpreterComponent implements OnInit {
     updateCalendar = false;
     calendarOptions: Object = {};
 
-    constructor(private routes: ActivatedRoute, private router: Router, public userDataService: UserService) {}
-
+    constructor(private routes: ActivatedRoute, private router: Router, public userDataService: UserService) {
+    }
     ngOnInit() {
         let d = new DatePipe('en-us');
         this.userModel.naati_validity_start_date =
@@ -56,6 +56,7 @@ export class InterpreterComponent implements OnInit {
                 fixedWeekCount: false,
                 weekends: true, // will hide Saturdays and Sundays
                 timezone: 'local',
+                slotDuration: '01:00:00',
                 header: {
                     left: 'title',
                     center: '',
