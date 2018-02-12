@@ -27,7 +27,6 @@ export class AppComponent  implements OnDestroy, AfterViewChecked {
 
 
   ngAfterViewChecked() {
-    $(document).foundation();
   }
 
   isLoggedIn() {
