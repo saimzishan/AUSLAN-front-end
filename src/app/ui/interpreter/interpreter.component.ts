@@ -89,7 +89,7 @@ export class InterpreterComponent implements OnInit {
                     this.router.navigate(['/user-management/', calEvent.id, 'block_out']);
                 },
                 editable: true,
-                eventLimit: true, // allow "more" link when too many events
+                eventLimit: 2, // allow "more" link when too many events
                 events: []
             };
             for (let avail_block of this.userModel.availability_blocks_attributes) {
