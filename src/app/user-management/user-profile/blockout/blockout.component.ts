@@ -53,9 +53,6 @@ export class BlockoutComponent implements OnDestroy, OnInit {
         this.userID = this.interpreter !== null ? this.interpreter.id : -1;
         this.end_time.setTime(this.start_time.getTime() + (1 * 60 * 60 * 1000));
         this.sub = this.route.params.subscribe(params => {
-            // let interpreterUserModel = params['interpreterUserModel'] || '';
-            // let jsonData = JSON.parse(interpreterUserModel);
-            // console.log('interpreter: '+ JSON.stringify(interpreterUserModel));
             let param_id = params['id'] || '';
             if (Boolean(param_id) && parseInt(param_id, 10) > 0) {
                 this.param_id = parseInt(param_id, 10);
