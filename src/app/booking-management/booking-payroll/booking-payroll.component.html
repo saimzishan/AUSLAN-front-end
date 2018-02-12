@@ -4,9 +4,9 @@
     <main>
     <form #payroll_form="ngForm" class="common-form reduced-top">
       <app-booking-info [selectedBookingModel]="bookingModel"></app-booking-info>
-      
+
         <h2>Payroll details</h2>
-        <fieldset [disabled]="isReadonlyForBO">
+        <fieldset name="bookingPayrollFieldset" [disabled]="isReadonlyForBO">
         <ng-container *ngFor="let payroll of payments.payroll_attributes; let i = index">
         <section class="payroll-card">
             <section class="payroll-card__interpreter">

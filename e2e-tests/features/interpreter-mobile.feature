@@ -208,4 +208,3 @@ Feature: As INTERPRETER, I can login on mobile
     Then I will be shown the bookings page
 
 # ---------------------------------------- AUSLAN 1-67 -> END ----------------------------------------
-
