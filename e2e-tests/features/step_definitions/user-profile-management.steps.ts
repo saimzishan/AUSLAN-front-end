@@ -21,6 +21,7 @@ defineSupportCode(({Given, Then, When}) => {
     When(/^I click on my name in the top corner$/, bookingPage.clickOnProfile);
     When(/^I click on my name in the top corner on mobile$/, bookingPage.clickOnProfileMobile);
     When(/^I click on the option  profile$/, bookingPage.clickOnOptionProfile);
+    When(/^I click on the option  staff calender$/, bookingPage.clickOnStaffCalender);
 
     Then(/^I will be taken to my individual (.*) page$/, takeToIndividualPage);
     function takeToIndividualPage(individual_type: string) {
