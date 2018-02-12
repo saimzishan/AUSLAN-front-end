@@ -295,3 +295,8 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER BOOK
     Then I click on BUTTON name 'yesBtn'
     And I wait for 3000 milli-seconds
     And I get error message: 'Unprocessable Entity You have a blockout at this time. Please remove the blockout before accepting the booking'
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 817b8c5f56232fbbee53a0b76e2a2ebf8a405f80
