@@ -21,7 +21,7 @@ export class BookingPayrollPage extends PageObject {
 
     checkReadonlyFields = (interpClient: string) => {
         FIELDS.forEach((fieldName) => {
-            let ele = this.getElementByCss('input[ng-reflect-name="'+fieldName+interpClient+'_0"]');;
+            let ele = this.getElementByCss('input[ng-reflect-name="'+interpClient+'_'+fieldName+'0"]');;
             return ele.getAttribute('readonly').then(readonly => { 
                    return expect(readonly === 'true').to.be.true;
             });
@@ -30,7 +30,7 @@ export class BookingPayrollPage extends PageObject {
 
     checkInputValues = (interpClient: string) => {
         FIELDS.forEach((fieldName) => {
-            let ele = this.getElementByCss('input[ng-reflect-name="'+fieldName+interpClient+'_0"]');;
+            let ele = this.getElementByCss('input[ng-reflect-name="'+interpClient+'_'+fieldName+'0"]');;
             return ele.getAttribute('value').then(val => { 
                    return expect(val).to.be.eq('0');
             });
