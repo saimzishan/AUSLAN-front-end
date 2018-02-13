@@ -42,14 +42,14 @@ Feature: Booking Filter
 
   @runThis
   Scenario: Given 1 verified Booking Officer, I should be able to reset status filter
-    Given The booking has status 'red'
+    Given The booking has status 'green'
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
     When I am on the bookings page
     Then I will be shown with bookings
-    When I hover on the Status dropdown and select 'Red'
+    When I hover on the Status dropdown and select 'Green'
     Then I am shown with 1 booking
-    Then I see one row with status 'red'
+    Then I see one row with status 'green'
     When I hover on the Status dropdown and select 'All'
     Then I am shown with 5 bookings
 

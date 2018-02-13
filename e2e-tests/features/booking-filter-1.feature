@@ -18,7 +18,7 @@ Feature: Booking Filter
   @runThis
   Scenario: Given 1 verified Booking Officer, I should be able to filter by job ids
     Given There exist 7 bookings
-    Given The booking has status 'red'
+    Given The booking has status 'green'
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
     When I am on the bookings page
@@ -26,47 +26,47 @@ Feature: Booking Filter
     Then I am shown with 10 booking
     Then I can count the element with css 'span.show-for-sr' to be '4'
     Then I click on parent of '3' element with css 'span.show-for-sr'
-    When I hover on the Status dropdown and select 'Red'
+    When I hover on the Status dropdown and select 'Green'
     Then I am shown with 1 booking
-    Then I see one row with status 'red'
+    Then I see one row with status 'green'
     Then I can see the element with css 'span.show-for-sr' is 'hidden'
 
   @runThis
   Scenario: Given 1 verified Booking Officer, I should be able to filter by job ids
     Given There exist 7 bookings
-    Given The booking has status 'red'
+    Given The booking has status 'green'
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
     When I am on the bookings page
     Then I will be shown with bookings
     Then I am shown with 10 booking
     Then I can count the element with css 'span.show-for-sr' to be '4'
-    When I hover on the Status dropdown and select 'Red'
+    When I hover on the Status dropdown and select 'Green'
     Then I am shown with 1 booking
-    Then I see one row with status 'red'
+    Then I see one row with status 'green'
     Then I can see the element with css 'span.show-for-sr' is 'hidden'
 
   @runThis
   Scenario: Given 1 verified Booking Officer, I should be able to filter by booking status
-    Given The booking has status 'red'
-    Given I exist as an Booking Officer
-    And I sign in with valid Booking Officer credentials
-    When I am on the bookings page
-    Then I will be shown with bookings
-    When I hover on the Status dropdown and select 'Red'
-    Then I am shown with 1 booking
-    Then I see one row with status 'red'
-
-  @runThis
-  Scenario: Given 1 verified Booking Officer, I should be able to filter by booking status
-    Given The booking has status 'red'
+    Given The booking has status 'green'
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
     When I am on the bookings page
     Then I will be shown with bookings
     When I hover on the Status dropdown and select 'Green'
+    Then I am shown with 1 booking
+    Then I see one row with status 'green'
+
+  @runThis
+  Scenario: Given 1 verified Booking Officer, I should be able to filter by booking status
+    Given The booking has status 'green'
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    When I am on the bookings page
+    Then I will be shown with bookings
+    When I hover on the Status dropdown and select 'Red'
     Then I am shown with 4 bookings
-    Then I see 4 rows with status 'green'
+    Then I see 4 rows with status 'red'
 
   @runThis
   Scenario: Given 1 verified Booking Officer, 1 verified Interpreter exists, I should be able to filter by booking state
@@ -157,23 +157,11 @@ Feature: Booking Filter
 
   @runThis
   Scenario: Given 1 verified Booking Officer, I should be able to filter by service type
+    Given The booking has service type 'Captioning'
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
     When I am on the bookings page
     Then I am shown with 5 bookings
-    When I click on an individual booking
-    Then I am on the individual booking page
-    When I click on link 'Booking details'
-    Then I click on checkbox name 'cbCaptioning'
-    And I verify checkbox name 'cbCaptioning' is checked 'true'
-    And I verify checkbox name 'cbAuslan' is checked 'false'
-    Then I fill the field 'captioner_count' with value '2'
-    When I click on BUTTON 'SAVE'
-    Then If I am shown a popup message 'Would you like to save these changes for all bookings or only for this one?', I approve it
-    Then I should get a valid booking update notification
-    When I click on Bookings
-    Then I am on the bookings page
-    And I am shown with 5 bookings
     When I hover on the Service Type dropdown and select 'CAPTIONING'
     Then I am shown with 1 booking
     Then I see one row with service type 'CAPTIONING'

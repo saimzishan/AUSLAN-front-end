@@ -71,11 +71,22 @@ export class BookingListComponent implements OnInit {
     }
 
     setClickedRow(booking: Booking) {
-        let route = GLOBAL.currentUser instanceof Interpreter || GLOBAL.currentUser instanceof OrganisationalRepresentative
-        || GLOBAL.currentUser instanceof IndividualClient
-            ? 'job-detail' : 'booking-job';
+        let route;
+        if (this.isCurrentUserAdminOrBookingOfficer() && this.isStateCancelClaimOrComplete(booking.state)) {
+            route = 'payroll-billing';
+        } else {
+            route = GLOBAL.currentUser instanceof Interpreter || GLOBAL.currentUser instanceof OrganisationalRepresentative
+                || GLOBAL.currentUser instanceof IndividualClient
+                ? 'job-detail' : 'booking-job';
+        }
         this.router.navigate(['/booking-management/' + booking.id, route]);
         GLOBAL.selBookingID = booking.id;
+    }
+
+    isStateCancelClaimOrComplete(state) {
+           return state === BOOKING_STATE.Service_completed || state === BOOKING_STATE.Cancelled_chargeable ||
+                  state === BOOKING_STATE.Claimed || state === BOOKING_STATE.Claimed_exported || state === BOOKING_STATE.Cancelled_claimed ||
+                  state === BOOKING_STATE.Cancelled_claimed_exported;
     }
 
     isCurrentUser(id) {

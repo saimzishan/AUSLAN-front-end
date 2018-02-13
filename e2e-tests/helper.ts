@@ -549,15 +549,23 @@ export class Heroku {
     }
 
     static updateBookingWithStatus(status: string) {
-        let daysToAdd = status === 'red' ? '2' : '4';
-        let command = 'd = ' + daysToAdd + '.business_days.after(DateTime.now.change(hour: 10));';
-        command += 'Booking.last.update(start_time: d, end_time: d + 1.hour);Booking.last.update_status';
+        const greenStatus = status === 'green';
+        let command = '';
+        if (greenStatus) {
+            command += 'Booking.last.update(number_of_interpreters_required: 0);';
+        }
+        command += 'Booking.last.update_status';
         Heroku.sendCommandToHeroku(command);
     }
 
     static updateBookingWithMethodType(method: string) {
         let method_type = method === 'VRI' ? '1' : '0';
         let command = 'Booking.last.update(method_type: ' + method_type + ')';
+        Heroku.sendCommandToHeroku(command);
+    }
+
+    static updateBookingWithServiceType(serviceType: string) {
+        let command = 'Booking.last.update(type: ' + serviceType + ')';
         Heroku.sendCommandToHeroku(command);
     }
 
