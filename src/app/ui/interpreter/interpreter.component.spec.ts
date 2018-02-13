@@ -17,6 +17,8 @@ import {GmapsApiService} from '../../api/gmaps-api.service';
 import {RemoveSpacePipe} from '../../shared/pipe/remove-space.pipe';
 import {FakeOpMapsAPILoader} from '../../shared/test/Mock';
 import {MapsAPILoader} from '@agm/core';
+import {UserService} from '../../api/user.service';
+import {MockUserService, MockBookingService} from '../../shared/test/Mock';
 
 describe('InterpreterComponent', () => {
     let component: InterpreterComponent;
@@ -25,7 +27,8 @@ describe('InterpreterComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [InterpreterComponent, AddressComponent, BillingAccountComponent, RemoveSpacePipe],
-            providers: [NotificationServiceBus, GmapsApiService, {provide: AuthHttp, useClass: MockBackend}, { provide: MapsAPILoader, useClass: FakeOpMapsAPILoader}],
+            providers: [NotificationServiceBus, GmapsApiService,  {provide: AuthHttp, useClass: MockBackend}, { provide: MapsAPILoader, useClass: FakeOpMapsAPILoader},
+                { provide: UserService, useClass: MockUserService }],
             imports: [FormsModule, CustomFormsModule, SimpleNotificationsModule,
                 RouterTestingModule, MaterialModule, CalendarModule]
         })
