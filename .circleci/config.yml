@@ -28,7 +28,7 @@ jobs:
               PR=$(git rev-parse --abbrev-ref HEAD)
               FILES=$(git diff --name-only origin/$PR `git merge-base origin/$PR origin/master` | grep "booking")
               if [[ -z $FILES ]] ; then
-                (circleci tests glob "e2e-tests/features/*.feature" | grep -v "booking";) | cat | sed '/^\s*$/d' | tr " " "\n" | sort -u  | grep "\.feature" | circleci tests split > /var/www/booking-system-frontend/test_features_for_split_container.txt
+                (echo $FILES;circleci tests glob "e2e-tests/features/*.feature" | grep -v "booking";) | cat | sed '/^\s*$/d' | tr " " "\n" | sort -u  | grep "\.feature" | circleci tests split > /var/www/booking-system-frontend/test_features_for_split_container.txt
               else
                 (echo $FILES;circleci tests glob "e2e-tests/features/*booking*.feature";) | cat | sed '/^\s*$/d' | tr " " "\n" | sort -u  | grep "\.feature" | circleci tests split > /var/www/booking-system-frontend/test_features_for_split_container.txt
              fi
