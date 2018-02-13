@@ -2,25 +2,27 @@ import { Component } from '@angular/core';
 import {LinkHelper, LinkAuth, LINK} from '../../shared/router/linkhelper';
 
 @Component({
-  selector: 'app-user-header',
-  templateUrl: './user-header.component.html',
-  styleUrls: ['./user-header.component.css']
+    selector: 'app-user-header',
+    templateUrl: './user-header.component.html',
+    styleUrls: ['./user-header.component.css']
 })
 export class UserHeaderComponent {
-  linkName = LINK;
-  constructor(private linkAuth: LinkAuth) {
-  }
+    linkName = LINK;
+    isStaff_calendar = false;
+    constructor(private linkAuth: LinkAuth) {}
 
-  isActiveLink(linkName) {
-    return LinkHelper.activeLink === linkName;
-  }
+    isActiveLink(linkName) {
+        return LinkHelper.activeLink === linkName;
+    }
 
-  setActiveLink(linkName) {
-    LinkHelper.activeLink = linkName;
-  }
+    setActiveLink(linkName) {
+        LinkHelper.activeLink = linkName;
+    }
 
-
-  canShowLink(linkName) {
-    return this.linkAuth.canShowLink(linkName);
-  }
+    canShowLink(linkName) {
+        return this.linkAuth.canShowLink(linkName);
+    }
+    showStaffCalendar() {
+      this.isStaff_calendar = true;
+    }
 }

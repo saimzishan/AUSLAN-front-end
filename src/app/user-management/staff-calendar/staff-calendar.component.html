@@ -1,0 +1,18 @@
+<section id="submenu">
+  <app-user-header id="main-submenu-links">
+  </app-user-header>
+</section>
+
+<app-mobile-header title="USER PROFILE" backLink="/booking-management"></app-mobile-header>
+
+<div id="page-common">
+  <main>
+    <form class="common-form reduced-top">
+      <ng-container>
+        <h1>STAFF AVAILABILITY</h1>
+        <angular2-fullcalendar id="mycal" #mycal [options]="calendarOptions"></angular2-fullcalendar>
+        <button id="staff-availability" [routerLink]="['/user-management/',2,'staff-availability']">ADD STAFF AVAILABILITY</button>
+      </ng-container>     
+    </form>
+  </main>
+</div>
