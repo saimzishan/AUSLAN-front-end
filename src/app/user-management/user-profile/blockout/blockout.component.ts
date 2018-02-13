@@ -94,7 +94,6 @@ export class BlockoutComponent implements OnDestroy, OnInit {
 
         dt.setTime(this.start_time.getTime() + (1 * 60 * 60 * 1000));
         this.end_time = dt;
-        console.log(this.end_time);
     }
     roundOffMinutes() {
         let dt = new Date();
@@ -105,6 +104,10 @@ export class BlockoutComponent implements OnDestroy, OnInit {
         this.start_time = this.defaultDateTime;
         dt.setTime(this.defaultDateTime.getTime() + (1 * 60 * 60 * 1000));
         this.end_time = dt;
+    }
+    setDayMonthYear() {
+        this.end_time = new Date(this.start_time.getFullYear(), this.start_time.getMonth(), this.start_time.getDate(),
+        this.end_time.getHours(), this.end_time.getMinutes());
     }
     getRoute () {
         this.router.navigate([ this.isUserAdminOrBO() ? '/user-management' : '/user-management/profile']);
