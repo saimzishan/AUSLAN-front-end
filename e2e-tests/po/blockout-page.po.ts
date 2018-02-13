@@ -53,13 +53,6 @@ export class BlockoutPagePo extends PageObject {
     }
     changeEndTimeOFBlockout = () => {
         let endTime = this.getElementByCss('input[name="dpEventDate_endtime"]');
-        let today = new Date();
-        today.setDate(today.getDate() + 5);
-        const currentDate = [
-            Heroku.prettyDate(today.getDate()),
-            Heroku.prettyDate(today.getMonth() + 1), // January is 0!,
-            today.getFullYear().toString()
-        ].join('/');
         endTime.clear();
         endTime.sendKeys('09:25 AM'); 
         this.clickOutSide();
