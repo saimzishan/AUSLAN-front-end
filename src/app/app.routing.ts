@@ -24,8 +24,6 @@ import {BlockoutComponent} from './user-management/user-profile/blockout/blockou
 import {BookingPayrollComponent} from './booking-management/booking-payroll/booking-payroll.component';
 import { StaffCalendarComponent } from './user-management/staff-calendar/staff-calendar.component';
 const appRoutes: Routes = [
-  { path: 'demo', component: OrgRepComponent },
-  { path: 'demo-interpreter', component: InterpreterComponent },
   { path: 'user-management', component: UserManagementComponent, canActivate: [AuthGuard]},
   { path: 'user-management/profile', component: UserProfileComponent, canActivate: [AuthGuard]},
   { path: 'user-management/secure_pass', component: UserPasswordComponent, canActivate: [AuthGuard]},
@@ -50,7 +48,7 @@ const appRoutes: Routes = [
   {path: 'reset', component: ResetComponent, canActivate: [NoAuthGuard] },
   {path: 'verify/:id', component: VerifyComponent, canActivate: [AuthGuard]},
   {path: 'bookings', component: BookingComponent, canActivate: [AuthGuard]},
-  { path: '**', redirectTo: 'authenticate', pathMatch: 'full'}
+  { path: '**', redirectTo: 'authenticate', pathMatch: 'full', canActivate: [NoAuthGuard]}
 ];
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes);

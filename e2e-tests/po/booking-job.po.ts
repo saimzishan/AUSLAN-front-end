@@ -32,6 +32,9 @@ export class BookingJobPage extends PageObject {
     gotoStorePath = () => {
         return this.navigateTo(this._currentPath);
     }
+    gotoBasePath = () => {
+        return this.navigateTo(browser.baseUrl);
+    }
     browse = () => {
         return this.currentPath().then((currentPath) => {
             let EC = protractor.ExpectedConditions;
