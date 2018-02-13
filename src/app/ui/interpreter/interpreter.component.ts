@@ -21,8 +21,8 @@ export class InterpreterComponent implements OnInit {
     updateCalendar = false;
     calendarOptions: Object = {};
 
-    constructor(private routes: ActivatedRoute, private router: Router, public userDataService: UserService) {}
-
+    constructor(private routes: ActivatedRoute, private router: Router, public userDataService: UserService) {
+    }
     ngOnInit() {
         let d = new DatePipe('en-us');
         this.userModel.naati_validity_start_date =
@@ -56,6 +56,7 @@ export class InterpreterComponent implements OnInit {
                 fixedWeekCount: false,
                 weekends: true, // will hide Saturdays and Sundays
                 timezone: 'local',
+                slotDuration: '01:00:00',
                 header: {
                     left: 'title',
                     center: '',
@@ -85,10 +86,12 @@ export class InterpreterComponent implements OnInit {
                 },
                 defaultView: $(window).width() < 768 ? 'listMonth' : 'month',
                 eventClick: (calEvent, jsEvent, view) => {
-                    this.router.navigate(['/user-management/', calEvent.id, 'block_out']);
+                    if (view.name !== 'listYear' && view.name !== 'listMonth') {
+                        this.router.navigate(['/user-management/', calEvent.id, 'block_out']);
+                    }
                 },
                 editable: true,
-                eventLimit: true, // allow "more" link when too many events
+                eventLimit: 2, // allow "more" link when too many events
                 events: []
             };
             for (let avail_block of this.userModel.availability_blocks_attributes) {
