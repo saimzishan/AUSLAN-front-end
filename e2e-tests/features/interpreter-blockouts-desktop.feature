@@ -310,5 +310,6 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER BOOK
     And I will be taken to blockout page
     And I enter blockout name 'singleEvent'
     Then I check that the end time is greater then start time
+    Then I change the value of end time
     And I click on BUTTON name 'save_blockout'
     And I get success message: 'Blockout successfully added'
