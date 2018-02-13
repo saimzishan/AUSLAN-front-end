@@ -19,3 +19,4 @@ Feature: Interpreter Pagination
     Then I click on parent of '3' element with css 'span.show-for-sr'
     Then I can see a list of 2 verified interpreters
     Then I can see the element with id 'displayTxt' has text 'Displaying 21 - 22 of 22 Interpreters'
+

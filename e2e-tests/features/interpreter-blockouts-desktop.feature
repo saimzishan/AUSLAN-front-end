@@ -296,4 +296,24 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER BOOK
     And I wait for 3000 milli-seconds
     And I get error message: 'Unprocessable Entity You have a blockout at this time. Please remove the blockout before accepting the booking'
 
+<<<<<<< HEAD
 
+=======
+@runThis
+  Scenario: As INTERPRETER, I can create edit blockout on desktop to check whether the end time changes or not
+    Given I go to the website
+    And I am on a computer
+    And I am shown the login screen, with picture and signup button
+    And I sign in with valid Interpreter credentials
+    Then I will be shown the bookings page
+    And I click on my name in the top corner
+    And I click on the option  profile
+    And I will be taken to my individual profile page
+    And I click on BUTTON name 'modify_blockouts'
+    And I will be taken to blockout page
+    And I enter blockout name 'singleEvent'
+    Then I check that the end time is greater then start time
+    Then I change the value of end time
+    And I click on BUTTON name 'save_blockout'
+    And I get success message: 'Blockout successfully added'
+>>>>>>> origin/master

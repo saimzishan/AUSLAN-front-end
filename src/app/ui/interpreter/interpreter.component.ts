@@ -21,8 +21,8 @@ export class InterpreterComponent implements OnInit {
     updateCalendar = false;
     calendarOptions: Object = {};
 
-    constructor(private routes: ActivatedRoute, private router: Router, public userDataService: UserService) {}
-
+    constructor(private routes: ActivatedRoute, private router: Router, public userDataService: UserService) {
+    }
     ngOnInit() {
         let d = new DatePipe('en-us');
         this.userModel.naati_validity_start_date =
@@ -34,15 +34,16 @@ export class InterpreterComponent implements OnInit {
 
         delete this.userModel.assignments_attributes;
         delete this.userModel.password;
-        this.userDataService.getUser(GLOBAL.currentUser.id)
-        .subscribe((res: any) => {
-                if (res.status === 200) {
-                    delete res.data.assignments_attributes;
-                    this.userModel.availability_blocks_attributes =  res.data.availability_blocks_attributes;
-                    this.BlockoutToUpdate();
-                }
-            }, (errors) => {
-            });
+        if (this.userModel) {
+            this.userDataService.getUser(this.userModel.id)
+                .subscribe((res: any) => {
+                    if (res.status === 200) {
+                        delete res.data.assignments_attributes;
+                        this.userModel.availability_blocks_attributes =  res.data.availability_blocks_attributes;
+                        this.BlockoutToUpdate();
+                    }
+                });
+        }
     }
     isUserAdminORBookOfficer(): Boolean {
         return Boolean(GLOBAL.currentUser instanceof Administrator ||
@@ -51,10 +52,11 @@ export class InterpreterComponent implements OnInit {
     BlockoutToUpdate() {
         if (this.displayCalendar) {
             this.calendarOptions = {
-                height: 'parent',
+                height: 'auto',
                 fixedWeekCount: false,
                 weekends: true, // will hide Saturdays and Sundays
                 timezone: 'local',
+                slotDuration: '01:00:00',
                 header: {
                     left: 'title',
                     center: '',
@@ -89,7 +91,7 @@ export class InterpreterComponent implements OnInit {
                     }
                 },
                 editable: true,
-                eventLimit: true, // allow "more" link when too many events
+                eventLimit: 2, // allow "more" link when too many events
                 events: []
             };
             for (let avail_block of this.userModel.availability_blocks_attributes) {
@@ -115,10 +117,10 @@ export class InterpreterComponent implements OnInit {
                         {
                             start: moment().endOf(avail_block.frequency === 'daily' ? 'day' :
                                 avail_block.frequency === 'weekly' ? 'week' :
-                                    avail_block.frequency === 'monthly' ? 'month' : 'week'),
+                                avail_block.frequency === 'monthly' ? 'month' : 'week'),
                             end: moment().endOf(avail_block.frequency === 'daily' ? 'day' :
                                 avail_block.frequency === 'weekly' ? 'week' :
-                                    avail_block.frequency === 'monthly' ? 'month' : 'week')
+                                avail_block.frequency === 'monthly' ? 'month' : 'week')
                         },
                         {
                             start: moment(sd.toISOString()).format('YYYY-MM-DD'),
