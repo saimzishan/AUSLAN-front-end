@@ -543,4 +543,15 @@ defineSupportCode(({Given, When, Then}) => {
             }
         });
     }
+
+    Then(/^I can see that form '(.*)' is '(.*)'$/, checkFormDisabled);
+    function checkFormDisabled (name: string, disabled: string) {
+        let isEnabled = disabled.toLowerCase() === 'disabled';
+        let elem = page.getElementByName(name);
+            return elem.getAttribute('disabled').then(disable => {
+                console.log("disable"+disable+"isenable"+isEnabled);
+                    return expect(disable === isEnabled.toString() || disable === null).to.be.true;
+            });
+    }
+
 });
