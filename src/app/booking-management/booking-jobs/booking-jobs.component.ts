@@ -839,7 +839,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         // }
         return value;
     }
-
+    
     search() {
         GLOBAL._filterInterpreterVal.set('search', this.searchParams);
         this.route.params.subscribe(params => {
