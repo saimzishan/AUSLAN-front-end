@@ -1,6 +1,6 @@
 <h2>Job Details</h2>
 <table id="job-details-responsive" class="custom-small-table">
-    <thead>
+  <thead>
     <tr>
       <th>Job</th>
       <th>Date</th>
@@ -9,79 +9,91 @@
       <th>Type</th>
       <th>Org</th>
       <th *ngIf='isClientInterpAndBookInProgress()'>Suburb</th>
-      <th *ngIf='!isClientInterpAndBookInProgress()'>Client</th>
-      <th *ngIf='!isClientInterpAndBookInProgress()'>Address</th>
-      <th *ngIf='!isClientInterpAndBookInProgress()'>Venue</th>
+      <ng-container *ngIf='!isClientInterpAndBookInProgress()'>
+        <th>Client</th>
+        <th>Address</th>
+        <th>Venue</th>
+      </ng-container>
       <th>Nature</th>
       <th>Specific</th>
-      <th *ngIf='!isClientInterpAndBookInProgress()'>People</th>
-      <th *ngIf='isClientInterpAndBookInProgress()'>Special Instructions</th>
-      <th *ngIf='isClientInterpAndBookInProgress()'>Attached</th>
+      <ng-container *ngIf='!isClientInterpAndBookInProgress()'>
+        <th>People</th>
+        <th>Special Instructions</th>
+        <th>Attached</th>
+      </ng-container>
       <th *ngIf='isCurrentUserAdminOrBookingOfficer() || isOrgRep()'>Date Added</th>
-      <th *ngIf='isCurrentUserAdminOrBookingOfficer()'>Days Notice</th>
-      <th *ngIf='isCurrentUserAdminOrBookingOfficer()'>Updated</th>
+      <ng-container *ngIf='isCurrentUserAdminOrBookingOfficer()'>
+        <th>Days Notice</th>
+        <th *ngIf='isCurrentUserAdminOrBookingOfficer()'>Updated</th>
+      </ng-container>
     </tr>
-    </thead>
-    <tbody>
+  </thead>
+  <tbody>
     <tr>
-        <td data-title="JOB NUMBER">
-            {{selectedBookingModel.id | PrettyID}}
-            <span data-title="Link ID" *ngIf="isCurrentUserAdminOrBookingOfficer() && !!selectedBookingModel.link_id" class="linkId">
-                <a>#{{selectedBookingModel.link_id}}</a>
-            </span>
+      <td data-title="JOB NUMBER">
+        {{selectedBookingModel.id | PrettyID}}
+        <span data-title="Link ID" *ngIf="isCurrentUserAdminOrBookingOfficer() && !!selectedBookingModel.link_id" class="linkId">
+          <a>#{{selectedBookingModel.link_id}}</a>
+        </span>
+      </td>
+      <td data-title="DATE"><span>{{selectedBookingModel.venue.start_time_iso | amDateFormat:'ddd D MMM YY'}}</span></td>
+      <td data-title="TIME">
+        <span>{{selectedBookingModel.venue.start_time_iso | amDateFormat:'h:mm A'}} - {{selectedBookingModel.venue.end_time_iso | amDateFormat:'h:mm A'}}</span>
+      </td>
+      <td>{{selectedBookingModel.method_type}}</td>
+      <td>{{selectedBookingModel.service_type}}</td>
+      <td data-title="ORGANISATION">{{selectedBookingModel.client.organisation_name}}</td>
+      <td data-title="SUBURB" *ngIf='isClientInterpAndBookInProgress()'>
+        <a target="_blank"
+           href="{{'https://www.google.com.au/maps/place/' +selectedBookingModel.venue.suburb}}">
+          {{selectedBookingModel.venue.suburb}}
+        </a>
+      </td>
+      <ng-container *ngIf='!isClientInterpAndBookInProgress()'>
+        <td data-title="CLIENT">
+          {{selectedBookingModel.deaf_person.first_name +
+          ' ' +
+          selectedBookingModel.deaf_person.last_name}}
         </td>
-        <td data-title="DATE"><span>{{selectedBookingModel.venue.start_time_iso | amDateFormat:'ddd D MMM YY'}}</span></td>
-        <td data-title="TIME">
-            <span>{{selectedBookingModel.venue.start_time_iso | amDateFormat:'h:mm A'}} - {{selectedBookingModel.venue.end_time_iso | amDateFormat:'h:mm A'}}</span>
+        <td data-title="ADDRESS">
+          <a target="_blank"
+             href="{{'https://www.google.com.au/maps/place/' + selectedBookingModel.venue.street_number + ' ' + selectedBookingModel.venue.street_name + ' ' + selectedBookingModel.venue.suburb}}">
+            {{selectedBookingModel.venue.street_number
+            + ' ' + selectedBookingModel.venue.street_name }}
+          </a>
         </td>
-        <td>{{selectedBookingModel.method_type}}</td>
-        <td>{{selectedBookingModel.service_type}}</td>
-        <td data-title="ORGANISATION">{{selectedBookingModel.client.organisation_name}}</td>
-        <td data-title="SUBURB" *ngIf='isClientInterpAndBookInProgress()'>
-            <a target="_blank"
-               href="{{'https://www.google.com.au/maps/place/' +selectedBookingModel.venue.suburb}}">
-                {{selectedBookingModel.venue.suburb}}
-            </a>
+        <td data-title="VENUE">{{selectedBookingModel.venue.title}}</td>
+      </ng-container>
+      <td data-title="NATURE">{{selectedBookingModel.nature_of_appointment}}</td>
+      <td>{{selectedBookingModel.specific_nature_of_appointment}}</td>
+      <ng-container *ngIf='!isClientInterpAndBookInProgress()'>
+        <td data-title="PEOPLE">{{selectedBookingModel.venue.expected_attendance}}</td>
+        <td data-title="SPECIAL INSTRUCTIONS" class="new-line">
+          {{selectedBookingModel.special_instructions}}
         </td>
-        <td data-title="CLIENT" *ngIf='!isClientInterpAndBookInProgress()'>
-            {{selectedBookingModel.deaf_person.first_name +
-            ' ' +
-            selectedBookingModel.deaf_person.last_name}}
-        </td>
-        <td data-title="ADDRESS" *ngIf='!isClientInterpAndBookInProgress()'>
-            <a target="_blank"
-               href="{{'https://www.google.com.au/maps/place/' + selectedBookingModel.venue.street_number + ' ' + selectedBookingModel.venue.street_name + ' ' + selectedBookingModel.venue.suburb}}">
-                {{selectedBookingModel.venue.street_number
-                + ' ' + selectedBookingModel.venue.street_name }}
-            </a>
-        </td>
-        <td data-title="VENUE" *ngIf='!isClientInterpAndBookInProgress()'>{{selectedBookingModel.venue.title}}</td>
-        <td data-title="NATURE">{{selectedBookingModel.nature_of_appointment}}</td>
-        <td>{{selectedBookingModel.specific_nature_of_appointment}}</td>
-        <td data-title="PEOPLE" *ngIf='!isClientInterpAndBookInProgress()'>{{selectedBookingModel.venue.expected_attendance}}</td>
-        <td data-title="SPECIAL INSTRUCTIONS" class="new-line" *ngIf='!isClientInterpAndBookInProgress()'>
-            {{selectedBookingModel.special_instructions}}
-        </td>
-        <td align="center" data-title="Attached" *ngIf='!isClientInterpAndBookInProgress()'>
-            <ul *ngIf="selectedBookingModel.documents_attributes.length > 0"
-                class="dropdown menu custom"
-                data-dropdown-menu>
-                <li>
-                    <a href="#" class="icon-attach"></a>
-                    <ul class="menu">
-                        <li *ngFor="let attachment of selectedBookingModel.documents_attributes">
-                            <a  download
-                                href="{{attachment.url}}">
-                                <i class="icon-attach"></i> {{attachment.file_name}}
-                            </a>
-                        </li>
-                    </ul>
+        <td align="center" data-title="Attached">
+          <ul *ngIf="selectedBookingModel.documents_attributes.length > 0"
+                           class="dropdown menu custom"
+                           data-dropdown-menu>
+            <li>
+              <a href="#" class="icon-attach"></a>
+              <ul class="menu">
+                <li *ngFor="let attachment of selectedBookingModel.documents_attributes">
+                  <a  download
+                  href="{{attachment.url}}">
+                    <i class="icon-attach"></i> {{attachment.file_name}}
+                  </a>
                 </li>
-            </ul>
+              </ul>
+            </li>
+          </ul>
         </td>
-        <td data-title="Date Added" *ngIf='isCurrentUserAdminOrBookingOfficer() || isOrgRep()'>{{selectedBookingModel.created_at | date}}</td>
-        <td *ngIf='isCurrentUserAdminOrBookingOfficer()'>Days Notice</td>
-        <td data-title="UPDATED" *ngIf='isCurrentUserAdminOrBookingOfficer()'><span class="underline">{{selectedBookingModel.updated_at | date}}</span></td>
+      </ng-container>
+      <td data-title="Date Added" *ngIf='isCurrentUserAdminOrBookingOfficer() || isOrgRep()'>{{selectedBookingModel.created_at | date}}</td>
+      <ng-container *ngIf='isCurrentUserAdminOrBookingOfficer()'>
+        <td>Days Notice</td>
+        <td data-title="UPDATED"><span class="underline">{{selectedBookingModel.updated_at | date}}</span></td>
+      </ng-container>
     </tr>
-    </tbody>
+  </tbody>
 </table>
