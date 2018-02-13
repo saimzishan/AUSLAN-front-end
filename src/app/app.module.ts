@@ -80,6 +80,7 @@ import {MomentModule} from 'angular2-moment/moment.module';
 import {BookingInfoComponent} from './booking-management/booking-info/booking-info.component';
 import {BookingPayrollComponent} from './booking-management/booking-payroll/booking-payroll.component';
 import {PayrollTimeComponent} from './booking-management/payroll-time/payroll-time.component';
+import { StaffCalendarComponent } from './user-management/staff-calendar/staff-calendar.component';
 
 @NgModule({
     declarations: [
@@ -109,7 +110,7 @@ import {PayrollTimeComponent} from './booking-management/payroll-time/payroll-ti
         SkillMatrixComponent, AddressComponent, AccountantComponent,
         UserPasswordComponent, PreComponent, BlockoutComponent, TermandconditionComponent,
         InterpreterBoxComponent, InterpreterPopupComponent, RemoveSpacePipe, LinkidPopupComponent, MobileHeaderComponent,
-        BookingInfoComponent, BookingPayrollComponent, PayrollTimeComponent
+        BookingInfoComponent, BookingPayrollComponent, PayrollTimeComponent, StaffCalendarComponent
     ],
     entryComponents: [PopupComponent, InterpreterPopupComponent, LinkidPopupComponent],
     imports: [CustomFormsModule, routing, FileUploadModule,

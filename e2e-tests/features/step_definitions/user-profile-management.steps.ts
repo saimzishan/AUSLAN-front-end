@@ -21,6 +21,7 @@ defineSupportCode(({Given, Then, When}) => {
     When(/^I click on my name in the top corner$/, bookingPage.clickOnProfile);
     When(/^I click on my name in the top corner on mobile$/, bookingPage.clickOnProfileMobile);
     When(/^I click on the option  profile$/, bookingPage.clickOnOptionProfile);
+    When(/^I click on the option  staff calender$/, bookingPage.clickOnStaffCalender);
 
     Then(/^I will be taken to my individual (.*) page$/, takeToIndividualPage);
     function takeToIndividualPage(individual_type: string) {
@@ -31,6 +32,7 @@ defineSupportCode(({Given, Then, When}) => {
         }
     }
     Then(/^I will be taken to blockout page$/, blockoutPage.browse);
+    Then(/^I will be taken to staff-calendar page$/, blockoutPage.browse);
     Then(/^I enter blockout name '(.*)'$/, blockoutPage.enterBlockoutName);
     Then(/^I check that the end time is greater then start time$/, blockoutPage.checkEndTimeAgainstStartTime);
     Then(/^I change the value of end time$/, blockoutPage.changeEndTimeOFBlockout);
