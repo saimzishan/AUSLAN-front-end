@@ -32,7 +32,7 @@ defineSupportCode(({Given, Then, When}) => {
         }
     }
     Then(/^I will be taken to blockout page$/, blockoutPage.browse);
-    Then(/^I will be taken to staff-calendar page$/, blockoutPage.browse);
+    Then(/^I will be taken to staff-calendar page$/, blockoutPage.browseStaff);
     Then(/^I enter blockout name '(.*)'$/, blockoutPage.enterBlockoutName);
     Then(/^I check that the end time is greater then start time$/, blockoutPage.checkEndTimeAgainstStartTime);
     Then(/^I change the value of end time$/, blockoutPage.changeEndTimeOFBlockout);

@@ -22,6 +22,14 @@ export class BlockoutPagePo extends PageObject {
         });
     }
 
+    browseStaff = () => {
+        return this.currentPath().then((currentPath) => {
+            this.didFinishedRendering();
+            expect(currentPath).to.contain('staff-availability');
+
+        });
+    }
+
     didFinishedRendering = () => {
         this.saveBtn = this.getButtonByText('SAVE');
         return browser.wait(protractor.ExpectedConditions.presenceOf(this.saveBtn), 30000).then(() => {
