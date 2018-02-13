@@ -54,11 +54,7 @@ export class Payments {
     }
 
     meterToKm(meters: string) {
-        if (meters === '0.0') {
-            return 0;
-        } else {
-            return Math.round((+meters / 1000));
-        }
+        return (meters === '0.0') ? 0 : Math.round((+meters / 1000));
     }
 
     kmToMeter(km: string) {

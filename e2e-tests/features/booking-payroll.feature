@@ -32,19 +32,19 @@ Feature: Booking Payroll and Billing
     When I click on link 'Payroll & Billing'
     Then I should be on the payroll and billing page
     Then I wait for 1500 milli-seconds
-    When I fill the payroll field 'interpreterTime_client_0' with value '%4'
+    When I fill the payroll field 'client_interpreterTime_0' with value '%4'
     Then I click out of the text box
     Then I am shown a validation error with the text 'Oops! Only numerical values, "." and ":" are allowed.'
-    And I clear the payroll input field 'interpreterTime_client_0'
-    When I fill the payroll field 'prepTime_client_0' with value '#'
+    And I clear the payroll input field 'client_interpreterTime_0'
+    When I fill the payroll field 'client_prepTime_0' with value '#'
     Then I click out of the text box
     Then I am shown a validation error with the text 'Oops! Only numerical values, "." and ":" are allowed.'
-    And I clear the payroll input field 'prepTime_client_0'
-    When I fill the payroll field 'interpreterTime_interpreter_0' with value 'asdf1234'
+    And I clear the payroll input field 'client_prepTime_0'
+    When I fill the payroll field 'interpreter_interpreterTime_0' with value 'asdf1234'
     Then I click out of the text box
     Then I am shown a validation error with the text 'Oops! Only numerical values, "." and ":" are allowed.'
-    And I clear the payroll input field 'interpreterTime_interpreter_0'
-    When I fill the payroll field 'prepTime_interpreter_0' with value '=-09'
+    And I clear the payroll input field 'interpreter_interpreterTime_0'
+    When I fill the payroll field 'interpreter_prepTime_0' with value '=-09'
     Then I click out of the text box
     Then I am shown a validation error with the text 'Oops! Only numerical values, "." and ":" are allowed.'
     And I click on BUTTON 'Save'
@@ -105,8 +105,8 @@ Feature: Booking Payroll and Billing
     And I verify that payroll 'interpreter' input fields have zero value
     When I click on material checkbox name 'cbPayInterpreter_0'
     Then I verify material checkbox name 'cbPayInterpreter_0' is checked 'true'
-    And I can see the payroll element 'interpreterTime_interpreter_0' has text '2:0'
-    And I can see the payroll element 'prepTime_interpreter_0' has text '0'
+    And I can see the payroll element 'interpreter_interpreterTime_0' has text '2:0'
+    And I can see the payroll element 'interpreter_prepTime_0' has text '0'
 
   @runThis
   Scenario: Given 1 verified Booking Officer, When I check invoice client then time fields of client will be filled from the time fields of interpreter, INTERPRETER exists
@@ -125,21 +125,21 @@ Feature: Booking Payroll and Billing
     Then I should be on the payroll and billing page
     Then I wait for 1500 milli-seconds
     Then I click on material checkbox name 'cbPayTravel_0'
-    And I fill the payroll field 'interpreterTime_interpreter_0' with value '1:20'
-    And I fill the payroll field 'prepTime_interpreter_0' with value '0:20'
-    And I fill the payroll field 'travelTime_interpreter_0' with value '0:25'
+    And I fill the payroll field 'interpreter_interpreterTime_0' with value '1:20'
+    And I fill the payroll field 'interpreter_prepTime_0' with value '0:20'
+    And I fill the payroll field 'interpreter_travelTime_0' with value '0:25'
     And I verify material checkbox name 'cbInvoiceClient_0' is checked 'true'
     When I click on material checkbox name 'cbInvoiceClient_0'
     Then I verify material checkbox name 'cbInvoiceClient_0' is checked 'false'
     And I verify that payroll 'client' input fields have zero value
     When I click on material checkbox name 'cbInvoiceClient_0'
     Then I verify material checkbox name 'cbInvoiceClient_0' is checked 'true'
-    And I can see the payroll element 'interpreterTime_client_0' has text '1:20'
-    And I can see the payroll element 'prepTime_client_0' has text '0:20'
-    And I can see the payroll element 'travelTime_client_0' has text '0:25'
+    And I can see the payroll element 'client_interpreterTime_0' has text '1:20'
+    And I can see the payroll element 'client_prepTime_0' has text '0:20'
+    And I can see the payroll element 'client_travelTime_0' has text '0:25'
 
   @runThis
-  Scenario: Given 1 verified Booking Officer, When I check charge travel then km and travel time will be filled from the interpreter and when i save then I will get a success notification, INTERPRETER exists
+  Scenario: Given 1 verified Booking Officer, When I check charge travel then km and travel time will be filled from the recommended values and when i save then I will get a success notification, INTERPRETER exists
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
     And I am on the bookings page
@@ -154,9 +154,6 @@ Feature: Booking Payroll and Billing
     When I click on link 'Payroll & Billing'
     Then I should be on the payroll and billing page
     Then I wait for 1500 milli-seconds
-    Then I click on material checkbox name 'cbPayTravel_0'
-    And I fill the payroll field 'kiloMeters_interpreter_0' with value '1.4'
-    And I fill the payroll field 'travelTime_interpreter_0' with value '0:05'
     And I verify material checkbox name 'cbInvoiceClient_0' is checked 'true'
     When I click on material checkbox name 'cbInvoiceClient_0'
     Then I verify material checkbox name 'cbInvoiceClient_0' is checked 'false'
@@ -165,12 +162,10 @@ Feature: Booking Payroll and Billing
     Then I verify material checkbox name 'cbInvoiceClient_0' is checked 'true'
     When I click on material checkbox name 'cbChargeTravel_0'
     Then I verify material checkbox name 'cbChargeTravel_0' is checked 'true'
-    And I can see the payroll element 'kiloMeters_client_0' has text '1.4'
-    And I can see the payroll element 'travelTime_client_0' has text '0:05'
+    And I can see the payroll element 'client_kiloMeters_0' has text '1'
+    And I can see the payroll element 'client_travelTime_0' has text '0:05'
     And I click on BUTTON 'Save'
     Then I should get a valid payroll save notification
-    Then I can see the payroll element 'kiloMeters_interpreter_0' has text '1'
-    And I can see the payroll element 'travelTime_interpreter_0' has text '0:05'
 
   @runThis
   Scenario: Given 1 verified Booking Officer, I can not see the the payroll link when booking moves to Cancelled no charge state

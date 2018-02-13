@@ -142,6 +142,7 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
 
                         this.payments[payrollInvoice][index]['interpreting_time'] = duration.hours() + ':' + duration.minutes();
                         this.payments[payrollInvoice][index]['preparation_time'] = 0;
+                        this.setRecommendedDistanceTravelTime(payrollInvoice, index);
                     } else {
                         this.payments[payrollInvoice][index]['pay_travel'] = false;
                         ['interpreting_time', 'preparation_time', 'distance', 'travel_time'].forEach(distTime => {
@@ -167,14 +168,18 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
                     }
                 } else {
                     if (this.payments[payrollInvoice][index][field]) {
-                        ['distance', 'travel_time'].forEach(distTime => {
-                            this.payments[payrollInvoice][index][distTime] = this.payments.invoice_attributes[index]['recommended'][distTime];
-                        });
+                        this.setRecommendedDistanceTravelTime(payrollInvoice, index);
                     } else {
                         this.payments[payrollInvoice][index]['distance'] = this.payments[payrollInvoice][index]['travel_time'] = 0;
                     }
                 }
             }
+    }
+
+    setRecommendedDistanceTravelTime(payrollInvoice: string, index) {
+        ['distance', 'travel_time'].forEach(distTime => {
+            this.payments[payrollInvoice][index][distTime] = this.payments[payrollInvoice][index]['recommended'][distTime];
+        });
     }
 
     deepCopy(oldObj: any) {
