@@ -6,8 +6,6 @@
 				   [ngClass]="{'active':  isActiveLink(linkName.change_pass)}"
 				   (click)="setActiveLink( linkName.change_pass)" >Change Password</a>
 
-				<a id="TABStaffCalendar" [routerLink]="['/user-management/','staff_calendar']"> Staff Calender</a>
-
 	</section>
 			<section>
 				<a id="lnkSettings" *ngIf="canShowLink('user-management')"  [routerLink]="['/user-management']"

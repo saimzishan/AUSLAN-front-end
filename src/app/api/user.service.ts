@@ -318,6 +318,29 @@ export class UserService extends ApiService {
                 JSON.stringify(obj) , options) // Better add verify in path
             .catch((err) => { return Observable.throw(err); });
     }
+    // ================= Added by Zeeshan yousaf ============================= //
+    addStaffAvailabilities(userID: number, availibilityBlock: AvailabilityBlock) {
+        let headers = new Headers({
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        });
+        let options = new RequestOptions({ headers: headers });
+        let obj = { 'staff_availability': availibilityBlock };
+
+        return this.http
+            .post(GLOBAL.USER_API_ENDPOINT + '/interpreters/' + userID + '/staff_availabilities',
+                JSON.stringify(obj), options) // Better add verify in path
+            .catch((err) => { return Observable.throw(err); });
+    }
+    getStaffAvailabilities(userID: number) {
+        let headers = new Headers({ 'Accept': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http
+            .get(GLOBAL.USER_API_ENDPOINT + '/interpreters/' + userID + '/staff_availabilities', options)
+            .map(this.extractData)
+            .catch((err) => { return Observable.throw(err); });
+    }
 
     editBlockout( userID: number, availabilityBlock: AvailabilityBlock) {
         let headers = new Headers({'Accept': 'application/json',

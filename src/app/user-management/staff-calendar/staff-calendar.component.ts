@@ -8,6 +8,7 @@ import { CalendarComponent } from 'ap-angular2-fullcalendar';
 import * as moment from 'moment';
 import * as $ from 'jquery';
 import { DatePipe } from '@angular/common';
+import { UserService } from '../../api/user.service';
 
 @Component({
     selector: 'app-staff-calendar',
@@ -20,13 +21,22 @@ export class StaffCalendarComponent implements OnInit {
     displayCalendar = true;
     calendarOptions: Object = {};
     updateCalendar = false;
-    constructor(private route: ActivatedRoute, private router: Router) {
+    userID;
+    interpreter;
+    constructor(public userDataService: UserService, private route: ActivatedRoute, private router: Router) {
         this.userModel = new Interpreter();
     }
     isUserLogin() {
         return Boolean(GLOBAL.currentUser);
     }
     ngOnInit() {
+        this.interpreter = Boolean(GLOBAL.currentUser) &&
+            GLOBAL.currentUser instanceof Interpreter ? <Interpreter>GLOBAL.currentUser :
+            this.isUserAdminOrBO() ? GLOBAL.currentInterpreter : null;
+        this.userID = this.interpreter !== null ? this.interpreter.id : -1;
+        if (this.userID !== -1 ) {
+            this.getStaffAvailabilities(this.userID);
+        }
         let d = new DatePipe('en-us');
         this.userModel.naati_validity_start_date =
             d.transform(this.userModel.naati_validity_start_date, 'yyyy-MM-dd');
@@ -90,7 +100,7 @@ export class StaffCalendarComponent implements OnInit {
                 eventLimit: true,
                 events: []
             }; // allow 'more' link when too many events
-
+            // console.log(this.userModel.availability_blocks_attributes);
             for (let avail_block of this.userModel
                 .availability_blocks_attributes) {
                 let sd = new Date(avail_block.start_time);
@@ -156,5 +166,19 @@ export class StaffCalendarComponent implements OnInit {
 
             this.updateCalendar = true;
         }
+    }
+    isUserAdminOrBO() {
+        return GLOBAL.currentUser instanceof Administrator ||
+            GLOBAL.currentUser instanceof BookingOfficer;
+    }
+    getStaffAvailabilities(userID) {
+        this.userDataService.getStaffAvailabilities(userID)
+            .subscribe((res: any) => {
+                if (res.status === 200) {
+                    delete res.data.assignments_attributes;
+                    this.userModel.availability_blocks_attributes = res.data.availability_blocks_attributes;
+                    console.log(this.userModel.availability_blocks_attributes);
+                }
+            });
     }
 }

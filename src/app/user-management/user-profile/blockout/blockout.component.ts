@@ -199,12 +199,37 @@ export class BlockoutComponent implements OnDestroy, OnInit {
         this.availabilityBlock.start_time = this.interpreterStateTimeZone(this.start_time);
         this.availabilityBlock.end_time = this.interpreterStateTimeZone(this.end_time);
         this.availabilityBlock.end_date = this.interpreterStateTimeZone(this.end_date);
-        console.log(this.availabilityBlock);
-        this.userDataService.addBlockout(this.userID, this.availabilityBlock)
+        if (this.param_id > 2) {
+            this.addStaffAvailabilitie(this.availabilityBlock);
+            return;
+        } else {
+            this.userDataService.addBlockout(this.userID, this.availabilityBlock)
+                .subscribe((res: any) => {
+                    if (res.status === 200) {
+                        // UI Notification
+
+                        this.availabilityBlock.id = res.json().id;
+                        this.spinnerService.requestInProcess(false);
+                        this.interpreter.availability_blocks_attributes.push(this.availabilityBlock);
+                        if (this.isUserAdminOrBO() === false) {
+                            AuthGuard.refreshUser(this.interpreter);
+                        }
+                        this._location.back();
+                        this.notificationServiceBus.launchNotification(false, 'Blockout successfully added');
+                    }
+                }, errors => {
+                    this.spinnerService.requestInProcess(false);
+
+                    let e = errors.json();
+                    this.notificationServiceBus.launchNotification(true, errors.statusText + ' '
+                        + JSON.stringify(e || e.errors).replace(/]|[[]/g, '').replace(/({|})/g, ''));
+                });
+        }
+    }
+    addStaffAvailabilitie(staffAvailabilitieForm) {
+        this.userDataService.addStaffAvailabilities(this.userID, this.availabilityBlock)
             .subscribe((res: any) => {
                 if (res.status === 200) {
-                    // UI Notification
-
                     this.availabilityBlock.id = res.json().id;
                     this.spinnerService.requestInProcess(false);
                     this.interpreter.availability_blocks_attributes.push(this.availabilityBlock);
@@ -212,7 +237,7 @@ export class BlockoutComponent implements OnDestroy, OnInit {
                         AuthGuard.refreshUser(this.interpreter);
                     }
                     this._location.back();
-                    this.notificationServiceBus.launchNotification(false, 'Blockout successfully added');
+                    this.notificationServiceBus.launchNotification(false, 'Staff Availability successfully added');
                 }
             }, errors => {
                 this.spinnerService.requestInProcess(false);
