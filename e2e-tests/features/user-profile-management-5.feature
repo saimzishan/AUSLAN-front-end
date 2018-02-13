@@ -209,5 +209,6 @@ Feature: User Profile Management
     And I will be taken to my individual profile page
     When I click on the option  staff calender
     When I click on BUTTON 'ADD STAFF AVAILABILITY'
+    Then I will be taken to staff-calendar page
 
 # --------------------------------------------- AUSLAN1-165 -> END ---------------------------------------------
