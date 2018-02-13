@@ -78,7 +78,7 @@
                         <input type="text" name="client_name" (blur)="filter('client_name', filterByClientName.value.client_name)" [(ngModel)]="bookingFilter.client_name">
                     </form>
                 </th>
-                <th width="10%">
+                <th>
                     <span class="order"
                           [ngClass]="getSortOrder('suburb')"
                           (click)="sort('suburb')">Suburb</span>
