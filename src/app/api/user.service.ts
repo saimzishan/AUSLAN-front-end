@@ -354,6 +354,20 @@ export class UserService extends ApiService {
                 JSON.stringify(obj) , options) // Better add verify in path
             .catch((err) => { return Observable.throw(err); });
     }
+    editStaffAvailabilities(userID: number, availabilityBlock: AvailabilityBlock) {
+        let headers = new Headers({
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        });
+        let options = new RequestOptions({ headers: headers });
+        let obj = { 'staff_availability': availabilityBlock };
+
+        return this.http
+            .put(GLOBAL.USER_API_ENDPOINT + '/interpreters/' + userID + '/staff_availabilities/' +
+                availabilityBlock.id,
+                JSON.stringify(obj), options) // Better add verify in path
+            .catch((err) => { return Observable.throw(err); });
+    }
 
     deleteBlockout(userID: number, availability_block_id: number) {
         let headers = new Headers({'Accept': 'application/json',
@@ -363,6 +377,19 @@ export class UserService extends ApiService {
         return this.http
             .delete(GLOBAL.USER_API_ENDPOINT + '/interpreters/' +
                 userID + '/availability_blocks/' + availability_block_id ,
+                options) // Better add verify in path
+            .catch((err) => { return Observable.throw(err); });
+    }
+    deleteStaffAvailabilities(userID: number, availability_block_id: number) {
+        let headers = new Headers({
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        });
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http
+            .delete(GLOBAL.USER_API_ENDPOINT + '/interpreters/' +
+            userID + '/staff_availabilities/' + availability_block_id,
                 options) // Better add verify in path
             .catch((err) => { return Observable.throw(err); });
     }

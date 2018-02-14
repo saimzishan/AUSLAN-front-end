@@ -3,10 +3,10 @@
     </app-user-header>
 </section>
 <header class="text-center hidden-mobile">
-    <div *ngIf="param_id > 2;then content else other_content"></div>
+    <div *ngIf="staff_availability;then content else other_content"></div>
 
     <ng-template #content>
-        <h1>{{ param_id === 3 ? 'ADD STAFF AVAILABILITY' : 'EDIT STAFF AVAILABILITY'}}</h1>
+        <h1>{{ param_id < 1 ? 'ADD STAFF AVAILABILITY' : 'EDIT STAFF AVAILABILITY'}}</h1>
     </ng-template>
     <ng-template #other_content>
         <h1>{{ param_id < 1 ? 'ADD BLOCKOUT' : 'EDIT BLOCKOUT'}}</h1>
@@ -81,14 +81,13 @@
                             </md-slide-toggle>
                         </div>
                     </div>
-
                     <div *ngIf="availabilityBlock.recurring">
 
                         <div class="small-12 columns">
                             <div class="form-field">
                                 <label>FREQUENCY *</label>
 
-                                <select [(ngModel)]="availabilityBlock.frequency" name="availabilityBlock_frequency"
+                                <select [(ngModel)]="availabilityBlock.frequency" name="availabilityBlock_frequency" (change)="checkIsWeekely()"
                                         #availabilityBlock_frequency="ngModel" required
                                         aria-label="A">
                                     <option *ngFor="let frequency_name of ['daily', 'weekly']"
@@ -97,6 +96,21 @@
 
                                 </select>
 
+                            </div>
+                        </div>
+                        {{isWeekely}}
+                        {{availabilityBlock.recurring}}
+                        <div class="medium-12 columns" *ngIf="availabilityBlock.recurring">
+                            <div *ngIf="isWeekely">
+                                <div class='form-field'>
+                                    <label>REPEAT ON*</label>
+                                    <div *ngFor="let day of repeat_days" class='medium-1 columns'>
+                                        <md-checkbox [(ngModel)]="day.selected" name="{{day.value}}" [disabled]="isRecurrenceDayCheckboxDisabled(day)" [align]='right'
+                                            [required]='isRecurringBooking'>
+                                            {{day.display}}
+                                        </md-checkbox>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="small-12 columns">
