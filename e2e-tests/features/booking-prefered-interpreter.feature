@@ -441,4 +441,24 @@ Feature: Create Booking with preferred or blocked interpreters
     Then I should be on the edit booking page
     And I can count the element with css 'section.interpreter_selected_blocked' to be '0'
     And I can count the element with css 'section.interpreter_selected_prefered' to be '1'
+
+  @runThis
+  Scenario: As an Organisational Representative, I should be able to see paginated interpreter list on new booking form
+    Given There exist 12 verified interpreters
+    Given I exist as an Organisational Representative
+    And I sign in with valid Organisational Representative credentials
+    When I click on my name in the top corner
+    When I click on the option  profile
+    Then I will be taken to my individual profile page
+    Then I can see the element with name 'interpreter_block_prefered' is 'visible'
+    Then I can see the element with css '.btnYes_prefered' is 'visible'
+    When I click on element with css '.btnYes_prefered'
+    And  I click on BUTTON name 'btnManageInterpreter_prefered'
+    Then I can see the element with css 'div.md-dialog' is 'visible'
+    And I can see the element with id 'displayTxt' has text 'Displaying 1 - 10 of 12 Interpreters'
+    And I can see '10' validated interpreters
+    And I can count the element with css 'span.show-for-sr' to be '4'
+    When I click on parent of '3' element with css 'span.show-for-sr'
+    Then I can see the element with id 'displayTxt' has text 'Displaying 11 - 12 of 12 Interpreters'
+    And I can see '2' validated interpreters
  
