@@ -18,6 +18,7 @@ Feature: Create, read, update and delete a User
     And I am on my admin home screen
     And I hover on the 'Profile'
     And I go to the 'User Management' list page
+    And I click out of the text box
     Then I click on element by name 'user-roles'
     When I hover on the userlist dropdown and select 'Administrator'
     And I will be taken to the 'ADMINISTRATOR Signup' page
