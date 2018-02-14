@@ -78,7 +78,7 @@ Feature: Nearby Interpreter Sort by columns
     When I click on the interpreter table header 'Suburb'
     Then I should see the verified interpreters in descending order of Suburb
 
-  @runThis
+  @ignoreThis
   Scenario: Given 1 verified Administrator Officer, I can sort the list of interpreters by Km column
     Given There exist 5 verified interpreters
     Given The first 1 interpreters have travel pay status 'Yes'

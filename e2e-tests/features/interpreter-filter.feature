@@ -74,7 +74,7 @@ Feature: Nearby Interpreter Filter
     When I query interpreter by form field suburb and value 'Doncaster'
     Then I can see a list of 1 verified interpreters
 
-  @runThis
+  @ignoreThis
   Scenario: Given 1 verified Administrator Officer, I can filter the list of interpreters by Pay Travel column
     Given There exist 5 verified interpreters
     Given The first 2 interpreters have travel pay status 'Yes'
