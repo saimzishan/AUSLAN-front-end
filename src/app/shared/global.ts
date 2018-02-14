@@ -46,6 +46,7 @@ export class GLOBAL {
     public static userStatusArray = [{name: 'Active'}, {name: 'Disabled'}];
     public static _extRefVal: URLSearchParams = new URLSearchParams();
     public static _filterVal: URLSearchParams = new URLSearchParams();
+    public static _filterInterpreterVal: URLSearchParams = new URLSearchParams();
 
     // UI Params
     public static selBookingID = '';
@@ -58,6 +59,16 @@ export class GLOBAL {
             }
         });
         this._filterVal.paramsMap.forEach((value: string[], key: string) => {
+            for (let v of value) {
+                p.set(key, v);
+            }
+        });
+        return p;
+    }
+
+    public static getInterpreterSearchParameters() {
+        let p = new URLSearchParams();
+        this._filterInterpreterVal.paramsMap.forEach((value: string[], key: string) => {
             for (let v of value) {
                 p.set(key, v);
             }
