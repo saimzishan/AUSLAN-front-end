@@ -315,12 +315,13 @@ Feature: Booking Payroll and Billing
     Then I should be on the payroll and billing page
     When I click on link 'Booking info'
     Then I am on the individual booking page
+    Then I wait for 1200 milli-seconds
     When I click on link 'Payroll & Billing'
     Then I should be on the payroll and billing page
     Then I click on material checkbox name 'cbPayTravel_0'
     When I click on link 'Booking details'
     Then I will be shown a popup message 'There are unsaved changes on this page. Are you sure you want to leave?'
-    And I click on BUTTON name 'noBtn'
+    And I click on BUTTON name 'yesBtn'
     Then I wait for 1500 milli-seconds
     When I click on link 'Booking info'
     Then I will be shown a popup message 'There are unsaved changes on this page. Are you sure you want to leave?'
