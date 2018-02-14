@@ -162,9 +162,9 @@ export class BookingManagementPage extends PageObject {
     bookingWithStatusExists = (count: string, booking_status: string) => {
         if (count === 'one') { count = '1'; }
         let className = {
-            'green': 'icon-check-green',
-            'red': 'status-ready-to-process',
-            'orange': 'status-allocated'
+            'green': 'icon-small-green',
+            'red': 'icon-small-red',
+            'orange': 'icon-small-yellow'
         }[booking_status];
         return this.getAllElementByCSS('i[class="status ' + className + '"]').count().then((cnt) => {
             expect(cnt.toString()).to.be.eq(count);
