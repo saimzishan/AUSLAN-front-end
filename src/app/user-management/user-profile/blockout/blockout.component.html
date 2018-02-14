@@ -3,7 +3,15 @@
     </app-user-header>
 </section>
 <header class="text-center hidden-mobile">
-    <h1>{{ param_id < 1 ? 'ADD BLOCKOUT' : 'EDIT BLOCKOUT'}}</h1>
+    <div *ngIf="param_id >=2;then content else other_content"></div>
+
+    <ng-template #content>
+        <h1>{{ param_id === 2 ? 'ADD STAFF AVAILABILITY' : 'EDIT STAFF AVAILABILITY'}}</h1>
+    </ng-template>
+    <ng-template #other_content>
+        <h1>{{ param_id < 1 ? 'ADD BLOCKOUT' : 'EDIT BLOCKOUT'}}</h1>
+    </ng-template>
+    
 </header>
 <app-mobile-header title="{{ param_id < 1 ? 'ADD BLOCKOUT' : 'EDIT BLOCKOUT'}}" backLink="/user-management/profile"></app-mobile-header>
 
@@ -47,7 +55,7 @@
                         <div class="form-field">
                             <label>END TIME *</label>
 
-                            <p-calendar name='dpEventDate_endtime' [(ngModel)]="end_time"
+                            <p-calendar name='dpEventDate_endtime' [(ngModel)]="end_time"  (onClose)="setDayMonthYear()"
                             [stepMinute]="5" [defaultDate]="defaultDateTime" 
                             required #dpEventDate_endtime="ngModel" [timeOnly]="true"
                                         hourFormat="12"></p-calendar>

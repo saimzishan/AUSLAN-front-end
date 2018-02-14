@@ -109,6 +109,7 @@ defineSupportCode(({Given, Then, When}) => {
     Then(/^I store the current url$/, bookingJobPO.storePath);
     Then(/^I go to stored url$/, bookingJobPO.gotoStorePath);
     Then(/^I see the error page$/, bookingJobPO.errorPage);
+    Then(/^I go to base url$/, bookingJobPO.gotoBasePath);
 
     //  Click on Request bookings
     Then(/^I am shown with (\d+) (.*[^\s])?\s?[bB]ookings?$/, bookingManagementPO.showTheNumberofBooking);

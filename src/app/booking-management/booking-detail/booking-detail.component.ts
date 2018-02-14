@@ -314,9 +314,9 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.bookingModel.bookable_type = this.bookingModel.bookable_type || 'IndividualClient';
             if (this.isUserAdminORBookOfficer) {
                 this.bookingModel.created_by_admin = true;
-            } else {
-                this.oldBookingModel = this.deepCopy(this.bookingModel);
             }
+            this.oldBookingModel = this.deepCopy(this.bookingModel);
+
             if (!this.forEdit && !this.isDuplicate) {
                 this.onBookingAddressChange();
             }
