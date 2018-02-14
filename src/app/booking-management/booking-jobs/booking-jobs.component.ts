@@ -354,10 +354,18 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     }
 
     getInterpreterIconClass(user: Interpreter) {
-        return user.booked ? 'fa fa-times-circle' :
-            user.blocked ? 'fa fa-ban' :
-                user.blockout ? 'fa fa-exclamation-circle fa-danger' :
-                    '';
+        let path = '../../../assets/img/svg-icons/';
+        path = path + (this.checkInterpreterState(user.id, 'Accepted') ? 'accepted.svg' :
+                       user.blocked ? 'blocked.svg' :
+                       user.booked ? 'booking.svg' :
+                       user.blockout ? 'booking.svg' :
+                       this.checkInterpreterState(user.id, 'Rejected') ? 'declined.svg' :
+                       this.checkInterpreterState(user.id, 'Invited') ? 'invited.svg' : '');
+        return path;
+    }
+
+    checkInterpreterState(interpreter_id: number, state: string) {
+        return this.selectedBookingModel.interpreters.filter(i => i.id === interpreter_id && i.state === state).length > 0;
     }
 
     fetchAllInterpreters() {

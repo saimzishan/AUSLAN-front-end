@@ -31,3 +31,13 @@ Feature: Booking Admin Management
     Then I click on an individual booking
     Then I am on the individual booking page
     And I can see the element with name 'manage-interpreters-a' is 'visible'
+
+  @runThis
+  Scenario: As a Booking Officer i can see the blank status when Interpreter is not invited
+    Given There exist 1 bookings
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    And I am on the bookings page
+    When I click on an individual booking
+    Then I will be shown the booking job page
+    
