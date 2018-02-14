@@ -818,25 +818,9 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     }
 
     private formatterValueFor(field: string, value: string) {
-        let formattedValue: string;
         if (value !== undefined && value.toLowerCase() === 'all') {
             return '';
         }
-        // if (value && value.length) {
-        //     value = value.trim();
-        //     value = value.replace(/,$/g, '');
-        //     switch (field) {
-        //         case 'booking_status':
-        //             formattedValue = BOOKING_STATUS.hasOwnProperty(value) ? BOOKING_STATUS[value].toString() : '';
-        //             break;
-        //         case 'booking_type':
-        //             formattedValue = BOOKING_NATURE.hasOwnProperty(value) ? BOOKING_NATURE[value].toString() : '';
-        //             break;
-        //         default:
-        //             formattedValue = value;
-        //             break;
-        //     }
-        // }
         return value;
     }
 
