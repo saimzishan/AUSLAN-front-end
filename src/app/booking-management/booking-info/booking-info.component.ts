@@ -12,7 +12,6 @@ export class BookingInfoComponent {
 
   @Input() selectedBookingModel: Booking = new Booking();
 
-
   isCurrentUserAdminOrBookingOfficer(): boolean {
     return Boolean(GLOBAL.currentUser instanceof Administrator ||
       GLOBAL.currentUser instanceof BookingOfficer);
