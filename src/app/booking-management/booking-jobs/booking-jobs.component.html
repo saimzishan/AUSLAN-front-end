@@ -163,7 +163,7 @@
                     </div>
                     </ng-container>
                 </section>
-            <ng-container *ngIf='!isCancelledOrUnableToServe && isCurrentUserAdminOrBookingOfficer()'>
+            <ng-container *ngIf="isCurrentUserAdminOrBookingOfficer() && (isActiveState('Requested') || isActiveState('In_progress') || this.isActiveState('Allocated'))">
                 <h2>
                     Invite Interpreters
                     <button class="outside"></button>

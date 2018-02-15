@@ -458,7 +458,8 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                             this.getStateString();
                         }
                     }
-                    if (this.isCurrentUserAdminOrBookingOfficer() && !this.isCancelledOrUnableToServe) {
+                    if (this.isCurrentUserAdminOrBookingOfficer() && (this.isActiveState('Requested') || this.isActiveState('In_progress') ||
+                                                                      this.isActiveState('Allocated'))) {
                         this.fetchNearbyinterpreters(param_id);
                     } else {
                         this.spinnerService.requestInProcess(false);
