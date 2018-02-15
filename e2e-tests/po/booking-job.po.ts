@@ -231,5 +231,25 @@ export class BookingJobPage extends PageObject {
                 return expect(presence).to.be.eq(shouldSee);
             });
     }
+
+    checkInterpreterStatus(status: string) {
+        const interpreterRows = $$('section[id=invited-interpreters] table tbody tr');
+        return interpreterRows.map((row) => {
+            let cols = row.all(by.tagName('td'));
+            cols.each((col, index) => {
+                if (index === 2) {
+                    if (status === 'blank') {
+                        col.getText().then((txt) => {
+                            expect(txt.trim()).to.be.empty;
+                        });
+                    } else {
+                        col.element(by.css('img')).getAttribute('src').then(path => {
+                            expect(path).to.include(status);
+                        });
+                    }
+                }
+            });
+        });
+    }
 }
 
