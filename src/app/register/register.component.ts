@@ -7,7 +7,7 @@ import {
 import {ROLE} from '../shared/model/role.enum';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NotificationServiceBus} from '../notification/notification.service';
-import {FormGroup} from '@angular/forms';
+import {FormGroup, FormControl} from '@angular/forms';
 import {SpinnerService} from '../spinner/spinner.service';
 import {GLOBAL} from '../shared/global';
 
@@ -112,19 +112,30 @@ export class RegisterComponent implements OnInit, OnDestroy {
         return this.sub_param && this.sub_param.unsubscribe();
     }
 
-    applyChanges(form: FormGroup) {
+    applyChanges(form: any , interpreterform: any) {
         if (!this.termsAndConditionAccepted) {
             this.notificationServiceBus.launchNotification(true, 'Kindly accept Terms and Conditions');
             return;
         }
-        if (form.invalid) {
+        if (form.invalid || interpreterform.form.invalid) {
+            this.validateAllFormFields(form.control);
+            this.validateAllFormFields(interpreterform.form.control);
             this.notificationServiceBus.launchNotification(true, GLOBAL.MISSING_FIELDS_ERROR_MESSAGE);
             return;
         }
         this.spinnerService.requestInProcess(true);
         this.isEdit && !this.isDuplicate ? this.editUser() : this.isDuplicate ? this.duplicateUser('create_orgrep') : this.addUser();
     }
-
+    validateAllFormFields(formGroup: FormGroup) {
+        Object.keys(formGroup.controls).forEach(field => {
+            const control = formGroup.get(field);
+            if (control instanceof FormControl) {
+              control.markAsTouched({ onlySelf: true });
+            } else if (control instanceof FormGroup) {
+              this.validateAllFormFields(control);
+            }
+          });
+        }
     addUser() {
         this.userService.createUser(this.model)
             .subscribe((res: any) => {

@@ -145,3 +145,4 @@ Feature: Booking Management
     And I can see the bookable field
     When I search for 'ted' in autocomplete
     Then I am shown ted Individual Client as a suggestion
+
