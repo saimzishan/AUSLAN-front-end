@@ -54,6 +54,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     @ViewChild('cchart') cchart;
     currentPage = 1;
     totalItems;
+    isRequestedProgressOrAllocated = false;
 
     constructor(public dialog: MdDialog,
                 public viewContainerRef: ViewContainerRef, public spinnerService: SpinnerService,
@@ -420,6 +421,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                         this.isCancelledOrUnableToServe = this.isActiveState('Cancelled_no_charge')
                             || this.isActiveState('Unable_to_service') || this.isActiveState('Cancelled_chargeable');
 
+                        this.isRequestedProgressOrAllocated = this.isStateRequestProgressAlloc();
                         this.selectedBookingModel.venue.start_time_iso = this.selectedBookingModel.utcToBookingTimeZone(this.selectedBookingModel.venue.start_time_iso);
                         this.selectedBookingModel.venue.end_time_iso = this.selectedBookingModel.utcToBookingTimeZone(this.selectedBookingModel.venue.end_time_iso);
                         let diffInMs: number = Date.now() - Date.parse(this.selectedBookingModel.venue.start_time_iso);
@@ -458,8 +460,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                             this.getStateString();
                         }
                     }
-                    if (this.isCurrentUserAdminOrBookingOfficer() && (this.isActiveState('Requested') || this.isActiveState('In_progress') ||
-                                                                      this.isActiveState('Allocated'))) {
+                    if (this.isCurrentUserAdminOrBookingOfficer() && this.isRequestedProgressOrAllocated) {
                         this.fetchNearbyinterpreters(param_id);
                     } else {
                         this.spinnerService.requestInProcess(false);
@@ -471,6 +472,10 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                     let e = err.json() || 'There is some error on server side';
                     this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
                 });
+    }
+
+    isStateRequestProgressAlloc() {
+       return (this.isActiveState('Requested') || this.isActiveState('In_progress') || this.isActiveState('Allocated'));
     }
 
     inviteInterpreters() {
