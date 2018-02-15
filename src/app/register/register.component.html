@@ -2,6 +2,11 @@
     <header *ngIf="false === isUserLogin()" id="header">
         <a href="/"><i class="icons icons-logo"></i></a>
     </header>
+    <section id="submenu" *ngIf="checkUserAdminORBookOfficer()">
+       <section>
+            <a id="TABStaffCalendar" [routerLink]="['/user-management/','staff_calendar']"> Staff Calender</a>
+        </section>
+    </section>
     <section id="page-signup-organisation">
         <section>
             <header>
@@ -162,6 +167,22 @@
                             </span>
                             </div>
                           </div>
+                        <div *ngIf="checkUserAdminORBookOfficer()" class="medium-6 columns">
+                            <div class="form-field">
+                                <label>Staff/Casual</label>
+                                <select aria-label="A" (change)="staffToCasualToggle()" [(ngModel)]="model.staffToCasualToggle" name="staffToCasualToggle" #location_pref="ngModel"
+                                    required>
+                        
+                                    <option *ngFor="let loc_name of  ['Staff','Casual']" [value]="loc_name">{{loc_name.toUpperCase()}}</option>
+                        
+                                </select>
+                                <span *ngIf="location_pref.touched && !location_pref.errors?.required && !location_pref.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
+                                <span *ngIf="location_pref.touched && (location_pref.errors?.required || location_pref.errors?.rangeLength);" class="inline-icon error">
+                        
+                                    <span>This field is required.</span>!
+                                </span>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <br>
