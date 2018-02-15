@@ -16,6 +16,7 @@ import {NotificationServiceBus} from '../../../notification/notification.service
 import {MockBackend} from '@angular/http/testing';
 import {AuthHttp} from 'angular2-jwt';
 import {SpinnerService} from '../../../spinner/spinner.service';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 describe('InterpreterPopupComponent', () => {
 
@@ -23,7 +24,7 @@ describe('InterpreterPopupComponent', () => {
         TestBed.configureTestingModule({
             declarations: [InterpreterPopupComponent],
             imports: [CustomFormsModule, FormsModule, NoopAnimationsModule, MaterialModule,
-                RouterTestingModule],
+                RouterTestingModule, NgxPaginationModule],
             providers: [{provide: UserService, useClass: MockUserService},
                 { provide: AuthHttp, useClass: MockBackend },
                 SpinnerService, MdDialog, NotificationServiceBus, ViewContainerRef]

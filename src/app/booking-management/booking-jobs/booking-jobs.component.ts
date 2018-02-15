@@ -17,6 +17,8 @@ import {GLOBAL} from '../../shared/global';
 import {BookingHeaderService} from '../booking-header/booking-header.service';
 import {LinkidPopupComponent} from '../linkid-popup/linkid-popup.component';
 import {DatePipe} from '@angular/common';
+import {URLSearchParams} from '@angular/http';
+import {InterpreterFilter} from '../../shared/model/interpreter-filter.interface';
 
 @Component({
     selector: 'app-booking-jobs',
@@ -45,6 +47,9 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     disableAccept = false;
     disableReject = false;
     private currentStatus = 'Invited';
+    private filterInterpreterParams = new URLSearchParams();
+    private currentSort = {'field': 'distance', 'order': 'asc'};
+    interpreterFilter: InterpreterFilter = {};
     stateStr = '';
     hideInvite = false;
     hideAccept = false;
@@ -54,6 +59,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     @ViewChild('cchart') cchart;
     currentPage = 1;
     totalItems;
+    searchParams: string;
 
     constructor(public dialog: MdDialog,
                 public viewContainerRef: ViewContainerRef, public spinnerService: SpinnerService,
@@ -395,7 +401,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     }
 
     fetchNearbyinterpreters(booking_id) {
-        this.bookingService.nearbyBookings(booking_id, this.currentPage)
+        this.bookingService.nearbyBookings(booking_id, this.currentPage, GLOBAL.getInterpreterSearchParameters())
             .subscribe((res: any) => {
                     if (res.status === 200) {
                         this.totalItems = Boolean(res.data.paginates) ? res.data.paginates.total_records : res.data.users.length;
@@ -789,5 +795,100 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         return blocked_int.filter(
             i => i.interpreter_id === user_id
         ).length > 0;
+    }
+
+    private isCurrentSort(field: string) {
+        return this.currentSort.field === field;
+    }
+
+    private setCurrentSort(field: string) {
+        let order = 'asc';
+        if (this.isCurrentSort(field)) {
+            order = this.currentSort.order === 'asc' ? 'desc' : 'asc';
+        }
+        this.currentSort.field = field;
+        this.currentSort.order = order;
+    }
+
+    getSortOrder(field: string) {
+        return this.isCurrentSort(field) ? this.currentSort.order : '';
+    }
+
+    sortInterpreters(field: string) {
+        this.setCurrentSort(field);
+        this.filterInterpreterParams.set('sort', this.currentSort.field);
+        this.filterInterpreterParams.set('direction', this.currentSort.order);
+        GLOBAL._filterInterpreterVal = this.filterInterpreterParams;
+        this.route.params.subscribe(params => {
+            let param_id = params['id'] || '';
+            this.fetchNearbyinterpreters(param_id);
+        });
+    }
+
+    private formatterValueFor(field: string, value: string) {
+        if (value !== undefined && value.toLowerCase() === 'all') {
+            return '';
+        }
+        return value;
+    }
+
+    search() {
+        GLOBAL._filterInterpreterVal.set('search', this.searchParams);
+        this.route.params.subscribe(params => {
+            let param_id = params['id'] || '';
+            this.fetchNearbyinterpreters(param_id);
+        });
+    }
+
+    clearSearch() {
+        this.searchParams = '';
+        this.search();
+    }
+
+    filterInterpreters(field: string, value: string) {
+        this.interpreterFilter[field] = this.formatterValueFor(field, value);
+        for (let k in this.interpreterFilter) {
+            if (this.interpreterFilter.hasOwnProperty(k)) {
+                this.filterInterpreterParams.set('filter[' + k + ']', this.interpreterFilter[k]);
+            }
+        }
+        GLOBAL._filterInterpreterVal = this.filterInterpreterParams;
+        this.route.params.subscribe(params => {
+            let param_id = params['id'] || '';
+            this.fetchNearbyinterpreters(param_id);
+        });
+    }
+
+    preferredStatuses() {
+        return ['All', 'Yes', 'No'];
+    }
+    filterPreferredStatus() {
+        return this.interpreterFilter.preferred_status;
+    }
+
+    skillLevelList() {
+        let keys = ['Captioning', 'Certified Conference Interpreter', 'Certified Interpreter', 'Certified Provisional Interpreter',
+            'Certified Specialist Interpreter - Health', 'Certified Specialist Interpreter - Health & Legal', 'Certified Specialist Interpreter - Legal',
+            'Notetaking', 'Paraprofessional Level', 'Professional Level', 'Recognised', 'Recognised Practising'];
+        return ['All', ...keys];
+    }
+
+    filterSkillLevel() {
+        return this.interpreterFilter.skill_level;
+    }
+
+    travelPayStatuses() {
+        return ['All', 'Yes', 'No'];
+    }
+
+    filterPayStatus() {
+        return this.interpreterFilter.travel_pay_status;
+    }
+
+    underScoreToSpaces(str: string) {
+        if (!str) {
+            return 'All';
+        }
+        return str.replace(/_/g, ' ');
     }
 }

@@ -171,6 +171,12 @@
                 <section *ngIf='!isCancelledOrUnableToServe && !isCurrentUserInterpreter()' id="invite-interpreters">
                     <section id="filters">
                         <section class="search-bar" style="width:150%">
+                            <form #filterBySearch="ngForm" class="common-form compact" (ngSubmit)="search()" novalidate>
+                                <input type="text" name="search" id="search" (blur)="search()" [(ngModel)]="searchParams" (click)="'' !== searchParams && clearSearch()" placeholder="Search...">
+                            </form>
+                            <button>
+                                <i (click)="search()" class="icon-glass"></i>
+                            </button>
                         </section>
                         <section class="filters">
 
@@ -194,34 +200,79 @@
                                 <th width="10%">
                                 </th>
                                 <th width="7%">
-                                    <span class="">#</span>
+                                    <span>#</span>
                                 </th>
                                 <th width="12%">
                                     <span class="">Status</span>
                                 </th>
                                 <th width="12%">
-                                    <span class="">Preferred</span>
+                                    <span class="order" [ngClass]="getSortOrder('preferred_status')" (click)="sortInterpreters('preferred_status')">Preferred</span>
+                                    <ul class="dropdown menu custom" id="preferred-interpreter" data-dropdown-menu>
+                                        <li>
+                                            <a href="javascript:void(0)">{{underScoreToSpaces(filterPreferredStatus())}}</a>
+                                            <ul class="menu smaller">
+                                                <li *ngFor="let p_status of preferredStatuses()">
+                                                    <a href="javascript:void(0)" (click)="filterInterpreters('preferred_status', p_status)"><i></i>{{p_status}}</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
                                 </th>
                                 <th width="17%">
-                                    <span class="">First Name</span>
+                                    <span class="order" [ngClass]="getSortOrder('first_name')" (click)="sortInterpreters('first_name')">First Name</span>
+                                    <form #filterByFirstName="ngForm" class="common-form compact"
+                                          (ngSubmit)="filterInterpreters('first_name', filterByFirstName.value.first_name)" novalidate>
+                                        <input type="text" name="first_name" (blur)="filterInterpreters('first_name', filterByFirstName.value.first_name)"
+                                               [(ngModel)]="interpreterFilter.first_name">
+                                    </form>
                                 </th>
                                 <th width="17%">
-                                    <span class="">Last Name</span>
+                                    <span class="order" [ngClass]="getSortOrder('last_name')" (click)="sortInterpreters('last_name')">Last Name</span>
+                                    <form #filterByLastName="ngForm" class="common-form compact"
+                                          (ngSubmit)="filterInterpreters('last_name', filterByLastName.value.last_name)" novalidate>
+                                        <input type="text" name="last_name" (blur)="filterInterpreters('last_name', filterByLastName.value.last_name)"
+                                               [(ngModel)]="interpreterFilter.last_name">
+                                    </form>
                                 </th>
                                 <th width="9%">
                                     <span class="">Role (S,C)</span>
                                 </th>
                                 <th width="9%">
-                                    <span class="">Lvl</span>
+                                    <span class="order" [ngClass]="getSortOrder('skill_level')" (click)="sortInterpreters('skill_level')">Lvl</span>
+                                    <ul class="dropdown menu custom" id="skill-level" data-dropdown-menu>
+                                        <li>
+                                            <a href="javascript:void(0)">{{underScoreToSpaces(filterSkillLevel())}}</a>
+                                            <ul class="menu smaller">
+                                                <li *ngFor="let skill_level of skillLevelList()">
+                                                    <a href="javascript:void(0)" (click)="filterInterpreters('skill_level', skill_level)"><i></i>{{underScoreToSpaces(skill_level)}}</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
                                 </th>
                                 <th width="15%">
-                                    <span class="">Suburb</span>
+                                    <span class="order" [ngClass]="getSortOrder('suburb')" (click)="sortInterpreters('suburb')">Suburb</span>
+                                    <form #filterBySuburb="ngForm" class="common-form compact"
+                                          (ngSubmit)="filterInterpreters('suburb', filterBySuburb.value.suburb)" novalidate>
+                                        <input type="text" name="suburb" (blur)="filterInterpreters('suburb', filterBySuburb.value.suburb)"
+                                               [(ngModel)]="interpreterFilter.suburb">
+                                    </form>
                                 </th>
                                 <th width="9%">
-                                    <span class="">Km</span>
+                                    <span class="order" [ngClass]="getSortOrder('distance')" (click)="sortInterpreters('distance')">Km</span>
                                 </th>
                                 <th width="9%">
-                                    <span class="">Pay Travel (Y/N)</span>
+                                    <span>Pay Travel (Y/N)</span>
+                                    <ul class="dropdown menu custom" id="travel-pay-status" data-dropdown-menu>
+                                        <li>
+                                            <a href="javascript:void(0)">{{underScoreToSpaces(filterPayStatus())}}</a>
+                                            <ul class="menu smaller">
+                                                <li *ngFor="let pay_status of travelPayStatuses()">
+                                                    <a href="javascript:void(0)" (click)="filterInterpreters('travel_pay_status', pay_status)"><i></i>{{underScoreToSpaces(pay_status)}}</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
                                 </th>
                                 <th width="9%">
                                     <span class="">Notes</span>
