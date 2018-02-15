@@ -45,6 +45,7 @@ export class VerifyComponent implements OnInit, OnDestroy {
         if (res.status === 200) {
         }
               this.spinnerService.requestInProcess(false);
+              this.notificationServiceBus.launchNotification(false, 'An email has been sent with your verification code');
 
           },
       err => {

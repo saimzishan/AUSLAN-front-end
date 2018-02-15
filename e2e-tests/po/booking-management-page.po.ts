@@ -96,6 +96,12 @@ export class BookingManagementPage extends PageObject {
         });
     }
 
+    showVerifyPage = () => {
+        return this.currentPath().then((currentPath) => {
+            expect(currentPath).to.contain('verify/');
+        });
+    }
+
     clickOnNewBooking = () => {
         return this.getElementByID('lnkNewBooking').click();
     }
