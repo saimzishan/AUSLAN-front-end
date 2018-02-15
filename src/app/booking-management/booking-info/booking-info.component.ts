@@ -8,14 +8,10 @@ import {GLOBAL} from '../../shared/global';
   templateUrl: './booking-info.component.html',
   styleUrls: ['./booking-info.component.css']
 })
-export class BookingInfoComponent implements OnInit {
+export class BookingInfoComponent {
 
   @Input() selectedBookingModel: Booking = new Booking();
 
-  constructor() { }
-
-  ngOnInit() {
-  }
 
   isCurrentUserAdminOrBookingOfficer(): boolean {
     return Boolean(GLOBAL.currentUser instanceof Administrator ||

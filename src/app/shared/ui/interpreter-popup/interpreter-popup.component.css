@@ -1,3 +1,7 @@
 .ImgSize{
     height: 75% !important;
 }
+
+.my-pagination /deep/ .ngx-pagination .current {
+    background: #02b86e !important;
+}

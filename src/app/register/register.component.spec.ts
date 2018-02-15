@@ -34,6 +34,7 @@ import {InterpreterBoxComponent} from '../shared/ui/interpreter-box/interpreter-
 import {PreferedAllocationService} from '../shared/prefered-allocation.service';
 import {SpinnerService} from '../spinner/spinner.service';
 import {RemoveSpacePipe} from '../shared/pipe/remove-space.pipe';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 describe('RegisterComponent', () => {
     let component: RegisterComponent;
@@ -47,7 +48,7 @@ describe('RegisterComponent', () => {
             InterpreterPopupComponent, InterpreterBoxComponent, RemoveSpacePipe],
             imports: [FormsModule, MaterialModule, CalendarModule,
                 CustomFormsModule, SimpleNotificationsModule.forRoot(),
-                RouterTestingModule],
+                RouterTestingModule, NgxPaginationModule],
             providers: [NotificationServiceBus, PreferedAllocationService, SpinnerService,
                 {provide: UserService, useClass: MockUserService}, {provide: AuthHttp, useClass: MockBackend}]
         }).compileComponents();
