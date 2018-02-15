@@ -129,7 +129,7 @@ Feature: Create, read, update and delete a User
     When I click on reset password for an active existing Booking Officer
     Then The password for the user should be reset
 
-  @runThis
+  @ignoreThis
   Scenario: Booking Officer can see the interpreter notes when add or edit the interpreter
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
