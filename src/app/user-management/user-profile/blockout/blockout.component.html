@@ -98,14 +98,12 @@
 
                             </div>
                         </div>
-                        {{isWeekely}}
-                        {{availabilityBlock.recurring}}
                         <div class="medium-12 columns" *ngIf="availabilityBlock.recurring">
                             <div *ngIf="isWeekely">
                                 <div class='form-field'>
                                     <label>REPEAT ON*</label>
-                                    <div *ngFor="let day of repeat_days" class='medium-1 columns'>
-                                        <md-checkbox [(ngModel)]="day.selected" name="{{day.value}}" [disabled]="isRecurrenceDayCheckboxDisabled(day)" [align]='right'
+                                    <div *ngFor="let day of repeat_days" class='medium-2 columns'>
+                                        <md-checkbox  [(ngModel)]="day.selected" name="{{day.value}}" [disabled]="isRecurrenceDayCheckboxDisabled(day)" [align]='right'
                                             [required]='isRecurringBooking'>
                                             {{day.display}}
                                         </md-checkbox>

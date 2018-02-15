@@ -14,6 +14,7 @@ import {ROLE} from '../../../shared/model/role.enum';
 import * as momentTimeZone from 'moment-timezone';
 import {Booking} from '../../../shared/model/booking.entity';
 import {Location} from '@angular/common';
+import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
     selector: 'app-blockout',
@@ -38,36 +39,43 @@ export class BlockoutComponent implements OnDestroy, OnInit {
     bookingDate: Date;
     repeat_days = [
         {
+            sendValue: '0',
             display: 'S',
             value: 'Sunday',
             selected: false
         },
         {
+            sendValue: '1',
             display: 'M',
             value: 'Monday',
             selected: false
         },
         {
+            sendValue: '2',
             display: 'T',
             value: 'Tuesday',
             selected: false
         },
         {
+            sendValue: '3',
             display: 'W',
             value: 'Wednesday',
             selected: false
         },
         {
+            sendValue: '4',
             display: 'T',
             value: 'Thursday',
             selected: false
         },
         {
+            sendValue: '5',
             display: 'F',
             value: 'Friday',
             selected: false
         },
         {
+            sendValue: '6',
             display: 'S',
             value: 'Saturday',
             selected: false
@@ -124,6 +132,14 @@ export class BlockoutComponent implements OnDestroy, OnInit {
         });
         this.roundOffMinutes();
     }
+    public setRecurring_week_days() {
+        for (let i = 0; i < this.repeat_days.length; i++) {
+            if (this.repeat_days[i].selected) {
+                this.availabilityBlock.recurring_week_days.push(this.repeat_days[i].sendValue);
+            }
+        }
+        console.log(this.availabilityBlock.recurring_week_days);
+    }
     isUserAdminOrBO () {
         return GLOBAL.currentUser instanceof Administrator ||
         GLOBAL.currentUser instanceof BookingOfficer;
@@ -133,7 +149,6 @@ export class BlockoutComponent implements OnDestroy, OnInit {
         if (this.availabilityBlock.frequency === 'weekly') {
             this.isWeekely = true;
         }
-        alert(this.availabilityBlock.frequency);
     }
     ngOnDestroy() {
         return this.sub && this.sub.unsubscribe();
@@ -326,6 +341,7 @@ export class BlockoutComponent implements OnDestroy, OnInit {
         this.availabilityBlock.end_time = this.interpreterStateTimeZone(this.end_time);
         this.availabilityBlock.end_date = this.interpreterStateTimeZone(this.end_date);
         if (this.staff_availability) {
+            this.setRecurring_week_days();
             this.addStaffAvailabilitie(this.availabilityBlock);
         } else {
             this.userDataService.addBlockout(this.userID, this.availabilityBlock)
