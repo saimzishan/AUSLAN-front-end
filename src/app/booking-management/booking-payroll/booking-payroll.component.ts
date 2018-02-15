@@ -19,6 +19,7 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
   bookingModel: Booking = new Booking();
   private sub: any;
   payments = new Payments();
+  oldPayments;
   claimPressed = false;
   undoClaimPressed = false;
   isReadonlyForBO = false;
@@ -69,6 +70,7 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
             if (res.status === 200) {
                 this.payments.fromJSON('payroll', res.data.payments.payrolls);
                 this.payments.fromJSON('invoice', res.data.payments.invoices);
+                this.oldPayments = this.deepCopy(this.payments);
             }
             this.spinnerService.requestInProcess(false);
         },
@@ -140,6 +142,7 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
 
                         this.payments[payrollInvoice][index]['interpreting_time'] = duration.hours() + ':' + duration.minutes();
                         this.payments[payrollInvoice][index]['preparation_time'] = 0;
+                        this.setRecommendedDistanceTravelTime(payrollInvoice, index);
                     } else {
                         this.payments[payrollInvoice][index]['pay_travel'] = false;
                         ['interpreting_time', 'preparation_time', 'distance', 'travel_time'].forEach(distTime => {
@@ -165,14 +168,23 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
                     }
                 } else {
                     if (this.payments[payrollInvoice][index][field]) {
-                        ['distance', 'travel_time'].forEach(distTime => {
-                            this.payments[payrollInvoice][index][distTime] = this.payments.payroll_attributes[index][distTime];
-                        });
+                        this.setRecommendedDistanceTravelTime(payrollInvoice, index);
                     } else {
                         this.payments[payrollInvoice][index]['distance'] = this.payments[payrollInvoice][index]['travel_time'] = 0;
                     }
                 }
             }
+    }
+
+    setRecommendedDistanceTravelTime(payrollInvoice: string, index) {
+        ['distance', 'travel_time'].forEach(distTime => {
+            this.payments[payrollInvoice][index][distTime] = this.payments[payrollInvoice][index]['recommended'][distTime];
+        });
+    }
+
+    deepCopy(oldObj: any) {
+            let newObj = JSON.parse(JSON.stringify(oldObj));
+            return newObj;
     }
 
     isStateCompleteOrCancelCharge() {

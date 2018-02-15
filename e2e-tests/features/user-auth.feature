@@ -6,6 +6,12 @@ Feature: As all, I can login/logout, change profile, cannot login with invalid p
     And I am shown the login screen, with picture and signup button
     And I exist as an valid user
 
+  @runThis
+  Scenario: As Administrator, I can login/logout
+    And I sign in with valid Administrator credentials
+    Then I will be shown the bookings page
+    And I go to base url
+    Then I can see the element with name 'auslanLogo' is 'hidden'
 
   @runThis
   Scenario: As Individual Client, I can login/logout

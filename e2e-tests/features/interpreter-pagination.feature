@@ -6,7 +6,7 @@ Feature: Interpreter Pagination
     Given There exist 1 bookings
 
   @runThis
-  Scenario: Given 1 verified Administrator Officer,  I should be able to see paginated interpreter list on booking detail page
+  Scenario: Given 1 verified Administrator Officer, I should be able to see paginated interpreter list on booking detail page
     Given There exist 22 verified interpreters
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials

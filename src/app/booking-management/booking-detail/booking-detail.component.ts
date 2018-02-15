@@ -314,9 +314,9 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.bookingModel.bookable_type = this.bookingModel.bookable_type || 'IndividualClient';
             if (this.isUserAdminORBookOfficer) {
                 this.bookingModel.created_by_admin = true;
-            } else {
-                this.oldBookingModel = this.deepCopy(this.bookingModel);
             }
+            this.oldBookingModel = this.deepCopy(this.bookingModel);
+
             if (!this.forEdit && !this.isDuplicate) {
                 this.onBookingAddressChange();
             }
@@ -827,7 +827,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     gotoBookingInfo() {
         let route = GLOBAL.currentUser instanceof Interpreter || GLOBAL.currentUser instanceof OrganisationalRepresentative
             ? 'job-detail' : 'booking-job';
-        this.router.navigate(['/booking-management/' + GLOBAL.selBookingID, route]);
+        GLOBAL.selBookingID = Boolean(GLOBAL.selBookingID) && GLOBAL.selBookingID.length > 0 ? GLOBAL.selBookingID : this.bookingModel.id;
+        this.router.navigate(['booking-management/' + GLOBAL.selBookingID, route]);
     }
 
     onCancelBooking() {

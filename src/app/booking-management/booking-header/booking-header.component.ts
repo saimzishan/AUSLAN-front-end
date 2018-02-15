@@ -8,6 +8,7 @@ import {Router, NavigationExtras} from '@angular/router';
 import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
 import {PopupComponent} from '../../shared/popup/popup.component';
 import {NotificationServiceBus} from '../../notification/notification.service';
+import {Payments} from '../../shared/model/payment.entity';
 
 @Component({
     selector: 'app-booking-header',
@@ -17,7 +18,8 @@ import {NotificationServiceBus} from '../../notification/notification.service';
 export class BookingHeaderComponent implements OnInit, OnDestroy {
 
     @Input() bookingModel: Booking = new Booking();
-    @Input() oldBookingModel: Booking = new Booking();
+    @Input() paymentModel: Payments = new Payments();
+    @Input() oldModel: any;
     @Input() isCancelOrUnable = false;
     @Input() invitePress = false;
     @Input() unAssignPress = false;
@@ -57,13 +59,28 @@ export class BookingHeaderComponent implements OnInit, OnDestroy {
     }
 
     bookingDetailClick() {
-            let navigationExtras: NavigationExtras = {
-                queryParams: {
-                    bookingModel: JSON.stringify(this.bookingModel),
-                    shouldEdit: 'edit', assignedInterpreter: this.bookingModel.interpreters.filter(i => i.state === 'Accepted').length
-                }
-            };
-            this.router.navigate(['/booking-management', 'edit-booking'], navigationExtras);
+        if (this.isActive('payroll-billing') && this.isModelChanged(this.oldModel, this.paymentModel)) {
+                this.showUnsavedWarningPopup();
+                this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
+                    if (result) {
+                        return;
+                    } else {
+                        this.gotoBookingDetail();
+                    }
+                });
+        } else if (!this.isActive('edit-booking')) {
+            this.gotoBookingDetail();
+        }
+    }
+
+    gotoBookingDetail() {
+        let navigationExtras: NavigationExtras = {
+            queryParams: {
+                bookingModel: JSON.stringify(this.bookingModel),
+                shouldEdit: 'edit', assignedInterpreter: this.bookingModel.interpreters.filter(i => i.state === 'Accepted').length
+            }
+        };
+        this.router.navigate(['/booking-management', 'edit-booking'], navigationExtras);
     }
 
     payrollClick() {
@@ -110,19 +127,9 @@ export class BookingHeaderComponent implements OnInit, OnDestroy {
         if (this.isActive('booking-job') || this.isActive('job-detail')) {
             return;
        } else {
-            if (this.isModelChanged(this.oldBookingModel, this.bookingModel)) {
-                let config: MdDialogConfig = {
-                    disableClose: true
-                };
-                config.viewContainerRef = this.viewContainerRef;
-                this.dialogRef = this.dialog.open(PopupComponent, config);
-                this.dialogRef.componentInstance.title = 'Unsaved changes';
-                this.dialogRef.componentInstance.cancelTitle = 'Leave page';
-                this.dialogRef.componentInstance.okTitle = 'Stay on page';
-                this.dialogRef.componentInstance.closeVal = true;
-                this.dialogRef.componentInstance.popupMessage =
-                    `There are unsaved changes on this page. Are you sure you want to leave?`;
-
+            let currentModel = this.isActive('payroll-billing') ? this.paymentModel : this.bookingModel;
+            if (this.isModelChanged(this.oldModel, currentModel)) {
+                this.showUnsavedWarningPopup();
                 this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
                     if (result) {
                         return;
@@ -136,6 +143,20 @@ export class BookingHeaderComponent implements OnInit, OnDestroy {
         }
     }
 
+    showUnsavedWarningPopup() {
+        let config: MdDialogConfig = {
+            disableClose: true
+        };
+        config.viewContainerRef = this.viewContainerRef;
+        this.dialogRef = this.dialog.open(PopupComponent, config);
+        this.dialogRef.componentInstance.title = 'Unsaved changes';
+        this.dialogRef.componentInstance.cancelTitle = 'Leave page';
+        this.dialogRef.componentInstance.okTitle = 'Stay on page';
+        this.dialogRef.componentInstance.closeVal = true;
+        this.dialogRef.componentInstance.popupMessage =
+            `There are unsaved changes on this page. Are you sure you want to leave?`;
+    }
+
     isActive(route: string) {
         return this.router.url.includes(route);
     }
@@ -147,6 +168,7 @@ export class BookingHeaderComponent implements OnInit, OnDestroy {
     gotoBookingInfo() {
         let route = GLOBAL.currentUser instanceof Interpreter || GLOBAL.currentUser instanceof OrganisationalRepresentative
             ? 'job-detail' : 'booking-job';
+        GLOBAL.selBookingID = Boolean(GLOBAL.selBookingID) && GLOBAL.selBookingID.length > 0 ? GLOBAL.selBookingID : this.bookingModel.id;
         this.router.navigate(['/booking-management/' + GLOBAL.selBookingID, route]);
     }
 

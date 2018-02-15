@@ -31,10 +31,10 @@ export class PayrollTimeComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.interpTimePlaceHolder = this.payrollInvoice.interpreting_time;
+    this.interpTimePlaceHolder = this.payrollInvoice.recommended.interpreting_time;
     this.prepTimePlaceHolder = this.payrollInvoice.preparation_time;
-    this.kmPlaceHolder = this.payrollInvoice.distance;
-    this.travelTimePlaceHolder = this.payrollInvoice.travel_time;
+    this.kmPlaceHolder = this.payrollInvoice.recommended.distance;
+    this.travelTimePlaceHolder = this.payrollInvoice.recommended.travel_time;
   }
 
 }

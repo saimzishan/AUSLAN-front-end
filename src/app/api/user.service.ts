@@ -147,11 +147,11 @@ export class UserService extends ApiService {
     /*
          The Api should be able to fetch basic data for interpreters.
         */
-    fetchBasicDetailsForInterpreter(): Observable<Object> {
+    fetchBasicDetailsForInterpreter(page?: number): Observable<Object> {
         let headers = new Headers({'Accept': 'application/json',
             'Content-Type': 'application/json'});
         let options = new RequestOptions({ headers: headers });
-        return this.http.get(GLOBAL.USER_API_ENDPOINT + '/interpreters/basic_list' , options)
+        return this.http.get(GLOBAL.USER_API_ENDPOINT + '/interpreters/basic_list?page=' + page , options)
             .map(this.extractData)
             .catch((err) => { return this.handleError(err); });
 

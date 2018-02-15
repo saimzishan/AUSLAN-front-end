@@ -28,6 +28,7 @@ import {InterpreterBoxComponent} from '../../shared/ui/interpreter-box/interpret
 import {PreferedAllocationService} from '../../shared/prefered-allocation.service';
 import {RemoveSpacePipe} from '../../shared/pipe/remove-space.pipe';
 import {MobileHeaderComponent} from '../../ui/mobile-header/mobile-header.component';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 describe('UserProfileComponent', () => {
   let component: UserProfileComponent;
@@ -44,7 +45,8 @@ describe('UserProfileComponent', () => {
          { provide: UserService, useClass: MockUserService}, { provide: AuthHttp, useClass: MockBackend},
         NotificationServiceBus,
         SpinnerService],
-        imports: [HttpModule, CalendarModule, FormsModule, MaterialModule, RouterTestingModule, CustomFormsModule, BrowserAnimationsModule]
+        imports: [HttpModule, CalendarModule, FormsModule, MaterialModule, RouterTestingModule, CustomFormsModule,
+            BrowserAnimationsModule, NgxPaginationModule]
     })
     .compileComponents();
   }));
