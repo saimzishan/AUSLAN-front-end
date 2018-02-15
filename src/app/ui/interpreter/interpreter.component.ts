@@ -11,7 +11,8 @@ import {UserService} from '../../api/user.service';
 @Component({
     selector: 'app-interpreter',
     templateUrl: './interpreter.component.html',
-    styleUrls: ['./interpreter.component.css']
+    styleUrls: ['./interpreter.component.css'],
+    exportAs: 'ctInterpreterForm'
 })
 export class InterpreterComponent implements OnInit {
     @Input() userModel: Interpreter;
