@@ -33,7 +33,7 @@ Feature: Create Booking with preferred or blocked interpreters
     Then I will be taken to the 'New Booking' form
     When I click on element by name 'rdBookingAddressNo'
     And I fill New Booking form fields correctly
-    And I can see the element with name 'preferInterHeading' has text 'Preferred interpreters'
+    And I can see the element with name 'preferInterHeading' has text 'PREFERRED INTERPRETERS'
     And I can see the element with name 'preferInterQuestion1' is 'visible'
     And I can see the element with name 'preferInterQuestion1' has text 'Do you have preferred interpreters for this booking?'
     And I can see the element with name 'preferInterQuestion2' is 'not visible'
@@ -96,7 +96,7 @@ Feature: Create Booking with preferred or blocked interpreters
     Then I will be taken to the 'New Booking' form
     When I click on element by name 'rdBookingAddressNo'
     And I fill New Booking form fields correctly
-    And I can see the element with name 'blockInterHeading' has text 'Blocked interpreters'
+    And I can see the element with name 'blockInterHeading' has text 'BLOCKED INTERPRETERS'
     And I can see the element with name 'blockInterQuestion1' is 'visible'
     And I can see the element with name 'blockInterQuestion1' has text 'Do you have blocked interpreters for this booking?'
     And I can see the element with name 'blockInterQuestion2' is 'not visible'
@@ -169,7 +169,7 @@ Feature: Create Booking with preferred or blocked interpreters
     Then I will be taken to the 'New Booking' form
     When I click on element by name 'rdBookingAddressNo'
     And I fill New Booking form fields correctly
-    And I can see the element with name 'preferInterHeading' has text 'Preferred interpreters'
+    And I can see the element with name 'preferInterHeading' has text 'PREFERRED INTERPRETERS'
     And I can see the element with name 'preferInterQuestion1' is 'visible'
     When I click on element by name 'rdPreferredInterpretersYes'
     Then I can see the element with name 'preferInterQuestion2' is 'visible'
@@ -185,7 +185,7 @@ Feature: Create Booking with preferred or blocked interpreters
     Then I click on BUTTON name 'noBtn'
     Then I wait for 2000 milli-seconds
     Then I can see the element with css 'div.md-dialog' is 'hidden'
-    And I can see the element with name 'blockInterHeading' has text 'Blocked interpreters'
+    And I can see the element with name 'blockInterHeading' has text 'BLOCKED INTERPRETERS'
     And I can see the element with name 'blockInterQuestion1' is 'visible'
     When I click on element by name 'rdBlockedInterpretersYes'
     Then I can see the element with name 'blockInterQuestion2' is 'visible'
@@ -224,7 +224,7 @@ Feature: Create Booking with preferred or blocked interpreters
     Then I will be taken to the 'New Booking' form
     When I select the bookable for client
     And I fill New Booking form fields correctly
-    And I can see the element with name 'preferInterHeading' has text 'Preferred interpreters'
+    And I can see the element with name 'preferInterHeading' has text 'PREFERRED INTERPRETERS'
     And I can see the element with name 'preferInterQuestion1' is 'visible'
     And I can see the element with name 'preferInterQuestion1' has text 'Do you have preferred interpreters for this booking?'
     And I can see the element with name 'preferInterQuestion2' is 'not visible'
