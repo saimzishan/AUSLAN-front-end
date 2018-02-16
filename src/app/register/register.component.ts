@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, OnDestroy} from '@angular/core';
+import {Component, OnInit, AfterViewInit, Input, OnDestroy, ViewChild} from '@angular/core';
 import {UserService} from '../api/user.service';
 import {
     Accountant, Administrator, BookingOfficer, IndividualClient, Interpreter, Organisational, OrganisationalRepresentative,
@@ -7,7 +7,7 @@ import {
 import {ROLE} from '../shared/model/role.enum';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NotificationServiceBus} from '../notification/notification.service';
-import {FormGroup, FormControl} from '@angular/forms';
+import {FormGroup, FormControl, NgForm, NgModel} from '@angular/forms';
 import {SpinnerService} from '../spinner/spinner.service';
 import {GLOBAL} from '../shared/global';
 
@@ -17,7 +17,6 @@ import {GLOBAL} from '../shared/global';
     styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit, OnDestroy {
-
     public model: any;
     public successMessage = `Congratulations. Your account has been created.
      Please login with your credentials. `;
@@ -28,13 +27,13 @@ export class RegisterComponent implements OnInit, OnDestroy {
     termsAndConditionAccepted = false;
     selectedStatus = '';
     userStatusArray = GLOBAL.userStatusArray;
+    @Input('app-address') public registerModel: NgModel;
 
     constructor(public userService: UserService,
                 public notificationServiceBus: NotificationServiceBus,
                 public spinnerService: SpinnerService,
                 public routes: ActivatedRoute, public router: Router) {
     }
-
     isUserLogin() {
         return Boolean(GLOBAL.currentUser);
     }
@@ -118,8 +117,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
             return;
         }
         if (form.invalid || interpreterform.form.invalid) {
+            
             this.validateAllFormFields(form.control);
-            this.validateAllFormFields(interpreterform.form.control);
             this.notificationServiceBus.launchNotification(true, GLOBAL.MISSING_FIELDS_ERROR_MESSAGE);
             return;
         }
