@@ -39,7 +39,8 @@ export class InterpreterComponent implements OnInit {
                 .subscribe((res: any) => {
                     if (res.status === 200) {
                         delete res.data.assignments_attributes;
-                        this.userModel.availability_blocks_attributes =  res.data.availability_blocks_attributes;
+                        this.userModel.availability_blocks_attributes = res.data.availability_blocks_attributes;
+                        this.userModel.staff_availabilities_attributes = res.data.staff_availabilities_attributes;
                         this.BlockoutToUpdate();
                     }
                 });

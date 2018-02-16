@@ -102,7 +102,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
         });
         this.termsAndConditionAccepted = this.isUserLogin();
         this.model.state_where_most_bookings_occur = 'VIC';
-        this.model.staffToCasualToggle = 'Casual';
+        this.model.staff_to_casual_toggle = this.model.employment_type;
     }
     staffToCasualToggle() {
         this.userService.toggle_employment_type(this.model.id)

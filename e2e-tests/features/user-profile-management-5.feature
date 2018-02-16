@@ -198,7 +198,6 @@ Feature: User Profile Management
     Then I get valid message: 'User details updated Successfully'
     And I can verify my profile pic is different with link 'missing.svg'
 
-   #------------------------------ Added by Zeeshan -------------------------------
   @runThis
   Scenario: As BOOKING OFFICER AND Administrator, I can crud INTERPRETER blockouts
     Given I exist as an Administrator

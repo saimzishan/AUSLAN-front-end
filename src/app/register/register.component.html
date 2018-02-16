@@ -170,14 +170,14 @@
                         <div *ngIf="checkUserAdminORBookOfficer()" class="medium-6 columns">
                             <div class="form-field">
                                 <label>Staff/Casual</label>
-                                <select aria-label="A" (change)="staffToCasualToggle()" [(ngModel)]="model.staffToCasualToggle" name="staffToCasualToggle" #location_pref="ngModel"
+                                <select aria-label="A" (change)="staffToCasualToggle()" [(ngModel)]="model.staff_to_casual_toggle" name="staff_to_casual" #staff_to_casual="ngModel"
                                     required>
                         
-                                    <option *ngFor="let loc_name of  ['Staff','Casual']" [value]="loc_name">{{loc_name.toUpperCase()}}</option>
+                                    <option *ngFor="let staff_casual_toggle of  ['Staff','Casual']" [value]="staff_casual_toggle">{{staff_casual_toggle.toUpperCase()}}</option>
                         
                                 </select>
-                                <span *ngIf="location_pref.touched && !location_pref.errors?.required && !location_pref.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
-                                <span *ngIf="location_pref.touched && (location_pref.errors?.required || location_pref.errors?.rangeLength);" class="inline-icon error">
+                                <span *ngIf="staff_to_casual.touched && !staff_to_casual.errors?.required && !staff_to_casual.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
+                                <span *ngIf="staff_to_casual.touched && (staff_to_casual.errors?.required || staff_to_casual.errors?.rangeLength);" class="inline-icon error">
                         
                                     <span>This field is required.</span>!
                                 </span>
