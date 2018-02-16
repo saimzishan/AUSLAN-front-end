@@ -295,10 +295,10 @@
                                 <td align="center">
                                     {{isPreferred(user.id) ? 'Preferred' : ' - '}}
                                 </td>
-                                <td>
-
+                                <td> 
+                                    <i class="icon-requested preff-icon" *ngIf="isPreferred(user.id)"></i>
                                     <a name="lnkEditUser" [routerLink]="['/init']" [queryParams]="{selectedRole:'INTERPRETER',uid:user.id, edit_user:
-												stringifyUser(user)}"> {{user.first_name}} </a>
+                                                    stringifyUser(user)}"> {{user.first_name}} </a>
                                 </td>
                                 <td>{{user.last_name}}</td>
                                 <td>{{isStaff(user) ? 'Staff' : 'Casual'}}</td>
