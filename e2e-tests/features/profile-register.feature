@@ -161,9 +161,8 @@ Feature: Create Profile
     Then I fill the field 'email' with value 'dragana@auslan.com.au'
     Then I fill the field 'pass' with value 'Abcd#1234'
     Then I click on button 'Log In'
-    Then I wait for 10000 milli-seconds
+    Then I wait for 1200 milli-seconds
     Then I am shown the verify screen
-    Then I click on button 'Resend Verification Code'
-
-
+    When I click on BUTTON name 'resend_code'
+    Then I will get an error notification saying "An email has been sent with your verification code"
 # --------------------------------------- AUSLAN1-1114 END ------------------------------------------------
