@@ -218,7 +218,7 @@ export class BlockoutComponent implements OnDestroy, OnInit {
                 this.spinnerService.requestInProcess(false);
 
                 let e = errors.json();
-                if (this.availabilityBlock.start_time > this.availabilityBlock.end_time) {
+                if (this.start_time.getTime() > this.end_time.getTime()) {
                     this.notificationServiceBus.launchNotification(true, 'End time cannot be before start time. Please change');
                 } else {
                 this.notificationServiceBus.launchNotification(true, errors.statusText + ' '
