@@ -404,6 +404,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     }
 
     fetchNearbyinterpreters(booking_id) {
+        this.spinnerService.requestInProcess(true);
         this.bookingService.nearbyBookings(booking_id, this.currentPage, GLOBAL.getInterpreterSearchParameters())
             .subscribe((res: any) => {
                     if (res.status === 200) {
