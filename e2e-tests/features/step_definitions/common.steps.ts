@@ -62,6 +62,7 @@ defineSupportCode(({Given, When, Then}) => {
             });
         });
     });
+    Given(/^I am shown the verify screen/, bookingManagementPage.showVerifyPage);
     Given(/^I don't see any new New Booking link/, bookingManagementPage.newBookingDoesNotExists);
     Given(/^Assigned all bookings to (.*)/, Heroku.assignExistingBooking);
     Given(/^I click on forgot my password$/, homePage.clickOnResetPassword);
