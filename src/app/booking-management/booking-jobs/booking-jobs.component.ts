@@ -360,13 +360,13 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     }
 
     getInterpreterIconClass(user: Interpreter) {
-        let path = '../../../assets/img/svg-icons/';
-        path = path + (this.checkInterpreterState(user.id, 'Accepted') ? 'accepted.svg' :
+        let path = (this.checkInterpreterState(user.id, 'Accepted') ? 'accepted.svg' :
                        user.blocked ? 'blocked.svg' :
                        user.booked ? 'booking.svg' :
                        user.blockout ? 'booking.svg' :
                        this.checkInterpreterState(user.id, 'Rejected') ? 'declined.svg' :
                        this.checkInterpreterState(user.id, 'Invited') ? 'invited.svg' : '');
+        path = path.length > 0 ? '../../../assets/img/svg-icons/' + path : path;
         return path;
     }
 
