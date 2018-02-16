@@ -1,4 +1,4 @@
-import {Component, ViewChild, OnInit, Input, ElementRef} from '@angular/core';
+import {Component, ViewChild, OnInit, AfterViewInit, Input, ElementRef} from '@angular/core';
 import {DatePipe} from '@angular/common';
 import {ActivatedRoute, Router} from '@angular/router';
 import * as $ from 'jquery';
@@ -7,6 +7,7 @@ import {Interpreter, BookingOfficer, Administrator} from '../../shared/model/use
 import {GLOBAL} from '../../shared/global';
 import {CalendarComponent} from 'ap-angular2-fullcalendar';
 import {UserService} from '../../api/user.service';
+import {NgForm} from '@angular/forms';
 
 @Component({
     selector: 'app-interpreter',
@@ -14,16 +15,26 @@ import {UserService} from '../../api/user.service';
     styleUrls: ['./interpreter.component.css'],
     exportAs: 'ctInterpreterForm'
 })
-export class InterpreterComponent implements OnInit {
+export class InterpreterComponent implements OnInit , AfterViewInit {
+    @ViewChild('interpreterForm') public interpreterform: NgForm;
     @Input() userModel: Interpreter;
     @Input() displayCalendar= false;
     @Input() canCalculateDistance: boolean;
     @ViewChild('mycal') myCal: CalendarComponent;
     updateCalendar = false;
     calendarOptions: Object = {};
+    @Input() parentForm: NgForm;
 
     constructor(private routes: ActivatedRoute, private router: Router, public userDataService: UserService) {
     }
+
+    ngAfterViewInit() {
+        if (this.parentForm !== null) {
+            if (!this.parentForm.form.contains('interpreterFields')) {
+                this.parentForm.form.addControl('interpreterFields', this.interpreterform.form);
+            }
+        }
+      }
     ngOnInit() {
         let d = new DatePipe('en-us');
         this.userModel.naati_validity_start_date =
