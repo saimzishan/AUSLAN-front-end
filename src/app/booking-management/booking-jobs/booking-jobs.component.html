@@ -163,12 +163,12 @@
                     </div>
                     </ng-container>
                 </section>
-
-                <h2 *ngIf='!isCancelledOrUnableToServe && !isCurrentUserInterpreter()'>
+            <ng-container *ngIf="isCurrentUserAdminOrBookingOfficer() && isRequestedProgressOrAllocated">
+                <h2>
                     Invite Interpreters
                     <button class="outside"></button>
                 </h2>
-                <section *ngIf='!isCancelledOrUnableToServe && !isCurrentUserInterpreter()' id="invite-interpreters">
+                <section id="invite-interpreters">
                     <section id="filters">
                         <section class="search-bar" style="width:150%">
                             <form #filterBySearch="ngForm" class="common-form compact" (ngSubmit)="search()" novalidate>
@@ -192,7 +192,7 @@
                     </section>
                 </section>
 
-                <section *ngIf='!isCancelledOrUnableToServe && !isCurrentUserInterpreter()' id="invited-interpreters"  class="interpreters-list">
+                <section id="invited-interpreters"  class="interpreters-list">
                     <section class="section-left">
                         <table class="custom custom-small-table">
                             <thead>
@@ -350,6 +350,7 @@
                         </section>
                     </section>
                 </section>
+            </ng-container>
                 <ng-container *ngIf='!isCurrentUserInterpreter()'>
                     <h2 class="hidden-mobile">History</h2>
                     <table id="changes-history" class="custom-small-table">

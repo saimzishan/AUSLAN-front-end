@@ -33,6 +33,26 @@ Feature: Booking Admin Management
     And I can see the element with name 'manage-interpreters-a' is 'visible'
 
   @runThis
+  Scenario: As an Individual Client and Organisational Representative I can not see the invite interpreter section
+    Given There exist 1 bookings
+    Given I exist as an Individual Client
+    And I sign in with valid Individual Client credentials
+    And I am on the bookings page
+    Then I click on an individual booking
+    Then I am on the individual booking page
+    And I can see the element with name 'invite-interpreters' is 'not visible'
+    And I can see the element with name 'invited-interpreters' is 'not visible'
+    And I click on my name in the top corner
+    Then I click on logout
+    Then Assigned all bookings to Organisational Representative
+    And I sign in with valid Organisational Representative credentials
+    And I am on the bookings page
+    Then I click on an individual booking
+    Then I am on the individual booking page
+    And I can see the element with name 'invite-interpreters' is 'not visible'
+    And I can see the element with name 'invited-interpreters' is 'not visible'
+
+  @runThis
   Scenario: As a Booking Officer I can see the blank status when Interpreter is not invited
     Given There exist 1 bookings
     Given I exist as an Booking Officer
