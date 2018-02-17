@@ -6,24 +6,23 @@ Feature: Booking Admin Management
     And I am shown the login screen, with picture and signup button
 
   @runThis
-  Scenario: As a Booking Officer I should see the correct suburb of the booking
-    Given There exist 1 bookings
-    Given I exist as a Booking Officer
-    When I sign in with valid Booking Officer credentials
+  Scenario: Given a booking is created, As an Interpreter invited to the booking, I should see the correct suburb of the booking
+    Given I exist as an Interpreter
+    When I sign in with valid Interpreter credentials
     Then I am on the bookings page
     When I click on an individual booking
     Then I will be shown the booking job page
-    Then I should see the value under Suburb column as 'Parkville'
+    And I should see the value under Suburb column as 'Parkville'
 
   @runThis
-  Scenario: As a Booking Officer I should see the correct suburb of the booking
+  Scenario: As a Booking Officer I should see the correct type of the booking
     Given There exist 1 bookings
     Given I exist as a Booking Officer
     When I sign in with valid Booking Officer credentials
     Then I am on the bookings page
     When I click on an individual booking
     Then I will be shown the booking job page
-    Then I should see the value under Type column as 'Medical'
+    Then I should see the value under Type column as 'AUSLAN'
 
   @runThis
   Scenario: As a Booking Officer I should see the correct Job number of the booking
