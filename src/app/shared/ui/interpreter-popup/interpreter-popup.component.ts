@@ -14,7 +14,7 @@ export class InterpreterPopupComponent implements OnInit {
 
     selectedInterpreters = [];
     isPreffered = false;
-    state_where_most_bookings_occur: string = 'VIC';
+    state_where_most_bookings_occur = 'VIC';
     interpreterList = [];
     checkedInterpreter = -1;
     currentPage = 1;

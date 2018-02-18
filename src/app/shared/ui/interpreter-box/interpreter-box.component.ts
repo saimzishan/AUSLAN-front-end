@@ -21,7 +21,7 @@ export class InterpreterBoxComponent implements OnInit, AfterContentInit, OnDest
     title = '';
     @Input() isHidden = false;
     @Input() isEditable = true;
-    @Input() state_where_most_bookings_occur: string = 'VIC';
+    @Input() state_where_most_bookings_occur = 'VIC';
     preferAllocSub: any;
 
     constructor(public dialog: MdDialog,
