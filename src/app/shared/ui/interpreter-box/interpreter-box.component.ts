@@ -21,6 +21,7 @@ export class InterpreterBoxComponent implements OnInit, AfterContentInit, OnDest
     title = '';
     @Input() isHidden = false;
     @Input() isEditable = true;
+    @Input() state_where_most_bookings_occur: string = 'VIC';
     preferAllocSub: any;
 
     constructor(public dialog: MdDialog,
@@ -70,6 +71,7 @@ export class InterpreterBoxComponent implements OnInit, AfterContentInit, OnDest
         this.dialogRef = this.dialog.open(InterpreterPopupComponent, config);
         this.dialogRef.componentInstance.selectedInterpreters = this.selectedInterpreters;
         this.dialogRef.componentInstance.isPreffered = this.isPreffered;
+        this.dialogRef.componentInstance.state_where_most_bookings_occur = this.state_where_most_bookings_occur;
         this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
             this._sharedPreferedAllocationService.publishData(this.selectedInterpreters);
         });
