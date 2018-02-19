@@ -11,7 +11,6 @@ export class InterpreterManagementPage extends PageObject {
 
     hoverOnInterpreterTableHeader = (headerTitle: string, selection: string) => {
         let headerCss = '.dropdown#' + {
-            'Preferred': 'preferred-interpreter',
             'Lvl': 'skill-level',
             'Pay Travel (Y/N)': 'travel-pay-status'
         }[headerTitle];
@@ -67,7 +66,6 @@ export class InterpreterManagementPage extends PageObject {
         let lastEl = this.getElementByCss('.section-left table tbody tr:last-child td:nth-child(' + InterpreterTableHeaders[tableHeader] + ')');
         let isAscending = ascending === 'ascending';
         let compareMethod = {
-            Preferred: 'compareByText',
             'First Name': 'compareByText',
             'Last Name': 'compareByText',
             Lvl: 'compareByText',

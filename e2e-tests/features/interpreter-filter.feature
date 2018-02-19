@@ -5,7 +5,7 @@ Feature: Nearby Interpreter Filter
     And I am shown the login screen, with picture and signup button
     Given There exist 1 bookings
 
-  @runThis
+  @ignoreThis
   Scenario: Given 1 verified Administrator Officer, I can filter the list of interpreters by Preferred column Yes and No
     Given There exist 5 verified interpreters
     Given The first 2 interpreters have preference 'Preferred'

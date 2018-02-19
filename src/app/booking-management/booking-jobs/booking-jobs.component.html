@@ -203,11 +203,19 @@
                                     <span class="">Status</span>
                                 </th>
                                 <th width="17%">
-                                    <span class="order" [ngClass]="getSortOrder('first_name')" (click)="sortInterpreters('first_name')">Name</span>
+                                    <span class="order" [ngClass]="getSortOrder('first_name')" (click)="sortInterpreters('first_name')">First Name</span>
                                     <form #filterByFirstName="ngForm" class="common-form compact"
                                           (ngSubmit)="filterInterpreters('first_name', filterByFirstName.value.first_name)" novalidate>
                                         <input type="text" name="first_name" (blur)="filterInterpreters('first_name', filterByFirstName.value.first_name)"
                                                [(ngModel)]="interpreterFilter.first_name">
+                                    </form>
+                                </th>
+                                <th width="17%">
+                                    <span class="order" [ngClass]="getSortOrder('last_name')" (click)="sortInterpreters('last_name')">Last Name</span>
+                                    <form #filterByLastName="ngForm" class="common-form compact"
+                                          (ngSubmit)="filterInterpreters('last_name', filterByLastName.value.last_name)" novalidate>
+                                        <input type="text" name="last_name" (blur)="filterInterpreters('last_name', filterByLastName.value.last_name)"
+                                               [(ngModel)]="interpreterFilter.last_name">
                                     </form>
                                 </th>
                                 <th width="9%">
@@ -267,14 +275,20 @@
                                     <img [src]="getInterpreterIconClass(user)">
 
                                 </td>
-                                <td> 
+                                <td>
                                     <i class="icon-requested preff-icon" *ngIf="isPreferred(user.id)"></i>
                                     <a name="lnkEditUser" [routerLink]="['/init']" [queryParams]="{selectedRole:'INTERPRETER',uid:user.id, edit_user:
-                                                    stringifyUser(user)}"> {{user.first_name + ' ' + user.last_name}} </a>
+                                                    stringifyUser(user)}"> {{user.first_name}} </a>
+
+                                </td>
+                                <td>
+                                    <a name="lnkEditUser" [routerLink]="['/init']" [queryParams]="{selectedRole:'INTERPRETER',uid:user.id, edit_user:
+                                                    stringifyUser(user)}"> {{user.last_name}} </a>
+
                                 </td>
                                 <td>{{isStaff(user) ? 'S' : 'C'}}</td>
-                                <td>{{user.skill_level}}</td>
-                                <td>{{getSuburb(user)}}</td>
+                                <td class="truncated-text">{{user.skill_level}}</td>
+                                <td class="truncated-text">{{getSuburb(user)}}</td>
                                 <td>{{user.distance}}</td>
                                 <td>{{ travelPayStatus(user)}}</td>
                                 <td class="truncated-text" [title]="user.booking_office_notes">{{user.booking_office_notes}}</td>
