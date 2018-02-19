@@ -254,4 +254,3 @@ Feature: Booking Admin Management
     Then I click on Bookings
     And I am on the bookings page
     Then I see one row with state 'Requested'
-    

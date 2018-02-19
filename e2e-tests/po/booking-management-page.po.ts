@@ -96,6 +96,15 @@ export class BookingManagementPage extends PageObject {
         });
     }
 
+    showVerifyPage = () => {
+        let verifyCodeField = this.getElementByName('verification_code');
+        let resendBtn = this.getElementByName('resend_code');
+        return browser.wait(protractor.ExpectedConditions.presenceOf(verifyCodeField), 1200).then(() => {
+            expect(verifyCodeField).to.exist;
+            expect(verifyCodeField).to.exist;
+        });
+    }
+
     clickOnNewBooking = () => {
         return this.getElementByID('lnkNewBooking').click();
     }
@@ -162,9 +171,9 @@ export class BookingManagementPage extends PageObject {
     bookingWithStatusExists = (count: string, booking_status: string) => {
         if (count === 'one') { count = '1'; }
         let className = {
-            'green': 'icon-check-green',
-            'red': 'status-ready-to-process',
-            'orange': 'status-allocated'
+            'green': 'icon-small-green',
+            'red': 'icon-small-red',
+            'orange': 'icon-small-yellow'
         }[booking_status];
         return this.getAllElementByCSS('i[class="status ' + className + '"]').count().then((cnt) => {
             expect(cnt.toString()).to.be.eq(count);

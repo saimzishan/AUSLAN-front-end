@@ -178,7 +178,7 @@
                 </td>
                 <td class="text-center">
                     <i class="status"
-                       [ngClass]="{'icon-check-green': booking.status === 'green', 'status-ready-to-process': booking.status === 'red', 'status-allocated': booking.status === 'orange'}">
+                       [ngClass]="{'icon-small icon-small-green': booking.status === 'green', 'icon-small icon-small-red': booking.status === 'red', 'icon-small icon-small-yellow': booking.status === 'orange'}">
                     </i>
                 </td>
                 <td style="text-transform: capitalize">{{stateToString(booking.state)}}</td>

@@ -138,7 +138,7 @@ export class UserService extends ApiService {
         const headers = new Headers({'Accept': 'application/json',
             'Content-Type': 'application/json'});
         let options = new RequestOptions({ headers: headers });
-        options = Object.assign(options, otherParams);
+        options = Object.assign(options, { params: otherParams });
         return this.http.get(GLOBAL.USER_API_ENDPOINT + '/' + userType , options)
             .map(this.extractData)
             .catch((err) => { return this.handleError(err); });
@@ -147,11 +147,13 @@ export class UserService extends ApiService {
     /*
          The Api should be able to fetch basic data for interpreters.
         */
-    fetchBasicDetailsForInterpreter(page?: number): Observable<Object> {
+    fetchBasicDetailsForInterpreter(page?: number, state_where_most_bookings_occur?: string): Observable<Object> {
         let headers = new Headers({'Accept': 'application/json',
             'Content-Type': 'application/json'});
         let options = new RequestOptions({ headers: headers });
-        return this.http.get(GLOBAL.USER_API_ENDPOINT + '/interpreters/basic_list?page=' + page , options)
+        const otherOptions = { params: { state_where_most_bookings_occur: state_where_most_bookings_occur, page: page } };
+        options = Object.assign(options, otherOptions);
+        return this.http.get(GLOBAL.USER_API_ENDPOINT + '/interpreters/basic_list', options)
             .map(this.extractData)
             .catch((err) => { return this.handleError(err); });
 
