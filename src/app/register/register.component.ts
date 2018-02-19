@@ -27,7 +27,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
     termsAndConditionAccepted = false;
     selectedStatus = '';
     userStatusArray = GLOBAL.userStatusArray;
-    @Input('app-address') public registerModel: NgModel;
 
     constructor(public userService: UserService,
                 public notificationServiceBus: NotificationServiceBus,
@@ -111,13 +110,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
         return this.sub_param && this.sub_param.unsubscribe();
     }
 
-    applyChanges(form: any , interpreterform: any) {
+    applyChanges(form: any) {
         if (!this.termsAndConditionAccepted) {
             this.notificationServiceBus.launchNotification(true, 'Kindly accept Terms and Conditions');
             return;
         }
-        if (form.invalid || interpreterform.form.invalid) {
-            
+        if (form.invalid) {
             this.validateAllFormFields(form.control);
             this.notificationServiceBus.launchNotification(true, GLOBAL.MISSING_FIELDS_ERROR_MESSAGE);
             return;

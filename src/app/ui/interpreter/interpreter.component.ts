@@ -29,7 +29,7 @@ export class InterpreterComponent implements OnInit , AfterViewInit {
     }
 
     ngAfterViewInit() {
-        if (this.parentForm !== null) {
+        if (this.parentForm !== null && this.parentForm !== undefined) {
             if (!this.parentForm.form.contains('interpreterFields')) {
                 this.parentForm.form.addControl('interpreterFields', this.interpreterform.form);
             }
