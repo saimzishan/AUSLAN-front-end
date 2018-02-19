@@ -2,7 +2,8 @@
 <header>
   <h4 class="text-center">INDIVIDUAL CLIENT'S DETAILS</h4>
 </header>
-<div class="row small-collapse">
+<div>
+<div ngForm="indClientForm" #indClientForm="ngForm" class="row small-collapse">
   <div class="row-wrapper">
     <div class="medium-6 columns">
       <div class="form-field">
@@ -55,7 +56,7 @@
 </div>
 <br>
 
-<app-address [prefix]="address_title" [address]="userModel.address_attributes" [canCalculateDistance]="canCalculateDistance"></app-address>
+<app-address [parentForm]="indClientForm" [prefix]="address_title" [address]="userModel.address_attributes" [canCalculateDistance]="canCalculateDistance"></app-address>
 
 <div class="row small-collapse">
   <div class="row-wrapper">
@@ -74,7 +75,7 @@
 
 <app-billing-account [primaryContact]="userModel.individual_client_primary_contact"
                      [billingAddress]="userModel.individual_client_billing_account.organisation_billing_address"
-                     [parentForm]="parentForm" [canCalculateDistance]="canCalculateDistance"></app-billing-account>
+                     [parentForm]="indClientForm" [canCalculateDistance]="canCalculateDistance"></app-billing-account>
 
 
 <div class="row small-collapse">
@@ -113,5 +114,5 @@
     </div>
   </div>
 </div>
-
+</div>
 <br>

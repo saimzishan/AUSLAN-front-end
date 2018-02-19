@@ -16,7 +16,7 @@ export class OrgRepComponent implements  OnInit, AfterViewInit {
   @Input() parentForm: NgForm;
   address_title = 'ORGANISATION ADDRESS';
   ngAfterViewInit() {
-    if (this.parentForm !== null) {
+    if (this.parentForm !== null && this.parentForm !== undefined) {
         if (!this.parentForm.form.contains('orgRepForm')) {
             this.parentForm.form.addControl('orgRepForm', this.orgRepform.form);
         }
