@@ -12,7 +12,6 @@ import {AuthHttp} from 'angular2-jwt';
 import {MockBackend} from '@angular/http/testing';
 import {MapsAPILoader} from '@agm/core';
 import {FakeOpMapsAPILoader} from '../../shared/test/Mock';
-import {NgForm} from '@angular/forms';
 
 describe('AddressComponent', () => {
     let component: AddressComponent;
