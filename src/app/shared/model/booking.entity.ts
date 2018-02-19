@@ -389,6 +389,11 @@ export class Booking {
         return momentTimeZone(time).tz(timeZone).format();
     }
 
+    getDayLightSavings() {
+        let timeZone = Booking.getNamedTimeZone(this.venue.state, this.venue.post_code.toString());
+        return momentTimeZone().tz(timeZone).format('Z');
+    }
+
     setMethodType(method: string) {
         switch (method) {
             case 'On Site':

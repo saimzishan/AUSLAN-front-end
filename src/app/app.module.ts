@@ -81,6 +81,7 @@ import {BookingInfoComponent} from './booking-management/booking-info/booking-in
 import {BookingPayrollComponent} from './booking-management/booking-payroll/booking-payroll.component';
 import {PayrollTimeComponent} from './booking-management/payroll-time/payroll-time.component';
 import { StaffCalendarComponent } from './user-management/staff-calendar/staff-calendar.component';
+import {ShortTimePipe} from './shared/pipe/short-time.pipe';
 
 @NgModule({
     declarations: [
@@ -110,7 +111,7 @@ import { StaffCalendarComponent } from './user-management/staff-calendar/staff-c
         SkillMatrixComponent, AddressComponent, AccountantComponent,
         UserPasswordComponent, PreComponent, BlockoutComponent, TermandconditionComponent,
         InterpreterBoxComponent, InterpreterPopupComponent, RemoveSpacePipe, LinkidPopupComponent, MobileHeaderComponent,
-        BookingInfoComponent, BookingPayrollComponent, PayrollTimeComponent, StaffCalendarComponent
+        BookingInfoComponent, BookingPayrollComponent, PayrollTimeComponent, StaffCalendarComponent, ShortTimePipe
     ],
     entryComponents: [PopupComponent, InterpreterPopupComponent, LinkidPopupComponent],
     imports: [CustomFormsModule, routing, FileUploadModule,

@@ -439,8 +439,8 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                             || this.isActiveState('Unable_to_service') || this.isActiveState('Cancelled_chargeable');
 
                         this.isRequestedProgressOrAllocated = this.isStateRequestProgressAlloc();
-                        this.selectedBookingModel.venue.start_time_iso = this.selectedBookingModel.utcToBookingTimeZone(this.selectedBookingModel.venue.start_time_iso);
-                        this.selectedBookingModel.venue.end_time_iso = this.selectedBookingModel.utcToBookingTimeZone(this.selectedBookingModel.venue.end_time_iso);
+                    //    this.selectedBookingModel.venue.start_time_iso = this.selectedBookingModel.utcToBookingTimeZone(this.selectedBookingModel.venue.start_time_iso);
+                    //    this.selectedBookingModel.venue.end_time_iso = this.selectedBookingModel.utcToBookingTimeZone(this.selectedBookingModel.venue.end_time_iso);
                         let diffInMs: number = Date.now() - Date.parse(this.selectedBookingModel.venue.start_time_iso);
                         this.diffInHours = diffInMs / 1000 / 60 / 60;
                         if (this.diffInHours < 0) {
