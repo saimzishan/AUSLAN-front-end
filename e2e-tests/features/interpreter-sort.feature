@@ -48,7 +48,7 @@ Feature: Nearby Interpreter Sort by columns
     When I click on the interpreter table header 'Last Name'
     Then I should see the verified interpreters in descending order of Last Name
 
-  @ignoreThis
+  @runThis
   Scenario: Given 1 verified Administrator Officer, I can sort the list of interpreters by Lvl column
     Given There exist 5 verified interpreters
     Given The first 1 interpreters have skill level 'Notetaking'
@@ -64,7 +64,7 @@ Feature: Nearby Interpreter Sort by columns
     Then I should see the verified interpreters in descending order of Lvl
 
 
-  @ignoreThis
+  @runThis
   Scenario: Given 1 verified Administrator Officer, I can sort the list of interpreters by Suburb column
     Given There exist 5 verified interpreters
     Given I exist as an Administrator

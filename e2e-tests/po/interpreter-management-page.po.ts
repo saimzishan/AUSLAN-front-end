@@ -4,7 +4,7 @@ import {expect} from '../config/helpers/chai-imports';
 import {BookingPage} from './create-booking.po';
 
 enum InterpreterTableHeaders {
-    None, Empty, Number, Status, Preferred, 'First Name', 'Last Name', Role, Lvl, Suburb, Km
+    None, Empty, Status, 'First Name', 'Last Name', Role, Lvl, Suburb, Km
 }
 
 export class InterpreterManagementPage extends PageObject {
@@ -12,7 +12,7 @@ export class InterpreterManagementPage extends PageObject {
     hoverOnInterpreterTableHeader = (headerTitle: string, selection: string) => {
         let headerCss = '.dropdown#' + {
             'Lvl': 'skill-level',
-            'Pay Travel (Y/N)': 'travel-pay-status'
+            'Pay Travel': 'travel-pay-status'
         }[headerTitle];
         let el = this.getElementByCss(headerCss);
         return browser.actions().mouseMove(el).perform().then(() => {
