@@ -16,6 +16,7 @@ import {GmapsApiService} from '../../api/gmaps-api.service';
 import {RemoveSpacePipe} from '../../shared/pipe/remove-space.pipe';
 import {FakeOpMapsAPILoader} from '../../shared/test/Mock';
 import {MapsAPILoader} from '@agm/core';
+import {NgForm} from '@angular/forms';
 
 describe('BillingAccountComponent', () => {
     let component: BillingAccountComponent;

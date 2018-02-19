@@ -170,7 +170,7 @@
                 <app-interpreter [displayCalendar]="isEdit && checkUserAdminORBookOfficer()"
                  [parentForm]="registerForm" #interpreterForm="ctInterpreterForm" [userModel]="model" [canCalculateDistance]="true"
                                  *ngIf="selectedRole === 'INTERPRETER'"></app-interpreter>
-                <app-ind-client [userModel]="model" *ngIf="selectedRole === 'INDIVIDUALCLIENT'"></app-ind-client>
+                <app-ind-client  [parentForm]="registerForm" [userModel]="model" *ngIf="selectedRole === 'INDIVIDUALCLIENT'"></app-ind-client>
                 <br>
 
 
@@ -196,7 +196,7 @@
                 </ng-container>
                 <div align="center">
                     <button class="login button" name="register_user" type="submit"
-                            (click)="applyChanges(registerForm,interpreterForm)" class="button">{{isUserLogin() === true ? isDuplicate ?
+                            (click)="applyChanges(registerForm)" class="button">{{isUserLogin() === true ? isDuplicate ?
                         'Duplicate' : isEdit ?
                         'Edit' : 'Create' : 'Register'}}
                     </button>

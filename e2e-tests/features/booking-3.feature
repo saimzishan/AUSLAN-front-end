@@ -163,3 +163,4 @@ Feature: Booking Management
     And I can see the element with name 'invoiceMsg' has text 'Do you want to use standard invoice details for this booking? *'
 # ---------------------------------------- AUSLAN1-727 -> START ----------------------------------------
 
+

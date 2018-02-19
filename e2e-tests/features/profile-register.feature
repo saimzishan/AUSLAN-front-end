@@ -165,3 +165,4 @@ Feature: Create Profile
     When I click on BUTTON name 'resend_code'
     Then I will get an error notification saying "An email has been sent with your verification code"
 # --------------------------------------- AUSLAN1-1114 END ------------------------------------------------
+
