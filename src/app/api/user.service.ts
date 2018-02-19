@@ -138,7 +138,7 @@ export class UserService extends ApiService {
         const headers = new Headers({'Accept': 'application/json',
             'Content-Type': 'application/json'});
         let options = new RequestOptions({ headers: headers });
-        options = Object.assign(options, otherParams);
+        options = Object.assign(options, { params: otherParams });
         return this.http.get(GLOBAL.USER_API_ENDPOINT + '/' + userType , options)
             .map(this.extractData)
             .catch((err) => { return this.handleError(err); });
