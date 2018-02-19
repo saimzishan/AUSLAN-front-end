@@ -1,5 +1,5 @@
 <main>
-    <section class="jobs">
+    <section class="jobs withOffset">
         <table id="jobs-responsive" class="custom">
             <thead>
             <tr>
@@ -188,8 +188,7 @@
                             <i class="icon-time hidden-desktop"></i>
                             <span>
                                 <span>
-                                    {{booking.venue.start_time_iso | amDateFormat:'h:mm A'}} -
-                                    {{booking.venue.end_time_iso | amDateFormat:'h:mm A'}}
+                                    {{booking.venue.start_time_iso | amDateFormat:'h:mm A'}} - {{booking.venue.end_time_iso | amDateFormat:'h:mm A'}}
                                 </span>
                                 <span>
                                     {{booking.venue.start_time_iso | amDateFormat:'ddd D MMM YY'}}
@@ -206,7 +205,7 @@
                     booking.deaf_person.last_name}}
                 </td>
                 <td>{{booking.venue.suburb}}</td>
-                <td class="truncated">
+                <td class="truncated-text">
                     <ng-container *ngIf="booking.interpreters_required <= 2 && didInterpreterAccepted(booking.interpreters).length > 0 ;">
                         <span *ngFor="let user of didInterpreterAccepted(booking.interpreters)">
                                     <strong *ngIf="isCurrentUser(user.id); else sim_user_Block">
@@ -226,7 +225,7 @@
                     <span *ngIf="booking.interpreters_required == 1 && didInterpreterAccepted(booking.interpreters).length < 1 ;">To be filled </span>
                     
                 </td>
-                <td class="truncated">
+                <td class="truncated-text">
                     <ng-container *ngIf="booking.documents_attributes.length > 0">
                         <a href="javascript:void(0)" class="attach"><i class="icon-attach"></i></a>
                     </ng-container>
