@@ -16,3 +16,9 @@
 #job-booking main #filters .icon-glass{
     transform: none;
 }
+
+.preff-icon {
+    color: #02b86e;
+    font-size: 20px;
+    float: left;
+}
