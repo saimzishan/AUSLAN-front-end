@@ -16,7 +16,6 @@ import {MockBackend} from '@angular/http/testing';
 import {RemoveSpacePipe} from '../../shared/pipe/remove-space.pipe';
 import {MapsAPILoader} from '@agm/core';
 import {FakeOpMapsAPILoader} from '../../shared/test/Mock';
-import {NgForm} from '@angular/forms';
 
 describe('OrgRepComponent', () => {
   let component: OrgRepComponent;

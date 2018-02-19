@@ -19,7 +19,6 @@ import {FakeOpMapsAPILoader} from '../../shared/test/Mock';
 import {MapsAPILoader} from '@agm/core';
 import {UserService} from '../../api/user.service';
 import {MockUserService, MockBookingService} from '../../shared/test/Mock';
-import {NgForm} from '@angular/forms';
 
 describe('InterpreterComponent', () => {
     let component: InterpreterComponent;
