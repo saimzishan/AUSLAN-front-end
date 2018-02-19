@@ -162,8 +162,8 @@ Feature: Booking Payroll and Billing
     Then I verify material checkbox name 'cbInvoiceClient_0' is checked 'true'
     When I click on material checkbox name 'cbChargeTravel_0'
     Then I verify material checkbox name 'cbChargeTravel_0' is checked 'true'
-    And I can see the payroll element 'client_kiloMeters_0' has text '1'
-    And I can see the payroll element 'client_travelTime_0' has text '0:05'
+    And I can see the payroll element 'client_kiloMeters_0' has text '2'
+    And I can see the payroll element 'client_travelTime_0' has text '0:10'
     And I click on BUTTON 'Save'
     Then I should get a valid payroll save notification
 
