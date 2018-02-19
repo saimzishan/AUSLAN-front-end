@@ -417,7 +417,7 @@ export class Interpreter extends User {
     public override_availabilty: blockout_availability;
     public skill_level;
     public location_pref = 'VIC';
-    public employment_type = 'Casual';
+    public employment_type;
     public communication_preference = 'email_and_sms';
     public assignments_attributes = [];
     public availability_blocks_attributes: Array<AvailabilityBlock> = [];

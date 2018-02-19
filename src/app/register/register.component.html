@@ -173,7 +173,7 @@
                                 <select aria-label="A" (change)="staffToCasualToggle()" [(ngModel)]="model.staff_to_casual_toggle" name="staff_to_casual" #staff_to_casual="ngModel"
                                     required>
                         
-                                    <option *ngFor="let staff_casual_toggle of  ['Staff','Casual']" [value]="staff_casual_toggle">{{staff_casual_toggle.toUpperCase()}}</option>
+                                    <option *ngFor="let staff_casual_toggle of  ['staff','casual']" [value]="staff_casual_toggle">{{staff_casual_toggle.toUpperCase()}}</option>
                         
                                 </select>
                                 <span *ngIf="staff_to_casual.touched && !staff_to_casual.errors?.required && !staff_to_casual.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
