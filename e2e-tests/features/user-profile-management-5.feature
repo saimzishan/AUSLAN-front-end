@@ -211,4 +211,5 @@ Feature: User Profile Management
     When I click on BUTTON 'ADD STAFF AVAILABILITY'
     Then I will be taken to staff-calendar page
 
+
 # --------------------------------------------- AUSLAN1-165 -> END ---------------------------------------------

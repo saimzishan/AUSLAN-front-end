@@ -14,8 +14,8 @@
                 <section class="payroll-card__content">
                     <section class="common-form">
                         PAYROLL AS
-                        <select name="{{'payrollAs_' + i}}" class="menu custom gray">
-                            <option [value]="Casual">Casual</option>
+                        <select  (change)="staffToCasualToggle(payroll. interpreter_id)" [(ngModel)]="payroll.payroll_as"  name="{{'payrollAs_' + i}}" class="menu custom gray">
+                            <option *ngFor="let staff_casual_toggle of ['staff','casual']" [value]="staff_casual_toggle">{{staff_casual_toggle.toUpperCase()}}</option>
                         </select>
  
                     </section>

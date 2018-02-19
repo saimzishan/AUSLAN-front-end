@@ -199,4 +199,19 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
     isCurrentUserAdmin() {
         return GLOBAL.currentUser instanceof Administrator;
     }
+    staffToCasualToggle(id) {
+        this.spinnerService.requestInProcess(true);
+        this.bookingService.toggle_employment_type(id)
+            .subscribe((res: any) => {
+                if (res.status === 204) {
+                    this.notificationServiceBus.launchNotification(false, 'Successfully applyChanges');
+                }
+                this.spinnerService.requestInProcess(false);
+            },
+            err => {
+                this.spinnerService.requestInProcess(false);
+                let e = err.json() || 'There is some error on server side';
+                this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
+            });
+    }
 }

@@ -235,4 +235,14 @@ export class BookingService extends ApiService {
             .map(this.extractData)
             .catch((err) => { return this.handleError(err); });
     }
+    toggle_employment_type(id: number): Observable<Object> {
+                   let headers = new Headers({'Accept': 'application/json',
+                           'Content-Type': 'application/json'
+                      });
+        let options = new RequestOptions({ headers: headers });
+
+          return this.http.put(GLOBAL.USER_API + '/' + id + '/toggle_employment_type/', options)
+                   .map(this.extractData)
+                  .catch((err) => { return this.handleError(err); });
+   }
 }
