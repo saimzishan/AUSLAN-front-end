@@ -22,8 +22,8 @@
                 <div class="row-wrapper">
                     <div class="small-12 columns">
                         <div class="form-field">
-                            <label>NAME BLOCKOUT *</label>
 
+                            <label>{{staff_availability? 'NAME AVAILABILITY *' : 'NAME BLOCKOUT *'}}</label>
                             <input type='text'
                                    name='blockout_name'
                                    [(ngModel)]="availabilityBlock.name" [rangeLength]="[1,50]" required
