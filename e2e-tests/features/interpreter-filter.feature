@@ -5,7 +5,7 @@ Feature: Nearby Interpreter Filter
     And I am shown the login screen, with picture and signup button
     Given There exist 1 bookings
 
-  @runThis
+  @ignoreThis
   Scenario: Given 1 verified Administrator Officer, I can filter the list of interpreters by Preferred column Yes and No
     Given There exist 5 verified interpreters
     Given The first 2 interpreters have preference 'Preferred'
@@ -77,19 +77,19 @@ Feature: Nearby Interpreter Filter
   @ignoreThis
   Scenario: Given 1 verified Administrator Officer, I can filter the list of interpreters by Pay Travel column
     Given There exist 5 verified interpreters
-    Given The first 2 interpreters have travel pay status 'Yes'
-    Given The last 3 interpreters have travel pay status 'No'
+    Given The first 2 interpreters have travel pay status 'Y'
+    Given The last 3 interpreters have travel pay status 'N'
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
     And I am on the bookings page
     When I click on an individual booking
     Then I am on the individual booking page
     Then I can see a list of 5 verified interpreters
-    When I hover on the Pay Travel (Y/N) dropdown on interpreter table header and select 'Yes'
+    When I hover on the Pay Travel dropdown on interpreter table header and select 'Yes'
     Then I can see a list of 2 verified interpreters
-    When I hover on the Pay Travel (Y/N) dropdown on interpreter table header and select 'No'
+    When I hover on the Pay Travel dropdown on interpreter table header and select 'No'
     Then I can see a list of 3 verified interpreters
-    When I hover on the Pay Travel (Y/N) dropdown on interpreter table header and select 'All'
+    When I hover on the Pay Travel dropdown on interpreter table header and select 'All'
     Then I can see a list of 5 verified interpreters
 
   @runThis

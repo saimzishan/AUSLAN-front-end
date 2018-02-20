@@ -5,7 +5,7 @@ Feature: Nearby Interpreter Sort by columns
     And I am shown the login screen, with picture and signup button
     Given There exist 1 bookings
 
-  @runThis
+  @ignoreThis
   Scenario: Given 1 verified Administrator Officer, I can sort the list of interpreters by Preferred column
     Given There exist 5 verified interpreters
     Given The first 1 interpreters have preference 'Preferred'
