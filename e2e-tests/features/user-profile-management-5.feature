@@ -210,6 +210,5 @@ Feature: User Profile Management
     Then I click on edit for an active existing Interpreter
     And I will be taken to the 'INTERPRETER Signup' page
     When I select option STAFF from dropdown Staff/Casual
-    And I get success message: 'Successfully applyChanges'
-    
+    And I get success message: 'Successfully applyChanges'    
 # --------------------------------------------- AUSLAN1-165 -> END ---------------------------------------------
