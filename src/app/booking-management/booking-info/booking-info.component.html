@@ -36,7 +36,7 @@
           <a>#{{selectedBookingModel.link_id}}</a>
         </span>
       </td>
-      <td data-title="DATE"><span>{{selectedBookingModel.venue.start_time_iso | amDateFormat:'ddd D MMM YY'}}</span></td>
+      <td data-title="DATE"><span>{{selectedBookingModel.venue.start_time_iso | date:'EEE d MMM yy'}}</span></td>
       <td data-title="TIME">
         <span>{{selectedBookingModel.venue.start_time_iso | timeShort : selectedBookingModel.venue.state : selectedBookingModel.venue.post_code}} - {{selectedBookingModel.venue.end_time_iso | timeShort : selectedBookingModel.venue.state : selectedBookingModel.venue.post_code}}</span>
       </td>

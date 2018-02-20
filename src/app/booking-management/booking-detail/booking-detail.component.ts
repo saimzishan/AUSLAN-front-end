@@ -163,9 +163,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 this.oldInterpreterPreference = jsonData.preference_allocations_attributes;
                 this.bookingModel.documents_attributes = [];
                 this.bookingDate = new Date(this.datePipe.transform(this.bookingModel.venue.start_time_iso, 'MM/dd/yyyy'));
-                this.bookingStartTime = new Date(this.bookingModel.venue.start_time_iso);
-                this.bookingEndTime = new Date(this.bookingModel.venue.end_time_iso);
-                this.setDayMonthYear();
+                this.setTime();
                 this.natureOfApptChange(null);
                 this.checkInterpreterBoxes();
             } else {
@@ -339,12 +337,15 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         return this.bookingDate || this.minDate;
     }
 
-    setDayMonthYear() {
+    setTime() {
+        let startTime = this.bookingModel.utcToBookingTimeZone(this.bookingModel.venue.start_time_iso);
+        let endTime = this.bookingModel.utcToBookingTimeZone(this.bookingModel.venue.end_time_iso);
         let currentDate = new Date();
+
         this.bookingStartTime = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(),
-            this.bookingStartTime.getHours(), this.bookingStartTime.getMinutes());
+                                         moment.duration(startTime).get('hours'), moment.duration(startTime).get('minutes'));
         this.bookingEndTime = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(),
-            this.bookingEndTime.getHours(), this.bookingEndTime.getMinutes());
+                                       moment.duration(endTime).get('hours'), moment.duration(endTime).get('minutes'));
     }
 
     roundOffMinutes() {

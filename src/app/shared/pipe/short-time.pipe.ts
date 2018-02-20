@@ -8,10 +8,9 @@ import * as momentTimeZone from 'moment-timezone';
 export class ShortTimePipe implements PipeTransform {
 
   transform(timeVal: any, state?: any, postCode?: any): any {
-    if (timeVal !== undefined) {
+    if (timeVal !== undefined && state !== undefined && postCode !== undefined) {
          let timeZone = Booking.getNamedTimeZone(state, postCode.toString());
-         let asxx = momentTimeZone(timeVal).tz(timeZone).format('hh:mm A');
-          return asxx;
+         return momentTimeZone(timeVal).tz(timeZone).format('hh:mm A');
     }
   }
 

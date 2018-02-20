@@ -76,7 +76,6 @@ import {AgmCoreModule} from '@agm/core';
 import {AutoCompleteModule, CalendarModule as PrimeNgCalendarModule} from 'primeng/primeng';
 import {LinkidPopupComponent} from './booking-management/linkid-popup/linkid-popup.component';
 import {MobileHeaderComponent} from './ui/mobile-header/mobile-header.component';
-import {MomentModule} from 'angular2-moment/moment.module';
 import {BookingInfoComponent} from './booking-management/booking-info/booking-info.component';
 import {BookingPayrollComponent} from './booking-management/booking-payroll/booking-payroll.component';
 import {PayrollTimeComponent} from './booking-management/payroll-time/payroll-time.component';
@@ -119,7 +118,7 @@ import {ShortTimePipe} from './shared/pipe/short-time.pipe';
         FormsModule, BrowserAnimationsModule, NgxPaginationModule,
         HttpModule, SimpleNotificationsModule.forRoot(),
         ReactiveFormsModule, Md2Module.forRoot(),
-        MaterialModule, CalendarModule, PrimeNgCalendarModule, MomentModule, AgmCoreModule.forRoot({
+        MaterialModule, CalendarModule, PrimeNgCalendarModule, AgmCoreModule.forRoot({
             apiKey: 'AIzaSyA-BDtGjVcaDl5VrgsGiwDLEvDQ1XOsWAw',
             libraries: ['places']
         }),
