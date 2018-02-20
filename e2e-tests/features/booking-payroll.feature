@@ -105,8 +105,8 @@ Feature: Booking Payroll and Billing
     And I verify that payroll 'interpreter' input fields have zero value
     When I click on material checkbox name 'cbPayInterpreter_0'
     Then I verify material checkbox name 'cbPayInterpreter_0' is checked 'true'
-    And I can see the payroll element 'interpreter_interpreterTime_0' has text '2:0'
-    And I can see the payroll element 'interpreter_prepTime_0' has text '0'
+    And I can see the payroll element 'interpreter_interpreterTime_0' has text '2:00'
+    And I can see the payroll element 'interpreter_prepTime_0' has text '0:00'
 
   @runThis
   Scenario: Given 1 verified Booking Officer, When I check invoice client then time fields of client will be filled from the time fields of interpreter, INTERPRETER exists

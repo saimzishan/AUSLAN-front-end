@@ -234,7 +234,7 @@ export class BookingJobPage extends PageObject {
         return interpreterRows.map((row) => {
             let cols = row.all(by.tagName('td'));
             cols.each((col, index) => {
-                if (index === 2) {
+                if (index === 1) {
                     if (status === 'blank') {
                         col.getText().then((txt) => {
                             expect(txt.trim()).to.be.empty;

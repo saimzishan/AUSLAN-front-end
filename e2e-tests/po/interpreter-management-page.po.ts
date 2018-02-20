@@ -4,16 +4,15 @@ import {expect} from '../config/helpers/chai-imports';
 import {BookingPage} from './create-booking.po';
 
 enum InterpreterTableHeaders {
-    None, Empty, Number, Status, Preferred, 'First Name', 'Last Name', Role, Lvl, Suburb, Km
+    None, Empty, Status, 'First Name', 'Last Name', Role, Lvl, Suburb, Km
 }
 
 export class InterpreterManagementPage extends PageObject {
 
     hoverOnInterpreterTableHeader = (headerTitle: string, selection: string) => {
         let headerCss = '.dropdown#' + {
-            'Preferred': 'preferred-interpreter',
             'Lvl': 'skill-level',
-            'Pay Travel (Y/N)': 'travel-pay-status'
+            'Pay Travel': 'travel-pay-status'
         }[headerTitle];
         let el = this.getElementByCss(headerCss);
         return browser.actions().mouseMove(el).perform().then(() => {
@@ -67,7 +66,6 @@ export class InterpreterManagementPage extends PageObject {
         let lastEl = this.getElementByCss('.section-left table tbody tr:last-child td:nth-child(' + InterpreterTableHeaders[tableHeader] + ')');
         let isAscending = ascending === 'ascending';
         let compareMethod = {
-            Preferred: 'compareByText',
             'First Name': 'compareByText',
             'Last Name': 'compareByText',
             Lvl: 'compareByText',

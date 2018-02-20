@@ -199,24 +199,8 @@
                             <tr>
                                 <th width="10%">
                                 </th>
-                                <th width="7%">
-                                    <span>#</span>
-                                </th>
                                 <th width="12%">
                                     <span class="">Status</span>
-                                </th>
-                                <th width="12%">
-                                    <span class="order" [ngClass]="getSortOrder('preferred_status')" (click)="sortInterpreters('preferred_status')">Preferred</span>
-                                    <ul class="dropdown menu custom" id="preferred-interpreter" data-dropdown-menu>
-                                        <li>
-                                            <a href="javascript:void(0)">{{underScoreToSpaces(filterPreferredStatus())}}</a>
-                                            <ul class="menu smaller">
-                                                <li *ngFor="let p_status of preferredStatuses()">
-                                                    <a href="javascript:void(0)" (click)="filterInterpreters('preferred_status', p_status)"><i></i>{{p_status}}</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                    </ul>
                                 </th>
                                 <th width="17%">
                                     <span class="order" [ngClass]="getSortOrder('first_name')" (click)="sortInterpreters('first_name')">First Name</span>
@@ -235,7 +219,7 @@
                                     </form>
                                 </th>
                                 <th width="9%">
-                                    <span class="">Role (S,C)</span>
+                                    <span class="">Role</span>
                                 </th>
                                 <th width="9%">
                                     <span class="order" [ngClass]="getSortOrder('skill_level')" (click)="sortInterpreters('skill_level')">Lvl</span>
@@ -262,7 +246,7 @@
                                     <span class="order" [ngClass]="getSortOrder('distance')" (click)="sortInterpreters('distance')">Km</span>
                                 </th>
                                 <th width="9%">
-                                    <span>Pay Travel (Y/N)</span>
+                                    <span>Pay Travel</span>
                                     <ul class="dropdown menu custom" id="travel-pay-status" data-dropdown-menu>
                                         <li>
                                             <a href="javascript:void(0)">{{underScoreToSpaces(filterPayStatus())}}</a>
@@ -287,26 +271,27 @@
                                                  (change)="onChange($event,user, ind)">
                                     </md-checkbox>
                                 </td>
-                                <td>{{user.id}}</td>
                                 <td align="center">
                                     <img [src]="getInterpreterIconClass(user)">
 
                                 </td>
-                                <td align="center">
-                                    {{isPreferred(user.id) ? 'Preferred' : ' - '}}
+                                <td>
+                                    <i class="icon-requested preff-icon" *ngIf="isPreferred(user.id)"></i>
+                                    <a name="lnkEditUser" [routerLink]="['/init']" [queryParams]="{selectedRole:'INTERPRETER',uid:user.id, edit_user:
+                                                    stringifyUser(user)}"> {{user.first_name}} </a>
+
                                 </td>
                                 <td>
-
                                     <a name="lnkEditUser" [routerLink]="['/init']" [queryParams]="{selectedRole:'INTERPRETER',uid:user.id, edit_user:
-												stringifyUser(user)}"> {{user.first_name}} </a>
+                                                    stringifyUser(user)}"> {{user.last_name}} </a>
+
                                 </td>
-                                <td>{{user.last_name}}</td>
-                                <td>{{isStaff(user) ? 'Staff' : 'Casual'}}</td>
-                                <td>{{user.skill_level}}</td>
-                                <td>{{getSuburb(user)}}</td>
+                                <td>{{isStaff(user) ? 'S' : 'C'}}</td>
+                                <td class="truncated-text">{{user.skill_level}}</td>
+                                <td class="truncated-text">{{getSuburb(user)}}</td>
                                 <td>{{user.distance}}</td>
                                 <td>{{ travelPayStatus(user)}}</td>
-                                <td>{{user.booking_office_notes}}</td>
+                                <td class="truncated-text" [title]="user.booking_office_notes">{{user.booking_office_notes}}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -334,7 +319,7 @@
                                 <button type="button">&gt;</button>
                             </section>
                             <section class="flow">
-                                <div *ngFor="let inte of interpreterList">
+                                <div *ngFor="let inte of interpreterList ">
                                     <section>
                                         <ng-container *ngFor="let avail_block of inte.availability_blocks_attributes">
                                             <ng-container *ngIf="getTimelineBlockoutStyle(avail_block).length > 2">

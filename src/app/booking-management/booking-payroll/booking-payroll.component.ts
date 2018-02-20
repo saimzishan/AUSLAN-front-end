@@ -134,22 +134,17 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
             if (payrollInvoice === 'payroll_attributes') {
                 if (field === 'pay_interpreter') {
                     if (this.payments[payrollInvoice][index][field]) {
-                         let startDate = moment(this.bookingModel.venue.start_time_iso);
-                         let endDate = moment(this.bookingModel.venue.end_time_iso);
-                         let duration = moment.duration(endDate.diff(startDate));
-
-                        this.payments[payrollInvoice][index]['interpreting_time'] = duration.hours() + ':' + duration.minutes();
-                        this.payments[payrollInvoice][index]['preparation_time'] = 0;
+                        this.payments[payrollInvoice][index]['interpreting_time'] = this.payments[payrollInvoice][index]['recommended']['interpreting_time'];
+                        this.payments[payrollInvoice][index]['preparation_time'] = '0:00';
                         this.setRecommendedDistanceTravelTime(payrollInvoice, index);
                     } else {
                         this.payments[payrollInvoice][index]['pay_travel'] = false;
-                        ['interpreting_time', 'preparation_time', 'distance', 'travel_time'].forEach(distTime => {
-                            this.payments[payrollInvoice][index][distTime] = 0;
-                        });
+                        this.resetTimeDistance(payrollInvoice, index);
                     }
                 } else {
                     if (!this.payments[payrollInvoice][index][field]) {
-                        this.payments[payrollInvoice][index]['distance'] = this.payments[payrollInvoice][index]['travel_time'] = 0;
+                        this.payments[payrollInvoice][index]['distance'] = 0;
+                        this.payments[payrollInvoice][index]['travel_time'] = '0:00';
                     }
                 }
             } else {
@@ -160,18 +155,23 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
                         });
                     } else {
                         this.payments[payrollInvoice][index]['charge_travel'] = false;
-                        ['interpreting_time', 'preparation_time', 'distance', 'travel_time'].forEach(distTime => {
-                            this.payments[payrollInvoice][index][distTime] = 0;
-                        });
+                        this.resetTimeDistance(payrollInvoice, index);
                     }
                 } else {
                     if (this.payments[payrollInvoice][index][field]) {
                         this.setRecommendedDistanceTravelTime(payrollInvoice, index);
                     } else {
-                        this.payments[payrollInvoice][index]['distance'] = this.payments[payrollInvoice][index]['travel_time'] = 0;
+                        this.payments[payrollInvoice][index]['distance'] = 0;
+                        this.payments[payrollInvoice][index]['travel_time'] = '0:00';
                     }
                 }
             }
+    }
+
+    resetTimeDistance(payrollInvoice: string, index) {
+        ['interpreting_time', 'preparation_time', 'distance', 'travel_time'].forEach(distTime => {
+            this.payments[payrollInvoice][index][distTime] = (distTime === 'distance') ? 0 : '0:00';
+        });
     }
 
     setRecommendedDistanceTravelTime(payrollInvoice: string, index) {
