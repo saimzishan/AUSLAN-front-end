@@ -547,10 +547,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
       Calling this method will create a new booking
     */
     public onCreateBooking(form: any, addressForm: any, billingForm: any, uploader: FileUploader) {
-<<<<<<< HEAD
-=======
-        // this.form.controls.markAsTouched({ onlySelf: true });
->>>>>>> 7380a51c664477072d68729c46dee744501ed45b
         if (addressForm.isTravelCostApplicable && !form.value.travel_cost_applicable) {
             this.notificationServiceBus.launchNotification(true, 'Travel cost must be applicable as your booking distance is more than 40 kms');
             return;
