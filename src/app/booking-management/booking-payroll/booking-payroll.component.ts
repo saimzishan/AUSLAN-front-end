@@ -97,12 +97,10 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
 
     savePayment() {
         this.spinnerService.requestInProcess(true);
-        this.payments.timeDistanceConversion('payroll', this.payments.payroll_attributes);
-        this.payments.timeDistanceConversion('invoice', this.payments.invoice_attributes);
         this.bookingService.updateBookingPayments(this.bookingModel.id, this.payments).subscribe((res: any) => {
             if (res.status === 204) {
                 this.notificationServiceBus.launchNotification(false, 'Hurray! Payroll & Billing details have been updated.');
-                this.fetchBookingPayment(this.bookingModel.id);
+            //    this.fetchBookingPayment(this.bookingModel.id);
             }
             this.spinnerService.requestInProcess(false);
         },
@@ -144,9 +142,10 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
                         this.resetTimeDistance(payrollInvoice, index);
                     }
                 } else {
-                    if (!this.payments[payrollInvoice][index][field]) {
-                        this.payments[payrollInvoice][index]['distance'] = 0;
-                        this.payments[payrollInvoice][index]['travel_time'] = '0:00';
+                    if (this.payments[payrollInvoice][index][field]) {
+                        this.setRecommendedDistanceTravelTime(payrollInvoice, index);
+                    } else {
+                        this.setDistanceTravelTimeZero(payrollInvoice, index);
                     }
                 }
             } else {
@@ -163,11 +162,15 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
                     if (this.payments[payrollInvoice][index][field]) {
                         this.setRecommendedDistanceTravelTime(payrollInvoice, index);
                     } else {
-                        this.payments[payrollInvoice][index]['distance'] = 0;
-                        this.payments[payrollInvoice][index]['travel_time'] = '0:00';
+                        this.setDistanceTravelTimeZero(payrollInvoice, index);
                     }
                 }
             }
+    }
+
+    setDistanceTravelTimeZero(payrollInvoice: string, index) {
+        this.payments[payrollInvoice][index]['distance'] = 0;
+        this.payments[payrollInvoice][index]['travel_time'] = '0:00';
     }
 
     resetTimeDistance(payrollInvoice: string, index) {
