@@ -307,7 +307,7 @@ Feature: Booking Admin Management
     Then I see one row with state 'Cancelled no charge'
   
   @runThis
-  Scenario:Booking Officer can Undo a booking having state Cancelled No chargeable
+  Scenario: Booking Officer can Undo a booking having state Cancelled No chargeable
     Given There exist 1 booking with link id
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
