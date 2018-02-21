@@ -58,11 +58,15 @@
             (completeMethod)="filterBookingForItems($event)"
             (onSelect)='onBookingForSelectionChange($event)'
             field='displayName'
-            [style]="{'width':'100%'}" required>
+            [style]="{'width':'100%'}" required #bookablee="ngModel">
             <ng-template let-bookable pTemplate='item'>
               <span>{{ getOrgName(bookable) }}</span>
             </ng-template>
           </p-autoComplete>
+          <span *ngIf="bookablee.touched && (bookablee.errors?.required);"
+          class="inline-icon error">
+      <span>input is required</span>!
+    </span>
         </div>
       </div>
     </div>
