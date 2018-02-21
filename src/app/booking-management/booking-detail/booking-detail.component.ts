@@ -589,8 +589,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     // have to merge this with save booking later.
     proceedWithBooking() {
         if (this.isBookingTimeInNonStandardHours()) {
-            let message = `This booking is not within the standard booking hours (8AM - 6PM).
-                            Do you still want to create booking?`;
+            let message = 'This booking is not within the standard booking hours (8AM - 6PM).' +
+                            ' Do you still want to ' + (this.forEdit ? 'update' : 'create') + ' booking?';
             let title = 'NON-STANDARD HOURS WARNING';
             this.createModal(title, message);
             this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
@@ -693,7 +693,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         this.dialogRef = this.dialog.open(PopupComponent, config);
         this.dialogRef.componentInstance.title = title;
         this.dialogRef.componentInstance.cancelTitle = (options && options.cancelTitle) || 'BACK';
-        this.dialogRef.componentInstance.okTitle = (options && options.okTitle) || 'CREATE';
+        this.dialogRef.componentInstance.okTitle = (options && options.okTitle) || this.forEdit ? 'UPDATE' : 'CREATE';
         this.dialogRef.componentInstance.closeVal = (options && options.closeVal) || false;
         this.dialogRef.componentInstance.popupMessage = message;
     }
