@@ -825,6 +825,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         this.filterInterpreterParams.set('direction', this.currentSort.order);
         GLOBAL._filterInterpreterVal = this.filterInterpreterParams;
         this.route.params.subscribe(params => {
+            this.currentPage = 1;
             let param_id = params['id'] || '';
             this.fetchNearbyinterpreters(param_id);
         });
@@ -840,6 +841,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     search() {
         GLOBAL._filterInterpreterVal.set('search', this.searchParams);
         this.route.params.subscribe(params => {
+            this.currentPage = 1;
             let param_id = params['id'] || '';
             this.fetchNearbyinterpreters(param_id);
         });
@@ -859,6 +861,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         }
         GLOBAL._filterInterpreterVal = this.filterInterpreterParams;
         this.route.params.subscribe(params => {
+            this.currentPage = 1;
             let param_id = params['id'] || '';
             this.fetchNearbyinterpreters(param_id);
         });
