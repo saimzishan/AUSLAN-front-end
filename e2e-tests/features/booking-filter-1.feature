@@ -162,8 +162,8 @@ Feature: Booking Filter
     And I sign in with valid Booking Officer credentials
     When I am on the bookings page
     Then I am shown with 5 bookings
-    When I hover on the Service Type dropdown and select 'CAPTIONING'
+    When I hover on the Service Type dropdown and select 'Captioning'
     Then I am shown with 1 booking
-    Then I see one row with service type 'CAPTIONING'
+    Then I see one row with service type 'Captioning'
 
 # ---------------------------------------- AUSLAN1-438 -> END ----------------------------------------

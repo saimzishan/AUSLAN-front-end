@@ -143,8 +143,8 @@ export class BookingListComponent implements OnInit {
         return ['All', 'onsite', 'vri'];
     }
     bookingServiceTypes() {
-        let keys = ['ASL', 'AUSLAN', 'BSL', 'CAPTIONING', 'NOTETAKING', 'DEAF', 'DEAF BLIND', 'INDIGENOUS SIGN',
-            'ISL', 'PLATFORM', 'SIGNED ENGLISH', 'TACTILE', 'VISUAL FRAME'];
+        let keys = ['ASL', 'Auslan', 'BSL', 'Captioning', 'Deaf', 'Indigenous Sign', 'ISL',
+            'Notetaking', 'Platform', 'Signed English', 'Tactile', 'Visual Frame'];
         return ['All', ...keys];
     }
 
