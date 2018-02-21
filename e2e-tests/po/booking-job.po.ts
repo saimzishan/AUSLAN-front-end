@@ -5,7 +5,7 @@ import {NotificationObject} from './notification';
 
 enum BookingDetailTableHeaders {
     Job, Date, Time,
-    Method, Type, Org, Suburb
+    Method, 'Service Type', Org, Suburb
 }
 
 export class BookingJobPage extends PageObject {

@@ -86,9 +86,13 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
             this.notificationServiceBus.launchNotification(true, 'Oops! Only numbers and dots allowed. Please try again.');
             return;
         }
-
-        if (this.claimPressed || this.undoClaimPressed) {
-            let state = this.claimPressed ? 'claimed' : 'service_completed';
+        const currentState = BOOKING_STATE[this.bookingModel.state].toLowerCase();
+        let state: string;
+        if (this.claimPressed) {
+            state = currentState === 'cancelled_chargeable' ? 'cancelled_claimed' : 'claimed';
+            this.changeBookingState(state);
+        } else if (this.undoClaimPressed) {
+            state = currentState === 'cancelled_claimed' ? 'cancelled_chargeable' : 'service_completed';
             this.changeBookingState(state);
         } else {
             this.savePayment();
@@ -115,7 +119,7 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
         this.bookingService.updateBookingByTransitioning(this.bookingModel.id, state)
             .subscribe((res: any) => {
                     if (res.status === 204) {
-                        let msg = this.claimPressed ? 'Claimed' : 'Service Completed';
+                        let msg = this.setNotificationState(state);
                         this.notificationServiceBus.launchNotification(false, 'The booking has been transitioned to \"' + msg + '\" state');
                         this.claimPressed = this.undoClaimPressed = false;
                         this.fetchBooking(this.bookingModel.id);
@@ -200,5 +204,18 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
 
     isCurrentUserAdmin() {
         return GLOBAL.currentUser instanceof Administrator;
+    }
+
+    setNotificationState(state) {
+        switch (state) {
+            case 'cancelled_chargeable':
+                return 'Cancelled Chargeable';
+            case 'cancelled_claimed':
+                return 'Cancelled Claimed';
+            case 'claimed':
+                return 'Claimed';
+            case 'service_completed':
+                return 'Service Completed';
+        }
     }
 }
