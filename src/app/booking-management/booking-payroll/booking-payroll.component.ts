@@ -100,7 +100,6 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
         this.bookingService.updateBookingPayments(this.bookingModel.id, this.payments).subscribe((res: any) => {
             if (res.status === 204) {
                 this.notificationServiceBus.launchNotification(false, 'Hurray! Payroll & Billing details have been updated.');
-            //    this.fetchBookingPayment(this.bookingModel.id);
             }
             this.spinnerService.requestInProcess(false);
         },
