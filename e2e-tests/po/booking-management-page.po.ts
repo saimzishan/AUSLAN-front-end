@@ -96,6 +96,15 @@ export class BookingManagementPage extends PageObject {
         });
     }
 
+    showVerifyPage = () => {
+        let verifyCodeField = this.getElementByName('verification_code');
+        let resendBtn = this.getElementByName('resend_code');
+        return browser.wait(protractor.ExpectedConditions.presenceOf(verifyCodeField), 1200).then(() => {
+            expect(verifyCodeField).to.exist;
+            expect(verifyCodeField).to.exist;
+        });
+    }
+
     clickOnNewBooking = () => {
         return this.getElementByID('lnkNewBooking').click();
     }

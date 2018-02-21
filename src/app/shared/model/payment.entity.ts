@@ -12,6 +12,7 @@ export class Payments {
             payrollInvoice.distance = this.meterToKm(payrollInvoice.distance);
             payrollInvoice.recommended.travel_time = this.minutesToTime(payrollInvoice.recommended.travel_time);
             payrollInvoice.recommended.distance = this.meterToKm(payrollInvoice.recommended.distance);
+            payrollInvoice.recommended.interpreting_time = this.minutesToTime(payrollInvoice.recommended.interpreting_time);
 
             if (type === 'payroll') {
                 this.payroll_attributes.push(payrollInvoice);

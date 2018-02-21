@@ -50,6 +50,15 @@ export class HomePage extends PageObject {
 
     }
 
+    signInWithValidNewCredential = (type: string) => {
+
+        let currentlyLoggedInUser = User.returnTypeAndUser(type).user;
+        this.setValue(this.emailField, currentlyLoggedInUser.email);
+        this.setValue(this.passField, currentlyLoggedInUser.pass);
+        return this.loginUserBtn.click();
+
+    }
+
     signInWithInValidCredential = (type: string) => {
 
         let currentlyLoggedInUser = User.returnTypeAndUser(type).user;

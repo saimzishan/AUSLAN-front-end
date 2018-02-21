@@ -313,5 +313,7 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER BOOK
     Then I change the value of end time
     And I click on BUTTON name 'save_blockout'
     And I get success message: 'Blockout successfully added'
+    
+
 
 

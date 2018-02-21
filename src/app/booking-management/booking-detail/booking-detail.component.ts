@@ -909,8 +909,14 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 errors => {
                     this.spinnerService.requestInProcess(false);
                     let e = errors.json() || '';
+                    let full_messages;
+                    if (e.constructor === ''.constructor) {
+                       full_messages = e;
+                    } else if (e.constructor === {}.constructor) {
+                       full_messages = e.errors;
+                    }
                     this.notificationServiceBus.launchNotification(true,
-                        'Error occured on server side. ' + errors.statusText + ' ' + JSON.stringify(e || e.errors));
+                        'Error occured on server side. ' + errors.statusText + ', ' + full_messages);
                 });
     }
 

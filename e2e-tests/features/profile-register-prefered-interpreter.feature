@@ -376,6 +376,4 @@ Feature: Create Profile with prefered or blocked interpreters
     When I click on the option  profile
     Then I will be taken to my individual profile page
     Then I can count the element with css 'section.interpreter_selected_prefered' to be '0'
-
-
 # --------------------------------------- AUSLAN1-379 END ------------------------------------------------

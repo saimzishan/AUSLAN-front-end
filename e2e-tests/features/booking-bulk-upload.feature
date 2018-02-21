@@ -49,7 +49,7 @@ Feature: Booking Management with bulk upload
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
     When I will upload a bulk upload spreadsheet 'bulk_booking_upload_with_wrong_bookable.xlsx'
-    Then I get an booking error notification with Error occured on server side. Unprocessable Entity {"errors":"Error on row 4. Email does not correspond to your account"}
+    Then I get an booking error notification with Error occured on server side. Unprocessable Entity, Error on row 4. Email does not correspond to your account
     And I will be taken to the 'New Booking' form
 
   @runThis
@@ -60,7 +60,7 @@ Feature: Booking Management with bulk upload
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
     When I will upload a bulk upload spreadsheet 'bulk_booking_upload_with_wrong_bookable.xlsx'
-    Then I get an booking error notification with Error occured on server side. Unprocessable Entity {"errors":"Error on row 3. Email does not correspond to your account"}
+    Then I get an booking error notification with Error occured on server side. Unprocessable Entity, Error on row 3. Email does not correspond to your account
     And I will be taken to the 'New Booking' form
 
   @runThis
@@ -71,7 +71,7 @@ Feature: Booking Management with bulk upload
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
     When I will upload a bulk upload spreadsheet 'bulk_booking_upload_with_error_in_one_row.xlsx'
-    Then I get an booking error notification with Error occured on server side. Unprocessable Entity {"errors":"Error on row 4. Address post code can't be blank, Billing account address street name can't be blank, Start time can't be blank, End time can't be blank, Number of people attending is not a number"}
+    Then I get an booking error notification with Error occured on server side. Unprocessable Entity, Error on row 4. Address post code can't be blank, Billing account address street name can't be blank, Start time can't be blank, End time can't be blank, Number of people attending is not a number
     And I will be taken to the 'New Booking' form
 
   @runThis
@@ -82,7 +82,7 @@ Feature: Booking Management with bulk upload
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
     When I will upload a bulk upload spreadsheet 'bulk_booking_upload_with_wrong_bookable.xlsx'
-    Then I get an booking error notification with Error occured on server side. Unprocessable Entity {"errors":"Error on row 4. Email does not correspond to your account"}
+    Then I get an booking error notification with Error occured on server side. Unprocessable Entity, Error on row 4. Email does not correspond to your account
     Then I wait for 5000 milli-seconds
     And I will upload a bulk upload spreadsheet 'bulk_booking_upload_with_wrong_bookable.xlsx'
-    Then I get an booking error notification with Error occured on server side. Unprocessable Entity {"errors":"Error on row 4. Email does not correspond to your account"}
+    Then I get an booking error notification with Error occured on server side. Unprocessable Entity, Error on row 4. Email does not correspond to your account
