@@ -219,9 +219,11 @@
           <div class='medium-6 columns'>
             <label>END DATE*</label>
             <p-calendar name="recurrence_end_date"
+                        placeholder="END DATE OF APPOINTMENT *" 
                         [(ngModel)]="bookingModel.recurrence_end_date"
                         [minDate]="minDateForRecurrenceEnd"
-                        [required]="isRecurringBooking">
+                        [required]="isRecurringBooking"
+                        dateFormat="dd/mm/yy">
             </p-calendar>
           </div>
         </div>
