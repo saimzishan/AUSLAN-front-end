@@ -1,7 +1,7 @@
 <header>
     <h4 class="text-center">ORGANISATION DETAILS</h4>
 </header>
-<div ngForm="orgRepForm" #orgRepForm="ngForm" class="row small-collapse">
+<div class="row small-collapse">
     <div class="row-wrapper">
         <div class="medium-6 columns">
             <div class="form-field">
@@ -75,7 +75,7 @@
 
 <br>
 
-<app-address [isReadOnly]="isDuplicate" [prefix]="address_title" [address]="userModel.address_attributes" [parentForm]="orgRepForm" [canCalculateDistance]="false"></app-address>
+<app-address [isReadOnly]="isDuplicate" [prefix]="address_title" [address]="userModel.address_attributes" [parentForm]="parentForm" [canCalculateDistance]="false"></app-address>
 
 <div class="row small-collapse">
     <div class="row-wrapper">
@@ -96,7 +96,7 @@
 <br>
 <app-billing-account [isReadOnly]="isDuplicate"
                      [primaryContact]="userModel.organisation_primary_contact"
-                     [parentForm]="orgRepForm" [canCalculateDistance]="false"
+                     [parentForm]="parentForm" [canCalculateDistance]="false"
                      [billingAddress]="userModel.organisation_billing_account.organisation_billing_address"></app-billing-account>
 
 
@@ -145,4 +145,5 @@
         </div>
     </div>
 </div>
+
 <br>
