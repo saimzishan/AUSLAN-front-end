@@ -884,7 +884,6 @@
     </div>
   </ng-container> 
     <br>
-    <div class="separator"></div>
 
     <h4 class="text-center">CONTACT DETAILS</h4>
 
@@ -1168,9 +1167,10 @@
       </div>
     </div>
 
-    <div class="separator"></div>
+    <br>
 
     <h4 class="text-center">JOB DOCUMENTS</h4>
+    <div class="separator"></div>    
     <div class="row">
       <section class="file-uploader">
         <button md-button>
@@ -1199,10 +1199,8 @@
         </section>
       </section>
     </div>
-    <br>
-    <div class="separator"></div>
 
-    <h4 class="text-center" name="preferInterHeading">Preferred interpreters</h4>
+    <h4 class="text-center" name="preferInterHeading">PREFERRED INTERPRETERS</h4>
 
     <div class="row">
       <div class="medium-12 columns">
@@ -1234,10 +1232,8 @@
                           [isHidden]="true" [selectedInterpreters]="oldInterpreterPreference" [isEditable]="!isDisabledForOrgRepIndClient">
     </app-interpreter-box> 
 
-    <br>
-    <div class="separator"></div>
 
-    <h4 class="text-center" name="blockInterHeading">Blocked interpreters</h4>
+    <h4 class="text-center" name="blockInterHeading">BLOCKED INTERPRETERS</h4>
 
     <div class="row">
       <div class="medium-12 columns">
@@ -1269,7 +1265,6 @@
                           [isHidden]="true" [selectedInterpreters]="oldInterpreterPreference">
     </app-interpreter-box> 
     <div [hidden]='true'>
-      <div class="separator"></div>
 
       <h4 class="text-center">BOOKING PREFERENCES</h4>
       <div class="row ext">

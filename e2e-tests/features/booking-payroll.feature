@@ -105,8 +105,8 @@ Feature: Booking Payroll and Billing
     And I verify that payroll 'interpreter' input fields have zero value
     When I click on material checkbox name 'cbPayInterpreter_0'
     Then I verify material checkbox name 'cbPayInterpreter_0' is checked 'true'
-    And I can see the payroll element 'interpreter_interpreterTime_0' has text '2:0'
-    And I can see the payroll element 'interpreter_prepTime_0' has text '0'
+    And I can see the payroll element 'interpreter_interpreterTime_0' has text '2:00'
+    And I can see the payroll element 'interpreter_prepTime_0' has text '0:00'
 
   @runThis
   Scenario: Given 1 verified Booking Officer, When I check invoice client then time fields of client will be filled from the time fields of interpreter, INTERPRETER exists
@@ -162,8 +162,8 @@ Feature: Booking Payroll and Billing
     Then I verify material checkbox name 'cbInvoiceClient_0' is checked 'true'
     When I click on material checkbox name 'cbChargeTravel_0'
     Then I verify material checkbox name 'cbChargeTravel_0' is checked 'true'
-    And I can see the payroll element 'client_kiloMeters_0' has text '1'
-    And I can see the payroll element 'client_travelTime_0' has text '0:05'
+    And I can see the payroll element 'client_kiloMeters_0' has text '2'
+    And I can see the payroll element 'client_travelTime_0' has text '0:10'
     And I click on BUTTON 'Save'
     Then I should get a valid payroll save notification
 
@@ -247,7 +247,7 @@ Feature: Booking Payroll and Billing
     Then I wait for 3000 milli-seconds
     Then I click on BUTTON 'Claim'
     When I click on BUTTON 'Save'
-    Then I get a valid 'Claimed' notification for state
+    Then I get a valid 'Cancelled Claimed' notification for state
     Then I click on Bookings
     And I am on the bookings page
     When I click on an individual booking
@@ -256,7 +256,7 @@ Feature: Booking Payroll and Billing
     Then I wait for 3000 milli-seconds
     Then I click on BUTTON 'Undo claim'
     When I click on BUTTON 'Save'
-    Then I get a valid 'Service Completed' notification for state
+    Then I get a valid 'Cancelled Chargeable' notification for state
     Then I click on Bookings
     And I am on the bookings page
     When I click on an individual booking
@@ -286,13 +286,13 @@ Feature: Booking Payroll and Billing
     And I can see the element with name 'btnClaim' is 'visible'
     Then I click on BUTTON 'Claim'
     When I click on BUTTON 'Save'
-    Then I get a valid 'Claimed' notification for state
+    Then I get a valid 'Cancelled Claimed' notification for state
     And I can see the element with name 'btnClaim' is 'not visible'
     And I can see the element with name 'btnUndoClaim' is 'visible'
     Then I wait for 3000 milli-seconds
     Then I click on BUTTON 'Undo claim'
     When I click on BUTTON 'Save'
-    Then I get a valid 'Service Completed' notification for state
+    Then I get a valid 'Cancelled Chargeable' notification for state
 
   @runThis
   Scenario: Given 1 verified Booking Officer, I will get a warning popup when I move to bookng info or booking detail if there are unsaved changes on payroll page, INTERPRETER exists

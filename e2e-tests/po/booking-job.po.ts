@@ -4,11 +4,8 @@ import {expect} from '../config/helpers/chai-imports';
 import {NotificationObject} from './notification';
 
 enum BookingDetailTableHeaders {
-    Job, Time, Date, Org,
-    Client, Venue, Address,
-    Suburb, Type, People,
-    'Special Instructions', Attached,
-    'Date Added', Updated
+    Job, Date, Time,
+    Method, 'Service Type', Org, Suburb
 }
 
 export class BookingJobPage extends PageObject {
@@ -225,11 +222,31 @@ export class BookingJobPage extends PageObject {
     checkAttachmentIcons = (negate: string) => {
         let shouldSee = !(negate === 'not');
         let bookingDetails = this.getAllElementByCSS('table#job-details-responsive tbody tr td');
-        let el = bookingDetails.get(BookingDetailTableHeaders.Attached);
+        let el = bookingDetails.get(13);
         return this.getAllByCSSInElement(el, 'i.icon-attach').isPresent()
             .then(presence => {
                 return expect(presence).to.be.eq(shouldSee);
             });
+    }
+
+    checkInterpreterStatus(status: string) {
+        const interpreterRows = $$('section[id=invited-interpreters] table tbody tr');
+        return interpreterRows.map((row) => {
+            let cols = row.all(by.tagName('td'));
+            cols.each((col, index) => {
+                if (index === 1) {
+                    if (status === 'blank') {
+                        col.getText().then((txt) => {
+                            expect(txt.trim()).to.be.empty;
+                        });
+                    } else {
+                        col.element(by.css('img')).getAttribute('src').then(path => {
+                            expect(path).to.include(status);
+                        });
+                    }
+                }
+            });
+        });
     }
 }
 

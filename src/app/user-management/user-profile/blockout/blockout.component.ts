@@ -384,8 +384,12 @@ export class BlockoutComponent implements OnDestroy, OnInit {
                 this.spinnerService.requestInProcess(false);
 
                 let e = errors.json();
+                if (this.start_time.getTime() > this.end_time.getTime()) {
+                    this.notificationServiceBus.launchNotification(true, 'End time cannot be before start time. Please change');
+                } else {
                 this.notificationServiceBus.launchNotification(true, errors.statusText + ' '
                     + JSON.stringify(e || e.errors).replace(/]|[[]/g, '').replace(/({|})/g, ''));
+                }
             });
     }
 }

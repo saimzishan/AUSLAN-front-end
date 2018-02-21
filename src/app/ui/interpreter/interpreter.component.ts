@@ -65,9 +65,10 @@ export class InterpreterComponent implements OnInit {
                 },
                 textColor: '#ffffff',
                 contentHeight: 'auto',
-                navLinks: true, // can click day/week names to navigate views
+                navLinks: $(window).width() >= 768, // can click day/week names to navigate views , clickable if on desktop
                 selectable: true,
                 selectHelper: true,
+                eventStartEditable: false, // will disable dragable events
                 windowResize: (view) => {
                     this.myCal.fullCalendar( 'changeView', $(window).width() < 768 ? 'listMonth' : 'month');
                 },
@@ -87,9 +88,7 @@ export class InterpreterComponent implements OnInit {
                 },
                 defaultView: 'listMonth',
                 eventClick: (calEvent, jsEvent, view) => {
-                    if (view.name !== 'listYear' && view.name !== 'listMonth') {
                         this.router.navigate(['/user-management/', calEvent.id, 'block_out']);
-                    }
                 },
                 editable: true,
                 eventLimit: 2, // allow "more" link when too many events
@@ -103,7 +102,7 @@ export class InterpreterComponent implements OnInit {
 
                 let event: any = ({
                     title: avail_block.name,
-                    color: avail_block.recurring ? '#00ff00' : '#02b86e',
+                    color: '#02b86e',
                     id: avail_block.id,
                     textColor: '#ffffff',
                     booking_id: avail_block.booking_id,
