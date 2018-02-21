@@ -247,7 +247,7 @@ Feature: Booking Payroll and Billing
     Then I wait for 3000 milli-seconds
     Then I click on BUTTON 'Claim'
     When I click on BUTTON 'Save'
-    Then I get a valid 'Claimed' notification for state
+    Then I get a valid 'Cancelled Claimed' notification for state
     Then I click on Bookings
     And I am on the bookings page
     When I click on an individual booking
@@ -256,7 +256,7 @@ Feature: Booking Payroll and Billing
     Then I wait for 3000 milli-seconds
     Then I click on BUTTON 'Undo claim'
     When I click on BUTTON 'Save'
-    Then I get a valid 'Service Completed' notification for state
+    Then I get a valid 'Cancelled Chargeable' notification for state
     Then I click on Bookings
     And I am on the bookings page
     When I click on an individual booking
@@ -286,13 +286,13 @@ Feature: Booking Payroll and Billing
     And I can see the element with name 'btnClaim' is 'visible'
     Then I click on BUTTON 'Claim'
     When I click on BUTTON 'Save'
-    Then I get a valid 'Claimed' notification for state
+    Then I get a valid 'Cancelled Claimed' notification for state
     And I can see the element with name 'btnClaim' is 'not visible'
     And I can see the element with name 'btnUndoClaim' is 'visible'
     Then I wait for 3000 milli-seconds
     Then I click on BUTTON 'Undo claim'
     When I click on BUTTON 'Save'
-    Then I get a valid 'Service Completed' notification for state
+    Then I get a valid 'Cancelled Chargeable' notification for state
 
   @runThis
   Scenario: Given 1 verified Booking Officer, I will get a warning popup when I move to bookng info or booking detail if there are unsaved changes on payroll page, INTERPRETER exists
