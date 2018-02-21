@@ -1,4 +1,4 @@
-import {Component, Input, ViewChild, OnInit, AfterViewInit} from '@angular/core';
+import {Component, Input, ViewChild} from '@angular/core';
 import {Contact} from '../../shared/model/contact.entity';
 import {Address} from '../../shared/model/venue.entity';
 import {NgForm} from '@angular/forms';
@@ -9,7 +9,7 @@ import {NgForm} from '@angular/forms';
   styleUrls: ['./billing-account.component.css'],
   exportAs: 'ctBillingForm'
 })
-export class BillingAccountComponent implements  AfterViewInit {
+export class BillingAccountComponent {
   @Input() primaryContact: Contact;
   @Input() billingAddress: Address;
   @Input() preferred_billing_method_email = false;
@@ -18,12 +18,4 @@ export class BillingAccountComponent implements  AfterViewInit {
   @ViewChild('billingFields') public form: NgForm;
   address_title = 'BILLING ADDRESS';
   @Input() isReadOnly = false;
-
-  ngAfterViewInit() {
-    if (this.parentForm !== null && this.parentForm !== undefined) {
-        if (!this.parentForm.form.contains('billingFields')) {
-            this.parentForm.form.addControl('billingFields', this.form.form);
-        }
-    }
-  }
 }

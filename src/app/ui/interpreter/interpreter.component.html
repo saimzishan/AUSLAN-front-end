@@ -1,4 +1,4 @@
-<div class="row small-collapse" ngForm="interpreterForm" #interpreterForm="ngForm">
+<div class="row small-collapse">
   <div class="row-wrapper">
     <div class="medium-6 columns">
       <div class="form-field">
@@ -91,7 +91,7 @@
 </div>
 
 <br>
-<app-address  [parentForm]="interpreterForm" [address]="userModel.address_attributes" #addressForm="ctAddressForm" [canCalculateDistance]="canCalculateDistance" [userModel]="userModel"></app-address>
+<app-address [address]="userModel.address_attributes" #addressForm="ctAddressForm" [canCalculateDistance]="canCalculateDistance" [userModel]="userModel"></app-address>
 
 <ng-container *ngIf="isUserAdminORBookOfficer()">
     <div class="medium-12 columns">

@@ -9,7 +9,7 @@ import {SpinnerService} from '../../spinner/spinner.service';
 import {NotificationServiceBus} from '../../notification/notification.service';
 import {GLOBAL} from '../../shared/global';
 import {UserNameService} from '../../shared/user-name.service';
-import {FormGroup, FormControl} from '@angular/forms';
+import {FormGroup} from '@angular/forms';
 import {AuthGuard} from '../../auth/auth.guard';
 
 @Component({
@@ -47,19 +47,8 @@ export class UserProfileComponent implements OnInit {
         this.selectedStatus = Boolean(this.userModel && this.userModel.disabled === false) ?
             this.userStatusArray[0].name : this.userStatusArray[1].name;
     }
-    validateAllFormFields(formGroup: FormGroup) {
-        Object.keys(formGroup.controls).forEach(field => {
-            const control = formGroup.get(field);
-            if (control instanceof FormControl) {
-              control.markAsTouched({ onlySelf: true });
-            } else if (control instanceof FormGroup) {
-              this.validateAllFormFields(control);
-            }
-          });
-        }
-    editUser(form: any) {
+    editUser(form: FormGroup) {
         if ( form.invalid ) {
-            this.validateAllFormFields(form.control);
             this.notificationServiceBus.
             launchNotification(true, GLOBAL.MISSING_FIELDS_ERROR_MESSAGE);
             return;

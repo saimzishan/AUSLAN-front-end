@@ -101,4 +101,3 @@ Feature: Validation of Profile Registration.
     And I jump to 'address_state' element
     Then I will get a error notification
     
-    

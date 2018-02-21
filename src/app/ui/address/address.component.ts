@@ -56,8 +56,8 @@ export class AddressComponent implements AfterViewInit, OnInit {
 
     ngAfterViewInit() {
         if (this.parentForm != null) {
-            if (!this.parentForm.form.contains('addressFields')) {
-                this.parentForm.form.addControl('addressFields', this.form.form);
+            if (!this.parentForm.form.contains('billAddressFields')) {
+                this.parentForm.form.addControl('billAddressFields', this.form.form);
             }
         }
     }
