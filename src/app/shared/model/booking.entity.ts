@@ -390,26 +390,4 @@ export class Booking {
         let timeZone = Booking.getNamedTimeZone(this.venue.state, this.venue.post_code.toString());
         return momentTimeZone(time).tz(timeZone).format();
     }
-
-    setMethodType(method: string) {
-        switch (method) {
-            case 'On Site':
-                return 'onsite';
-            case 'VRI':
-                return 'vri';
-            default:
-                return method;
-        }
-    }
-
-    displayMethodType(method: string) {
-        switch (method) {
-            case 'onsite':
-                return 'On Site';
-            case 'vri':
-                return 'VRI';
-            default:
-                return method;
-        }
-    }
 }

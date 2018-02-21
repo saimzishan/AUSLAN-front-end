@@ -22,7 +22,7 @@ Feature: Booking Admin Management
     Then I am on the bookings page
     When I click on an individual booking
     Then I will be shown the booking job page
-    Then I should see the value under Type column as 'AUSLAN'
+    Then I should see the value under Service Type column as 'Auslan'
 
   @runThis
   Scenario: As a Booking Officer I should see the correct Job number of the booking
@@ -132,7 +132,7 @@ Feature: Booking Admin Management
     And I am on the bookings page
     Then I see one row with state 'In progress'
 
-    @runThis
+  @runThis
   Scenario: Booking Officer can CANCEL a booking having linked id with option Cancel only this booking and then Cancelled no charge for DSQ  with time greater then 24 hours
     Given There exist 1 booking with link id
     Given I exist as an Booking Officer
@@ -161,7 +161,7 @@ Feature: Booking Admin Management
     And I am on the bookings page
     Then I see one row with state 'Cancelled no charge'
 
-    @runThis
+  @runThis
   Scenario: Booking Officer can CANCEL a booking having linked id with option Cancel only this booking and then Cancelled charge for DSQ  with time greater then 24 hours
     Given There exist 1 booking with link id
     Given I exist as an Booking Officer
@@ -190,7 +190,7 @@ Feature: Booking Admin Management
     And I am on the bookings page
     Then I see one row with state 'Cancelled chargeable'
 
-     @runThis
+  @runThis
   Scenario: Booking Officer can CANCEL a booking having linked id with option Cancel only this booking and then Cancelled Chargeable for Vicdeaf with time less then 48 hours
     Given There exist 1 booking with link id
     Given I exist as an Booking Officer
@@ -219,7 +219,7 @@ Feature: Booking Admin Management
     And I am on the bookings page
     Then I see one row with state 'Cancelled chargeable'
 
-@runThis
+  @runThis
   Scenario: Booking Officer can CANCEL a booking having linked id with option Cancel only this booking and then Cancelled No Charge for Vicdeaf with time less then 48 hours
     Given There exist 1 booking with link id
     Given I exist as an Booking Officer
@@ -248,7 +248,7 @@ Feature: Booking Admin Management
     And I am on the bookings page
     Then I see one row with state 'Cancelled no charge'
 
- @runThis
+  @runThis
   Scenario: Booking Officer can CANCEL a booking having linked id with option Cancel only this booking and then Cancelled Chargeable for Vicdeaf with time greater then 48 hours
     Given There exist 1 booking with link id
     Given I exist as an Booking Officer
@@ -277,7 +277,7 @@ Feature: Booking Admin Management
     And I am on the bookings page
     Then I see one row with state 'Cancelled chargeable'
 
-@runThis
+  @runThis
   Scenario: Booking Officer can CANCEL a booking having linked id with option Cancel only this booking and then Cancelled No Charge for Vicdeaf with time greater then 48 hours
     Given There exist 1 booking with link id
     Given I exist as an Booking Officer
@@ -334,7 +334,7 @@ Feature: Booking Admin Management
     When I click on BUTTON 'Undo cancel'
     Then I can see the booking state 'In Progress'
 
-    @runThis
+  @runThis
   Scenario: Booking Officer can Undo a booking having state Cancelled chargeable
     Given There exist 1 booking with link id
     Given I exist as an Booking Officer
