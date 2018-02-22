@@ -110,10 +110,10 @@ Feature: Booking Sort
     When I click on table header 'Interpreter'
     Then I should see the bookings in ascending order of Interpreter
 
-  @ignoreThis
+  @runThis
   Scenario: As a Booking Officer, I can sort the bookings by Org column
     Given I have preloaded bookings with different org values
-    Then I exist as an Booking Officer
+    And I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
     When I am on the bookings page
     Then I will be shown with bookings

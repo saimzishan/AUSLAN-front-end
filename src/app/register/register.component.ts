@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, OnDestroy} from '@angular/core';
+import {Component, OnInit, AfterViewInit, Input, OnDestroy, ViewChild} from '@angular/core';
 import {UserService} from '../api/user.service';
 import {
     Accountant, Administrator, BookingOfficer, IndividualClient, Interpreter, Organisational, OrganisationalRepresentative,
@@ -7,7 +7,7 @@ import {
 import {ROLE} from '../shared/model/role.enum';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NotificationServiceBus} from '../notification/notification.service';
-import {FormGroup} from '@angular/forms';
+import {FormGroup, FormControl, NgForm, NgModel} from '@angular/forms';
 import {SpinnerService} from '../spinner/spinner.service';
 import {GLOBAL} from '../shared/global';
 
@@ -17,7 +17,6 @@ import {GLOBAL} from '../shared/global';
     styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit, OnDestroy {
-
     public model: any;
     public successMessage = `Congratulations. Your account has been created.
      Please login with your credentials. `;
@@ -34,7 +33,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
                 public spinnerService: SpinnerService,
                 public routes: ActivatedRoute, public router: Router) {
     }
-
     isUserLogin() {
         return Boolean(GLOBAL.currentUser);
     }
@@ -125,19 +123,29 @@ export class RegisterComponent implements OnInit, OnDestroy {
         return this.sub_param && this.sub_param.unsubscribe();
     }
 
-    applyChanges(form: FormGroup) {
+    applyChanges(form: any) {
         if (!this.termsAndConditionAccepted) {
             this.notificationServiceBus.launchNotification(true, 'Kindly accept Terms and Conditions');
             return;
         }
         if (form.invalid) {
             this.notificationServiceBus.launchNotification(true, GLOBAL.MISSING_FIELDS_ERROR_MESSAGE);
+            this.validateAllFormFields(form.control);
             return;
         }
         this.spinnerService.requestInProcess(true);
         this.isEdit && !this.isDuplicate ? this.editUser() : this.isDuplicate ? this.duplicateUser('create_orgrep') : this.addUser();
     }
-
+    validateAllFormFields(formGroup: FormGroup) {
+        Object.keys(formGroup.controls).forEach(field => {
+            const control = formGroup.get(field);
+            if (control instanceof FormControl) {
+              control.markAsTouched({ onlySelf: true });
+            } else if (control instanceof FormGroup) {
+              this.validateAllFormFields(control);
+            }
+          });
+        }
     addUser() {
         this.userService.createUser(this.model)
             .subscribe((res: any) => {

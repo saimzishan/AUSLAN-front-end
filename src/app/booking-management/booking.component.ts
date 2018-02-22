@@ -70,8 +70,6 @@ export class BookingComponent  {
                                         currentInt.state === 'Rejected')) {
                                     continue;
                                 } else {
-                                    b.venue.start_time_iso = b.utcToBookingTimeZone(b.venue.start_time_iso);
-                                    b.venue.end_time_iso = b.utcToBookingTimeZone(b.venue.end_time_iso);
                                     this.bookings.push(b);
                                 }
                             }

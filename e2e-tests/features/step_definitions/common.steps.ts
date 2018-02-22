@@ -62,6 +62,7 @@ defineSupportCode(({Given, When, Then}) => {
             });
         });
     });
+    Given(/^I am shown the verify screen/, bookingManagementPage.showVerifyPage);
     Given(/^I don't see any new New Booking link/, bookingManagementPage.newBookingDoesNotExists);
     Given(/^Assigned all bookings to (.*)/, Heroku.assignExistingBooking);
     Given(/^I click on forgot my password$/, homePage.clickOnResetPassword);
@@ -199,10 +200,19 @@ defineSupportCode(({Given, When, Then}) => {
     Given(/^I can see the payroll element '(.*)' has text '(.*)'/, checkPayrollFieldText);
 
     function checkPayrollFieldText(fieldName: string, text: string) {
-                let input = bookingPayroll.getElementByCss('input[ng-reflect-name="'+fieldName+'"]');
-                        return input.getAttribute('value').then(elmTxt => {
-                            return expect(elmTxt).to.be.eq(text);
-                    });
+        let input = bookingPayroll.getElementByCss('input[ng-reflect-name="'+fieldName+'"]');
+        return input.getAttribute('value').then(elmTxt => {
+            return expect(elmTxt).to.be.eq(text);
+        });
+    }
+
+    Given(/^I can see the payroll element '(.*)' has non-zero value/, checkPayrollFieldTextIsNonZero);
+
+    function checkPayrollFieldTextIsNonZero(fieldName: string) {
+        let input = bookingPayroll.getElementByCss('input[ng-reflect-name="'+fieldName+'"]');
+        return input.getAttribute('value').then(elmTxt => {
+            return expect(elmTxt.match(/[1-9]/)).to.be.greaterThan(0);
+        });
     }
 
     Given(/^I jump to '(.*)' element$/, toNextElement);
