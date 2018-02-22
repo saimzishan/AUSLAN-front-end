@@ -147,7 +147,6 @@ Feature: Create Profile
     When I fill all the details correctly for -> 'INDIVIDUALCLIENT' with the pref communication is 'SMS AND EMAIL'
     Then 'INDIVIDUALCLIENT' will be created
 # --------------------------------------- AUSLAN1-53 END ------------------------------------------------
-
 # --------------------------------------- AUSLAN1-1114 START ------------------------------------------------
   @runThis
   Scenario: interp sign up with prefer communication

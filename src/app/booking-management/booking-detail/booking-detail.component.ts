@@ -9,7 +9,7 @@ import {NotificationServiceBus} from '../../notification/notification.service';
 import {Router, ActivatedRoute} from '@angular/router';
 import {RolePermission} from '../../shared/role-permission/role-permission';
 import {DatePipe} from '@angular/common';
-import {FormGroup} from '@angular/forms';
+import {FormGroup, FormControl} from '@angular/forms';
 import {FileUploader} from 'ng2-file-upload';
 import {Address} from '../../shared/model/venue.entity';
 import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
@@ -32,7 +32,6 @@ const _ONE_HOUR = 1000 /*milliseconds*/
     styleUrls: ['./booking-detail.component.css']
 })
 export class BookingDetailComponent implements OnInit, OnDestroy {
-
     private sub: any;
     public uploader: FileUploader = new FileUploader({url: '', maxFileSize: 20 * 1024 * 1024});
     bookingModel: Booking;
@@ -165,9 +164,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 this.oldInterpreterPreference = jsonData.preference_allocations_attributes;
                 this.bookingModel.documents_attributes = [];
                 this.bookingDate = new Date(this.datePipe.transform(this.bookingModel.venue.start_time_iso, 'MM/dd/yyyy'));
-                this.bookingStartTime = new Date(this.bookingModel.venue.start_time_iso);
-                this.bookingEndTime = new Date(this.bookingModel.venue.end_time_iso);
-                this.setDayMonthYear();
+                this.setTime();
                 this.natureOfApptChange(null);
                 this.checkInterpreterBoxes();
             } else {
@@ -283,8 +280,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         let selectedDate = this.datePipe.transform(this.bookingDate, 'yyyy-MM-dd');
         let startTime = moment(this.bookingStartTime, 'hh:mm A').format('HH:mm:ss');
         let endTime = moment(this.bookingEndTime, 'hh:mm A').format('HH:mm:ss');
-        this.bookingModel.venue.start_time_iso = this.bookingModel.utcToBookingTimeZone(selectedDate + 'T' + startTime);
-        this.bookingModel.venue.end_time_iso = this.bookingModel.utcToBookingTimeZone(selectedDate + 'T' + endTime);
+        this.bookingModel.venue.start_time_iso = selectedDate + 'T' + startTime + this.bookingModel.getDayLightSavings();
+        this.bookingModel.venue.end_time_iso = selectedDate + 'T' + endTime + this.bookingModel.getDayLightSavings();
     }
 
     natureOfApptChange($event) {
@@ -341,12 +338,15 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         return this.bookingDate || this.minDate;
     }
 
-    setDayMonthYear() {
+    setTime() {
+        let startTime = this.bookingModel.utcToBookingTimeZone(this.bookingModel.venue.start_time_iso);
+        let endTime = this.bookingModel.utcToBookingTimeZone(this.bookingModel.venue.end_time_iso);
         let currentDate = new Date();
+
         this.bookingStartTime = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(),
-            this.bookingStartTime.getHours(), this.bookingStartTime.getMinutes());
+                                         moment.duration(startTime).get('hours'), moment.duration(startTime).get('minutes'));
         this.bookingEndTime = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(),
-            this.bookingEndTime.getHours(), this.bookingEndTime.getMinutes());
+                                       moment.duration(endTime).get('hours'), moment.duration(endTime).get('minutes'));
     }
 
     roundOffMinutes() {
@@ -555,11 +555,20 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         }
     }
 
+       validateAllFormFields(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach(field => {
+        const control = formGroup.get(field);
+        if (control instanceof FormControl) {
+          control.markAsTouched({ onlySelf: true });
+        } else if (control instanceof FormGroup) {
+          this.validateAllFormFields(control);
+        }
+      });
+    }
     /*
       Calling this method will create a new booking
     */
-    public onCreateBooking(form: FormGroup, addressForm: any, billingForm: any, uploader: FileUploader) {
-
+    public onCreateBooking(form: any, addressForm: any, billingForm: any, uploader: FileUploader) {
         if (addressForm.isTravelCostApplicable && !form.value.travel_cost_applicable) {
             this.notificationServiceBus.launchNotification(true, 'Travel cost must be applicable as your booking distance is more than 40 kms');
             return;
@@ -574,6 +583,9 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             return;
         }
         if (form.invalid || addressForm.form.invalid || billingForm.form.invalid) {
+            this.validateAllFormFields(form.control);
+            this.validateAllFormFields(addressForm.form.control);
+            this.validateAllFormFields(billingForm.form.control);
             this.notificationServiceBus.launchNotification(true, GLOBAL.MISSING_FIELDS_ERROR_MESSAGE);
             return;
         }
@@ -610,8 +622,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     // have to merge this with save booking later.
     proceedWithBooking() {
         if (this.isBookingTimeInNonStandardHours()) {
-            let message = `This booking is not within the standard booking hours (8AM - 6PM).
-                            Do you still want to create booking?`;
+            let message = 'This booking is not within the standard booking hours (8AM - 6PM).' +
+                            ' Do you still want to ' + (this.forEdit ? 'update' : 'create') + ' booking?';
             let title = 'NON-STANDARD HOURS WARNING';
             this.createModal(title, message);
             this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
@@ -714,7 +726,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         this.dialogRef = this.dialog.open(PopupComponent, config);
         this.dialogRef.componentInstance.title = title;
         this.dialogRef.componentInstance.cancelTitle = (options && options.cancelTitle) || 'BACK';
-        this.dialogRef.componentInstance.okTitle = (options && options.okTitle) || 'CREATE';
+        this.dialogRef.componentInstance.okTitle = (options && options.okTitle) || this.forEdit ? 'UPDATE' : 'CREATE';
         this.dialogRef.componentInstance.closeVal = (options && options.closeVal) || false;
         this.dialogRef.componentInstance.popupMessage = message;
     }
