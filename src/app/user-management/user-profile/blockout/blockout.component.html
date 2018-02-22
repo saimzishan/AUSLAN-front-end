@@ -6,7 +6,7 @@
     <div *ngIf="param_id >=2;then content else other_content"></div>
 
     <ng-template #content>
-        <h1>{{ param_id === 2 ? 'ADD BLOCKOUT' : 'EDIT BLOCKOUT'}}</h1>
+        <h1>{{ param_id === 2 ? 'ADD STAFF AVAILABILITY' : 'EDIT STAFF AVAILABILITY'}}</h1>
     </ng-template>
     <ng-template #other_content>
         <h1>{{ param_id < 1 ? 'ADD BLOCKOUT' : 'EDIT BLOCKOUT'}}</h1>
