@@ -22,6 +22,14 @@ export class Payments {
         });
     }
 
+    createJSON() {
+        let o = new Object({
+                payroll_attributes: this.timeDistanceConversion(JSON.stringify(this.payroll_attributes)),
+                invoice_attributes: this.timeDistanceConversion(JSON.stringify(this.invoice_attributes))
+        });
+        return o;
+    }
+
     minutesToTime(minutes: string) {
         let min = +minutes;
         let hours = Math.floor(min / 60);
@@ -33,25 +41,19 @@ export class Payments {
         return Math.ceil(minutes / _numbFive) * _numbFive;
     }
 
-    timeDistanceConversion(type: string, data: any) {
-        if (type === 'payroll') {
-            this.payroll_attributes = [];
-        } else {
-            this.invoice_attributes = [];
-        }
+    timeDistanceConversion(data: any) {
+        let billing_attributes = [];
 
-        data.forEach(payrollInvoice => {
+        JSON.parse(data).forEach(payrollInvoice => {
             payrollInvoice.interpreting_time = this.convertToMinutes(payrollInvoice.interpreting_time);
             payrollInvoice.preparation_time = this.convertToMinutes(payrollInvoice.preparation_time);
             payrollInvoice.travel_time = this.convertToMinutes(payrollInvoice.travel_time);
             payrollInvoice.distance = this.kmToMeter(payrollInvoice.distance);
 
-            if (type === 'payroll') {
-                this.payroll_attributes.push(payrollInvoice);
-            } else {
-                this.invoice_attributes.push(payrollInvoice);
-            }
+            billing_attributes.push(payrollInvoice);
         });
+
+        return billing_attributes;
     }
 
     meterToKm(meters: string) {

@@ -76,11 +76,11 @@ import {AgmCoreModule} from '@agm/core';
 import {AutoCompleteModule, CalendarModule as PrimeNgCalendarModule} from 'primeng/primeng';
 import {LinkidPopupComponent} from './booking-management/linkid-popup/linkid-popup.component';
 import {MobileHeaderComponent} from './ui/mobile-header/mobile-header.component';
-import {MomentModule} from 'angular2-moment/moment.module';
 import {BookingInfoComponent} from './booking-management/booking-info/booking-info.component';
 import {BookingPayrollComponent} from './booking-management/booking-payroll/booking-payroll.component';
 import {PayrollTimeComponent} from './booking-management/payroll-time/payroll-time.component';
 import { StaffCalendarComponent } from './user-management/staff-calendar/staff-calendar.component';
+import {ShortTimePipe} from './shared/pipe/short-time.pipe';
 
 @NgModule({
     declarations: [
@@ -110,7 +110,7 @@ import { StaffCalendarComponent } from './user-management/staff-calendar/staff-c
         SkillMatrixComponent, AddressComponent, AccountantComponent,
         UserPasswordComponent, PreComponent, BlockoutComponent, TermandconditionComponent,
         InterpreterBoxComponent, InterpreterPopupComponent, RemoveSpacePipe, LinkidPopupComponent, MobileHeaderComponent,
-        BookingInfoComponent, BookingPayrollComponent, PayrollTimeComponent, StaffCalendarComponent
+        BookingInfoComponent, BookingPayrollComponent, PayrollTimeComponent, StaffCalendarComponent, ShortTimePipe
     ],
     entryComponents: [PopupComponent, InterpreterPopupComponent, LinkidPopupComponent],
     imports: [CustomFormsModule, routing, FileUploadModule,
@@ -118,7 +118,7 @@ import { StaffCalendarComponent } from './user-management/staff-calendar/staff-c
         FormsModule, BrowserAnimationsModule, NgxPaginationModule,
         HttpModule, SimpleNotificationsModule.forRoot(),
         ReactiveFormsModule, Md2Module.forRoot(),
-        MaterialModule, CalendarModule, PrimeNgCalendarModule, MomentModule, AgmCoreModule.forRoot({
+        MaterialModule, CalendarModule, PrimeNgCalendarModule, AgmCoreModule.forRoot({
             apiKey: 'AIzaSyA-BDtGjVcaDl5VrgsGiwDLEvDQ1XOsWAw',
             libraries: ['places']
         }),
