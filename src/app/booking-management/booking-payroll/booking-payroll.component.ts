@@ -48,8 +48,6 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
                 if (res.status === 200) {
                     let data = res.data;
                     this.bookingModel.fromJSON(data);
-                    this.bookingModel.venue.start_time_iso = this.bookingModel.utcToBookingTimeZone(this.bookingModel.venue.start_time_iso);
-                    this.bookingModel.venue.end_time_iso = this.bookingModel.utcToBookingTimeZone(this.bookingModel.venue.end_time_iso);
                     this.isReadonlyForBO = (GLOBAL.currentUser instanceof BookingOfficer &&
                                             this.bookingModel.state === BOOKING_STATE.Claimed);
                 }
@@ -86,9 +84,13 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
             this.notificationServiceBus.launchNotification(true, 'Oops! Only numbers and dots allowed. Please try again.');
             return;
         }
-
-        if (this.claimPressed || this.undoClaimPressed) {
-            let state = this.claimPressed ? 'claimed' : 'service_completed';
+        const currentState = BOOKING_STATE[this.bookingModel.state].toLowerCase();
+        let state: string;
+        if (this.claimPressed) {
+            state = currentState === 'cancelled_chargeable' ? 'cancelled_claimed' : 'claimed';
+            this.changeBookingState(state);
+        } else if (this.undoClaimPressed) {
+            state = currentState === 'cancelled_claimed' ? 'cancelled_chargeable' : 'service_completed';
             this.changeBookingState(state);
         } else {
             this.savePayment();
@@ -97,12 +99,9 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
 
     savePayment() {
         this.spinnerService.requestInProcess(true);
-        this.payments.timeDistanceConversion('payroll', this.payments.payroll_attributes);
-        this.payments.timeDistanceConversion('invoice', this.payments.invoice_attributes);
         this.bookingService.updateBookingPayments(this.bookingModel.id, this.payments).subscribe((res: any) => {
             if (res.status === 204) {
                 this.notificationServiceBus.launchNotification(false, 'Hurray! Payroll & Billing details have been updated.');
-                this.fetchBookingPayment(this.bookingModel.id);
             }
             this.spinnerService.requestInProcess(false);
         },
@@ -118,7 +117,7 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
         this.bookingService.updateBookingByTransitioning(this.bookingModel.id, state)
             .subscribe((res: any) => {
                     if (res.status === 204) {
-                        let msg = this.claimPressed ? 'Claimed' : 'Service Completed';
+                        let msg = this.setNotificationState(state);
                         this.notificationServiceBus.launchNotification(false, 'The booking has been transitioned to \"' + msg + '\" state');
                         this.claimPressed = this.undoClaimPressed = false;
                         this.fetchBooking(this.bookingModel.id);
@@ -144,9 +143,10 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
                         this.resetTimeDistance(payrollInvoice, index);
                     }
                 } else {
-                    if (!this.payments[payrollInvoice][index][field]) {
-                        this.payments[payrollInvoice][index]['distance'] = 0;
-                        this.payments[payrollInvoice][index]['travel_time'] = '0:00';
+                    if (this.payments[payrollInvoice][index][field]) {
+                        this.setRecommendedDistanceTravelTime(payrollInvoice, index);
+                    } else {
+                        this.setDistanceTravelTimeZero(payrollInvoice, index);
                     }
                 }
             } else {
@@ -163,11 +163,15 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
                     if (this.payments[payrollInvoice][index][field]) {
                         this.setRecommendedDistanceTravelTime(payrollInvoice, index);
                     } else {
-                        this.payments[payrollInvoice][index]['distance'] = 0;
-                        this.payments[payrollInvoice][index]['travel_time'] = '0:00';
+                        this.setDistanceTravelTimeZero(payrollInvoice, index);
                     }
                 }
             }
+    }
+
+    setDistanceTravelTimeZero(payrollInvoice: string, index) {
+        this.payments[payrollInvoice][index]['distance'] = 0;
+        this.payments[payrollInvoice][index]['travel_time'] = '0:00';
     }
 
     resetTimeDistance(payrollInvoice: string, index) {
@@ -213,5 +217,17 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
                 let e = err.json() || 'There is some error on server side';
                 this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
             });
+        }
+    setNotificationState(state) {
+        switch (state) {
+            case 'cancelled_chargeable':
+                return 'Cancelled Chargeable';
+            case 'cancelled_claimed':
+                return 'Cancelled Claimed';
+            case 'claimed':
+                return 'Claimed';
+            case 'service_completed':
+                return 'Service Completed';
+        }
     }
 }

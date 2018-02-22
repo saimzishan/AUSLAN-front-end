@@ -12,6 +12,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/observable/throw';
+import {Payments} from '../shared/model/payment.entity';
 
 @Injectable()
 export class BookingService extends ApiService {
@@ -225,11 +226,11 @@ export class BookingService extends ApiService {
             .catch((err) => { return this.handleError(err); });
     }
 
-    updateBookingPayments(booking_id: number, payment): Observable<Object> {
+    updateBookingPayments(booking_id: number, payment: Payments): Observable<Object> {
         let headers = new Headers({'Accept': 'application/json',
         'Content-Type': 'application/json'});
         let options = new RequestOptions({ headers: headers });
-        let obj = { 'payments': payment };
+        let obj = { 'payments': payment.createJSON() };
 
         return this.http.put(GLOBAL.BOOKING_API + '/' + booking_id + '/payments/group_update', JSON.stringify(obj), options)
             .map(this.extractData)

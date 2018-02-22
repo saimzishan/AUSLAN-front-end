@@ -5,7 +5,7 @@ import {NotificationObject} from './notification';
 
 enum BookingDetailTableHeaders {
     Job, Date, Time,
-    Method, Type, Org, Suburb
+    Method, 'Service Type', Org, Suburb
 }
 
 export class BookingJobPage extends PageObject {
@@ -234,7 +234,7 @@ export class BookingJobPage extends PageObject {
         return interpreterRows.map((row) => {
             let cols = row.all(by.tagName('td'));
             cols.each((col, index) => {
-                if (index === 2) {
+                if (index === 1) {
                     if (status === 'blank') {
                         col.getText().then((txt) => {
                             expect(txt.trim()).to.be.empty;

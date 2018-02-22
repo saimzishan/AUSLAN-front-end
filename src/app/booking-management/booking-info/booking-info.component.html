@@ -6,7 +6,7 @@
       <th>Date</th>
       <th>Time</th>
       <th>Method</th>
-      <th>Type</th>
+      <th>Service Type</th>
       <th>Org</th>
       <th *ngIf='isClientInterpAndBookInProgress()'>Suburb</th>
       <ng-container *ngIf='!isClientInterpAndBookInProgress()'>
@@ -36,11 +36,11 @@
           <a>#{{selectedBookingModel.link_id}}</a>
         </span>
       </td>
-      <td data-title="DATE"><span>{{selectedBookingModel.venue.start_time_iso | amDateFormat:'ddd D MMM YY'}}</span></td>
+      <td data-title="DATE"><span>{{selectedBookingModel.venue.start_time_iso | date:'EEE d MMM yy'}}</span></td>
       <td data-title="TIME">
-        <span>{{selectedBookingModel.venue.start_time_iso | amDateFormat:'h:mm A'}} - {{selectedBookingModel.venue.end_time_iso | amDateFormat:'h:mm A'}}</span>
+        <span>{{selectedBookingModel.venue.start_time_iso | timeShort : selectedBookingModel.venue.state : selectedBookingModel.venue.post_code}} - {{selectedBookingModel.venue.end_time_iso | timeShort : selectedBookingModel.venue.state : selectedBookingModel.venue.post_code}}</span>
       </td>
-      <td>{{selectedBookingModel.method_type}}</td>
+      <td>{{selectedBookingModel.method_name}}</td>
       <td>{{selectedBookingModel.service_type}}</td>
       <td data-title="ORGANISATION">{{selectedBookingModel.client.organisation_name}}</td>
       <td data-title="SUBURB" *ngIf='isClientInterpAndBookInProgress()'>

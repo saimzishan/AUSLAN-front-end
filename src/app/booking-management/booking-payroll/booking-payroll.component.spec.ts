@@ -6,7 +6,6 @@ import { FormsModule }   from '@angular/forms';
 import {MaterialModule} from '@angular/material';
 import {PayrollTimeComponent} from '../payroll-time/payroll-time.component';
 import { PrettyIDPipe } from '../../shared/pipe/pretty-id.pipe';
-import {MomentModule} from 'angular2-moment/moment.module';
 import {SpinnerService} from '../../spinner/spinner.service';
 import { NotificationServiceBus } from '../../notification/notification.service';
 import {BookingService} from '../../api/booking.service';
@@ -17,6 +16,7 @@ import { AuthHttp, AuthConfig } from 'angular2-jwt';
 import { MockBackend } from '@angular/http/testing';
 import {BookingHeaderService} from '../booking-header/booking-header.service';
 import { RouterTestingModule } from '@angular/router/testing';
+import {ShortTimePipe} from '../../shared/pipe/short-time.pipe';
 
 describe('BookingPayrollComponent', () => {
   let component: BookingPayrollComponent;
@@ -24,7 +24,8 @@ describe('BookingPayrollComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BookingPayrollComponent, BookingHeaderComponent, BookingInfoComponent, PayrollTimeComponent, PrettyIDPipe ],
+      declarations: [ BookingPayrollComponent, BookingHeaderComponent, BookingInfoComponent, PayrollTimeComponent,
+                      PrettyIDPipe, ShortTimePipe ],
       providers: [SpinnerService, NotificationServiceBus, BookingHeaderService,
         {
           provide: ActivatedRoute,
@@ -34,7 +35,7 @@ describe('BookingPayrollComponent', () => {
         },
         { provide: BookingService, useClass: MockBookingService },
         { provide: AuthHttp, useClass: MockBackend }],
-      imports: [FormsModule, MaterialModule, MomentModule, RouterTestingModule]
+      imports: [FormsModule, MaterialModule, RouterTestingModule]
     })
     .compileComponents();
   }));
