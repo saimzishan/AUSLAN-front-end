@@ -48,8 +48,6 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
                 if (res.status === 200) {
                     let data = res.data;
                     this.bookingModel.fromJSON(data);
-                    this.bookingModel.venue.start_time_iso = this.bookingModel.utcToBookingTimeZone(this.bookingModel.venue.start_time_iso);
-                    this.bookingModel.venue.end_time_iso = this.bookingModel.utcToBookingTimeZone(this.bookingModel.venue.end_time_iso);
                     this.isReadonlyForBO = (GLOBAL.currentUser instanceof BookingOfficer &&
                                             this.bookingModel.state === BOOKING_STATE.Claimed);
                 }

@@ -388,6 +388,11 @@ export class Booking {
 
     utcToBookingTimeZone(time: string) {
         let timeZone = Booking.getNamedTimeZone(this.venue.state, this.venue.post_code.toString());
-        return momentTimeZone(time).tz(timeZone).format();
+        return momentTimeZone(time).tz(timeZone).format('HH:mm:ss');
+    }
+
+    getDayLightSavings() {
+        let timeZone = Booking.getNamedTimeZone(this.venue.state, this.venue.post_code.toString());
+        return momentTimeZone().tz(timeZone).format('Z');
     }
 }
