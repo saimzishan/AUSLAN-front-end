@@ -147,3 +147,4 @@ Feature: Booking Management
     Then I am shown ted Individual Client as a suggestion
 
 
+

@@ -720,7 +720,9 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     public isRecurrenceDayCheckboxDisabled(day) {
+        if(this.isDuplicate){
         return this.bookingDate && this.bookingDate.getDay() === this.repeat_days.indexOf(day);
+        }
     }
 
     private getRecurrenceDays() {

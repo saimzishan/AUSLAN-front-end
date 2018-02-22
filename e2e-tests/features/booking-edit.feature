@@ -396,3 +396,4 @@ Feature: Edit Booking
     Then I should be on the edit booking page
     And I can see that form 'bookingDetailFieldset' is 'disabled'
     
+    
