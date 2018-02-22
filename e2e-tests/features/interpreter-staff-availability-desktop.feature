@@ -1,4 +1,3 @@
-# ------------------- Added by Muhammad Zeeshan Yousaf --------------------------- # 
 Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER STAFF-AVAILABILITY ON DESKTOP
     @runThis
     Scenario: As Administrator I can add INTERPRETER STAFF-AVAILABILITY on desktop

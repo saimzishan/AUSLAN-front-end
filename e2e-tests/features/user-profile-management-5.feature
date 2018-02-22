@@ -198,17 +198,17 @@ Feature: User Profile Management
     Then I get valid message: 'User details updated Successfully'
     And I can verify my profile pic is different with link 'missing.svg'
 
-   #------------------------------ Added by Zeeshan -------------------------------
   @runThis
-  Scenario: As INTERPRETER, I should be able to go page STAFF AVAILABILITY
-    Given I exist as an Interpreter
-    And I sign in with valid Interpreter credentials
-    Then I am on the bookings page
-    And I click on my name in the top corner
-    When I click on the option  profile
-    And I will be taken to my individual profile page
-    When I click on the option  staff calender
-    When I click on BUTTON 'ADD STAFF AVAILABILITY'
-    Then I will be taken to staff-calendar page
-
+  Scenario: As BOOKING OFFICER AND Administrator, I can crud INTERPRETER blockouts
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on the bookings page
+    When I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then The valid Interpreter should be in the list
+    When I hover on the 'Actions' of the Interpreter
+    Then I click on edit for an active existing Interpreter
+    And I will be taken to the 'INTERPRETER Signup' page
+    When I select option STAFF from dropdown Staff/Casual
+    And I get success message: 'Successfully applyChanges'    
 # --------------------------------------------- AUSLAN1-165 -> END ---------------------------------------------

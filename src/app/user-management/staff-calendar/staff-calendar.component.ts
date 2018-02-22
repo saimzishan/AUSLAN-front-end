@@ -9,6 +9,7 @@ import * as moment from 'moment';
 import * as $ from 'jquery';
 import { DatePipe } from '@angular/common';
 import { UserService } from '../../api/user.service';
+import { dashCaseToCamelCase } from '@angular/compiler/src/util';
 
 @Component({
     selector: 'app-staff-calendar',
@@ -123,7 +124,7 @@ export class StaffCalendarComponent implements OnInit {
                     frequency: avail_block.frequency
                 });
                 if (avail_block.recurring === true) {
-                    event.dow = avail_block.frequency === 'daily' ? [1, 2, 3, 4, 5] : [sd.getDay()];
+                    event.dow = avail_block.frequency === 'daily' ? [1, 2, 3, 4, 5] : [this.setDays(avail_block.recurring_week_days)];
                     event.ranges = [
                         {
                             start: moment().endOf(avail_block.frequency === 'daily' ? 'day' :
@@ -145,5 +146,16 @@ export class StaffCalendarComponent implements OnInit {
             this.updateCalendar = true;
         }
 
+    }
+    setDays(days) {
+        let data = '';
+        for (let row = 0; row < days.length; row++) {
+            if ( row === days.length - 1 ) {
+                data += days[row];
+            } else {
+                data += days[row] + ',';
+            }
+        }
+        return data;
     }
 }
