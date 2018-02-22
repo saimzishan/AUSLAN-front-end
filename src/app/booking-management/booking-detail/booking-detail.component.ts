@@ -435,10 +435,10 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         } else {
             if (this.isUserAdminORBookOfficer && this.bookable !== undefined) {
                 tempPrefInterp = this.bookable.prefferedInterpreters.filter(itm => itm.preference === 'preferred');
-                this.hasPrefInt = (tempPrefInterp.length > 0)? true : false;
+                this.hasPrefInt = (tempPrefInterp.length > 0) ? true : false;
             } else if (this.userModel.type === 'OrganisationalRepresentative' || this.userModel.type === 'IndividualClient') {
-                tempPrefInterp = this.userModel.prefferedInterpreters.filter(itm => itm.preference === 'preferred');                
-                this.hasPrefInt = (this.userModel.prefferedInterpreters.length > 0)? true : false;
+                tempPrefInterp = this.userModel.prefferedInterpreters.filter(itm => itm.preference === 'preferred');
+                this.hasPrefInt = (this.userModel.prefferedInterpreters.length > 0) ? true : false;
             }
         }
     }
@@ -460,14 +460,14 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         if (!this.showBlocked) {
             this.showProfileBlocked = false;
             this.bookingModel.preference_allocations_attributes = this.bookingModel.preference_allocations_attributes.filter(a => a.preference !== 'blocked');
-            this.oldInterpreterPreference = [];            
+            this.oldInterpreterPreference = [];
         } else {
             if (this.isUserAdminORBookOfficer && this.bookable !== undefined) {
-                tempBlockInterp = this.bookable.prefferedInterpreters.filter(itm => itm.preference === 'blocked');                
-                this.hasBlockInt = (tempBlockInterp.length > 0)? true : false;
+                tempBlockInterp = this.bookable.prefferedInterpreters.filter(itm => itm.preference === 'blocked');
+                this.hasBlockInt = (tempBlockInterp.length > 0) ? true : false;
             } else if (this.userModel.type === 'OrganisationalRepresentative' || this.userModel.type === 'IndividualClient') {
-                tempBlockInterp = this.userModel.prefferedInterpreters.filter(itm => itm.preference === 'blocked');                                
-                this.hasBlockInt = (this.userModel.prefferedInterpreters.length > 0)? true : false;
+                tempBlockInterp = this.userModel.prefferedInterpreters.filter(itm => itm.preference === 'blocked');
+                this.hasBlockInt = (this.userModel.prefferedInterpreters.length > 0) ? true : false;
             }
         }
     }
