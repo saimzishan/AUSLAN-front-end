@@ -420,6 +420,7 @@ export class Interpreter extends User {
     public communication_preference = 'email_and_sms';
     public assignments_attributes = [];
     public availability_blocks_attributes: Array<AvailabilityBlock> = [];
+    public staff_availabilities_attributes: Array<AvailabilityBlock> = [];
     public interpreter_type = 'Metro';
     public booking_office_notes = '';
     public blocked = false;
