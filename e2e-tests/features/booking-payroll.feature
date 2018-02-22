@@ -66,7 +66,7 @@ Feature: Booking Payroll and Billing
     When I click on link 'Payroll & Billing'
     Then I should be on the payroll and billing page
     Then I wait for 1500 milli-seconds
-    Then I click on material checkbox name 'cbPayTravel_0'
+#    Then I click on material checkbox name 'cbPayTravel_0'
     And I verify material checkbox name 'cbPayTravel_0' is checked 'true'
     And I verify material checkbox name 'cbPayInterpreter_0' is checked 'true'
     When I click on material checkbox name 'cbPayInterpreter_0'
