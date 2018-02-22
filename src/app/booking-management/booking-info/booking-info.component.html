@@ -6,7 +6,7 @@
       <th>Date</th>
       <th>Time</th>
       <th>Method</th>
-      <th>Type</th>
+      <th>Service Type</th>
       <th>Org</th>
       <th *ngIf='isClientInterpAndBookInProgress()'>Suburb</th>
       <ng-container *ngIf='!isClientInterpAndBookInProgress()'>
@@ -40,7 +40,7 @@
       <td data-title="TIME">
         <span>{{selectedBookingModel.venue.start_time_iso | amDateFormat:'h:mm A'}} - {{selectedBookingModel.venue.end_time_iso | amDateFormat:'h:mm A'}}</span>
       </td>
-      <td>{{selectedBookingModel.method_type}}</td>
+      <td>{{selectedBookingModel.method_name}}</td>
       <td>{{selectedBookingModel.service_type}}</td>
       <td data-title="ORGANISATION">{{selectedBookingModel.client.organisation_name}}</td>
       <td data-title="SUBURB" *ngIf='isClientInterpAndBookInProgress()'>

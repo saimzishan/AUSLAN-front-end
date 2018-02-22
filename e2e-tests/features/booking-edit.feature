@@ -365,7 +365,7 @@ Feature: Edit Booking
     And I can see the element with name 'btnClaim' is 'visible'
     Then I click on BUTTON 'Claim'
     When I click on BUTTON 'Save'
-    Then I get a valid 'Claimed' notification for state
+    Then I get a valid 'Cancelled Claimed' notification for state
     Then I click on my name in the top corner
     And I click on logout
     And I sign in with valid Booking Officer credentials
