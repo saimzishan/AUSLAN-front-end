@@ -9,7 +9,7 @@ import { PrettyIDPipe } from '../../shared/pipe/pretty-id.pipe';
 import { FormsModule }   from '@angular/forms';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {DatePipe} from '@angular/common';
-import {MomentModule} from 'angular2-moment/moment.module';
+import {ShortTimePipe} from '../../shared/pipe/short-time.pipe';
 
 describe('BookingListComponent' ,  () => {
   let component:  BookingListComponent;
@@ -28,14 +28,14 @@ describe('BookingListComponent' ,  () => {
     'deaf_persons_eaf_no' : '5555' ,
     'parking_availability' : 'None' ,
     'number_of_people_attending' : -0 ,
-    'start_time' : '2017-03-16T19:20+01:00' ,
-    'end_time' : '2017-03-16T19:22+01:00',
+    'start_time' : '2018-02-25T22:00:00Z' ,
+    'end_time' : '2018-02-25T23:00:00Z',
     'address_attributes': {
       'line_1': 'Curve Tomorrow',
       'line_2': 'L4 West RCH',
       'line_3': '50 Flemington Rd',
       'suburb': 'Parkville',
-      'state' : ' Victoria',
+      'state' : 'QLD',
       'post_code': '3025'
     },
     'created_by': {
@@ -46,9 +46,9 @@ describe('BookingListComponent' ,  () => {
   let mock_booking_list: Array<Booking> = [];
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations :  [ BookingListComponent, PrettyIDPipe ],
+      declarations :  [ BookingListComponent, PrettyIDPipe, ShortTimePipe ],
       providers: [DatePipe ],
-      imports: [RouterTestingModule, FormsModule, NgxPaginationModule, MomentModule]
+      imports: [RouterTestingModule, FormsModule, NgxPaginationModule]
     }).compileComponents();
   }));
 

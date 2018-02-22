@@ -73,8 +73,8 @@ import {NgxPaginationModule} from 'ngx-pagination';
 import {RemoveSpacePipe} from './shared/pipe/remove-space.pipe';
 import {AutoCompleteModule, CalendarModule as PrimeNgCalendarModule} from 'primeng/primeng';
 import {MobileHeaderComponent} from './ui/mobile-header/mobile-header.component';
-import {MomentModule} from 'angular2-moment/moment.module';
 import {BookingInfoComponent} from './booking-management/booking-info/booking-info.component';
+import {ShortTimePipe} from './shared/pipe/short-time.pipe';
 
 describe('AppComponent', () => {
   beforeEach(() => {
@@ -90,12 +90,12 @@ describe('AppComponent', () => {
         BookingDetailComponent, BlockoutComponent, MobileHeaderComponent,
         SpinnerComponent, OrgRepComponent, InterpreterComponent, AddressComponent,
           IndClientComponent, BillingAccountComponent, AccountantComponent, PreComponent,
-          InterpreterBoxComponent, InterpreterPopupComponent, RemoveSpacePipe, BookingInfoComponent
-
+          InterpreterBoxComponent, InterpreterPopupComponent, RemoveSpacePipe, BookingInfoComponent,
+          ShortTimePipe
       ],
       imports: [CustomFormsModule, NgxPaginationModule, FileuploaderModule, RouterTestingModule, Md2Module.forRoot(),
       MaterialModule, FormsModule, SimpleNotificationsModule.forRoot(), MobileFooterModule,
-        HttpModule, CalendarModule, PrimeNgCalendarModule, MomentModule, AutoCompleteModule
+        HttpModule, CalendarModule, PrimeNgCalendarModule, AutoCompleteModule
       ],  providers: [ NotificationServiceBus,
             PreferedAllocationService,
          UserNameService, Title, SpinnerService, UserService, {provide: APP_BASE_HREF, useValue : '/' }, {

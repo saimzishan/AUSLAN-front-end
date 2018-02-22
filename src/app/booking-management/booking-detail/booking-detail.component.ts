@@ -162,9 +162,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 this.oldInterpreterPreference = jsonData.preference_allocations_attributes;
                 this.bookingModel.documents_attributes = [];
                 this.bookingDate = new Date(this.datePipe.transform(this.bookingModel.venue.start_time_iso, 'MM/dd/yyyy'));
-                this.bookingStartTime = new Date(this.bookingModel.venue.start_time_iso);
-                this.bookingEndTime = new Date(this.bookingModel.venue.end_time_iso);
-                this.setDayMonthYear();
+                this.setTime();
                 this.natureOfApptChange(null);
                 this.checkInterpreterBoxes();
             } else {
@@ -280,8 +278,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         let selectedDate = this.datePipe.transform(this.bookingDate, 'yyyy-MM-dd');
         let startTime = moment(this.bookingStartTime, 'hh:mm A').format('HH:mm:ss');
         let endTime = moment(this.bookingEndTime, 'hh:mm A').format('HH:mm:ss');
-        this.bookingModel.venue.start_time_iso = this.bookingModel.utcToBookingTimeZone(selectedDate + 'T' + startTime);
-        this.bookingModel.venue.end_time_iso = this.bookingModel.utcToBookingTimeZone(selectedDate + 'T' + endTime);
+        this.bookingModel.venue.start_time_iso = selectedDate + 'T' + startTime + this.bookingModel.getDayLightSavings();
+        this.bookingModel.venue.end_time_iso = selectedDate + 'T' + endTime + this.bookingModel.getDayLightSavings();
     }
 
     natureOfApptChange($event) {
@@ -338,12 +336,15 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         return this.bookingDate || this.minDate;
     }
 
-    setDayMonthYear() {
+    setTime() {
+        let startTime = this.bookingModel.utcToBookingTimeZone(this.bookingModel.venue.start_time_iso);
+        let endTime = this.bookingModel.utcToBookingTimeZone(this.bookingModel.venue.end_time_iso);
         let currentDate = new Date();
+
         this.bookingStartTime = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(),
-            this.bookingStartTime.getHours(), this.bookingStartTime.getMinutes());
+                                         moment.duration(startTime).get('hours'), moment.duration(startTime).get('minutes'));
         this.bookingEndTime = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(),
-            this.bookingEndTime.getHours(), this.bookingEndTime.getMinutes());
+                                       moment.duration(endTime).get('hours'), moment.duration(endTime).get('minutes'));
     }
 
     roundOffMinutes() {
