@@ -379,3 +379,4 @@ Feature: Booking Admin Management
     Then I can see the button state 'Unable to Service' is hidden
     When I click on BUTTON 'Undo cancel'
     Then I can see the booking state 'In Progress'
+

@@ -273,7 +273,7 @@
                 (bookingList.length > 1 ? 's' : '')}}
             </div>
             <div class="element element_inline">
-                <pagination-controls class="my-pagination" *ngIf="totalItems >= 10"
+                <pagination-controls class="my-pagination" *ngIf="totalItems > 10"
                                      (pageChange)="getPage($event)"></pagination-controls>
             </div>
         </div>
