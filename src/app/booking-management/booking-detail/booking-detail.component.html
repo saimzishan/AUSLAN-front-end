@@ -177,13 +177,13 @@
             </span>
           </div>
         </div>
-        <div class='medium-2 columns'>
+        <div class='medium-2 columns' *ngIf="!forEdit">
           <div class='form-feild'>
             <label for='recurring-booking'>RECURRING?</label>
             <md-slide-toggle id="recurring-booking"
                              name="recurring-booking"
                              aria-label="Recurring booking"
-                             [(ngModel)]="isRecurringBooking">
+                             [(ngModel)]="isRecurringBooking" >
             </md-slide-toggle>
           </div>
         </div>

@@ -395,4 +395,24 @@ Feature: Edit Booking
     When I click on link 'Booking details'
     Then I should be on the edit booking page
     And I can see that form 'bookingDetailFieldset' is 'disabled'
-    
+#  Then I can see the button '(.*)' is (disabled|enabled)
+
+ @runThis
+  Scenario: As a Booking Officer, I can see that recurrsion button is not vissible via edit 
+   Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    Then I am on the bookings page
+    And I am shown with 1 bookings
+    When I click on an individual booking
+    Then I am on the individual booking page
+     When I click on link 'Booking details'
+    Then I should be on the edit booking page
+    Then I can see the element with name 'recurring-booking' is 'not visible'
+    Then I click on Bookings
+    And I am on the bookings page
+     When I click on an individual booking
+    Then I will be shown the booking job page
+    Then I can see the button 'Save' is disabled
+    And I click on BUTTON 'Duplicate'
+    Then I will be taken to the 'New Booking' form
+    Then I can see the element with name 'recurring-booking' is 'visible'
