@@ -66,15 +66,12 @@ Feature: Booking Payroll and Billing
     When I click on link 'Payroll & Billing'
     Then I should be on the payroll and billing page
     Then I wait for 1500 milli-seconds
-    And I verify material checkbox name 'cbPayTravel_0' is checked 'true'
     And I verify material checkbox name 'cbPayInterpreter_0' is checked 'true'
     When I click on material checkbox name 'cbPayInterpreter_0'
     Then I verify material checkbox name 'cbPayInterpreter_0' is checked 'false'
     And I verify material checkbox name 'cbPayTravel_0' is checked 'false'
     And I verify that payroll 'interpreter' input fields are non editable
     And I verify that payroll 'interpreter' input fields have zero value
-    Then I click on material checkbox name 'cbChargeTravel_0'
-    And I verify material checkbox name 'cbChargeTravel_0' is checked 'true'
     And I verify material checkbox name 'cbInvoiceClient_0' is checked 'true'
     When I click on material checkbox name 'cbInvoiceClient_0'
     Then I verify material checkbox name 'cbInvoiceClient_0' is checked 'false'
@@ -123,6 +120,8 @@ Feature: Booking Payroll and Billing
     Then I wait for 2000 milli-seconds
     When I click on link 'Payroll & Billing'
     Then I should be on the payroll and billing page
+    When I click on material checkbox name 'cbPayTravel_0'
+    Then I verify material checkbox name 'cbPayTravel_0' is checked 'true'
     And I fill the payroll field 'interpreter_interpreterTime_0' with value '1:20'
     And I fill the payroll field 'interpreter_prepTime_0' with value '0:20'
     And I fill the payroll field 'interpreter_travelTime_0' with value '0:25'
@@ -160,8 +159,8 @@ Feature: Booking Payroll and Billing
     Then I verify material checkbox name 'cbInvoiceClient_0' is checked 'true'
     When I click on material checkbox name 'cbChargeTravel_0'
     Then I verify material checkbox name 'cbChargeTravel_0' is checked 'true'
-    And I can see the payroll element 'client_kiloMeters_0' has text '0'
-    And I can see the payroll element 'client_travelTime_0' has text '0:00'
+    And I can see the payroll element 'client_kiloMeters_0' has text '8'
+    And I can see the payroll element 'client_travelTime_0' has text '0:20'
     And I click on BUTTON 'Save'
     Then I should get a valid payroll save notification
 
