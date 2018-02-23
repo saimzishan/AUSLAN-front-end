@@ -15,6 +15,8 @@ import * as momentTimeZone from 'moment-timezone';
 import {Booking} from '../../../shared/model/booking.entity';
 import {Location} from '@angular/common';
 import { forEach } from '@angular/router/src/utils/collection';
+import { DatePipe } from '@angular/common';
+import * as moment from 'moment';
 
 @Component({
     selector: 'app-blockout',
@@ -88,6 +90,7 @@ export class BlockoutComponent implements OnDestroy, OnInit {
                 private route: ActivatedRoute,
                 private router: Router,
                 public dialog: MdDialog,
+                private datePipe: DatePipe,
                 public viewContainerRef: ViewContainerRef, private _location: Location) {
     }
     public isRecurrenceDayCheckboxDisabled(day) {
@@ -124,10 +127,7 @@ export class BlockoutComponent implements OnDestroy, OnInit {
                             this.availabilityBlock = a
                         );
                 }
-                this.start_time = new Date(this.availabilityBlock.start_time);
-                this.end_time = new Date(this.availabilityBlock.end_time);
-                this.end_date = Boolean(this.availabilityBlock.end_date) ? new Date(this.availabilityBlock.end_date) :
-                    new Date(this.availabilityBlock.start_time);
+                this.settingTime();
             }
         });
         this.roundOffMinutes();
@@ -252,7 +252,7 @@ export class BlockoutComponent implements OnDestroy, OnInit {
     }
     interpreterStateTimeZone (time) {
         let timeZone = Booking.getNamedTimeZone(this.interpreter.address_attributes.state, this.interpreter.address_attributes.post_code.toString());
-        return momentTimeZone(time).tz(timeZone).format();
+        return momentTimeZone(time).tz(timeZone).format('HH:mm:ss');
     }
     editBlockouts(form: FormGroup) {
         if (form.invalid) {
@@ -261,9 +261,7 @@ export class BlockoutComponent implements OnDestroy, OnInit {
         }
         this.spinnerService.requestInProcess(true);
 
-        this.availabilityBlock.start_time = this.interpreterStateTimeZone(this.start_time);
-        this.availabilityBlock.end_time = this.interpreterStateTimeZone(this.end_time);
-        this.availabilityBlock.end_date = Boolean(this.end_date) ? this.interpreterStateTimeZone(this.end_date) : this.interpreterStateTimeZone(this.start_time);
+        this.timeFormatting();
         this.userDataService.editBlockout(this.userID,
             this.availabilityBlock)
             .subscribe((res: any) => {
@@ -292,9 +290,7 @@ export class BlockoutComponent implements OnDestroy, OnInit {
             return;
         }
         this.spinnerService.requestInProcess(true);
-        this.availabilityBlock.start_time = this.interpreterStateTimeZone(this.start_time);
-        this.availabilityBlock.end_time = this.interpreterStateTimeZone(this.end_time);
-        this.availabilityBlock.end_date = Boolean(this.end_date) ? this.interpreterStateTimeZone(this.end_date) : this.interpreterStateTimeZone(this.start_time);
+        this.timeFormatting();
         this.userDataService.editStaffAvailabilities(this.userID,
             this.availabilityBlock)
             .subscribe((res: any) => {
@@ -337,9 +333,7 @@ export class BlockoutComponent implements OnDestroy, OnInit {
         }
         this.spinnerService.requestInProcess(true);
         delete this.availabilityBlock.booking_id;
-        this.availabilityBlock.start_time = this.interpreterStateTimeZone(this.start_time);
-        this.availabilityBlock.end_time = this.interpreterStateTimeZone(this.end_time);
-        this.availabilityBlock.end_date = this.interpreterStateTimeZone(this.end_date);
+        this.timeFormatting();
         if (this.staff_availability) {
             this.setRecurring_week_days();
             this.addStaffAvailabilitie(this.availabilityBlock);
@@ -392,4 +386,35 @@ export class BlockoutComponent implements OnDestroy, OnInit {
                 }
             });
     }
+
+    timeFormatting() {
+        let startDate = this.datePipe.transform(this.start_time, 'yyyy-MM-dd');
+        let startTime = moment(this.start_time, 'hh:mm A').format('HH:mm:ss');
+        let endTime = moment(this.end_time, 'hh:mm A').format('HH:mm:ss');
+        let daylightSavings = this.interpreterDaylightSavings();
+        let endDate = this.datePipe.transform(this.end_date, 'yyyy-MM-dd');
+
+        this.availabilityBlock.start_time = startDate + 'T' + startTime + daylightSavings;
+        this.availabilityBlock.end_time = startDate + 'T' + endTime + daylightSavings;
+        this.availabilityBlock.end_date = endDate;
+    }
+    settingTime() {
+        let endTime = this.interpreterStateTimeZone(this.availabilityBlock.end_time);
+        let currentDate = new Date();
+        let sTime = this.interpreterStateTimeZone(this.availabilityBlock.start_time);
+        let startDate = new Date(this.availabilityBlock.start_time);
+
+        this.start_time = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate(),
+            moment.duration(sTime).get('hours'), moment.duration(sTime).get('minutes'));
+
+        this.end_time = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(),
+            moment.duration(endTime).get('hours'), moment.duration(endTime).get('minutes'));
+        this.end_date = Boolean(this.availabilityBlock.end_date) ? new Date(this.availabilityBlock.end_date) :
+            new Date(this.availabilityBlock.start_time);
+    }
+    interpreterDaylightSavings() {
+        let timeZone = Booking.getNamedTimeZone(this.interpreter.address_attributes.state, this.interpreter.address_attributes.post_code.toString());
+        return momentTimeZone().tz(timeZone).format('Z');
+    }
+
 }
