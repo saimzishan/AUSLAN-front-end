@@ -192,7 +192,7 @@ defineSupportCode(({Given, When, Then}) => {
     Given(/^I clear the payroll input field '(.*)'/, clearPayrollField);
 
     function clearPayrollField(fieldName: string) {
-            let input = bookingPayroll.getElementByCss('input[ng-reflect-name="'+fieldName+'"]');
+            let input = bookingPayroll.getElementByCss('input[ng-reflect-name="' + fieldName + '"]');
             expect(input).to.exist;
             input.clear();
     }
@@ -200,7 +200,7 @@ defineSupportCode(({Given, When, Then}) => {
     Given(/^I can see the payroll element '(.*)' has text '(.*)'/, checkPayrollFieldText);
 
     function checkPayrollFieldText(fieldName: string, text: string) {
-        let input = bookingPayroll.getElementByCss('input[ng-reflect-name="'+fieldName+'"]');
+        let input = bookingPayroll.getElementByCss('input[ng-reflect-name="' + fieldName + '"]');
         return input.getAttribute('value').then(elmTxt => {
             return expect(elmTxt).to.be.eq(text);
         });
@@ -209,7 +209,7 @@ defineSupportCode(({Given, When, Then}) => {
     Given(/^I can see the payroll element '(.*)' has non-zero value/, checkPayrollFieldTextIsNonZero);
 
     function checkPayrollFieldTextIsNonZero(fieldName: string) {
-        let input = bookingPayroll.getElementByCss('input[ng-reflect-name="'+fieldName+'"]');
+        let input = bookingPayroll.getElementByCss('input[ng-reflect-name="' + fieldName + '"]');
         return input.getAttribute('value').then(elmTxt => {
             return expect(elmTxt.match(/[1-9]/)).to.be.greaterThan(0);
         });
