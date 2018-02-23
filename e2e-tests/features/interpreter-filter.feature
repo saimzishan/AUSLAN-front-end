@@ -22,7 +22,7 @@ Feature: Nearby Interpreter Filter
     Then I can see a list of 3 verified interpreters
 
   @runThis
-  Scenario: Given 1 verified Administrator Officer, I can filter the list of interpreters by First Name
+  Scenario: Given 1 verified Administrator Officer, I can filter the list of interpreters by some text of first name
     Given There exist 5 verified interpreters
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
@@ -30,11 +30,11 @@ Feature: Nearby Interpreter Filter
     When I click on an individual booking
     Then I am on the individual booking page
     Then I can see a list of 5 verified interpreters
-    When I query interpreter by form field first_name and value 'Interpreter - 1'
+    When I query interpreter by form field name and value 'preter - 2'
     Then I can see a list of 1 verified interpreters
 
   @runThis
-  Scenario: Given 1 verified Administrator Officer, I can filter the list of interpreters by Last Name
+  Scenario: Given 1 verified Administrator Officer, I can filter the list of interpreters by some text of last name
     Given There exist 5 verified interpreters
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
@@ -42,7 +42,19 @@ Feature: Nearby Interpreter Filter
     When I click on an individual booking
     Then I am on the individual booking page
     Then I can see a list of 5 verified interpreters
-    When I query interpreter by form field last_name and value 'Hampton'
+    When I query interpreter by form field name and value 'Hampt'
+    Then I can see a list of 1 verified interpreters
+
+  @runThis
+  Scenario: Given 1 verified Administrator Officer, I can filter the list of interpreters by some combined text of first and last name
+    Given There exist 5 verified interpreters
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on the bookings page
+    When I click on an individual booking
+    Then I am on the individual booking page
+    Then I can see a list of 5 verified interpreters
+    When I query interpreter by form field name and value 'ter - 2 Hampt'
     Then I can see a list of 1 verified interpreters
 
   @runThis
@@ -93,7 +105,7 @@ Feature: Nearby Interpreter Filter
     Then I can see a list of 5 verified interpreters
 
   @runThis
-  Scenario: Given 1 verified Administrator Officer, I can search the interpreters by text in first name
+  Scenario: Given 1 verified Administrator Officer, I can search the interpreters by some text of first name
     Given There exist 5 verified interpreters
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
@@ -107,7 +119,7 @@ Feature: Nearby Interpreter Filter
     Then I can see a list of 5 verified interpreters
 
   @runThis
-  Scenario: Given 1 verified Administrator Officer, I can search the interpreters by text in last name
+  Scenario: Given 1 verified Administrator Officer, I can search the interpreters by some text of last name
     Given There exist 5 verified interpreters
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
@@ -116,6 +128,20 @@ Feature: Nearby Interpreter Filter
     Then I am on the individual booking page
     Then I can see a list of 5 verified interpreters
     When I search interpreters with 'Doncaster'
+    Then I can see a list of 1 verified interpreters
+    When I search interpreters with 'empty'
+    Then I can see a list of 5 verified interpreters
+
+  @runThis
+  Scenario: Given 1 verified Administrator Officer, I can search the interpreters by some combined text of first and last name
+    Given There exist 5 verified interpreters
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on the bookings page
+    When I click on an individual booking
+    Then I am on the individual booking page
+    Then I can see a list of 5 verified interpreters
+    When I search interpreters with 'ter - 1 Don'
     Then I can see a list of 1 verified interpreters
     When I search interpreters with 'empty'
     Then I can see a list of 5 verified interpreters
