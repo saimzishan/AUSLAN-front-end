@@ -219,15 +219,15 @@ export class BookingPage extends PageObject {
         this.previousDate = true;
         return this.createBookingWithTimeAndInterpreter('standard', '10:15 AM', '11:15 AM', '2', 'auslanInterpreters_count');
     }
-    editBookingWithTomorrowDateWith_VICDEAF_STATE =() =>{
+    editBookingWithDayAfterTomorrowDateWith_VICDEAF_STATE = () => {
         this.getElementByCss('input[name="dpDate"]').clear();
-        this.setDate( this.getDateAfterNDays(1));
+        this.setDate( this.getDateAfterNDays(2));
         this.setElementsValueByName('address_state', 'VIC');
     }
-    editBookingWith_DSQ_STATES =() =>{
+    editBookingWith_DSQ_STATES = () => {
         this.setElementsValueByName('address_state', 'ACT');
     }
-    editBookingWith_VICDEAF_STATE =() =>{
+    editBookingWith_VICDEAF_STATE = () => {
         this.setElementsValueByName('address_state', 'VIC');
     }
     createBookingForPerth = () => {
