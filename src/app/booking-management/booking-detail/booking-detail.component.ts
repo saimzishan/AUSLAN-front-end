@@ -417,6 +417,12 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         }
     }
 
+    public onBookingForChange() {
+        this.bookingModel.preference_allocations_attributes = [];
+        this.bookingModel.bookable_id = 0;
+        this.bookable = <IndividualClient | OrganisationalRepresentative>UserFactory.createUser({ type: this.bookingModel.bookable_type });
+    }
+
     public onBookingForSelectionChange(selectedObject: IndividualClient | OrganisationalRepresentative) {
         this.bookingModel.preference_allocations_attributes = [];
         this.bookingModel.bookable_id = selectedObject.id;
