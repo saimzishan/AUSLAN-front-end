@@ -66,7 +66,7 @@ Feature: Booking Payroll and Billing
     When I click on link 'Payroll & Billing'
     Then I should be on the payroll and billing page
     Then I wait for 1500 milli-seconds
-    Then I click on material checkbox name 'cbPayTravel_0'
+#    Then I click on material checkbox name 'cbPayTravel_0'
     And I verify material checkbox name 'cbPayTravel_0' is checked 'true'
     And I verify material checkbox name 'cbPayInterpreter_0' is checked 'true'
     When I click on material checkbox name 'cbPayInterpreter_0'
@@ -108,7 +108,7 @@ Feature: Booking Payroll and Billing
     And I can see the payroll element 'interpreter_interpreterTime_0' has text '2:00'
     And I can see the payroll element 'interpreter_prepTime_0' has text '0:00'
 
-  @runThis
+  @ignoreThis
   Scenario: Given 1 verified Booking Officer, When I check invoice client then time fields of client will be filled from the time fields of interpreter, INTERPRETER exists
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
@@ -121,9 +121,9 @@ Feature: Booking Payroll and Billing
     And I click on BUTTON 'Save'
     Then I wait for 1000 milli-seconds
     Then I get valid message: 'The interpreter have been assigned'
+    Then I wait for 2000 milli-seconds
     When I click on link 'Payroll & Billing'
     Then I should be on the payroll and billing page
-    Then I wait for 1500 milli-seconds
     Then I click on material checkbox name 'cbPayTravel_0'
     And I fill the payroll field 'interpreter_interpreterTime_0' with value '1:20'
     And I fill the payroll field 'interpreter_prepTime_0' with value '0:20'
@@ -138,7 +138,7 @@ Feature: Booking Payroll and Billing
     And I can see the payroll element 'client_prepTime_0' has text '0:20'
     And I can see the payroll element 'client_travelTime_0' has text '0:25'
 
-  @runThis
+  @ignoreThis
   Scenario: Given 1 verified Booking Officer, When I check charge travel then km and travel time will be filled from the recommended values and when i save then I will get a success notification, INTERPRETER exists
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials

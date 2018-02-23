@@ -83,7 +83,7 @@ defineSupportCode(({Given, When, Then}) => {
     Given(/^I am on my dashboard screen$/, bookingManagementPage.verify);
     Given(/^I fill New Booking form fields correctly$/, bookingPage.createBooking);
     Given(/^I fill New Booking form fields correctly with yesterday date$/, bookingPage.createBookingWithYesterdayDate);
-    Given(/^I fill New Booking form fields correctly with tomorrow date with vicdeaf$/, bookingPage.editBookingWithTomorrowDateWith_VICDEAF_STATE);
+    Given(/^I fill New Booking form fields correctly with day after tomorrow date with vicdeaf$/, bookingPage.editBookingWithDayAfterTomorrowDateWith_VICDEAF_STATE);
     Given(/^I fill New Booking form fields correctly with DSQ state$/, bookingPage.editBookingWith_DSQ_STATES);
     Given(/^I fill New Booking form fields correctly with just vicdeaf$/, bookingPage.editBookingWith_VICDEAF_STATE);
     Given(/^I fill New Booking form fields with address greater than 40 kilometers$/, bookingPage.createBookingForPerth);
@@ -481,14 +481,14 @@ defineSupportCode(({Given, When, Then}) => {
     When(/^I verify material checkbox name '(.*)' is checked '(.*)'$/, verifyMaterialCB);
     function verifyMaterialCB(btnName: string, checkedState: string) {
         let bVal = ((checkedState === 'True') || (checkedState === 'true'));
-        return page.getElementByCss('md-checkbox[ng-reflect-name="'+btnName+'"]').getAttribute('ng-reflect-model').then(val => {
-            expect(val).to.be.eq(bVal+'');
+        return page.getElementByCss('md-checkbox[ng-reflect-name="' + btnName + '"]').getAttribute('ng-reflect-model').then(val => {
+            expect(val).to.be.eq(bVal + '');
         });
     }
 
     When(/^I click on material checkbox name '(.*)'$/, clickMaterialCB);
     function clickMaterialCB(cbName: string) {
-        return page.getElementByCss('md-checkbox[ng-reflect-name="'+cbName+'"]').click();
+        return page.getElementByCss('md-checkbox[ng-reflect-name="' + cbName + '"]').click();
     }
 
     When(/^I verify radiobutton name '(.*)' and is checked$/, verifyOnRBByName);
