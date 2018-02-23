@@ -61,6 +61,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     totalItems;
     isRequestedProgressOrAllocated = false;
     searchParams: string;
+    setparam_id;
 
     constructor(public dialog: MdDialog,
                 public viewContainerRef: ViewContainerRef, public spinnerService: SpinnerService,
@@ -70,6 +71,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         /** http://stackoverflow.com/questions/38008334/angular2-rxjs-when-should-i-unsubscribe-from-subscription */
         this.sub = this.route.params.subscribe(params => {
             let param_id = params['id'] || '';
+            this.setparam_id = params['id'] || '';
             if (Boolean(param_id) && parseInt(param_id, 10) > 0) {
                 this.fetchBookingInterpreters(param_id);
             }

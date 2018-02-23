@@ -23,6 +23,7 @@ import {PreComponent} from './register/pre/pre.component';
 import {BlockoutComponent} from './user-management/user-profile/blockout/blockout.component';
 import {BookingPayrollComponent} from './booking-management/booking-payroll/booking-payroll.component';
 import { StaffCalendarComponent } from './user-management/staff-calendar/staff-calendar.component';
+import { InterpreterMessagesComponent } from './messaging/interpreter-messages/interpreter-messages.component';
 const appRoutes: Routes = [
   { path: 'user-management', component: UserManagementComponent, canActivate: [AuthGuard]},
   { path: 'user-management/profile', component: UserProfileComponent, canActivate: [AuthGuard]},
@@ -37,7 +38,10 @@ const appRoutes: Routes = [
   { path: 'booking-management/:id/booking-job', component: BookingJobsComponent, canActivate: [AuthGuard]},
   { path: 'booking-management/:id/job-detail', component: BookingJobsComponent, canActivate: [AuthGuard]},
   { path: 'booking-management/edit-booking', component: BookingDetailComponent, canActivate: [AuthGuard]},
-  { path: 'booking-management/:id/payroll-billing', component: BookingPayrollComponent, canActivate: [AuthGuard]},
+  { path: 'booking-management/:id/payroll-billing', component: BookingPayrollComponent, canActivate: [AuthGuard] },
+
+  { path: 'interpreter-messages/messages', component: InterpreterMessagesComponent, canActivate: [AuthGuard]},
+
   { path: 'authenticate', component: AuthComponent , canActivate: [NoAuthGuard] },
   { path: 'authenticate/logout', component: AuthComponent },
   { path: '404', component: NotFoundComponent },

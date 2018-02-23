@@ -360,6 +360,12 @@
     </section>
 </ng-container>
 <!-- Make this as a class-->
+
+<ul *ngIf="!isCurrentUserAdminOrBookingOfficer()" class="dropdown menu custom actions hidden-desktop reduced" data-dropdown-menu>
+    <li> 
+        <button [routerLink]="['/interpreter-messages/messages']" class="button green wide" style="width: 100%;">MESSAGE OFFICE</button>
+    </li>
+</ul>
 <ng-container *ngIf="jobAccessError">
     <div class="error" style="text-align: center;padding-top: 100px;">
         <span>
