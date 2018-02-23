@@ -21,7 +21,7 @@ jobs:
           name: Setup parallelism
           shell: /bin/bash -l
           command: |
-            if [ $CIRCLE_BRANCH = 'master' ] || [ $CIRCLE_BRANCH = 'develop-lockdown' ];
+            if [ $CIRCLE_BRANCH = 'master' ] || [ $CIRCLE_BRANCH = 'development' ];
               then
                 circleci tests glob "/var/www/booking-system-frontend/e2e-tests/features/*.feature" | circleci tests split > ./test_features_for_split_container.txt
             else

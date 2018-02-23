@@ -1221,7 +1221,7 @@
       </div>
     </div>
 
-    <div class="row" *ngIf="showPreferred && !isDisabledForOrgRepIndClient">
+    <div class="row" *ngIf="showPreferred && hasPrefInt">
       <div class="medium-12 columns">
         <div class="form-field">
           <label name="preferInterQuestion2">Do you want to set the preferred interpreters that you have set in your profile? </label>
@@ -1254,7 +1254,7 @@
       </div>
     </div>
 
-    <div class="row" *ngIf="showBlocked && !isDisabledForOrgRepIndClient">
+    <div class="row" *ngIf="showBlocked && hasBlockInt">
       <div class="medium-12 columns">
         <div class="form-field">
           <label name="blockInterQuestion2">Do you want to set the blocked interpreters that you have set in your profile? </label>
