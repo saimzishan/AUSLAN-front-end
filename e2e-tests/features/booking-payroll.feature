@@ -121,9 +121,9 @@ Feature: Booking Payroll and Billing
     And I click on BUTTON 'Save'
     Then I wait for 1000 milli-seconds
     Then I get valid message: 'The interpreter have been assigned'
+    Then I wait for 2000 milli-seconds
     When I click on link 'Payroll & Billing'
     Then I should be on the payroll and billing page
-    Then I wait for 1500 milli-seconds
     Then I click on material checkbox name 'cbPayTravel_0'
     And I fill the payroll field 'interpreter_interpreterTime_0' with value '1:20'
     And I fill the payroll field 'interpreter_prepTime_0' with value '0:20'
