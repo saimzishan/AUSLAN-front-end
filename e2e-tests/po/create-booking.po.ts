@@ -190,8 +190,12 @@ export class BookingPage extends PageObject {
         const divDetails = this.getAllByTagNameInElement(optionLabel, 'div');
         const all_input_in_div = this.getAllByTagNameInElement(divDetails, 'input');
         return all_input_in_div.each(function (single_input, index) {
-            return single_input.getAttribute('value').then((val) => {
-                expect(!!val).to.be.eq(condition);
+            return single_input.getAttribute('name').then((name) => {
+                if (name !== 'search_address') {
+                    return single_input.getAttribute('value').then((val) => {
+                        expect(!!val).to.be.eq(condition);
+                    });
+                }
             });
         });
     }

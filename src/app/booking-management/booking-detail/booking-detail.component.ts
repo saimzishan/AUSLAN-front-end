@@ -876,8 +876,9 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     handleFileSelect(evt) {
 
         let files = evt.target.files;
-
         let file = files[0];
+        evt.srcElement.value = '';
+
         // File uploader wont add a duplicate file
         if (files && file) {
             this.fileName = file.name;
