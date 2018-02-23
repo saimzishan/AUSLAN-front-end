@@ -16,7 +16,6 @@ export class BlockoutPagePo extends PageObject {
     saveBtn;
     browse = () => {
         return this.currentPath().then((currentPath) => {
-            this.didFinishedRendering();
             expect(currentPath).to.contain('block_out');
 
         });
