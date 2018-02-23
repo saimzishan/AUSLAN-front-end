@@ -108,7 +108,7 @@ Feature: Booking Payroll and Billing
     And I can see the payroll element 'interpreter_interpreterTime_0' has text '2:00'
     And I can see the payroll element 'interpreter_prepTime_0' has text '0:00'
 
-  @runThis
+  @ignoreThis
   Scenario: Given 1 verified Booking Officer, When I check invoice client then time fields of client will be filled from the time fields of interpreter, INTERPRETER exists
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
