@@ -146,6 +146,7 @@ Feature: Booking Payroll and Billing
     And I click on BUTTON name 'reassingBtn'
     Then I can see the button 'Save' is enabled
     And I click on BUTTON 'Save'
+    And I run all background jobs
     Then I wait for 1000 milli-seconds
     Then I get valid message: 'The interpreter have been assigned'
     Then I wait for 2000 milli-seconds

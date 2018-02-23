@@ -18,6 +18,7 @@ defineSupportCode(({After}) => {
         } else {
             Heroku.sendCommandToHeroku('Booking.destroy_all');
             Heroku.sendCommandToHeroku('User.destroy_all');
+            Heroku.sendCommandToHeroku('Delayed::Job.destroy_all');
         }
         return browser.restart();
     });
