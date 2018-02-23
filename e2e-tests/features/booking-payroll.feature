@@ -138,7 +138,7 @@ Feature: Booking Payroll and Billing
     And I can see the payroll element 'client_prepTime_0' has text '0:20'
     And I can see the payroll element 'client_travelTime_0' has text '0:25'
 
-  @runThis
+  @ignoreThis
   Scenario: Given 1 verified Booking Officer, When I check charge travel then km and travel time will be filled from the recommended values and when i save then I will get a success notification, INTERPRETER exists
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
