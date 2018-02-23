@@ -252,7 +252,7 @@ export class BlockoutComponent implements OnDestroy, OnInit {
     }
     interpreterStateTimeZone (time) {
         let timeZone = Booking.getNamedTimeZone(this.interpreter.address_attributes.state, this.interpreter.address_attributes.post_code.toString());
-        return momentTimeZone(time).tz(timeZone).format();
+        return momentTimeZone(time).tz(timeZone).format('HH:mm:ss');
     }
     editBlockouts(form: FormGroup) {
         if (form.invalid) {
