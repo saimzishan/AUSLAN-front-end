@@ -147,3 +147,4 @@ Feature: User Profile Management
     Then I will be taken to my individual profile page
     
     
+    
