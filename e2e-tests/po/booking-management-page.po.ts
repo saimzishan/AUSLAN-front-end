@@ -330,11 +330,11 @@ export class BookingManagementPage extends PageObject {
         let today = new Date();
         let todayDate = {
             dd: this.prettyDate(today.getDate()),
-            mm: this.prettyDate(today.getMonth() + 1), //January is 0!
+            mm: this.prettyDate(today.getMonth() + 1), // January is 0!
             yy: today.getFullYear().toString()
         };
         let datefrom = this.getElementByName('date_from');
-        datefrom.getAttribute('value').then((value)=> {
+        datefrom.getAttribute('value').then((value) => {
         return expect(value).to.be.eq(todayDate.yy + '-' + todayDate.mm + '-' + todayDate.dd);
     });
     }

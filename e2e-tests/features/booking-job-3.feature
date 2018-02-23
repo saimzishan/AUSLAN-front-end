@@ -201,7 +201,7 @@ Feature: Booking Admin Management
     Then I will be shown the booking job page
     When I click on link 'Booking details'
     Then I should be on the edit booking page
-    Then I fill New Booking form fields correctly with tomorrow date with vicdeaf
+    Then I fill New Booking form fields correctly with day after tomorrow date with vicdeaf
     And I click on checkbox name 'tnc'
     And I click on BUTTON 'SAVE'
     And If I am shown popups, I approve all of them
@@ -230,7 +230,7 @@ Feature: Booking Admin Management
     Then I will be shown the booking job page
     When I click on link 'Booking details'
     Then I should be on the edit booking page
-    Then I fill New Booking form fields correctly with tomorrow date with vicdeaf
+    Then I fill New Booking form fields correctly with day after tomorrow date with vicdeaf
     And I click on checkbox name 'tnc'
     And I click on BUTTON 'SAVE'
     And If I am shown popups, I approve all of them
@@ -379,3 +379,4 @@ Feature: Booking Admin Management
     Then I can see the button state 'Unable to Service' is hidden
     When I click on BUTTON 'Undo cancel'
     Then I can see the booking state 'In Progress'
+

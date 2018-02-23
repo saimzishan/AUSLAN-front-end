@@ -161,3 +161,4 @@ Feature: User Profile Management
     And I will be taken to my individual profile page
     And I can see the element with name 'selStatus' is 'hidden'
     
+    
