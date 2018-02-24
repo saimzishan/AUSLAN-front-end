@@ -110,6 +110,7 @@ export class BlockoutComponent implements OnDestroy, OnInit {
         }
         this.userID = this.interpreter !== null ? this.interpreter.id : -1;
         this.end_time.setTime(this.start_time.getTime() + (1 * 60 * 60 * 1000));
+        this.end_date = this.end_time;
         this.sub = this.route.params.subscribe(params => {
             let param_id = params['id'] || '';
             if (Boolean(param_id) && parseInt(param_id, 10) > 0) {
@@ -168,10 +169,10 @@ export class BlockoutComponent implements OnDestroy, OnInit {
     onStartTimeChanged() {
         let dt = new Date();
         dt.setDate(this.start_time.getDate());
-        this.end_date = dt;
 
         dt.setTime(this.start_time.getTime() + (1 * 60 * 60 * 1000));
         this.end_time = dt;
+        this.end_date = dt;
     }
     roundOffMinutes() {
         let dt = this.end_time;
