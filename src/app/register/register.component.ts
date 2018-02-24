@@ -100,8 +100,21 @@ export class RegisterComponent implements OnInit, OnDestroy {
         });
         this.termsAndConditionAccepted = this.isUserLogin();
         this.model.state_where_most_bookings_occur = 'VIC';
+        this.model.staff_to_casual_toggle = this.model.employment_type;
     }
-
+    staffToCasualToggle() {
+        this.userService.toggle_employment_type(this.model.id)
+            .subscribe((res: any) => {
+                    if (res) {
+                        this.notificationServiceBus.launchNotification(false, 'Successfully applyChanges');
+                    }
+                 }, errors => {
+                    this.spinnerService.requestInProcess(false);
+                    let e = errors.json();
+                    this.notificationServiceBus.launchNotification(true, errors.statusText + ' '
+                        + JSON.stringify(e.errors).replace(/]|[[]/g, '').replace(/({|})/g, ''));
+                });
+    }
     tocChanged(val: boolean) {
         this.termsAndConditionAccepted = val;
     }
