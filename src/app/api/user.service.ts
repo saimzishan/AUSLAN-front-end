@@ -320,7 +320,6 @@ export class UserService extends ApiService {
                 JSON.stringify(obj) , options) // Better add verify in path
             .catch((err) => { return Observable.throw(err); });
     }
-    // ================= Added by Zeeshan yousaf ============================= //
     addStaffAvailabilities(userID: number, availibilityBlock: AvailabilityBlock) {
         let headers = new Headers({
             'Accept': 'application/json',
