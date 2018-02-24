@@ -169,7 +169,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
 
             this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
                 if (result) {
-                    this.changeBookingState(isCancel);
+                    this.cancelBooking(isCancel, false, true);
                 }
             });
         }
@@ -193,22 +193,35 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
         if (result !== 'close') {
             if (isCancel) {
-                this.cancelBooking(isCancel, !result);
+                this.cancelBooking(isCancel, !result, false);
             } else {
                 this.changeBookingState(isCancel, !result);
             }
         }
         });
     }
-    cancelBooking(isCancel: Boolean, update_all_linked_bookings?: boolean) {
+
+    cancelBooking(isCancel: Boolean, update_all_linked_bookings: boolean, forUnlink: boolean) {
         let config: MdDialogConfig = {
             disableClose: true
         };
+        let title, cancelTitle, okTitle;
+
+        if (forUnlink) {
+            title = isCancel ? 'Cancel booking' : 'Unable to service booking';
+            cancelTitle = isCancel ? 'Cancelled Chargeable' : 'Unable to service this bookings';
+            okTitle = isCancel ? 'Cancelled No Charge' : 'Unable to service this booking';
+        } else {
+            title = isCancel ? 'Cancel linked booking' : 'Unable to service linked booking';
+            cancelTitle = isCancel ? 'Cancelled Chargeable' : 'Unable to service all bookings';
+            okTitle = isCancel ? 'Cancelled No Charge' : 'Unable to service this booking';
+        }
+
         config.viewContainerRef = this.viewContainerRef;
         this.dialogRef = this.dialog.open(PopupComponent, config);
-        this.dialogRef.componentInstance.title = isCancel ? 'Cancel linked booking' : 'Unable to service linked booking';
-        this.dialogRef.componentInstance.cancelTitle = isCancel ? 'Cancelled Chargeable' : 'Unable to service all bookings';
-        this.dialogRef.componentInstance.okTitle = isCancel ? 'Cancelled No Charge' : 'Unable to service this booking';
+        this.dialogRef.componentInstance.title = title;
+        this.dialogRef.componentInstance.cancelTitle = cancelTitle;
+        this.dialogRef.componentInstance.okTitle = okTitle;
         this.dialogRef.componentInstance.closeVal = 'close';
         if (isCancel) {
             let statement = this.isVicdeaf && (this.diffInHours < 48) ? 'Cancelled Chargeable since the start date is within 48 hours.'
