@@ -51,6 +51,7 @@ export class BlockoutComponent implements OnDestroy, OnInit {
         }
         this.userID = this.interpreter !== null ? this.interpreter.id : -1;
         this.end_time.setTime(this.start_time.getTime() + (1 * 60 * 60 * 1000));
+        this.end_date = this.end_time;
         this.sub = this.route.params.subscribe(params => {
             let param_id = params['id'] || '';
             if (Boolean(param_id) && parseInt(param_id, 10) > 0) {
@@ -63,7 +64,7 @@ export class BlockoutComponent implements OnDestroy, OnInit {
                 this.start_time = new Date(this.availabilityBlock.start_time);
                 this.end_time = new Date(this.availabilityBlock.end_time);
                 this.end_date = Boolean(this.availabilityBlock.end_date) ? new Date(this.availabilityBlock.end_date) :
-                    new Date(this.availabilityBlock.start_time);
+                    this.end_time;
             }
         });
         this.roundOffMinutes();
@@ -90,10 +91,10 @@ export class BlockoutComponent implements OnDestroy, OnInit {
     onStartTimeChanged() {
         let dt = new Date();
         dt.setDate(this.start_time.getDate());
-        this.end_date = dt;
 
         dt.setTime(this.start_time.getTime() + (1 * 60 * 60 * 1000));
         this.end_time = dt;
+        this.end_date = dt;
     }
     roundOffMinutes() {
         let dt = this.end_time;
@@ -157,7 +158,7 @@ export class BlockoutComponent implements OnDestroy, OnInit {
 
         this.availabilityBlock.start_time = this.interpreterStateTimeZone(this.start_time);
         this.availabilityBlock.end_time = this.interpreterStateTimeZone(this.end_time);
-        this.availabilityBlock.end_date = Boolean(this.end_date) ? this.interpreterStateTimeZone(this.end_date) : this.interpreterStateTimeZone(this.start_time);
+        this.availabilityBlock.end_date = Boolean(this.end_date) ? this.interpreterStateTimeZone(this.end_date) : this.interpreterStateTimeZone(this.end_time);
         this.userDataService.editBlockout(this.userID,
             this.availabilityBlock)
             .subscribe((res: any) => {
