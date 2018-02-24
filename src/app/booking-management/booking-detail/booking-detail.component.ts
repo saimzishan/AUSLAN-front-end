@@ -435,10 +435,10 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         } else {
             if (this.isUserAdminORBookOfficer && this.bookable !== undefined) {
                 tempPrefInterp = this.bookable.prefferedInterpreters.filter(itm => itm.preference === 'preferred');
-                this.hasPrefInt = (tempPrefInterp.length > 0) ? true : false;
+                this.hasPrefInt = (tempPrefInterp.length > 0);
             } else if (this.userModel.type === 'OrganisationalRepresentative' || this.userModel.type === 'IndividualClient') {
                 tempPrefInterp = this.userModel.prefferedInterpreters.filter(itm => itm.preference === 'preferred');
-                this.hasPrefInt = (tempPrefInterp.length > 0) ? true : false;
+                this.hasPrefInt = (tempPrefInterp.length > 0);
             }
         }
     }
@@ -464,10 +464,10 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         } else {
             if (this.isUserAdminORBookOfficer && this.bookable !== undefined) {
                 tempBlockInterp = this.bookable.prefferedInterpreters.filter(itm => itm.preference === 'blocked');
-                this.hasBlockInt = (tempBlockInterp.length > 0) ? true : false;
+                this.hasBlockInt = (tempBlockInterp.length > 0);
             } else if (this.userModel.type === 'OrganisationalRepresentative' || this.userModel.type === 'IndividualClient') {
                 tempBlockInterp = this.userModel.prefferedInterpreters.filter(itm => itm.preference === 'blocked');
-                this.hasBlockInt = (tempBlockInterp.length > 0) ? true : false;
+                this.hasBlockInt = (tempBlockInterp.length > 0);
             }
         }
     }
