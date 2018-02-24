@@ -67,11 +67,11 @@
       <td data-title="NATURE">{{selectedBookingModel.nature_of_appointment}}</td>
       <td data-title="SPECIFIC">{{selectedBookingModel.specific_nature_of_appointment}}</td>
       <ng-container *ngIf='!isClientInterpAndBookInProgress()'>
-        <td data-title="PEOPLE">{{selectedBookingModel.venue.expected_attendance}}</td>
+        <td data-title="NUMBER OF PEOPLE">{{selectedBookingModel.venue.expected_attendance}}</td>
         <td data-title="SPECIAL INSTRUCTIONS" class="new-line">
           {{selectedBookingModel.special_instructions}}
         </td>
-        <td align="center" data-title="ATTACHED">
+        <td align="center" data-title="ATTACHMENTS">
           <ul *ngIf="selectedBookingModel.documents_attributes.length > 0"
                            class="dropdown menu custom"
                            data-dropdown-menu>
