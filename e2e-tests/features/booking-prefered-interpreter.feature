@@ -249,7 +249,7 @@ Feature: Create Booking with preferred or blocked interpreters
     When I click on element by name 'rdBookingAddressNo'
     And I fill New Booking form fields correctly
     When I click on element by name 'rdBlockedInterpretersYes'
-    When I click on element by name 'rdProfileBlockedInterpretersYes'
+    #When I click on element by name 'rdProfileBlockedInterpretersYes'
     And I can see the element with name 'btnManageInterpreter_blocked' is 'visible'
     And I can count the element with css 'section.interpreter_selected_blocked' to be '0'
     And I click on BUTTON name 'btnManageInterpreter_blocked'
@@ -279,7 +279,7 @@ Feature: Create Booking with preferred or blocked interpreters
     When I click on link 'Booking details'
     Then I should be on the edit booking page
     When I click on element by name 'rdBlockedInterpretersYes'
-    When I click on element by name 'rdProfileBlockedInterpretersYes'
+    #When I click on element by name 'rdProfileBlockedInterpretersYes'
     And I click on BUTTON name 'btnManageInterpreter_blocked'
     Then I can see the element with css 'div.md-dialog' is 'visible'
     When I click on '1' interpreter
@@ -315,7 +315,7 @@ Feature: Create Booking with preferred or blocked interpreters
     When I click on element by name 'rdBookingAddressNo'
     And I fill New Booking form fields correctly
     When I click on element by name 'rdBlockedInterpretersYes'
-    When I click on element by name 'rdProfileBlockedInterpretersYes'
+    #When I click on element by name 'rdProfileBlockedInterpretersYes'
     And I can see the element with name 'btnManageInterpreter_blocked' is 'visible'
     And I can count the element with css 'section.interpreter_selected_blocked' to be '0'
     And I click on BUTTON name 'btnManageInterpreter_blocked'
@@ -345,7 +345,7 @@ Feature: Create Booking with preferred or blocked interpreters
     When I click on link 'Booking details'
     Then I should be on the edit booking page
     When I click on element by name 'rdBlockedInterpretersYes'
-    When I click on element by name 'rdProfileBlockedInterpretersYes'
+    #When I click on element by name 'rdProfileBlockedInterpretersYes'
     And I click on BUTTON name 'btnManageInterpreter_blocked'
     Then I can see the element with css 'div.md-dialog' is 'visible'
     When I click on '1' interpreter
@@ -355,7 +355,7 @@ Feature: Create Booking with preferred or blocked interpreters
     Then I can remove '1' , 'blocked' interpreter
     And I can count the element with css 'section.interpreter_selected_blocked' to be '0'
     When I click on element by name 'rdPreferredInterpretersYes'
-    When I click on element by name 'rdProfilePreferredInterpretersYes'
+    #When I click on element by name 'rdProfilePreferredInterpretersYes'
     And  I click on BUTTON name 'btnManageInterpreter_prefered'
     Then I can see the element with css 'div.md-dialog' is 'visible'
     When I click on '1' interpreter
@@ -384,7 +384,7 @@ Feature: Create Booking with preferred or blocked interpreters
     When I click on element by name 'rdBookingAddressNo'
     And I fill New Booking form fields correctly
     When I click on element by name 'rdBlockedInterpretersYes'
-    When I click on element by name 'rdProfileBlockedInterpretersYes'
+    #When I click on element by name 'rdProfileBlockedInterpretersYes'
     And I can see the element with name 'btnManageInterpreter_blocked' is 'visible'
     And I can count the element with css 'section.interpreter_selected_blocked' to be '0'
     And I click on BUTTON name 'btnManageInterpreter_blocked'
@@ -414,7 +414,7 @@ Feature: Create Booking with preferred or blocked interpreters
     When I click on link 'Booking details'
     Then I should be on the edit booking page
     When I click on element by name 'rdBlockedInterpretersYes'
-    When I click on element by name 'rdProfileBlockedInterpretersYes'
+    #When I click on element by name 'rdProfileBlockedInterpretersYes'
     And I click on BUTTON name 'btnManageInterpreter_blocked'
     Then I can see the element with css 'div.md-dialog' is 'visible'
     When I click on '1' interpreter
@@ -424,7 +424,7 @@ Feature: Create Booking with preferred or blocked interpreters
     Then I can remove '1' , 'blocked' interpreter
     And I can count the element with css 'section.interpreter_selected_blocked' to be '0'
     When I click on element by name 'rdPreferredInterpretersYes'
-    When I click on element by name 'rdProfilePreferredInterpretersYes'
+    #When I click on element by name 'rdProfilePreferredInterpretersYes'
     And  I click on BUTTON name 'btnManageInterpreter_prefered'
     Then I can see the element with css 'div.md-dialog' is 'visible'
     When I click on '1' interpreter

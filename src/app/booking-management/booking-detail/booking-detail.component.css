@@ -3,3 +3,6 @@
 .another-file-over-class { border: dotted 3px green; }
 .bulk-upload { padding: 0;}
 .bulk-upload b { margin-bottom: 0.5em;}
+.clear-pull{
+    clear: both;
+}

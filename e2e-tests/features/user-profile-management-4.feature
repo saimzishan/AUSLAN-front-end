@@ -192,3 +192,4 @@ Feature: User Profile Management
     And I will be taken to my individual profile page
     And The dropdown field COMM. PREFERENCE * will be updated with email_and_sms
     
+    
