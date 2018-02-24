@@ -185,6 +185,7 @@ Feature: Booking Management
     Then I can see the button 'Save' is disabled
     And I click on BUTTON 'Duplicate'
     Then I will be taken to the 'New Booking' form
+    And I can see that the bookable is set
     When I click the create booking button
     Then I will get an error notification saying "Kindly accept Terms and Conditions"
     Then I verify that the link with name 'lnkTC' href is 'https://s3-ap-southeast-2.amazonaws.com/auslan-public-bucket/Auslan_Online_Terms_And_Conditions.pdf'
