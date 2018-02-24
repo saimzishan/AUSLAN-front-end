@@ -94,6 +94,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     defaultDateTime: Date;
     isRecurringBooking = false;
     isDisableForClientOrgBookOfficer = false;
+    hasBlockInt: Boolean = false;
+    hasPrefInt: Boolean = false;
     repeat_days = [
         {
             display: 'S',
@@ -425,11 +427,20 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     public onPreferredSelectionChange() {
+        let tempPrefInterp = [];
         if (!this.showPreferred) {
             this.showProfilePreferred = false;
             this.bookingModel.preference_allocations_attributes = this.bookingModel.preference_allocations_attributes.filter(a => a.preference !== 'preferred');
+            this.oldInterpreterPreference = [];
+        } else {
+            if (this.isUserAdminORBookOfficer && this.bookable !== undefined) {
+                tempPrefInterp = this.bookable.prefferedInterpreters.filter(itm => itm.preference === 'preferred');
+                this.hasPrefInt = (tempPrefInterp.length > 0);
+            } else if (this.userModel.type === 'OrganisationalRepresentative' || this.userModel.type === 'IndividualClient') {
+                tempPrefInterp = this.userModel.prefferedInterpreters.filter(itm => itm.preference === 'preferred');
+                this.hasPrefInt = (tempPrefInterp.length > 0);
+            }
         }
-
     }
 
     public onProfilePreferredSelectionChange() {
@@ -445,9 +456,19 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     public onBlockedSelectionChange() {
+        let tempBlockInterp = [];
         if (!this.showBlocked) {
             this.showProfileBlocked = false;
             this.bookingModel.preference_allocations_attributes = this.bookingModel.preference_allocations_attributes.filter(a => a.preference !== 'blocked');
+            this.oldInterpreterPreference = [];
+        } else {
+            if (this.isUserAdminORBookOfficer && this.bookable !== undefined) {
+                tempBlockInterp = this.bookable.prefferedInterpreters.filter(itm => itm.preference === 'blocked');
+                this.hasBlockInt = (tempBlockInterp.length > 0);
+            } else if (this.userModel.type === 'OrganisationalRepresentative' || this.userModel.type === 'IndividualClient') {
+                tempBlockInterp = this.userModel.prefferedInterpreters.filter(itm => itm.preference === 'blocked');
+                this.hasBlockInt = (tempBlockInterp.length > 0);
+            }
         }
     }
 
@@ -1020,5 +1041,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     resetPrefBlockInterpreters() {
         this.oldInterpreterPreference = [];
         this.showPreferred = this.showProfilePreferred = this.showBlocked = this.showProfileBlocked = false;
+        this.hasPrefInt = this.hasBlockInt = false;
     }
 }

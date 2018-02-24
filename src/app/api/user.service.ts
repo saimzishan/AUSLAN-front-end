@@ -320,6 +320,28 @@ export class UserService extends ApiService {
                 JSON.stringify(obj) , options) // Better add verify in path
             .catch((err) => { return Observable.throw(err); });
     }
+    addStaffAvailabilities(userID: number, availibilityBlock: AvailabilityBlock) {
+        let headers = new Headers({
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        });
+        let options = new RequestOptions({ headers: headers });
+        let obj = { 'staff_availability': availibilityBlock };
+
+        return this.http
+            .post(GLOBAL.USER_API_ENDPOINT + '/interpreters/' + userID + '/staff_availabilities',
+                JSON.stringify(obj), options) // Better add verify in path
+            .catch((err) => { return Observable.throw(err); });
+    }
+    getStaffAvailabilities(userID: number) {
+        let headers = new Headers({ 'Accept': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http
+            .get(GLOBAL.USER_API_ENDPOINT + '/interpreters/' + userID + '/staff_availabilities', options)
+            .map(this.extractData)
+            .catch((err) => { return Observable.throw(err); });
+    }
 
     editBlockout( userID: number, availabilityBlock: AvailabilityBlock) {
         let headers = new Headers({'Accept': 'application/json',
@@ -333,6 +355,20 @@ export class UserService extends ApiService {
                 JSON.stringify(obj) , options) // Better add verify in path
             .catch((err) => { return Observable.throw(err); });
     }
+    editStaffAvailabilities(userID: number, availabilityBlock: AvailabilityBlock) {
+        let headers = new Headers({
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        });
+        let options = new RequestOptions({ headers: headers });
+        let obj = { 'staff_availability': availabilityBlock };
+
+        return this.http
+            .put(GLOBAL.USER_API_ENDPOINT + '/interpreters/' + userID + '/staff_availabilities/' +
+                availabilityBlock.id,
+                JSON.stringify(obj), options) // Better add verify in path
+            .catch((err) => { return Observable.throw(err); });
+    }
 
     deleteBlockout(userID: number, availability_block_id: number) {
         let headers = new Headers({'Accept': 'application/json',
@@ -342,6 +378,31 @@ export class UserService extends ApiService {
         return this.http
             .delete(GLOBAL.USER_API_ENDPOINT + '/interpreters/' +
                 userID + '/availability_blocks/' + availability_block_id ,
+                options) // Better add verify in path
+            .catch((err) => { return Observable.throw(err); });
+    }
+    toggle_employment_type(id: number): Observable<Object> {
+
+        let headers = new Headers({
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        });
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http.put(GLOBAL.USER_API + '/' + id + '/toggle_employment_type/', options)
+            .map(this.extractData)
+            .catch((err) => { return this.handleError(err); });
+    }
+    deleteStaffAvailabilities(userID: number, availability_block_id: number) {
+        let headers = new Headers({
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        });
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http
+            .delete(GLOBAL.USER_API_ENDPOINT + '/interpreters/' +
+                userID + '/staff_availabilities/' + availability_block_id,
                 options) // Better add verify in path
             .catch((err) => { return Observable.throw(err); });
     }

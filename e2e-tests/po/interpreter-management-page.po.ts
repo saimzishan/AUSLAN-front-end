@@ -4,7 +4,7 @@ import {expect} from '../config/helpers/chai-imports';
 import {BookingPage} from './create-booking.po';
 
 enum InterpreterTableHeaders {
-    None, Empty, Status, 'First Name', 'Last Name', Role, Lvl, Suburb, Km
+    None, Empty, Status, Name, Role, Lvl, Suburb, Km
 }
 
 export class InterpreterManagementPage extends PageObject {
@@ -66,8 +66,7 @@ export class InterpreterManagementPage extends PageObject {
         let lastEl = this.getElementByCss('.section-left table tbody tr:last-child td:nth-child(' + InterpreterTableHeaders[tableHeader] + ')');
         let isAscending = ascending === 'ascending';
         let compareMethod = {
-            'First Name': 'compareByText',
-            'Last Name': 'compareByText',
+            'Name': 'compareByText',
             Lvl: 'compareByText',
             Suburb: 'compareByText', // Terabithia > Parkville
             Km: 'compareByText', // 50 Km > 10 Km
