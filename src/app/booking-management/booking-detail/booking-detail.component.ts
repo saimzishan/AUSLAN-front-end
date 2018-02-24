@@ -169,8 +169,13 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 this.checkInterpreterBoxes();
             } else {
                 this.bookingModel = new Booking();
+                this.bookingDate = undefined;
+                this.bookingStartTime = undefined;
+                this.bookingEndTime = undefined;
+                this.isRecurringBooking = false;
                 this.resetPrefBlockInterpreters();
                 this.onSpecialInstruction();
+                this.resetRecurringDays();
             }
 
             if (this.forEdit) {
@@ -741,9 +746,11 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     public isRecurrenceDayCheckboxDisabled(day) {
-        if(this.isDuplicate){
-        return this.bookingDate && this.bookingDate.getDay() === this.repeat_days.indexOf(day);
+        const isDisabled = this.bookingDate && this.bookingDate.getDay() === this.repeat_days.indexOf(day);
+        if (isDisabled) {
+            this.repeat_days[this.repeat_days.indexOf(day)].selected = true;
         }
+        return isDisabled;
     }
 
     private getRecurrenceDays() {
@@ -900,8 +907,10 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         for (const day of this.repeat_days) {
             day.selected = false;
         }
-        this.repeat_days[this.bookingDate.getDay()].selected = true;
-        this.minDateForRecurrenceEnd = this.getMinDateForRecurringBookingEnd();
+        if (this.bookingDate) {
+            this.repeat_days[this.bookingDate.getDay()].selected = true;
+            this.minDateForRecurrenceEnd = this.getMinDateForRecurringBookingEnd();
+        }
     }
 
     _handleReaderLoaded(readerEvt) {
