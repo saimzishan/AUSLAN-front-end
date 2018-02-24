@@ -12,9 +12,7 @@ defineSupportCode(({Before}) => {
         console.log('Inside Before Scenario');
 
         if (!first_run) {
-            Heroku.sendCommandToHeroku('Assignment.destroy_all');
-            Heroku.sendCommandToHeroku('Booking.destroy_all');
-            Heroku.sendCommandToHeroku('User.destroy_all');
+            Heroku.sendCommandToHeroku('Assignment.destroy_all;Booking.destroy_all;User.destroy_all;Delayed::Job.destroy_all');
         }
 
         let all_personas = ['Booking Officer', 'Administrator', 'Accountant', 'Interpreter',

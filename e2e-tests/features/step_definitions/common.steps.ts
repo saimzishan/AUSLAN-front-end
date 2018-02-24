@@ -564,4 +564,5 @@ defineSupportCode(({Given, When, Then}) => {
             });
     }
 
+    Then(/^I run all background jobs$/, Heroku.runAllBackgroundTasks);
 });

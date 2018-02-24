@@ -39,7 +39,7 @@
       <div class="medium-12 columns">
         <div class="form-field">
           <label>ARE YOU MAKING A BOOKING FOR AN INDIVIDUAL CLIENT OR ORGANISATION?*</label>
-          <md-radio-group name="rdBookingFor" [(ngModel)]="bookingModel.bookable_type" [disabled]="isDisabledForAdmin">
+          <md-radio-group name="rdBookingFor" [(ngModel)]="bookingModel.bookable_type" [disabled]="isDisabledForAdmin" (change)="onBookingForChange()">
             <md-radio-button id ="IndividualClient" name ="IndividualClient" value="IndividualClient">CLIENT</md-radio-button>
             <md-radio-button id="OrganisationalRepresentative" name="OrganisationalRepresentative" value="OrganisationalRepresentative">ORGANISATION</md-radio-button>
           </md-radio-group>
@@ -56,6 +56,7 @@
           <p-autoComplete name='bookable'
             [(ngModel)]="bookable"
             [suggestions]="allClientsOrg"
+            [placeholder]="'Start typing...'"
             (completeMethod)="filterBookingForItems($event)"
             (onSelect)='onBookingForSelectionChange($event)'
             field='displayName'

@@ -374,4 +374,24 @@ export class BookingPage extends PageObject {
         this.setDate(dateString);
         this.setStartEndTime(field, timeString);
     }
+
+    changeBookableType = () => {
+        const indClientInput = this.getElementByCss('input#IndividualClient-input');
+        return indClientInput.getAttribute('checked').then(checked => {
+            if (checked) {
+                return this.getElementByCss('label[for="OrganisationalRepresentative-input"]').click();
+            } else {
+                return this.getElementByCss('label[for="IndividualClient-input"]').click();
+            }
+        });
+    }
+
+    checkPresenceOfBookable = (negate: 'not' | undefined) => {
+        const presence = !!!negate;
+        const input = this.getElementByCss('.ui-autocomplete-input');
+        return input.getAttribute('value').then(value => {
+            const expectedValue = !!value
+            return expect(expectedValue).to.be.eq(presence);
+        });
+    }
 }

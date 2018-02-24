@@ -77,6 +77,7 @@ defineSupportCode(({Given, Then, When}) => {
     When(/^I empty the search field '(.*)'$/, bookingManagementPO.emptyTheField);
     When(/^I click out of the text box$/, bookingManagementPO.clickOutSide);
     When(/^I click on Booking$/, bookingManagementPO.clickOnBooking);
+    When(/^I change the bookable type/, createBookingPO.changeBookableType);
 
 
     Then(/^I will be taken to the 'New Booking' form$/, createBookingPO.browse);
@@ -139,4 +140,5 @@ defineSupportCode(({Given, Then, When}) => {
     Then(/^I verify that payroll '(.*)' input fields are non editable$/, bookingPayrollPO.checkReadonlyFields);
     Then(/^I verify that payroll '(.*)' input fields have zero value$/, bookingPayrollPO.checkInputValues);
     Then(/^I should get a valid payroll save notification$/, bookingPayrollPO.getSuccessNotificationContent);
+    Then(/^I can see that the bookable is (not)?\s?set/, createBookingPO.checkPresenceOfBookable);
 });
