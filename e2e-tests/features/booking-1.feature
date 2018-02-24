@@ -234,6 +234,3 @@ Feature: Booking Management
     And I click the create booking button
     Then I will be shown a popup message
 # ---------------------------------------- AUSLAN1-252 -> END ----------------------------------------
-
-
-
