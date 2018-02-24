@@ -72,7 +72,20 @@ Feature: Booking Management
     Then I am shown a validation error with the text 'Please specify what the appointment is about'
 
     #--------------------------------- AUSLAN1-770 -----------------------------------------------------
-  @ignoreThis
+
+  @runThis
+  Scenario: Given and Individual Client exists, As a Booking Officer, the bookable should clear when I change bookable type
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    Then I am on the bookings page
+    And I click on 'New Booking'
+    Then I will be taken to the 'New Booking' form
+    And I select the bookable for client
+    Then I can see that the bookable is set
+    When I change the bookable type
+    Then I can see that the bookable is not set
+
+  @runThis
   Scenario: As a Booking Officer, I can create a booking for Organisational Representative
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
@@ -102,7 +115,7 @@ Feature: Booking Management
     When I change the street number to 154
     And I click on checkbox name 'tnc'
     And I click on BUTTON 'SAVE'
-    And If I am shown a popup, I approve it
+    And If I am shown popups, I approve all of them
     Then I should get a valid booking update notification
     # ---------------------------------------- AUSLAN1-711 -> START ----------------------------------------
   @ignoreThis
