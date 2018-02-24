@@ -40,7 +40,7 @@ const appRoutes: Routes = [
   { path: 'booking-management/edit-booking', component: BookingDetailComponent, canActivate: [AuthGuard]},
   { path: 'booking-management/:id/payroll-billing', component: BookingPayrollComponent, canActivate: [AuthGuard] },
 
-  { path: 'interpreter-messages/messages', component: InterpreterMessagesComponent, canActivate: [AuthGuard]},
+  { path: 'users/messages', component: InterpreterMessagesComponent, canActivate: [AuthGuard]},
 
   { path: 'authenticate', component: AuthComponent , canActivate: [NoAuthGuard] },
   { path: 'authenticate/logout', component: AuthComponent },

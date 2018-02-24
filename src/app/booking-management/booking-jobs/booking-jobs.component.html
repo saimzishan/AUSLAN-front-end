@@ -363,7 +363,7 @@
 
 <ul *ngIf="!isCurrentUserAdminOrBookingOfficer()" class="dropdown menu custom actions hidden-desktop reduced" data-dropdown-menu>
     <li> 
-        <button [routerLink]="['/interpreter-messages/messages']" class="button green wide" style="width: 100%;">MESSAGE OFFICE</button>
+        <button [routerLink]="['/users/messages']" class="button green wide" style="width: 100%;">MESSAGE OFFICE</button>
     </li>
 </ul>
 <ng-container *ngIf="jobAccessError">
