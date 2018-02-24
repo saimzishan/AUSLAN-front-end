@@ -89,7 +89,7 @@
           </ul>
         </td>
       </ng-container>
-      <td data-title="DATE ADDED" *ngIf='isCurrentUserAdminOrBookingOfficer() || isOrgRep()'>{{selectedBookingModel.created_at | date}}</td>
+      <td data-title="DATE ADDED" *ngIf='isCurrentUserAdminOrBookingOfficer() || isClientOrOrgRep()'>{{selectedBookingModel.created_at | date}}</td>
       <ng-container *ngIf='isCurrentUserAdminOrBookingOfficer()'>
         <td data-title="DAYS NOTICED">Days Notice</td>
         <td data-title="UPDATED"><span class="underline">{{selectedBookingModel.updated_at | date}}</span></td>

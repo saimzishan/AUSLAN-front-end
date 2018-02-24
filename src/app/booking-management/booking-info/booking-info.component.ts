@@ -31,6 +31,10 @@ export class BookingInfoComponent {
         return Boolean(GLOBAL.currentUser instanceof OrganisationalRepresentative);
     }
 
+    isClientOrOrgRep(): boolean {
+        return Boolean(GLOBAL.currentUser instanceof IndividualClient || GLOBAL.currentUser instanceof OrganisationalRepresentative);
+    }
+
     isClientInterpAndBookInProgress(): boolean {
         return this.isClientOrInterpreter() && this.isBookingInProgress();
     }
