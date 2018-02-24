@@ -471,18 +471,17 @@ defineSupportCode(({Given, When, Then}) => {
     }
 
     When(/^I verify checkbox name '(.*)' is checked '(.*)'$/, verifyOnCBByName);
-    function verifyOnCBByName(btnName: string, checkedState: string) {
-        let bVal = ((checkedState === 'True') || (checkedState === 'true'));
+    function verifyOnCBByName(btnName: string, checkedState: 'True' | 'true') {
         return page.getElementByName(btnName).getAttribute('ng-reflect-model').then(val => {
-            expect(val).to.be.eq(bVal+'');
+            return expect(val).to.be.eq(checkedState.toLowerCase());
         });
     }
 
     When(/^I verify material checkbox name '(.*)' is checked '(.*)'$/, verifyMaterialCB);
-    function verifyMaterialCB(btnName: string, checkedState: string) {
-        let bVal = ((checkedState === 'True') || (checkedState === 'true'));
-        return page.getElementByCss('md-checkbox[ng-reflect-name="' + btnName + '"]').getAttribute('ng-reflect-model').then(val => {
-            expect(val).to.be.eq(bVal + '');
+    function verifyMaterialCB(btnName: string, checkedState: 'True' | 'true') {
+        const checkbox = page.getElementByCss('md-checkbox[ng-reflect-name="' + btnName + '"]');
+        return checkbox.getAttribute('ng-reflect-model').then(val => {
+            return expect(val).to.be.eq(checkedState.toLowerCase());
         });
     }
 

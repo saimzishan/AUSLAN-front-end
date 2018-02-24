@@ -120,7 +120,6 @@ Feature: Booking Payroll and Billing
     And I run all background jobs
     When I click on link 'Payroll & Billing'
     Then I should be on the payroll and billing page
-    When I click on material checkbox name 'cbPayTravel_0'
     Then I verify material checkbox name 'cbPayTravel_0' is checked 'true'
     And I fill the payroll field 'interpreter_interpreterTime_0' with value '1:20'
     And I fill the payroll field 'interpreter_prepTime_0' with value '0:20'
