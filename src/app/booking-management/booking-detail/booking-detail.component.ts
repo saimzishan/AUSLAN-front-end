@@ -438,7 +438,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 this.hasPrefInt = (tempPrefInterp.length > 0) ? true : false;
             } else if (this.userModel.type === 'OrganisationalRepresentative' || this.userModel.type === 'IndividualClient') {
                 tempPrefInterp = this.userModel.prefferedInterpreters.filter(itm => itm.preference === 'preferred');
-                this.hasPrefInt = (this.userModel.prefferedInterpreters.length > 0) ? true : false;
+                this.hasPrefInt = (tempPrefInterp.length > 0) ? true : false;
             }
         }
     }
@@ -467,7 +467,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 this.hasBlockInt = (tempBlockInterp.length > 0) ? true : false;
             } else if (this.userModel.type === 'OrganisationalRepresentative' || this.userModel.type === 'IndividualClient') {
                 tempBlockInterp = this.userModel.prefferedInterpreters.filter(itm => itm.preference === 'blocked');
-                this.hasBlockInt = (this.userModel.prefferedInterpreters.length > 0) ? true : false;
+                this.hasBlockInt = (tempBlockInterp.length > 0) ? true : false;
             }
         }
     }
