@@ -420,7 +420,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     public onBookingForChange() {
         this.bookingModel.preference_allocations_attributes = [];
         this.bookingModel.bookable_id = 0;
-        this.bookable = <IndividualClient | OrganisationalRepresentative>UserFactory.createUser({ type: this.bookingModel.bookable_type });
+        this.bookable = undefined;
     }
 
     public onBookingForSelectionChange(selectedObject: IndividualClient | OrganisationalRepresentative) {

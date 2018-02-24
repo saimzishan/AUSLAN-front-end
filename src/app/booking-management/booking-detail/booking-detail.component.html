@@ -56,7 +56,7 @@
           <p-autoComplete name='bookable'
             [(ngModel)]="bookable"
             [suggestions]="allClientsOrg"
-            [placeholder]="Start typing..."
+            [placeholder]="'Start typing...'"
             (completeMethod)="filterBookingForItems($event)"
             (onSelect)='onBookingForSelectionChange($event)'
             field='displayName'
