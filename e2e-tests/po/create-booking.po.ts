@@ -3,6 +3,7 @@ import {browser, by, element, $, $$, protractor, ExpectedConditions} from 'protr
 import {expect} from '../config/helpers/chai-imports';
 import {CONSTANT, Booking} from '../helper';
 import {NotificationObject} from './notification';
+import * as moment from 'moment';
 
 interface TestDateFormat {
     mm: string;
@@ -14,6 +15,7 @@ export class BookingPage extends PageObject {
     previousDate: Boolean = false;
     tommorowDate: Boolean = false;
     list_of_object = {};
+
     browse = () => {
         return this.currentPath().then((currentPath) => {
             this.didFinishedRendering();
@@ -225,7 +227,11 @@ export class BookingPage extends PageObject {
     }
     editBookingWithDayAfterTomorrowDateWith_VICDEAF_STATE = () => {
         this.getElementByCss('input[name="dpDate"]').clear();
-        this.setDate( this.getDateAfterNDays(2));
+        this.setDate(this.getDateAfterNDays(2));
+        this.getElementByCss('input[name="dpEventDate"]').clear();
+        this.setStartEndTime('start', this.getTimeBeforeNHours(2));
+        this.getElementByCss('input[name="dpEventEndTime"]').clear();
+        this.setStartEndTime('end', this.getTimeBeforeNHours(1));
         this.setElementsValueByName('address_state', 'VIC');
     }
     editBookingWith_DSQ_STATES = () => {
@@ -282,6 +288,16 @@ export class BookingPage extends PageObject {
             dateStart.getFullYear().toString()
         ].join('/');
     }
+
+    private getTimeBeforeNHours = (n: number): string => {
+        const currentDate = new Date();
+        currentDate.setHours(currentDate.getHours() - n);
+        let tim = moment(currentDate).format('hh:mm A');
+       // let tim = currentDate.getHours() + ':' + currentDate.getMinutes();
+        console.log('timeeeeeeee'+tim);
+        return tim;
+    }
+
     createBookingWithTimeAndInterpreter = (standard: string, startTime: string, endTime: string, interpreterNum: string, interpreterFieldName: string) => {
         const dateToSend = this.previousDate ? this.getDateAfterNDays(-1) : this.getDateAfterNDays(8);
         this.setDate(dateToSend);
