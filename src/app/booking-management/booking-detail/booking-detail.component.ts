@@ -96,6 +96,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     isDisableForClientOrgBookOfficer = false;
     hasBlockInt: Boolean = false;
     hasPrefInt: Boolean = false;
+    duplicatingBookable: number;
     repeat_days = [
         {
             display: 'S',
@@ -160,6 +161,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             if (param.length > 0) {
                 let jsonData = JSON.parse(param);
                 this.bookingModel.fromJSON(jsonData);
+                this.duplicatingBookable = jsonData.bookable_id;
                 this.oldDocuments = jsonData.documents_attributes;
                 this.oldInterpreterPreference = jsonData.preference_allocations_attributes;
                 this.bookingModel.documents_attributes = [];
@@ -305,6 +307,9 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.isDisabledForAdmin = (this.forEdit && !this.bookingModel.created_by_admin);
             this.currentUserIsContact = this.isCurrentUserContact();
             this.currentUserIsClient = this.isCurrentUserClient();
+            if (this.isDuplicate) {
+                this.getUserById(this.duplicatingBookable);
+            }
             if (!this.forEdit) {
                 this.onSelectionChange();
                 this.onClientSelectionChange();
@@ -508,6 +513,24 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             });
             return this.allClientsOrg;
         });
+    }
+
+    public getUserById(id: number) {
+        let bookableUser;
+        this.userService.getUser(id)
+            .subscribe((res: any) => {
+                if (res.status === 200) {
+                    bookableUser = res.data;
+                    const singleUser = <IndividualClient | OrganisationalRepresentative>UserFactory.createUser(bookableUser);
+                    singleUser.displayName = this.getOrgName(singleUser);
+                    this.bookable = singleUser;
+                    this.bookingModel.bookable_id = singleUser.id;
+                    this.userModel = this.isUserAdminORBookOfficer ? this.bookable : this.userModel;
+                    this.onSelectionChange();
+                    this.onClientSelectionChange();
+                    this.setInvoiceField();
+                }
+            });
     }
 
     isNotIndClient() {
