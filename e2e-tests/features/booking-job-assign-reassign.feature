@@ -39,7 +39,7 @@ Feature: Booking Admin Management
     Then I can see the booking state 'Allocated'
 
     # =================== IN PROGRESS to ALLOCATED ===============================
-  @ignoreThis
+  @runThis
   Scenario: As INTERPRETER, I have not accept or decline, but admin can Assign directly, if a booking is created and INTERPRETER Invited and Administrator exists then
     And I sign in with valid Administrator credentials
     When I am on the bookings page
@@ -76,7 +76,7 @@ Feature: Booking Admin Management
 
 
   # =================== ALLOCATED to IN PROGRESS ===============================
-  @ignoreThis
+  @runThis
   Scenario: As INTERPRETER, I have accepted e, but admin can UnAssign directly, if a booking is created and INTERPRETER Invited and Administrator exists then
     And I sign in with valid Interpreter credentials
     Then I will be shown the bookings page

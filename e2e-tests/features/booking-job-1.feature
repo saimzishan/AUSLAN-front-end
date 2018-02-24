@@ -175,7 +175,7 @@ Feature: Booking Admin Management
     Then I see one row with state 'Requested'
 
 
-  @ignoreThis
+  @runThis
   Scenario: Booking Officer can REQUESTED to the unable to service a booking, Interpreter exists and a booking is created
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
