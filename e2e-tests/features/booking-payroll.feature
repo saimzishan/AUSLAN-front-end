@@ -117,7 +117,7 @@ Feature: Booking Payroll and Billing
     And I click on BUTTON 'Save'
     Then I wait for 1000 milli-seconds
     Then I get valid message: 'The interpreter have been assigned'
-    Then I wait for 2000 milli-seconds
+    And I run all background jobs
     When I click on link 'Payroll & Billing'
     Then I should be on the payroll and billing page
     When I click on material checkbox name 'cbPayTravel_0'
@@ -148,7 +148,7 @@ Feature: Booking Payroll and Billing
     And I click on BUTTON 'Save'
     Then I wait for 1000 milli-seconds
     Then I get valid message: 'The interpreter have been assigned'
-    Then I wait for 2000 milli-seconds
+    And I run all background jobs
     When I click on link 'Payroll & Billing'
     Then I should be on the payroll and billing page
     And I verify material checkbox name 'cbInvoiceClient_0' is checked 'true'

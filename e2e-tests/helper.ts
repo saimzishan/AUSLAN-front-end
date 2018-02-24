@@ -431,6 +431,12 @@ export class Heroku {
         let task = 'seed:test_data:preload_booking:with_' + type + '_interpreter'; // Will create one booking with one interpreter as type
         Heroku.sendTaskToHeroku(task);
     }
+
+    static runAllBackgroundTasks() {
+        const command = 'Delayed::Job.all.map(&:invoke_job)';
+        Heroku.sendCommandToHeroku(command);
+    }
+
     static createSingleBooking() {
         const data = Heroku.createBooking(1);
         let command = 'b = Booking.new(' + JSON.stringify(data) + '); b.bookable = IndividualClient.first; b.save';
