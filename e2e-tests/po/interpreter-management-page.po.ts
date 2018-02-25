@@ -45,6 +45,9 @@ export class InterpreterManagementPage extends PageObject {
     }
 
     comparisonExpectation = (firstRowText: any, lastRowText: any, isAscending: boolean) => {
+        if (firstRowText === lastRowText) {
+            throw new Error('Text found to be same for first row and last row. Probably the table is not updated with latest data.');
+        }
         if (isAscending) {
             return expect(lastRowText > firstRowText).to.be.eq(true);
         } else {
@@ -53,9 +56,7 @@ export class InterpreterManagementPage extends PageObject {
     }
     compareByText = (firstEl, lastEl, isAscending) => {
         return firstEl.getText().then((firstRowText) => {
-            firstRowText = firstRowText === 'To be filled' ? 'zzzz' : firstRowText;
             return lastEl.getText().then((lastRowText) => {
-                lastRowText = lastRowText === 'To be filled' ? 'zzzz' : lastRowText;
                 return this.comparisonExpectation(firstRowText, lastRowText, isAscending);
             });
         });
@@ -66,7 +67,7 @@ export class InterpreterManagementPage extends PageObject {
         let lastEl = this.getElementByCss('.section-left table tbody tr:last-child td:nth-child(' + InterpreterTableHeaders[tableHeader] + ')');
         let isAscending = ascending === 'ascending';
         let compareMethod = {
-            'Name': 'compareByText',
+            Name: 'compareByText',
             Lvl: 'compareByText',
             Suburb: 'compareByText', // Terabithia > Parkville
             Km: 'compareByText', // 50 Km > 10 Km
