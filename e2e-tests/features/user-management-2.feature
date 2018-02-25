@@ -36,7 +36,6 @@ Feature: Create, read, update and delete a User
     And I will be taken to the 'INTERPRETER Signup' page
     And I select option STAFF from dropdown Staff/Casual
     And I fill all the details correctly for -> 'INTERPRETER' with the pref communication is 'SMS AND EMAIL'
-    And I wait for 30000 milli-seconds
     Then 'INTERPRETER' will be created
     And I hover on the 'Profile'
     And I go to the 'User Management' list page
