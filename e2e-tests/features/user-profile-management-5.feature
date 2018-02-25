@@ -214,6 +214,5 @@ Feature: User Profile Management
     And I click on my name in the top corner
     When I click on the option  profile
     And I will be taken to my individual profile page
-    When I click on the option  staff calender
-    When I click on BUTTON 'ADD STAFF AVAILABILITY'
-    Then I will be taken to staff-calendar page
+    When I click on BUTTON 'Add Blockout'
+    Then I will be taken to blockout page
