@@ -16,8 +16,7 @@ defineSupportCode(({After}) => {
             const world = this;
             // (scenarioResult.status === 'failed') ? saveFailedScenarioScreenshot(world, scenarioResult) : Promise.resolve();
         } else {
-            Heroku.sendCommandToHeroku('Booking.destroy_all');
-            Heroku.sendCommandToHeroku('User.destroy_all');
+            Heroku.sendCommandToHeroku('Booking.destroy_all;User.destroy_all;Delayed::Job.destroy_all');
         }
         return browser.restart();
     });

@@ -96,6 +96,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     isDisableForClientOrgBookOfficer = false;
     hasBlockInt: Boolean = false;
     hasPrefInt: Boolean = false;
+    duplicatingBookable: number;
     repeat_days = [
         {
             display: 'S',
@@ -160,6 +161,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             if (param.length > 0) {
                 let jsonData = JSON.parse(param);
                 this.bookingModel.fromJSON(jsonData);
+                this.duplicatingBookable = jsonData.bookable_id;
                 this.oldDocuments = jsonData.documents_attributes;
                 this.oldInterpreterPreference = jsonData.preference_allocations_attributes;
                 this.bookingModel.documents_attributes = [];
@@ -169,8 +171,13 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 this.checkInterpreterBoxes();
             } else {
                 this.bookingModel = new Booking();
+                this.bookingDate = undefined;
+                this.bookingStartTime = undefined;
+                this.bookingEndTime = undefined;
+                this.isRecurringBooking = false;
                 this.resetPrefBlockInterpreters();
                 this.onSpecialInstruction();
+                this.resetRecurringDays();
             }
 
             if (this.forEdit) {
@@ -305,6 +312,9 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.isDisabledForAdmin = (this.forEdit && !this.bookingModel.created_by_admin);
             this.currentUserIsContact = this.isCurrentUserContact();
             this.currentUserIsClient = this.isCurrentUserClient();
+            if (this.isDuplicate) {
+                this.getUserById(this.duplicatingBookable);
+            }
             if (!this.forEdit) {
                 this.onSelectionChange();
                 this.onClientSelectionChange();
@@ -417,6 +427,12 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         }
     }
 
+    public onBookingForChange() {
+        this.bookingModel.preference_allocations_attributes = [];
+        this.bookingModel.bookable_id = 0;
+        this.bookable = undefined;
+    }
+
     public onBookingForSelectionChange(selectedObject: IndividualClient | OrganisationalRepresentative) {
         this.bookingModel.preference_allocations_attributes = [];
         this.bookingModel.bookable_id = selectedObject.id;
@@ -435,10 +451,10 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         } else {
             if (this.isUserAdminORBookOfficer && this.bookable !== undefined) {
                 tempPrefInterp = this.bookable.prefferedInterpreters.filter(itm => itm.preference === 'preferred');
-                this.hasPrefInt = (tempPrefInterp.length > 0) ? true : false;
+                this.hasPrefInt = (tempPrefInterp.length > 0);
             } else if (this.userModel.type === 'OrganisationalRepresentative' || this.userModel.type === 'IndividualClient') {
                 tempPrefInterp = this.userModel.prefferedInterpreters.filter(itm => itm.preference === 'preferred');
-                this.hasPrefInt = (this.userModel.prefferedInterpreters.length > 0) ? true : false;
+                this.hasPrefInt = (tempPrefInterp.length > 0);
             }
         }
     }
@@ -464,10 +480,10 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         } else {
             if (this.isUserAdminORBookOfficer && this.bookable !== undefined) {
                 tempBlockInterp = this.bookable.prefferedInterpreters.filter(itm => itm.preference === 'blocked');
-                this.hasBlockInt = (tempBlockInterp.length > 0) ? true : false;
+                this.hasBlockInt = (tempBlockInterp.length > 0);
             } else if (this.userModel.type === 'OrganisationalRepresentative' || this.userModel.type === 'IndividualClient') {
                 tempBlockInterp = this.userModel.prefferedInterpreters.filter(itm => itm.preference === 'blocked');
-                this.hasBlockInt = (this.userModel.prefferedInterpreters.length > 0) ? true : false;
+                this.hasBlockInt = (tempBlockInterp.length > 0);
             }
         }
     }
@@ -502,6 +518,24 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             });
             return this.allClientsOrg;
         });
+    }
+
+    public getUserById(id: number) {
+        let bookableUser;
+        this.userService.getUser(id)
+            .subscribe((res: any) => {
+                if (res.status === 200) {
+                    bookableUser = res.data;
+                    const singleUser = <IndividualClient | OrganisationalRepresentative>UserFactory.createUser(bookableUser);
+                    singleUser.displayName = this.getOrgName(singleUser);
+                    this.bookable = singleUser;
+                    this.bookingModel.bookable_id = singleUser.id;
+                    this.userModel = this.isUserAdminORBookOfficer ? this.bookable : this.userModel;
+                    this.onSelectionChange();
+                    this.onClientSelectionChange();
+                    this.setInvoiceField();
+                }
+            });
     }
 
     isNotIndClient() {
@@ -741,7 +775,11 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     public isRecurrenceDayCheckboxDisabled(day) {
-        return this.bookingDate && this.bookingDate.getDay() === this.repeat_days.indexOf(day);
+        const isDisabled = this.bookingDate && this.bookingDate.getDay() === this.repeat_days.indexOf(day);
+        if (isDisabled) {
+            this.repeat_days[this.repeat_days.indexOf(day)].selected = true;
+        }
+        return isDisabled;
     }
 
     private getRecurrenceDays() {
@@ -898,8 +936,10 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         for (const day of this.repeat_days) {
             day.selected = false;
         }
-        this.repeat_days[this.bookingDate.getDay()].selected = true;
-        this.minDateForRecurrenceEnd = this.getMinDateForRecurringBookingEnd();
+        if (this.bookingDate) {
+            this.repeat_days[this.bookingDate.getDay()].selected = true;
+            this.minDateForRecurrenceEnd = this.getMinDateForRecurringBookingEnd();
+        }
     }
 
     _handleReaderLoaded(readerEvt) {
