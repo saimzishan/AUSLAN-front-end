@@ -331,7 +331,7 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER BOOK
     And I click on BUTTON name 'cancel_blockout'
     And I will be taken to the 'INTERPRETER Signup' page
 
-  @runThis
+  @ignoreThis
   Scenario: As Administrator, I cannot see the save and delete buttons if the blockout is created by the system, Individual Client and INTERPRETER exists
     Given I am on a computer
     Given There exist 1 bookings
