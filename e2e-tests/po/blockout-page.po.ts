@@ -24,8 +24,7 @@ export class BlockoutPagePo extends PageObject {
     browseStaff = () => {
         return this.currentPath().then((currentPath) => {
             this.didFinishedRendering();
-            expect(currentPath).to.contain('staff-availability');
-
+            expect(currentPath).to.contain('staff_calendar');
         });
     }
 
@@ -51,7 +50,7 @@ export class BlockoutPagePo extends PageObject {
             today.getFullYear().toString()
         ].join('/');
         startTime.clear();
-        startTime.sendKeys(currentDate + ' 06:25 AM'); 
+        startTime.sendKeys(currentDate + ' 06:25 AM');
         let endTime = this.getElementByCss('input[name="dpEventDate_endtime"]');
         this.clickOutSide();
         return endTime.getAttribute('value').then((val) => {
@@ -61,7 +60,7 @@ export class BlockoutPagePo extends PageObject {
     changeEndTimeOFBlockout = () => {
         let endTime = this.getElementByCss('input[name="dpEventDate_endtime"]');
         endTime.clear();
-        endTime.sendKeys('09:25 AM'); 
+        endTime.sendKeys('09:25 AM');
         this.clickOutSide();
         return endTime.getAttribute('value').then((val) => {
             expect(val).to.be.eq('09:25 AM');
