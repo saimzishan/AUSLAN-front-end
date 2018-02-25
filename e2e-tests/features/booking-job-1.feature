@@ -172,7 +172,7 @@ Feature: Booking Admin Management
     Then I see one row with state 'Requested'
 
 
-  @ignoreThis
+  @runThis
   Scenario: Booking Officer can REQUESTED to the unable to service a booking, Interpreter exists and a booking is created
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
@@ -182,8 +182,7 @@ Feature: Booking Admin Management
     Then I click on an individual booking of type 'Requested'
     Then I will be shown the booking job page
     Then I click on BUTTON 'Unable to Service'
-    Then I will be shown a popup message
-    Then I click on BUTTON name 'yesBtn'
+    And If I am shown popups, I approve all of them
     Then I get a valid 'Unable to Service' notification for state
     And I can not see a list of interpreters
     Then I can see the button state 'Unable to Service' is hidden

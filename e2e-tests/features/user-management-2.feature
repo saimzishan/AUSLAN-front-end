@@ -23,7 +23,7 @@ Feature: Create, read, update and delete a User
 
 #
 ############################### New Interpreter ##############################
-  @ignoreThis
+  @runThis
   Scenario: Administrator should be able to add a new Interp.
     And I exist as an Administrator
     And I sign in with valid Administrator credentials
@@ -34,6 +34,7 @@ Feature: Create, read, update and delete a User
     Then I click on element by name 'user-roles'
     When I hover on the userlist dropdown and select 'Interpreter'
     And I will be taken to the 'INTERPRETER Signup' page
+    And I select option STAFF from dropdown Staff/Casual
     And I fill all the details correctly for -> 'INTERPRETER' with the pref communication is 'SMS AND EMAIL'
     Then 'INTERPRETER' will be created
     And I hover on the 'Profile'

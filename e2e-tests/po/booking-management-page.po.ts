@@ -279,13 +279,13 @@ export class BookingManagementPage extends PageObject {
         return searchForm.submit();
     }
     querySearchWithEmptyDate = () => {
-        this.getElementByName('date_from').sendKeys(protractor.Key.BACK_SPACE);
+        this.getElementByName('date_from').sendKeys(protractor.Key.BACK_SPACE,protractor.Key.ARROW_RIGHT,protractor.Key.BACK_SPACE,protractor.Key.ARROW_RIGHT,protractor.Key.BACK_SPACE);
     }
     queryManualSearchWithFutureDate = () => {
-        this.getElementByName('date_from').sendKeys(protractor.Key.ARROW_RIGHT,protractor.Key.ARROW_UP);
+        this.getElementByName('date_from').sendKeys(protractor.Key.ARROW_UP);
     }
     queryManualSearchWithCurrentDate = () => {
-        this.getElementByName('date_from').sendKeys(protractor.Key.ARROW_RIGHT,protractor.Key.ARROW_DOWN);
+        this.getElementByName('date_from').sendKeys(protractor.Key.ARROW_DOWN);
     }
     enterPressed = () => {
         this.getElementByName('date_from').sendKeys(protractor.Key.ENTER);
