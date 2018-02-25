@@ -23,7 +23,7 @@ Feature: Create, read, update and delete a User
 
 #
 ############################### New Interpreter ##############################
-  @ignoreThis
+  @runThis
   Scenario: Administrator should be able to add a new Interp.
     And I exist as an Administrator
     And I sign in with valid Administrator credentials
