@@ -106,7 +106,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
         this.userService.toggle_employment_type(this.model.id)
             .subscribe((res: any) => {
                     if (res) {
-                        this.notificationServiceBus.launchNotification(false, 'Successfully applyChanges');
+                        this.notificationServiceBus.launchNotification(false, 'Successfully applied changes.');
                     }
                  }, errors => {
                     this.spinnerService.requestInProcess(false);

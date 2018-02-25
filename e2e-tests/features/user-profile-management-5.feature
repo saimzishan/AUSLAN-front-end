@@ -203,8 +203,8 @@ Feature: User Profile Management
     When I hover on the 'Actions' of the Interpreter
     Then I click on edit for an active existing Interpreter
     And I will be taken to the 'INTERPRETER Signup' page
-    When I select option STAFF from dropdown Staff/Casual
-    And I get success message: 'Successfully applyChanges'    
+    When I select option CASUAL from dropdown Staff/Casual
+    And I get success message: 'Successfully applied changes.'
 
   @runThis
   Scenario: As INTERPRETER, I should be able to go page STAFF AVAILABILITY
