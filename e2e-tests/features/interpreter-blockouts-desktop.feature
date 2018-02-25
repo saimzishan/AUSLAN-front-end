@@ -315,6 +315,26 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER BOOK
     And I get success message: 'Blockout successfully added'
     
   @runThis
+  Scenario: As Administrator I can cancel INTERPRETER blockouts on desktop and it will take me to previous page intead of user management list page
+    Given I go to the website
+    And I am on a computer
+    And I am shown the login screen, with picture and signup button
+    And I sign in with valid Administrator credentials
+    Then I will be shown the bookings page
+    When I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then The valid Interpreter should be in the list
+    When I hover on the 'Actions' of the Interpreter
+    Then I click on edit for an active existing Interpreter
+    And I will be taken to the 'INTERPRETER Signup' page
+    And I click on BUTTON name 'modify_blockouts'
+    And I will be taken to blockout page
+    And I click on BUTTON name 'save_blockout'
+    And I get error message: 'Oops! Please fill in all the fields correctly.'
+    And I click on BUTTON name 'cancel_blockout'
+    And I will be taken to the 'INTERPRETER Signup' page
+
+  @runThis
   Scenario: As Administrator, I cannot see the save and delete buttons if the blockout is created by the system, Individual Client and INTERPRETER exists
     Given I am on a computer
     Given There exist 1 bookings
@@ -347,10 +367,9 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER BOOK
     And I click on my name in the top corner
     And I click on the option  profile
     And I will be taken to my individual profile page
-    Then I click on button with css '.fc-month-button'
-    And I can count the element with css 'span.fc-title' to be '1'
-    And I can see the element with css 'span.fc-title' and text Booking
-    And I can click the element with css 'span.fc-title' and text Booking
+    Then I click on button with css '.fc-listYear-button'
+    And I can count the element with css 'tr.fc-list-item' to be '1'
+    And I click on element with css 'td.fc-list-item-title > a'
     And I will be taken to blockout page
     Then I can see the element with name 'save_blockout' is 'not visible'
     Then I can see the element with name 'delete_blockout' is 'not visible'
