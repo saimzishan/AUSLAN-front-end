@@ -19,9 +19,6 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER BOOK
     And I click on BUTTON name 'save_blockout'
     And I get error message: 'Oops! Please fill in all the fields correctly.'
     And I click on BUTTON name 'cancel_blockout'
-    And I am on the 'User Management' list page
-    When I hover on the 'Actions' of the Interpreter
-    Then I click on edit for an active existing Interpreter
     And I will be taken to the 'INTERPRETER Signup' page
     And I click on BUTTON name 'modify_blockouts'
     And I will be taken to blockout page
