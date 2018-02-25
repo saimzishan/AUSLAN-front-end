@@ -103,17 +103,19 @@ export class RegisterComponent implements OnInit, OnDestroy {
         this.model.staff_to_casual_toggle = this.model.employment_type;
     }
     staffToCasualToggle() {
-        this.userService.toggle_employment_type(this.model.id)
-            .subscribe((res: any) => {
+        if (this.model.id > 0) {
+            this.userService.toggle_employment_type(this.model.id)
+                .subscribe((res: any) => {
                     if (res) {
                         this.notificationServiceBus.launchNotification(false, 'Successfully applied changes.');
                     }
-                 }, errors => {
+                }, errors => {
                     this.spinnerService.requestInProcess(false);
                     let e = errors.json();
                     this.notificationServiceBus.launchNotification(true, errors.statusText + ' '
                         + JSON.stringify(e.errors).replace(/]|[[]/g, '').replace(/({|})/g, ''));
                 });
+        }
     }
     tocChanged(val: boolean) {
         this.termsAndConditionAccepted = val;
