@@ -19,9 +19,6 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER BOOK
     And I click on BUTTON name 'save_blockout'
     And I get error message: 'Oops! Please fill in all the fields correctly.'
     And I click on BUTTON name 'cancel_blockout'
-    And I am on the 'User Management' list page
-    When I hover on the 'Actions' of the Interpreter
-    Then I click on edit for an active existing Interpreter
     And I will be taken to the 'INTERPRETER Signup' page
     And I click on BUTTON name 'modify_blockouts'
     And I will be taken to blockout page
@@ -296,7 +293,7 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER BOOK
     And I wait for 3000 milli-seconds
     And I get error message: 'Unprocessable Entity You have a blockout at this time. Please remove the blockout before accepting the booking'
 
-@runThis
+  @runThis
   Scenario: As INTERPRETER, I can create edit blockout on desktop to check whether the end time changes or not
     Given I go to the website
     And I am on a computer
@@ -313,7 +310,7 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER BOOK
     Then I change the value of end time
     And I click on BUTTON name 'save_blockout'
     And I get success message: 'Blockout successfully added'
-    
+
   @runThis
   Scenario: As Administrator I can cancel INTERPRETER blockouts on desktop and it will take me to previous page intead of user management list page
     Given I go to the website
@@ -373,5 +370,3 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER BOOK
     And I will be taken to blockout page
     Then I can see the element with name 'save_blockout' is 'not visible'
     Then I can see the element with name 'delete_blockout' is 'not visible'
-
-

@@ -28,8 +28,7 @@ Feature: Booking Admin Management
     Then I will be shown the booking job page
     Then I can see the booking state 'In Progress'
     Then I click on BUTTON 'Unable to Service'
-    Then I will be shown a popup message
-    Then I click on BUTTON name 'yesBtn'
+    And If I am shown popups, I approve all of them
     Then I get a valid 'Unable to Service' notification for state
     And I can not see a list of interpreters
     Then I can see the button state 'Unable to Service' is hidden
@@ -92,8 +91,7 @@ Feature: Booking Admin Management
     Then I will be shown the booking job page
     Then I can see the booking state 'In Progress'
     Then I click on BUTTON 'Unable to Service'
-    Then I will be shown a popup message
-    Then I click on BUTTON name 'yesBtn'
+    Then If I am shown popups, I approve all of them
     Then I get a valid 'Unable to Service' notification for state
     And I can not see a list of interpreters
     Then I can see the button state 'Unable to Service' is hidden
@@ -136,7 +134,7 @@ Feature: Booking Admin Management
     ########### REQUESTED TO UNABLE TO SERVICE #######################################
 
   @runThis
-  Scenario: Administrator can REQUESTED to unable to service a booking, Interpreter exists and a booking is created and a booking is created
+  Scenario: Administrator can REQUESTED to unable to service a booking, Interpreter exists and a booking is created
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
     And I am on the bookings page
@@ -145,8 +143,7 @@ Feature: Booking Admin Management
     Then I click on an individual booking of type 'Requested'
     Then I will be shown the booking job page
     Then I click on BUTTON 'Unable to Service'
-    Then I will be shown a popup message
-    Then I click on BUTTON name 'yesBtn'
+    And If I am shown popups, I approve all of them
     Then I get a valid 'Unable to Service' notification for state
     And I can not see a list of interpreters
     Then I can see the button state 'Unable to Service' is hidden
@@ -226,8 +223,7 @@ Feature: Booking Admin Management
     Then I click on an individual booking of type 'Requested'
     Then I will be shown the booking job page
     Then I click on BUTTON 'Cancel Booking'
-    Then I will be shown a popup message
-    Then I click on BUTTON name 'yesBtn'
+    And If I am shown popups, I approve all of them
     Then I get a valid 'Cancelled with No Charge' notification for state
     And I can not see a list of interpreters
     Then I can see the button state 'Unable to Service' is hidden
@@ -254,4 +250,3 @@ Feature: Booking Admin Management
     Then I click on Bookings
     And I am on the bookings page
     Then I see one row with state 'Requested'
-

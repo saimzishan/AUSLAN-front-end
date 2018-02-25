@@ -190,7 +190,7 @@ Feature: Booking Admin Management
     And I am on the bookings page
     Then I see one row with state 'Cancelled chargeable'
 
-  @runThis
+  @ignoreThis
   Scenario: Booking Officer can CANCEL a booking having linked id with option Cancel only this booking and then Cancelled Chargeable for Vicdeaf with time less then 48 hours
     Given There exist 1 booking with link id
     Given I exist as an Booking Officer
@@ -219,7 +219,7 @@ Feature: Booking Admin Management
     And I am on the bookings page
     Then I see one row with state 'Cancelled chargeable'
 
-  @runThis
+  @ignoreThis
   Scenario: Booking Officer can CANCEL a booking having linked id with option Cancel only this booking and then Cancelled No Charge for Vicdeaf with time less then 48 hours
     Given There exist 1 booking with link id
     Given I exist as an Booking Officer

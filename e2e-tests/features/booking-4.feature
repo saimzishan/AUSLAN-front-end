@@ -5,9 +5,9 @@ Feature: Booking Management
     And I am on a computer
     And I am shown the login screen, with picture and signup button
 
-# ---------------------------------------- AUSLAN1-727 -> END ----------------------------------------
+    # ---------------------------------------- AUSLAN1-727 -> END ----------------------------------------
 
-# ---------------------------------------- AUSLAN1-736, 737, 741, 901, 905 -> START ----------------------------------------
+    # ---------------------------------------- AUSLAN1-736, 737, 741, 901, 905 -> START ----------------------------------------
   @runThis
   Scenario: Given 1 verified Individual Client, Booking Officer can create a booking and travel cost should save
     Given I exist as an Booking Officer
@@ -33,7 +33,7 @@ Feature: Booking Management
     When I query search with empty date
     And I will be shown with bookings
     Then I am shown with 1 booking
-# ---------------------------------------- AUSLAN1-736, 737, 741, 901, 905 -> END ----------------------------------------
+    # ---------------------------------------- AUSLAN1-736, 737, 741, 901, 905 -> END ----------------------------------------
 
   @runThis
   Scenario: Given an Individual Client, Booking Officer should get a popup when the booking needs more interpreters
@@ -71,7 +71,20 @@ Feature: Booking Management
     When I select option OTHER from dropdown NATURE OF APPOINTMENT
     Then I am shown a validation error with the text 'Please specify what the appointment is about'
 
-  #--------------------------------- AUSLAN1-770 -----------------------------------------------------
+    #--------------------------------- AUSLAN1-770 -----------------------------------------------------
+
+  @runThis
+  Scenario: Given and Individual Client exists, As a Booking Officer, the bookable should clear when I change bookable type
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    Then I am on the bookings page
+    And I click on 'New Booking'
+    Then I will be taken to the 'New Booking' form
+    And I select the bookable for client
+    Then I can see that the bookable is set
+    When I change the bookable type
+    Then I can see that the bookable is not set
+
   @runThis
   Scenario: As a Booking Officer, I can create a booking for Organisational Representative
     Given I exist as an Booking Officer
@@ -102,9 +115,9 @@ Feature: Booking Management
     When I change the street number to 154
     And I click on checkbox name 'tnc'
     And I click on BUTTON 'SAVE'
-    And If I am shown a popup, I approve it
+    And If I am shown popups, I approve all of them
     Then I should get a valid booking update notification
-# ---------------------------------------- AUSLAN1-711 -> START ----------------------------------------
+    # ---------------------------------------- AUSLAN1-711 -> START ----------------------------------------
   @runThis
   Scenario: Individual Client can use their address to auto fill booking address
     Given I exist as an Individual Client
@@ -135,9 +148,9 @@ Feature: Booking Management
     And I click on element by name 'rdBookingAddressYes'
     Then I can see the booking address is 'auto populated'
 
-# ---------------------------------------- AUSLAN1-711 -> END ----------------------------------------
+    # ---------------------------------------- AUSLAN1-711 -> END ----------------------------------------
 
-#----------------------------------------- AUSLAN1-312 -> START ----------------------------------------
+    #----------------------------------------- AUSLAN1-312 -> START ----------------------------------------
 
   @runThis
   Scenario: Given 1 verified Individual Client, Administrator can create a booking with all types of interpreters
@@ -192,9 +205,9 @@ Feature: Booking Management
     And I am on the bookings page
     And I am shown with 10 bookings
     And I can see the element with id 'displayTxt' has text 'Displaying 1 - 10 of 12 Bookings'
-#----------------------------------------- AUSLAN1-312 -> END ----------------------------------------
+    #----------------------------------------- AUSLAN1-312 -> END ----------------------------------------
 
-#----------------------------------------- AUSLAN1-977 -> START ----------------------------------------
+    #----------------------------------------- AUSLAN1-977 -> START ----------------------------------------
   @runThis
   Scenario: Given 1 verified Individual Client, Booking Officer will get error notification when changing notetakers to less number than assigned. Interpreter and Interpreter1 exists.
     Given I exist as an Booking Officer
@@ -263,7 +276,4 @@ Feature: Booking Management
     Then I wait for 1000 milli-seconds
     Then I will get an error notification saying "Oops! Too many captioners already allocated. Please unassign first."
 
-        #----------------------------------------- AUSLAN1-977 -> END ----------------------------------------
-        
-
-
+    #----------------------------------------- AUSLAN1-977 -> END ----------------------------------------

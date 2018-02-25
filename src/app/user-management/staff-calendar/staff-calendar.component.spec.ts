@@ -15,6 +15,10 @@ import { LinkHelper, LinkAuth } from '../../shared/router/linkhelper';
 import { AddressComponent } from '../../ui/address/address.component';
 import { RolePermission } from '../../shared/role-permission/role-permission';
 import { DatePipe } from '@angular/common';
+import { UserService } from '../../api/user.service';
+import { AuthHttp } from 'angular2-jwt';
+import { MockUserService } from '../../shared/test/Mock';
+import { MockBackend } from '@angular/http/testing';
 
 describe('StaffCalendarComponent', () => {
   let component: StaffCalendarComponent;
@@ -23,7 +27,7 @@ describe('StaffCalendarComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [StaffCalendarComponent, AddressComponent, MobileHeaderComponent, UserHeaderComponent, InterpreterComponent ],
-      providers: [LinkHelper, LinkAuth, RolePermission, DatePipe],
+      providers: [LinkHelper, LinkAuth, RolePermission, DatePipe, { provide: UserService, useClass: MockUserService }, { provide: AuthHttp, useClass: MockBackend } ],
       imports: [HttpModule, CalendarModule, FormsModule, MaterialModule, RouterTestingModule, CustomFormsModule, BrowserAnimationsModule]
     })
     .compileComponents();

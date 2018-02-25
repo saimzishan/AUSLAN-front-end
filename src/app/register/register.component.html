@@ -2,6 +2,11 @@
     <header *ngIf="false === isUserLogin()" id="header">
         <a href="/"><i class="icons icons-logo"></i></a>
     </header>
+    <section id="submenu" *ngIf="checkUserAdminORBookOfficer()">
+       <section>
+            <a id="TABStaffCalendar" [routerLink]="['/user-management/','staff_calendar']"> Staff Calender</a>
+        </section>
+    </section>
     <section id="page-signup-organisation">
         <section>
             <header>
@@ -162,6 +167,22 @@
                             </span>
                             </div>
                           </div>
+                        <div *ngIf="checkUserAdminORBookOfficer() && selectedRole === 'INTERPRETER'" class="medium-6 columns">
+                            <div class="form-field">
+                                <label>Staff/Casual</label>
+                                <select aria-label="A" (change)="staffToCasualToggle()" [(ngModel)]="model.staff_to_casual_toggle" name="staff_to_casual" #staff_to_casual="ngModel"
+                                    required>
+                        
+                                    <option *ngFor="let staff_casual_toggle of  ['staff','casual']" [value]="staff_casual_toggle">{{staff_casual_toggle.toUpperCase()}}</option>
+                        
+                                </select>
+                                <span *ngIf="staff_to_casual.touched && !staff_to_casual.errors?.required && !staff_to_casual.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
+                                <span *ngIf="staff_to_casual.touched && (staff_to_casual.errors?.required || staff_to_casual.errors?.rangeLength);" class="inline-icon error">
+                        
+                                    <span>This field is required.</span>!
+                                </span>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <br>
