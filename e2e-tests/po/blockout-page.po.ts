@@ -24,7 +24,7 @@ export class BlockoutPagePo extends PageObject {
     browseStaff = () => {
         return this.currentPath().then((currentPath) => {
             this.didFinishedRendering();
-            expect(currentPath).to.contain('staff_calendar');
+            expect(currentPath).to.contain('staff_availability');
         });
     }
 
