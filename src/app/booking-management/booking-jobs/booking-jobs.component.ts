@@ -61,6 +61,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     totalItems;
     isRequestedProgressOrAllocated = false;
     searchParams: string;
+    bookingState: any;
 
     constructor(public dialog: MdDialog,
                 public viewContainerRef: ViewContainerRef, public spinnerService: SpinnerService,
@@ -237,6 +238,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         }
         this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
         if (result !== 'close') {
+            this.bookingState = this.selectedBookingModel.state;
             this.changeBookingState(isCancel, !result, update_all_linked_bookings);
         }
         });
@@ -263,6 +265,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         } else {
             state = isCancel ? 'cancelled_no_charge' : 'unable_to_service';
             stateMsg = isCancel ? 'Cancelled with No Charge' : 'Unable to Service';
+            this.selectedBookingModel.interpreters = [];
         }
         this.spinnerService.requestInProcess(true);
         this.bookingService.updateBookingByTransitioning(this.selectedBookingModel.id, state, update_all_linked_bookings)
@@ -318,13 +321,23 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         });
     }
     undoCancel() {
-        let state = 'in_progress';
-        let stateMsg = 'Cancelled with Charge';
+        let state;
+        let stateMsg;
+        if (this.selectedBookingModel.state === BOOKING_STATE.Cancelled_no_charge) {
+            state = 'in_progress';
+            this.bookingState = BOOKING_STATE.In_progress;
+            stateMsg = 'Cancelled with No Charge';
+            
+        } else {
+            state = 'allocated';
+            stateMsg = 'Cancelled with Charge';
+        }
+        
         this.spinnerService.requestInProcess(true);
         this.bookingService.updateBookingByTransitioning(this.selectedBookingModel.id, state)
              .subscribe((res: any) => {
                      if (res.status === 204) {
-                         this.selectedBookingModel.state = BOOKING_STATE.In_progress;
+                         this.selectedBookingModel.state = state === 'in_progress' ? BOOKING_STATE.In_progress : BOOKING_STATE.Allocated;
                          this.isCancelledOrUnableToServe = false;
                          this.isRequestedProgressOrAllocated = true;
                          this.notificationServiceBus.launchNotification(false, 'The booking has been transitioned to \"' + stateMsg + '\" state');
