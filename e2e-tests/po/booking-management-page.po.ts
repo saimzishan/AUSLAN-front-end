@@ -96,6 +96,15 @@ export class BookingManagementPage extends PageObject {
         });
     }
 
+    showVerifyPage = () => {
+        let verifyCodeField = this.getElementByName('verification_code');
+        let resendBtn = this.getElementByName('resend_code');
+        return browser.wait(protractor.ExpectedConditions.presenceOf(verifyCodeField), 1200).then(() => {
+            expect(verifyCodeField).to.exist;
+            expect(verifyCodeField).to.exist;
+        });
+    }
+
     clickOnNewBooking = () => {
         return this.getElementByID('lnkNewBooking').click();
     }
@@ -162,9 +171,9 @@ export class BookingManagementPage extends PageObject {
     bookingWithStatusExists = (count: string, booking_status: string) => {
         if (count === 'one') { count = '1'; }
         let className = {
-            'green': 'icon-check-green',
-            'red': 'status-ready-to-process',
-            'orange': 'status-allocated'
+            'green': 'icon-small-green',
+            'red': 'icon-small-red',
+            'orange': 'icon-small-yellow'
         }[booking_status];
         return this.getAllElementByCSS('i[class="status ' + className + '"]').count().then((cnt) => {
             expect(cnt.toString()).to.be.eq(count);
@@ -270,13 +279,13 @@ export class BookingManagementPage extends PageObject {
         return searchForm.submit();
     }
     querySearchWithEmptyDate = () => {
-        this.getElementByName('date_from').sendKeys(protractor.Key.BACK_SPACE);
+        this.getElementByName('date_from').sendKeys(protractor.Key.BACK_SPACE,protractor.Key.ARROW_RIGHT,protractor.Key.BACK_SPACE,protractor.Key.ARROW_RIGHT,protractor.Key.BACK_SPACE);
     }
     queryManualSearchWithFutureDate = () => {
-        this.getElementByName('date_from').sendKeys(protractor.Key.ARROW_RIGHT,protractor.Key.ARROW_UP);
+        this.getElementByName('date_from').sendKeys(protractor.Key.ARROW_UP);
     }
     queryManualSearchWithCurrentDate = () => {
-        this.getElementByName('date_from').sendKeys(protractor.Key.ARROW_RIGHT,protractor.Key.ARROW_DOWN);
+        this.getElementByName('date_from').sendKeys(protractor.Key.ARROW_DOWN);
     }
     enterPressed = () => {
         this.getElementByName('date_from').sendKeys(protractor.Key.ENTER);
@@ -321,11 +330,11 @@ export class BookingManagementPage extends PageObject {
         let today = new Date();
         let todayDate = {
             dd: this.prettyDate(today.getDate()),
-            mm: this.prettyDate(today.getMonth() + 1), //January is 0!
+            mm: this.prettyDate(today.getMonth() + 1), // January is 0!
             yy: today.getFullYear().toString()
         };
         let datefrom = this.getElementByName('date_from');
-        datefrom.getAttribute('value').then((value)=> {
+        datefrom.getAttribute('value').then((value) => {
         return expect(value).to.be.eq(todayDate.yy + '-' + todayDate.mm + '-' + todayDate.dd);
     });
     }

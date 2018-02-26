@@ -3,6 +3,7 @@ import {browser, by, element, $, $$, protractor, ExpectedConditions} from 'protr
 import {expect} from '../config/helpers/chai-imports';
 import {CONSTANT, Booking} from '../helper';
 import {NotificationObject} from './notification';
+import * as moment from 'moment';
 
 interface TestDateFormat {
     mm: string;
@@ -14,6 +15,7 @@ export class BookingPage extends PageObject {
     previousDate: Boolean = false;
     tommorowDate: Boolean = false;
     list_of_object = {};
+
     browse = () => {
         return this.currentPath().then((currentPath) => {
             this.didFinishedRendering();
@@ -190,8 +192,12 @@ export class BookingPage extends PageObject {
         const divDetails = this.getAllByTagNameInElement(optionLabel, 'div');
         const all_input_in_div = this.getAllByTagNameInElement(divDetails, 'input');
         return all_input_in_div.each(function (single_input, index) {
-            return single_input.getAttribute('value').then((val) => {
-                expect(!!val).to.be.eq(condition);
+            return single_input.getAttribute('name').then((name) => {
+                if (name !== 'search_address') {
+                    return single_input.getAttribute('value').then((val) => {
+                        expect(!!val).to.be.eq(condition);
+                    });
+                }
             });
         });
     }
@@ -219,15 +225,19 @@ export class BookingPage extends PageObject {
         this.previousDate = true;
         return this.createBookingWithTimeAndInterpreter('standard', '10:15 AM', '11:15 AM', '2', 'auslanInterpreters_count');
     }
-    editBookingWithTomorrowDateWith_VICDEAF_STATE =() =>{
+    editBookingWithDayAfterTomorrowDateWith_VICDEAF_STATE = () => {
         this.getElementByCss('input[name="dpDate"]').clear();
-        this.setDate( this.getDateAfterNDays(1));
+        this.setDate(this.getDateAfterNDays(2));
+        this.getElementByCss('input[name="dpEventDate"]').clear();
+        this.setStartEndTime('start', this.getTimeBeforeNHours(2));
+        this.getElementByCss('input[name="dpEventEndTime"]').clear();
+        this.setStartEndTime('end', this.getTimeBeforeNHours(1));
         this.setElementsValueByName('address_state', 'VIC');
     }
-    editBookingWith_DSQ_STATES =() =>{
+    editBookingWith_DSQ_STATES = () => {
         this.setElementsValueByName('address_state', 'ACT');
     }
-    editBookingWith_VICDEAF_STATE =() =>{
+    editBookingWith_VICDEAF_STATE = () => {
         this.setElementsValueByName('address_state', 'VIC');
     }
     createBookingForPerth = () => {
@@ -278,6 +288,16 @@ export class BookingPage extends PageObject {
             dateStart.getFullYear().toString()
         ].join('/');
     }
+
+    private getTimeBeforeNHours = (n: number): string => {
+        const currentDate = new Date();
+        currentDate.setHours(currentDate.getHours() - n);
+        let tim = moment(currentDate).format('hh:mm A');
+       // let tim = currentDate.getHours() + ':' + currentDate.getMinutes();
+        console.log('timeeeeeeee'+tim);
+        return tim;
+    }
+
     createBookingWithTimeAndInterpreter = (standard: string, startTime: string, endTime: string, interpreterNum: string, interpreterFieldName: string) => {
         const dateToSend = this.previousDate ? this.getDateAfterNDays(-1) : this.getDateAfterNDays(8);
         this.setDate(dateToSend);
@@ -373,5 +393,25 @@ export class BookingPage extends PageObject {
         let timeString = hh.toString() + ':00PM';
         this.setDate(dateString);
         this.setStartEndTime(field, timeString);
+    }
+
+    changeBookableType = () => {
+        const indClientInput = this.getElementByCss('input#IndividualClient-input');
+        return indClientInput.getAttribute('checked').then(checked => {
+            if (checked) {
+                return this.getElementByCss('label[for="OrganisationalRepresentative-input"]').click();
+            } else {
+                return this.getElementByCss('label[for="IndividualClient-input"]').click();
+            }
+        });
+    }
+
+    checkPresenceOfBookable = (negate: 'not' | undefined) => {
+        const presence = !!!negate;
+        const input = this.getElementByCss('.ui-autocomplete-input');
+        return input.getAttribute('value').then(value => {
+            const expectedValue = !!value
+            return expect(expectedValue).to.be.eq(presence);
+        });
     }
 }

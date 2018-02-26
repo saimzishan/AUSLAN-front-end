@@ -1,5 +1,5 @@
 <main>
-    <section class="jobs">
+    <section class="jobs withOffset">
         <table id="jobs-responsive" class="custom">
             <thead>
             <tr>
@@ -177,7 +177,7 @@
                 </td>
                 <td class="text-center">
                     <i class="status"
-                       [ngClass]="{'icon-check-green': booking.status === 'green', 'status-ready-to-process': booking.status === 'red', 'status-allocated': booking.status === 'orange'}">
+                       [ngClass]="{'icon-small icon-small-green': booking.status === 'green', 'icon-small icon-small-red': booking.status === 'red', 'icon-small icon-small-yellow': booking.status === 'orange'}">
                     </i>
                 </td>
                 <td style="text-transform: capitalize">{{stateToString(booking.state)}}</td>
@@ -187,11 +187,11 @@
                             <i class="icon-time hidden-desktop"></i>
                             <span>
                                 <span>
-                                    {{booking.venue.start_time_iso | amDateFormat:'h:mm A'}} -
-                                    {{booking.venue.end_time_iso | amDateFormat:'h:mm A'}}
+                                    {{booking.venue.start_time_iso | timeShort : booking.venue.state : booking.venue.post_code}} -
+                                    {{booking.venue.end_time_iso | timeShort : booking.venue.state : booking.venue.post_code}}
                                 </span>
                                 <span>
-                                    {{booking.venue.start_time_iso | amDateFormat:'ddd D MMM YY'}}
+                                    {{booking.venue.start_time_iso | date:'EEE d MMM yy'}}
                                 </span>
                             </span>
                         </span>
@@ -205,7 +205,7 @@
                     booking.deaf_person.last_name}}
                 </td>
                 <td>{{booking.venue.suburb}}</td>
-                <td class="truncated">
+                <td class="truncated-text">
                     <ng-container *ngIf="booking.interpreters_required <= 2 && didInterpreterAccepted(booking.interpreters).length > 0 ;">
                         <span *ngFor="let user of didInterpreterAccepted(booking.interpreters)">
                                     <strong *ngIf="isCurrentUser(user.id); else sim_user_Block">
@@ -225,13 +225,13 @@
                     <span *ngIf="booking.interpreters_required == 1 && didInterpreterAccepted(booking.interpreters).length < 1 ;">To be filled </span>
                     
                 </td>
-                <td class="truncated">
+                <td class="truncated-text">
                     <ng-container *ngIf="booking.documents_attributes.length > 0">
                         <a href="javascript:void(0)" class="attach"><i class="icon-attach"></i></a>
                     </ng-container>
                     {{booking.raw_nature_of_appointment}}
                 </td>
-                <td>{{booking.method_type}}</td>
+                <td>{{booking.method_name}}</td>
                 <td>{{booking.service_type}}</td>
                 <!-- td><span class="underline">02-06 TS<br>7:15 A</span></td -->
 
@@ -272,7 +272,7 @@
                 (bookingList.length > 1 ? 's' : '')}}
             </div>
             <div class="element element_inline">
-                <pagination-controls class="my-pagination" *ngIf="totalItems >= 10"
+                <pagination-controls class="my-pagination" *ngIf="totalItems > 10"
                                      (pageChange)="getPage($event)"></pagination-controls>
             </div>
         </div>

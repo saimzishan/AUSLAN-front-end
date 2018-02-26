@@ -39,6 +39,7 @@ import {GmapsApiService} from '../../api/gmaps-api.service';
 import {RemoveSpacePipe} from '../../shared/pipe/remove-space.pipe';
 import {AutoCompleteModule, CalendarModule as PrimeNgCalendarModule} from 'primeng/primeng';
 import {MapsAPILoader} from '@agm/core';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 describe('BookingDetailComponent', () => {
     let component: BookingDetailComponent;
@@ -50,7 +51,7 @@ describe('BookingDetailComponent', () => {
                 BillingAccountComponent, TermandconditionComponent, BookingHeaderComponent,
                 InterpreterBoxComponent, InterpreterPopupComponent, RemoveSpacePipe
             ],
-            imports: [CustomFormsModule, FileuploaderModule,
+            imports: [CustomFormsModule, FileuploaderModule, NgxPaginationModule,
                 FormsModule, BrowserAnimationsModule, RouterTestingModule, HttpModule,
                 Md2Module.forRoot(),
                 MaterialModule, PrimeNgCalendarModule, AutoCompleteModule

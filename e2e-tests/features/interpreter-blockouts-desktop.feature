@@ -19,9 +19,6 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER BOOK
     And I click on BUTTON name 'save_blockout'
     And I get error message: 'Oops! Please fill in all the fields correctly.'
     And I click on BUTTON name 'cancel_blockout'
-    And I am on the 'User Management' list page
-    When I hover on the 'Actions' of the Interpreter
-    Then I click on edit for an active existing Interpreter
     And I will be taken to the 'INTERPRETER Signup' page
     And I click on BUTTON name 'modify_blockouts'
     And I will be taken to blockout page
@@ -296,7 +293,7 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER BOOK
     And I wait for 3000 milli-seconds
     And I get error message: 'Unprocessable Entity You have a blockout at this time. Please remove the blockout before accepting the booking'
 
-@runThis
+  @runThis
   Scenario: As INTERPRETER, I can create edit blockout on desktop to check whether the end time changes or not
     Given I go to the website
     And I am on a computer
@@ -313,3 +310,63 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER BOOK
     Then I change the value of end time
     And I click on BUTTON name 'save_blockout'
     And I get success message: 'Blockout successfully added'
+
+  @runThis
+  Scenario: As Administrator I can cancel INTERPRETER blockouts on desktop and it will take me to previous page intead of user management list page
+    Given I go to the website
+    And I am on a computer
+    And I am shown the login screen, with picture and signup button
+    And I sign in with valid Administrator credentials
+    Then I will be shown the bookings page
+    When I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then The valid Interpreter should be in the list
+    When I hover on the 'Actions' of the Interpreter
+    Then I click on edit for an active existing Interpreter
+    And I will be taken to the 'INTERPRETER Signup' page
+    And I click on BUTTON name 'modify_blockouts'
+    And I will be taken to blockout page
+    And I click on BUTTON name 'save_blockout'
+    And I get error message: 'Oops! Please fill in all the fields correctly.'
+    And I click on BUTTON name 'cancel_blockout'
+    And I will be taken to the 'INTERPRETER Signup' page
+
+  @runThis
+  Scenario: As Administrator, I cannot see the save and delete buttons if the blockout is created by the system, Individual Client and INTERPRETER exists
+    Given I am on a computer
+    Given There exist 1 bookings
+    And I go to the website
+    And I am shown the login screen, with picture and signup button
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on the bookings page
+    Then I see one row with state 'Requested'
+    Then I click on an individual booking of type 'Requested'
+    Then I will be shown the booking job page
+    Then I can see the button 'Save' is disabled
+    Then I select 1 Interpreter
+    And I click on BUTTON name 'reassingBtn'
+    Then I wait for 1000 milli-seconds
+    Then I can see the button 'Save' is enabled
+    And I click on BUTTON 'Save'
+    Then I wait for 1000 milli-seconds
+    Then I get valid message: 'The interpreter have been assigned'
+    Then I click on Bookings
+    And I am on the bookings page
+    Then I see one row with state 'In progress'
+    Then I click on an individual booking of type 'In progress'
+    Then I will be shown the booking job page
+    Then I can see the booking state 'In Progress'
+    Then I hover on the 'Profile'
+    And I click on logout
+    And I sign in with valid Interpreter credentials
+    Then I see one row with state 'In progress'
+    And I click on my name in the top corner
+    And I click on the option  profile
+    And I will be taken to my individual profile page
+    Then I click on button with css '.fc-listYear-button'
+    And I can count the element with css 'tr.fc-list-item' to be '1'
+    And I click on element with css 'td.fc-list-item-title > a'
+    And I will be taken to blockout page
+    Then I can see the element with name 'save_blockout' is 'not visible'
+    Then I can see the element with name 'delete_blockout' is 'not visible'

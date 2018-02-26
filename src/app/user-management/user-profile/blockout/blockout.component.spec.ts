@@ -19,6 +19,7 @@ import {NotificationServiceBus} from '../../../notification/notification.service
 import {CalendarModule as PrimeNgCalendarModule} from 'primeng/primeng';
 import {ViewContainerRef} from '@angular/core';
 import {MobileHeaderComponent} from '../../../ui/mobile-header/mobile-header.component';
+import { DatePipe } from '@angular/common';
 
 describe('BlockoutComponent', () => {
   let component: BlockoutComponent;
@@ -30,7 +31,7 @@ describe('BlockoutComponent', () => {
       providers: [MdDialog,
           ViewContainerRef, LinkHelper, LinkAuth, RolePermission,
         { provide: UserService, useClass: MockUserService}, { provide: AuthHttp, useClass: MockBackend},
-        NotificationServiceBus,
+        NotificationServiceBus, DatePipe,
         SpinnerService],
       imports: [HttpModule, FormsModule, MaterialModule, PrimeNgCalendarModule,
           RouterTestingModule, CustomFormsModule, BrowserAnimationsModule]

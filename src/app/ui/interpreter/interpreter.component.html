@@ -1,4 +1,4 @@
-<div class="row small-collapse">
+<div class="row small-collapse" ngForm="interpreterForm" #interpreterForm="ngForm">
   <div class="row-wrapper">
     <div class="medium-6 columns">
       <div class="form-field">
@@ -21,7 +21,7 @@
         <input type="date" placeholder="Please enter NAATI validity start date"
                 [ngModel]="userModel.naati_validity_start_date"
                (ngModelChange)="userModel.naati_validity_start_date = $event"
-               name="naati_validity_start_date" max="2099-12-01" min="1900-01-02"
+               name="naati_validity_start_date" 
                 #naati_validity_start_date="ngModel">
       </div>
     </div>
@@ -29,7 +29,7 @@
       <div class="form-field">
         <label>NAATI VALIDITY END DATE</label>
         <input type="date" placeholder="Please enter NAATI validity end date"
-                [ngModel]="userModel.naati_validity_end_date" max="2099-12-01" min="1900-01-02"
+                [ngModel]="userModel.naati_validity_end_date" 
                (ngModelChange)="userModel.naati_validity_end_date = $event"
                name="naati_validity_end_date"
                 #naati_validity_end_date="ngModel">
@@ -40,7 +40,7 @@
         <label>DATE OF BIRTH *</label>
         <input type="date" class="valid" placeholder="Date of Birth"
                 [ngModel]="userModel.date_of_birth" (ngModelChange)="userModel.date_of_birth = $event"
-               name="date_of_birth" max="2099-12-01" min="1900-01-02"
+               name="date_of_birth" 
                 #date_of_birth="ngModel"
                required>
 
@@ -91,7 +91,7 @@
 </div>
 
 <br>
-<app-address [address]="userModel.address_attributes" #addressForm="ctAddressForm" [canCalculateDistance]="canCalculateDistance" [userModel]="userModel"></app-address>
+<app-address  [parentForm]="interpreterForm" [address]="userModel.address_attributes" #addressForm="ctAddressForm" [canCalculateDistance]="canCalculateDistance" [userModel]="userModel"></app-address>
 
 <ng-container *ngIf="isUserAdminORBookOfficer()">
     <div class="medium-12 columns">
@@ -116,7 +116,7 @@
 <ng-container *ngIf="displayCalendar && updateCalendar">
   <h1>BLOCKOUTS</h1>
   <angular2-fullcalendar id="mycal" #mycal [options]="calendarOptions"></angular2-fullcalendar>
-  <button name="modify_blockouts" [routerLink]="['/user-management/',-1,'block_out']">
+  <button class= "padTop" name="modify_blockouts" [routerLink]="['/user-management/',-1,'block_out']">
     Add Blockout
   </button>
 </ng-container>

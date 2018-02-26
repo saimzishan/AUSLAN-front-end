@@ -17,6 +17,8 @@ import {GLOBAL} from '../../shared/global';
 import {BookingHeaderService} from '../booking-header/booking-header.service';
 import {LinkidPopupComponent} from '../linkid-popup/linkid-popup.component';
 import {DatePipe} from '@angular/common';
+import {URLSearchParams} from '@angular/http';
+import {InterpreterFilter} from '../../shared/model/interpreter-filter.interface';
 
 @Component({
     selector: 'app-booking-jobs',
@@ -45,6 +47,9 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     disableAccept = false;
     disableReject = false;
     private currentStatus = 'Invited';
+    private filterInterpreterParams = new URLSearchParams();
+    private currentSort = {'field': 'distance', 'order': 'asc'};
+    interpreterFilter: InterpreterFilter = {};
     stateStr = '';
     hideInvite = false;
     hideAccept = false;
@@ -54,6 +59,8 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     @ViewChild('cchart') cchart;
     currentPage = 1;
     totalItems;
+    isRequestedProgressOrAllocated = false;
+    searchParams: string;
 
     constructor(public dialog: MdDialog,
                 public viewContainerRef: ViewContainerRef, public spinnerService: SpinnerService,
@@ -162,7 +169,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
 
             this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
                 if (result) {
-                    this.changeBookingState(isCancel);
+                    this.cancelBooking(isCancel, false, true);
                 }
             });
         }
@@ -186,22 +193,35 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
         if (result !== 'close') {
             if (isCancel) {
-                this.cancelBooking(isCancel, !result);
+                this.cancelBooking(isCancel, !result, false);
             } else {
                 this.changeBookingState(isCancel, !result);
             }
         }
         });
     }
-    cancelBooking(isCancel: Boolean, update_all_linked_bookings?: boolean) {
+
+    cancelBooking(isCancel: Boolean, update_all_linked_bookings: boolean, forUnlink: boolean) {
         let config: MdDialogConfig = {
             disableClose: true
         };
+        let title, cancelTitle, okTitle;
+
+        if (forUnlink) {
+            title = isCancel ? 'Cancel booking' : 'Unable to service booking';
+            cancelTitle = isCancel ? 'Cancelled Chargeable' : 'Unable to service this bookings';
+            okTitle = isCancel ? 'Cancelled No Charge' : 'Unable to service this booking';
+        } else {
+            title = isCancel ? 'Cancel linked booking' : 'Unable to service linked booking';
+            cancelTitle = isCancel ? 'Cancelled Chargeable' : 'Unable to service all bookings';
+            okTitle = isCancel ? 'Cancelled No Charge' : 'Unable to service this booking';
+        }
+
         config.viewContainerRef = this.viewContainerRef;
         this.dialogRef = this.dialog.open(PopupComponent, config);
-        this.dialogRef.componentInstance.title = isCancel ? 'Cancel linked booking' : 'Unable to service linked booking';
-        this.dialogRef.componentInstance.cancelTitle = isCancel ? 'Cancelled Chargeable' : 'Unable to service all bookings';
-        this.dialogRef.componentInstance.okTitle = isCancel ? 'Cancelled No Charge' : 'Unable to service this booking';
+        this.dialogRef.componentInstance.title = title;
+        this.dialogRef.componentInstance.cancelTitle = cancelTitle;
+        this.dialogRef.componentInstance.okTitle = okTitle;
         this.dialogRef.componentInstance.closeVal = 'close';
         if (isCancel) {
             let statement = this.isVicdeaf && (this.diffInHours < 48) ? 'Cancelled Chargeable since the start date is within 48 hours.'
@@ -254,13 +274,14 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                             this.selectedBookingModel.state = isCancel ? BOOKING_STATE.Cancelled_no_charge : BOOKING_STATE.Unable_to_service;
                         }
                         this.isCancelledOrUnableToServe = true;
+                        this.isRequestedProgressOrAllocated = false;
                         this.notificationServiceBus.launchNotification(false, 'The booking has been transitioned to \"' + stateMsg + '\" state');
                     }
                     this.spinnerService.requestInProcess(false);
                 },
                 err => {
                     this.spinnerService.requestInProcess(false);
-                    let e = err.json() || 'There is some error on server side';
+                    let e: any = err.json() || 'There is some error on server side';
                     this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
                 });
     }
@@ -305,13 +326,14 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                      if (res.status === 204) {
                          this.selectedBookingModel.state = BOOKING_STATE.In_progress;
                          this.isCancelledOrUnableToServe = false;
+                         this.isRequestedProgressOrAllocated = true;
                          this.notificationServiceBus.launchNotification(false, 'The booking has been transitioned to \"' + stateMsg + '\" state');
                      }
                      this.spinnerService.requestInProcess(false);
                  },
                  err => {
                      this.spinnerService.requestInProcess(false);
-                     let e = err.json() || 'There is some error on server side';
+                     let e: any = err.json() || 'There is some error on server side';
                      this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
                  });
     }
@@ -354,10 +376,18 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     }
 
     getInterpreterIconClass(user: Interpreter) {
-        return user.booked ? 'fa fa-times-circle' :
-            user.blocked ? 'fa fa-ban' :
-                user.blockout ? 'fa fa-exclamation-circle fa-danger' :
-                    '';
+        let path = (this.checkInterpreterState(user.id, 'Accepted') ? 'accepted.svg' :
+                    user.blocked ? 'blocked.svg' :
+                    user.booked ? 'booking.svg' :
+                    user.blockout ? 'booking.svg' :
+                    this.checkInterpreterState(user.id, 'Rejected') ? 'declined.svg' :
+                    this.checkInterpreterState(user.id, 'Invited') ? 'invited.svg' : '');
+        path = path.length > 0 ? '../../../assets/img/svg-icons/' + path : path;
+        return path;
+    }
+
+    checkInterpreterState(interpreter_id: number, state: string) {
+        return this.selectedBookingModel.interpreters.filter(i => i.id === interpreter_id && i.state === state).length > 0;
     }
 
     fetchAllInterpreters() {
@@ -371,7 +401,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                 },
                 err => {
                     this.spinnerService.requestInProcess(false);
-                    let e = err.json() || 'There is some error on server side';
+                    let e: any = err.json() || 'There is some error on server side';
                     this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
                 });
     }
@@ -379,7 +409,6 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
 
     getPage(page: number) {
         this.currentPage = page;
-        console.log(page);
         this.route.params.subscribe(params => {
             let param_id = params['id'] || '';
             this.fetchNearbyinterpreters(param_id);
@@ -387,7 +416,8 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     }
 
     fetchNearbyinterpreters(booking_id) {
-        this.bookingService.nearbyBookings(booking_id, this.currentPage)
+        this.spinnerService.requestInProcess(true);
+        this.bookingService.nearbyBookings(booking_id, this.currentPage, GLOBAL.getInterpreterSearchParameters())
             .subscribe((res: any) => {
                     if (res.status === 200) {
                         this.totalItems = Boolean(res.data.paginates) ? res.data.paginates.total_records : res.data.users.length;
@@ -398,7 +428,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                 },
                 err => {
                     this.spinnerService.requestInProcess(false);
-                    let e = err.json() || 'There is some error on server side';
+                    let e: any = err.json() || 'There is some error on server side';
                     this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
                 });
     }
@@ -420,8 +450,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                         this.isCancelledOrUnableToServe = this.isActiveState('Cancelled_no_charge')
                             || this.isActiveState('Unable_to_service') || this.isActiveState('Cancelled_chargeable');
 
-                        this.selectedBookingModel.venue.start_time_iso = this.selectedBookingModel.utcToBookingTimeZone(this.selectedBookingModel.venue.start_time_iso);
-                        this.selectedBookingModel.venue.end_time_iso = this.selectedBookingModel.utcToBookingTimeZone(this.selectedBookingModel.venue.end_time_iso);
+                        this.isRequestedProgressOrAllocated = this.isStateRequestProgressAlloc();
                         let diffInMs: number = Date.now() - Date.parse(this.selectedBookingModel.venue.start_time_iso);
                         this.diffInHours = diffInMs / 1000 / 60 / 60;
                         if (this.diffInHours < 0) {
@@ -458,7 +487,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                             this.getStateString();
                         }
                     }
-                    if (this.isCurrentUserAdminOrBookingOfficer()) {
+                    if (this.isCurrentUserAdminOrBookingOfficer() && this.isRequestedProgressOrAllocated) {
                         this.fetchNearbyinterpreters(param_id);
                     } else {
                         this.spinnerService.requestInProcess(false);
@@ -467,9 +496,13 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                 err => {
                     this.jobAccessError = true;
                     this.spinnerService.requestInProcess(false);
-                    let e = err.json() || 'There is some error on server side';
+                    let e: any = err.json() || 'There is some error on server side';
                     this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
                 });
+    }
+
+    isStateRequestProgressAlloc() {
+       return (this.isActiveState('Requested') || this.isActiveState('In_progress') || this.isActiveState('Allocated'));
     }
 
     inviteInterpreters() {
@@ -499,7 +532,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                 },
                 err => {
                     this.spinnerService.requestInProcess(false);
-                    let e = err.json() || 'There is some error on server side';
+                    let e: any = err.json() || 'There is some error on server side';
                     this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
                 });
     }
@@ -514,7 +547,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                 },
                 err => {
                     this.spinnerService.requestInProcess(false);
-                    let e = err.json() || 'There is some error on server side';
+                    let e: any = err.json() || 'There is some error on server side';
                     this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
                 });
     }
@@ -530,7 +563,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                 },
                 err => {
                     this.spinnerService.requestInProcess(false);
-                    let e = err.json() || 'There is some error on server side';
+                    let e: any = err.json() || 'There is some error on server side';
                     this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
                 });
     }
@@ -546,7 +579,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                 },
                 err => {
                     this.spinnerService.requestInProcess(false);
-                    let e = err.json() || {errors: 'There booking could not be updated. Please try after some time.'};
+                    let e: any = err.json() || {errors: 'There booking could not be updated. Please try after some time.'};
                     this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
                 });
     }
@@ -690,7 +723,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                         },
                         err => {
                             this.spinnerService.requestInProcess(false);
-                            let e = err.json() || 'There is some error on server side';
+                            let e: any = err.json() || 'There is some error on server side';
                             this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
                         });
             }
@@ -710,7 +743,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         if (interpreter.distance === '-') {
             return '-';
         } else {
-            return interpreter.travel_pay ? 'Yes' : 'No';
+            return interpreter.travel_pay ? 'Y' : 'N';
         }
     }
 
@@ -751,7 +784,6 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
             }
             toRet = cells + ' ' + offset + ' pink';
         }
-        console.log(toRet);
         return toRet;
     }
 
@@ -781,5 +813,103 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         return blocked_int.filter(
             i => i.interpreter_id === user_id
         ).length > 0;
+    }
+
+    private isCurrentSort(field: string) {
+        return this.currentSort.field === field;
+    }
+
+    private setCurrentSort(field: string) {
+        let order = 'asc';
+        if (this.isCurrentSort(field)) {
+            order = this.currentSort.order === 'asc' ? 'desc' : 'asc';
+        }
+        this.currentSort.field = field;
+        this.currentSort.order = order;
+    }
+
+    getSortOrder(field: string) {
+        return this.isCurrentSort(field) ? this.currentSort.order : '';
+    }
+
+    sortInterpreters(field: string) {
+        this.setCurrentSort(field);
+        this.filterInterpreterParams.set('sort', this.currentSort.field);
+        this.filterInterpreterParams.set('direction', this.currentSort.order);
+        GLOBAL._filterInterpreterVal = this.filterInterpreterParams;
+        this.route.params.subscribe(params => {
+            this.currentPage = 1;
+            let param_id = params['id'] || '';
+            this.fetchNearbyinterpreters(param_id);
+        });
+    }
+
+    private formatterValueFor(field: string, value: string) {
+        if (value !== undefined && value.toLowerCase() === 'all') {
+            return '';
+        }
+        return value;
+    }
+
+    search() {
+        GLOBAL._filterInterpreterVal.set('search', this.searchParams);
+        this.route.params.subscribe(params => {
+            this.currentPage = 1;
+            let param_id = params['id'] || '';
+            this.fetchNearbyinterpreters(param_id);
+        });
+    }
+
+    clearSearch() {
+        this.searchParams = '';
+        this.search();
+    }
+
+    filterInterpreters(field: string, value: string) {
+        this.interpreterFilter[field] = this.formatterValueFor(field, value);
+        for (let k in this.interpreterFilter) {
+            if (this.interpreterFilter.hasOwnProperty(k)) {
+                this.filterInterpreterParams.set('filter[' + k + ']', this.interpreterFilter[k]);
+            }
+        }
+        GLOBAL._filterInterpreterVal = this.filterInterpreterParams;
+        this.route.params.subscribe(params => {
+            this.currentPage = 1;
+            let param_id = params['id'] || '';
+            this.fetchNearbyinterpreters(param_id);
+        });
+    }
+
+    preferredStatuses() {
+        return ['All', 'Yes', 'No'];
+    }
+    filterPreferredStatus() {
+        return this.interpreterFilter.preferred_status;
+    }
+
+    skillLevelList() {
+        let keys = ['Captioning', 'Certified Conference Interpreter', 'Certified Interpreter', 'Certified Provisional Interpreter',
+            'Certified Specialist Interpreter - Health', 'Certified Specialist Interpreter - Health & Legal', 'Certified Specialist Interpreter - Legal',
+            'Notetaking', 'Paraprofessional Level', 'Professional Level', 'Recognised', 'Recognised Practising'];
+        return ['All', ...keys];
+    }
+
+    filterSkillLevel() {
+        return this.interpreterFilter.skill_level;
+    }
+
+    travelPayStatuses() {
+        return ['All', 'Yes', 'No'];
+    }
+
+    filterPayStatus() {
+        return this.interpreterFilter.travel_pay_status;
+    }
+
+    underScoreToSpaces(str: string) {
+        if (!str) {
+            return 'All';
+        }
+        return str.replace(/_/g, ' ');
     }
 }

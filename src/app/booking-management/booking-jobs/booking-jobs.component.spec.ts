@@ -20,10 +20,10 @@ import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
 import { PrettyIDPipe } from '../../shared/pipe/pretty-id.pipe';
 import {BookingHeaderService} from '../booking-header/booking-header.service';
 import {BookingHeaderComponent} from '../booking-header/booking-header.component';
-import {MomentModule} from 'angular2-moment/moment.module';
 import {BookingInfoComponent} from '../booking-info/booking-info.component';
 import {DatePipe} from '@angular/common';
 import {NgxPaginationModule} from 'ngx-pagination';
+import {ShortTimePipe} from '../../shared/pipe/short-time.pipe';
 
 describe('BookingJobsComponent', () => {
   let component: BookingJobsComponent;
@@ -31,7 +31,8 @@ describe('BookingJobsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [BookingJobsComponent, BookingHeaderComponent, PrettyIDPipe, BookingInfoComponent],
+      declarations: [BookingJobsComponent, BookingHeaderComponent, PrettyIDPipe, BookingInfoComponent,
+                     ShortTimePipe],
       providers: [MdDialog,
         ViewContainerRef, SpinnerService, NotificationServiceBus, DatePipe, BookingHeaderService,
         {
@@ -42,7 +43,7 @@ describe('BookingJobsComponent', () => {
         },
         { provide: BookingService, useClass: MockBookingService },
         { provide: UserService, useClass: MockUserService }, { provide: AuthHttp, useClass: MockBackend }],
-      imports: [SimpleNotificationsModule, MaterialModule, FormsModule, MomentModule, NgxPaginationModule,
+      imports: [SimpleNotificationsModule, MaterialModule, FormsModule, NgxPaginationModule,
         RouterTestingModule, CustomFormsModule]
     }).compileComponents();
   }));

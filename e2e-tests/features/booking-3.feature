@@ -84,7 +84,7 @@ Feature: Booking Management
     And I will be shown with bookings
     Then I am shown with 1 booking
 
-  @ignoreThis
+  @runThis
   Scenario: Individual Client can't have special instruction fields
     Given I exist as an Individual Client
     And I sign in with valid Individual Client credentials

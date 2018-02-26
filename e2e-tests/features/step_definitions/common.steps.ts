@@ -62,6 +62,7 @@ defineSupportCode(({Given, When, Then}) => {
             });
         });
     });
+    Given(/^I am shown the verify screen/, bookingManagementPage.showVerifyPage);
     Given(/^I don't see any new New Booking link/, bookingManagementPage.newBookingDoesNotExists);
     Given(/^Assigned all bookings to (.*)/, Heroku.assignExistingBooking);
     Given(/^I click on forgot my password$/, homePage.clickOnResetPassword);
@@ -82,7 +83,7 @@ defineSupportCode(({Given, When, Then}) => {
     Given(/^I am on my dashboard screen$/, bookingManagementPage.verify);
     Given(/^I fill New Booking form fields correctly$/, bookingPage.createBooking);
     Given(/^I fill New Booking form fields correctly with yesterday date$/, bookingPage.createBookingWithYesterdayDate);
-    Given(/^I fill New Booking form fields correctly with tomorrow date with vicdeaf$/, bookingPage.editBookingWithTomorrowDateWith_VICDEAF_STATE);
+    Given(/^I update the booking to be within 48 hours with vicdeaf$/, bookingPage.editBookingWithDayAfterTomorrowDateWith_VICDEAF_STATE);
     Given(/^I fill New Booking form fields correctly with DSQ state$/, bookingPage.editBookingWith_DSQ_STATES);
     Given(/^I fill New Booking form fields correctly with just vicdeaf$/, bookingPage.editBookingWith_VICDEAF_STATE);
     Given(/^I fill New Booking form fields with address greater than 40 kilometers$/, bookingPage.createBookingForPerth);
@@ -191,7 +192,7 @@ defineSupportCode(({Given, When, Then}) => {
     Given(/^I clear the payroll input field '(.*)'/, clearPayrollField);
 
     function clearPayrollField(fieldName: string) {
-            let input = bookingPayroll.getElementByCss('input[ng-reflect-name="'+fieldName+'"]');
+            let input = bookingPayroll.getElementByCss('input[ng-reflect-name="' + fieldName + '"]');
             expect(input).to.exist;
             input.clear();
     }
@@ -199,10 +200,19 @@ defineSupportCode(({Given, When, Then}) => {
     Given(/^I can see the payroll element '(.*)' has text '(.*)'/, checkPayrollFieldText);
 
     function checkPayrollFieldText(fieldName: string, text: string) {
-                let input = bookingPayroll.getElementByCss('input[ng-reflect-name="'+fieldName+'"]');
-                        return input.getAttribute('value').then(elmTxt => {
-                            return expect(elmTxt).to.be.eq(text);
-                    });
+        let input = bookingPayroll.getElementByCss('input[ng-reflect-name="' + fieldName + '"]');
+        return input.getAttribute('value').then(elmTxt => {
+            return expect(elmTxt).to.be.eq(text);
+        });
+    }
+
+    Given(/^I can see the payroll element '(.*)' has non-zero value/, checkPayrollFieldTextIsNonZero);
+
+    function checkPayrollFieldTextIsNonZero(fieldName: string) {
+        let input = bookingPayroll.getElementByCss('input[ng-reflect-name="' + fieldName + '"]');
+        return input.getAttribute('value').then(elmTxt => {
+            return expect(elmTxt.match(/[1-9]/)).to.be.greaterThan(0);
+        });
     }
 
     Given(/^I jump to '(.*)' element$/, toNextElement);
@@ -461,24 +471,23 @@ defineSupportCode(({Given, When, Then}) => {
     }
 
     When(/^I verify checkbox name '(.*)' is checked '(.*)'$/, verifyOnCBByName);
-    function verifyOnCBByName(btnName: string, checkedState: string) {
-        let bVal = ((checkedState === 'True') || (checkedState === 'true'));
+    function verifyOnCBByName(btnName: string, checkedState: 'True' | 'true') {
         return page.getElementByName(btnName).getAttribute('ng-reflect-model').then(val => {
-            expect(val).to.be.eq(bVal+'');
+            return expect(val).to.be.eq(checkedState.toLowerCase());
         });
     }
 
     When(/^I verify material checkbox name '(.*)' is checked '(.*)'$/, verifyMaterialCB);
-    function verifyMaterialCB(btnName: string, checkedState: string) {
-        let bVal = ((checkedState === 'True') || (checkedState === 'true'));
-        return page.getElementByCss('md-checkbox[ng-reflect-name="'+btnName+'"]').getAttribute('ng-reflect-model').then(val => {
-            expect(val).to.be.eq(bVal+'');
+    function verifyMaterialCB(btnName: string, checkedState: 'True' | 'true') {
+        const checkbox = page.getElementByCss('md-checkbox[ng-reflect-name="' + btnName + '"]');
+        return checkbox.getAttribute('ng-reflect-model').then(val => {
+            return expect(val).to.be.eq(checkedState.toLowerCase());
         });
     }
 
     When(/^I click on material checkbox name '(.*)'$/, clickMaterialCB);
     function clickMaterialCB(cbName: string) {
-        return page.getElementByCss('md-checkbox[ng-reflect-name="'+cbName+'"]').click();
+        return page.getElementByCss('md-checkbox[ng-reflect-name="' + cbName + '"]').click();
     }
 
     When(/^I verify radiobutton name '(.*)' and is checked$/, verifyOnRBByName);
@@ -554,4 +563,5 @@ defineSupportCode(({Given, When, Then}) => {
             });
     }
 
+    Then(/^I run all background jobs$/, Heroku.runAllBackgroundTasks);
 });

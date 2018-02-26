@@ -413,11 +413,30 @@ export class Heroku {
             console.log('Heroku Command => Error', o3);
         });
     }
+
+    static updateInterpretersPreference(order: string, count: string, preference: string) {
+        let task = 'seed:test_data:interpreters:allocate[' + order + ',' + count + ',' + preference + ']';
+        Heroku.sendTaskToHeroku(task);
+    }
+    static updateInterpretersSkillLevel(order: string, count: string, skill: string) {
+        let task = 'seed:test_data:interpreters:skill[' + order + ',' + count + ',' + skill + ']';
+        Heroku.sendTaskToHeroku(task);
+    }
+    static updateInterpretersTravelPayStatus(order: string, count: string, status: string) {
+        let task = 'seed:test_data:interpreters:travel_pay[' + order + ',' + count + ',' + status + ']';
+        Heroku.sendTaskToHeroku(task);
+    }
     static createInterpreterOfType (type: string) {
         // blocked, booked, blockout
         let task = 'seed:test_data:preload_booking:with_' + type + '_interpreter'; // Will create one booking with one interpreter as type
         Heroku.sendTaskToHeroku(task);
     }
+
+    static runAllBackgroundTasks() {
+        const command = 'Delayed::Job.all.map(&:invoke_job)';
+        Heroku.sendCommandToHeroku(command);
+    }
+
     static createSingleBooking() {
         const data = Heroku.createBooking(1);
         let command = 'b = Booking.new(' + JSON.stringify(data) + '); b.bookable = IndividualClient.first; b.save';

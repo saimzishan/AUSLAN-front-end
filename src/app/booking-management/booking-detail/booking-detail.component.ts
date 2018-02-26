@@ -9,7 +9,7 @@ import {NotificationServiceBus} from '../../notification/notification.service';
 import {Router, ActivatedRoute} from '@angular/router';
 import {RolePermission} from '../../shared/role-permission/role-permission';
 import {DatePipe} from '@angular/common';
-import {FormGroup} from '@angular/forms';
+import {FormGroup, FormControl} from '@angular/forms';
 import {FileUploader} from 'ng2-file-upload';
 import {Address} from '../../shared/model/venue.entity';
 import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
@@ -32,7 +32,6 @@ const _ONE_HOUR = 1000 /*milliseconds*/
     styleUrls: ['./booking-detail.component.css']
 })
 export class BookingDetailComponent implements OnInit, OnDestroy {
-
     private sub: any;
     public uploader: FileUploader = new FileUploader({url: '', maxFileSize: 20 * 1024 * 1024});
     bookingModel: Booking;
@@ -95,6 +94,9 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     defaultDateTime: Date;
     isRecurringBooking = false;
     isDisableForClientOrgBookOfficer = false;
+    hasBlockInt: Boolean = false;
+    hasPrefInt: Boolean = false;
+    duplicatingBookable: number;
     repeat_days = [
         {
             display: 'S',
@@ -159,19 +161,23 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             if (param.length > 0) {
                 let jsonData = JSON.parse(param);
                 this.bookingModel.fromJSON(jsonData);
+                this.duplicatingBookable = jsonData.bookable_id;
                 this.oldDocuments = jsonData.documents_attributes;
                 this.oldInterpreterPreference = jsonData.preference_allocations_attributes;
                 this.bookingModel.documents_attributes = [];
                 this.bookingDate = new Date(this.datePipe.transform(this.bookingModel.venue.start_time_iso, 'MM/dd/yyyy'));
-                this.bookingStartTime = new Date(this.bookingModel.venue.start_time_iso);
-                this.bookingEndTime = new Date(this.bookingModel.venue.end_time_iso);
-                this.setDayMonthYear();
+                this.setTime();
                 this.natureOfApptChange(null);
                 this.checkInterpreterBoxes();
             } else {
                 this.bookingModel = new Booking();
+                this.bookingDate = undefined;
+                this.bookingStartTime = undefined;
+                this.bookingEndTime = undefined;
+                this.isRecurringBooking = false;
                 this.resetPrefBlockInterpreters();
                 this.onSpecialInstruction();
+                this.resetRecurringDays();
             }
 
             if (this.forEdit) {
@@ -281,8 +287,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         let selectedDate = this.datePipe.transform(this.bookingDate, 'yyyy-MM-dd');
         let startTime = moment(this.bookingStartTime, 'hh:mm A').format('HH:mm:ss');
         let endTime = moment(this.bookingEndTime, 'hh:mm A').format('HH:mm:ss');
-        this.bookingModel.venue.start_time_iso = this.bookingModel.utcToBookingTimeZone(selectedDate + 'T' + startTime);
-        this.bookingModel.venue.end_time_iso = this.bookingModel.utcToBookingTimeZone(selectedDate + 'T' + endTime);
+        this.bookingModel.venue.start_time_iso = selectedDate + 'T' + startTime + this.bookingModel.getDayLightSavings();
+        this.bookingModel.venue.end_time_iso = selectedDate + 'T' + endTime + this.bookingModel.getDayLightSavings();
     }
 
     natureOfApptChange($event) {
@@ -306,6 +312,9 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.isDisabledForAdmin = (this.forEdit && !this.bookingModel.created_by_admin);
             this.currentUserIsContact = this.isCurrentUserContact();
             this.currentUserIsClient = this.isCurrentUserClient();
+            if (this.isDuplicate) {
+                this.getUserById(this.duplicatingBookable);
+            }
             if (!this.forEdit) {
                 this.onSelectionChange();
                 this.onClientSelectionChange();
@@ -314,9 +323,9 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.bookingModel.bookable_type = this.bookingModel.bookable_type || 'IndividualClient';
             if (this.isUserAdminORBookOfficer) {
                 this.bookingModel.created_by_admin = true;
-            } else {
-                this.oldBookingModel = this.deepCopy(this.bookingModel);
             }
+            this.oldBookingModel = this.deepCopy(this.bookingModel);
+
             if (!this.forEdit && !this.isDuplicate) {
                 this.onBookingAddressChange();
             }
@@ -339,12 +348,15 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         return this.bookingDate || this.minDate;
     }
 
-    setDayMonthYear() {
+    setTime() {
+        let startTime = this.bookingModel.utcToBookingTimeZone(this.bookingModel.venue.start_time_iso);
+        let endTime = this.bookingModel.utcToBookingTimeZone(this.bookingModel.venue.end_time_iso);
         let currentDate = new Date();
+
         this.bookingStartTime = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(),
-            this.bookingStartTime.getHours(), this.bookingStartTime.getMinutes());
+                                         moment.duration(startTime).get('hours'), moment.duration(startTime).get('minutes'));
         this.bookingEndTime = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(),
-            this.bookingEndTime.getHours(), this.bookingEndTime.getMinutes());
+                                       moment.duration(endTime).get('hours'), moment.duration(endTime).get('minutes'));
     }
 
     roundOffMinutes() {
@@ -415,6 +427,12 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         }
     }
 
+    public onBookingForChange() {
+        this.bookingModel.preference_allocations_attributes = [];
+        this.bookingModel.bookable_id = 0;
+        this.bookable = undefined;
+    }
+
     public onBookingForSelectionChange(selectedObject: IndividualClient | OrganisationalRepresentative) {
         this.bookingModel.preference_allocations_attributes = [];
         this.bookingModel.bookable_id = selectedObject.id;
@@ -425,11 +443,20 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     public onPreferredSelectionChange() {
+        let tempPrefInterp = [];
         if (!this.showPreferred) {
             this.showProfilePreferred = false;
             this.bookingModel.preference_allocations_attributes = this.bookingModel.preference_allocations_attributes.filter(a => a.preference !== 'preferred');
+            this.oldInterpreterPreference = [];
+        } else {
+            if (this.isUserAdminORBookOfficer && this.bookable !== undefined) {
+                tempPrefInterp = this.bookable.prefferedInterpreters.filter(itm => itm.preference === 'preferred');
+                this.hasPrefInt = (tempPrefInterp.length > 0);
+            } else if (this.userModel.type === 'OrganisationalRepresentative' || this.userModel.type === 'IndividualClient') {
+                tempPrefInterp = this.userModel.prefferedInterpreters.filter(itm => itm.preference === 'preferred');
+                this.hasPrefInt = (tempPrefInterp.length > 0);
+            }
         }
-
     }
 
     public onProfilePreferredSelectionChange() {
@@ -445,9 +472,19 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     public onBlockedSelectionChange() {
+        let tempBlockInterp = [];
         if (!this.showBlocked) {
             this.showProfileBlocked = false;
             this.bookingModel.preference_allocations_attributes = this.bookingModel.preference_allocations_attributes.filter(a => a.preference !== 'blocked');
+            this.oldInterpreterPreference = [];
+        } else {
+            if (this.isUserAdminORBookOfficer && this.bookable !== undefined) {
+                tempBlockInterp = this.bookable.prefferedInterpreters.filter(itm => itm.preference === 'blocked');
+                this.hasBlockInt = (tempBlockInterp.length > 0);
+            } else if (this.userModel.type === 'OrganisationalRepresentative' || this.userModel.type === 'IndividualClient') {
+                tempBlockInterp = this.userModel.prefferedInterpreters.filter(itm => itm.preference === 'blocked');
+                this.hasBlockInt = (tempBlockInterp.length > 0);
+            }
         }
     }
 
@@ -481,6 +518,24 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             });
             return this.allClientsOrg;
         });
+    }
+
+    public getUserById(id: number) {
+        let bookableUser;
+        this.userService.getUser(id)
+            .subscribe((res: any) => {
+                if (res.status === 200) {
+                    bookableUser = res.data;
+                    const singleUser = <IndividualClient | OrganisationalRepresentative>UserFactory.createUser(bookableUser);
+                    singleUser.displayName = this.getOrgName(singleUser);
+                    this.bookable = singleUser;
+                    this.bookingModel.bookable_id = singleUser.id;
+                    this.userModel = this.isUserAdminORBookOfficer ? this.bookable : this.userModel;
+                    this.onSelectionChange();
+                    this.onClientSelectionChange();
+                    this.setInvoiceField();
+                }
+            });
     }
 
     isNotIndClient() {
@@ -534,11 +589,20 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         }
     }
 
+       validateAllFormFields(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach(field => {
+        const control = formGroup.get(field);
+        if (control instanceof FormControl) {
+          control.markAsTouched({ onlySelf: true });
+        } else if (control instanceof FormGroup) {
+          this.validateAllFormFields(control);
+        }
+      });
+    }
     /*
       Calling this method will create a new booking
     */
-    public onCreateBooking(form: FormGroup, addressForm: any, billingForm: any, uploader: FileUploader) {
-
+    public onCreateBooking(form: any, addressForm: any, billingForm: any, uploader: FileUploader) {
         if (addressForm.isTravelCostApplicable && !form.value.travel_cost_applicable) {
             this.notificationServiceBus.launchNotification(true, 'Travel cost must be applicable as your booking distance is more than 40 kms');
             return;
@@ -553,6 +617,9 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             return;
         }
         if (form.invalid || addressForm.form.invalid || billingForm.form.invalid) {
+            this.validateAllFormFields(form.control);
+            this.validateAllFormFields(addressForm.form.control);
+            this.validateAllFormFields(billingForm.form.control);
             this.notificationServiceBus.launchNotification(true, GLOBAL.MISSING_FIELDS_ERROR_MESSAGE);
             return;
         }
@@ -589,8 +656,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     // have to merge this with save booking later.
     proceedWithBooking() {
         if (this.isBookingTimeInNonStandardHours()) {
-            let message = `This booking is not within the standard booking hours (8AM - 6PM).
-                            Do you still want to create booking?`;
+            let message = 'This booking is not within the standard booking hours (8AM - 6PM).' +
+                            ' Do you still want to ' + (this.forEdit ? 'update' : 'create') + ' booking?';
             let title = 'NON-STANDARD HOURS WARNING';
             this.createModal(title, message);
             this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
@@ -693,7 +760,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         this.dialogRef = this.dialog.open(PopupComponent, config);
         this.dialogRef.componentInstance.title = title;
         this.dialogRef.componentInstance.cancelTitle = (options && options.cancelTitle) || 'BACK';
-        this.dialogRef.componentInstance.okTitle = (options && options.okTitle) || 'CREATE';
+        this.dialogRef.componentInstance.okTitle = (options && options.okTitle) || this.forEdit ? 'UPDATE' : 'CREATE';
         this.dialogRef.componentInstance.closeVal = (options && options.closeVal) || false;
         this.dialogRef.componentInstance.popupMessage = message;
     }
@@ -708,7 +775,11 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     public isRecurrenceDayCheckboxDisabled(day) {
-        return this.bookingDate && this.bookingDate.getDay() === this.repeat_days.indexOf(day);
+        const isDisabled = this.bookingDate && this.bookingDate.getDay() === this.repeat_days.indexOf(day);
+        if (isDisabled) {
+            this.repeat_days[this.repeat_days.indexOf(day)].selected = true;
+        }
+        return isDisabled;
     }
 
     private getRecurrenceDays() {
@@ -827,7 +898,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     gotoBookingInfo() {
         let route = GLOBAL.currentUser instanceof Interpreter || GLOBAL.currentUser instanceof OrganisationalRepresentative
             ? 'job-detail' : 'booking-job';
-        this.router.navigate(['/booking-management/' + GLOBAL.selBookingID, route]);
+        GLOBAL.selBookingID = Boolean(GLOBAL.selBookingID) && GLOBAL.selBookingID.length > 0 ? GLOBAL.selBookingID : this.bookingModel.id;
+        this.router.navigate(['booking-management/' + GLOBAL.selBookingID, route]);
     }
 
     onCancelBooking() {
@@ -842,8 +914,9 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     handleFileSelect(evt) {
 
         let files = evt.target.files;
-
         let file = files[0];
+        evt.srcElement.value = '';
+
         // File uploader wont add a duplicate file
         if (files && file) {
             this.fileName = file.name;
@@ -864,8 +937,10 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         for (const day of this.repeat_days) {
             day.selected = false;
         }
-        this.repeat_days[this.bookingDate.getDay()].selected = true;
-        this.minDateForRecurrenceEnd = this.getMinDateForRecurringBookingEnd();
+        if (this.bookingDate) {
+            this.repeat_days[this.bookingDate.getDay()].selected = true;
+            this.minDateForRecurrenceEnd = this.getMinDateForRecurringBookingEnd();
+        }
     }
 
     _handleReaderLoaded(readerEvt) {
@@ -908,8 +983,14 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 errors => {
                     this.spinnerService.requestInProcess(false);
                     let e = errors.json() || '';
+                    let full_messages;
+                    if (e.constructor === ''.constructor) {
+                       full_messages = e;
+                    } else if (e.constructor === {}.constructor) {
+                       full_messages = e.errors;
+                    }
                     this.notificationServiceBus.launchNotification(true,
-                        'Error occured on server side. ' + errors.statusText + ' ' + JSON.stringify(e || e.errors));
+                        'Error occured on server side. ' + errors.statusText + ', ' + full_messages);
                 });
     }
 
@@ -999,5 +1080,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     resetPrefBlockInterpreters() {
         this.oldInterpreterPreference = [];
         this.showPreferred = this.showProfilePreferred = this.showBlocked = this.showProfileBlocked = false;
+        this.hasPrefInt = this.hasBlockInt = false;
     }
 }

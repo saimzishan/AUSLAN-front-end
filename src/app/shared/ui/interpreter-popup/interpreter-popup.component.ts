@@ -14,8 +14,11 @@ export class InterpreterPopupComponent implements OnInit {
 
     selectedInterpreters = [];
     isPreffered = false;
+    state_where_most_bookings_occur = 'VIC';
     interpreterList = [];
     checkedInterpreter = -1;
+    currentPage = 1;
+    totalItems;
 
     ngOnInit() {
         this.fetchAllInterpreters();
@@ -65,9 +68,10 @@ export class InterpreterPopupComponent implements OnInit {
     fetchAllInterpreters() {
         // This call is creating problem in console, why ?
         this.spinnerService.requestInProcess(false);
-        this.userDataService.fetchBasicDetailsForInterpreter()
+        this.userDataService.fetchBasicDetailsForInterpreter(this.currentPage, this.state_where_most_bookings_occur)
             .subscribe((res: any) => {
                     if (res.status === 200) {
+                        this.totalItems = Boolean(res.data.paginates) ? res.data.paginates.total_records : res.data.users.length;
                         this.interpreterList = res.data.users.sort(function (a, b) {
                             let nameA = a.first_name.toLowerCase();
                             let nameB = b.first_name.toLowerCase();
@@ -98,4 +102,10 @@ export class InterpreterPopupComponent implements OnInit {
         }
         this.closeDialog();
     }
+
+    getPage(page: number) {
+        this.currentPage = page;
+        this.fetchAllInterpreters();
+    }
+
 }

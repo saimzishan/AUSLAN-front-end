@@ -1,4 +1,4 @@
-import {Component, ViewChild, OnInit, Input, ElementRef} from '@angular/core';
+import {Component, ViewChild, OnInit, AfterViewInit, Input, ElementRef} from '@angular/core';
 import {DatePipe} from '@angular/common';
 import {ActivatedRoute, Router} from '@angular/router';
 import * as $ from 'jquery';
@@ -7,22 +7,34 @@ import {Interpreter, BookingOfficer, Administrator} from '../../shared/model/use
 import {GLOBAL} from '../../shared/global';
 import {CalendarComponent} from 'ap-angular2-fullcalendar';
 import {UserService} from '../../api/user.service';
+import {NgForm} from '@angular/forms';
 
 @Component({
     selector: 'app-interpreter',
     templateUrl: './interpreter.component.html',
-    styleUrls: ['./interpreter.component.css']
+    styleUrls: ['./interpreter.component.css'],
+    exportAs: 'ctInterpreterForm'
 })
-export class InterpreterComponent implements OnInit {
+export class InterpreterComponent implements OnInit , AfterViewInit {
+    @ViewChild('interpreterForm') public interpreterform: NgForm;
     @Input() userModel: Interpreter;
     @Input() displayCalendar= false;
     @Input() canCalculateDistance: boolean;
     @ViewChild('mycal') myCal: CalendarComponent;
     updateCalendar = false;
     calendarOptions: Object = {};
+    @Input() parentForm: NgForm;
 
     constructor(private routes: ActivatedRoute, private router: Router, public userDataService: UserService) {
     }
+
+    ngAfterViewInit() {
+        if (this.parentForm !== null && this.parentForm !== undefined) {
+            if (!this.parentForm.form.contains('interpreterFields')) {
+                this.parentForm.form.addControl('interpreterFields', this.interpreterform.form);
+            }
+        }
+      }
     ngOnInit() {
         let d = new DatePipe('en-us');
         this.userModel.naati_validity_start_date =
@@ -39,7 +51,8 @@ export class InterpreterComponent implements OnInit {
                 .subscribe((res: any) => {
                     if (res.status === 200) {
                         delete res.data.assignments_attributes;
-                        this.userModel.availability_blocks_attributes =  res.data.availability_blocks_attributes;
+                        this.userModel.availability_blocks_attributes = res.data.availability_blocks_attributes;
+                        this.userModel.staff_availabilities_attributes = res.data.staff_availabilities_attributes;
                         this.BlockoutToUpdate();
                     }
                 });
@@ -64,9 +77,10 @@ export class InterpreterComponent implements OnInit {
                 },
                 textColor: '#ffffff',
                 contentHeight: 'auto',
-                navLinks: true, // can click day/week names to navigate views
+                navLinks: $(window).width() >= 768, // can click day/week names to navigate views , clickable if on desktop
                 selectable: true,
                 selectHelper: true,
+                eventStartEditable: false, // will disable dragable events
                 windowResize: (view) => {
                     this.myCal.fullCalendar( 'changeView', $(window).width() < 768 ? 'listMonth' : 'month');
                 },
@@ -84,11 +98,9 @@ export class InterpreterComponent implements OnInit {
 
                     }).length)  > 0; // if it isn't in one of the ranges, don't render it (by returning false
                 },
-                defaultView: $(window).width() < 768 ? 'listMonth' : 'month',
+                defaultView: 'listMonth',
                 eventClick: (calEvent, jsEvent, view) => {
-                    if (view.name !== 'listYear' && view.name !== 'listMonth') {
                         this.router.navigate(['/user-management/', calEvent.id, 'block_out']);
-                    }
                 },
                 editable: true,
                 eventLimit: 2, // allow "more" link when too many events
@@ -102,7 +114,7 @@ export class InterpreterComponent implements OnInit {
 
                 let event: any = ({
                     title: avail_block.name,
-                    color: avail_block.recurring ? '#00ff00' : '#02b86e',
+                    color: '#02b86e',
                     id: avail_block.id,
                     textColor: '#ffffff',
                     booking_id: avail_block.booking_id,

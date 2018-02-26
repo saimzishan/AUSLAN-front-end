@@ -39,7 +39,7 @@ Feature: Edit Booking
     When I change the street number to 154
     And I click on checkbox name 'tnc'
     And I click on BUTTON 'SAVE'
-    And If I am shown a popup message 'This booking is not within the standard booking hours (8AM - 6PM). Do you still want to create booking?', I approve it
+    And If I am shown a popup message 'This booking is not within the standard booking hours (8AM - 6PM). Do you still want to update booking?', I approve it
     Then I wait for 1200 milli-seconds
     Then If I am shown a popup message 'Would you like to save these changes for all bookings or only for this one?', I approve it
     Then I should get a valid booking update notification
@@ -133,7 +133,7 @@ Feature: Edit Booking
     Then I will close the file upload
     And I click on checkbox name 'tnc'
     And I click the create booking button
-    And If I am shown a popup message 'This booking is not within the standard booking hours (8AM - 6PM). Do you still want to create booking?', I approve it
+    And If I am shown a popup message 'This booking is not within the standard booking hours (8AM - 6PM). Do you still want to update booking?', I approve it
     Then I should get a valid booking update notification
     And I am on the individual booking page
     When I click on link 'Booking details'
@@ -156,7 +156,7 @@ Feature: Edit Booking
     Then I will close the file upload
     And I click on checkbox name 'tnc'
     And I click on BUTTON 'SAVE'
-    And If I am shown a popup message 'This booking is not within the standard booking hours (8AM - 6PM). Do you still want to create booking?', I approve it
+    And If I am shown a popup message 'This booking is not within the standard booking hours (8AM - 6PM). Do you still want to update booking?', I approve it
     Then I should get a valid booking update notification
     And I am on the individual booking page
     When I click on link 'Booking details'
@@ -166,7 +166,7 @@ Feature: Edit Booking
     Then I will see attachment 'sushi.pdf' is removed
     And I click on checkbox name 'tnc'
     And I click on BUTTON 'SAVE'
-    And If I am shown a popup message 'This booking is not within the standard booking hours (8AM - 6PM). Do you still want to create booking?', I approve it
+    And If I am shown a popup message 'This booking is not within the standard booking hours (8AM - 6PM). Do you still want to update booking?', I approve it
     Then I should get a valid booking update notification
     And I wait for 1000 milli-seconds
     And I am on the individual booking page
@@ -174,14 +174,14 @@ Feature: Edit Booking
     Then I should be on the edit booking page
     And I see attachment 'sushi.pdf' does 'not exists'
 
-  # Auslan1-843
-  # The bookings in this file are created using Factory Girl
-  # The configuration and values are as defined in the api project
-  # Following values have been assigned as of now
-  # Contact first name: Jimmy
-  # Contact last name: Donavan
-  # Contact email: jimmy@donavan.com
-  # Contact phone number: 03 9876 4321
+    # Auslan1-843
+    # The bookings in this file are created using Factory Girl
+    # The configuration and values are as defined in the api project
+    # Following values have been assigned as of now
+    # Contact first name: Jimmy
+    # Contact last name: Donavan
+    # Contact email: jimmy@donavan.com
+    # Contact phone number: 03 9876 4321
   @ignoreThis
   Scenario: As a Booking Officer, When editing a booking, I should see the contact details as given by api
     Given I exist as an Booking Officer
@@ -365,7 +365,7 @@ Feature: Edit Booking
     And I can see the element with name 'btnClaim' is 'visible'
     Then I click on BUTTON 'Claim'
     When I click on BUTTON 'Save'
-    Then I get a valid 'Claimed' notification for state
+    Then I get a valid 'Cancelled Claimed' notification for state
     Then I click on my name in the top corner
     And I click on logout
     And I sign in with valid Booking Officer credentials
@@ -395,4 +395,23 @@ Feature: Edit Booking
     When I click on link 'Booking details'
     Then I should be on the edit booking page
     And I can see that form 'bookingDetailFieldset' is 'disabled'
-    
+
+  @runThis
+  Scenario: As a Booking Officer, I can see that recurrsion button is not vissible via edit 
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    Then I am on the bookings page
+    And I am shown with 1 bookings
+    When I click on an individual booking
+    Then I am on the individual booking page
+    When I click on link 'Booking details'
+    Then I should be on the edit booking page
+    Then I can see the element with name 'recurring-booking' is 'not visible'
+    Then I click on Bookings
+    And I am on the bookings page
+    When I click on an individual booking
+    Then I will be shown the booking job page
+    Then I can see the button 'Save' is disabled
+    And I click on BUTTON 'Duplicate'
+    Then I will be taken to the 'New Booking' form
+    Then I can see the element with name 'recurring-booking' is 'visible'

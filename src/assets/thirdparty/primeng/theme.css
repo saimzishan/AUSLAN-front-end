@@ -44,9 +44,9 @@
 
 .ui-state-highlight {
   border-color: #156090;
-  background: #186ba0;
+  background: #1DB670;
   color: #FFFFFF; }
-  .ui-state-highlight a {
+  .ui-state-highlight a, .ui-state-highlight span  {
     color: #FFFFFF; }
 
 .ui-state-focus {

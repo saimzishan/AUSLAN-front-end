@@ -1,20 +1,11 @@
-import {Component, AfterViewChecked} from '@angular/core';
+import {Component} from '@angular/core';
 import {URLSearchParams} from '@angular/http';
 import {BookingService} from '../api/booking.service';
 import {Booking} from '../shared/model/booking.entity';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/distinctUntilChanged';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/operator/toPromise';
-import 'rxjs/add/observable/throw';
 import {SpinnerService} from '../spinner/spinner.service';
 import {RolePermission} from '../shared/role-permission/role-permission';
-import {IndividualClient, Interpreter, OrganisationalRepresentative, User} from '../shared/model/user.entity';
-import {ROLE} from '../shared/model/role.enum';
+import {IndividualClient, Interpreter, OrganisationalRepresentative} from '../shared/model/user.entity';
 import {GLOBAL} from '../shared/global';
-import {MobileFooterComponent} from '../ui/mobile-footer/mobile-footer.component';
 import {BOOKING_STATE} from '../shared/model/booking-state.enum';
 import {BookingInterpreter} from '../shared/model/contact.entity';
 
@@ -70,8 +61,6 @@ export class BookingComponent  {
                                         currentInt.state === 'Rejected')) {
                                     continue;
                                 } else {
-                                    b.venue.start_time_iso = b.utcToBookingTimeZone(b.venue.start_time_iso);
-                                    b.venue.end_time_iso = b.utcToBookingTimeZone(b.venue.end_time_iso);
                                     this.bookings.push(b);
                                 }
                             }

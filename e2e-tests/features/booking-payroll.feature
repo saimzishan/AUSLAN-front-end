@@ -66,16 +66,12 @@ Feature: Booking Payroll and Billing
     When I click on link 'Payroll & Billing'
     Then I should be on the payroll and billing page
     Then I wait for 1500 milli-seconds
-    Then I click on material checkbox name 'cbPayTravel_0'
-    And I verify material checkbox name 'cbPayTravel_0' is checked 'true'
     And I verify material checkbox name 'cbPayInterpreter_0' is checked 'true'
     When I click on material checkbox name 'cbPayInterpreter_0'
     Then I verify material checkbox name 'cbPayInterpreter_0' is checked 'false'
     And I verify material checkbox name 'cbPayTravel_0' is checked 'false'
     And I verify that payroll 'interpreter' input fields are non editable
     And I verify that payroll 'interpreter' input fields have zero value
-    Then I click on material checkbox name 'cbChargeTravel_0'
-    And I verify material checkbox name 'cbChargeTravel_0' is checked 'true'
     And I verify material checkbox name 'cbInvoiceClient_0' is checked 'true'
     When I click on material checkbox name 'cbInvoiceClient_0'
     Then I verify material checkbox name 'cbInvoiceClient_0' is checked 'false'
@@ -105,8 +101,8 @@ Feature: Booking Payroll and Billing
     And I verify that payroll 'interpreter' input fields have zero value
     When I click on material checkbox name 'cbPayInterpreter_0'
     Then I verify material checkbox name 'cbPayInterpreter_0' is checked 'true'
-    And I can see the payroll element 'interpreter_interpreterTime_0' has text '2:0'
-    And I can see the payroll element 'interpreter_prepTime_0' has text '0'
+    And I can see the payroll element 'interpreter_interpreterTime_0' has text '2:00'
+    And I can see the payroll element 'interpreter_prepTime_0' has text '0:00'
 
   @runThis
   Scenario: Given 1 verified Booking Officer, When I check invoice client then time fields of client will be filled from the time fields of interpreter, INTERPRETER exists
@@ -121,10 +117,10 @@ Feature: Booking Payroll and Billing
     And I click on BUTTON 'Save'
     Then I wait for 1000 milli-seconds
     Then I get valid message: 'The interpreter have been assigned'
+    And I run all background jobs
     When I click on link 'Payroll & Billing'
     Then I should be on the payroll and billing page
-    Then I wait for 1500 milli-seconds
-    Then I click on material checkbox name 'cbPayTravel_0'
+    Then I verify material checkbox name 'cbPayTravel_0' is checked 'true'
     And I fill the payroll field 'interpreter_interpreterTime_0' with value '1:20'
     And I fill the payroll field 'interpreter_prepTime_0' with value '0:20'
     And I fill the payroll field 'interpreter_travelTime_0' with value '0:25'
@@ -138,7 +134,7 @@ Feature: Booking Payroll and Billing
     And I can see the payroll element 'client_prepTime_0' has text '0:20'
     And I can see the payroll element 'client_travelTime_0' has text '0:25'
 
-  @runThis
+  @ignoreThis
   Scenario: Given 1 verified Booking Officer, When I check charge travel then km and travel time will be filled from the recommended values and when i save then I will get a success notification, INTERPRETER exists
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
@@ -151,9 +147,9 @@ Feature: Booking Payroll and Billing
     And I click on BUTTON 'Save'
     Then I wait for 1000 milli-seconds
     Then I get valid message: 'The interpreter have been assigned'
+    And I run all background jobs
     When I click on link 'Payroll & Billing'
     Then I should be on the payroll and billing page
-    Then I wait for 1500 milli-seconds
     And I verify material checkbox name 'cbInvoiceClient_0' is checked 'true'
     When I click on material checkbox name 'cbInvoiceClient_0'
     Then I verify material checkbox name 'cbInvoiceClient_0' is checked 'false'
@@ -162,8 +158,8 @@ Feature: Booking Payroll and Billing
     Then I verify material checkbox name 'cbInvoiceClient_0' is checked 'true'
     When I click on material checkbox name 'cbChargeTravel_0'
     Then I verify material checkbox name 'cbChargeTravel_0' is checked 'true'
-    And I can see the payroll element 'client_kiloMeters_0' has text '1'
-    And I can see the payroll element 'client_travelTime_0' has text '0:05'
+    And I can see the payroll element 'client_kiloMeters_0' has text '8'
+    And I can see the payroll element 'client_travelTime_0' has text '0:20'
     And I click on BUTTON 'Save'
     Then I should get a valid payroll save notification
 
@@ -247,7 +243,7 @@ Feature: Booking Payroll and Billing
     Then I wait for 3000 milli-seconds
     Then I click on BUTTON 'Claim'
     When I click on BUTTON 'Save'
-    Then I get a valid 'Claimed' notification for state
+    Then I get a valid 'Cancelled Claimed' notification for state
     Then I click on Bookings
     And I am on the bookings page
     When I click on an individual booking
@@ -256,7 +252,7 @@ Feature: Booking Payroll and Billing
     Then I wait for 3000 milli-seconds
     Then I click on BUTTON 'Undo claim'
     When I click on BUTTON 'Save'
-    Then I get a valid 'Service Completed' notification for state
+    Then I get a valid 'Cancelled Chargeable' notification for state
     Then I click on Bookings
     And I am on the bookings page
     When I click on an individual booking
@@ -286,13 +282,13 @@ Feature: Booking Payroll and Billing
     And I can see the element with name 'btnClaim' is 'visible'
     Then I click on BUTTON 'Claim'
     When I click on BUTTON 'Save'
-    Then I get a valid 'Claimed' notification for state
+    Then I get a valid 'Cancelled Claimed' notification for state
     And I can see the element with name 'btnClaim' is 'not visible'
     And I can see the element with name 'btnUndoClaim' is 'visible'
     Then I wait for 3000 milli-seconds
     Then I click on BUTTON 'Undo claim'
     When I click on BUTTON 'Save'
-    Then I get a valid 'Service Completed' notification for state
+    Then I get a valid 'Cancelled Chargeable' notification for state
 
   @runThis
   Scenario: Given 1 verified Booking Officer, I will get a warning popup when I move to bookng info or booking detail if there are unsaved changes on payroll page, INTERPRETER exists
@@ -315,12 +311,13 @@ Feature: Booking Payroll and Billing
     Then I should be on the payroll and billing page
     When I click on link 'Booking info'
     Then I am on the individual booking page
+    Then I wait for 1200 milli-seconds
     When I click on link 'Payroll & Billing'
     Then I should be on the payroll and billing page
     Then I click on material checkbox name 'cbPayTravel_0'
     When I click on link 'Booking details'
     Then I will be shown a popup message 'There are unsaved changes on this page. Are you sure you want to leave?'
-    And I click on BUTTON name 'noBtn'
+    And I click on BUTTON name 'yesBtn'
     Then I wait for 1500 milli-seconds
     When I click on link 'Booking info'
     Then I will be shown a popup message 'There are unsaved changes on this page. Are you sure you want to leave?'

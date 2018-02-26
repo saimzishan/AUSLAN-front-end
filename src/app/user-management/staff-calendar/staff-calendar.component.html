@@ -8,10 +8,10 @@
 <div id="page-common">
   <main>
     <form class="common-form reduced-top">
-      <ng-container>
+      <ng-container *ngIf="displayCalendar && updateCalendar">
         <h1>STAFF AVAILABILITY</h1>
         <angular2-fullcalendar id="mycal" #mycal [options]="calendarOptions"></angular2-fullcalendar>
-        <button id="staff-availability" [routerLink]="['/user-management/',2,'staff-availability']">ADD STAFF AVAILABILITY</button>
+        <button id="staff-availability" [routerLink]="['/user-management/',-3,'staff-availability']">ADD STAFF AVAILABILITY</button>
       </ng-container>     
     </form>
   </main>

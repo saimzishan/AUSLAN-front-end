@@ -16,7 +16,7 @@ Feature: Booking Filter
     Then I should be on the edit booking page
     And I change the input field EXT. REFERENCE NUM with INV-909
     And I click the create booking button
-    And If I am shown a popup message 'This booking is not within the standard booking hours (8AM - 6PM). Do you still want to create booking?', I approve it
+    And If I am shown a popup message 'This booking is not within the standard booking hours (8AM - 6PM). Do you still want to update booking?', I approve it
     Then I wait for 1200 milli-seconds
     Then If I am shown a popup message 'Would you like to save these changes for all bookings or only for this one?', I approve it
     Then I should get a valid booking update notification
@@ -104,7 +104,7 @@ Feature: Booking Filter
     And I am on the bookings page
     Then I can see that date_from is preseleted with current date
 
-  @ignoreThis
+  @runThis
   Scenario: As a Booking Officer, I can create a booking for Organisational Representative with old date and I should be able to filter the bookings by today's date onward
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
@@ -118,6 +118,8 @@ Feature: Booking Filter
     Then I get a valid create booking notification
     And I am on the bookings page
     When I query search with empty date
+    And I press enter
+    Then I wait for 1000 milli-seconds
     Then I am shown with 6 booking
 
   @runThis
@@ -166,7 +168,7 @@ Feature: Booking Filter
     And I click out of the text box
     Then I am shown with 0 booking
 
-  @ignoreThis
+  @runThis
   Scenario: As a Administrator, filter for date should only submit date after clicked out or pressed enter
     Given I sign in with valid Administrator credentials
     When I am on the bookings page
