@@ -10,6 +10,9 @@ import * as $ from 'jquery';
 import { DatePipe } from '@angular/common';
 import { UserService } from '../../api/user.service';
 import { dashCaseToCamelCase } from '@angular/compiler/src/util';
+import { Booking } from '../../shared/model/booking.entity';
+import * as momentTimeZone from 'moment-timezone';
+
 
 @Component({
     selector: 'app-staff-calendar',
@@ -51,6 +54,7 @@ export class StaffCalendarComponent implements OnInit {
                 .subscribe((res: any) => {
                     if (res.status === 200) {
                         delete res.data.assignments_attributes;
+                        console.log(res.data);
                         this.userModel.staff_availabilities_attributes = res.data.staff_availabilities_attributes;
                         this.StaffAvialabilityToUpdate();
                     }
@@ -112,14 +116,25 @@ export class StaffCalendarComponent implements OnInit {
                 let sd = new Date(avail_block.start_time);
                 let ed = new Date(avail_block.end_date || avail_block.start_time);
                 let edt = new Date(avail_block.end_time);
+                let currentDate = new Date();
+                let sTime = this.interpreterStateTimeZone(avail_block.start_time);
+
+                let endTime = this.interpreterStateTimeZone(avail_block.end_time);
+
+                let s_t = new Date(sd.getFullYear(), sd.getMonth(), sd.getDate(),
+                    moment.duration(sTime).get('hours'), moment.duration(sTime).get('minutes'));
+
+                let e_t = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(),
+                    moment.duration(endTime).get('hours'), moment.duration(endTime).get('minutes'));
+
                 let event: any = ({
                     title: avail_block.name,
                     color: avail_block.recurring ? '#00ff00' : '#02b86e',
                     id: avail_block.id,
                     textColor: '#ffffff',
                     booking_id: avail_block.booking_id,
-                    start: avail_block.recurring === false ? sd.toISOString() : `${sd.getHours()}:${sd.getMinutes()}`,
-                    end: avail_block.recurring === false ? ed.toISOString() : `${edt.getHours()}:${edt.getMinutes()}`,
+                    start: avail_block.recurring === false ? s_t : ' ',
+                    end: avail_block.recurring === false ? e_t : ' ',
                     recurring: avail_block.recurring,
                     frequency: avail_block.frequency
                 });
@@ -133,13 +148,13 @@ export class StaffCalendarComponent implements OnInit {
                             end: moment().endOf(avail_block.frequency === 'daily' ? 'day' :
                                 avail_block.frequency === 'weekly' ? 'week' :
                                     avail_block.frequency === 'monthly' ? 'month' : 'week')
-                        },
-                        {
-                            start: moment(sd.toISOString()).format('YYYY-MM-DD'),
-                            end: moment(ed.toISOString()).format('YYYY-MM-DD')
+                        }, {
+                            start:  s_t ,
+                            end:  e_t ,
                         }
                     ];
-                }
+                } // console.log(avail_block.start_time);
+
 
                 this.calendarOptions['events'].push(event);
             }
@@ -158,4 +173,9 @@ export class StaffCalendarComponent implements OnInit {
         }
         return data;
     }
+    interpreterStateTimeZone(time) {
+        let timeZone = Booking.getNamedTimeZone(this.interpreter.address_attributes.state, this.interpreter.address_attributes.post_code.toString());
+        return momentTimeZone(time).tz(timeZone).format('HH:mm:ss');
+    }
+
 }
