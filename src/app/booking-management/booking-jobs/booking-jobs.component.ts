@@ -19,6 +19,7 @@ import {LinkidPopupComponent} from '../linkid-popup/linkid-popup.component';
 import {DatePipe} from '@angular/common';
 import {URLSearchParams} from '@angular/http';
 import {InterpreterFilter} from '../../shared/model/interpreter-filter.interface';
+import * as $ from 'jquery';
 
 @Component({
     selector: 'app-booking-jobs',
@@ -61,7 +62,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     totalItems;
     isRequestedProgressOrAllocated = false;
     searchParams: string;
-
+    serviceNameToDisplay;
     constructor(public dialog: MdDialog,
                 public viewContainerRef: ViewContainerRef, public spinnerService: SpinnerService,
                 public notificationServiceBus: NotificationServiceBus,
@@ -74,13 +75,10 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                 this.fetchBookingInterpreters(param_id);
             }
         });
-
     }
 
 
     ngOnInit() {
-
-
         this.headerSubscription = this.bookingHeaderService.notifyObservable$.subscribe((res) => {
             this.callRelatedFunctions(res);
         });
@@ -492,6 +490,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                     } else {
                         this.spinnerService.requestInProcess(false);
                     }
+                    ($(window).width() >= 768) ? this.serviceNameToDisplayDesktop() : this.serviceNameToDisplayMobile();
                 },
                 err => {
                     this.jobAccessError = true;
@@ -912,4 +911,33 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         }
         return str.replace(/_/g, ' ');
     }
+
+    serviceNameToDisplayDesktop() {
+        let interpreter = 'interptreter';
+        this.serviceNameToDisplay = this.selectedBookingModel.number_of_note_takers_required > 0 ? 'Notetaker'
+                                    : this.selectedBookingModel.number_of_captioners_required > 0 ? 'Captioner'
+                                    : this.selectedBookingModel.number_of_auslan_interpreters_required > 0 ? interpreter
+                                    : this.selectedBookingModel.number_of_visual_frame_interpreters_required > 0 ? interpreter + ' (visual frame)'
+                                    : this.selectedBookingModel.number_of_tactile_interpreters_required > 0 ? interpreter + ' (tactile)'
+                                    : this.selectedBookingModel.number_of_platform_interpreters_required > 0 ? interpreter + ' (platform)'
+                                    : this.selectedBookingModel.number_of_asl_interpreters_required > 0 ? interpreter + ' (asl)'
+                                    : this.selectedBookingModel.number_of_bsl_interpreters_required > 0 ? interpreter + ' (bsl)'
+                                    : this.selectedBookingModel.number_of_isl_interpreters_required > 0 ? interpreter + ' (isl)'
+                                    : this.selectedBookingModel.number_of_signed_english_interpreters_required > 0 ? interpreter + ' (signed english)'
+                                    : this.selectedBookingModel.number_of_indigenous_sign_interpreters_required > 0 ? interpreter + ' (indigenous sign)' : '';
+                                }
+    serviceNameToDisplayMobile() {
+        let interpreter = 'INTERPRETER';
+        this.serviceNameToDisplay = this.selectedBookingModel.number_of_note_takers_required > 0 ? 'NOTETAKER'
+                                    : this.selectedBookingModel.number_of_captioners_required > 0 ? 'CAPTIONER'
+                                    : this.selectedBookingModel.number_of_auslan_interpreters_required > 0 ? interpreter
+                                    : this.selectedBookingModel.number_of_visual_frame_interpreters_required > 0 ? interpreter + ' (VISUAL FRAME)'
+                                    : this.selectedBookingModel.number_of_tactile_interpreters_required > 0 ? interpreter + ' (TACTILE)'
+                                    : this.selectedBookingModel.number_of_platform_interpreters_required > 0 ? interpreter + ' (PLATFORM)'
+                                    : this.selectedBookingModel.number_of_asl_interpreters_required > 0 ? interpreter + ' (ASL)'
+                                    : this.selectedBookingModel.number_of_bsl_interpreters_required > 0 ? interpreter + ' (BSL)'
+                                    : this.selectedBookingModel.number_of_isl_interpreters_required > 0 ? interpreter + ' (ISL)'
+                                    : this.selectedBookingModel.number_of_signed_english_interpreters_required > 0 ? interpreter + ' (SIGNED ENGLISH)'
+                                    : this.selectedBookingModel.number_of_indigenous_sign_interpreters_required > 0 ? interpreter + ' (INDIGENOUS SIGN)' : '';
+                                }
 }
