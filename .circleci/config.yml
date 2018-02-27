@@ -84,6 +84,11 @@ jobs:
               npm install enhanced-resolve@3.3.0
               ng build --aot --env=canary
               aws s3 sync dist/  s3://auslan-booking-system-ct/ --delete
+            elif [ "${CIRCLE_BRANCH}" == "release-0.8" ]; then
+              rm -rf dist
+              npm install enhanced-resolve@3.3.0
+              ng build --aot --env=stage
+              aws s3 sync dist/  s3://auslandemo/ --delete
             else
               echo "Not master branch so not deploying"
             fi
