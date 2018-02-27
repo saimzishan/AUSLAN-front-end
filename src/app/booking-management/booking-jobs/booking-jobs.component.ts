@@ -328,9 +328,12 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
             this.bookingState = BOOKING_STATE.In_progress;
             stateMsg = 'Cancelled with No Charge';
             
-        } else {
+        } else if (this.selectedBookingModel.state === BOOKING_STATE.Cancelled_chargeable) {
             state = 'allocated';
             stateMsg = 'Cancelled with Charge';
+        } else {
+            state = 'in_progress';
+            stateMsg = 'Unable to Service';
         }
         
         this.spinnerService.requestInProcess(true);
