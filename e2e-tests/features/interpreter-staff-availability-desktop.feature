@@ -14,7 +14,6 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER STAF
     And I will be taken to the 'INTERPRETER Signup' page
     When I click on the option  staff calender
     When I click on BUTTON 'ADD STAFF AVAILABILITY'
-    And I wait for 1500 milli-seconds
     Then I will be taken to staff-calendar page
     And I enter blockout name 'singleEvent'
     And I click on BUTTON 'SAVE'
