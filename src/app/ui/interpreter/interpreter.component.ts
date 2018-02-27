@@ -110,9 +110,13 @@ export class InterpreterComponent implements OnInit , AfterViewInit {
             };
             for (let avail_block of this.userModel.availability_blocks_attributes) {
                 let sd = new Date(avail_block.start_time);
-                let ed = new Date(avail_block.end_date || avail_block.start_time);
+                let ed;
+                if (!avail_block.recurring) {
+                    ed = new Date(avail_block.start_time);
+                } else {
+                    ed = new Date(avail_block.end_date || avail_block.start_time);
+                }
                 let edt = new Date(avail_block.end_time);
-                let currentDate = new Date();
                 let sTime = this.interpreterStateTimeZone(avail_block.start_time);
 
                 let endTime = this.interpreterStateTimeZone(avail_block.end_time);
@@ -120,7 +124,7 @@ export class InterpreterComponent implements OnInit , AfterViewInit {
                 let s_t = new Date(sd.getFullYear(), sd.getMonth(), sd.getDate(),
                     moment.duration(sTime).get('hours'), moment.duration(sTime).get('minutes'));
 
-                let e_t = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(),
+                let e_t = new Date(ed.getFullYear(), ed.getMonth(), ed.getDate(),
                     moment.duration(endTime).get('hours'), moment.duration(endTime).get('minutes'));
 
                 let event: any = ({
