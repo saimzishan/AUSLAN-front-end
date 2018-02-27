@@ -782,7 +782,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                 cells = 'cells' + (edt.getHours() - sd.getHours());
 
             }
-            toRet = cells + ' ' + offset + ' pink fix-height';
+            toRet = cells + ' ' + offset + ' pink';
         }
         return toRet;
     }

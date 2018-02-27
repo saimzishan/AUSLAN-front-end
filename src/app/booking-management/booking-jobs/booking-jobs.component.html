@@ -296,15 +296,15 @@
                     <section *ngIf="showCalendar">
                         <section id="time">{{ startTime | date}} {{ startTime | date:'shortTime'}} - {{ endTime | date:'shortTime'}}</section>
                         <section>
-                            <section id="time-range" class="time-range">
+                            <section id="time-range">
                                 <button type="button">&lt;</button>
                                 <section>
-                                    <span class="txt-left" *ngFor="let t of getTimelineStartTime()">{{t}}</span>
+                                    <span *ngFor="let t of getTimelineStartTime()">{{t}}</span>
                                 </section>
                                 <button type="button">&gt;</button>
                             </section>
                             <section class="flow">
-                                <div class="fix-height" *ngFor="let inte of interpreterList ">
+                                <div *ngFor="let inte of interpreterList ">
                                     <section>
                                         <ng-container *ngFor="let avail_block of inte.availability_blocks_attributes">
                                             <ng-container *ngIf="getTimelineBlockoutStyle(avail_block).length > 2">
