@@ -334,7 +334,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                  err => {
                      this.spinnerService.requestInProcess(false);
                      let e: any = err.json() || 'There is some error on server side';
-                     this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
+                     this.notificationServiceBus.launchNotification(true, e.errors.base[0]);
                  });
     }
 

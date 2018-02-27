@@ -882,8 +882,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                     errors => {
                         this.spinnerService.requestInProcess(false);
                         let e = errors.json() || '';
-                        this.notificationServiceBus.launchNotification(true,
-                            'Error occurred on server side. ' + errors.statusText + ' ' + JSON.stringify(e || e.errors));
+                        this.notificationServiceBus.launchNotification(true, e.errors.base[0]);
                     });
         }
     }
