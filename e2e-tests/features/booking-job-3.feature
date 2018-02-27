@@ -22,7 +22,7 @@ Feature: Booking Admin Management
     Then I am on the bookings page
     When I click on an individual booking
     Then I will be shown the booking job page
-    Then I should see the value under Service Type column as 'AUSLAN'
+    Then I should see the value under Service Type column as 'Auslan'
 
   @runThis
   Scenario: As a Booking Officer I should see the correct Job number of the booking
