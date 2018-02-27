@@ -318,6 +318,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             if (!this.forEdit) {
                 this.onSelectionChange();
                 this.onClientSelectionChange();
+                this.onStandardInvoice();
             }
             this.getUser();
             this.bookingModel.bookable_type = this.bookingModel.bookable_type || 'IndividualClient';
