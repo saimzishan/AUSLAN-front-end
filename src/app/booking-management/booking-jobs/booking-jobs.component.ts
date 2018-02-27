@@ -19,6 +19,8 @@ import {LinkidPopupComponent} from '../linkid-popup/linkid-popup.component';
 import {DatePipe} from '@angular/common';
 import {URLSearchParams} from '@angular/http';
 import {InterpreterFilter} from '../../shared/model/interpreter-filter.interface';
+import * as moment from 'moment';
+import * as momentTimeZone from 'moment-timezone';
 
 @Component({
     selector: 'app-booking-jobs',
@@ -455,8 +457,8 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                         this.diffInHours = diffInMs / 1000 / 60 / 60;
                         if (this.diffInHours < 0) {
                             this.diffInHours = (-1) * this.diffInHours;
-                        }this.startTime = new Date(this.selectedBookingModel.venue.start_time_iso);
-                        this.endTime = new Date(this.selectedBookingModel.venue.end_time_iso);
+                        }
+                        this.setTime();
                         if (this.isCurrentUserInterpreter()) {
                             this.selectedBookingModel.interpreters.filter(i => i.id === GLOBAL.currentUser.id)
                                 .map(i => this.currentStatus = i.state || 'Invited');
@@ -499,6 +501,17 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                     let e: any = err.json() || 'There is some error on server side';
                     this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
                 });
+    }
+
+    setTime() {
+        let startTime = this.selectedBookingModel.utcToBookingTimeZone(this.selectedBookingModel.venue.start_time_iso);
+        let endTime = this.selectedBookingModel.utcToBookingTimeZone(this.selectedBookingModel.venue.end_time_iso);
+        let currentDate = new Date(this.selectedBookingModel.venue.start_time_iso);
+
+        this.startTime = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(),
+                                         moment.duration(startTime).get('hours'), moment.duration(startTime).get('minutes'));
+        this.endTime = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(),
+                                       moment.duration(endTime).get('hours'), moment.duration(endTime).get('minutes'));
     }
 
     isStateRequestProgressAlloc() {
@@ -764,11 +777,22 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         return JSON.stringify(user);
     }
 
-    getTimelineBlockoutStyle(avail_block) {
+    getTimelineBlockoutStyle(avail_block, state: string, postCode: string) {
         let toRet = '';
-        let sd = new Date(avail_block.start_time);
+        let sTime = this.interpreterStateTimeZone(avail_block.start_time, state, postCode);
+        let startDate = new Date(avail_block.start_time);
+
+        let sd = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate(),
+                    moment.duration(sTime).get('hours'), moment.duration(sTime).get('minutes'));
+
         if (sd.toLocaleDateString() === this.startTime.toLocaleDateString()) {
-            let edt = new Date(avail_block.end_time);
+
+            let eTime = this.interpreterStateTimeZone(avail_block.end_time, state, postCode);
+            let endDate = new Date(avail_block.end_time);
+
+            let edt = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate(),
+                moment.duration(eTime).get('hours'), moment.duration(eTime).get('minutes'));
+
             let cells = '';
             let offset = '';
             let st = this.startTime.getHours() - 2;
@@ -785,6 +809,11 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
             toRet = cells + ' ' + offset + ' pink';
         }
         return toRet;
+    }
+
+    interpreterStateTimeZone (time, state: string, postCode: string) {
+        let timeZone = Booking.getNamedTimeZone(state, postCode);
+        return momentTimeZone(time).tz(timeZone).format('HH:mm:ss');
     }
 
     getTimelineMoverStyle() {

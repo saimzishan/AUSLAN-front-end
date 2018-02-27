@@ -307,8 +307,8 @@
                                 <div *ngFor="let inte of interpreterList ">
                                     <section>
                                         <ng-container *ngFor="let avail_block of inte.availability_blocks_attributes">
-                                            <ng-container *ngIf="getTimelineBlockoutStyle(avail_block).length > 2">
-                                                <span class="{{getTimelineBlockoutStyle(avail_block)}}"></span>
+                                            <ng-container *ngIf="getTimelineBlockoutStyle(avail_block,inte.address_attributes.state,inte.address_attributes.post_code).length > 2">
+                                                <span class="{{getTimelineBlockoutStyle(avail_block,inte.address_attributes.state,inte.address_attributes.post_code)}}"></span>
                                             </ng-container>
                                         </ng-container>
                                     </section>
