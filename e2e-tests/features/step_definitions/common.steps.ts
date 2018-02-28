@@ -431,7 +431,9 @@ defineSupportCode(({Given, When, Then}) => {
     When(/^I click on BUTTON '(.*)'$/, clickOnBtn);
 
     function clickOnBtn(btnLabel: string) {
-        return page.getButtonByText(btnLabel).click();
+        const button = page.getButtonByText(btnLabel);
+        browser.wait(protractor.ExpectedConditions.elementToBeClickable(button), 5000);
+        return button.click();
     }
 
     When(/^I click on BUTTON name '(.*)'$/, clickOnBtnByName);

@@ -1,4 +1,4 @@
-import {Component, Input, Output, OnInit, EventEmitter} from '@angular/core';
+import {Component, Input, Output, OnInit, EventEmitter, OnChanges} from '@angular/core';
 import {URLSearchParams} from '@angular/http';
 import {Booking} from '../../shared/model/booking.entity';
 import {Router} from '@angular/router';
@@ -22,8 +22,8 @@ import {DatePipe} from '@angular/common';
     templateUrl: './booking-list.component.html',
     styleUrls: ['./booking-list.component.css']
 })
-export class BookingListComponent implements OnInit {
-    @Input('bookingList') bookingList: Array<Booking> = [];
+export class BookingListComponent implements OnInit, OnChanges {
+    @Input() bookingList: Array<Booking> = [];
     @Output() onBookingFilter = new EventEmitter();
     bookingFilter: BookingFilter = {};
     private filterParams = new URLSearchParams();
@@ -40,9 +40,9 @@ export class BookingListComponent implements OnInit {
         this.filterParams = GLOBAL._filterVal;
         this.filterParams.paramsMap.forEach((value: string[], key: string) => {
             for (let v of value) {
-            if (key !== 'sort' && key !== 'direction') {
-                key = key.match(/filter\[(\w+)\]/)[1];
-            }
+                if (key !== 'sort' && key !== 'direction') {
+                    key = key.match(/filter\[(\w+)\]/)[1];
+                }
                 this.bookingFilter[key] = v;
                 break;
             }
@@ -50,9 +50,11 @@ export class BookingListComponent implements OnInit {
         if (this.filterParams.paramsMap.size === 0) {
             this.sort('start_time');
             this.bookingFilter.date_from = this.datePipe.transform(Date.now(), 'yyyy-MM-dd');
-            }
+        }
         this.filter('date_from', this.bookingFilter.date_from);
     }
+
+    ngOnChanges(changes) { }
 
     underScoreToSpaces(str: string) {
         if (!str) {
