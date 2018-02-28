@@ -256,7 +256,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr *ngFor="let user of interpreterList | paginate: { itemsPerPage: 20, currentPage: currentPage, totalItems: totalItems } let ind = index">
+                            <tr [ngClass]="(user.blocked || user.booked || user.blockout) ? 'half-opacity' : 'full-opacity'" *ngFor="let user of interpreterList | paginate: { itemsPerPage: 20, currentPage: currentPage, totalItems: totalItems } let ind = index">
                                 <td width="10%">
                                     <md-checkbox name='{{"Check" + ind}}'
                                                  [checked]="checkList[ind]===true"
