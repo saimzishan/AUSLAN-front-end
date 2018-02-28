@@ -277,3 +277,25 @@ Feature: Booking Management
     Then I will get an error notification saying "Oops! Too many captioners already allocated. Please unassign first."
 
     #----------------------------------------- AUSLAN1-977 -> END ----------------------------------------
+
+  @runThis
+  Scenario: Given 1 verified Individual Client, Booking Officer can verify the service name.
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    And I am on the bookings page
+    And I am shown with 0 bookings
+    When I click on 'New Booking'
+    Then I will be taken to the 'New Booking' form
+    Then I click on checkbox name 'cbAuslan'
+    Then I click on checkbox name 'cbCaptioning'
+    When I fill New Booking form fields correctly with standard time from 09:00 AM to 10:00 AM with 1 'captioner_count'
+    And I select the bookable for client
+    Then I click on checkbox name 'tnc'
+    And I click the create booking button
+    Then I get a valid create booking notification
+    And I am on the bookings page
+    And I am shown with 1 bookings
+    And I wait for 2000 milli-seconds
+    When I click on an individual booking
+    Then I am on the individual booking page
+    Then I can see the element with id 'serviceName' has text 'Captioner 1 :'

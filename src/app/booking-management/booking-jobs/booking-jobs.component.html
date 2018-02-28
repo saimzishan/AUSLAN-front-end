@@ -69,7 +69,7 @@
                         <section name="manage-interpreters-b"  class="manage-interpreters">
                             <section>
                                 <div *ngFor="let numb of counter(selectedBookingModel.interpreters_required); let i=index">
-                                    <b>{{serviceNameToDisplay}} {{i + 1}} :</b>
+                                    <b id="serviceName" >{{serviceNameToDisplay}} {{i + 1}} :</b>
                                     <span>To be filled</span>
                                 </div>
                             </section>
