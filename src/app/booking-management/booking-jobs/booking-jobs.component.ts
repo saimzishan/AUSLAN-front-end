@@ -61,7 +61,6 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     totalItems;
     isRequestedProgressOrAllocated = false;
     searchParams: string;
-    bookingState: any;
 
     constructor(public dialog: MdDialog,
                 public viewContainerRef: ViewContainerRef, public spinnerService: SpinnerService,
@@ -238,7 +237,6 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         }
         this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
         if (result !== 'close') {
-            this.bookingState = this.selectedBookingModel.state;
             this.changeBookingState(isCancel, !result, update_all_linked_bookings);
         }
         });
@@ -325,11 +323,10 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         let stateMsg;
         if (this.selectedBookingModel.state === BOOKING_STATE.Cancelled_no_charge) {
             state = 'in_progress';
-            this.bookingState = BOOKING_STATE.In_progress;
-            stateMsg = 'Cancelled with No Charge';
+            stateMsg = 'In progress';
         } else if (this.selectedBookingModel.state === BOOKING_STATE.Cancelled_chargeable) {
             state = 'allocated';
-            stateMsg = 'Cancelled with Charge';
+            stateMsg = 'Allocated';
         } else {
             state = 'in_progress';
             stateMsg = 'Unable to Service';
