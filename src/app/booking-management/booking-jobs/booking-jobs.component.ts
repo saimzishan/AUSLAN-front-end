@@ -282,8 +282,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                 err => {
                     this.spinnerService.requestInProcess(false);
                     let e: any = err.json() || 'There is some error on server side';
-                    this.notificationServiceBus.launchNotification(true, JSON.stringify(e.errors.base || e.errors)
-                    .replace(/]|[[]/g, '').replace(/({|})/g, '').replace(/["]/g, ''));
+                    this.getNotification(e.errors);
                 });
     }
 
@@ -335,8 +334,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                  err => {
                      this.spinnerService.requestInProcess(false);
                      let e: any = err.json() || 'There is some error on server side';
-                     this.notificationServiceBus.launchNotification(true, JSON.stringify(e.errors.base || e.errors)
-                    .replace(/]|[[]/g, '').replace(/({|})/g, '').replace(/["]/g, ''));
+                     this.getNotification(e.errors);
                  });
     }
 
@@ -404,8 +402,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                 err => {
                     this.spinnerService.requestInProcess(false);
                     let e: any = err.json() || 'There is some error on server side';
-                    this.notificationServiceBus.launchNotification(true, JSON.stringify(e.errors.base || e.errors)
-                    .replace(/]|[[]/g, '').replace(/({|})/g, '').replace(/["]/g, ''));
+                    this.getNotification(e.errors);
                 });
     }
 
@@ -432,8 +429,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                 err => {
                     this.spinnerService.requestInProcess(false);
                     let e: any = err.json() || 'There is some error on server side';
-                    this.notificationServiceBus.launchNotification(true, JSON.stringify(e.errors.base || e.errors)
-                    .replace(/]|[[]/g, '').replace(/({|})/g, '').replace(/["]/g, ''));
+                    this.getNotification(e.errors);
                 });
     }
 
@@ -501,8 +497,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                     this.jobAccessError = true;
                     this.spinnerService.requestInProcess(false);
                     let e: any = err.json() || 'There is some error on server side';
-                    this.notificationServiceBus.launchNotification(true, JSON.stringify(e.errors.base || e.errors)
-                    .replace(/]|[[]/g, '').replace(/({|})/g, '').replace(/["]/g, ''));
+                    this.getNotification(e.errors);
                 });
     }
 
@@ -538,8 +533,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                 err => {
                     this.spinnerService.requestInProcess(false);
                     let e: any = err.json() || 'There is some error on server side';
-                    this.notificationServiceBus.launchNotification(true, JSON.stringify(e.errors.base || e.errors)
-                    .replace(/]|[[]/g, '').replace(/({|})/g, '').replace(/["]/g, ''));
+                    this.getNotification(e.errors);
                 });
     }
 
@@ -554,8 +548,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                 err => {
                     this.spinnerService.requestInProcess(false);
                     let e: any = err.json() || 'There is some error on server side';
-                    this.notificationServiceBus.launchNotification(true, JSON.stringify(e.errors.base || e.errors)
-                    .replace(/]|[[]/g, '').replace(/({|})/g, '').replace(/["]/g, ''));
+                    this.getNotification(e.errors);
                 });
     }
 
@@ -571,8 +564,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                 err => {
                     this.spinnerService.requestInProcess(false);
                     let e: any = err.json() || 'There is some error on server side';
-                    this.notificationServiceBus.launchNotification(true, JSON.stringify(e.errors.base || e.errors)
-                    .replace(/]|[[]/g, '').replace(/({|})/g, '').replace(/["]/g, ''));
+                    this.getNotification(e.errors);
                 });
     }
 
@@ -588,8 +580,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                 err => {
                     this.spinnerService.requestInProcess(false);
                     let e: any = err.json() || {errors: 'There booking could not be updated. Please try after some time.'};
-                    this.notificationServiceBus.launchNotification(true, JSON.stringify(e.errors.base || e.errors)
-                    .replace(/]|[[]/g, '').replace(/({|})/g, '').replace(/["]/g, ''));
+                    this.getNotification(e.errors);
                 });
     }
 
@@ -733,8 +724,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                         err => {
                             this.spinnerService.requestInProcess(false);
                             let e: any = err.json() || 'There is some error on server side';
-                            this.notificationServiceBus.launchNotification(true, JSON.stringify(e.errors.base || e.errors)
-                            .replace(/]|[[]/g, '').replace(/({|})/g, '').replace(/["]/g, ''));
+                            this.getNotification(e.errors);
                         });
             }
         });
@@ -921,5 +911,10 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
             return 'All';
         }
         return str.replace(/_/g, ' ');
+    }
+
+    getNotification(error) {
+        this.notificationServiceBus.launchNotification(true, JSON.stringify(error.base || error)
+        .replace(/]|[[]/g, '').replace(/({|})/g, '').replace(/["]/g, ''));
     }
 }

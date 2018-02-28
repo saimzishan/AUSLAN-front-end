@@ -89,8 +89,7 @@ export class InterpreterPopupComponent implements OnInit {
                 err => {
                     this.spinnerService.requestInProcess(false);
                     let e = err.json() || 'There is some error on server side';
-                    this.notificationServiceBus.launchNotification(true, JSON.stringify(e.errors.base || e.errors)
-                    .replace(/]|[[]/g, '').replace(/({|})/g, '').replace(/["]/g, ''));
+                    this.getNotification(e.errors);
                 });
     }
 
@@ -107,6 +106,11 @@ export class InterpreterPopupComponent implements OnInit {
     getPage(page: number) {
         this.currentPage = page;
         this.fetchAllInterpreters();
+    }
+
+    getNotification(error) {
+        this.notificationServiceBus.launchNotification(true, JSON.stringify(error.base || error)
+        .replace(/]|[[]/g, '').replace(/({|})/g, '').replace(/["]/g, ''));
     }
 
 }

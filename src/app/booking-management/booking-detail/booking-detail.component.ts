@@ -813,8 +813,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 errors => {
                     this.spinnerService.requestInProcess(false);
                     let e = errors.json() || '';
-                    this.notificationServiceBus.launchNotification(true, JSON.stringify(e.errors.base || e.errors)
-                    .replace(/]|[[]/g, '').replace(/({|})/g, '').replace(/["]/g, ''));
+                    this.getNotification(e.errors);
                 });
     }
 
@@ -882,8 +881,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                     errors => {
                         this.spinnerService.requestInProcess(false);
                         let e = errors.json() || '';
-                        this.notificationServiceBus.launchNotification(true, JSON.stringify(e.errors.base || e.errors)
-                        .replace(/]|[[]/g, '').replace(/({|})/g, '').replace(/["]/g, ''));
+                        this.getNotification(e.errors);
                     });
         }
     }
@@ -989,8 +987,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                     } else if (e.constructor === {}.constructor) {
                        full_messages = e.errors;
                     }
-                    this.notificationServiceBus.launchNotification(true, JSON.stringify(full_messages.base || full_messages)
-                    .replace(/]|[[]/g, '').replace(/({|})/g, '').replace(/["]/g, ''));
+                    this.getNotification(full_messages);
                 });
     }
 
@@ -1081,5 +1078,10 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         this.oldInterpreterPreference = [];
         this.showPreferred = this.showProfilePreferred = this.showBlocked = this.showProfileBlocked = false;
         this.hasPrefInt = this.hasBlockInt = false;
+    }
+
+    getNotification(error) {
+        this.notificationServiceBus.launchNotification(true, JSON.stringify(error.base || error)
+        .replace(/]|[[]/g, '').replace(/({|})/g, '').replace(/["]/g, ''));
     }
 }

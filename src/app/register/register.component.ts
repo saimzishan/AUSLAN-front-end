@@ -162,8 +162,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
             }, errors => {
                 this.spinnerService.requestInProcess(false);
                 let e = errors.json();
-                this.notificationServiceBus.launchNotification(true, JSON.stringify(e.errors.base || e.errors)
-                .replace(/]|[[]/g, '').replace(/({|})/g, '').replace(/["]/g, ''));
+                this.getNotification(e.errors);
             });
     }
 
@@ -185,8 +184,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
                 (err) => {
                     this.spinnerService.requestInProcess(false);
                     let e = err.json();
-                    this.notificationServiceBus.launchNotification(true, JSON.stringify(e.errors.base || e.errors)
-                    .replace(/]|[[]/g, '').replace(/({|})/g, '').replace(/["]/g, ''));
+                    this.getNotification(e.errors);
                 });
     }
 
@@ -204,8 +202,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
             }, errors => {
                 this.spinnerService.requestInProcess(false);
                 let e = errors.json();
-                this.notificationServiceBus.launchNotification(true, JSON.stringify(e.errors.base || e.errors)
-                .replace(/]|[[]/g, '').replace(/({|})/g, '').replace(/["]/g, ''));
+                this.getNotification(e.errors);
             });
     }
 
@@ -228,5 +225,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
     _handleReaderLoaded(readerEvt) {
         this.model.avatar = readerEvt.target.result;
+    }
+
+    getNotification(error) {
+        this.notificationServiceBus.launchNotification(true, JSON.stringify(error.base || error)
+        .replace(/]|[[]/g, '').replace(/({|})/g, '').replace(/["]/g, ''));
     }
 }

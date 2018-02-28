@@ -41,12 +41,16 @@ export class UserPasswordComponent {
                   this.notificationServiceBus.launchNotification(false, 'User password updated Successfully');
               }
         }, errors => {
-            this.spinnerService.requestInProcess(false);
-
-            let e = errors.json();
-          this.notificationServiceBus.launchNotification(true, JSON.stringify(e.errors.base || e.errors)
-          .replace(/]|[[]/g, '').replace(/({|})/g, '').replace(/["]/g, ''));
+          this.spinnerService.requestInProcess(false);
+          let e = errors.json();
+          this.getNotification(e.errors);
+          
         });
+  }
+
+  getNotification(error) {
+    this.notificationServiceBus.launchNotification(true, JSON.stringify(error.base || error)
+    .replace(/]|[[]/g, '').replace(/({|})/g, '').replace(/["]/g, ''));
   }
 
 }

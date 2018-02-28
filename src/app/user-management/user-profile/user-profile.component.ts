@@ -92,8 +92,7 @@ export class UserProfileComponent implements OnInit {
                     this.spinnerService.requestInProcess(false);
 
                     let e = errors.json();
-                    this.notificationServiceBus.launchNotification(true, JSON.stringify(e.errors)
-                    .replace(/]|[[]/g, '').replace(/({|})/g, '').replace(/["]/g, ''));
+                    this.getNotification(e.errors);
                 });
     }
 
@@ -110,5 +109,10 @@ export class UserProfileComponent implements OnInit {
     }
     _handleReaderLoaded(readerEvt) {
         this.userModel.avatar = readerEvt.target.result;
+    }
+
+    getNotification(error) {
+        this.notificationServiceBus.launchNotification(true, JSON.stringify(error.base || error)
+        .replace(/]|[[]/g, '').replace(/({|})/g, '').replace(/["]/g, ''));
     }
 }
