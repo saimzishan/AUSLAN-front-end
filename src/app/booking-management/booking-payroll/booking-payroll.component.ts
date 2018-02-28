@@ -56,7 +56,8 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
             err => {
                 this.spinnerService.requestInProcess(false);
                 let e = err.json() || 'There is some error on server side';
-                this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
+                this.notificationServiceBus.launchNotification(true, JSON.stringify(e.errors.base || e.errors)
+                .replace(/]|[[]/g, '').replace(/({|})/g, '').replace(/["]/g, ''));
             });
     }
 
@@ -75,7 +76,8 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
         err => {
             this.spinnerService.requestInProcess(false);
             let e = err.json() || 'There is some error on server side';
-            this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
+            this.notificationServiceBus.launchNotification(true, JSON.stringify(e.errors.base || e.errors)
+            .replace(/]|[[]/g, '').replace(/({|})/g, '').replace(/["]/g, ''));
         });
     }
 
@@ -108,7 +110,8 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
         err => {
             this.spinnerService.requestInProcess(false);
             let e = err.json() || 'There is some error on server side';
-            this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
+            this.notificationServiceBus.launchNotification(true, JSON.stringify(e.errors.base || e.errors)
+            .replace(/]|[[]/g, '').replace(/({|})/g, '').replace(/["]/g, ''));
         });
     }
 
@@ -127,7 +130,8 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
                 err => {
                     this.spinnerService.requestInProcess(false);
                     let e = err.json() || 'There is some error on server side';
-                    this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
+                    this.notificationServiceBus.launchNotification(true, JSON.stringify(e.errors.base || e.errors)
+                    .replace(/]|[[]/g, '').replace(/({|})/g, '').replace(/["]/g, ''));
                 });
     }
 

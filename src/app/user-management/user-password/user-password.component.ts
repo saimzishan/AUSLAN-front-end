@@ -44,8 +44,8 @@ export class UserPasswordComponent {
             this.spinnerService.requestInProcess(false);
 
             let e = errors.json();
-          this.notificationServiceBus.launchNotification(true, errors.statusText + ' '
-              + JSON.stringify(e.errors || e).replace(/]|[[]/g, '').replace(/({|})/g, ''));
+          this.notificationServiceBus.launchNotification(true, JSON.stringify(e.errors.base || e.errors)
+          .replace(/]|[[]/g, '').replace(/({|})/g, '').replace(/["]/g, ''));
         });
   }
 

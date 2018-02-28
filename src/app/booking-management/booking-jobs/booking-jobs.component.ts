@@ -282,7 +282,8 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                 err => {
                     this.spinnerService.requestInProcess(false);
                     let e: any = err.json() || 'There is some error on server side';
-                    this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
+                    this.notificationServiceBus.launchNotification(true, JSON.stringify(e.errors.base || e.errors)
+                    .replace(/]|[[]/g, '').replace(/({|})/g, '').replace(/["]/g, ''));
                 });
     }
 
@@ -334,7 +335,8 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                  err => {
                      this.spinnerService.requestInProcess(false);
                      let e: any = err.json() || 'There is some error on server side';
-                     this.notificationServiceBus.launchNotification(true, e.errors.base[0]);
+                     this.notificationServiceBus.launchNotification(true, JSON.stringify(e.errors.base || e.errors)
+                    .replace(/]|[[]/g, '').replace(/({|})/g, '').replace(/["]/g, ''));
                  });
     }
 
@@ -402,7 +404,8 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                 err => {
                     this.spinnerService.requestInProcess(false);
                     let e: any = err.json() || 'There is some error on server side';
-                    this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
+                    this.notificationServiceBus.launchNotification(true, JSON.stringify(e.errors.base || e.errors)
+                    .replace(/]|[[]/g, '').replace(/({|})/g, '').replace(/["]/g, ''));
                 });
     }
 
@@ -429,7 +432,8 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                 err => {
                     this.spinnerService.requestInProcess(false);
                     let e: any = err.json() || 'There is some error on server side';
-                    this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
+                    this.notificationServiceBus.launchNotification(true, JSON.stringify(e.errors.base || e.errors)
+                    .replace(/]|[[]/g, '').replace(/({|})/g, '').replace(/["]/g, ''));
                 });
     }
 
@@ -497,7 +501,8 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                     this.jobAccessError = true;
                     this.spinnerService.requestInProcess(false);
                     let e: any = err.json() || 'There is some error on server side';
-                    this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
+                    this.notificationServiceBus.launchNotification(true, JSON.stringify(e.errors.base || e.errors)
+                    .replace(/]|[[]/g, '').replace(/({|})/g, '').replace(/["]/g, ''));
                 });
     }
 
@@ -533,7 +538,8 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                 err => {
                     this.spinnerService.requestInProcess(false);
                     let e: any = err.json() || 'There is some error on server side';
-                    this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
+                    this.notificationServiceBus.launchNotification(true, JSON.stringify(e.errors.base || e.errors)
+                    .replace(/]|[[]/g, '').replace(/({|})/g, '').replace(/["]/g, ''));
                 });
     }
 
@@ -548,7 +554,8 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                 err => {
                     this.spinnerService.requestInProcess(false);
                     let e: any = err.json() || 'There is some error on server side';
-                    this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
+                    this.notificationServiceBus.launchNotification(true, JSON.stringify(e.errors.base || e.errors)
+                    .replace(/]|[[]/g, '').replace(/({|})/g, '').replace(/["]/g, ''));
                 });
     }
 
@@ -564,7 +571,8 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                 err => {
                     this.spinnerService.requestInProcess(false);
                     let e: any = err.json() || 'There is some error on server side';
-                    this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
+                    this.notificationServiceBus.launchNotification(true, JSON.stringify(e.errors.base || e.errors)
+                    .replace(/]|[[]/g, '').replace(/({|})/g, '').replace(/["]/g, ''));
                 });
     }
 
@@ -580,7 +588,8 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                 err => {
                     this.spinnerService.requestInProcess(false);
                     let e: any = err.json() || {errors: 'There booking could not be updated. Please try after some time.'};
-                    this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
+                    this.notificationServiceBus.launchNotification(true, JSON.stringify(e.errors.base || e.errors)
+                    .replace(/]|[[]/g, '').replace(/({|})/g, '').replace(/["]/g, ''));
                 });
     }
 
@@ -724,7 +733,8 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                         err => {
                             this.spinnerService.requestInProcess(false);
                             let e: any = err.json() || 'There is some error on server side';
-                            this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
+                            this.notificationServiceBus.launchNotification(true, JSON.stringify(e.errors.base || e.errors)
+                            .replace(/]|[[]/g, '').replace(/({|})/g, '').replace(/["]/g, ''));
                         });
             }
         });

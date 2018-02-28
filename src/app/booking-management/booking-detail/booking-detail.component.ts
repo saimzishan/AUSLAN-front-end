@@ -813,8 +813,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 errors => {
                     this.spinnerService.requestInProcess(false);
                     let e = errors.json() || '';
-                    this.notificationServiceBus.launchNotification(true,
-                        'Error occured on server side. ' + errors.statusText + ' ' + JSON.stringify(e || e.errors));
+                    this.notificationServiceBus.launchNotification(true, JSON.stringify(e.errors.base || e.errors)
+                    .replace(/]|[[]/g, '').replace(/({|})/g, '').replace(/["]/g, ''));
                 });
     }
 
@@ -882,7 +882,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                     errors => {
                         this.spinnerService.requestInProcess(false);
                         let e = errors.json() || '';
-                        this.notificationServiceBus.launchNotification(true, e.errors.base[0]);
+                        this.notificationServiceBus.launchNotification(true, JSON.stringify(e.errors.base || e.errors)
+                        .replace(/]|[[]/g, '').replace(/({|})/g, '').replace(/["]/g, ''));
                     });
         }
     }
@@ -988,8 +989,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                     } else if (e.constructor === {}.constructor) {
                        full_messages = e.errors;
                     }
-                    this.notificationServiceBus.launchNotification(true,
-                        'Error occured on server side. ' + errors.statusText + ', ' + full_messages);
+                    this.notificationServiceBus.launchNotification(true, JSON.stringify(full_messages.base || full_messages)
+                    .replace(/]|[[]/g, '').replace(/({|})/g, '').replace(/["]/g, ''));
                 });
     }
 
