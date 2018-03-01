@@ -332,7 +332,7 @@ Feature: Booking Admin Management
     Then I can see the button state 'Cancel Booking' is hidden
     Then I can see the button state 'Unable to Service' is hidden
     When I click on BUTTON 'Undo cancel'
-    Then I can see the booking state 'In Progress'
+    Then I can see the booking state 'Cancelled No Charge'
 
   @runThis
   Scenario: Booking Officer can Undo a booking having state Cancelled chargeable
@@ -378,5 +378,5 @@ Feature: Booking Admin Management
     Then I can see the button state 'Cancel Booking' is hidden
     Then I can see the button state 'Unable to Service' is hidden
     When I click on BUTTON 'Undo cancel'
-    Then I can see the booking state 'In Progress'
+    Then I can see the booking state 'unable to service'
 
