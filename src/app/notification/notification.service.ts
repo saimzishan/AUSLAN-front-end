@@ -30,6 +30,8 @@ export class NotificationServiceBus {
         let notificationContainer = new NotificationContainer();
         if (message instanceof String) {
             notificationContainer.message = message;
+        } else if (message.hasOwnProperty('errors') && message['errors'].length) {
+            notificationContainer.message = message['errors'];
         } else if (message instanceof Object && isError) {
             this.handleErrorObjectsForNotification(message);
         } else {
