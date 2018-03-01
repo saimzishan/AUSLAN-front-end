@@ -230,3 +230,4 @@ Feature: Booking Admin Management
     Then I will be shown the booking job page
     Then I should see the value under Org column as 'Ted Bear'
 
+
