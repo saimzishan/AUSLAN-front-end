@@ -148,12 +148,14 @@
                     </div>
                     <div class="manage-job-buttons" *ngIf="isCurrentUserInterpreter()">
                         <button class="button button-accept"
+                                *ngIf="!disableAccept"
                                 [ngClass]="isCurrentUserState('Accepted') ? 'button pushed button-accept' : 'button button-accept'"
                                 (click)="!disableAccept && showDialogBoxInterpreter(false)">
                             <i class="icon-check-mobile"></i>
                         </button>
 
                         <button class="button button-decline"
+                                *ngIf="!disableReject"
                                 [ngClass]="isCurrentUserState('Rejected') ? 'button pushed button-decline' : 'button button-decline'"
                                 (click)="!disableReject && showDialogBoxInterpreter(true)">
                             <i class="icon-decline"></i>
@@ -264,7 +266,7 @@
                                 <td align="center">
                                     <img [src]="getInterpreterIconClass(user)">
                                 </td>
-                                <td>
+                                <td class="truncated-text">
                                     <i class="icon-requested preff-icon" *ngIf="isPreferred(user.id)"></i>
                                     <a name="lnkEditUser" [routerLink]="['/init']" [queryParams]="{selectedRole:'INTERPRETER', uid: user.id, edit_user: stringifyUser(user)}">
                                         {{user.full_name}}</a>

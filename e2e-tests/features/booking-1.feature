@@ -133,7 +133,8 @@ Feature: Booking Management
     And I am on the bookings page
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
-    When I click on element by name 'rdBookingAddressNo'
+    Then I click on element by name 'rdBookingAddressNo'
+    And I click on element by name 'rdStandardInvoiceNo'
     When I fill New Booking form fields correctly
     And I click the create booking button
     Then I will get an error notification saying "Kindly accept Terms and Conditions"
@@ -153,7 +154,8 @@ Feature: Booking Management
     And I am on the bookings page
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
-    When I click on element by name 'rdBookingAddressNo'
+    Then I click on element by name 'rdBookingAddressNo'
+    And I click on element by name 'rdStandardInvoiceNo'
     When I fill New Booking form fields correctly
     And I click the create booking button
     Then I will get an error notification saying "Kindly accept Terms and Conditions"
@@ -185,7 +187,7 @@ Feature: Booking Management
     Then I can see the button 'Save' is disabled
     And I click on BUTTON 'Duplicate'
     Then I will be taken to the 'New Booking' form
-    And I select the bookable for client
+    And I can see that the bookable is set
     When I click the create booking button
     Then I will get an error notification saying "Kindly accept Terms and Conditions"
     Then I verify that the link with name 'lnkTC' href is 'https://s3-ap-southeast-2.amazonaws.com/auslan-public-bucket/Auslan_Online_Terms_And_Conditions.pdf'
@@ -234,5 +236,3 @@ Feature: Booking Management
     And I click the create booking button
     Then I will be shown a popup message
 # ---------------------------------------- AUSLAN1-252 -> END ----------------------------------------
-
-

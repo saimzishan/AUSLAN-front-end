@@ -138,5 +138,25 @@ Feature: Booking Admin Management
     When I click on an individual booking
     Then I will be shown the booking job page
     And I can see the Interpreter status is 'declined'
-    
 
+  @runThis
+  Scenario: As an Administrator when I cancel a booking which has no linked booking then I would see a pop up to which state I want to cancel the booking
+    Given There exist 1 bookings
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on the bookings page
+    When I click on an individual booking
+    Then I will be shown the booking job page
+    And I can see the button 'Save' is disabled
+    And I can see the button 'Unlink' is enabled
+    When I click on button 'Unlink'
+    Then I can see the button 'Save' is enabled
+    When I click on button 'Save'
+    Then I should get a valid booking update notification
+    When I click on BUTTON 'Cancel Booking'
+    Then I will be shown a popup message 'Are you sure you want to cancel the booking? The client will be notified of this. This is a permanent action.'
+    Then I click on BUTTON name 'yesBtn'
+    Then I wait for 1200 milli-seconds
+    Then I will be shown a popup message 'Are you sure you want to cancel this booking? This is permanent. We recommend to cancel this booking as Cancelled No Charge since the start date is not within 48 hours.'
+    Then I click on BUTTON name 'yesBtn'
+    Then I get a valid 'Cancelled with No Charge' notification for state

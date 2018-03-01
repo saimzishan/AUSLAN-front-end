@@ -8,4 +8,5 @@ export class AvailabilityBlock {
     public frequency = '';
     public booking_id = -1;
     public type_of_block = 'free';
+    recurring_week_days = [];
 }

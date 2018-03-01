@@ -30,7 +30,7 @@
   </thead>
   <tbody>
     <tr>
-      <td data-title="JOB NUMBER">
+      <td data-title="JOB">
         {{selectedBookingModel.id | PrettyID}}
         <span data-title="Link ID" *ngIf="isCurrentUserAdminOrBookingOfficer() && !!selectedBookingModel.link_id" class="linkId">
           <a>#{{selectedBookingModel.link_id}}</a>
@@ -40,8 +40,8 @@
       <td data-title="TIME">
         <span>{{selectedBookingModel.venue.start_time_iso | timeShort : selectedBookingModel.venue.state : selectedBookingModel.venue.post_code}} - {{selectedBookingModel.venue.end_time_iso | timeShort : selectedBookingModel.venue.state : selectedBookingModel.venue.post_code}}</span>
       </td>
-      <td>{{selectedBookingModel.method_name}}</td>
-      <td>{{selectedBookingModel.service_type}}</td>
+      <td data-title="METHOD">{{selectedBookingModel.method_name}}</td>
+      <td data-title="SERVICE TYPE">{{selectedBookingModel.service_type}}</td>
       <td data-title="ORGANISATION">{{selectedBookingModel.client.organisation_name}}</td>
       <td data-title="SUBURB" *ngIf='isClientInterpAndBookInProgress()'>
         <a target="_blank"
@@ -65,18 +65,18 @@
         <td data-title="VENUE">{{selectedBookingModel.venue.title}}</td>
       </ng-container>
       <td data-title="NATURE">{{selectedBookingModel.nature_of_appointment}}</td>
-      <td>{{selectedBookingModel.specific_nature_of_appointment}}</td>
+      <td data-title="SPECIFIC">{{selectedBookingModel.specific_nature_of_appointment}}</td>
       <ng-container *ngIf='!isClientInterpAndBookInProgress()'>
-        <td data-title="PEOPLE">{{selectedBookingModel.venue.expected_attendance}}</td>
+        <td data-title="NUMBER OF PEOPLE">{{selectedBookingModel.venue.expected_attendance}}</td>
         <td data-title="SPECIAL INSTRUCTIONS" class="new-line">
           {{selectedBookingModel.special_instructions}}
         </td>
-        <td align="center" data-title="Attached">
+        <td align="center" data-title="ATTACHMENTS">
           <ul *ngIf="selectedBookingModel.documents_attributes.length > 0"
                            class="dropdown menu custom"
                            data-dropdown-menu>
             <li>
-              <a href="#" class="icon-attach"></a>
+              <a class="icon-attach"></a>
               <ul class="menu">
                 <li *ngFor="let attachment of selectedBookingModel.documents_attributes">
                   <a  download
@@ -89,9 +89,9 @@
           </ul>
         </td>
       </ng-container>
-      <td data-title="Date Added" *ngIf='isCurrentUserAdminOrBookingOfficer() || isOrgRep()'>{{selectedBookingModel.created_at | date}}</td>
+      <td data-title="DATE ADDED" *ngIf='isCurrentUserAdminOrBookingOfficer() || isClientOrOrgRep()'>{{selectedBookingModel.created_at | date}}</td>
       <ng-container *ngIf='isCurrentUserAdminOrBookingOfficer()'>
-        <td>Days Notice</td>
+        <td data-title="DAYS NOTICED">Days Notice</td>
         <td data-title="UPDATED"><span class="underline">{{selectedBookingModel.updated_at | date}}</span></td>
       </ng-container>
     </tr>

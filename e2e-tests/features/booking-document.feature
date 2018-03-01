@@ -222,7 +222,7 @@ Feature: Booking Management
     Then I see attachment 'sushi.pdf' does 'not exists'
 
 
-  @ignoreThis
+  @runThis
     # https://github.com/valor-software/ng2-file-upload/issues/906
   Scenario: Administrator can remove booking documents for Individual Client
     Given I exist as an Administrator
@@ -244,7 +244,6 @@ Feature: Booking Management
     Then I will see attachment 'ppt_not_sushi.ppt' is removed
     When I will upload a document 'sushi.pdf'
     And I will see attachment 'sushi.pdf'
-    When I click on element by name 'rdBookingAddressNo'
     And I fill New Booking form fields correctly
     And I select the bookable for client
     And I click the create booking button

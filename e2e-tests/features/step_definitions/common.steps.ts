@@ -83,7 +83,7 @@ defineSupportCode(({Given, When, Then}) => {
     Given(/^I am on my dashboard screen$/, bookingManagementPage.verify);
     Given(/^I fill New Booking form fields correctly$/, bookingPage.createBooking);
     Given(/^I fill New Booking form fields correctly with yesterday date$/, bookingPage.createBookingWithYesterdayDate);
-    Given(/^I fill New Booking form fields correctly with day after tomorrow date with vicdeaf$/, bookingPage.editBookingWithDayAfterTomorrowDateWith_VICDEAF_STATE);
+    Given(/^I update the booking to be within 48 hours with vicdeaf$/, bookingPage.editBookingWithDayAfterTomorrowDateWith_VICDEAF_STATE);
     Given(/^I fill New Booking form fields correctly with DSQ state$/, bookingPage.editBookingWith_DSQ_STATES);
     Given(/^I fill New Booking form fields correctly with just vicdeaf$/, bookingPage.editBookingWith_VICDEAF_STATE);
     Given(/^I fill New Booking form fields with address greater than 40 kilometers$/, bookingPage.createBookingForPerth);
@@ -431,7 +431,9 @@ defineSupportCode(({Given, When, Then}) => {
     When(/^I click on BUTTON '(.*)'$/, clickOnBtn);
 
     function clickOnBtn(btnLabel: string) {
-        return page.getButtonByText(btnLabel).click();
+        const button = page.getButtonByText(btnLabel);
+        browser.wait(protractor.ExpectedConditions.elementToBeClickable(button), 5000);
+        return button.click();
     }
 
     When(/^I click on BUTTON name '(.*)'$/, clickOnBtnByName);
@@ -471,18 +473,17 @@ defineSupportCode(({Given, When, Then}) => {
     }
 
     When(/^I verify checkbox name '(.*)' is checked '(.*)'$/, verifyOnCBByName);
-    function verifyOnCBByName(btnName: string, checkedState: string) {
-        let bVal = ((checkedState === 'True') || (checkedState === 'true'));
+    function verifyOnCBByName(btnName: string, checkedState: 'True' | 'true') {
         return page.getElementByName(btnName).getAttribute('ng-reflect-model').then(val => {
-            expect(val).to.be.eq(bVal+'');
+            return expect(val).to.be.eq(checkedState.toLowerCase());
         });
     }
 
     When(/^I verify material checkbox name '(.*)' is checked '(.*)'$/, verifyMaterialCB);
-    function verifyMaterialCB(btnName: string, checkedState: string) {
-        let bVal = ((checkedState === 'True') || (checkedState === 'true'));
-        return page.getElementByCss('md-checkbox[ng-reflect-name="' + btnName + '"]').getAttribute('ng-reflect-model').then(val => {
-            expect(val).to.be.eq(bVal + '');
+    function verifyMaterialCB(btnName: string, checkedState: 'True' | 'true') {
+        const checkbox = page.getElementByCss('md-checkbox[ng-reflect-name="' + btnName + '"]');
+        return checkbox.getAttribute('ng-reflect-model').then(val => {
+            return expect(val).to.be.eq(checkedState.toLowerCase());
         });
     }
 
@@ -564,4 +565,5 @@ defineSupportCode(({Given, When, Then}) => {
             });
     }
 
+    Then(/^I run all background jobs$/, Heroku.runAllBackgroundTasks);
 });

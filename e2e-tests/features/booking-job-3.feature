@@ -190,7 +190,7 @@ Feature: Booking Admin Management
     And I am on the bookings page
     Then I see one row with state 'Cancelled chargeable'
 
-  @runThis
+  @ignoreThis
   Scenario: Booking Officer can CANCEL a booking having linked id with option Cancel only this booking and then Cancelled Chargeable for Vicdeaf with time less then 48 hours
     Given There exist 1 booking with link id
     Given I exist as an Booking Officer
@@ -201,7 +201,7 @@ Feature: Booking Admin Management
     Then I will be shown the booking job page
     When I click on link 'Booking details'
     Then I should be on the edit booking page
-    Then I fill New Booking form fields correctly with day after tomorrow date with vicdeaf
+    Then I update the booking to be within 48 hours with vicdeaf
     And I click on checkbox name 'tnc'
     And I click on BUTTON 'SAVE'
     And If I am shown popups, I approve all of them
@@ -219,7 +219,7 @@ Feature: Booking Admin Management
     And I am on the bookings page
     Then I see one row with state 'Cancelled chargeable'
 
-  @runThis
+  @ignoreThis
   Scenario: Booking Officer can CANCEL a booking having linked id with option Cancel only this booking and then Cancelled No Charge for Vicdeaf with time less then 48 hours
     Given There exist 1 booking with link id
     Given I exist as an Booking Officer
@@ -230,7 +230,7 @@ Feature: Booking Admin Management
     Then I will be shown the booking job page
     When I click on link 'Booking details'
     Then I should be on the edit booking page
-    Then I fill New Booking form fields correctly with day after tomorrow date with vicdeaf
+    Then I update the booking to be within 48 hours with vicdeaf
     And I click on checkbox name 'tnc'
     And I click on BUTTON 'SAVE'
     And If I am shown popups, I approve all of them
@@ -332,7 +332,7 @@ Feature: Booking Admin Management
     Then I can see the button state 'Cancel Booking' is hidden
     Then I can see the button state 'Unable to Service' is hidden
     When I click on BUTTON 'Undo cancel'
-    Then I can see the booking state 'In Progress'
+    Then I can see the booking state 'Cancelled No Charge'
 
   @runThis
   Scenario: Booking Officer can Undo a booking having state Cancelled chargeable
@@ -378,5 +378,5 @@ Feature: Booking Admin Management
     Then I can see the button state 'Cancel Booking' is hidden
     Then I can see the button state 'Unable to Service' is hidden
     When I click on BUTTON 'Undo cancel'
-    Then I can see the booking state 'In Progress'
+    Then I can see the booking state 'unable to service'
 
