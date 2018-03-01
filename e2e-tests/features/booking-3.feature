@@ -24,7 +24,8 @@ Feature: Booking Management
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
     And I can see the txtSpecialInstruction field
-    When I click on element by name 'rdBookingAddressNo'
+    Then I click on element by name 'rdBookingAddressNo'
+    And I click on element by name 'rdStandardInvoiceNo'
     When I fill New Booking form fields correctly with non-standard time from 07:00 AM to 08:00 AM with 1 'auslanInterpreters_count'
     And I specify i have special instruction
     Then I move to element name 'tnc'
@@ -42,7 +43,8 @@ Feature: Booking Management
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
     And I can see the txtSpecialInstruction field
-    When I click on element by name 'rdBookingAddressNo'
+    Then I click on element by name 'rdBookingAddressNo'
+    And I click on element by name 'rdStandardInvoiceNo'
     And I fill New Booking form fields correctly with non-standard time from 07:00 AM to 08:00 AM with 1 'auslanInterpreters_count'
     And I specify i have special instruction
     And The field 'txtSpecialInstruction' will be populated with 'I am special'
