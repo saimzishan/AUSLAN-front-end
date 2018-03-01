@@ -273,7 +273,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                         }
                         this.isCancelledOrUnableToServe = true;
                         this.isRequestedProgressOrAllocated = false;
-                        this.notificationServiceBus.launchNotification(false, 'The booking has been transitioned to \"' + stateMsg + '\" state');
+                        this.notificationServiceBus.launchNotification(false, `The booking has been transitioned to "${stateMsg}" state`);
                     }
                     this.spinnerService.requestInProcess(false);
                 },
@@ -325,7 +325,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                          this.selectedBookingModel.state = BOOKING_STATE.In_progress;
                          this.isCancelledOrUnableToServe = false;
                          this.isRequestedProgressOrAllocated = true;
-                         this.notificationServiceBus.launchNotification(false, 'The booking has been transitioned to \"' + stateMsg + '\" state');
+                         this.notificationServiceBus.launchNotification(false, `The booking has been transitioned to "${stateMsg}" state`);
                      }
                      this.spinnerService.requestInProcess(false);
                  },
