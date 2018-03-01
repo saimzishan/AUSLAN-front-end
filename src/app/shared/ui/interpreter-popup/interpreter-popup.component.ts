@@ -89,7 +89,7 @@ export class InterpreterPopupComponent implements OnInit {
                 err => {
                     this.spinnerService.requestInProcess(false);
                     let e = err.json() || 'There is some error on server side';
-                    this.getNotification(e.errors);
+                    this.notificationServiceBus.launchNotification(true, e);
                 });
     }
 
@@ -107,10 +107,4 @@ export class InterpreterPopupComponent implements OnInit {
         this.currentPage = page;
         this.fetchAllInterpreters();
     }
-
-    getNotification(error) {
-        this.notificationServiceBus.launchNotification(true, JSON.stringify(error.base || error)
-        .replace(/]|[[]/g, '').replace(/({|})/g, '').replace(/["]/g, ''));
-    }
-
 }

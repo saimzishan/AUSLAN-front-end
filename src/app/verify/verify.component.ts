@@ -50,7 +50,7 @@ export class VerifyComponent implements OnInit, OnDestroy {
           },
       err => {
         this.spinnerService.requestInProcess(false);
-        this.notificationServiceBus.launchNotification(true, JSON.stringify(err));
+        this.notificationServiceBus.launchNotification(true, err.json());
       },
       () => { });
   }

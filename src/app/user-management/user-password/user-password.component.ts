@@ -7,50 +7,41 @@ import { GLOBAL } from '../../shared/global';
 import {FormGroup} from '@angular/forms';
 
 @Component({
-  selector: 'app-user-password',
-  templateUrl: './user-password.component.html',
-  styleUrls: ['./user-password.component.css']
+    selector: 'app-user-password',
+    templateUrl: './user-password.component.html',
+    styleUrls: ['./user-password.component.css']
 })
 export class UserPasswordComponent {
 
-  curr_password = '';
-  new_password = '';
-  confirm_password = '';
-  constructor(public userDataService: UserService,
-              public notificationServiceBus: NotificationServiceBus,
-              public spinnerService: SpinnerService) {
+    curr_password = '';
+    new_password = '';
+    confirm_password = '';
+    constructor(public userDataService: UserService,
+        public notificationServiceBus: NotificationServiceBus,
+        public spinnerService: SpinnerService) { }
 
-  }
+    editUser(form: FormGroup) {
+        if ( form.invalid ) {
+            this.notificationServiceBus.
+                launchNotification(true, GLOBAL.MISSING_FIELDS_ERROR_MESSAGE);
+            return;
+        }
 
+        this.spinnerService.requestInProcess(true);
 
-  editUser(form: FormGroup) {
-      if ( form.invalid ) {
-          this.notificationServiceBus.
-          launchNotification(true, GLOBAL.MISSING_FIELDS_ERROR_MESSAGE);
-          return;
-      }
+        this.userDataService.updatePassword(GLOBAL.currentUser.id, this.curr_password, this.new_password)
+            .subscribe((res: any) => {
+                if (res.status === 200) {
+                    // UI Notification
+                    this.spinnerService.requestInProcess(false);
 
-      this.spinnerService.requestInProcess(true);
+                    this.notificationServiceBus.launchNotification(false, 'User password updated Successfully');
+                }
+            }, errors => {
+                this.spinnerService.requestInProcess(false);
+                let e = errors.json();
+                this.notificationServiceBus.launchNotification(true, e);
 
-      this.userDataService.updatePassword(GLOBAL.currentUser.id, this.curr_password, this.new_password)
-        .subscribe((res: any) => {
-              if (res.status === 200) {
-                // UI Notification
-                  this.spinnerService.requestInProcess(false);
-
-                  this.notificationServiceBus.launchNotification(false, 'User password updated Successfully');
-              }
-        }, errors => {
-          this.spinnerService.requestInProcess(false);
-          let e = errors.json();
-          this.getNotification(e.errors);
-          
-        });
-  }
-
-  getNotification(error) {
-    this.notificationServiceBus.launchNotification(true, JSON.stringify(error.base || error)
-    .replace(/]|[[]/g, '').replace(/({|})/g, '').replace(/["]/g, ''));
-  }
-
+            });
+    }
 }
