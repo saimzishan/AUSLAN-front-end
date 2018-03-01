@@ -332,7 +332,7 @@ Feature: Booking Admin Management
     Then I can see the button state 'Cancel Booking' is hidden
     Then I can see the button state 'Unable to Service' is hidden
     When I click on BUTTON 'Undo cancel'
-    Then I can see the booking state 'In Progress'
+    Then I can see the booking state 'Cancelled No Charge'
 
   @runThis
   Scenario: Booking Officer can Undo a booking having state Cancelled chargeable
@@ -378,7 +378,7 @@ Feature: Booking Admin Management
     Then I can see the button state 'Cancel Booking' is hidden
     Then I can see the button state 'Unable to Service' is hidden
     When I click on BUTTON 'Undo cancel'
-    Then I can see the booking state 'In Progress'
+    Then I can see the booking state 'unable to service'
 
    @runThis
   Scenario: Booking Officer cannot Undo cancel booking if alloccted interpreter is assign to another booking
@@ -390,7 +390,6 @@ Feature: Booking Admin Management
     When I click on an individual booking
     Then I will be shown the booking job page
     Then I select 1 Interpreter
-    Then I wait for 1000 milli-seconds
     And I click on BUTTON name 'reassingBtn'
     And I click on BUTTON 'Save'
     Then I wait for 1000 milli-seconds
@@ -406,7 +405,6 @@ Feature: Booking Admin Management
     Then I click on an individual booking of type 'Requested'
     Then I will be shown the booking job page
     Then I select 1 Interpreter
-    Then I wait for 1000 milli-seconds
     And I click on BUTTON name 'reassingBtn'
     And I click on BUTTON 'Save'
     Then I wait for 1000 milli-seconds

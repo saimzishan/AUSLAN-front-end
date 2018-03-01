@@ -12,7 +12,8 @@ Feature: Booking Management
     And I am on the bookings page
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
-    When I click on element by name 'rdBookingAddressNo'
+    Then I click on element by name 'rdBookingAddressNo'
+    And I click on element by name 'rdStandardInvoiceNo'
     When I fill New Booking form fields correctly with non-standard time from 04:00 AM to 05:00 AM with 1 'auslanInterpreters_count'
     And I click the create booking button
     Then I will get an error notification saying "Kindly accept Terms and Conditions"
@@ -30,7 +31,8 @@ Feature: Booking Management
     And I am on the bookings page
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
-    When I click on element by name 'rdBookingAddressNo'
+    Then I click on element by name 'rdBookingAddressNo'
+    And I click on element by name 'rdStandardInvoiceNo'
     When I fill New Booking form fields correctly with non-standard time from 04:00 AM to 05:00 AM with 1 'auslanInterpreters_count'
     And I click the create booking button
     Then I will get an error notification saying "Kindly accept Terms and Conditions"
@@ -104,7 +106,8 @@ Feature: Booking Management
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
     And I can see the ext_ref_num field
-    When I click on element by name 'rdBookingAddressNo'
+    Then I click on element by name 'rdBookingAddressNo'
+    And I click on element by name 'rdStandardInvoiceNo'
     When I fill New Booking form fields correctly
     And I fill the field 'ext_ref_num' with value '1234'
     Then I move to element name 'tnc'

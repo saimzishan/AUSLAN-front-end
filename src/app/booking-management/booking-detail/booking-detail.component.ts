@@ -318,6 +318,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             if (!this.forEdit) {
                 this.onSelectionChange();
                 this.onClientSelectionChange();
+                this.onStandardInvoice();
             }
             this.getUser();
             this.bookingModel.bookable_type = this.bookingModel.bookable_type || 'IndividualClient';
@@ -813,7 +814,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 errors => {
                     this.spinnerService.requestInProcess(false);
                     let e = errors.json() || '';
-                    this.getNotification(e.errors);
+                    this.notificationServiceBus.launchNotification(true, e);
                 });
     }
 
@@ -881,7 +882,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                     errors => {
                         this.spinnerService.requestInProcess(false);
                         let e = errors.json() || '';
-                        this.getNotification(e.errors);
+                        this.notificationServiceBus.launchNotification(true, e);
                     });
         }
     }
@@ -981,13 +982,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 errors => {
                     this.spinnerService.requestInProcess(false);
                     let e = errors.json() || '';
-                    let full_messages;
-                    if (e.constructor === ''.constructor) {
-                       full_messages = e;
-                    } else if (e.constructor === {}.constructor) {
-                       full_messages = e.errors;
-                    }
-                    this.getNotification(full_messages);
+                    this.notificationServiceBus.launchNotification(true, e);
                 });
     }
 
@@ -1078,10 +1073,5 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         this.oldInterpreterPreference = [];
         this.showPreferred = this.showProfilePreferred = this.showBlocked = this.showProfileBlocked = false;
         this.hasPrefInt = this.hasBlockInt = false;
-    }
-
-    getNotification(error) {
-        this.notificationServiceBus.launchNotification(true, JSON.stringify(error.base || error)
-        .replace(/]|[[]/g, '').replace(/({|})/g, '').replace(/["]/g, ''));
     }
 }

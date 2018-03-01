@@ -1145,8 +1145,8 @@
           </label>
           <md-radio-group name="rdStandardInvoice" [(ngModel)]="standardInvoice" (change)='onStandardInvoice()'
                           [disabled]="isDisabledForOrgRepIndClient">
-            <md-radio-button [value]="true">YES</md-radio-button>
-            <md-radio-button [value]="false">NO</md-radio-button>
+            <md-radio-button name="rdStandardInvoiceYes" [value]="true">YES</md-radio-button>
+            <md-radio-button name="rdStandardInvoiceNo" [value]="false">NO</md-radio-button>
           </md-radio-group>
         </div>
       </div>
