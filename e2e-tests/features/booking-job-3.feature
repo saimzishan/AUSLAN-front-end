@@ -390,7 +390,6 @@ Feature: Booking Admin Management
     When I click on an individual booking
     Then I will be shown the booking job page
     Then I select 1 Interpreter
-    Then I wait for 1000 milli-seconds
     And I click on BUTTON name 'reassingBtn'
     And I click on BUTTON 'Save'
     Then I wait for 1000 milli-seconds
@@ -406,7 +405,6 @@ Feature: Booking Admin Management
     Then I click on an individual booking of type 'Requested'
     Then I will be shown the booking job page
     Then I select 1 Interpreter
-    Then I wait for 1000 milli-seconds
     And I click on BUTTON name 'reassingBtn'
     And I click on BUTTON 'Save'
     Then I wait for 1000 milli-seconds
