@@ -901,4 +901,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         }
         return str.replace(/_/g, ' ');
     }
+    getInterpreterId() {
+        return GLOBAL.currentUser.id;
+    }
 }

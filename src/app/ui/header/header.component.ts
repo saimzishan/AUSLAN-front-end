@@ -13,6 +13,7 @@ export class HeaderComponent implements OnDestroy, OnInit {
   private sub: any;
   userIsActive = false;
   fullName = '';
+  userID;
 
   constructor(public userNameService: UserNameService, private linkAuth: LinkAuth) {
   }
@@ -29,6 +30,7 @@ export class HeaderComponent implements OnDestroy, OnInit {
       '';
         this.userIsActive = Boolean(GLOBAL.currentUser && this.fullName && this.fullName.length > 0
         && this.fullName === GLOBAL.currentUser.first_name + ' '  + GLOBAL.currentUser.last_name);
+    this.userID = GLOBAL.currentUser.id;
   }
 
   getPicturePath() {
