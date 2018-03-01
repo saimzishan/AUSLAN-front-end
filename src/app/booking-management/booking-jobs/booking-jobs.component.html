@@ -266,7 +266,7 @@
                                 <td align="center">
                                     <img [src]="getInterpreterIconClass(user)">
                                 </td>
-                                <td>
+                                <td class="truncated-text">
                                     <i class="icon-requested preff-icon" *ngIf="isPreferred(user.id)"></i>
                                     <a name="lnkEditUser" [routerLink]="['/init']" [queryParams]="{selectedRole:'INTERPRETER', uid: user.id, edit_user: stringifyUser(user)}">
                                         {{user.full_name}}</a>

@@ -54,7 +54,8 @@ Feature: Booking Status
     And I am on the bookings page
     When I click on 'New Booking'
     Then I will be taken to the 'New Booking' form
-    When I click on element by name 'rdBookingAddressNo'
+    And I click on element by name 'rdBookingAddressNo'
+    And I click on element by name 'rdStandardInvoiceNo'
     Then I fill New Booking form fields correctly
     Then I move to element name 'tnc'
     Then I click on checkbox name 'tnc'

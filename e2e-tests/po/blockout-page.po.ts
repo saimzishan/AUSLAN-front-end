@@ -22,18 +22,13 @@ export class BlockoutPagePo extends PageObject {
     }
 
     browseStaff = () => {
+        const EC = protractor.ExpectedConditions;
         return this.currentPath().then((currentPath) => {
-            this.didFinishedRendering();
-            expect(currentPath).to.contain('staff_calendar');
+            const urlMatchCondition = EC.or(EC.urlContains('staff-availability'), EC.urlContains('staff_calendar'))
+            browser.wait(urlMatchCondition, 30000);
         });
     }
 
-    didFinishedRendering = () => {
-        this.saveBtn = this.getButtonByText('SAVE');
-        return browser.wait(protractor.ExpectedConditions.presenceOf(this.saveBtn), 30000).then(() => {
-            expect(this.saveBtn).to.exist;
-        });
-    }
     enterBlockoutName = (blockout_name: string) => {
 
         let input_field = this.getElementByName('blockout_name');
