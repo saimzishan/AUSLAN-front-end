@@ -295,6 +295,7 @@ Feature: Booking Management
     Then I wait for 1000 milli-seconds
     And If I am shown a popup message 'Would you like to save these changes for all bookings or only for this one?', I approve it
     Then I should get a valid booking update notification
+    Then I wait for 3300 milli-seconds
     Then I select 1 Interpreter
     Then I wait for 1000 milli-seconds
     And I click on BUTTON name 'reassingBtn'
