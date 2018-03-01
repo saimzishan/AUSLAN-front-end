@@ -311,3 +311,25 @@ Feature: Booking Management
     And If I am shown a popup message 'Would you like to save these changes for all bookings or only for this one?', I approve it
     Then I wait for 1000 milli-seconds
     And I will be shown a popup message 'Interpreter(s) have been/is allocated for this job. You're changing important fields of the booking. Do you have confirmation from the interpreter(s) that these changes are OK?'
+
+  @runThis
+  Scenario: Given 1 verified Individual Client, Booking Officer can verify the service name.
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    And I am on the bookings page
+    And I am shown with 0 bookings
+    When I click on 'New Booking'
+    Then I will be taken to the 'New Booking' form
+    Then I click on checkbox name 'cbAuslan'
+    Then I click on checkbox name 'cbCaptioning'
+    When I fill New Booking form fields correctly with standard time from 09:00 AM to 10:00 AM with 1 'captioner_count'
+    And I select the bookable for client
+    Then I click on checkbox name 'tnc'
+    And I click the create booking button
+    Then I get a valid create booking notification
+    And I am on the bookings page
+    And I am shown with 1 bookings
+    And I wait for 2000 milli-seconds
+    When I click on an individual booking
+    Then I am on the individual booking page
+    Then I can see the element with id 'serviceName' has text 'Captioner 1 :'
