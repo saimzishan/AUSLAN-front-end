@@ -44,7 +44,6 @@ export class UserPasswordComponent {
           this.spinnerService.requestInProcess(false);
           let e = errors.json();
           this.getNotification(e.errors);
-          
         });
   }
 
