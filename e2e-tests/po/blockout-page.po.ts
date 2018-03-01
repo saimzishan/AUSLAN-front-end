@@ -22,19 +22,13 @@ export class BlockoutPagePo extends PageObject {
     }
 
     browseStaff = () => {
+        const EC = protractor.ExpectedConditions;
         return this.currentPath().then((currentPath) => {
-            this.didFinishedRendering();
-            expect(currentPath).to.contain('staff-availability');
-
+            const urlMatchCondition = EC.or(EC.urlContains('staff-availability'), EC.urlContains('staff_calendar'))
+            browser.wait(urlMatchCondition, 30000);
         });
     }
 
-    didFinishedRendering = () => {
-        this.saveBtn = this.getButtonByText('SAVE');
-        return browser.wait(protractor.ExpectedConditions.presenceOf(this.saveBtn), 30000).then(() => {
-            expect(this.saveBtn).to.exist;
-        });
-    }
     enterBlockoutName = (blockout_name: string) => {
 
         let input_field = this.getElementByName('blockout_name');
@@ -51,7 +45,7 @@ export class BlockoutPagePo extends PageObject {
             today.getFullYear().toString()
         ].join('/');
         startTime.clear();
-        startTime.sendKeys(currentDate + ' 06:25 AM'); 
+        startTime.sendKeys(currentDate + ' 06:25 AM');
         let endTime = this.getElementByCss('input[name="dpEventDate_endtime"]');
         this.clickOutSide();
         return endTime.getAttribute('value').then((val) => {
@@ -61,7 +55,7 @@ export class BlockoutPagePo extends PageObject {
     changeEndTimeOFBlockout = () => {
         let endTime = this.getElementByCss('input[name="dpEventDate_endtime"]');
         endTime.clear();
-        endTime.sendKeys('09:25 AM'); 
+        endTime.sendKeys('09:25 AM');
         this.clickOutSide();
         return endTime.getAttribute('value').then((val) => {
             expect(val).to.be.eq('09:25 AM');
