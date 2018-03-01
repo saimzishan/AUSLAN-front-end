@@ -28,11 +28,11 @@ export class NotificationServiceBus {
     // Service message commands
     launchNotification(isError: boolean, message: string | object) {
         let notificationContainer = new NotificationContainer();
-        if (message instanceof String) {
+        if (typeof message == 'string') {
             notificationContainer.message = message;
         } else if (message.hasOwnProperty('errors') && message['errors'].length) {
             notificationContainer.message = message['errors'];
-        } else if (message instanceof Object && isError) {
+        } else if (typeof message === 'object' && isError) {
             this.handleErrorObjectsForNotification(message);
         } else {
             notificationContainer.message = JSON.stringify(message).replace(/[{"\[\]\}:]|errors|base/gmi, '');
