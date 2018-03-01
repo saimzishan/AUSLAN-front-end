@@ -913,19 +913,22 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     }
 
     serviceName() {
-       let flag = ($(window).width() >= 768)
+       let flag = ($(window).width() >= 768);
         let interpreter = 'interptreter';
         this.serviceNameToDisplay = this.selectedBookingModel.number_of_note_takers_required > 0 ? this.desktopOrMobile(flag, 'Notetaker')
                                     : this.selectedBookingModel.number_of_captioners_required > 0 ?  this.desktopOrMobile(flag, 'Captioner')
                                     : this.selectedBookingModel.number_of_auslan_interpreters_required > 0 ? this.desktopOrMobile(flag, interpreter)
-                                    : this.selectedBookingModel.number_of_visual_frame_interpreters_required > 0 ?this.desktopOrMobile(flag,  interpreter + ' (visual frame)')
-                                    : this.selectedBookingModel.number_of_tactile_interpreters_required > 0 ?this.desktopOrMobile(flag,  interpreter + ' (tactile)')
-                                    : this.selectedBookingModel.number_of_platform_interpreters_required > 0 ?this.desktopOrMobile(flag,  interpreter + ' (platform)')
+                                    : this.selectedBookingModel.number_of_visual_frame_interpreters_required > 0 ?
+                                                                                            this.desktopOrMobile(flag, interpreter + ' (visual frame)')
+                                    : this.selectedBookingModel.number_of_tactile_interpreters_required > 0 ? this.desktopOrMobile(flag, interpreter + ' (tactile)')
+                                    : this.selectedBookingModel.number_of_platform_interpreters_required > 0 ? this.desktopOrMobile(flag, interpreter + ' (platform)')
                                     : this.selectedBookingModel.number_of_asl_interpreters_required > 0 ? this.desktopOrMobile(flag, interpreter + ' (asl)')
-                                    : this.selectedBookingModel.number_of_bsl_interpreters_required > 0 ?this.desktopOrMobile(flag,  interpreter + ' (bsl)')
-                                    : this.selectedBookingModel.number_of_isl_interpreters_required > 0 ?this.desktopOrMobile(flag,  interpreter + ' (isl)')
-                                    : this.selectedBookingModel.number_of_signed_english_interpreters_required > 0 ? this.desktopOrMobile(flag, interpreter + ' (signed english)')
-                                    : this.selectedBookingModel.number_of_indigenous_sign_interpreters_required > 0 ?this.desktopOrMobile(flag,  interpreter + ' (indigenous sign)' ): '';
+                                    : this.selectedBookingModel.number_of_bsl_interpreters_required > 0 ? this.desktopOrMobile(flag, interpreter + ' (bsl)')
+                                    : this.selectedBookingModel.number_of_isl_interpreters_required > 0 ? this.desktopOrMobile(flag, interpreter + ' (isl)')
+                                    : this.selectedBookingModel.number_of_signed_english_interpreters_required > 0 ?
+                                                                                            this.desktopOrMobile(flag, interpreter + ' (signed english)')
+                                    : this.selectedBookingModel.number_of_indigenous_sign_interpreters_required > 0 ?
+                                                                                            this.desktopOrMobile(flag, interpreter + ' (indigenous sign)' ) : '';
                                 }
     desktopOrMobile(flag: boolean, serviceName: string) {
          serviceName = flag ? serviceName : serviceName.toUpperCase();
