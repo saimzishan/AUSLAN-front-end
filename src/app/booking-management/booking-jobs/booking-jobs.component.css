@@ -22,3 +22,11 @@
     font-size: 17px;
     float: left;
 }
+
+.half-opacity {
+    opacity: 0.5;
+}
+
+.full-opacity {
+    opacity: 1;
+}
