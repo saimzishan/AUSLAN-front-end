@@ -18,8 +18,10 @@ export class NotificationServiceBus {
     handleErrorObjectsForNotification(obj) {
         let message = '';
         for (let field in obj.errors) {
-            let fieldName = field === 'base' ? '' : field.charAt(0).toUpperCase() + field.slice(1);
-            message += `${fieldName} ${obj.errors[field][0]}. `;
+            if (obj.errors.hasOwnProperty(field)) {
+                let fieldName = field === 'base' ? '' : field.charAt(0).toUpperCase() + field.slice(1);
+                message += `${fieldName} ${obj.errors[field][0]}. `;
+            }
         }
         this.launchNotification(true, message);
     }
