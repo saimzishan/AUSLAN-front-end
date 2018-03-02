@@ -46,7 +46,7 @@ export class NotificationComponent implements OnDestroy, OnInit {
                             this.ngZone.run(() => {
                             });
 
-                        }, 3500);
+                        }, notificationContainer.isError? 5000 : 3500);
                     });
 
                 }
