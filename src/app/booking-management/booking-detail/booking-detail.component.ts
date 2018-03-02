@@ -814,8 +814,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 errors => {
                     this.spinnerService.requestInProcess(false);
                     let e = errors.json() || '';
-                    this.notificationServiceBus.launchNotification(true,
-                        'Error occured on server side. ' + errors.statusText + ' ' + JSON.stringify(e || e.errors));
+                    this.notificationServiceBus.launchNotification(true, e);
                 });
     }
 
@@ -836,7 +835,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     updateBooking() {
-        if ((this.bookingModel.state === BOOKING_STATE.In_progress || this.bookingModel.state === BOOKING_STATE.Allocated) && this.isImportantFieldsChanged()) {
+        if ((this.bookingModel.state === BOOKING_STATE.In_progress || this.bookingModel.state === BOOKING_STATE.Allocated) &&
+                                                            (this.assignedInterpreter > 0 && this.isImportantFieldsChanged())) {
             let config: MdDialogConfig = {
                 disableClose: true
             };
@@ -883,8 +883,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                     errors => {
                         this.spinnerService.requestInProcess(false);
                         let e = errors.json() || '';
-                        this.notificationServiceBus.launchNotification(true,
-                            'Error occurred on server side. ' + errors.statusText + ' ' + JSON.stringify(e || e.errors));
+                        this.notificationServiceBus.launchNotification(true, e);
                     });
         }
     }
@@ -984,14 +983,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 errors => {
                     this.spinnerService.requestInProcess(false);
                     let e = errors.json() || '';
-                    let full_messages;
-                    if (e.constructor === ''.constructor) {
-                       full_messages = e;
-                    } else if (e.constructor === {}.constructor) {
-                       full_messages = e.errors;
-                    }
-                    this.notificationServiceBus.launchNotification(true,
-                        'Error occured on server side. ' + errors.statusText + ', ' + full_messages);
+                    this.notificationServiceBus.launchNotification(true, e);
                 });
     }
 

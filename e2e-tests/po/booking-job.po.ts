@@ -71,15 +71,12 @@ export class BookingJobPage extends PageObject {
         });
     }
 
-    selectInterpreters = (num_of_interpreter: string) => {
-        let int_count = parseInt(num_of_interpreter, 10);
-        return $$('md-checkbox').each((ef, ind) => {
-            if (ind < int_count) {
-                // return browser.actions().mouseMove(ef).perform().then( () => {
-                // browser.driver.executeScript("arguments[0].scrollIntoView(true);", ed.getWebElement());
+    selectInterpreters = (num_of_interpreter: number) => {
+        return $$('section.interpreters-list md-checkbox').each((ef, ind) => {
+            const isClickable = protractor.ExpectedConditions.invisibilityOf(this.getElementByCss('.notification__wrapper'));
+            browser.wait(isClickable, 5000);
+            if (ind < num_of_interpreter) {
                 return ef.click();
-                // });
-
             }
         });
     }
