@@ -360,7 +360,7 @@ Feature: Booking Admin Management
     Then I can see the button state 'Cancel Booking' is hidden
     Then I can see the button state 'Unable to Service' is hidden
     When I click on BUTTON 'Undo cancel'
-    Then I can see the booking state 'Allocated'
+    Then I can see the booking state 'In Progress'
 
    @runThis
   Scenario: Booking Officer can Unable to service a booking having linked id and can undo it
