@@ -836,7 +836,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     updateBooking() {
-        if ((this.bookingModel.state === BOOKING_STATE.In_progress || this.bookingModel.state === BOOKING_STATE.Allocated) && this.isImportantFieldsChanged()) {
+        if ((this.bookingModel.state === BOOKING_STATE.In_progress || this.bookingModel.state === BOOKING_STATE.Allocated) &&
+                                                            (this.assignedInterpreter > 0 && this.isImportantFieldsChanged())) {
             let config: MdDialogConfig = {
                 disableClose: true
             };
