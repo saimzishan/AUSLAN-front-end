@@ -28,7 +28,7 @@ export class NotificationServiceBus {
     // Service message commands
     launchNotification(isError: boolean, message: string | object) {
         let notificationContainer = new NotificationContainer();
-        if (typeof message == 'string') {
+        if (typeof message === 'string') {
             notificationContainer.message = message;
         } else if (message.hasOwnProperty('errors') && message['errors'].length) {
             notificationContainer.message = message['errors'];
