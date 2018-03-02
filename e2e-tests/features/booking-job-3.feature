@@ -380,7 +380,7 @@ Feature: Booking Admin Management
     When I click on BUTTON 'Undo cancel'
     Then I can see the booking state 'unable to service'
 
-   @runThis
+  @runThis
   Scenario: Booking Officer cannot Undo cancel booking if alloccted interpreter is assign to another booking
     Given There exist 2 booking with link id
     Given I exist as an Booking Officer
