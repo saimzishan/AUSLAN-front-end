@@ -87,8 +87,9 @@ Feature: User Role and Permissions Management
     Then I am on the bookings page
     When I click on 'New Booking'
     Then I will be taken to the 'New Booking' form
-    When I click on element by name 'rdBookingAddressNo'
-    When I fill New Booking form fields correctly
+    And I click on element by name 'rdBookingAddressNo'
+    And I click on element by name 'rdStandardInvoiceNo'
+    Then I fill New Booking form fields correctly
     When I specify i am the client of this booking
     Then The booking form will be automatically populated with the details.
     Then I move to element name 'tnc'

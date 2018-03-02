@@ -29,9 +29,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
     userStatusArray = GLOBAL.userStatusArray;
 
     constructor(public userService: UserService,
-                public notificationServiceBus: NotificationServiceBus,
-                public spinnerService: SpinnerService,
-                public routes: ActivatedRoute, public router: Router) {
+        public notificationServiceBus: NotificationServiceBus,
+        public spinnerService: SpinnerService,
+        public routes: ActivatedRoute, public router: Router) {
     }
     isUserLogin() {
         return Boolean(GLOBAL.currentUser);
@@ -68,8 +68,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
                     if (this.isDuplicate) {
                         this.model.first_name = this.model.last_name =
                             this.model.email = this.model.mobile =
-                                this.model.photo_url = this.model.password =
-                                    this.model.confirm_password = '';
+                            this.model.photo_url = this.model.password =
+                            this.model.confirm_password = '';
                     }
                     this.selectedRole = 'ORGANISATION';
                     break;
@@ -112,8 +112,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
                 }, errors => {
                     this.spinnerService.requestInProcess(false);
                     let e = errors.json();
-                    this.notificationServiceBus.launchNotification(true, errors.statusText + ' '
-                        + JSON.stringify(e.errors).replace(/]|[[]/g, '').replace(/({|})/g, ''));
+                    this.notificationServiceBus.launchNotification(true, e);
                 });
         }
     }
@@ -142,12 +141,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
         Object.keys(formGroup.controls).forEach(field => {
             const control = formGroup.get(field);
             if (control instanceof FormControl) {
-              control.markAsTouched({ onlySelf: true });
+                control.markAsTouched({ onlySelf: true });
             } else if (control instanceof FormGroup) {
-              this.validateAllFormFields(control);
+                this.validateAllFormFields(control);
             }
-          });
-        }
+        });
+    }
     addUser() {
         this.userService.createUser(this.model)
             .subscribe((res: any) => {
@@ -162,8 +161,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
             }, errors => {
                 this.spinnerService.requestInProcess(false);
                 let e = errors.json();
-                this.notificationServiceBus.launchNotification(true, errors.statusText + ' '
-                    + JSON.stringify(e.errors).replace(/]|[[]/g, '').replace(/({|})/g, ''));
+                this.notificationServiceBus.launchNotification(true, e);
             });
     }
 
@@ -173,19 +171,19 @@ export class RegisterComponent implements OnInit, OnDestroy {
         this.selectedStatus = '';
         this.userService.updateUser(this.model)
             .subscribe((res: any) => {
-                    if (res.status === 200) {
-                        // UI Notification
+                if (res.status === 200) {
+                    // UI Notification
 
-                        let route = '/user-management';
-                        this.router.navigate([route]);
-                        this.spinnerService.requestInProcess(false);
-                        this.notificationServiceBus.launchNotification(false, 'User details updated Successfully');
-                    }
-                },
+                    let route = '/user-management';
+                    this.router.navigate([route]);
+                    this.spinnerService.requestInProcess(false);
+                    this.notificationServiceBus.launchNotification(false, 'User details updated Successfully');
+                }
+            },
                 (err) => {
                     this.spinnerService.requestInProcess(false);
                     let e = err.json();
-                    this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
+                    this.notificationServiceBus.launchNotification(true, e);
                 });
     }
 
@@ -203,8 +201,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
             }, errors => {
                 this.spinnerService.requestInProcess(false);
                 let e = errors.json();
-                this.notificationServiceBus.launchNotification(true, errors.statusText + ' '
-                    + JSON.stringify(e.errors).replace(/]|[[]/g, '').replace(/({|})/g, ''));
+                this.notificationServiceBus.launchNotification(true, e);
             });
     }
 

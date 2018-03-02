@@ -332,7 +332,7 @@ Feature: Booking Admin Management
     Then I can see the button state 'Cancel Booking' is hidden
     Then I can see the button state 'Unable to Service' is hidden
     When I click on BUTTON 'Undo cancel'
-    Then I can see the booking state 'In Progress'
+    Then I can see the booking state 'Cancelled No Charge'
 
   @runThis
   Scenario: Booking Officer can Undo a booking having state Cancelled chargeable
@@ -378,5 +378,40 @@ Feature: Booking Admin Management
     Then I can see the button state 'Cancel Booking' is hidden
     Then I can see the button state 'Unable to Service' is hidden
     When I click on BUTTON 'Undo cancel'
-    Then I can see the booking state 'In Progress'
+    Then I can see the booking state 'unable to service'
 
+  @runThis
+  Scenario: Booking Officer cannot Undo cancel booking if alloccted interpreter is assign to another booking
+    Given There exist 2 booking with link id
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    And I am on the bookings page
+    And I see one row with the link id
+    When I click on an individual booking
+    Then I will be shown the booking job page
+    Then I select 1 Interpreter
+    And I click on BUTTON name 'reassingBtn'
+    And I click on BUTTON 'Save'
+    Then I wait for 1000 milli-seconds
+    Then I get valid message: 'The interpreter have been assigned'
+    When I click on BUTTON 'Cancel Booking'
+    Then I will be shown a popup message 'Would you like to cancel only this booking, or all linked bookings?'
+    Then I click on BUTTON name 'yesBtn'
+    Then I wait for 1200 milli-seconds
+    Then I will be shown a popup message 'Are you sure you want to cancel this booking? This is permanent. We recommend to cancel this booking as Cancelled No Charge since the start date is not within 48 hours.'
+    Then I click on BUTTON name 'noBtn'
+    Then I get a valid 'Cancelled with Charge' notification for state
+    Then I click on Bookings
+    Then I click on an individual booking of type 'Requested'
+    Then I will be shown the booking job page
+    Then I select 1 Interpreter
+    And I click on BUTTON name 'reassingBtn'
+    And I click on BUTTON 'Save'
+    Then I wait for 1000 milli-seconds
+    Then I get valid message: 'The interpreter have been assigned'
+    Then I click on Bookings
+    Then I click on an individual booking of type 'Cancelled chargeable'
+    And I click on link 'Booking info'
+    Then I will be shown the booking job page
+    When I click on BUTTON 'Undo cancel'
+    And I get error message: 'Existing booking or blockout during booking. Booking not changed'

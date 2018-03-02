@@ -31,7 +31,8 @@ Feature: Create Booking with preferred or blocked interpreters
     And I am on the bookings page
     When I click on 'New Booking'
     Then I will be taken to the 'New Booking' form
-    When I click on element by name 'rdBookingAddressNo'
+    And I click on element by name 'rdBookingAddressNo'
+    And I click on element by name 'rdStandardInvoiceNo'
     And I fill New Booking form fields correctly
     And I can see the element with name 'preferInterHeading' has text 'PREFERRED INTERPRETERS'
     And I can see the element with name 'preferInterQuestion1' is 'visible'
@@ -94,7 +95,8 @@ Feature: Create Booking with preferred or blocked interpreters
     And I am on the bookings page
     When I click on 'New Booking'
     Then I will be taken to the 'New Booking' form
-    When I click on element by name 'rdBookingAddressNo'
+    And I click on element by name 'rdBookingAddressNo'
+    And I click on element by name 'rdStandardInvoiceNo'
     And I fill New Booking form fields correctly
     And I can see the element with name 'blockInterHeading' has text 'BLOCKED INTERPRETERS'
     And I can see the element with name 'blockInterQuestion1' is 'visible'
@@ -167,8 +169,9 @@ Feature: Create Booking with preferred or blocked interpreters
     And I am on the bookings page
     When I click on 'New Booking'
     Then I will be taken to the 'New Booking' form
-    When I click on element by name 'rdBookingAddressNo'
-    And I fill New Booking form fields correctly
+    And I click on element by name 'rdBookingAddressNo'
+    And I click on element by name 'rdStandardInvoiceNo'
+    Then I fill New Booking form fields correctly
     And I can see the element with name 'preferInterHeading' has text 'PREFERRED INTERPRETERS'
     And I can see the element with name 'preferInterQuestion1' is 'visible'
     When I click on element by name 'rdPreferredInterpretersYes'
@@ -246,8 +249,9 @@ Feature: Create Booking with preferred or blocked interpreters
     And I am on the bookings page
     When I click on 'New Booking'
     Then I will be taken to the 'New Booking' form
-    When I click on element by name 'rdBookingAddressNo'
-    And I fill New Booking form fields correctly
+    And I click on element by name 'rdBookingAddressNo'
+    And I click on element by name 'rdStandardInvoiceNo'
+    Then I fill New Booking form fields correctly
     When I click on element by name 'rdBlockedInterpretersYes'
     #When I click on element by name 'rdProfileBlockedInterpretersYes'
     And I can see the element with name 'btnManageInterpreter_blocked' is 'visible'
@@ -312,8 +316,9 @@ Feature: Create Booking with preferred or blocked interpreters
     And I am on the bookings page
     When I click on 'New Booking'
     Then I will be taken to the 'New Booking' form
-    When I click on element by name 'rdBookingAddressNo'
-    And I fill New Booking form fields correctly
+    And I click on element by name 'rdBookingAddressNo'
+    And I click on element by name 'rdStandardInvoiceNo'
+    Then I fill New Booking form fields correctly
     When I click on element by name 'rdBlockedInterpretersYes'
     #When I click on element by name 'rdProfileBlockedInterpretersYes'
     And I can see the element with name 'btnManageInterpreter_blocked' is 'visible'
@@ -381,8 +386,9 @@ Feature: Create Booking with preferred or blocked interpreters
     And I am on the bookings page
     When I click on 'New Booking'
     Then I will be taken to the 'New Booking' form
-    When I click on element by name 'rdBookingAddressNo'
-    And I fill New Booking form fields correctly
+    And I click on element by name 'rdBookingAddressNo'
+    And I click on element by name 'rdStandardInvoiceNo'
+    Then I fill New Booking form fields correctly
     When I click on element by name 'rdBlockedInterpretersYes'
     #When I click on element by name 'rdProfileBlockedInterpretersYes'
     And I can see the element with name 'btnManageInterpreter_blocked' is 'visible'
