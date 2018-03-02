@@ -528,7 +528,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                         this.notificationServiceBus.launchNotification(false, 'The interpreters have been invited');
                         this.selectedBookingModel.state = BOOKING_STATE.In_progress;
                     }
-                    this.spinnerService.requestInProcess(false);
+                    this.fetchBookingInterpreters(this.selectedBookingModel.id);
                 },
                 err => {
                     this.spinnerService.requestInProcess(false);
