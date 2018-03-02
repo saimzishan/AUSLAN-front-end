@@ -218,10 +218,8 @@ export class BlockoutComponent implements OnDestroy, OnInit {
                             }
                         }, errors => {
                             this.spinnerService.requestInProcess(false);
-
                             let e = errors.json();
-                            this.notificationServiceBus.launchNotification(true, errors.statusText + ' '
-                                + JSON.stringify(e || e.errors).replace(/]|[[]/g, '').replace(/({|})/g, ''));
+                            this.notificationServiceBus.launchNotification(true, e);
                         });
                 }
             }
@@ -245,10 +243,8 @@ export class BlockoutComponent implements OnDestroy, OnInit {
                 }
             }, errors => {
                 this.spinnerService.requestInProcess(false);
-
                 let e = errors.json();
-                this.notificationServiceBus.launchNotification(true, errors.statusText + ' '
-                    + JSON.stringify(e || e.errors).replace(/]|[[]/g, '').replace(/({|})/g, ''));
+                this.notificationServiceBus.launchNotification(true, e);
             });
     }
     interpreterStateTimeZone (time) {
@@ -279,10 +275,8 @@ export class BlockoutComponent implements OnDestroy, OnInit {
                 }
             }, errors => {
                 this.spinnerService.requestInProcess(false);
-
                 let e = errors.json();
-                this.notificationServiceBus.launchNotification(true, errors.statusText + ' '
-                    + JSON.stringify(e || e.errors).replace(/]|[[]/g, '').replace(/({|})/g, ''));
+                this.notificationServiceBus.launchNotification(true, e);
             });
     }
     editStaffAvailabilities(form: FormGroup) {
@@ -310,8 +304,7 @@ export class BlockoutComponent implements OnDestroy, OnInit {
                 this.spinnerService.requestInProcess(false);
 
                 let e = errors.json();
-                this.notificationServiceBus.launchNotification(true, errors.statusText + ' '
-                    + JSON.stringify(e || e.errors).replace(/]|[[]/g, '').replace(/({|})/g, ''));
+                this.notificationServiceBus.launchNotification(true, e);
             });
     }
 
@@ -357,8 +350,7 @@ export class BlockoutComponent implements OnDestroy, OnInit {
                     this.spinnerService.requestInProcess(false);
 
                     let e = errors.json();
-                    this.notificationServiceBus.launchNotification(true, errors.statusText + ' '
-                        + JSON.stringify(e || e.errors).replace(/]|[[]/g, '').replace(/({|})/g, ''));
+                    this.notificationServiceBus.launchNotification(true, e);
                 });
         }
     }
@@ -382,8 +374,7 @@ export class BlockoutComponent implements OnDestroy, OnInit {
                 if (this.start_time.getTime() > this.end_time.getTime()) {
                     this.notificationServiceBus.launchNotification(true, 'End time cannot be before start time. Please change');
                 } else {
-                this.notificationServiceBus.launchNotification(true, errors.statusText + ' '
-                    + JSON.stringify(e || e.errors).replace(/]|[[]/g, '').replace(/({|})/g, ''));
+                    this.notificationServiceBus.launchNotification(true, e);
                 }
             });
     }
