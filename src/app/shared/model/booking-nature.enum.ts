@@ -120,14 +120,14 @@ export class BA {
           'Psychology', 'Other'].sort();
     BA.DISSCUSSION_ITEM[BOOKING_NATURE.Police] =
       ['Arrest',
-          'Interview – accused',
-          'Interview – victim',
-          'Statement – accused',
-          'Statement – victim',
+          'Interview – Accused',
+          'Interview – Victim',
+          'Statement – Accused',
+          'Statement – Victim',
           'Warrant', 'Other'].sort();
     BA.DISSCUSSION_ITEM[BOOKING_NATURE.Conference] =
       [ 'Community consultation',
-          'Conference (please specify in Notes)',
+          'Conference (Please specify in Notes)',
           'Creative arts / festival',
           'Expo', 'Information Session',
           'Rally/Protest', 'Other'].sort();

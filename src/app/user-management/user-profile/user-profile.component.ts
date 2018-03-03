@@ -92,8 +92,7 @@ export class UserProfileComponent implements OnInit {
                     this.spinnerService.requestInProcess(false);
 
                     let e = errors.json();
-                    this.notificationServiceBus.launchNotification(true, errors.statusText + ' '
-                        + JSON.stringify(e || e.errors).replace(/]|[[]/g, '').replace(/({|})/g, ''));
+                    this.notificationServiceBus.launchNotification(true, e);
                 });
     }
 
