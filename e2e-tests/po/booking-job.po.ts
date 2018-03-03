@@ -71,15 +71,12 @@ export class BookingJobPage extends PageObject {
         });
     }
 
-    selectInterpreters = (num_of_interpreter: string) => {
-        let int_count = parseInt(num_of_interpreter, 10);
-        return $$('md-checkbox').each((ef, ind) => {
-            if (ind < int_count) {
-                // return browser.actions().mouseMove(ef).perform().then( () => {
-                // browser.driver.executeScript("arguments[0].scrollIntoView(true);", ed.getWebElement());
+    selectInterpreters = (num_of_interpreter: number) => {
+        return $$('section.interpreters-list md-checkbox').each((ef, ind) => {
+            const isClickable = protractor.ExpectedConditions.invisibilityOf(this.getElementByCss('.notification__wrapper'));
+            browser.wait(isClickable, 5000);
+            if (ind < num_of_interpreter) {
                 return ef.click();
-                // });
-
             }
         });
     }
@@ -161,14 +158,10 @@ export class BookingJobPage extends PageObject {
     }
 
     getSuccessNotificationContentForState = (state: string) => {
-        return browser.sleep(1000).then(() => {
-            NotificationObject.getNotificationContent('The booking has been transitioned to \"' + state + '\" state');
-        });
+        return NotificationObject.getNotificationContent(`The booking has been transitioned to "${state}" state`);
     }
     getSuccessNotificationContentForInvite = () => {
-        return browser.sleep(1500).then(() => {
-            NotificationObject.getNotificationContent('The interpreters have been invited');
-        });
+        return NotificationObject.getNotificationContent('The interpreters have been invited');
     }
     isValidBookingHeader = () => {
         return $('#header-mobile > h1').getText().then((txt) => {

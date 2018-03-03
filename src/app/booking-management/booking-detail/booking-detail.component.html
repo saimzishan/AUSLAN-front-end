@@ -297,7 +297,7 @@
                    [disabled]="isDisabledForOrgRepIndClient"
                    #specific_nature_of_appointment="ngModel" required 
                    name="specific_nature_of_appointment" aria-label="A">
-              <option *ngFor="let item of specific_appointment_types | enumVal" [value]="item.value">
+              <option *ngFor="let item of specific_appointment_types | enumVal" [value]="item.value.replace(' (Please specify in Notes)', '').replace(' (Please specify length in Notes)', '')">
               {{item.value.toUpperCase()}}
               </option>
             </select>

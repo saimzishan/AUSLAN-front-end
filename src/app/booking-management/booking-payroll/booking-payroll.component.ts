@@ -56,7 +56,7 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
             err => {
                 this.spinnerService.requestInProcess(false);
                 let e = err.json() || 'There is some error on server side';
-                this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
+                this.notificationServiceBus.launchNotification(true, e);
             });
     }
 
@@ -75,7 +75,7 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
         err => {
             this.spinnerService.requestInProcess(false);
             let e = err.json() || 'There is some error on server side';
-            this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
+            this.notificationServiceBus.launchNotification(true, e);
         });
     }
 
@@ -108,7 +108,7 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
         err => {
             this.spinnerService.requestInProcess(false);
             let e = err.json() || 'There is some error on server side';
-            this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
+            this.notificationServiceBus.launchNotification(true, e);
         });
     }
 
@@ -118,7 +118,7 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
             .subscribe((res: any) => {
                     if (res.status === 204) {
                         let msg = this.setNotificationState(state);
-                        this.notificationServiceBus.launchNotification(false, 'The booking has been transitioned to \"' + msg + '\" state');
+                        this.notificationServiceBus.launchNotification(false, `The booking has been transitioned to "${msg}" state`);
                         this.claimPressed = this.undoClaimPressed = false;
                         this.fetchBooking(this.bookingModel.id);
                     }
@@ -127,7 +127,7 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
                 err => {
                     this.spinnerService.requestInProcess(false);
                     let e = err.json() || 'There is some error on server side';
-                    this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
+                    this.notificationServiceBus.launchNotification(true, e);
                 });
     }
 

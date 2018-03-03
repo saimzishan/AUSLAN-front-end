@@ -275,14 +275,14 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                         }
                         this.isCancelledOrUnableToServe = true;
                         this.isRequestedProgressOrAllocated = false;
-                        this.notificationServiceBus.launchNotification(false, 'The booking has been transitioned to \"' + stateMsg + '\" state');
+                        this.notificationServiceBus.launchNotification(false, `The booking has been transitioned to "${stateMsg}" state`);
                     }
                     this.spinnerService.requestInProcess(false);
                 },
                 err => {
                     this.spinnerService.requestInProcess(false);
                     let e: any = err.json() || 'There is some error on server side';
-                    this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
+                    this.notificationServiceBus.launchNotification(true, e);
                 });
     }
 
@@ -327,14 +327,14 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                          this.selectedBookingModel.state = BOOKING_STATE.In_progress;
                          this.isCancelledOrUnableToServe = false;
                          this.isRequestedProgressOrAllocated = true;
-                         this.notificationServiceBus.launchNotification(false, 'The booking has been transitioned to \"' + stateMsg + '\" state');
+                         this.notificationServiceBus.launchNotification(false, `The booking has been transitioned to "${stateMsg}" state`);
                      }
                      this.spinnerService.requestInProcess(false);
                  },
                  err => {
                      this.spinnerService.requestInProcess(false);
                      let e: any = err.json() || 'There is some error on server side';
-                     this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
+                     this.notificationServiceBus.launchNotification(true, e);
                  });
     }
 
@@ -402,7 +402,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                 err => {
                     this.spinnerService.requestInProcess(false);
                     let e: any = err.json() || 'There is some error on server side';
-                    this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
+                    this.notificationServiceBus.launchNotification(true, e);
                 });
     }
 
@@ -429,7 +429,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                 err => {
                     this.spinnerService.requestInProcess(false);
                     let e: any = err.json() || 'There is some error on server side';
-                    this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
+                    this.notificationServiceBus.launchNotification(true, e);
                 });
     }
 
@@ -498,7 +498,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                     this.jobAccessError = true;
                     this.spinnerService.requestInProcess(false);
                     let e: any = err.json() || 'There is some error on server side';
-                    this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
+                    this.notificationServiceBus.launchNotification(true, e);
                 });
     }
 
@@ -540,12 +540,12 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                         this.notificationServiceBus.launchNotification(false, 'The interpreters have been invited');
                         this.selectedBookingModel.state = BOOKING_STATE.In_progress;
                     }
-                    this.spinnerService.requestInProcess(false);
+                    this.fetchBookingInterpreters(this.selectedBookingModel.id);
                 },
                 err => {
                     this.spinnerService.requestInProcess(false);
                     let e: any = err.json() || 'There is some error on server side';
-                    this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
+                    this.notificationServiceBus.launchNotification(true, e);
                 });
     }
 
@@ -560,7 +560,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                 err => {
                     this.spinnerService.requestInProcess(false);
                     let e: any = err.json() || 'There is some error on server side';
-                    this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
+                    this.notificationServiceBus.launchNotification(true, e);
                 });
     }
 
@@ -576,7 +576,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                 err => {
                     this.spinnerService.requestInProcess(false);
                     let e: any = err.json() || 'There is some error on server side';
-                    this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
+                    this.notificationServiceBus.launchNotification(true, e);
                 });
     }
 
@@ -591,8 +591,8 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                 },
                 err => {
                     this.spinnerService.requestInProcess(false);
-                    let e: any = err.json() || {errors: 'There booking could not be updated. Please try after some time.'};
-                    this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
+                    let e: any = err.json() || 'There booking could not be updated. Please try after some time.';
+                    this.notificationServiceBus.launchNotification(true, e);
                 });
     }
 
@@ -736,7 +736,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                         err => {
                             this.spinnerService.requestInProcess(false);
                             let e: any = err.json() || 'There is some error on server side';
-                            this.notificationServiceBus.launchNotification(true, err.statusText + ' ' + e.errors);
+                            this.notificationServiceBus.launchNotification(true, e);
                         });
             }
         });

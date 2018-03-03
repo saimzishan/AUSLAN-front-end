@@ -29,7 +29,7 @@ Feature: Create Profile
     Then I move to element name 'tnc'
     Then I click on checkbox name 'tnc'
     When I fill all the details correctly for -> 'INDIVIDUALCLIENT' with the pref communication is 'SMS AND EMAIL'
-    Then I will get an error notification saying "Unprocessable Entity "email":"has already been taken""
+    Then I will get an error notification saying "Email has already been taken"
 
   @runThis
   Scenario: With An Interpreter created before, can't create another interp with same email
@@ -38,7 +38,7 @@ Feature: Create Profile
     Then I move to element name 'tnc'
     Then I click on checkbox name 'tnc'
     When I fill all the details correctly for -> 'INTERPRETER' with the pref communication is 'SMS AND EMAIL'
-    Then I will get an error notification saying "Unprocessable Entity "email":"has already been taken""
+    Then I will get an error notification saying "Email has already been taken"
 
   @runThis
   Scenario: With An Organisational Representative created before, can't create another org rep with same email
@@ -47,7 +47,7 @@ Feature: Create Profile
     Then I move to element name 'tnc'
     Then I click on checkbox name 'tnc'
     When I fill all the details correctly for -> 'ORGANISATIONALREPRESENTATIVE' with the pref communication is 'SMS AND EMAIL'
-    Then I will get an error notification saying "Unprocessable Entity "email":"has already been taken""
+    Then I will get an error notification saying "Email has already been taken"
 
   @runThis
   Scenario: An org rep can be show the sign up page
