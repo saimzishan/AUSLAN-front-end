@@ -473,23 +473,22 @@ export class Heroku {
     }
 
     static createSingleUser(data) {
-        let return_command = '';
         let userType = User.user_type(data.type);
         delete data.type;
-        return_command += 'a = ' + userType + '.create(' + JSON.stringify(data) + ')';
-        return return_command;
+        return userType + '.create(' + JSON.stringify(data) + ')';
     }
 
     static createBulkUsers(numberOfUser: string, active: string, type: string) {
         const num_of_user = parseInt(numberOfUser, 10);
+        const commands = [];
         for (let i = 0; i < num_of_user; i++) {
-            let verified = (active === 'active');
+            const verified = (active === 'active');
             const data_to_sent = User.returnJSONForUser(type, i);
-            const command = Heroku.createSingleUser(data_to_sent);
-            Heroku.sendCommandToHeroku(command);
-            Heroku.sendCommandToHeroku(User.user_type(type) + '.find_by(email: "' + data_to_sent['email'] +
+            commands.push(Heroku.createSingleUser(data_to_sent));
+            commands.push(User.user_type(type) + '.find_by(email: "' + data_to_sent['email'] +
                 '").update_attributes(verified:' + true + ')');
         }
+        Heroku.sendCommandToHeroku(commands.join(';'));
     }
 
     static verifyAllInterpreter() {
@@ -507,10 +506,17 @@ export class Heroku {
         }
     }
 
+    static getCommandForVerifiedUser(userType: string, userObj: User): string {
+        const data_to_send = User.returnJSONForUser(userType, 1, userObj);
+        const command = [];
+        command.push(Heroku.createSingleUser(data_to_send));
+        command.push(`${User.user_type(userType)}.find_by(email: "${userObj.email}").update_attributes(verified: true)`);
+        return command.join(';');
+    }
+
     static addVerifiedUser(valid_login_user: User, type: string) {
         Heroku.createUser(valid_login_user, type);
-        Heroku.sendCommandToHeroku(User.user_type(type) + '.find_by(email: "' + valid_login_user.email +
-            '").update_attributes(verified:' + true + ')');
+        Heroku.sendCommandToHeroku(Heroku.getCommandForVerifiedUser(type, valid_login_user));
     }
 
     static createUser(valid_login_user: User, type: string) {

@@ -17,7 +17,9 @@ defineSupportCode(({Before}) => {
 
         let all_personas = ['Booking Officer', 'Administrator', 'Accountant', 'Interpreter',
             'Interpreter1', 'Interpreter2', 'Individual Client', 'Organisational Representative'];
-        let personas = [];
+        const personas = [];
+        const herokuCommandsToRun = [];
+        const herokuMethodsethodsToRun = [];
         all_personas.forEach((pn) => {
             if (scenario.scenario.name.toUpperCase().indexOf(pn.toUpperCase()) >= 0) {
                 if (scenario.scenario.name.toUpperCase().indexOf(('unverified ' + pn).toUpperCase()) < 0) {
@@ -27,39 +29,45 @@ defineSupportCode(({Before}) => {
         });
 
         for (let pn of personas) {
-            console.log('Adding Verified User', pn);
-            let currentlyLoggedInUser = User.returnTypeAndUser(pn).user;
-            Heroku.addVerifiedUser(currentlyLoggedInUser, pn);
+            const currentlyLoggedInUser = User.returnTypeAndUser(pn).user;
+            herokuCommandsToRun.push(Heroku.getCommandForVerifiedUser(pn, currentlyLoggedInUser));
         }
 
+
         if (scenario.scenario.name.toUpperCase().indexOf('booking is created'.toUpperCase()) >= 0) {
-            let currentlyLoggedInUser = User.returnTypeAndUser('Individual Client').user;
-            Heroku.addVerifiedUser(currentlyLoggedInUser, 'Individual Client');
-            Heroku.createSingleBooking();
+            const currentlyLoggedInUser = User.returnTypeAndUser('Individual Client').user;
+            herokuCommandsToRun.push(Heroku.getCommandForVerifiedUser('Individual Client', currentlyLoggedInUser));
+            herokuMethodsethodsToRun.push('createSingleBooking');
         }
 
         if (scenario.scenario.name.toUpperCase().indexOf('a booking with two Interpreters is created'.toUpperCase()) >= 0) {
-            let currentlyLoggedInUser = User.returnTypeAndUser('Individual Client').user;
-            Heroku.addVerifiedUser(currentlyLoggedInUser, 'Individual Client');
-            Heroku.createSingleBookingWithMoreInterpreter();
+            const currentlyLoggedInUser = User.returnTypeAndUser('Individual Client').user;
+            herokuMethodsethodsToRun.push(Heroku.getCommandForVerifiedUser('Individual Client', currentlyLoggedInUser));
+            herokuMethodsethodsToRun.push('createSingleBookingWithMoreInterpreter');
         }
 
         if (scenario.scenario.name.toUpperCase().indexOf('Interpreter Invited'.toUpperCase()) >= 0) {
-            Heroku.inviteInterpreter();
+            herokuMethodsethodsToRun.push('inviteInterpreter');
         }
 
         if (scenario.scenario.name.toUpperCase().indexOf('Interpreter_ALL Invited'.toUpperCase()) >= 0) {
-            Heroku.inviteAllInterpreter();
+            herokuMethodsethodsToRun.push('inviteAllInterpreter');
         }
 
         if (scenario.scenario.name.toUpperCase().indexOf('Special'.toUpperCase()) >= 0) {
-            Heroku.specialOrgRepSetup();
+            herokuMethodsethodsToRun.push('specialOrgRepSetup');
         }
-        if (false === scenario.scenario.name.toUpperCase().indexOf(('unverified').toUpperCase()) < 0) {
+        if (scenario.scenario.name.toUpperCase().indexOf(('unverified').toUpperCase()) > -1) {
             console.log('Adding UnVerified Interpreter');
-            let currentlyLoggedInUser = User.returnTypeAndUser('Interpreter').user;
-            Heroku.createUser(currentlyLoggedInUser, 'Interpreter');
+            const currentlyLoggedInUser = User.returnTypeAndUser('Interpreter').user;
+            herokuMethodsethodsToRun.push(Heroku.getCommandForVerifiedUser('Interpreter', currentlyLoggedInUser));
         }
+
+        Heroku.sendCommandToHeroku(herokuCommandsToRun.join(';'));
+        for (const callMethod of herokuMethodsethodsToRun) {
+            Heroku[callMethod].call(Heroku);
+        }
+
         first_run = true;
     });
 });

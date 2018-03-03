@@ -202,7 +202,7 @@ defineSupportCode(({Given, When, Then}) => {
 
     function clickOnBookings() {
         const bookingLink = page.getElementByID('lnkBooking');
-        browser.wait(protractor.ExpectedConditions.elementToBeClickable(bookingLink), 5000);
+        browser.waitForAngular();
         return bookingLink.click();
     }
 
