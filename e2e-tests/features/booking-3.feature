@@ -2,7 +2,6 @@ Feature: Booking Management
 
   Background: I as an all user should be able to see the website
     Given I go to the website
-    And I am on a computer
     And I am shown the login screen, with picture and signup button
 
   @runThis
@@ -56,7 +55,6 @@ Feature: Booking Management
     And I will be shown with bookings
     And I click on my name
     And I click on logout
-    And I go to the website
     And I am shown the login screen, with picture and signup button
     And I exist as an Administrator
     And I sign in with valid Administrator credentials

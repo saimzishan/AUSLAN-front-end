@@ -52,14 +52,10 @@ defineSupportCode(({Given, When, Then}) => {
     Given(/^I am shown the login screen, with picture and signup button/, homePage.didFinishedRendering);
     Given(/^I won't be logged in anymore and will be taken back to the loging screen/, homePage.didFinishedRendering);
     Given(/^I am on the mobile login screen without a hero picture$/, homePage.didFinishedRendering);
-    Given(/^I exist as an? (.*)/, function (type: string) {
-        return browser.sleep(4000);
-    });
+    Given(/^I exist as an? (.*)/, (type: string) => {});
     Given(/^I sign in with valid (.*) credentials$/, (type: string) => {
         return homePage.signInWithValidCredential(type).then(() => {
-            browser.sleep(4000).then(() => {
-                bookingManagementPage.onBookingListPage();
-            });
+            bookingManagementPage.onBookingListPage();
         });
     });
     Given(/^I am shown the verify screen/, bookingManagementPage.showVerifyPage);
@@ -131,19 +127,6 @@ defineSupportCode(({Given, When, Then}) => {
         return elm.sendKeys(p);
     }
 
-
-    Given(/^I will close the file upload$/, documentUploadClose);
-
-    function documentUploadClose() {
-        /* let elm = element(by.css('input[type="file"]'));
-         return elm.click().then(el => {
-         return elm.sendKeys(protractor.Key.ESCAPE);
-         });
-
-         return browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
-         */
-    }
-
     Given(/^I will be shown the booking detail page with id (.*)$/, bookingJob.isOnBookingJobDetails);
     Given(/^I will be shown a valid booking detail page$/, bookingJob.isOnValidBookingJobDetails);
     Given(/^I can see the valid header in booking detail page$/, bookingJob.isValidBookingHeader);
@@ -156,16 +139,6 @@ defineSupportCode(({Given, When, Then}) => {
     Given(/^I select (\d+) Interpreter$/, bookingJob.selectInterpreters);
     Given(/^I see (\d+) interpreter has accepted the booking$/, bookingJob.bookingAccepted);
     Given(/^I see attachment '(.*)' does '(.*)'$/, bookingJob.attachmentIsPresent);
-
-    Given(/^I am on a computer$/, onDesktopResolution);
-
-    function onDesktopResolution() {
-        /*return browser.driver.manage().window().setSize(1400, 900).then( () => {
-
-         browser.driver.manage().window().maximize();
-         });
-         */
-    }
 
     Given(/^I wait for (.*) milli-seconds/, (seconds: string) => {
         return browser.sleep(parseInt(seconds, 10));
@@ -284,7 +257,6 @@ defineSupportCode(({Given, When, Then}) => {
     function showValidationError() {
         let errs = page.getAll('.inline-icon.error');
         return errs.count().then((count) => {
-            // expect(count).to.be.greaterThan(0);
             expect(count).to.be.greaterThan(0);
         });
     }
@@ -292,10 +264,8 @@ defineSupportCode(({Given, When, Then}) => {
     Given(/^I am shown a validation error with the text '(.*)'$/, showValidationErrorWithText);
 
     function showValidationErrorWithText(errText: string) {
-        // browser.explore();
         let errs = page.getAllByCSSandText('.inline-icon.error > span', errText);
         return errs.count().then((count) => {
-            // expect(count).to.be.greaterThan(0);
             expect(count).to.be.greaterThan(0);
         });
     }

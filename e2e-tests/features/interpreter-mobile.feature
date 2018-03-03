@@ -125,7 +125,6 @@ Feature: As INTERPRETER, I can login on mobile
     And I will be shown a valid booking detail page
     And I store the current url
     And I go to the website
-    And I am on a computer
     And I am shown the login screen, with picture and signup button
     And I sign in with valid Interpreter1 credentials
     Then I will be shown the bookings page
@@ -152,7 +151,6 @@ Feature: As INTERPRETER, I can login on mobile
     Then I click on button with css 'button.icon-back'
     And I am on the bookings page
     And I go to the website
-    And I am on a computer
     And I am shown the login screen, with picture and signup button
     And I sign in with valid Interpreter1 credentials
     Then I will be shown the bookings page
@@ -167,7 +165,6 @@ Feature: As INTERPRETER, I can login on mobile
     Then I wait for 2500 milli-seconds
     Then I can see the booking state ' ALLOCATED ' in booking detail page
     And I go to the website
-    And I am on a computer
     And I am shown the login screen, with picture and signup button
     And I sign in with valid Interpreter credentials
     Then I will be shown the bookings page
@@ -185,7 +182,6 @@ Feature: As INTERPRETER, I can login on mobile
     And I will be shown a valid booking detail page
     And I store the current url
     And I go to the website
-    And I am on a computer
     And I am shown the login screen, with picture and signup button
     And I sign in with valid Interpreter1 credentials
     Then I will be shown the bookings page
@@ -200,7 +196,6 @@ Feature: As INTERPRETER, I can login on mobile
     Then I wait for 1000 milli-seconds
     Then I can see the booking state ' ALLOCATED ' in booking detail page
     And I go to the website
-    And I am on a computer
     And I am shown the login screen, with picture and signup button
     And I sign in with valid Interpreter credentials
     Then I will be shown the bookings page

@@ -2,7 +2,6 @@ Feature: As INTERPRETER, I can login on mobile
 
   Background: As INTERPRETER i am on mobile, before any steps
     Given I go to the website
-    And I am on a computer
     And I am shown the login screen, with picture and signup button
 
   @runThis
@@ -73,7 +72,6 @@ Feature: As INTERPRETER, I can login on mobile
     And I click on my name
     And I click on logout
     And I go to the website
-    And I am on a computer
     And I am shown the login screen, with picture and signup button
     And I sign in with valid Interpreter1 credentials
     Then I will be shown the bookings page
@@ -94,7 +92,6 @@ Feature: As INTERPRETER, I can login on mobile
     And I click on my name
     And I click on logout
     And I go to the website
-    And I am on a computer
     And I am shown the login screen, with picture and signup button
     And I sign in with valid Interpreter credentials
     Then I will be shown the bookings page

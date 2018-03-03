@@ -130,8 +130,7 @@ Feature: Edit Booking
     Then I should be on the edit booking page
     And I will upload a document 'sushi.pdf'
     When I will see attachment 'sushi.pdf'
-    Then I will close the file upload
-    And I click on checkbox name 'tnc'
+    Then I click on checkbox name 'tnc'
     And I click the create booking button
     And If I am shown a popup message 'This booking is not within the standard booking hours (8AM - 6PM). Do you still want to update booking?', I approve it
     Then I should get a valid booking update notification
@@ -153,8 +152,7 @@ Feature: Edit Booking
     Then I should be on the edit booking page
     And I will upload a document 'sushi.pdf'
     When I will see attachment 'sushi.pdf'
-    Then I will close the file upload
-    And I click on checkbox name 'tnc'
+    Then I click on checkbox name 'tnc'
     And I click on BUTTON 'SAVE'
     And If I am shown a popup message 'This booking is not within the standard booking hours (8AM - 6PM). Do you still want to update booking?', I approve it
     Then I should get a valid booking update notification

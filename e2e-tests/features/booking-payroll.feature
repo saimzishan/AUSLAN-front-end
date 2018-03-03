@@ -1,8 +1,7 @@
 Feature: Booking Payroll and Billing
 
   Background: I as an all user should be able to see the website
-    Given I am on a computer
-    And I go to the website
+    Given I go to the website
     And I am shown the login screen, with picture and signup button
     Given There exist 1 bookings
 

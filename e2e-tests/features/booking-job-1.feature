@@ -1,8 +1,7 @@
 Feature: Booking Admin Management
 
   Background: I as an ADMIN OR BOOKING OFFICER should be able to change booking status to unable to serve or cancel
-    Given I am on a computer
-    And I go to the website
+    Given I go to the website
     And I am shown the login screen, with picture and signup button
 
     ########### IN PROGRESS TO UNABLE TO SERVICE #######################################

@@ -1,7 +1,6 @@
 Feature: Booking Admin Management
 
   Background: I as an ADMIN should be able to see version get to login page
-    Given I am on a computer
     And I go to the website
     And I am shown the login screen, with picture and signup button
 

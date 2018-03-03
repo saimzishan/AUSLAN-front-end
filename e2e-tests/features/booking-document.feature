@@ -2,7 +2,6 @@ Feature: Booking Management
 
   Background: I as an all user should be able to see the website
     Given I go to the website
-    And I am on a computer
     And I am shown the login screen, with picture and signup button
 
 
@@ -15,7 +14,6 @@ Feature: Booking Management
     And I will be taken to the 'New Booking' form
     When I will upload a document 'sushi.pdf'
     And I will see attachment 'sushi.pdf'
-    And I will close the file upload
     And I fill New Booking form fields correctly
     And I select the bookable for client
     And I click the create booking button
@@ -41,7 +39,6 @@ Feature: Booking Management
     And I will be taken to the 'New Booking' form
     When I will upload a document 'sushi.pdf'
     And I will see attachment 'sushi.pdf'
-    And I will close the file upload
     And I fill New Booking form fields correctly
     And I select the bookable for org rep
     And I click the create booking button
@@ -68,7 +65,6 @@ Feature: Booking Management
     And I will be taken to the 'New Booking' form
     When I will upload a document 'sushi.pdf'
     And I will see attachment 'sushi.pdf'
-    And I will close the file upload
     And I fill New Booking form fields correctly
     And I select the bookable for client
     And I click the create booking button
@@ -94,7 +90,6 @@ Feature: Booking Management
     And I will be taken to the 'New Booking' form
     When I will upload a document 'docu_not_sushi.doc'
     And I will see attachment 'docu_not_sushi.doc'
-    And I will close the file upload
     And I fill New Booking form fields correctly
     And I select the bookable for client
     And I click the create booking button
@@ -121,7 +116,6 @@ Feature: Booking Management
     And I will be taken to the 'New Booking' form
     When I will upload a document 'docu_not_sushi.doc'
     And I will see attachment 'docu_not_sushi.doc'
-    And I will close the file upload
     And I fill New Booking form fields correctly
     And I select the bookable for client
     And I click the create booking button
@@ -147,7 +141,6 @@ Feature: Booking Management
     And I will be taken to the 'New Booking' form
     When I will upload a document 'ppt_not_sushi.ppt'
     And I will see attachment 'ppt_not_sushi.ppt'
-    And I will close the file upload
     And I fill New Booking form fields correctly
     And I select the bookable for client
     And I click the create booking button
@@ -173,7 +166,6 @@ Feature: Booking Management
     And I will be taken to the 'New Booking' form
     When I will upload a document 'ppt_not_sushi.ppt'
     And I will see attachment 'ppt_not_sushi.ppt'
-    And I will close the file upload
     And I fill New Booking form fields correctly
     And I select the bookable for client
     And I click the create booking button

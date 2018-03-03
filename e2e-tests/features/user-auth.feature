@@ -1,8 +1,7 @@
 Feature: As all, I can login/logout, change profile, cannot login with invalid password (BR001/BR007)
 
   Background: As all i am on computer and on main website, before any steps
-    Given I am on a computer
-    And I go to the website
+    Given I go to the website
     And I am shown the login screen, with picture and signup button
     And I exist as an valid user
 

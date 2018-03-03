@@ -4,7 +4,6 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER BOOK
   @runThis
   Scenario: As Administrator I can add INTERPRETER blockouts on desktop
     Given I go to the website
-    And I am on a computer
     And I am shown the login screen, with picture and signup button
     And I sign in with valid Administrator credentials
     Then I will be shown the bookings page
@@ -29,7 +28,6 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER BOOK
   @ignoreThis
   Scenario: As Administrator I can crud INTERPRETER blockouts on desktop
     Given I go to the website
-    And I am on a computer
     And I am shown the login screen, with picture and signup button
     And I sign in with valid Administrator credentials
     Then I will be shown the bookings page
@@ -88,7 +86,6 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER BOOK
   @ignoreThis
   Scenario: As Booking Officer I can crud INTERPRETER blockouts on desktop
     Given I go to the website
-    And I am on a computer
     And I am shown the login screen, with picture and signup button
     And I sign in with valid Booking Officer credentials
     Then I will be shown the bookings page
@@ -147,7 +144,6 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER BOOK
   @ignoreThis
   Scenario: As INTERPRETER, I can create edit and delete blockout on desktop
     Given I go to the website
-    And I am on a computer
     And I am shown the login screen, with picture and signup button
     And I sign in with valid Interpreter credentials
     Then I will be shown the bookings page
@@ -192,8 +188,7 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER BOOK
 
   @ignoreThis
   Scenario: As INTERPRETER, I cannot create a blockout and if i have accepted same time booking alread, a booking is created and Booking Officer, Individual Client exists
-    Given I am on a computer
-    And I go to the website
+    Given I go to the website
     And I am shown the login screen, with picture and signup button
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
@@ -237,7 +232,6 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER BOOK
   @ignoreThis
   Scenario: As INTERPRETER, I can create a blockout and cannot be allocated to a booking, a booking is created and Booking Officer, Individual Client exists
     Given I go to the website
-    And I am on a computer
     And I am shown the login screen, with picture and signup button
     And I sign in with valid Interpreter credentials
     Then I will be shown the bookings page
@@ -296,7 +290,6 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER BOOK
   @runThis
   Scenario: As INTERPRETER, I can create edit blockout on desktop to check whether the end time changes or not
     Given I go to the website
-    And I am on a computer
     And I am shown the login screen, with picture and signup button
     And I sign in with valid Interpreter credentials
     Then I will be shown the bookings page
@@ -314,7 +307,6 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER BOOK
   @runThis
   Scenario: As Administrator I can cancel INTERPRETER blockouts on desktop and it will take me to previous page intead of user management list page
     Given I go to the website
-    And I am on a computer
     And I am shown the login screen, with picture and signup button
     And I sign in with valid Administrator credentials
     Then I will be shown the bookings page
@@ -333,7 +325,6 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER BOOK
 
   @runThis
   Scenario: As Administrator, I cannot see the save and delete buttons if the blockout is created by the system, Individual Client and INTERPRETER exists
-    Given I am on a computer
     Given There exist 1 bookings
     And I go to the website
     And I am shown the login screen, with picture and signup button
