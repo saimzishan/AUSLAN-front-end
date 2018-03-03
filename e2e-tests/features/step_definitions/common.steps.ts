@@ -228,7 +228,9 @@ defineSupportCode(({Given, When, Then}) => {
     Given(/^I click on Bookings$/, clickOnBookings);
 
     function clickOnBookings() {
-        return page.getElementByID('lnkBooking').click();
+        const bookingLink = page.getElementByID('lnkBooking');
+        browser.wait(protractor.ExpectedConditions.elementToBeClickable(bookingLink), 5000);
+        return bookingLink.click();
     }
 
     Given(/^I will be shown a popup message$/, showPopup);
