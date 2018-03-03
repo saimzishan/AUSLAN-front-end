@@ -158,14 +158,10 @@ export class BookingJobPage extends PageObject {
     }
 
     getSuccessNotificationContentForState = (state: string) => {
-        return browser.sleep(1000).then(() => {
-            NotificationObject.getNotificationContent('The booking has been transitioned to \"' + state + '\" state');
-        });
+        return NotificationObject.getNotificationContent(`The booking has been transitioned to "${state}" state`);
     }
     getSuccessNotificationContentForInvite = () => {
-        return browser.sleep(1500).then(() => {
-            NotificationObject.getNotificationContent('The interpreters have been invited');
-        });
+        return NotificationObject.getNotificationContent('The interpreters have been invited');
     }
     isValidBookingHeader = () => {
         return $('#header-mobile > h1').getText().then((txt) => {

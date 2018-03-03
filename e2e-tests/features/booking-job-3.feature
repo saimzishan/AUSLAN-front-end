@@ -392,7 +392,6 @@ Feature: Booking Admin Management
     Then I select 1 Interpreter
     And I click on BUTTON name 'reassingBtn'
     And I click on BUTTON 'Save'
-    Then I wait for 1000 milli-seconds
     Then I get valid message: 'The interpreter have been assigned'
     When I click on BUTTON 'Cancel Booking'
     Then I will be shown a popup message 'Would you like to cancel only this booking, or all linked bookings?'
@@ -407,7 +406,6 @@ Feature: Booking Admin Management
     Then I select 1 Interpreter
     And I click on BUTTON name 'reassingBtn'
     And I click on BUTTON 'Save'
-    Then I wait for 1000 milli-seconds
     Then I get valid message: 'The interpreter have been assigned'
     Then I click on Bookings
     Then I click on an individual booking of type 'Cancelled chargeable'
