@@ -22,6 +22,7 @@ import {InterpreterFilter} from '../../shared/model/interpreter-filter.interface
 import * as moment from 'moment';
 import * as momentTimeZone from 'moment-timezone';
 import * as $ from 'jquery';
+import { BOOKING_NATURE } from '../../shared/model/booking-nature.enum';
 
 @Component({
     selector: 'app-booking-jobs',
@@ -57,6 +58,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     hideInvite = false;
     hideAccept = false;
     showCalendar = false;
+    undoState = false;
     startTime: Date;
     endTime: Date;
     @ViewChild('cchart') cchart;
@@ -327,8 +329,8 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                      if (res.status === 204) {
                          this.isCancelledOrUnableToServe = false;
                          this.isRequestedProgressOrAllocated = true;
+                         this.undoState = true;
                          this.fetchBookingInterpreters(this.selectedBookingModel.id);
-                         this.notificationServiceBus.launchNotification(false, `The booking has been transitioned to "${this.undoStateMsg}" state`);
                      }
                      this.spinnerService.requestInProcess(false);
                  },
@@ -488,7 +490,10 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                         }
                     }
                     if (this.isCurrentUserAdminOrBookingOfficer() && this.isRequestedProgressOrAllocated) {
-                        this.undoStateMsg = this.selectedBookingModel.state === BOOKING_STATE.In_progress ? 'In Progress' : 'Allocated';
+                        this.undoStateMsg = (this.selectedBookingModel.state === BOOKING_STATE.In_progress) ? 'In Progress' : 'Allocated';
+                        if (this.undoState) {
+                            this.notificationServiceBus.launchNotification(false, `The booking has been transitioned to "${this.undoStateMsg}" state`);
+                        }
                         this.fetchNearbyinterpreters(param_id);
                     } else {
                         this.spinnerService.requestInProcess(false);
