@@ -415,3 +415,47 @@ Feature: Booking Admin Management
     Then I will be shown the booking job page
     When I click on BUTTON 'Undo cancel'
     And I get error message: 'Existing booking or blockout during booking. Booking not changed'
+
+@runThis
+  Scenario: Administrator will cancel booking with no charge, and all assign interpreters will remove
+    Given There exist 1 booking with link id
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on the bookings page
+    And I see one row with the link id
+    When I click on an individual booking
+    Then I will be shown the booking job page
+    Then I select 1 Interpreter
+    And I click on BUTTON name 'reassingBtn'
+    And I click on BUTTON 'Save'
+    Then I get valid message: 'The interpreter have been assigned'
+    When I click on BUTTON 'Cancel Booking'
+    Then I will be shown a popup message 'Would you like to cancel only this booking, or all linked bookings?'
+    Then I click on BUTTON name 'yesBtn'
+    Then I wait for 1200 milli-seconds
+    Then I will be shown a popup message 'Are you sure you want to cancel this booking? This is permanent. We recommend to cancel this booking as Cancelled No Charge since the start date is not within 48 hours.'
+    Then I click on BUTTON name 'yesBtn'
+    Then I get a valid 'Cancelled with No Charge' notification for state
+    And I can see the element with name 'unassingBtn_1' is 'not visible'
+
+    @runThis
+  Scenario: Administrator will cancel booking with charge, and all assign interpreters will shown
+    Given There exist 1 booking with link id
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on the bookings page
+    And I see one row with the link id
+    When I click on an individual booking
+    Then I will be shown the booking job page
+    Then I select 1 Interpreter
+    And I click on BUTTON name 'reassingBtn'
+    And I click on BUTTON 'Save'
+    Then I get valid message: 'The interpreter have been assigned'
+    When I click on BUTTON 'Cancel Booking'
+    Then I will be shown a popup message 'Would you like to cancel only this booking, or all linked bookings?'
+    Then I click on BUTTON name 'yesBtn'
+    Then I wait for 1200 milli-seconds
+    Then I will be shown a popup message 'Are you sure you want to cancel this booking? This is permanent. We recommend to cancel this booking as Cancelled No Charge since the start date is not within 48 hours.'
+    Then I click on BUTTON name 'noBtn'
+    Then I get a valid 'Cancelled with Charge' notification for state
+    And I can see the element with name 'unassingBtn_1' is 'visible'
