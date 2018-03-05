@@ -381,7 +381,7 @@ Feature: Booking Admin Management
     Then I can see the booking state 'unable to service'
 
   @runThis
-  Scenario: Booking Officer cannot Undo cancel booking if alloccted interpreter is assign to another booking
+  Scenario: Booking Officer cannot Undo cancel booking if allocated interpreter is assign to another booking
     Given There exist 2 booking with link id
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
