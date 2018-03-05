@@ -42,7 +42,7 @@ defineSupportCode(({Before}) => {
 
         if (scenario.scenario.name.toUpperCase().indexOf('a booking with two Interpreters is created'.toUpperCase()) >= 0) {
             const currentlyLoggedInUser = User.returnTypeAndUser('Individual Client').user;
-            herokuMethodsethodsToRun.push(Heroku.getCommandForVerifiedUser('Individual Client', currentlyLoggedInUser));
+            herokuCommandsToRun.push(Heroku.getCommandForVerifiedUser('Individual Client', currentlyLoggedInUser));
             herokuMethodsethodsToRun.push('createSingleBookingWithMoreInterpreter');
         }
 
@@ -60,7 +60,8 @@ defineSupportCode(({Before}) => {
         if (scenario.scenario.name.toUpperCase().indexOf(('unverified').toUpperCase()) > -1) {
             console.log('Adding UnVerified Interpreter');
             const currentlyLoggedInUser = User.returnTypeAndUser('Interpreter').user;
-            herokuMethodsethodsToRun.push(Heroku.getCommandForVerifiedUser('Interpreter', currentlyLoggedInUser));
+            const data_to_send = User.returnJSONForUser('Interpreter', 1, currentlyLoggedInUser);
+            herokuCommandsToRun.push(Heroku.createSingleUser(data_to_send));
         }
 
         Heroku.sendCommandToHeroku(herokuCommandsToRun.join(';'));
