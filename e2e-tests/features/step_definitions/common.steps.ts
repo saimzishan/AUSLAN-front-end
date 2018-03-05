@@ -31,11 +31,7 @@ defineSupportCode(({Given, When, Then}) => {
 
     Given(/^There exists an? (.*)/, Heroku.createFactory);
     Given(/^I click on my name$/, bookingManagementPage.clickOnProfile);
-    Given(/^I scroll to top$/, () => {
-        return browser.executeScript('window.scrollTo(0,0);').then(function () {
-            browser.sleep(1000);
-        });
-    });
+    Given(/^I scroll to top$/, () => { browser.executeScript('window.scrollTo(0,0);'); });
     Given(/^I verify all Interpreters/, Heroku.verifyAllInterpreter);
     Given(/^I create the interpreter of type '(.*)'/, Heroku.createInterpreterOfType);
     Given(/^I click on logout$/, bookingManagementPage.logoutClick);
