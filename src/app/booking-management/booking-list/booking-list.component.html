@@ -5,8 +5,8 @@
             <tr>
                 <th width="4%">
                     <div class="checkbox">
-                        <input type="checkbox" name="" value="1" id="job-1">
-                        <label for="job-1"></label>
+                        <input type="checkbox" name="cbForAll" value="1" id="cbForAll">
+                        <label for="cbForAll"></label>
                     </div>
                 </th>
                 <th width="5%">
@@ -149,9 +149,9 @@
                 *ngFor="let booking of bookingList | paginate: { itemsPerPage: 10, currentPage: p, totalItems: totalItems } let i = index"
                 (click)="setClickedRow(booking)">
                 <td>
-                    <div class="checkbox">
-                        <input type="checkbox" name="" value="1" id="job-2">
-                        <label for="job-2"></label>
+                    <div class="checkbox" (click)="$event.stopPropagation()">
+                        <input type="checkbox" name="{{'cb_booking_'+i}}" id="{{'job-'+i}}" (click)="cbClicked(booking.id, $event.target.checked)">
+                        <label for="{{'job-'+i}}"></label>
                     </div>
                 </td>
                 <td class="bookingID">
