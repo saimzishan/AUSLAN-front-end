@@ -363,7 +363,7 @@ defineSupportCode(({Given, When, Then}) => {
     When(/^I can see the element with name '(.*)' is '(.*)'$/, isElementWithNameVisible);
     function isElementWithNameVisible(text: string, visible: string) {
         let isDisplayed = visible.toLowerCase() === 'visible';
-
+        browser.waitForAngular();
         return page.getElementByName(text).isPresent().then(val => {
             expect(val).to.be.eq(isDisplayed);
         });
@@ -527,10 +527,9 @@ defineSupportCode(({Given, When, Then}) => {
     function checkFormDisabled (name: string, disabled: string) {
         let isEnabled = disabled.toLowerCase() === 'disabled';
         let elem = page.getElementByName(name);
-            return elem.getAttribute('disabled').then(disable => {
-                console.log("disable"+disable+"isenable"+isEnabled);
-                    return expect(disable === isEnabled.toString() || disable === null).to.be.true;
-            });
+        return elem.getAttribute('disabled').then(disable => {
+            return expect(disable === isEnabled.toString() || disable === null).to.be.true;
+        });
     }
 
     Then(/^I run all background jobs$/, Heroku.runAllBackgroundTasks);

@@ -26,6 +26,9 @@ export class NotificationComponent implements OnDestroy, OnInit {
         this.sub = this.notificationService.launchNotification$.subscribe(
             notificationContainer => {
                 if (notificationContainer && notificationContainer.message.length > 0) {
+                    if (this.subscription) {
+                        clearTimeout(this.subscription);
+                    }
                     this.show = false;
                     this.isError = false;
                     this.mesg = notificationContainer.message;
@@ -37,16 +40,13 @@ export class NotificationComponent implements OnDestroy, OnInit {
                     }
                     this.show = true;
                     this.ngZone.runOutsideAngular(() => {
-                        if (this.subscription) {
-                            clearTimeout(this.subscription);
-                        }
                         this.subscription = setTimeout(() => {
                             this.show = false;
                             this.isError = false;
                             this.ngZone.run(() => {
                             });
 
-                        }, 3500);
+                        }, 2000);
                     });
 
                 }
