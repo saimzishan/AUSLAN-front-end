@@ -362,7 +362,7 @@ Feature: Booking Admin Management
     When I click on BUTTON 'Undo cancel'
     Then I can see the booking state 'In Progress'
 
-   @runThis
+  @runThis
   Scenario: Booking Officer can Unable to service a booking having linked id and can undo it
     Given There exist 1 booking with link id
     Given I exist as an Booking Officer
@@ -414,7 +414,7 @@ Feature: Booking Admin Management
     When I click on BUTTON 'Undo cancel'
     And I get error message: 'Existing booking or blockout during booking. Booking not changed'
 
-@runThis
+  @runThis
   Scenario: Administrator will cancel booking with no charge, and all assign interpreters will remove
     Given There exist 1 booking with link id
     Given I exist as an Administrator
@@ -436,7 +436,7 @@ Feature: Booking Admin Management
     Then I get a valid 'Cancelled with No Charge' notification for state
     And I can see the element with name 'unassingBtn_1' is 'not visible'
 
-    @runThis
+  @runThis
   Scenario: Administrator will cancel booking with charge, and all assign interpreters will shown
     Given There exist 1 booking with link id
     Given I exist as an Administrator
@@ -457,3 +457,59 @@ Feature: Booking Admin Management
     Then I click on BUTTON name 'noBtn'
     Then I get a valid 'Cancelled with Charge' notification for state
     And I can see the element with name 'unassingBtn_1' is 'visible'
+
+  @runThis
+  Scenario: Booking Officer can Undo cancel booking from cancelled chargeable and the interpreters should be allocated and their blockouts shown, exist Interpreter, Interpreter1, Interpreter2
+    Given There exist 1 booking with link id
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    And I am on the bookings page
+    And I see one row with the link id
+    When I click on an individual booking
+    Then I will be shown the booking job page
+    Then I can count the element with css 'span.pink' to be '0'
+    Then I select 3 Interpreter
+    And I click on BUTTON name 'reassingBtn'
+    And I click on BUTTON 'Save'
+    Then I get valid message: 'The interpreter have been assigned'
+    Then I can see the booking state 'Allocated'    
+    When I click on BUTTON 'Cancel Booking'
+    Then I will be shown a popup message 'Would you like to cancel only this booking, or all linked bookings?'
+    Then I click on BUTTON name 'yesBtn'
+    Then I wait for 1200 milli-seconds
+    Then I will be shown a popup message 'Are you sure you want to cancel this booking? This is permanent. We recommend to cancel this booking as Cancelled No Charge since the start date is not within 48 hours.'
+    Then I click on BUTTON name 'noBtn'
+    Then I get a valid 'Cancelled with Charge' notification for state
+    When I click on BUTTON 'Undo cancel'
+    Then I get a valid 'Allocated' notification for state
+    Then I can count the element with css 'span.pink' to be '3'
+
+  @runThis
+  Scenario: Booking Officer can Undo cancel booking from cancelled no charge and no interpreters are assigned, exist Interpreter, Interpreter1, Interpreter2
+    Given There exist 1 booking with link id
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    And I am on the bookings page
+    And I see one row with the link id
+    When I click on an individual booking
+    Then I will be shown the booking job page
+    Then I select 3 Interpreter
+    And I click on BUTTON name 'reassingBtn'
+    And I click on BUTTON 'Save'
+    Then I get valid message: 'The interpreter have been assigned'
+    Then I can see the booking state 'Allocated'
+    And I can see the element with name 'unassingBtn_1' is 'visible'
+    And I can see the element with name 'unassingBtn_2' is 'visible'
+    And I can see the element with name 'unassingBtn_3' is 'visible'
+    When I click on BUTTON 'Cancel Booking'
+    Then I will be shown a popup message 'Would you like to cancel only this booking, or all linked bookings?'
+    Then I click on BUTTON name 'yesBtn'
+    Then I wait for 1200 milli-seconds
+    Then I will be shown a popup message 'Are you sure you want to cancel this booking? This is permanent. We recommend to cancel this booking as Cancelled No Charge since the start date is not within 48 hours.'
+    Then I click on BUTTON name 'yesBtn'
+    Then I get a valid 'Cancelled with No Charge' notification for state
+    When I click on BUTTON 'Undo cancel'
+    And I can see the element with name 'unassingBtn_1' is 'not visible'
+    And I can see the element with name 'unassingBtn_2' is 'not visible'
+    And I can see the element with name 'unassingBtn_3' is 'not visible'
+    Then I can count the element with css 'span.pink' to be '0'    

@@ -63,7 +63,6 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     @ViewChild('cchart') cchart;
     currentPage = 1;
     totalItems;
-    undoStateMsg;
     isRequestedProgressOrAllocated = false;
     searchParams: string;
     serviceNameToDisplay;
@@ -489,11 +488,12 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                         }
                     }
                     if (this.isCurrentUserAdminOrBookingOfficer() && this.isRequestedProgressOrAllocated) {
-                        this.undoStateMsg = (this.selectedBookingModel.state === BOOKING_STATE.In_progress) ? 'In Progress' :
+                        let undoStateMsg;
+                        undoStateMsg = (this.selectedBookingModel.state === BOOKING_STATE.In_progress) ? 'In Progress' :
                         (this.selectedBookingModel.state === BOOKING_STATE.Cancelled_claimed) ? 'Cancelled Claimed' :
                         (this.selectedBookingModel.state === BOOKING_STATE.Cancelled_chargeable) ? 'Cancelled Chargeable' : 'Allocated';
                         if (this.undoState) {
-                            this.notificationServiceBus.launchNotification(false, `The booking has been transitioned to "${this.undoStateMsg}" state`);
+                            this.notificationServiceBus.launchNotification(false, `The booking has been transitioned to "${undoStateMsg}" state`);
                             this.undoState = false;
                         }
                         this.fetchNearbyinterpreters(param_id);
