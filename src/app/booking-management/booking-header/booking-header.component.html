@@ -37,9 +37,10 @@
             <a href="javascript:void(0);" [ngClass]="{'active' : isActiveState('Service_completed') || isActiveState('Cancelled_chargeable')} ">
                 {{isActiveState('Cancelled_chargeable') ? 'Cancelled Chargeable' : 'Service Completed' }}
             </a>
-            <a href="javascript:void(0);" [ngClass]="{'active' :  isActiveState('Unable_to_service') || isActiveState('Cancelled_no_charge') || isActiveState('Claimed')} ">
+            <a href="javascript:void(0);" [ngClass]="{'active' :  isActiveState('Unable_to_service') || isActiveState('Cancelled_no_charge') || isActiveState('Claimed') || isActiveState('Cancelled_claimed')} ">
                 {{isActiveState('Cancelled_no_charge') ? 'Cancelled No Charge' :
-                isActiveState('Unable_to_service') ? 'Unable To Service' : isActiveState('Claimed') ? 'Claimed' : 'Finished' }}
+                isActiveState('Unable_to_service') ? 'Unable To Service' : isActiveState('Claimed') ? 'Claimed' :
+                isActiveState('Cancelled_claimed') ? 'Cancelled Claimed' : 'Finished' }}
             </a>
         </nav>
     </section>

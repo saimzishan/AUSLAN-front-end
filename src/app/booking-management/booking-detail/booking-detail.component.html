@@ -132,7 +132,10 @@
                   <span>Start Date is required</span>!
                 </span>
                 <span *ngIf="(bookingDate < minDate)" class="inline-icon error">
-                  <span>Date is in the past. Please change the date</span>
+                  <span>Date is in the past. Please change the date</span>!
+                </span>
+                <span *ngIf="dpDate.touched && (bookingDate > maxDate)" class="inline-icon error">
+                  <span>Please change the date to within 5 years</span>!
                 </span>
               </div>
             </div>
