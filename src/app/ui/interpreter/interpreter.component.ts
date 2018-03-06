@@ -26,7 +26,7 @@ export class InterpreterComponent implements OnInit , AfterViewInit {
     updateCalendar = false;
     calendarOptions: Object = {};
     @Input() parentForm: NgForm;
-    // interpreter: Interpreter;
+
     constructor(private routes: ActivatedRoute, private router: Router, public userDataService: UserService) {
     }
 
@@ -109,22 +109,20 @@ export class InterpreterComponent implements OnInit , AfterViewInit {
                 events: []
             };
             for (let avail_block of this.userModel.availability_blocks_attributes) {
-                let sd = new Date(avail_block.start_time);
-                let ed;
+                let startDate = new Date(avail_block.start_time);
+                let endDate;
                 if (!avail_block.recurring) {
-                    ed = new Date(avail_block.start_time);
+                    endDate = new Date(avail_block.start_time);
                 } else {
-                    ed = new Date(avail_block.end_date || avail_block.start_time);
+                    endDate = new Date(avail_block.end_date || avail_block.start_time);
                 }
-                let edt = new Date(avail_block.end_time);
-                let sTime = this.interpreterStateTimeZone(avail_block.start_time);
-
+                let startTime = this.interpreterStateTimeZone(avail_block.start_time);
                 let endTime = this.interpreterStateTimeZone(avail_block.end_time);
 
-                let s_t = new Date(sd.getFullYear(), sd.getMonth(), sd.getDate(),
-                    moment.duration(sTime).get('hours'), moment.duration(sTime).get('minutes'));
+                let eventStart = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate(),
+                    moment.duration(startTime).get('hours'), moment.duration(startTime).get('minutes'));
 
-                let e_t = new Date(ed.getFullYear(), ed.getMonth(), ed.getDate(),
+                let eventEnd = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate(),
                     moment.duration(endTime).get('hours'), moment.duration(endTime).get('minutes'));
 
                 let event: any = ({
@@ -133,13 +131,13 @@ export class InterpreterComponent implements OnInit , AfterViewInit {
                     id: avail_block.id,
                     textColor: '#ffffff',
                     booking_id: avail_block.booking_id,
-                    start: avail_block.recurring === false ? s_t : ' ',
-                    end: avail_block.recurring === false ? e_t : ' ',
+                    start: avail_block.recurring === false ? eventStart : ' ',
+                    end: avail_block.recurring === false ? eventEnd : ' ',
                     recurring: avail_block.recurring,
                     frequency: avail_block.frequency
                 });
                 if (avail_block.recurring === true) {
-                    event.dow = avail_block.frequency === 'daily' ? [1, 2, 3, 4, 5] : [sd.getDay()];
+                    event.dow = avail_block.frequency === 'daily' ? [1, 2, 3, 4, 5] : [startDate.getDay()];
                     event.ranges = [
                         {
                             start: moment().endOf(avail_block.frequency === 'daily' ? 'day' :
@@ -150,8 +148,8 @@ export class InterpreterComponent implements OnInit , AfterViewInit {
                                 avail_block.frequency === 'monthly' ? 'month' : 'week')
                         },
                         {
-                            start:  s_t,
-                            end: e_t
+                            start:  eventStart,
+                            end: eventEnd
                         }
                     ];
                 }

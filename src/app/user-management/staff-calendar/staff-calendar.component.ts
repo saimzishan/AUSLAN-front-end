@@ -54,7 +54,6 @@ export class StaffCalendarComponent implements OnInit {
                 .subscribe((res: any) => {
                     if (res.status === 200) {
                         delete res.data.assignments_attributes;
-                        console.log(res.data);
                         this.userModel.staff_availabilities_attributes = res.data.staff_availabilities_attributes;
                         this.StaffAvialabilityToUpdate();
                     }
@@ -113,22 +112,21 @@ export class StaffCalendarComponent implements OnInit {
                 events: []
             };
             for (let avail_block of this.userModel.staff_availabilities_attributes) {
-                let sd = new Date(avail_block.start_time);
-                let ed;
+                let startDate = new Date(avail_block.start_time);
+                let endDate;
                 if (!avail_block.recurring) {
-                    ed = new Date(avail_block.start_time);
+                    endDate = new Date(avail_block.start_time);
                 } else {
-                    ed = new Date(avail_block.end_date || avail_block.start_time);
+                    endDate = new Date(avail_block.end_date || avail_block.start_time);
                 }
-                let edt = new Date(avail_block.end_time);
-                let sTime = this.interpreterStateTimeZone(avail_block.start_time);
+                let startTime = this.interpreterStateTimeZone(avail_block.start_time);
 
                 let endTime = this.interpreterStateTimeZone(avail_block.end_time);
 
-                let s_t = new Date(sd.getFullYear(), sd.getMonth(), sd.getDate(),
-                    moment.duration(sTime).get('hours'), moment.duration(sTime).get('minutes'));
+                let eventStart = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate(),
+                    moment.duration(startTime).get('hours'), moment.duration(startTime).get('minutes'));
 
-                let e_t = new Date(ed.getFullYear(), ed.getMonth(), ed.getDate(),
+                let eventEnd = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate(),
                     moment.duration(endTime).get('hours'), moment.duration(endTime).get('minutes'));
 
                 let event: any = ({
@@ -137,8 +135,8 @@ export class StaffCalendarComponent implements OnInit {
                     id: avail_block.id,
                     textColor: '#ffffff',
                     booking_id: avail_block.booking_id,
-                    start: avail_block.recurring === false ? s_t : ' ',
-                    end: avail_block.recurring === false ? e_t : ' ',
+                    start: avail_block.recurring === false ? eventStart : ' ',
+                    end: avail_block.recurring === false ? eventEnd : ' ',
                     recurring: avail_block.recurring,
                     frequency: avail_block.frequency
                 });
@@ -153,11 +151,11 @@ export class StaffCalendarComponent implements OnInit {
                                 avail_block.frequency === 'weekly' ? 'week' :
                                     avail_block.frequency === 'monthly' ? 'month' : 'week')
                         }, {
-                            start:  s_t ,
-                            end:  e_t ,
+                            start:  eventStart ,
+                            end:  eventEnd ,
                         }
                     ];
-                } // console.log(avail_block.start_time);
+                }
 
 
                 this.calendarOptions['events'].push(event);
