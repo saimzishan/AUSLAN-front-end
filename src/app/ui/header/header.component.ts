@@ -2,6 +2,7 @@ import {Component, OnDestroy, Input, OnInit} from '@angular/core';
 import {GLOBAL} from '../../shared/global';
 import {UserNameService} from '../../shared/user-name.service';
 import {LinkHelper, LINK, LinkAuth} from '../../shared/router/linkhelper';
+import {BookingHeaderService} from '../../booking-management/booking-header/booking-header.service';
 import { NavigationExtras, Router } from '@angular/router';
 
 @Component({
@@ -15,7 +16,7 @@ export class HeaderComponent implements OnDestroy, OnInit {
   userIsActive = false;
   fullName = '';
 
-  constructor(public router: Router, public userNameService: UserNameService, private linkAuth: LinkAuth) {
+  constructor(private bookingHeaderService: BookingHeaderService, public router: Router, public userNameService: UserNameService, private linkAuth: LinkAuth) {
   }
   ngOnInit () {
       this.sub = this.userNameService.loggedInUser$.subscribe(
@@ -53,8 +54,6 @@ export class HeaderComponent implements OnDestroy, OnInit {
   }
 
   refreshBooking() {
-    this.router.navigateByUrl('404').then(() => {
-      this.router.navigateByUrl('/booking-management/create-booking');
-    });
+    this.bookingHeaderService.notifyOther({option: 'refreshBooking'});
   }
 }
