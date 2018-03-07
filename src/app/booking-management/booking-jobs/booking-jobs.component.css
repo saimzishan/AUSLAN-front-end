@@ -1,8 +1,51 @@
 @media(max-width: 768px) {
-  .manage-interpreters-wrapper, #job-booking h2, #job-booking #invite-interpreters, #job-booking .interpreters-list {
+  .manage-interpreters-wrapper, #job-booking h2, #job-booking #invite-interpreters, #job-booking .interpreters-list, .job-description {
     display: none !important;
   }
 }
+
+@media(max-width: 767px) {
+    .job-description {
+        display: none !important;
+    }
+}
+
+@media(max-width: 999px) {
+    .job-description {
+        display: none !important;
+    }
+}
+
+@media(max-width: 640px) {
+    .job-description {
+        display: none !important;
+    }
+}
+
+@media(max-width: 960px) {
+    .job-description {
+        display: none !important;
+    }
+}
+
+@media(max-width: 1000px) {
+    .job-description {
+        display: none !important;
+    }
+}
+
+@media(max-width: 1023px) {
+    .job-description {
+        display: none !important;
+    }
+}
+
+@media(max-width: 1024px) {
+    .job-description {
+        display: none !important;
+    }
+}
+
 .interpreters-list .pagination {
     font-size: 0.820rem !important;
     margin: 5px  10px;
