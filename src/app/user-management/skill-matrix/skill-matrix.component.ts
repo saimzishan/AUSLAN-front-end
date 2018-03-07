@@ -104,8 +104,14 @@ export class SkillMatrixComponent implements OnInit {
         this.raw_nature_of_appointment = value;
         let val: BOOKING_NATURE = <BOOKING_NATURE> BOOKING_NATURE[this.raw_nature_of_appointment];
         this.specific_appointment_types = BA.DISSCUSSION_ITEM[BOOKING_NATURE[val]];
+        this.specific_appointment_types.forEach((item, index) => {
+            if (value === 'Mental Health') {
+                this.specific_appointment_types[index] = item.replace(' (Please specify length in Notes)', '');
+            } else {
+                this.specific_appointment_types[index] = item.replace(' (Please specify in Notes)', '');
+            }
+        });
         this.current_level = '';
-
     }
 
     apply(val: boolean) {
