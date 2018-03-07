@@ -164,3 +164,15 @@ Feature: Booking Sort
     Then I should see the bookings in descending order of Service Type
 
 # ---------------------------------------- AUSLAN1-438 -> END ----------------------------------------
+
+  @runThis
+  Scenario: Given 1 verified Booking Officer, I should be able to sort by notice
+    Given One booking has created date as of yesterday
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    When I am on the bookings page
+    Then I will be shown with bookings
+    When I click on table header 'Notice'
+    Then I should see the bookings in descending order of Notice
+    When I click on table header 'Notice'
+    Then I should see the bookings in ascending order of Notice
