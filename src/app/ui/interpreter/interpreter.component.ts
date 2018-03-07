@@ -114,7 +114,7 @@ export class InterpreterComponent implements OnInit , AfterViewInit {
 
                 let event: any = ({
                     title: avail_block.name,
-                    color: '#02b86e',
+                    color: avail_block.booking_id ? '#3bb69c' : '#02b86e',
                     id: avail_block.id,
                     textColor: '#ffffff',
                     booking_id: avail_block.booking_id,
