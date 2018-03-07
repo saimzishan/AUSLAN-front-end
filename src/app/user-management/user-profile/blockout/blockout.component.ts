@@ -139,7 +139,6 @@ export class BlockoutComponent implements OnDestroy, OnInit {
                 this.availabilityBlock.recurring_week_days.push(this.repeat_days[i].sendValue);
             }
         }
-        console.log(this.availabilityBlock.recurring_week_days);
     }
     isUserAdminOrBO () {
         return GLOBAL.currentUser instanceof Administrator ||
@@ -384,7 +383,12 @@ export class BlockoutComponent implements OnDestroy, OnInit {
         let startTime = moment(this.start_time, 'hh:mm A').format('HH:mm:ss');
         let endTime = moment(this.end_time, 'hh:mm A').format('HH:mm:ss');
         let daylightSavings = this.interpreterDaylightSavings();
-        let endDate = this.datePipe.transform(this.end_date, 'yyyy-MM-dd');
+        let endDate;
+        if (!this.availabilityBlock.recurring) {
+            endDate = this.datePipe.transform(this.start_time, 'yyyy-MM-dd');
+        } else {
+            endDate = this.datePipe.transform(this.end_date, 'yyyy-MM-dd');
+        }
 
         this.availabilityBlock.start_time = startDate + 'T' + startTime + daylightSavings;
         this.availabilityBlock.end_time = startDate + 'T' + endTime + daylightSavings;
