@@ -3,7 +3,6 @@ import {GLOBAL} from '../../shared/global';
 import {UserNameService} from '../../shared/user-name.service';
 import {LinkHelper, LINK, LinkAuth} from '../../shared/router/linkhelper';
 import {BookingHeaderService} from '../../booking-management/booking-header/booking-header.service';
-import { NavigationExtras, Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -11,12 +10,12 @@ import { NavigationExtras, Router } from '@angular/router';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnDestroy, OnInit {
-  linkName= LINK;
+  linkName = LINK;
   private sub: any;
   userIsActive = false;
   fullName = '';
 
-  constructor(private bookingHeaderService: BookingHeaderService, public router: Router, public userNameService: UserNameService, private linkAuth: LinkAuth) {
+  constructor(private bookingHeaderService: BookingHeaderService, public userNameService: UserNameService, private linkAuth: LinkAuth) {
   }
   ngOnInit () {
       this.sub = this.userNameService.loggedInUser$.subscribe(
