@@ -118,6 +118,11 @@ export class BookingHeaderComponent implements OnInit, OnDestroy {
             }
         return isState;
     }
+
+    isInProgressOrAllocatedState() {
+        return (this.bookingModel.state === BOOKING_STATE.In_progress || this.bookingModel.state === BOOKING_STATE.Allocated);
+    }
+
     isPassedState(bookingStatus: string) {
         return parseInt(this.bookingModel.state.toString(), 10) >
             parseInt(BOOKING_STATE[bookingStatus].toString(), 10);
