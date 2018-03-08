@@ -470,6 +470,20 @@ export class Heroku {
         Heroku.sendCommandToHeroku(command);
     }
 
+    static createBulkBookingsWithDifferentTime(count: number) {
+        const bookable = 'i=IndividualClient.first;FactoryGirl.create(:ted_individual_client) if !i';
+        const start_time = 'st = DateTime.now.beginning_of_day + 9.hours';
+        const factories_for_bookings = [];
+        for (let i = 0; i < count; i++) {
+            factories_for_bookings.push(
+                `st = st + ${i}.hours;
+                FactoryGirl.create(:booking, bookable: IndividualClient.first, start_time: st, end_time: st + 55.minutes)`
+            );
+        }
+        Heroku.sendCommandToHeroku([bookable, start_time, ...factories_for_bookings].join(';'));
+
+    }
+
     static preloadOrgBookings() {
         let task = 'seed:test_data:preloaded_org_bookings';
         Heroku.sendTaskToHeroku(task);

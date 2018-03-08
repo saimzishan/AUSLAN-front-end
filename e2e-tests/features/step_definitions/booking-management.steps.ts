@@ -24,6 +24,7 @@ defineSupportCode(({Given, Then, When}) => {
     Given(/^The booking has assignment category '(.*)'$/, Heroku.updateBookingWithCategory);
     Given(/^There exist (\d+) bookings$/, Heroku.createBulkBookings);
     Given(/^There exist (\d+) bookings? with(out)? link id$/, Heroku.createBulkBookingsWithLinkId);
+    Given(/^There exist (\d+) bookings? with different times$/, Heroku.createBulkBookingsWithDifferentTime)
     Given(/^There exist (\d+) admins/, Heroku.createBulkAdministrator);
     Given(/^I have preloaded bookings with different org values$/, Heroku.preloadOrgBookings);
     Given(/^One booking has client name as '(.*)'$/, Heroku.updateBookingWithClientName);

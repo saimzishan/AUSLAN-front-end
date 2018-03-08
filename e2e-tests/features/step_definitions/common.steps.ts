@@ -160,7 +160,7 @@ defineSupportCode(({Given, When, Then}) => {
     Given(/^I fill the field '(.*)' with value '(.*)'/, fillCorrectlyField);
 
     function fillCorrectlyField(lblString: string, value: string) {
-        let input = page.getElementByName(lblString);
+        let input = page.getElementByCss(`input[name="${lblString}"]`);
         expect(input).to.exist;
         input.clear();
         return page.setValue(input, value);
