@@ -629,6 +629,12 @@ export class Heroku {
         Heroku.sendCommandToHeroku(command);
     }
 
+    static updateBookingCreatedDateTime() {
+        let command = 'created_date = DateTime.yesterday;';
+        command += 'Booking.first.update(created_at: created_date);';
+        Heroku.sendCommandToHeroku(command);
+    }
+
     static assignExistingBooking(bookable: string) {
         let command = 'Booking.update_all(bookable_id: ' + bookable.replace(' ', '') + '.first.id)';
         Heroku.sendCommandToHeroku(command);
