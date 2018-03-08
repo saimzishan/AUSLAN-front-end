@@ -1020,20 +1020,52 @@
         </div>
       </div>
       <div class="row-wrapper">
-        <div class="medium-3 columns">
+        <div class="medium-4 columns">
+            <div class="form-field">
+              <label>NDIS ID
+                <span mdTooltip="Enter deaf person NDIS ID!">
+                  <i class="inline-icon-tip"></i>
+                </span>
+              </label>
+              <input type="tel"
+                      placeholder="Enter deaf person NDIS ID"
+                      [readonly]="isDisabledForOrgRepIndClient"
+                      [(ngModel)]="bookingModel.deaf_person.ndis_id"
+                      name="deaf_person_ndis"
+                      (click)="fireNotification($event)"
+                      #deaf_person_ndis="ngModel">
+            </div>
+          </div>
+          <div class="medium-4 columns">
+            <div class="form-field">
+              <label>EAF ID
+                <span mdTooltip="Enter deaf person EAF ID!">
+                  <i class="inline-icon-tip"></i>
+                </span>
+              </label>
+              <input type="tel"
+                      placeholder="Enter deaf person EAF ID"
+                      [readonly]="isDisabledForOrgRepIndClient"
+                      [(ngModel)]="bookingModel.deaf_person.eaf"
+                      name="deaf_person_eaf"
+                      (click)="fireNotification($event)"
+                      #deaf_person_eaf="ngModel">
+            </div>
+          </div>
+        <div class="medium-4 columns">
           <div class="form-field">
-            <label>EAF/NDISID
-              <span mdTooltip="Enter deaf person EAF number!">
+            <label>UR NUMBER
+              <span mdTooltip="Enter deaf person UR number!">
                 <i class="inline-icon-tip"></i>
               </span>
             </label>
             <input type="tel"
-                   placeholder="Enter deaf person EAF number"
+                   placeholder="Enter deaf person UR number"
                    [readonly]="isDisabledForOrgRepIndClient"
-                   [(ngModel)]="bookingModel.deaf_person.eaf"
-                   name="deaf_person_eaf"
+                   [(ngModel)]="bookingModel.deaf_person.ur_number"
+                   name="deaf_person_ur"
                    (click)="fireNotification($event)"
-                   #deaf_person_eaf="ngModel">
+                   #deaf_person_ur="ngModel">
           </div>
         </div>
         <div class="medium-9 columns">
