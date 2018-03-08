@@ -38,7 +38,7 @@ defineSupportCode(({Given, Then, When}) => {
     When(/^I click on edit for an (.*) existing (.*)$/, userManagementPO.clickOnEditUser);
     When(/^I click on duplicate for an (.*) existing (.*)$/, userManagementPO.clickOnDuplicateUser);
     Then(/^I update some (.*) fields/, userManagementPO.updateValidUserFields);
-    Then(/^I update (.*) UR and EAF id fields/, userManagementPO.updateClientFields);
+    Then(/^I update UR id as '(.*)' and EAF id as '(.*)' fields$/, userManagementPO.updateClientFields);
     Then(/^I update (.*) available field/, userManagementPO.updateAvailableField);
     When(/^I see success notification$/, userManagementPO.userUpdated);
     When(/^I see validation errors$/, userManagementPO.shouldShowInValidNotification);

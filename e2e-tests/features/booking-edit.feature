@@ -16,6 +16,31 @@ Feature: Edit Booking
     Then I should be on the edit booking page
 
   @runThis
+  Scenario: Given 1 verified Booking Officer, I should be able to visit the booking edit page and edit fields
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    And I am on the bookings page
+    When I click on an individual booking
+    Then I am on the individual booking page
+    When I click on link 'Booking details'
+    Then I should be on the edit booking page
+    And I fill the field 'deaf_person_ndis' with value '123-ndis'
+    And I fill the field 'deaf_person_eaf' with value '987-eaf'
+    And I fill the field 'deaf_person_ur' with value '456-ur'
+    And I click on BUTTON 'SAVE'
+    And If I am shown a popup message 'This booking is not within the standard booking hours (8AM - 6PM). Do you still want to update booking?', I approve it
+    Then I wait for 1000 milli-seconds
+    And If I am shown a popup message 'Would you like to save these changes for all bookings or only for this one?', I approve it
+    Then I should get a valid booking update notification
+    Then I wait for 1200 milli-seconds    
+    Then I am on the individual booking page    
+    When I click on link 'Booking details'
+    Then I should be on the edit booking page
+    Then I can verify the input 'deaf_person_ndis' will have the value '123-ndis'
+    Then I can verify the input 'deaf_person_eaf' will have the value '987-eaf'
+    Then I can verify the input 'deaf_person_ur' will have the value '456-ur'
+
+  @runThis
   Scenario: Given 1 verified Booking Officer, I should see the booking details filled in
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
