@@ -13,7 +13,7 @@ import { AuthComponent } from '../../auth/auth.component';
 import {UserNameService} from '../../shared/user-name.service';
 import {LinkHelper, LinkAuth, LINK} from '../../shared/router/linkhelper';
 import {RolePermission} from '../../shared/role-permission/role-permission';
-import { BookingHeaderService } from "../../booking-management/booking-header/booking-header.service";
+import { BookingHeaderService } from '../../booking-management/booking-header/booking-header.service';
 
 describe('component: TestComponent', function() {
     beforeEach(() => {
