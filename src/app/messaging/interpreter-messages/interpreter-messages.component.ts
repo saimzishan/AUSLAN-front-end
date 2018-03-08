@@ -22,10 +22,12 @@ export class InterpreterMessagesComponent implements OnInit {
   search;
   totalItems;
   bookings: Array<Booking> = [];
+  isTagShow;
   constructor(private _location: Location, public spinnerService: SpinnerService, public bookingDataService: BookingService,
     private rolePermission: RolePermission) { }
 
   ngOnInit() {
+    this.isTagShow = true;
   }
 
   backClicked() {
@@ -80,5 +82,8 @@ export class InterpreterMessagesComponent implements OnInit {
     this.search = GLOBAL.getSearchParameter();
     this.getPaginatedBooking();
 
+  }
+  sendMessageTagHide() {
+    this.isTagShow = false;
   }
 }

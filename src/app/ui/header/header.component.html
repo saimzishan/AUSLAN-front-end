@@ -5,7 +5,7 @@
 		<a id="lnkBooking" *ngIf="canShowLink('booking-management')" [ngClass]="{'active':isActiveLink(linkName.booking)}" (click)="setActiveLink(linkName.booking)" [routerLink]="['/booking-management']"><span><i class="icon-bookings"></i> BOOKINGS</span>
 		</a>
 		
-		<a id="lnkBooking" *ngIf="isActiveLink(linkName.booking)"  [ngClass]="{'active':isActiveLink(linkName.messages)}"  (click)="setActiveLink(linkName.messages)" [routerLink]="['/users/',userID,'messages']">
+		<a id="lnkBooking" *ngIf="isActive()"  [ngClass]="{'active':isActiveLink(linkName.messages)}"  (click)="setActiveLink(linkName.messages)" [routerLink]="['/users/',bookingID,'messages']">
 			<span>
 				<i class="icon-messages"></i>
 				MESSAGES

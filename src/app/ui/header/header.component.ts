@@ -2,6 +2,8 @@ import {Component, OnDestroy, Input, OnInit} from '@angular/core';
 import {GLOBAL} from '../../shared/global';
 import {UserNameService} from '../../shared/user-name.service';
 import {LinkHelper, LINK, LinkAuth} from '../../shared/router/linkhelper';
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-header',
@@ -13,9 +15,11 @@ export class HeaderComponent implements OnDestroy, OnInit {
   private sub: any;
   userIsActive = false;
   fullName = '';
-  userID;
-
-  constructor(public userNameService: UserNameService, private linkAuth: LinkAuth) {
+  bookingID;
+  route: string;
+  href;
+  constructor(location: Location, private router: Router, public userNameService: UserNameService, private linkAuth: LinkAuth) {
+    this.route = location.path();
   }
   ngOnInit () {
       this.sub = this.userNameService.loggedInUser$.subscribe(
@@ -30,7 +34,6 @@ export class HeaderComponent implements OnDestroy, OnInit {
       '';
         this.userIsActive = Boolean(GLOBAL.currentUser && this.fullName && this.fullName.length > 0
         && this.fullName === GLOBAL.currentUser.first_name + ' '  + GLOBAL.currentUser.last_name);
-    this.userID = GLOBAL.currentUser.id;
   }
 
   getPicturePath() {
@@ -51,6 +54,13 @@ export class HeaderComponent implements OnDestroy, OnInit {
 
   canShowLink(linkName) {
     return this.linkAuth.canShowLink(linkName);
+  }
+  isActive() {
+    this.href = this.route.split('/');
+    if (this.href[3] === 'job-detail') {
+      this.bookingID = this.href[2];
+            return true;
+    }
   }
 
 }
