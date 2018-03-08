@@ -172,10 +172,10 @@ export class BookingManagementPage extends PageObject {
         })
     }
 
-    bookingWithStateExists = (count: string, booking_state: string) => {
-        if (count === 'one') { count = '1'; }
+    bookingWithStateExists = (count: string | number, booking_state: string) => {
+        if (count === 'one') { count = 1; }
         return this.getAllByCSSandText('tbody td', booking_state).count().then((cnt) => {
-            expect(cnt.toString()).to.be.eq(count);
+            expect(cnt.toString()).to.be.gte(+count);
         });
     }
 
