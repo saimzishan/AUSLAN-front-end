@@ -33,6 +33,7 @@ export class UserFactory {
                 inte.address_attributes = <Address> data.address_attributes;
                 inte.availability_blocks_attributes = data.availability_blocks_attributes;
                 inte.interpreter_type = data.interpreter_type;
+                inte.account_number = data.linked_account_number;
                 return inte;
             default:
                 return new User(data);
@@ -103,6 +104,7 @@ export class Organisational extends User {
     public billingAddressIsSame = true;
     public prefferedInterpreters = [];
     public displayName: string;
+    public account_number = '';
 
     constructor(data) {
         super(data);
@@ -158,7 +160,7 @@ export class OrganisationalRepresentative extends Organisational {
                         'primary_contact_last_name': this.organisation_primary_contact.last_name,
                         'primary_contact_email': this.organisation_primary_contact.email,
                         'primary_contact_phone_number': this.organisation_primary_contact.phone_number,
-                        'account_number': 'ABCD-1234',
+                        'account_number': this.account_number,
                         'external_reference': this.organisation_billing_account.external_reference,
                         'address_attributes': this.organisation_billing_account.organisation_billing_address
                     }
@@ -253,6 +255,7 @@ export class OrganisationalRepresentative extends Organisational {
         this.organisation_billing_account.external_reference = obj.organisation.billing_account.external_reference;
         this.organisation_billing_account.id = obj.organisation.billing_account.id;
         this.organisation_billing_account.preferred_contact_method = obj.organisation.preferred_contact_method;
+        this.account_number = obj.organisation.billing_account.account_number;
 
     }
 }
@@ -290,6 +293,7 @@ export class IndividualClient extends User {
     public reffered_other: string;
     public prefferedInterpreters = [];
     public displayName: string;
+    public account_number = '';
 
     constructor(data) {
         super(data);
@@ -340,7 +344,7 @@ export class IndividualClient extends User {
                 'primary_contact_last_name': this.individual_client_primary_contact.last_name,
                 'primary_contact_email': this.individual_client_primary_contact.email,
                 'primary_contact_phone_number': this.individual_client_primary_contact.phone_number,
-                'account_number': '',
+                'account_number': this.account_number,
                 'external_reference': '',
                 'address_attributes': this.individual_client_billing_account.organisation_billing_address
             }
@@ -378,6 +382,7 @@ export class IndividualClient extends User {
         this.individual_client_primary_contact.phone_number = obj.billing_account_attributes.primary_contact_phone_number;
         this.individual_client_billing_account.organisation_billing_address = obj.billing_account_attributes.address_attributes;
         this.individual_client_billing_account.id = obj.billing_account_attributes.id;
+        this.account_number = obj.billing_account_attributes.account_number;
     }
 }
 
@@ -427,7 +432,7 @@ export class Interpreter extends User {
     public blocked = false;
     public booked = false;
     public blockout = false;
-
+    public account_number;
 
     get user_type() {
         return 'Interpreter';
