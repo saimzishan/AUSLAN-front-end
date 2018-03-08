@@ -38,4 +38,5 @@ export class BookingInfoComponent {
     isClientInterpAndBookInProgress(): boolean {
         return this.isClientOrInterpreter() && this.isBookingInProgress();
     }
+
 }
