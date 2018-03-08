@@ -398,25 +398,6 @@ export class BookingPage extends PageObject {
         return this.getElementByName('btnCreateBooking').click();
     }
 
-    setTime = (field: string, days: number, hours: number) => {
-        // add logic for business days
-        // this is a quick fix, improve this
-        // TODO: refactor this to use a standard method
-        let dayOfTheWeek = new Date(Date.now()).getDay();
-        if (dayOfTheWeek >= 4) {
-            days = 5 - dayOfTheWeek;
-        }
-        let date = new Date(Date.now() + (1000 * 60 * 60 * (Number(hours) || 0)) + (1000 * 60 * 60 * 24 * (days || 0)));
-        let dd = ('0' + date.getDate()).slice(-2);
-        let mm = ('0' + (date.getMonth() + 1)).slice(-2);
-        let yy = date.getFullYear();
-        let hh = Number(14 + Number(hours)); // date.getHours();
-        let dateString = [dd, mm, yy].join('/');
-        let timeString = hh.toString() + ':00PM';
-        this.setDate(dateString);
-        this.setStartEndTime(field, timeString);
-    }
-
     changeBookableType = () => {
         const indClientInput = this.getElementByCss('input#IndividualClient-input');
         return indClientInput.getAttribute('checked').then(checked => {

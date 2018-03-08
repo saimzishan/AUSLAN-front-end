@@ -284,10 +284,8 @@ defineSupportCode(({Given, When, Then}) => {
     Given(/^I am shown a validation error with the text '(.*)'$/, showValidationErrorWithText);
 
     function showValidationErrorWithText(errText: string) {
-        // browser.explore();
         let errs = page.getAllByCSSandText('.inline-icon.error > span', errText);
         return errs.count().then((count) => {
-            // expect(count).to.be.greaterThan(0);
             expect(count).to.be.greaterThan(0);
         });
     }
