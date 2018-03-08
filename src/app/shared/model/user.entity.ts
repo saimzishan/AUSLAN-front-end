@@ -276,6 +276,7 @@ export class IndividualClient extends User {
     public ndis_budget_limit: number;
     public ndis_validity_start_date: Date;
     public ndis_validity_end_date: Date;
+    public ur_id: string;
     public eaf_id: string;
     public eaf_budget_limit: number;
     public eaf_start_date: Date;
@@ -327,6 +328,7 @@ export class IndividualClient extends User {
                 'O:' + this.reffered_other : this.reffered_by,
             'mobile': this.mobile, 'ndis_id': this.ndis_id, 'ndis_budget_limit': this.ndis_budget_limit,
             'ndis_validity_start_date': this.ndis_validity_start_date, 'ndis_validity_end_date': this.ndis_validity_end_date,
+            'ur_id': this.ur_id,
             'eaf_id': this.eaf_id, 'eaf_budget_limit': this.eaf_budget_limit, 'eaf_start_date': this.eaf_start_date,
             'eaf_end_date': this.eaf_end_date,
             'business_hours_phone': this.phone,
@@ -360,6 +362,7 @@ export class IndividualClient extends User {
         this.ndis_validity_start_date = obj.ndis_validity_start_date;
         this.ndis_validity_end_date = obj.ndis_validity_end_date;
         this.mobile = obj.mobile;
+        this.ur_id = obj.ur_id;
         this.eaf_id = obj.eaf_id;
         this.eaf_budget_limit = obj.eaf_budget_limit;
         this.eaf_start_date = obj.eaf_start_date;

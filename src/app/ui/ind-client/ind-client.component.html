@@ -6,8 +6,26 @@
   <div class="row-wrapper">
     <div class="medium-6 columns">
       <div class="form-field">
+        <label>UR ID</label>
+        <input type="text" class="valid" placeholder="Enter UR ID"
+                [(ngModel)]="userModel.ur_id" name="ur_id"
+                #ur_id="ngModel"  digit>
+    
+      </div>
+    </div>
+    <div class="medium-6 columns">
+      <div class="form-field">
+          <label>EAF ID</label>
+          <input type="text" class="valid" placeholder="Enter EAF ID"
+                  [(ngModel)]="userModel.eaf_id" name="eaf_id"
+                  #eaf_id="ngModel"  digit>
+      
+      </div>
+    </div>
+    <div class="medium-6 columns">
+      <div class="form-field">
         <label>NDIS ID</label>
-        <input type="text" class="valid" placeholder=""
+        <input type="text" class="valid" placeholder="Enter NDIS ID"
                 [(ngModel)]="userModel.ndis_id" name="ndis_id"
                 #ndis_id="ngModel"  digit>
 
@@ -16,7 +34,7 @@
     <div class="medium-6 columns">
       <div class="form-field">
         <label>NDIS BUDGET LIMIT</label>
-        <input type="tel" class="valid" placeholder=""
+        <input type="tel" class="valid" placeholder="Enter NDIS BUDGET LIMIT"
                 [(ngModel)]="userModel.ndis_budget_limit" name="ndis_budget_limit"
                 #ndis_budget_limit="ngModel" >
 
