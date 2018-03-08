@@ -140,7 +140,6 @@ Feature: Booking Management
     And I can see the rdBookingFor field
     And I select the bookable for client
     Then I can see the 'CONTACT DETAILS' auto populated
-    # Then I wait for 60000 milli-seconds
     And I can see the 'CLIENT DETAILS' auto populated
     And I can see the 'INVOICE DETAILS' auto populated
     And I can see the element with name 'serviceMsg' has text 'What kind of services does the client need? Select multiple if relevant'
