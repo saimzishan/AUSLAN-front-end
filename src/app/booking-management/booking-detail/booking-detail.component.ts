@@ -283,8 +283,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         let selectedDate = this.datePipe.transform(this.bookingDate, 'yyyy-MM-dd');
         let startTime = moment(this.bookingStartTime, 'hh:mm A').format('HH:mm:ss');
         let endTime = moment(this.bookingEndTime, 'hh:mm A').format('HH:mm:ss');
-        this.bookingModel.venue.start_time_iso = selectedDate + 'T' + startTime + this.bookingModel.getDayLightSavings();
-        this.bookingModel.venue.end_time_iso = selectedDate + 'T' + endTime + this.bookingModel.getDayLightSavings();
+        this.bookingModel.venue.start_time_iso = selectedDate + 'T' + startTime + this.bookingModel.getDayLightSavings(selectedDate);
+        this.bookingModel.venue.end_time_iso = selectedDate + 'T' + endTime + this.bookingModel.getDayLightSavings(selectedDate);
     }
 
     natureOfApptChange($event) {
