@@ -117,7 +117,7 @@
                                 <label>END DATE *</label>
 
                                 <p-calendar name='dpEventDate_end' [(ngModel)]="end_date"
-                                            required #dpEventDate_end="ngModel"></p-calendar>
+                                            required #dpEventDate_end="ngModel" dateFormat="dd/mm/yy"></p-calendar>
 
                                 <span *ngIf="dpEventDate_end.touched &&  (!dpEventDate_end.errors?.required);"
                                       class="inline-icon inline-icon-valid valid"></span>

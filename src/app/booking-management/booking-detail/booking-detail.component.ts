@@ -318,6 +318,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             if (!this.forEdit) {
                 this.onSelectionChange();
                 this.onClientSelectionChange();
+                this.onStandardInvoice();
             }
             this.getUser();
             this.bookingModel.bookable_type = this.bookingModel.bookable_type || 'IndividualClient';
@@ -372,7 +373,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             ['first_name', 'last_name', 'email', 'mobile_number', 'ndis_id'].forEach((field) => {
                 let currentUserFieldMap = {mobile_number: 'mobile'};
                 let currentUserField = currentUserFieldMap[field] || field;
-                let value = this.currentUserIsClient ? user[currentUserField] : (this.bookingModel.deaf_person[field] || '');
+                let value = this.currentUserIsClient ? user[currentUserField] : '';
                 let mapForNsid = {ndis_id: 'eaf'};
                 field = mapForNsid[field] || field;
                 this.bookingModel.deaf_person[field] = value;
@@ -813,8 +814,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 errors => {
                     this.spinnerService.requestInProcess(false);
                     let e = errors.json() || '';
-                    this.notificationServiceBus.launchNotification(true,
-                        'Error occured on server side. ' + errors.statusText + ' ' + JSON.stringify(e || e.errors));
+                    this.notificationServiceBus.launchNotification(true, e);
                 });
     }
 
@@ -835,7 +835,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     updateBooking() {
-        if ((this.bookingModel.state === BOOKING_STATE.In_progress || this.bookingModel.state === BOOKING_STATE.Allocated) && this.isImportantFieldsChanged()) {
+        if ((this.bookingModel.state === BOOKING_STATE.In_progress || this.bookingModel.state === BOOKING_STATE.Allocated) &&
+                                                            (this.assignedInterpreter > 0 && this.isImportantFieldsChanged())) {
             let config: MdDialogConfig = {
                 disableClose: true
             };
@@ -882,8 +883,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                     errors => {
                         this.spinnerService.requestInProcess(false);
                         let e = errors.json() || '';
-                        this.notificationServiceBus.launchNotification(true,
-                            'Error occurred on server side. ' + errors.statusText + ' ' + JSON.stringify(e || e.errors));
+                        this.notificationServiceBus.launchNotification(true, e);
                     });
         }
     }
@@ -983,14 +983,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 errors => {
                     this.spinnerService.requestInProcess(false);
                     let e = errors.json() || '';
-                    let full_messages;
-                    if (e.constructor === ''.constructor) {
-                       full_messages = e;
-                    } else if (e.constructor === {}.constructor) {
-                       full_messages = e.errors;
-                    }
-                    this.notificationServiceBus.launchNotification(true,
-                        'Error occured on server side. ' + errors.statusText + ', ' + full_messages);
+                    this.notificationServiceBus.launchNotification(true, e);
                 });
     }
 

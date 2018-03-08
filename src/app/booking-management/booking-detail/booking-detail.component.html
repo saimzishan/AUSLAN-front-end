@@ -132,7 +132,10 @@
                   <span>Start Date is required</span>!
                 </span>
                 <span *ngIf="(bookingDate < minDate)" class="inline-icon error">
-                  <span>Date is in the past. Please change the date</span>
+                  <span>Date is in the past. Please change the date</span>!
+                </span>
+                <span *ngIf="dpDate.touched && (bookingDate > maxDate)" class="inline-icon error">
+                  <span>Please change the date to within 5 years</span>!
                 </span>
               </div>
             </div>
@@ -297,7 +300,7 @@
                    [disabled]="isDisabledForOrgRepIndClient"
                    #specific_nature_of_appointment="ngModel" required 
                    name="specific_nature_of_appointment" aria-label="A">
-              <option *ngFor="let item of specific_appointment_types | enumVal" [value]="item.value">
+              <option *ngFor="let item of specific_appointment_types | enumVal" [value]="item.value.replace(' (Please specify in Notes)', '').replace(' (Please specify length in Notes)', '')">
               {{item.value.toUpperCase()}}
               </option>
             </select>
@@ -1145,8 +1148,8 @@
           </label>
           <md-radio-group name="rdStandardInvoice" [(ngModel)]="standardInvoice" (change)='onStandardInvoice()'
                           [disabled]="isDisabledForOrgRepIndClient">
-            <md-radio-button [value]="true">YES</md-radio-button>
-            <md-radio-button [value]="false">NO</md-radio-button>
+            <md-radio-button name="rdStandardInvoiceYes" [value]="true">YES</md-radio-button>
+            <md-radio-button name="rdStandardInvoiceNo" [value]="false">NO</md-radio-button>
           </md-radio-group>
         </div>
       </div>

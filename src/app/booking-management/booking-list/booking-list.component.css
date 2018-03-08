@@ -5,4 +5,7 @@
     .icon-more-icon{
         display: none !important;
     }
+    #actions-list{
+        display: none;
+    }
 }
