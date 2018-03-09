@@ -48,7 +48,6 @@ export class BookingListComponent implements OnInit, OnChanges {
             }
         });
         if (this.filterParams.paramsMap.size === 0) {
-            this.sort('start_time');
             this.bookingFilter.date_from = this.datePipe.transform(Date.now(), 'yyyy-MM-dd');
         }
         this.filter('date_from', this.bookingFilter.date_from);
