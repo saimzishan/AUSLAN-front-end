@@ -33,7 +33,7 @@ export class BlockoutComponent implements OnDestroy, OnInit {
     public availabilityBlock: AvailabilityBlock = new AvailabilityBlock();
     dialogRef: MdDialogRef<any>;
     dialogSub;
-    userID = -1;
+    userID;
     queryParamSub;
     defaultDateTime: Date;
     public href;
@@ -102,36 +102,38 @@ export class BlockoutComponent implements OnDestroy, OnInit {
         if (this.href[3] === 'staff-availability') {
             this.staff_availability = true;
         }
-        this.interpreter = Boolean(GLOBAL.currentUser) &&
-        GLOBAL.currentUser instanceof Interpreter ?  <Interpreter>GLOBAL.currentUser :
-           this.isUserAdminOrBO() ?  GLOBAL.currentInterpreter : null;
-        if (this.interpreter === null ) {
-            this.router.navigate(['/user-management']);
-        }
-        this.userID = this.interpreter !== null ? this.interpreter.id : -1;
-        this.end_time.setTime(this.start_time.getTime() + (1 * 60 * 60 * 1000));
-        this.end_date = this.end_time;
-        this.sub = this.route.params.subscribe(params => {
-            let param_id = params['id'] || '';
-            if (Boolean(param_id) && parseInt(param_id, 10) > 0) {
-                this.param_id = parseInt(param_id, 10);
-                if (this.staff_availability) {
-                    this.interpreter.staff_availabilities_attributes
-                        .filter(a => a.id === this.param_id)
-                        .map(a =>
-                            this.availabilityBlock = a
-                        );
-                } else {
-                    this.interpreter.availability_blocks_attributes
-                        .filter(a => a.id === this.param_id)
-                        .map(a =>
-                            this.availabilityBlock = a
-                        );
+        this.userID = localStorage.getItem('userId') !== undefined ? localStorage.getItem('userId') : -1;
+        this.userDataService.getUser(this.userID)
+            .subscribe((res: any) => {
+                if (res.status === 200) {
+                    delete res.data.assignments_attributes;
+                    this.interpreter = res.data;
+                    this.userID = this.interpreter !== null ? this.interpreter.id : -1;
+                    this.end_time.setTime(this.start_time.getTime() + (1 * 60 * 60 * 1000));
+                    this.end_date = this.end_time;
+                    this.sub = this.route.params.subscribe(params => {
+                        let param_id = params['id'] || '';
+                        if (Boolean(param_id) && parseInt(param_id, 10) > 0) {
+                            this.param_id = parseInt(param_id, 10);
+                            if (this.staff_availability) {
+                                this.interpreter.staff_availabilities_attributes
+                                    .filter(a => a.id === this.param_id)
+                                    .map(a =>
+                                        this.availabilityBlock = a
+                                    );
+                            } else {
+                                this.interpreter.availability_blocks_attributes
+                                    .filter(a => a.id === this.param_id)
+                                    .map(a =>
+                                        this.availabilityBlock = a
+                                    );
+                            }
+                            this.settingTime();
+                        }
+                    });
+                    this.roundOffMinutes();
                 }
-                this.settingTime();
-            }
-        });
-        this.roundOffMinutes();
+            });
     }
     public setRecurring_week_days() {
         for (let i = 0; i < this.repeat_days.length; i++) {
@@ -382,7 +384,7 @@ export class BlockoutComponent implements OnDestroy, OnInit {
         let startDate = this.datePipe.transform(this.start_time, 'yyyy-MM-dd');
         let startTime = moment(this.start_time, 'hh:mm A').format('HH:mm:ss');
         let endTime = moment(this.end_time, 'hh:mm A').format('HH:mm:ss');
-        let daylightSavings = this.interpreterDaylightSavings(startDate);
+        let daylightSavings = this.interpreterDaylightSavings();
         let endDate;
         if (!this.availabilityBlock.recurring) {
             endDate = this.datePipe.transform(this.start_time, 'yyyy-MM-dd');
@@ -408,9 +410,9 @@ export class BlockoutComponent implements OnDestroy, OnInit {
         this.end_date = Boolean(this.availabilityBlock.end_date) ? new Date(this.availabilityBlock.end_date) :
             new Date(this.availabilityBlock.start_time);
     }
-    interpreterDaylightSavings(startDate) {
+    interpreterDaylightSavings() {
         let timeZone = Booking.getNamedTimeZone(this.interpreter.address_attributes.state, this.interpreter.address_attributes.post_code.toString());
-        return momentTimeZone(startDate).tz(timeZone).format('Z');
+        return momentTimeZone().tz(timeZone).format('Z');
     }
 
 }

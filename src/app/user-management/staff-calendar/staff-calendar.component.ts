@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {Administrator, blockout_availability, BookingOfficer, Interpreter, UserFactory} from '../../shared/model/user.entity';
 import { AvailabilityBlock } from '../../shared/model/availability-block.entity';
@@ -33,6 +33,7 @@ export class StaffCalendarComponent implements OnInit {
     isUserLogin() {
         return Boolean(GLOBAL.currentUser);
     }
+
     ngOnInit() {
         let d = new DatePipe('en-us');
         this.userModel.naati_validity_start_date =
@@ -44,22 +45,20 @@ export class StaffCalendarComponent implements OnInit {
 
         delete this.userModel.assignments_attributes;
         delete this.userModel.password;
-
-        this.interpreter = Boolean(GLOBAL.currentUser) &&
-            GLOBAL.currentUser instanceof Interpreter ? <Interpreter>GLOBAL.currentUser :
-            this.isUserAdminOrBO() ? GLOBAL.currentInterpreter : null;
-        this.userID = this.interpreter !== null ? this.interpreter.id : -1;
+        this.userID = localStorage.getItem('userId') !== undefined ? localStorage.getItem('userId') : -1;
         if (this.userID !== -1) {
             this.userDataService.getUser(this.userID)
                 .subscribe((res: any) => {
                     if (res.status === 200) {
                         delete res.data.assignments_attributes;
+                        this.interpreter = res.data;
                         this.userModel.staff_availabilities_attributes = res.data.staff_availabilities_attributes;
                         this.StaffAvialabilityToUpdate();
                     }
                 });
         }
     }
+
     isUserAdminOrBO() {
         return GLOBAL.currentUser instanceof Administrator ||
             GLOBAL.currentUser instanceof BookingOfficer;
@@ -179,5 +178,4 @@ export class StaffCalendarComponent implements OnInit {
         let timeZone = Booking.getNamedTimeZone(this.interpreter.address_attributes.state, this.interpreter.address_attributes.post_code.toString());
         return momentTimeZone(time).tz(timeZone).format('HH:mm:ss');
     }
-
 }
