@@ -16,7 +16,7 @@ Feature: Edit Booking
     Then I should be on the edit booking page
 
   @runThis
-  Scenario: Given 1 verified Booking Officer, I should be able to visit the booking edit page and edit fields
+  Scenario: Given 1 verified Booking Officer, I should be able to verify that EAF, NDIS and UR number are being saved properly
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
     And I am on the bookings page
@@ -28,12 +28,9 @@ Feature: Edit Booking
     And I fill the field 'deaf_person_eaf' with value '987-eaf'
     And I fill the field 'deaf_person_ur' with value '456-ur'
     And I click on BUTTON 'SAVE'
-    And If I am shown a popup message 'This booking is not within the standard booking hours (8AM - 6PM). Do you still want to update booking?', I approve it
-    Then I wait for 1000 milli-seconds
-    And If I am shown a popup message 'Would you like to save these changes for all bookings or only for this one?', I approve it
+    And If I am shown popups, I approve all of them
     Then I should get a valid booking update notification
-    Then I wait for 1200 milli-seconds    
-    Then I am on the individual booking page    
+    Then I am on the individual booking page
     When I click on link 'Booking details'
     Then I should be on the edit booking page
     Then I can verify the input 'deaf_person_ndis' will have the value '123-ndis'
