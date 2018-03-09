@@ -183,11 +183,11 @@
                                 </span>
                             </div>
                         </div>
-                        <div *ngIf="checkUserAdminORBookOfficer()" class="medium-6 columns">
+                        <div *ngIf="checkUserAdminORBookOfficer() && ((selectedRole === 'INTERPRETER') || (selectedRole === 'ORGANISATION') || (selectedRole === 'INDIVIDUALCLIENT'))" class="medium-6 columns">
                             <div class="form-field">
                                 <label>ACCOUNT NUMBER</label>
                                 <input type="text" placeholder="Enter your account number"
-                                        [(ngModel)]="model.account_number" name="account_number" #account_number="ngModel">
+                                        [(ngModel)]="model.linked_account_number" name="linked_account_number" #linked_account_number="ngModel">
                             </div>
                         </div>
                     </div>

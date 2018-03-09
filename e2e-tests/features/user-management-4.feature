@@ -172,13 +172,13 @@ Feature: Create, read, update and delete a User
     And I go to the 'User Management' list page
     When I click on edit for an active existing Individual Client
     And I will be taken to the 'INDIVIDUALCLIENT Signup' page
-    And I can see the element with name 'account_number' is 'visible'
-    Then I fill the field 'account_number' with value '1234567'
+    And I can see the element with name 'linked_account_number' is 'visible'
+    Then I fill the field 'linked_account_number' with value '1234567'
     And I click on update
     Then I see success notification
     When I click on edit for an active existing Individual Client
     Then I will be taken to the 'INDIVIDUALCLIENT Signup' page
-    And I can verify the input 'account_number' will have the value '1234567'
+    And I can verify the input 'linked_account_number' will have the value '1234567'
 
   @runThis
   Scenario: Booking Officer can save the account number of Organisational Representative
@@ -189,13 +189,13 @@ Feature: Create, read, update and delete a User
     And I go to the 'User Management' list page
     When I click on edit for an active existing Organisational Representative
     And I will be taken to the 'ORGANISATIONALREPRESENTATIVE Signup' page
-    And I can see the element with name 'account_number' is 'visible'
-    Then I fill the field 'account_number' with value '0987659'
+    And I can see the element with name 'linked_account_number' is 'visible'
+    Then I fill the field 'linked_account_number' with value '0987659'
     And I click on update
     Then I see success notification
     When I click on edit for an active existing Organisational Representative
     Then I will be taken to the 'ORGANISATIONALREPRESENTATIVE Signup' page
-    And I can verify the input 'account_number' will have the value '0987659'
+    And I can verify the input 'linked_account_number' will have the value '0987659'
 
   @runThis
   Scenario: Booking Officer can save the account number of interpreter
@@ -206,10 +206,10 @@ Feature: Create, read, update and delete a User
     And I go to the 'User Management' list page
     When I click on edit for an active existing Interpreter
     And I will be taken to the 'INTERPRETER Signup' page
-    And I can see the element with name 'account_number' is 'visible'
-    Then I fill the field 'account_number' with value '12121211'
+    And I can see the element with name 'linked_account_number' is 'visible'
+    Then I fill the field 'linked_account_number' with value '12121211'
     And I click on update
     Then I see success notification
     When I click on edit for an active existing Interpreter
     Then I will be taken to the 'INTERPRETER Signup' page
-    And I can verify the input 'account_number' will have the value '0987659'
+    And I can verify the input 'linked_account_number' will have the value '12121211'
