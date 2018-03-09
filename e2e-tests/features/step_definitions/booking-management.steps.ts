@@ -30,6 +30,7 @@ defineSupportCode(({Given, Then, When}) => {
     Given(/^One booking has org name as '(.*)'$/, Heroku.updateBookingWithOrgName);
     Given(/^One booking has suburb as '(.*)'$/, Heroku.updateBookingWithSuburb);
     Given(/^One booking has start and end dates as first and last days of next week$/, Heroku.updateBookingStartAndEndDateTime);
+    Given(/^One booking has created date as of yesterday$/, Heroku.updateBookingCreatedDateTime);
     Given(/^I can see the '(.*)' auto populated$/, createBookingPO.sectionAutoPopulated);
     Given(/^I can see the booking address is '(.*)'$/, createBookingPO.bookingAddressPopulated);
     Given(/^There exist (\d+) verified interpreters$/, Heroku.preloadVerifiedInterpreters);

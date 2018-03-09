@@ -3,6 +3,7 @@ import {Booking} from '../../shared/model/booking.entity';
 import {Administrator, BookingOfficer, Interpreter, IndividualClient, OrganisationalRepresentative} from '../../shared/model/user.entity';
 import {GLOBAL} from '../../shared/global';
 import {BOOKING_STATE} from '../../shared/model/booking-state.enum';
+import * as moment from 'moment';
 
 @Component({
     selector: 'app-booking-info',
@@ -39,4 +40,9 @@ export class BookingInfoComponent {
         return this.isClientOrInterpreter() && this.isBookingInProgress();
     }
 
+    calculateDaysAgo(created_at) {
+        let createdDate = moment(created_at);
+        let currentDate = moment(Date.now());
+        return currentDate.diff(createdDate, 'days');
+    }
 }
