@@ -10,7 +10,11 @@
             <section>
               <label>SELECT EXPORT</label>
               <select name="exportType" class="menu custom gray" [(ngModel)]="exportType" required>
-                <option value="Vicdeaf">Vicdeaf billing & payroll</option>
+                <option *ngIf="isBusinessVicdeaf();else dsq_options" value="Vicdeaf">Vicdeaf billing & payroll</option>
+                <ng-template #dsq_options>
+                  <option value="Weekly">Weekly Payroll</option>
+                  <option value="Monthly">Monthly Payroll</option>
+                </ng-template>
               </select>
             </section>
             <section class="no-border">

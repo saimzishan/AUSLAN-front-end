@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {NotificationServiceBus} from '../notification/notification.service';
+import {GLOBAL} from '../shared/global';
 
 @Component({
   selector: 'app-reports',
@@ -18,5 +19,9 @@ export class ReportsComponent {
       this.notificationServiceBus.launchNotification(true, 'Please select all fields');
       return;
     }
+  }
+
+  private isBusinessVicdeaf(): boolean {
+    return (GLOBAL.currentUser.business_name === 'Vicdeaf');
   }
 }
