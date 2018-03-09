@@ -62,12 +62,12 @@ export class BlockoutPagePo extends PageObject {
         });
     }
     changeEndDateOFBlockout = () => {
-        let endTime = this.getElementByCss('input[name="dpEventDate_end"]');
-        endTime.clear();
-        endTime.sendKeys('25/03/2018');
+        let endDate = this.getElementByCss('input[name="dpEventDate_end"]');
+        endDate.clear();
+        endDate.sendKeys('29/03/2018');
         this.clickOutSide();
-        return endTime.getAttribute('value').then((val) => {
-            expect(val).to.be.eq('25/03/2018');
+        return endDate.getAttribute('value').then((val) => {
+            expect(val).to.be.eq('29/03/2018');
         });
     }
     clickOutSide = () => {
