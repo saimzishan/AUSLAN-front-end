@@ -5,7 +5,7 @@ import {
     User, UserFactory
 } from '../shared/model/user.entity';
 import {ROLE} from '../shared/model/role.enum';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, Router, NavigationExtras} from '@angular/router';
 import {NotificationServiceBus} from '../notification/notification.service';
 import {FormGroup, FormControl, NgForm, NgModel} from '@angular/forms';
 import {SpinnerService} from '../spinner/spinner.service';
@@ -209,6 +209,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
         return Boolean(GLOBAL.currentUser instanceof Administrator ||
             GLOBAL.currentUser instanceof BookingOfficer) ;
     }
+
+    isUserDsqAdmin(): Boolean {
+        return Boolean(GLOBAL.currentUser instanceof Administrator);
+     //   return Boolean(GLOBAL.currentUser instanceof Administrator && GLOBAL.currentUser.business_name === 'Dsq');
+    }
+
     handleFileSelect(evt) {
         let files = evt.target.files;
         let file = files[0];
@@ -224,5 +230,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
     _handleReaderLoaded(readerEvt) {
         this.model.avatar = readerEvt.target.result;
+    }
+
+    navigateToPayroll() {
+        let navigationExtras: NavigationExtras = {
+            queryParams: {selectedRole: this.selectedRole}
+        };
+        this.router.navigate(['/user-management/', 'payroll-billing'], navigationExtras);
     }
 }

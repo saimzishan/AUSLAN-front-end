@@ -1,0 +1,73 @@
+<section id="submenu">
+    <app-user-header id="main-submenu-links">
+    </app-user-header>
+  </section>
+  
+  <div id="page-common">
+    <main>
+      <form class="common-form compact"> 
+          <h1>{{selectedRole === 'INTERPRETER' ? 'INTERPRETER PAYROLL' :
+                selectedRole === 'INDIVIDUALCLIENT' ? 'INDIVIDUAL CLIENT BILLING' :
+                selectedRole === 'ORGANISATION' ? 'ORGANISATION BILLING' : ''}} SETTINGS</h1>
+  
+          <div class="row">
+            <div class="row-wrapper">
+              <div class="medium-3 columns">
+                <div class="form-field">
+                  <label>Ordinary Hours<span class="helper">(9AM-6PM, M - F)</span></label>
+                  <select>
+                    <option>Standard</option>
+                    <option>EMAIL</option>
+                  </select>
+                </div>
+              </div>
+              <div class="medium-3 columns">
+                <div class="form-field">
+                  <label>Night Weekdays<span class="helper">(6PM-9PM, M - F)</span></label>
+                  <input type="text">
+                </div>
+              </div>
+              <div class="medium-3 columns">
+                <div class="form-field">
+                  <label>Weekend<span class="helper">(Sat - Sun)</span></label>
+                  <select>
+                    <option>Level 2</option>
+                    <option>EMAIL</option>
+                  </select>
+                </div>
+              </div>
+              <div class="medium-3 columns">
+                <div class="form-field">
+                  <label><span class="helper">&nbsp;</span>Travel</label>
+                  <input type="text">
+                </div>
+              </div>
+              <ng-container *ngIf="selectedRole !== 'INTERPRETER'">
+                <div class="medium-3 columns">
+                  <div class="form-field">
+                    <label>INVOICE</label>
+                    <select>
+                      <option>MONTHLY</option>
+                      <option>EMAIL</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="medium-3 columns">
+                  <div class="form-field">
+                    <label>LEDGER CODE</label>
+                    <input type="text">
+                  </div>
+                </div>
+                <div class="medium-3 columns">
+                  <div class="form-field">
+                    <label>GST</label>
+                    <input type="text">
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </form>
+    </main>
+  </div>
+  

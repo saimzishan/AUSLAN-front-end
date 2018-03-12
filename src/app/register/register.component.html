@@ -5,6 +5,8 @@
     <section id="submenu" *ngIf="checkUserAdminORBookOfficer()">
        <section>
             <a id="TABStaffCalendar" [routerLink]="['/user-management/','staff_calendar']"> Staff Calender</a>
+            <a *ngIf="isUserDsqAdmin() && (selectedRole === 'INTERPRETER' || selectedRole === 'INDIVIDUALCLIENT' || selectedRole === 'ORGANISATION')"
+                id="interpreterPayroll" (click)="navigateToPayroll()"> Payroll</a>
         </section>
     </section>
     <section id="page-signup-organisation">
