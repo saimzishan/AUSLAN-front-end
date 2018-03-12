@@ -27,6 +27,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     termsAndConditionAccepted = false;
     selectedStatus = '';
     userStatusArray = GLOBAL.userStatusArray;
+    otherGender = '';
 
     constructor(public userService: UserService,
         public notificationServiceBus: NotificationServiceBus,
@@ -50,6 +51,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
                 case 'Interpreter'.toUpperCase():
                     let int1: Interpreter = this.isEdit ? <Interpreter>UserFactory.createUser(jsonData) : new Interpreter();
                     this.model = int1;
+                    if (this.model.gender !== 'Male' && this.model.gender !== 'Female') {
+                        this.otherGender = this.model.gender;
+                        this.model.gender = 'Other';
+                    }
+
                     this.model.role = ROLE.Interpreter;
                     GLOBAL.currentInterpreter = this.isEdit ? int1 : GLOBAL.currentInterpreter;
                     break;
@@ -148,6 +154,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
         });
     }
     addUser() {
+        this.model.gender = this.model.gender === 'Other' ? this.otherGender : this.model.gender;
         this.userService.createUser(this.model)
             .subscribe((res: any) => {
                 if (res.data.id && 0 < res.data.id) {
@@ -166,7 +173,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     }
 
     editUser() {
-
+        this.model.gender = this.model.gender === 'Other' ? this.otherGender : this.model.gender;
         this.model.disabled = this.selectedStatus === 'Disabled';
         this.selectedStatus = '';
         this.userService.updateUser(this.model)
