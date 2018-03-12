@@ -57,6 +57,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     hideInvite = false;
     hideAccept = false;
     showCalendar = false;
+    undoState = false;
     startTime: Date;
     endTime: Date;
     @ViewChild('cchart') cchart;
@@ -263,6 +264,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         } else {
             state = isCancel ? 'cancelled_no_charge' : 'unable_to_service';
             stateMsg = isCancel ? 'Cancelled with No Charge' : 'Unable to Service';
+            this.selectedBookingModel.interpreters = [];
         }
         this.spinnerService.requestInProcess(true);
         this.bookingService.updateBookingByTransitioning(this.selectedBookingModel.id, state, update_all_linked_bookings)
@@ -319,15 +321,14 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     }
     undoCancel() {
         let state = 'in_progress';
-        let stateMsg = 'Cancelled with Charge';
         this.spinnerService.requestInProcess(true);
         this.bookingService.updateBookingByTransitioning(this.selectedBookingModel.id, state)
              .subscribe((res: any) => {
                      if (res.status === 204) {
-                         this.selectedBookingModel.state = BOOKING_STATE.In_progress;
                          this.isCancelledOrUnableToServe = false;
                          this.isRequestedProgressOrAllocated = true;
-                         this.notificationServiceBus.launchNotification(false, `The booking has been transitioned to "${stateMsg}" state`);
+                         this.undoState = true;
+                         this.fetchBookingInterpreters(this.selectedBookingModel.id);
                      }
                      this.spinnerService.requestInProcess(false);
                  },
@@ -449,7 +450,6 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                         this.isVicdeaf = GLOBAL.VICDEAF_STATES.filter(teststate => teststate === this.selectedBookingModel.venue.state).length > 0;
                         this.isCancelledOrUnableToServe = this.isActiveState('Cancelled_no_charge')
                             || this.isActiveState('Unable_to_service') || this.isActiveState('Cancelled_chargeable');
-
                         this.isRequestedProgressOrAllocated = this.isStateRequestProgressAlloc();
                         let diffInMs: number = Date.now() - Date.parse(this.selectedBookingModel.venue.start_time_iso);
                         this.diffInHours = diffInMs / 1000 / 60 / 60;
@@ -488,6 +488,14 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                         }
                     }
                     if (this.isCurrentUserAdminOrBookingOfficer() && this.isRequestedProgressOrAllocated) {
+                        let undoStateMsg;
+                        undoStateMsg = (this.selectedBookingModel.state === BOOKING_STATE.In_progress) ? 'In Progress' :
+                        (this.selectedBookingModel.state === BOOKING_STATE.Cancelled_claimed) ? 'Cancelled Claimed' :
+                        (this.selectedBookingModel.state === BOOKING_STATE.Cancelled_chargeable) ? 'Cancelled Chargeable' : 'Allocated';
+                        if (this.undoState) {
+                            this.notificationServiceBus.launchNotification(false, `The booking has been transitioned to "${undoStateMsg}" state`);
+                            this.undoState = false;
+                        }
                         this.fetchNearbyinterpreters(param_id);
                     } else {
                         this.spinnerService.requestInProcess(false);

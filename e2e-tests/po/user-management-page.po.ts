@@ -219,16 +219,14 @@ export class UserManagementPage extends PageObject {
         });
     }
 
-    updateClientFields = (type: string) => {
-        let type_valid_user = this.returnTypeAndUser(type, true);
-        let valid_user = type_valid_user.user;
-        let ur = this.getElementByName( 'ur_id');
-        let eaf = this.getElementByName( 'eaf_id');
+    updateClientFields = (ur_id: string, eaf_id) => {
+        let ur = this.getElementByName('ur_id');
+        let eaf = this.getElementByName('eaf_id');
 
         ur.clear();
-        this.setValue(ur, '123');
+        this.setValue(ur, ur_id);
         eaf.clear();
-        this.setValue(eaf, '987');
+        this.setValue(eaf, eaf_id);
         return this.getElementByName('register_user').isEnabled().then( (enabled) => {
             expect(enabled).to.equal(true);
         });
