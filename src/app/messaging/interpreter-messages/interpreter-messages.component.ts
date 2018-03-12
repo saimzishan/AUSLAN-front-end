@@ -24,6 +24,8 @@ export class InterpreterMessagesComponent implements OnInit {
   totalItems;
   bookings: Array<Booking> = [];
   isTagShow;
+  message_inbox_url;
+  message_body;
  // interpreterId;
   constructor(private userService: UserService,
      private messagingService: MessagingService, private _location: Location, public spinnerService: SpinnerService, public bookingDataService: BookingService,
@@ -100,6 +102,17 @@ export class InterpreterMessagesComponent implements OnInit {
         if (res.status === 200) {
           console.log(res);
         }
+      });
+  }
+
+  sendInterpreterMessages() {
+    this.messagingService.sendInterpreterMessages(this.getCurrentUser(), this.message_inbox_url, this.message_body)
+      .subscribe((res: any) => {
+        if (res.status === 200) {
+          console.log(res );
+        }
+      }, errors => {
+        this.spinnerService.requestInProcess(false);
       });
   }
 

@@ -35,4 +35,16 @@ export class MessagingService extends ApiService {
             .catch((err) => { return this.handleError(err); });
     }
 
+    sendInterpreterMessages(user_id, message_inbox_url, message_body): Observable<Object> {
+        let headers = new Headers({ 'Accept': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+        const otherOptions = { message: { message_inbox_url: message_inbox_url, message_body: message_body } };
+
+         options = Object.assign(options, otherOptions);
+        return this.http
+            .post(GLOBAL.USER_API + '/' + user_id + '/messages', options)
+            .map(this.extractData)
+            .catch((err) => { return this.handleError(err); });
+    }
+
 }
