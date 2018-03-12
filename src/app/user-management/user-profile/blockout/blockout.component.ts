@@ -102,7 +102,7 @@ export class BlockoutComponent implements OnDestroy, OnInit {
         if (this.href[3] === 'staff-availability') {
             this.staff_availability = true;
         }
-        this.userID = localStorage.getItem('userId') !== undefined ? localStorage.getItem('userId') : -1;
+        this.userID = this.interpreter !== null ? localStorage.getItem('userId') : -1;
         this.userDataService.getUser(this.userID)
             .subscribe((res: any) => {
                 if (res.status === 200) {

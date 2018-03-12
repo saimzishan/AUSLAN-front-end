@@ -30,7 +30,7 @@ const appRoutes: Routes = [
   { path: 'user-management/:id/skills', component: SkillMatrixComponent, canActivate: [AuthGuard]},
   { path: 'user-management/:id/block_out', component: BlockoutComponent, canActivate: [AuthGuard] },
   { path: 'user-management/:id/staff-availability', component: BlockoutComponent, canActivate: [AuthGuard]},
-  { path: 'user-management/staff_calendar', component: StaffCalendarComponent, canActivate: [AuthGuard]},
+  { path: 'user-management/:id/staff_calendar', component: StaffCalendarComponent, canActivate: [AuthGuard]},
   { path: 'booking-management', component: BookingComponent, canActivate: [AuthGuard]},
   { path: 'booking-management/:id/create-booking', component: BookingDetailComponent, canActivate: [AuthGuard]},
   { path: 'booking-management/create-booking', component: BookingDetailComponent, canActivate: [AuthGuard]},

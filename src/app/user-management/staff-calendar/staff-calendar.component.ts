@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {Administrator, blockout_availability, BookingOfficer, Interpreter, UserFactory} from '../../shared/model/user.entity';
 import { AvailabilityBlock } from '../../shared/model/availability-block.entity';
@@ -27,7 +27,7 @@ export class StaffCalendarComponent implements OnInit {
     updateCalendar = false;
     userID;
     interpreter: Interpreter;
-    constructor(public userDataService: UserService, private route: ActivatedRoute, private router: Router) {
+    constructor(public routes: ActivatedRoute, public userDataService: UserService, private route: ActivatedRoute, private router: Router) {
         this.userModel = new Interpreter();
     }
     isUserLogin() {
@@ -45,8 +45,11 @@ export class StaffCalendarComponent implements OnInit {
 
         delete this.userModel.assignments_attributes;
         delete this.userModel.password;
-        this.userID = localStorage.getItem('userId') !== undefined ? localStorage.getItem('userId') : -1;
-        if (this.userID !== -1) {
+        this.routes.params.subscribe(params => {
+             this.userID = +params['id'] || false;
+         });
+        if (this.userID) {
+            localStorage.setItem('userId', this.userID);
             this.userDataService.getUser(this.userID)
                 .subscribe((res: any) => {
                     if (res.status === 200) {
