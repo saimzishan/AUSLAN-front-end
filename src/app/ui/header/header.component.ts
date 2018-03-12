@@ -2,6 +2,7 @@ import {Component, OnDestroy, Input, OnInit} from '@angular/core';
 import {GLOBAL} from '../../shared/global';
 import {UserNameService} from '../../shared/user-name.service';
 import {LinkHelper, LINK, LinkAuth} from '../../shared/router/linkhelper';
+import {BookingHeaderService} from '../../booking-management/booking-header/booking-header.service';
 
 @Component({
   selector: 'app-header',
@@ -9,12 +10,12 @@ import {LinkHelper, LINK, LinkAuth} from '../../shared/router/linkhelper';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnDestroy, OnInit {
-  linkName= LINK;
+  linkName = LINK;
   private sub: any;
   userIsActive = false;
   fullName = '';
 
-  constructor(public userNameService: UserNameService, private linkAuth: LinkAuth) {
+  constructor(private bookingHeaderService: BookingHeaderService, public userNameService: UserNameService, private linkAuth: LinkAuth) {
   }
   ngOnInit () {
       this.sub = this.userNameService.loggedInUser$.subscribe(
@@ -51,4 +52,7 @@ export class HeaderComponent implements OnDestroy, OnInit {
     return this.linkAuth.canShowLink(linkName);
   }
 
+  refreshBooking() {
+    this.bookingHeaderService.notifyOther({option: 'refreshBooking'});
+  }
 }

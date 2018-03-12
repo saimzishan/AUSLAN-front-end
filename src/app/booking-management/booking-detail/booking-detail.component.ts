@@ -6,6 +6,7 @@ import {SpinnerService} from '../../spinner/spinner.service';
 import {BOOKING_STATE} from '../../shared/model/booking-state.enum';
 import {GLOBAL, ModalOptions} from '../../shared/global';
 import {NotificationServiceBus} from '../../notification/notification.service';
+import {BookingHeaderService} from '../booking-header/booking-header.service';
 import {Router, ActivatedRoute} from '@angular/router';
 import {RolePermission} from '../../shared/role-permission/role-permission';
 import {DatePipe} from '@angular/common';
@@ -62,6 +63,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     bookingHeading = '';
     forEdit = false;
     assignedInterpreter = 0;
+    private headerSubscription;
     oldDocuments = [];
     deleteDocuments = [];
     allClientsOrg = [];
@@ -139,6 +141,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     constructor(public bookingService: BookingService, private router: Router,
                 private route: ActivatedRoute, private rolePermission: RolePermission,
                 public notificationServiceBus: NotificationServiceBus, public spinnerService: SpinnerService,
+                public bookingHeaderService: BookingHeaderService,
                 private datePipe: DatePipe, public dialog: MdDialog, private changeDetector: ChangeDetectorRef,
                 public viewContainerRef: ViewContainerRef, public userService: UserService, private _sharedPreferedAllocationService: PreferedAllocationService) {
         BA.loadItems();
@@ -170,14 +173,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 this.natureOfApptChange(null);
                 this.checkInterpreterBoxes();
             } else {
-                this.bookingModel = new Booking();
-                this.bookingDate = undefined;
-                this.bookingStartTime = undefined;
-                this.bookingEndTime = undefined;
-                this.isRecurringBooking = false;
-                this.resetPrefBlockInterpreters();
-                this.onSpecialInstruction();
-                this.resetRecurringDays();
+                this.newBooking();
             }
 
             if (this.forEdit) {
@@ -287,8 +283,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         let selectedDate = this.datePipe.transform(this.bookingDate, 'yyyy-MM-dd');
         let startTime = moment(this.bookingStartTime, 'hh:mm A').format('HH:mm:ss');
         let endTime = moment(this.bookingEndTime, 'hh:mm A').format('HH:mm:ss');
-        this.bookingModel.venue.start_time_iso = selectedDate + 'T' + startTime + this.bookingModel.getDayLightSavings();
-        this.bookingModel.venue.end_time_iso = selectedDate + 'T' + endTime + this.bookingModel.getDayLightSavings();
+        this.bookingModel.venue.start_time_iso = selectedDate + 'T' + startTime + this.bookingModel.getDayLightSavings(selectedDate);
+        this.bookingModel.venue.end_time_iso = selectedDate + 'T' + endTime + this.bookingModel.getDayLightSavings(selectedDate);
     }
 
     natureOfApptChange($event) {
@@ -301,8 +297,9 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.dialogSub.unsubscribe();
         }
 
+        let headerSub = this.headerSubscription && this.headerSubscription.unsubscribe();
         let prefSub = this.preferAllocSub && this.preferAllocSub.unsubscribe();
-        return prefSub && this.sub && this.sub.unsubscribe();
+        return headerSub && prefSub && this.sub && this.sub.unsubscribe();
     }
 
     ngOnInit() {
@@ -331,6 +328,9 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 this.onBookingAddressChange();
             }
             this.bookingAddress.isTravelCostApplicable = this.bookingModel.travel_cost_applicable;
+            this.headerSubscription = this.bookingHeaderService.notifyObservable$.subscribe((res) => {
+                this.callRelatedFunctions(res);
+            });
         }
         this.dateRestrictions();
     }
@@ -343,6 +343,28 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         this.maxDate = new Date();
         this.maxDate.setFullYear(year + 5);
         this.minDateForRecurrenceEnd = this.getMinDateForRecurringBookingEnd();
+    }
+
+    callRelatedFunctions(res) {
+        if (res.hasOwnProperty('option')) {
+            switch (res.option) {
+                case 'refreshBooking':
+                    this.newBooking();
+                    this.bookable = undefined;
+                    break;
+            }
+        }
+    }
+
+    newBooking() {
+        this.bookingModel = new Booking();
+        this.bookingDate = undefined;
+        this.bookingStartTime = undefined;
+        this.bookingEndTime = undefined;
+        this.isRecurringBooking = false;
+        this.resetPrefBlockInterpreters();
+        this.onSpecialInstruction();
+        this.resetRecurringDays();
     }
 
     getMinDateForRecurringBookingEnd() {
