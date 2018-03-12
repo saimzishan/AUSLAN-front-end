@@ -9,7 +9,8 @@ import { IndividualClient, Interpreter, OrganisationalRepresentative, User } fro
 import { Booking } from '../../shared/model/booking.entity';
 import { BookingInterpreter } from '../../shared/model/contact.entity';
 import { BOOKING_STATE } from '../../shared/model/booking-state.enum';
-
+import { UserService } from '../../api/user.service';
+import { MessagingService } from '../../api/messaging.service';
 
 @Component({
   selector: 'app-interpreter-messages',
@@ -23,13 +24,19 @@ export class InterpreterMessagesComponent implements OnInit {
   totalItems;
   bookings: Array<Booking> = [];
   isTagShow;
-  constructor(private _location: Location, public spinnerService: SpinnerService, public bookingDataService: BookingService,
+ // interpreterId;
+  constructor(private userService: UserService,
+     private messagingService: MessagingService, private _location: Location, public spinnerService: SpinnerService, public bookingDataService: BookingService,
     private rolePermission: RolePermission) { }
 
   ngOnInit() {
     this.isTagShow = true;
+   // this.interpreterId = this.getCurrentUser();
+    this.getInterpreterMessages(this.getCurrentUser());
   }
-
+  getCurrentUser() {
+    return GLOBAL.currentUser.id;
+  }
   backClicked() {
     this._location.back();
   }
@@ -86,4 +93,14 @@ export class InterpreterMessagesComponent implements OnInit {
   sendMessageTagHide() {
     this.isTagShow = false;
   }
+
+  getInterpreterMessages(userId) {
+    this.messagingService.getInterpreterMessages(userId)
+      .subscribe((res: any) => {
+        if (res.status === 200) {
+          console.log(res);
+        }
+      });
+  }
+
 }

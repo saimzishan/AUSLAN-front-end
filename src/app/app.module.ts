@@ -6,7 +6,8 @@ import {AuthComponent} from './auth/auth.component';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {UserManagementComponent} from './user-management/user-management.component';
 import {UserService} from './api/user.service';
-import {BookingService} from './api/booking.service';
+import { BookingService } from './api/booking.service';
+import { MessagingService } from './api/messaging.service';
 import {Http, RequestOptions} from '@angular/http';
 import {EnumValPipe} from './shared/pipe/enum-val.pipe';
 import {NotFoundComponent} from './not-found/not-found.component';
@@ -126,7 +127,7 @@ import { InterpreterMessagesComponent } from './messaging/interpreter-messages/i
         AutoCompleteModule
     ], providers: [DatePipe, LinkAuth, UserNameService, RolePermission, AuthGuard, NoAuthGuard, Title, LinkHelper,
         NotificationServiceBus, SpinnerService, BookingService, UserService,
-        PreferedAllocationService, BookingHeaderService, GmapsApiService,
+        PreferedAllocationService, BookingHeaderService, GmapsApiService, MessagingService,
         {provide: APP_BASE_HREF, useValue: '/'},
         {
             provide: AuthHttp,

@@ -406,4 +406,5 @@ export class UserService extends ApiService {
                 options) // Better add verify in path
             .catch((err) => { return Observable.throw(err); });
     }
+
 }
