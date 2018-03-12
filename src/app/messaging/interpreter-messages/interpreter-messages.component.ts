@@ -106,14 +106,16 @@ export class InterpreterMessagesComponent implements OnInit {
   }
 
   sendInterpreterMessages() {
-    this.messagingService.sendInterpreterMessages(this.getCurrentUser(), this.message_inbox_url, this.message_body)
-      .subscribe((res: any) => {
-        if (res.status === 200) {
-          console.log(res );
-        }
-      }, errors => {
-        this.spinnerService.requestInProcess(false);
-      });
+    console.log(this.message_body);
+    return;
+  //   this.messagingService.sendInterpreterMessages(this.getCurrentUser(), this.message_inbox_url, this.message_body)
+  //     .subscribe((res: any) => {
+  //       if (res.status === 200) {
+  //         console.log(res );
+  //       }
+  //     }, errors => {
+  //       this.spinnerService.requestInProcess(false);
+  //     });
+  // }
   }
-
 }

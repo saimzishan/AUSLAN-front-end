@@ -47,8 +47,8 @@
   <form  *ngIf='isTagShow' class="messages__form" style="position: fixed;">
     <button (click)="sendMessageTagHide()" class="button messages__formButton">130528 x</button>
     <section class="messages__formInner">
-      <textarea class="messages__formInput">You can add prefered or blocked interpreters in this section</textarea>
-      <button class="messages__formSend"></button>
+      <textarea [(ngModel)]="message_body" name="message_body" class="messages__formInput"></textarea>
+      <button (click)="sendInterpreterMessages()" class="messages__formSend"></button>
     </section>
   </form>
 </section>
