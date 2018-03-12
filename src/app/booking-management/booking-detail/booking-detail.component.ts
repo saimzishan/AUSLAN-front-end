@@ -415,7 +415,9 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                     user.individual_client_billing_account.organisation_billing_address : new Address();
                 this.bookingModel.client.organisation_billing_account.external_reference = this.standardInvoice ?
                     user.individual_client_billing_account.external_reference : '';
-                this.bookingModel.deaf_person.eaf = this.standardInvoice ? user.ndis_id : '';
+                this.bookingModel.deaf_person.eaf = this.standardInvoice ? user.eaf_id : '';
+                this.bookingModel.deaf_person.ur_number = this.standardInvoice ? user.ur_id : '';
+                this.bookingModel.deaf_person.ndis_id = this.standardInvoice ? user.ndis_id : '';
             } else {
                 this.bookingModel.client.organisation_primary_contact = this.standardInvoice ?
                     user.organisation_primary_contact : new Contact();
@@ -424,6 +426,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 this.bookingModel.client.organisation_billing_account.external_reference = this.standardInvoice ?
                     user.organisation_billing_account.external_reference : '';
                 this.bookingModel.deaf_person.eaf = '';
+                this.bookingModel.deaf_person.ndis_id = '';
+                this.bookingModel.deaf_person.ur_number = '';
             }
         }
     }
