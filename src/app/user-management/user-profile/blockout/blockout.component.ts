@@ -384,7 +384,7 @@ export class BlockoutComponent implements OnDestroy, OnInit {
         let startDate = this.datePipe.transform(this.start_time, 'yyyy-MM-dd');
         let startTime = moment(this.start_time, 'hh:mm A').format('HH:mm:ss');
         let endTime = moment(this.end_time, 'hh:mm A').format('HH:mm:ss');
-        let daylightSavings = this.interpreterDaylightSavings();
+        let daylightSavings = this.interpreterDaylightSavings(startDate);
         let endDate;
         if (!this.availabilityBlock.recurring) {
             endDate = this.datePipe.transform(this.start_time, 'yyyy-MM-dd');
@@ -410,9 +410,9 @@ export class BlockoutComponent implements OnDestroy, OnInit {
         this.end_date = Boolean(this.availabilityBlock.end_date) ? new Date(this.availabilityBlock.end_date) :
             new Date(this.availabilityBlock.start_time);
     }
-    interpreterDaylightSavings() {
+    interpreterDaylightSavings(startDate) {
         let timeZone = Booking.getNamedTimeZone(this.interpreter.address_attributes.state, this.interpreter.address_attributes.post_code.toString());
-        return momentTimeZone().tz(timeZone).format('Z');
+        return momentTimeZone(startDate).tz(timeZone).format('Z');
     }
 
 }
