@@ -5,7 +5,7 @@
   
   <div id="page-common">
     <main>
-      <form class="common-form compact"> 
+      <form #payroll_billing_form="ngForm" class="common-form compact"> 
           <h1>{{selectedRole === 'INTERPRETER' ? 'INTERPRETER PAYROLL' :
                 selectedRole === 'INDIVIDUALCLIENT' ? 'INDIVIDUAL CLIENT BILLING' :
                 selectedRole === 'ORGANISATION' ? 'ORGANISATION BILLING' : ''}} SETTINGS</h1>
@@ -15,57 +15,78 @@
               <div class="medium-3 columns">
                 <div class="form-field">
                   <label>Ordinary Hours<span class="helper">(9AM-6PM, M - F)</span></label>
-                  <select>
-                    <option>Standard</option>
-                    <option>EMAIL</option>
-                  </select>
+                  <input type="text" name="ordinaryHours" #ordinaryHours="ngModel" [(ngModel)]="paymentModel.ordinary_hours" pattern="(\d+|\d+(\.)\d+)">
+                  <span *ngIf="ordinaryHours.touched && (ordinaryHours.errors?.pattern);"
+                          class="inline-icon error">
+                          <span>Oops! Only numerical values and "." are allowed.</span>!
+                  </span>
                 </div>
               </div>
               <div class="medium-3 columns">
                 <div class="form-field">
                   <label>Night Weekdays<span class="helper">(6PM-9PM, M - F)</span></label>
-                  <input type="text">
+                  <input type="text" name="nightWeekdays" #nightWeekdays="ngModel" [(ngModel)]="paymentModel.night_weekdays" pattern="(\d+|\d+(\.)\d+)">
+                  <span *ngIf="nightWeekdays.touched && (nightWeekdays.errors?.pattern);"
+                          class="inline-icon error">
+                          <span>Oops! Only numerical values and "." are allowed.</span>!
+                  </span>
                 </div>
               </div>
               <div class="medium-3 columns">
                 <div class="form-field">
                   <label>Weekend<span class="helper">(Sat - Sun)</span></label>
-                  <select>
-                    <option>Level 2</option>
-                    <option>EMAIL</option>
-                  </select>
+                  <input type="text" name="weekend" #weekend="ngModel" [(ngModel)]="paymentModel.weekend" pattern="(\d+|\d+(\.)\d+)">
+                  <span *ngIf="weekend.touched && (weekend.errors?.pattern);"
+                          class="inline-icon error">
+                          <span>Oops! Only numerical values and "." are allowed.</span>!
+                  </span>
                 </div>
               </div>
               <div class="medium-3 columns">
                 <div class="form-field">
                   <label><span class="helper">&nbsp;</span>Travel</label>
-                  <input type="text">
+                  <input type="text" name="travel" #travel="ngModel" [(ngModel)]="paymentModel.travel" pattern="(\d+|\d+(\.)\d+)">
+                  <span *ngIf="travel.touched && (travel.errors?.pattern);"
+                          class="inline-icon error">
+                          <span>Oops! Only numerical values and "." are allowed.</span>!
+                  </span>
                 </div>
               </div>
               <ng-container *ngIf="selectedRole !== 'INTERPRETER'">
                 <div class="medium-3 columns">
                   <div class="form-field">
                     <label>INVOICE</label>
-                    <select>
-                      <option>MONTHLY</option>
-                      <option>EMAIL</option>
+                    <select name="invoice" #invoice="ngModel" [(ngModel)]="paymentModel.invoice">
+                      <option value="monthly">MONTHLY</option>
+                      <option value="weekly">WEEKLY</option>
                     </select>
                   </div>
                 </div>
                 <div class="medium-3 columns">
                   <div class="form-field">
                     <label>LEDGER CODE</label>
-                    <input type="text">
+                    <input type="text" name="ledgerCode" #ledgerCode="ngModel" [(ngModel)]="paymentModel.ledger_code" pattern="(\d+|\d+(\.)\d+)">
+                    <span *ngIf="ledgerCode.touched && (ledgerCode.errors?.pattern);"
+                          class="inline-icon error">
+                          <span>Oops! Only numerical values and "." are allowed.</span>!
+                  </span>
                   </div>
                 </div>
                 <div class="medium-3 columns">
                   <div class="form-field">
                     <label>GST</label>
-                    <input type="text">
+                    <input type="text" name="gst" #gst="ngModel" [(ngModel)]="paymentModel.gst" pattern="(\d+|\d+(\.)\d+)">
+                    <span *ngIf="gst.touched && (gst.errors?.pattern);"
+                          class="inline-icon error">
+                          <span>Oops! Only numerical values and "." are allowed.</span>!
+                  </span>
                   </div>
                 </div>
               </ng-container>
             </div>
+          </div>
+          <div class="actions">
+            <button name="btnSave" (click)="savePayrollBilling(payroll_billing_form)">Save</button>
           </div>
         </form>
     </main>

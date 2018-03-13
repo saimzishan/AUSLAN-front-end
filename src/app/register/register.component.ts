@@ -234,7 +234,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
     navigateToPayroll() {
         let navigationExtras: NavigationExtras = {
-            queryParams: {selectedRole: this.selectedRole}
+            queryParams: {userId: this.selectedRole === 'ORGANISATION' ? this.model.organisation_attributes.id : this.model.id,
+                          selectedRole: this.selectedRole}
         };
         this.router.navigate(['/user-management/', 'payroll-billing'], navigationExtras);
     }
