@@ -22,6 +22,7 @@ export class UserProfileComponent implements OnInit {
     userModel;
     selectedStatus = '';
     userStatusArray = GLOBAL.userStatusArray;
+    otherGender = '';
 
     constructor(public userDataService: UserService, public userNameService: UserNameService,
                 public notificationServiceBus: NotificationServiceBus,
@@ -46,7 +47,16 @@ export class UserProfileComponent implements OnInit {
 
         this.selectedStatus = Boolean(this.userModel && this.userModel.disabled === false) ?
             this.userStatusArray[0].name : this.userStatusArray[1].name;
+        this.setGenderIfOther();
     }
+
+    setGenderIfOther() {
+        if (this.userModel.gender !== 'Male' && this.userModel.gender !== 'Female' && this.userModel.gender !== null) {
+            this.otherGender = this.userModel.gender;
+            this.userModel.gender = 'Other';
+        }
+    }
+
     validateAllFormFields(formGroup: FormGroup) {
         Object.keys(formGroup.controls).forEach(field => {
             const control = formGroup.get(field);
@@ -65,6 +75,8 @@ export class UserProfileComponent implements OnInit {
             return;
         }
 
+        this.userModel.gender = this.userModel.gender === 'Other' ? this.otherGender : this.userModel.gender;
+        this.otherGender = '';
         this.userModel.disabled = this.selectedStatus === 'Disabled';
         this.selectedStatus = '';
         this.spinnerService.requestInProcess(true);
@@ -82,6 +94,7 @@ export class UserProfileComponent implements OnInit {
                         user = UserFactory.createUser(JSON.parse(res._body));
                         GLOBAL.currentUser = user;
                         AuthGuard.refreshUser(user);
+                        this.setGenderIfOther();
                         this.userNameService.setLoggedInUser(user);
                         this.notificationServiceBus.launchNotification(false, 'User details updated Successfully');
                         this.spinnerService.requestInProcess(false);

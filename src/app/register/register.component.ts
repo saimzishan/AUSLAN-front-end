@@ -51,11 +51,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
                 case 'Interpreter'.toUpperCase():
                     let int1: Interpreter = this.isEdit ? <Interpreter>UserFactory.createUser(jsonData) : new Interpreter();
                     this.model = int1;
-                    if (this.model.gender !== 'Male' && this.model.gender !== 'Female') {
-                        this.otherGender = this.model.gender;
-                        this.model.gender = 'Other';
-                    }
-
+                    this.setIfOtherGender();
                     this.model.role = ROLE.Interpreter;
                     GLOBAL.currentInterpreter = this.isEdit ? int1 : GLOBAL.currentInterpreter;
                     break;
@@ -63,6 +59,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
                 case 'IndividualClient'.toUpperCase():
                     let ic = this.isEdit ? UserFactory.createUser(jsonData) : new IndividualClient(jsonData);
                     this.model = ic;
+                    this.setIfOtherGender();
                     this.model.role = ROLE.IndividualClient;
 
                     break;
@@ -70,6 +67,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
                 case 'Organisation'.toUpperCase():
                     let org = this.isEdit || this.isDuplicate ? UserFactory.createUser(jsonData) : new OrganisationalRepresentative(jsonData);
                     this.model = org;
+                    this.setIfOtherGender();
                     this.model.role = ROLE.Organisation;
                     if (this.isDuplicate) {
                         this.model.first_name = this.model.last_name =
@@ -108,6 +106,14 @@ export class RegisterComponent implements OnInit, OnDestroy {
         this.model.state_where_most_bookings_occur = 'VIC';
         this.model.staff_to_casual_toggle = this.model.employment_type;
     }
+
+    setIfOtherGender() {
+        if (this.model.gender !== 'Male' && this.model.gender !== 'Female' && this.model.gender !== null && this.isEdit) {
+            this.otherGender = this.model.gender;
+            this.model.gender = 'Other';
+        }
+    }
+
     staffToCasualToggle() {
         if (this.model.id > 0) {
             this.userService.toggle_employment_type(this.model.id)
