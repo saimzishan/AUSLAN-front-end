@@ -87,6 +87,27 @@
                                 </div>
                             </div>
                         </ng-container>
+                        <ng-container *ngIf="selectedRole === 'INDIVIDUALCLIENT' || selectedRole === 'ORGANISATION'|| selectedRole === 'INTERPRETER'">
+                            <div class="medium-6 columns">
+                                <div class="form-field">
+                                    <label>GENDER</label>
+                                    <select [(ngModel)]="model.gender" name="gender" #gender="ngModel">
+
+                                        <option *ngFor="let item of  ['Male','Female','Other']" [value]="item">{{item.toUpperCase()}}</option>
+
+                                    </select>
+                                </div>
+                            </div>
+                            <ng-container *ngIf="model.gender === 'Other'">
+                                <div class="medium-6 columns">
+                                    <div class="form-field">
+                                        <label>GENDER SPECIFY</label>
+                                        <input id="genderSpecify" name="genderSpecify" type="text" placeholder="Please specify your gender" [(ngModel)]="otherGender"
+                                            name="genderSpecify" #genderSpecify="ngModel">
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </ng-container>
                         <div class="medium-6 columns">
                             <div class="form-field">
                                 <label class="icon-email">
@@ -181,6 +202,13 @@
                         
                                     <span>This field is required.</span>!
                                 </span>
+                            </div>
+                        </div>
+                        <div *ngIf="checkUserAdminORBookOfficer() && ((selectedRole === 'INTERPRETER') || (selectedRole === 'ORGANISATION') || (selectedRole === 'INDIVIDUALCLIENT'))" class="medium-6 columns">
+                            <div class="form-field">
+                                <label>ACCOUNT NUMBER</label>
+                                <input type="text" placeholder="Enter your account number"
+                                        [(ngModel)]="model.linked_account_number" name="linked_account_number" #linked_account_number="ngModel">
                             </div>
                         </div>
                     </div>

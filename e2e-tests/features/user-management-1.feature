@@ -155,3 +155,75 @@ Feature: Create, read, update and delete a User
     And I update Booking Officer available field
     And I click on update
     Then I see success notification
+
+  @runThis
+  Scenario: Booking Officer should be able to update an Interpreter gender
+    And I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    And I am on my admin home screen
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then I click on edit for an active existing Interpreter
+    And I will be taken to the 'INTERPRETER Signup' page
+    And I select option MALE from dropdown GENDER
+    And I click on update
+    Then I see success notification
+    Then I click on edit for an active existing Interpreter
+    And I will be taken to the 'INTERPRETER Signup' page
+    And The cell of GENDER will be populated with MALE
+    And I select option OTHER from dropdown GENDER
+    And I fill the field 'genderSpecify' with value 'Cheeti'
+    And I click on update
+    Then I see success notification
+    Then I click on edit for an active existing Interpreter
+    And I will be taken to the 'INTERPRETER Signup' page
+    And The cell of GENDER will be populated with OTHER
+    Then I can verify the input 'genderSpecify' will have the value 'Cheeti'
+
+  @runThis
+  Scenario: Booking Officer should be able to update an Individual Client gender
+    And I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    And I am on my admin home screen
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then I click on edit for an active existing Individual Client
+    And I will be taken to the 'INDIVIDUALCLIENT Signup' page
+    And I select option MALE from dropdown GENDER
+    And I click on update
+    Then I see success notification
+    Then I click on edit for an active existing Individual Client
+    And I will be taken to the 'INDIVIDUALCLIENT Signup' page
+    And The cell of GENDER will be populated with MALE
+    And I select option OTHER from dropdown GENDER
+    And I fill the field 'genderSpecify' with value 'Cheeti'
+    And I click on update
+    Then I see success notification
+    Then I click on edit for an active existing Individual Client
+    And I will be taken to the 'INDIVIDUALCLIENT Signup' page
+    And The cell of GENDER will be populated with OTHER
+    Then I can verify the input 'genderSpecify' will have the value 'Cheeti'
+
+    @runThis
+  Scenario: Booking Officer should be able to update an Organisational Representative gender
+    And I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    And I am on my admin home screen
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then I click on edit for an active existing Organisational Representative
+    And I will be taken to the 'ORGANISATION Signup' page
+    And I select option MALE from dropdown GENDER
+    And I click on update
+    Then I see success notification
+    Then I click on edit for an active existing Organisational Representative
+    And I will be taken to the 'ORGANISATION Signup' page
+    And The cell of GENDER will be populated with MALE
+    And I select option OTHER from dropdown GENDER
+    And I fill the field 'genderSpecify' with value 'Cheeti'
+    And I click on update
+    Then I see success notification
+    Then I click on edit for an active existing Organisational Representative
+    And I will be taken to the 'ORGANISATION Signup' page
+    And The cell of GENDER will be populated with OTHER
+    Then I can verify the input 'genderSpecify' will have the value 'Cheeti'

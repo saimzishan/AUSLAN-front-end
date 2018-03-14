@@ -127,6 +127,25 @@ Feature: User Profile Management
     And I can see the element with name 'interpreter_notes' is 'not visible'
 
   @runThis
+  Scenario: Be able to update the profile as Interpreter
+    Given I exist as an Interpreter
+    And I sign in with valid Interpreter credentials
+    And I am on the bookings page
+    When I click on my name in the top corner
+    When I click on the option  profile
+    Then I will be taken to my individual profile page
+    And I select option MALE from dropdown GENDER
+    And I click on BUTTON 'SAVE'
+    Then I see success notification
+    And The cell of GENDER will be populated with MALE
+    And I select option OTHER from dropdown GENDER
+    And I fill the field 'genderSpecify' with value 'Cheeti'
+    And I click on BUTTON 'SAVE'
+    Then I see success notification
+    And The cell of GENDER will be populated with OTHER
+    Then I can verify the input 'genderSpecify' will have the value 'Cheeti'
+
+  @runThis
 #  Show profile page
   Scenario: Be able to view the profile as Organisational Representative
     Given I exist as an Organisational Representative
@@ -135,6 +154,25 @@ Feature: User Profile Management
     When I click on my name in the top corner
     When I click on the option  profile
     Then I will be taken to my individual profile page
+
+  @runThis
+  Scenario: Be able to update the profile as Organisational Representative
+    Given I exist as an Organisational Representative
+    And I sign in with valid Organisational Representative credentials
+    And I am on the bookings page
+    When I click on my name in the top corner
+    When I click on the option  profile
+    Then I will be taken to my individual profile page
+    And I select option MALE from dropdown GENDER
+    And I click on BUTTON 'SAVE'
+    Then I see success notification
+    And The cell of GENDER will be populated with MALE
+    And I select option OTHER from dropdown GENDER
+    And I fill the field 'genderSpecify' with value 'Cheeti'
+    And I click on BUTTON 'SAVE'
+    Then I see success notification
+    And The cell of GENDER will be populated with OTHER
+    Then I can verify the input 'genderSpecify' will have the value 'Cheeti'
 
   @runThis
 #  Show profile page
@@ -146,5 +184,21 @@ Feature: User Profile Management
     When I click on the option  profile
     Then I will be taken to my individual profile page
     
-    
-    
+  @runThis
+  Scenario: Be able to update the profile as Individual Client
+    Given I exist as an Individual Client
+    And I sign in with valid Individual Client credentials
+    And I am on the bookings page
+    When I click on my name in the top corner
+    When I click on the option  profile
+    Then I will be taken to my individual profile page
+    And I select option MALE from dropdown GENDER
+    And I click on BUTTON 'SAVE'
+    Then I see success notification
+    And The cell of GENDER will be populated with MALE
+    And I select option OTHER from dropdown GENDER
+    And I fill the field 'genderSpecify' with value 'Cheeti'
+    And I click on BUTTON 'SAVE'
+    Then I see success notification
+    And The cell of GENDER will be populated with OTHER
+    Then I can verify the input 'genderSpecify' will have the value 'Cheeti'

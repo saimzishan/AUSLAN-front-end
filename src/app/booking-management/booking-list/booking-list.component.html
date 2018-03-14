@@ -133,6 +133,9 @@
                         </li>
                     </ul>
                 </th>
+                <th *ngIf="isCurrentUserAdminOrBookingOfficer()">
+                    <span class="order" [ngClass]="getSortOrder('notice')" (click)="sort('notice')">Notice</span>
+                </th>
                 <!-- th>
                     <span class="order asc">Updated</span>
                 </th -->
@@ -221,7 +224,7 @@
                 <td>{{booking.method_name}}</td>
                 <td>{{booking.service_type}}</td>
                 <!-- td><span class="underline">02-06 TS<br>7:15 A</span></td -->
-
+                <td *ngIf="isCurrentUserAdminOrBookingOfficer()">{{calculateDaysAgo(booking.created_at)}}</td>
                 <td *ngIf="isCurrentUserAllowed()">
                     <ul id="actions-list" class="dropdown menu custom actions" data-dropdown-menu>
                         <li>

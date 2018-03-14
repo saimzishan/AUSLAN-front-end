@@ -162,3 +162,54 @@ Feature: Create, read, update and delete a User
     When I click on edit for an active existing Interpreter
     Then I will be taken to the 'INTERPRETER Signup' page
     And I can verify the input 'interpreter_notes' will have the value 'testing notes'
+
+  @runThis
+  Scenario: Booking Officer can save the account number of Individual Client
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    And I am on my admin home screen
+    Then I click on my name in the top corner
+    And I go to the 'User Management' list page
+    When I click on edit for an active existing Individual Client
+    And I will be taken to the 'INDIVIDUALCLIENT Signup' page
+    And I can see the element with name 'linked_account_number' is 'visible'
+    Then I fill the field 'linked_account_number' with value '1234567'
+    And I click on update
+    Then I see success notification
+    When I click on edit for an active existing Individual Client
+    Then I will be taken to the 'INDIVIDUALCLIENT Signup' page
+    And I can verify the input 'linked_account_number' will have the value '1234567'
+
+  @runThis
+  Scenario: Booking Officer can save the account number of Organisational Representative
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    And I am on my admin home screen
+    Then I click on my name in the top corner
+    And I go to the 'User Management' list page
+    When I click on edit for an active existing Organisational Representative
+    And I will be taken to the 'ORGANISATIONALREPRESENTATIVE Signup' page
+    And I can see the element with name 'linked_account_number' is 'visible'
+    Then I fill the field 'linked_account_number' with value '0987659'
+    And I click on update
+    Then I see success notification
+    When I click on edit for an active existing Organisational Representative
+    Then I will be taken to the 'ORGANISATIONALREPRESENTATIVE Signup' page
+    And I can verify the input 'linked_account_number' will have the value '0987659'
+
+  @runThis
+  Scenario: Booking Officer can save the account number of interpreter
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    And I am on my admin home screen
+    Then I click on my name in the top corner
+    And I go to the 'User Management' list page
+    When I click on edit for an active existing Interpreter
+    And I will be taken to the 'INTERPRETER Signup' page
+    And I can see the element with name 'linked_account_number' is 'visible'
+    Then I fill the field 'linked_account_number' with value '12121211'
+    And I click on update
+    Then I see success notification
+    When I click on edit for an active existing Interpreter
+    Then I will be taken to the 'INTERPRETER Signup' page
+    And I can verify the input 'linked_account_number' will have the value '12121211'
