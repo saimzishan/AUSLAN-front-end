@@ -4,6 +4,8 @@ import {UserNameService} from '../../shared/user-name.service';
 import {LinkHelper, LINK, LinkAuth} from '../../shared/router/linkhelper';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { MessagingService } from '../../api/messaging.service';
+import { NotificationServiceBus } from '../../notification/notification.service';
 
 @Component({
   selector: 'app-header',
@@ -15,10 +17,11 @@ export class HeaderComponent implements OnDestroy, OnInit {
   private sub: any;
   userIsActive = false;
   fullName = '';
-  bookingID;
+  interpreterID;
   route: string;
   href;
-  constructor(location: Location, private router: Router, public userNameService: UserNameService, private linkAuth: LinkAuth) {
+  constructor(public notificationServiceBus: NotificationServiceBus,
+    private messagingModel: MessagingService, location: Location, private router: Router, public userNameService: UserNameService, private linkAuth: LinkAuth) {
     this.route = location.path();
   }
   ngOnInit () {
@@ -34,6 +37,9 @@ export class HeaderComponent implements OnDestroy, OnInit {
       '';
         this.userIsActive = Boolean(GLOBAL.currentUser && this.fullName && this.fullName.length > 0
         && this.fullName === GLOBAL.currentUser.first_name + ' '  + GLOBAL.currentUser.last_name);
+      if (Boolean(GLOBAL.currentUser) && GLOBAL.currentUser.id > 0) {
+        this.interpreterID = GLOBAL.currentUser.id;
+      }
   }
 
   getPicturePath() {
@@ -55,12 +61,18 @@ export class HeaderComponent implements OnDestroy, OnInit {
   canShowLink(linkName) {
     return this.linkAuth.canShowLink(linkName);
   }
-  isActive() {
-    this.href = this.route.split('/');
-    if (this.href[3] === 'job-detail') {
-      this.bookingID = this.href[2];
-            return true;
+
+  checkBeforeNavigation() {
+    if (+localStorage.getItem('bookingId') === -1) {
+      this.notificationServiceBus.launchNotification(true, 'Please select any booking before');
+      return false;
     }
+    this.setActiveLink(7);
+    return true;
+  }
+
+  navigateToMessaging() {
+    this.router.navigate(['users/', this.interpreterID, 'messages']);
   }
 
 }

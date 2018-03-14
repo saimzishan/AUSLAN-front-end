@@ -88,6 +88,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         this.headerSubscription = this.bookingHeaderService.notifyObservable$.subscribe((res) => {
             this.callRelatedFunctions(res);
         });
+        localStorage.setItem('bookingId', this.setparam_id );
     }
 
     callRelatedFunctions(res) {
@@ -952,7 +953,10 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         return str.replace(/_/g, ' ');
     }
     getInterpreterId() {
-        return this.setparam_id;
+        if (Boolean(GLOBAL.currentUser) && GLOBAL.currentUser.id > 0) {
+            return GLOBAL.currentUser.id;
+        }
+        return -1;
     }
 
     serviceName() {

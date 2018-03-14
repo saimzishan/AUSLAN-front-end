@@ -31,7 +31,6 @@ export class BookingListComponent implements OnInit, OnChanges {
     @Output() onPageEmit = new EventEmitter<number>();
     @Input() p = 1;
     @Input() totalItems = 0;
-
     constructor(public router: Router, private datePipe: DatePipe) {
         BA.loadItems();
     }
@@ -83,6 +82,7 @@ export class BookingListComponent implements OnInit, OnChanges {
         }
         this.router.navigate(['/booking-management/' + booking.id, route]);
         GLOBAL.selBookingID = booking.id;
+        localStorage.setItem('bookingId', booking.id);
     }
 
     isStateCancelClaimOrComplete(state) {
