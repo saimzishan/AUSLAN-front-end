@@ -13,14 +13,14 @@ import {UserPayrollBilling} from '../../shared/model/user-payroll-billing.entity
 export class UserPayrollBillingComponent implements OnInit, OnDestroy {
   private sub: any;
   selectedRole = '';
-  ordHours = '';
-  paymentModel: UserPayrollBilling;
+  payrollBillingModel: UserPayrollBilling;
+  oldPayrollBillingModel;
 
   constructor(private route: ActivatedRoute, public userService: UserService, public spinnerService: SpinnerService,
               public notificationServiceBus: NotificationServiceBus) { }
 
   ngOnInit() {
-    this.paymentModel = new UserPayrollBilling();
+    this.payrollBillingModel = new UserPayrollBilling();
     this.sub = this.route.queryParams.subscribe(params => {
       this.selectedRole = params['selectedRole'] || '';
       let userID = params['userId'] || '';
@@ -38,7 +38,8 @@ export class UserPayrollBillingComponent implements OnInit, OnDestroy {
     this.spinnerService.requestInProcess(true);
     this.userService.getUserPayrollOrBilling(userID, this.selectedRole === 'ORGANISATION').subscribe((res: any) => {
       if (res.status === 200) {
-        this.paymentModel.fromJSON(res.data);
+        this.payrollBillingModel.fromJSON(res.data);
+        this.oldPayrollBillingModel = this.deepCopy(this.payrollBillingModel);
       }
       this.spinnerService.requestInProcess(false);
     },
@@ -55,9 +56,10 @@ export class UserPayrollBillingComponent implements OnInit, OnDestroy {
       return;
     }
     this.spinnerService.requestInProcess(true);
-    this.userService.updateUserPayrollOrBilling(this.paymentModel).subscribe((res: any) => {
+    this.userService.updateUserPayrollOrBilling(this.payrollBillingModel).subscribe((res: any) => {
       if (res.status === 204) {
-        this.notificationServiceBus.launchNotification(false, 'Hurray! details have been updated.');
+        this.notificationServiceBus.launchNotification(false, 'Details have been updated.');
+        this.oldPayrollBillingModel = this.deepCopy(this.payrollBillingModel);
       }
       this.spinnerService.requestInProcess(false);
     },
@@ -66,6 +68,11 @@ export class UserPayrollBillingComponent implements OnInit, OnDestroy {
         let e = err.json() || 'There is some error on server side';
         this.notificationServiceBus.launchNotification(true, e);
       });
+  }
+
+  deepCopy(oldObj: any) {
+    let newObj = JSON.parse(JSON.stringify(oldObj));
+    return newObj;
   }
 
 }

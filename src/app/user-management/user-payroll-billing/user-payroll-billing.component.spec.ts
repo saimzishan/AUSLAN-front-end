@@ -10,6 +10,10 @@ import {SpinnerService} from '../../spinner/spinner.service';
 import {AuthHttp} from 'angular2-jwt';
 import {MockBackend} from '@angular/http/testing';
 import {LinkHelper, LinkAuth} from '../../shared/router/linkhelper';
+import {UserService} from '../../api/user.service';
+import {MockUserService} from '../../shared/test/Mock';
+import {NotificationServiceBus} from '../../notification/notification.service';
+import {MaterialModule, MdDialog} from '@angular/material';
 
 describe('UserPayrollBillingComponent', () => {
   let component: UserPayrollBillingComponent;
@@ -18,9 +22,9 @@ describe('UserPayrollBillingComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ UserPayrollBillingComponent, UserHeaderComponent ],
-      imports: [FormsModule, RouterTestingModule, CustomFormsModule, HttpModule],
-      providers: [LinkHelper, LinkAuth, RolePermission,
-      SpinnerService, { provide: AuthHttp, useClass: MockBackend }]
+      imports: [FormsModule, RouterTestingModule, CustomFormsModule, HttpModule, MaterialModule],
+      providers: [LinkHelper, LinkAuth, RolePermission, { provide: UserService, useClass: MockUserService },
+                  NotificationServiceBus, SpinnerService, { provide: AuthHttp, useClass: MockBackend }, MdDialog]
     })
     .compileComponents();
   }));

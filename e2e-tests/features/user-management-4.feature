@@ -162,3 +162,60 @@ Feature: Create, read, update and delete a User
     When I click on edit for an active existing Interpreter
     Then I will be taken to the 'INTERPRETER Signup' page
     And I can verify the input 'interpreter_notes' will have the value 'testing notes'
+
+  @runThis
+  Scenario: Administrator can save the interpreter payroll settings and will get the unsaved changes warning when changing tabs if changes has been made
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on my admin home screen
+    Then I click on my name in the top corner
+    And I go to the 'User Management' list page
+    When I click on edit for an active existing Interpreter
+    Then I will be taken to the 'INTERPRETER Signup' page
+    And I click on link 'Payroll'
+    Then I fill the field 'ordinaryHours' with value '10.2'
+    And I fill the field 'weekend' with value '5.0'
+    When I click on link 'Manage Users'
+    Then I will be shown a popup message 'There are unsaved changes on this page. Are you sure you want to leave?'
+    And I click on BUTTON name 'yesBtn'
+    Then I wait for 1000 milli-seconds
+    When I click on BUTTON 'Save'
+    Then I get valid message: 'Details have been updated.'
+
+  @runThis
+  Scenario: Administrator can save the individual client billing settings and will get the unsaved changes warning when changing tabs if changes has been made 
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on my admin home screen
+    Then I click on my name in the top corner
+    And I go to the 'User Management' list page
+    When I click on edit for an active existing Individual Client
+    Then I will be taken to the 'INDIVIDUALCLIENT Signup' page
+    And I click on link 'Payroll'
+    Then I fill the field 'ordinaryHours' with value '10.2'
+    And I fill the field 'weekend' with value '5.0'
+    When I click on link 'Manage Users'
+    Then I will be shown a popup message 'There are unsaved changes on this page. Are you sure you want to leave?'
+    And I click on BUTTON name 'yesBtn'
+    Then I wait for 1000 milli-seconds
+    When I click on BUTTON 'Save'
+    Then I get valid message: 'Details have been updated.'
+  
+  @runThis
+  Scenario: Administrator can save the organisational representative billing settings and will get the unsaved changes warning when changing tabs if changes has been made
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on my admin home screen
+    Then I click on my name in the top corner
+    And I go to the 'User Management' list page
+    When I click on edit for an active existing Organisational Representative
+    Then I will be taken to the 'ORGANISATIONALREPRESENTATIVE Signup' page
+    And I click on link 'Payroll'
+    Then I fill the field 'ordinaryHours' with value '10.2'
+    And I fill the field 'weekend' with value '5.0'
+    When I click on link 'Manage Users'
+    Then I will be shown a popup message 'There are unsaved changes on this page. Are you sure you want to leave?'
+    And I click on BUTTON name 'yesBtn'
+    Then I wait for 1000 milli-seconds
+    When I click on BUTTON 'Save'
+    Then I get valid message: 'Details have been updated.'
