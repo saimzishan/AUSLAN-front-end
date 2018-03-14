@@ -1,4 +1,5 @@
 import {PageObject} from './app.po';
+import {BookingPage} from './create-booking.po';
 import {browser, by, element, $, $$, protractor} from 'protractor';
 import {expect} from '../config/helpers/chai-imports';
 import {Heroku, User} from '../helper';
@@ -14,6 +15,8 @@ export class BlockoutPagePo extends PageObject {
      * Look at chai-import.ts for further details
      * */
     saveBtn;
+    createBookingPO = new BookingPage();
+    
     browse = () => {
         return this.currentPath().then((currentPath) => {
             expect(currentPath).to.contain('block_out');
@@ -61,6 +64,11 @@ export class BlockoutPagePo extends PageObject {
             expect(val).to.be.eq('09:25 AM');
         });
     }
+    changeEndDateOFBlockout = () => {
+        let endDate = this.getElementByCss('input[name="dpEventDate_end"]');
+        endDate.clear();
+        endDate.sendKeys(this.createBookingPO.getDateAfterNDays(28));
+    }
     clickOutSide = () => {
         this.getElementByName('auslanLogo').click();
     }
@@ -82,7 +90,5 @@ export class BlockoutPagePo extends PageObject {
             this.getElementByName('blockout_name').click();
         });
     }
-
-
 }
 

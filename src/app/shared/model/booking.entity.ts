@@ -211,6 +211,8 @@ export class Booking {
         this.deaf_person.email = data.deaf_persons_email;
         this.deaf_person.mobile_number = data.deaf_persons_mobile;
         this.deaf_person.eaf = data.deaf_persons_eaf_no;
+        this.deaf_person.ur_number = data.deaf_persons_ur_id;
+        this.deaf_person.ndis_id = data.deaf_persons_ndis_id;
         this.raw_nature_of_appointment = data.nature_of_appointment;
         this.nature_of_appointment = <BOOKING_NATURE>BOOKING_NATURE[this.raw_nature_of_appointment];
         this.specific_nature_of_appointment = data.specific_nature_of_appointment;
@@ -341,6 +343,7 @@ export class Booking {
             deaf_persons_first_name: this.deaf_person.first_name,
             deaf_persons_last_name: this.deaf_person.last_name, deaf_persons_mobile: this.deaf_person.mobile_number,
             deaf_persons_email: this.deaf_person.email, deaf_persons_eaf_no: this.deaf_person.eaf,
+            deaf_persons_ur_id: this.deaf_person.ur_number, deaf_persons_ndis_id: this.deaf_person.ndis_id,
             number_of_people_attending: _expected_attendance,
             start_time: this.venue.start_time_iso,
             end_time: this.venue.end_time_iso,
@@ -391,8 +394,8 @@ export class Booking {
         return momentTimeZone(time).tz(timeZone).format('HH:mm:ss');
     }
 
-    getDayLightSavings() {
+    getDayLightSavings(bookingDate) {
         let timeZone = Booking.getNamedTimeZone(this.venue.state, this.venue.post_code.toString());
-        return momentTimeZone().tz(timeZone).format('Z');
+        return momentTimeZone(bookingDate).tz(timeZone).format('Z');
     }
 }

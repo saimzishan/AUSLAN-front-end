@@ -13,7 +13,7 @@
 		</a>
 	</nav>
 
-	<a *ngIf="userIsActive && canShowLink('create-booking')" id="lnkNewBooking" [ngClass]="{'active':isActiveLink(linkName.booking)}" (click)="setActiveLink(linkName.booking)" class="button" [routerLink]="['/booking-management','create-booking']">+ New Booking</a>
+	<a *ngIf="userIsActive && canShowLink('create-booking')" id="lnkNewBooking" [ngClass]="{'active':isActiveLink(linkName.booking)}" (click)="setActiveLink(linkName.booking);refreshBooking()" class="button" [routerLink]="['/booking-management','create-booking']">+ New Booking</a>
 
 	<section *ngIf="userIsActive">
 		<ul class="dropdown menu click-handler" data-disable-hover="true" data-click-open="true" data-dropdown-menu="" onclick="this.classList.toggle('opened');">

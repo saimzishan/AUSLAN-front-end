@@ -16,6 +16,7 @@ import {BookingInterpreter} from '../../shared/model/contact.entity';
 import {BookingFilter} from '../../shared/model/booking-filter.interface';
 import {BA, BOOKING_NATURE} from '../../shared/model/booking-nature.enum';
 import {DatePipe} from '@angular/common';
+import * as moment from 'moment';
 
 @Component({
     selector: 'app-booking-list',
@@ -47,7 +48,7 @@ export class BookingListComponent implements OnInit, OnChanges {
             }
         });
         if (this.filterParams.paramsMap.size === 0) {
-            this.sort('start_time');
+            this.setFilterParams('start_time');
             this.bookingFilter.date_from = this.datePipe.transform(Date.now(), 'yyyy-MM-dd');
         }
         this.filter('date_from', this.bookingFilter.date_from);
@@ -206,11 +207,15 @@ export class BookingListComponent implements OnInit, OnChanges {
     }
 
     sort(field: string) {
+        this.setFilterParams(field);
+        this.onBookingFilter.emit();
+    }
+
+    setFilterParams(field: string) {
         this.setCurrentSort(field);
         this.filterParams.set('sort', this.currentSort.field);
         this.filterParams.set('direction', this.currentSort.order);
         GLOBAL._filterVal = this.filterParams;
-        this.onBookingFilter.emit();
     }
 
     getPage(page: number) {
@@ -219,5 +224,11 @@ export class BookingListComponent implements OnInit, OnChanges {
     linkIdClicked(linkID: string) {
         this.bookingFilter.booking_ids = linkID;
         this.filter('booking_ids', this.bookingFilter.booking_ids);
+    }
+
+    calculateDaysAgo(created_at) {
+        let createdDate = moment(created_at);
+        let currentDate = moment(Date.now());
+        return currentDate.diff(createdDate, 'days');
     }
 }

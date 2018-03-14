@@ -14,10 +14,6 @@ import 'rxjs/add/observable/throw';
 
 @Injectable()
 export class MessagingService extends ApiService {
-    /*
-     While this method seems to have no significance, Most of the method below would fail, if DI fails.
-     Also when running test cases, mocking backend needs to ensure the HTTP is in provider and injector
-    */
     isValidHttp(): boolean {
         return (this.http !== undefined || this.http !== null);
     }
@@ -25,9 +21,7 @@ export class MessagingService extends ApiService {
     getInterpreterMessages(user_id): Observable<Object> {
         let headers = new Headers({ 'Accept': 'application/json' });
         let options = new RequestOptions({ headers: headers });
-        // const otherOptions = { params: {page: 1, per_page: 10 } };
 
-       // options = Object.assign(options, otherOptions);
         return this.http
             .get(GLOBAL.USER_API + '/' + user_id + '/messages' + '?page=' + 1 + '&amp;per_page=' + 100, options)
             .map(this.extractData)

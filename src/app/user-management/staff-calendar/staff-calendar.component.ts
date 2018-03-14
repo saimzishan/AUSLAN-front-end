@@ -141,7 +141,7 @@ export class StaffCalendarComponent implements OnInit {
                     frequency: avail_block.frequency
                 });
                 if (avail_block.recurring === true) {
-                    event.dow = avail_block.frequency === 'daily' ? [1, 2, 3, 4, 5] : [this.setDays(avail_block.recurring_week_days)];
+                    event.dow = avail_block.frequency === 'daily' ? [1, 2, 3, 4, 5] : this.setDays(avail_block.recurring_week_days);
                     event.ranges = [
                         {
                             start: moment().endOf(avail_block.frequency === 'daily' ? 'day' :
@@ -165,14 +165,10 @@ export class StaffCalendarComponent implements OnInit {
 
     }
     setDays(days) {
-        let data = '';
-        for (let row = 0; row < days.length; row++) {
-            if ( row === days.length - 1 ) {
-                data += days[row];
-            } else {
-                data += days[row] + ',';
-            }
-        }
+        let data = [];
+        days.forEach(element => {
+            data.push(+element + 1);
+        });
         return data;
     }
     interpreterStateTimeZone(time) {

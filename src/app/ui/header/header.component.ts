@@ -13,7 +13,7 @@ import { NotificationServiceBus } from '../../notification/notification.service'
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnDestroy, OnInit {
-  linkName= LINK;
+  linkName = LINK;
   private sub: any;
   userIsActive = false;
   fullName = '';
