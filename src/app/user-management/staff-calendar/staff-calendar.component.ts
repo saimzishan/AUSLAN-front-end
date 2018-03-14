@@ -47,19 +47,19 @@ export class StaffCalendarComponent implements OnInit {
         delete this.userModel.password;
         this.routes.params.subscribe(params => {
              this.userID = +params['id'] || false;
+             if (this.userID) {
+                localStorage.setItem('userId', this.userID);
+                this.userDataService.getUser(this.userID)
+                    .subscribe((res: any) => {
+                        if (res.status === 200) {
+                            delete res.data.assignments_attributes;
+                            this.interpreter = res.data;
+                            this.userModel.staff_availabilities_attributes = res.data.staff_availabilities_attributes;
+                            this.StaffAvialabilityToUpdate();
+                        }
+                    });
+            }
          });
-        if (this.userID) {
-            localStorage.setItem('userId', this.userID);
-            this.userDataService.getUser(this.userID)
-                .subscribe((res: any) => {
-                    if (res.status === 200) {
-                        delete res.data.assignments_attributes;
-                        this.interpreter = res.data;
-                        this.userModel.staff_availabilities_attributes = res.data.staff_availabilities_attributes;
-                        this.StaffAvialabilityToUpdate();
-                    }
-                });
-        }
     }
 
     isUserAdminOrBO() {
