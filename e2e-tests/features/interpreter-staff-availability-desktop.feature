@@ -44,7 +44,8 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER STAF
     Then I change the value of end date
     And I click on BUTTON 'SAVE'
     And I get success message: 'Staff Availability successfully added'
-    Then I can count the element with css 'span.fc-title' to be '6'
+    Then I click on button with css '.fc-listYear-button'
+    Then I can count the element with css '.fc-list-heading-main' to be atleast '6'
 
   @runThis
   Scenario: As Administrator I can add INTERPRETER blockouts on desktop
