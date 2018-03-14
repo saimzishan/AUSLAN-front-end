@@ -279,7 +279,7 @@ export class BookingPage extends PageObject {
         date = date.toString();
         return ('00' + date).slice(date.length);
     }
-    private getDateAfterNDays = (n: number): string => {
+    getDateAfterNDays = (n: number): string => {
         const currentDate = new Date();
         const dateStart = new Date(new Date(currentDate).setDate(currentDate.getDate() + n));
         return [

@@ -50,6 +50,7 @@ export class User {
     public role: ROLE;
     public first_name: string;
     public last_name: string;
+    public gender: string;
     public id: number;
     public mobile: string;
     public phone: string;
@@ -132,6 +133,7 @@ export class OrganisationalRepresentative extends Organisational {
             'id': this.id,
             'first_name': this.first_name,
             'last_name': this.last_name,
+            'gender': this.gender,
             'type': this.type,
             'email': this.email,
             'avatar': this.avatar,
@@ -326,6 +328,7 @@ export class IndividualClient extends User {
             'id': this.id,
             'photo_url': this.photo_url,
             'first_name': this.first_name, 'last_name': this.last_name, 'email': this.email, 'password': this.password,
+            'gender': this.gender,
             'type': this.type, 'special_instructions': this.special_instructions,
             'avatar': this.avatar,
             'discovery_of_auslan': this.reffered_by === 'OTHER' ?
@@ -360,6 +363,7 @@ export class IndividualClient extends User {
         this.first_name = obj.first_name;
         this.last_name = obj.last_name;
         this.email = obj.email;
+        this.gender = obj.gender;
         this.password = obj.password;
         this.ndis_id = obj.ndis_id;
         this.phone  = obj.business_hours_phone;

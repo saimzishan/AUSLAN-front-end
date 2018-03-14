@@ -49,7 +49,7 @@ export class BookingListComponent implements OnInit, OnChanges {
             }
         });
         if (this.filterParams.paramsMap.size === 0) {
-            this.sort('start_time');
+            this.setFilterParams('start_time');
             this.bookingFilter.date_from = this.datePipe.transform(Date.now(), 'yyyy-MM-dd');
         }
         this.filter('date_from', this.bookingFilter.date_from);
@@ -207,11 +207,15 @@ export class BookingListComponent implements OnInit, OnChanges {
     }
 
     sort(field: string) {
+        this.setFilterParams(field);
+        this.onBookingFilter.emit();
+    }
+
+    setFilterParams(field: string) {
         this.setCurrentSort(field);
         this.filterParams.set('sort', this.currentSort.field);
         this.filterParams.set('direction', this.currentSort.order);
         GLOBAL._filterVal = this.filterParams;
-        this.onBookingFilter.emit();
     }
 
     getPage(page: number) {
