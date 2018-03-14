@@ -149,3 +149,16 @@ Feature: Create, read, update and delete a User
     And I update some Organisational Representative fields
     And I click on update
     Then I see success notification
+
+  @runThis
+  Scenario: As Administrator I can update approve date Interpreter
+    And I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on my admin home screen
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then I click on edit for an active existing Interpreter
+    And I will be taken to the 'INTERPRETER Signup' page
+    And I enter approved date
+    And I click on BUTTON name 'register_user'
+    Then I see success notification
