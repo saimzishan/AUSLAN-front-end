@@ -61,6 +61,15 @@ export class BlockoutPagePo extends PageObject {
             expect(val).to.be.eq('09:25 AM');
         });
     }
+    changeEndDateOFBlockout = () => {
+        let endDate = this.getElementByCss('input[name="dpEventDate_end"]');
+        endDate.clear();
+        endDate.sendKeys('29/03/2018');
+        this.clickOutSide();
+        return endDate.getAttribute('value').then((val) => {
+            expect(val).to.be.eq('29/03/2018');
+        });
+    }
     clickOutSide = () => {
         this.getElementByName('auslanLogo').click();
     }
