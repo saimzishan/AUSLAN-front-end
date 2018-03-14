@@ -148,3 +148,12 @@ Feature: Booking Management
     And I can see the bookable field
     When I search for 'ted' in autocomplete
     Then I am shown ted Individual Client as a suggestion
+
+  @runThis
+  Scenario: Clicking on New Booking should reset the booking form for Administrator
+    Given I sign in with valid Administrator credentials
+    When I click on 'New Booking'
+    Then I will be taken to the 'New Booking' form
+    And I fill the field 'ext_ref_num' with value '1234'
+    When I click on 'New Booking'
+    Then I can verify the input 'ext_ref_num' will have the value ''

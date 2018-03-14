@@ -394,8 +394,8 @@ export class Booking {
         return momentTimeZone(time).tz(timeZone).format('HH:mm:ss');
     }
 
-    getDayLightSavings() {
+    getDayLightSavings(bookingDate) {
         let timeZone = Booking.getNamedTimeZone(this.venue.state, this.venue.post_code.toString());
-        return momentTimeZone().tz(timeZone).format('Z');
+        return momentTimeZone(bookingDate).tz(timeZone).format('Z');
     }
 }
