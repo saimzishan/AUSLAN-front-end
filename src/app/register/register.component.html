@@ -4,7 +4,7 @@
     </header>
     <section id="submenu" *ngIf="checkUserAdminORBookOfficer()">
        <section>
-            <a id="TABStaffCalendar" [routerLink]="['/user-management/','staff_calendar']"> Staff Calender</a>
+            <a id="TABStaffCalendar" [routerLink]="['/user-management/',userId,'staff_calendar']"> Staff Calender</a>
         </section>
     </section>
     <section id="page-signup-organisation">
