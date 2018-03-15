@@ -65,7 +65,6 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
         this.spinnerService.requestInProcess(true);
         this.bookingService.getBookingPayments(bookingID).subscribe((res: any) => {
             if (res.status === 200) {
-                // console.log(res.data.payments);
                 this.payments.fromJSON('payroll', res.data.payments.payrolls);
                 this.payments.fromJSON('invoice', res.data.payments.invoices);
                 this.oldPayments = this.deepCopy(this.payments);
