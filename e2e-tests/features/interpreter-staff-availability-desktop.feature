@@ -15,6 +15,7 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER STAF
     When I click on the option  staff calender
     When I click on BUTTON 'ADD STAFF AVAILABILITY'
     Then I will be taken to staff-calendar page
+    When I refresh
     And I enter blockout name 'singleEvent'
     And I click on BUTTON 'SAVE'
     And I get success message: 'Staff Availability successfully added'
@@ -46,6 +47,9 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER STAF
     Then I change the value of end date
     And I click on BUTTON 'SAVE'
     And I get success message: 'Staff Availability successfully added'
+    Then I click on button with css '.fc-listYear-button'
+    Then I can count the element with css '.fc-list-heading-main' to be atleast '6'
+    When I refresh
     Then I click on button with css '.fc-listYear-button'
     Then I can count the element with css '.fc-list-heading-main' to be atleast '6'
 
