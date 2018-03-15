@@ -211,8 +211,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     }
 
     isUserDsqAdmin(): Boolean {
-        return Boolean(GLOBAL.currentUser instanceof Administrator);
-     //   return Boolean(GLOBAL.currentUser instanceof Administrator && GLOBAL.currentUser.business_name === 'Dsq');
+        return Boolean(GLOBAL.currentUser instanceof Administrator && GLOBAL.currentUser.business_name === 'DSQ');
     }
 
     handleFileSelect(evt) {

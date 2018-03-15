@@ -166,6 +166,8 @@ Feature: Create, read, update and delete a User
   @runThis
   Scenario: Administrator can save the interpreter payroll settings and will get the unsaved changes warning when changing tabs if changes has been made
     Given I exist as an Administrator
+    Given The user 'Administrator' is of type dsq
+    Given The user 'Interpreter' is of type dsq
     And I sign in with valid Administrator credentials
     And I am on my admin home screen
     Then I click on my name in the top corner
@@ -185,6 +187,8 @@ Feature: Create, read, update and delete a User
   @runThis
   Scenario: Administrator can save the individual client billing settings and will get the unsaved changes warning when changing tabs if changes has been made 
     Given I exist as an Administrator
+    Given The user 'Administrator' is of type dsq
+    Given The user 'IndividualClient' is of type dsq
     And I sign in with valid Administrator credentials
     And I am on my admin home screen
     Then I click on my name in the top corner
@@ -204,6 +208,8 @@ Feature: Create, read, update and delete a User
   @runThis
   Scenario: Administrator can save the organisational representative billing settings and will get the unsaved changes warning when changing tabs if changes has been made
     Given I exist as an Administrator
+    Given The user 'Administrator' is of type dsq
+    Given The user 'OrganisationalRepresentative' is of type dsq
     And I sign in with valid Administrator credentials
     And I am on my admin home screen
     Then I click on my name in the top corner

@@ -59,6 +59,7 @@ export class User {
     public avatar: any;
     public photo_url = '';
     public state_where_most_bookings_occur: string;
+    public business_name = '';
 
     protected get user_type() {
         return '';
