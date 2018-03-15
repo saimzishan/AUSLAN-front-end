@@ -30,7 +30,7 @@
   </thead>
   <tbody>
     <tr>
-      <td data-title="JOB">
+      <td data-title="JOB NUMBER">
         {{selectedBookingModel.id | PrettyID}}
         <span data-title="Link ID" *ngIf="isCurrentUserAdminOrBookingOfficer() && !!selectedBookingModel.link_id" class="linkId">
           <a>#{{selectedBookingModel.link_id}}</a>
