@@ -23,7 +23,6 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
   claimPressed = false;
   undoClaimPressed = false;
   isReadonlyForBO = false;
-
   constructor(public spinnerService: SpinnerService, public bookingService: BookingService,
               private route: ActivatedRoute, public notificationServiceBus: NotificationServiceBus) { }
 
@@ -66,6 +65,7 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
         this.spinnerService.requestInProcess(true);
         this.bookingService.getBookingPayments(bookingID).subscribe((res: any) => {
             if (res.status === 200) {
+                // console.log(res.data.payments);
                 this.payments.fromJSON('payroll', res.data.payments.payrolls);
                 this.payments.fromJSON('invoice', res.data.payments.invoices);
                 this.oldPayments = this.deepCopy(this.payments);
@@ -214,6 +214,14 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
                 return 'Claimed';
             case 'service_completed':
                 return 'Service Completed';
+        }
+    }
+
+    staffToCasualToggle(index) {
+        if (this.payments.payroll_attributes[index].payroll_as === 'staff') {
+            this.payments.payroll_attributes[index].pay_travel = true;
+        } else {
+            this.payments.payroll_attributes[index].pay_travel = false;
         }
     }
 }
