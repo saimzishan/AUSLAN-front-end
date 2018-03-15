@@ -204,6 +204,10 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
         return GLOBAL.currentUser instanceof Administrator;
     }
 
+    isCurrentUserBO() {
+        return GLOBAL.currentUser instanceof BookingOfficer;
+    }
+
     setNotificationState(state) {
         switch (state) {
             case 'cancelled_chargeable':

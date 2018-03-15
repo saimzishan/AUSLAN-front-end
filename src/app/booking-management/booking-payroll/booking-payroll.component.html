@@ -68,6 +68,18 @@
         </section>
     </ng-container>
     </fieldset>
+    <fieldset>
+        <ng-container *ngIf="isCurrentUserAdmin() || isCurrentUserBO()">
+            <div class="medium-12">
+                <div class="form-field">
+                    <h2>GENERAL NOTES</h2>
+                    <textarea type="text" class="inline-icon inline-icon-txt"
+                            cols="30" rows="10" name="general_notes">
+                    </textarea>
+                </div>
+            </div>
+        </ng-container>
+    </fieldset>
         <div *ngIf="payments.payroll_attributes.length > 0" class="actions">
                 <button *ngIf="!isReadonlyForBO" name="btnSave" (click)="updatePayment(payroll_form)">Save</button>
                 <button *ngIf="isCurrentUserAdmin() && isStateCompleteOrCancelCharge()" name="btnClaim" (click)="claimPressed = true">Claim</button>
