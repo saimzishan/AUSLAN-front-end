@@ -304,7 +304,7 @@ defineSupportCode(({Given, When, Then}) => {
         return browser.pause();
     });
     When(/^I refresh/, () => {
-        return browser.refresh();
+        return browser.getCurrentUrl().then(u => browser.driver.navigate().to(u));
     });
     When(/^I click on button '(.*)'$/, clickOnButton);
     function clickOnButton(btnLabel: string) {
