@@ -10,6 +10,9 @@ import * as $ from 'jquery';
 import { DatePipe } from '@angular/common';
 import { UserService } from '../../api/user.service';
 import { dashCaseToCamelCase } from '@angular/compiler/src/util';
+import { Booking } from '../../shared/model/booking.entity';
+import * as momentTimeZone from 'moment-timezone';
+
 
 @Component({
     selector: 'app-staff-calendar',
@@ -109,22 +112,36 @@ export class StaffCalendarComponent implements OnInit {
                 events: []
             };
             for (let avail_block of this.userModel.staff_availabilities_attributes) {
-                let sd = new Date(avail_block.start_time);
-                let ed = new Date(avail_block.end_date || avail_block.start_time);
-                let edt = new Date(avail_block.end_time);
+                let startDate = new Date(avail_block.start_time);
+                let endDate;
+                if (!avail_block.recurring) {
+                    endDate = new Date(avail_block.start_time);
+                } else {
+                    endDate = new Date(avail_block.end_date || avail_block.start_time);
+                }
+                let startTime = this.interpreterStateTimeZone(avail_block.start_time);
+
+                let endTime = this.interpreterStateTimeZone(avail_block.end_time);
+
+                let eventStart = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate(),
+                    moment.duration(startTime).get('hours'), moment.duration(startTime).get('minutes'));
+
+                let eventEnd = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate(),
+                    moment.duration(endTime).get('hours'), moment.duration(endTime).get('minutes'));
+
                 let event: any = ({
                     title: avail_block.name,
                     color: avail_block.recurring ? '#00ff00' : '#02b86e',
                     id: avail_block.id,
                     textColor: '#ffffff',
                     booking_id: avail_block.booking_id,
-                    start: avail_block.recurring === false ? sd.toISOString() : `${sd.getHours()}:${sd.getMinutes()}`,
-                    end: avail_block.recurring === false ? ed.toISOString() : `${edt.getHours()}:${edt.getMinutes()}`,
+                    start: avail_block.recurring === false ? eventStart : ' ',
+                    end: avail_block.recurring === false ? eventEnd : ' ',
                     recurring: avail_block.recurring,
                     frequency: avail_block.frequency
                 });
                 if (avail_block.recurring === true) {
-                    event.dow = avail_block.frequency === 'daily' ? [1, 2, 3, 4, 5] : [this.setDays(avail_block.recurring_week_days)];
+                    event.dow = avail_block.frequency === 'daily' ? [1, 2, 3, 4, 5] : this.setDays(avail_block.recurring_week_days);
                     event.ranges = [
                         {
                             start: moment().endOf(avail_block.frequency === 'daily' ? 'day' :
@@ -133,13 +150,13 @@ export class StaffCalendarComponent implements OnInit {
                             end: moment().endOf(avail_block.frequency === 'daily' ? 'day' :
                                 avail_block.frequency === 'weekly' ? 'week' :
                                     avail_block.frequency === 'monthly' ? 'month' : 'week')
-                        },
-                        {
-                            start: moment(sd.toISOString()).format('YYYY-MM-DD'),
-                            end: moment(ed.toISOString()).format('YYYY-MM-DD')
+                        }, {
+                            start:  eventStart ,
+                            end:  eventEnd ,
                         }
                     ];
                 }
+
 
                 this.calendarOptions['events'].push(event);
             }
@@ -148,14 +165,15 @@ export class StaffCalendarComponent implements OnInit {
 
     }
     setDays(days) {
-        let data = '';
-        for (let row = 0; row < days.length; row++) {
-            if ( row === days.length - 1 ) {
-                data += days[row];
-            } else {
-                data += days[row] + ',';
-            }
-        }
+        let data = [];
+        days.forEach(element => {
+            data.push(+element + 1);
+        });
         return data;
     }
+    interpreterStateTimeZone(time) {
+        let timeZone = Booking.getNamedTimeZone(this.interpreter.address_attributes.state, this.interpreter.address_attributes.post_code.toString());
+        return momentTimeZone(time).tz(timeZone).format('HH:mm:ss');
+    }
+
 }

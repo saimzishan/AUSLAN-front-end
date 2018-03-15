@@ -13,6 +13,7 @@ import { AuthComponent } from '../../auth/auth.component';
 import {UserNameService} from '../../shared/user-name.service';
 import {LinkHelper, LinkAuth, LINK} from '../../shared/router/linkhelper';
 import {RolePermission} from '../../shared/role-permission/role-permission';
+import { BookingHeaderService } from '../../booking-management/booking-header/booking-header.service';
 
 describe('component: TestComponent', function() {
     beforeEach(() => {
@@ -20,7 +21,7 @@ describe('component: TestComponent', function() {
       TestBed.configureTestingModule({
         declarations: [HeaderComponent],
             imports: [RouterTestingModule, HttpModule],
-            providers: [LinkHelper, LinkAuth, UserNameService, RolePermission]
+            providers: [LinkHelper, LinkAuth, UserNameService, RolePermission, BookingHeaderService]
         }).compileComponents();
     });
     describe('HeaderComponent Create', () => {

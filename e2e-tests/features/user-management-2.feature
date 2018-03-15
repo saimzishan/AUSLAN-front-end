@@ -128,6 +128,25 @@ Feature: Create, read, update and delete a User
     Then I see success notification
 
   @runThis
+  Scenario: Administrator should be able to update an Individual Client ur_id and eaf_id
+    And I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on my admin home screen
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then I click on edit for an active existing Individual Client
+    And I will be taken to the 'INDIVIDUALCLIENT Signup' page
+    And I update UR id as '123-ur' and EAF id as '987-eaf' fields
+    And I click on update
+    Then I see success notification
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then I click on edit for an active existing Individual Client
+    And I will be taken to the 'INDIVIDUALCLIENT Signup' page
+    Then I can verify the input 'ur_id' will have the value '123-ur'
+    Then I can verify the input 'eaf_id' will have the value '987-eaf'
+
+  @runThis
   Scenario: Administrator should be able to delete/disable an Individual Client
     And I exist as an Administrator
     And I sign in with valid Administrator credentials

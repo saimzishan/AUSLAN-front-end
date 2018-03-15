@@ -176,7 +176,7 @@ export class BookingPage extends PageObject {
             return single_input.getAttribute('value').then((val) => {
 
                 return single_input.getAttribute('name').then((nam) => {
-                    if (['ext_ref_num', 'deaf_person_eaf', 'search_address'].indexOf(nam) === -1) {
+                    if (['ext_ref_num', 'deaf_person_ndis','deaf_person_ur','deaf_person_eaf', 'search_address'].indexOf(nam) === -1) {
                         expect(!!val).to.be.true;
                     }
 
@@ -279,7 +279,7 @@ export class BookingPage extends PageObject {
         date = date.toString();
         return ('00' + date).slice(date.length);
     }
-    private getDateAfterNDays = (n: number): string => {
+    getDateAfterNDays = (n: number): string => {
         const currentDate = new Date();
         const dateStart = new Date(new Date(currentDate).setDate(currentDate.getDate() + n));
         return [

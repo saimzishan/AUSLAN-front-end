@@ -24,7 +24,7 @@
       <th *ngIf='isCurrentUserAdminOrBookingOfficer() || isClientOrOrgRep()'>Date Added</th>
       <ng-container *ngIf='isCurrentUserAdminOrBookingOfficer()'>
         <th>Days Notice</th>
-        <th *ngIf='isCurrentUserAdminOrBookingOfficer()'>Updated</th>
+        <th>Updated</th>
       </ng-container>
     </tr>
   </thead>
@@ -91,7 +91,7 @@
       </ng-container>
       <td data-title="DATE ADDED" *ngIf='isCurrentUserAdminOrBookingOfficer() || isClientOrOrgRep()'>{{selectedBookingModel.created_at | date}}</td>
       <ng-container *ngIf='isCurrentUserAdminOrBookingOfficer()'>
-        <td data-title="DAYS NOTICED">Days Notice</td>
+        <td data-title="DAYS NOTICED">{{calculateDaysAgo(selectedBookingModel.created_at)}}</td>
         <td data-title="UPDATED"><span class="underline">{{selectedBookingModel.updated_at | date}}</span></td>
       </ng-container>
     </tr>
