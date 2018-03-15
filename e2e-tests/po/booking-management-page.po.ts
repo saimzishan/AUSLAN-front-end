@@ -281,6 +281,9 @@ export class BookingManagementPage extends PageObject {
     querySearchWithEmptyDate = () => {
         this.getElementByName('date_from').sendKeys(protractor.Key.BACK_SPACE,protractor.Key.ARROW_RIGHT,protractor.Key.BACK_SPACE,protractor.Key.ARROW_RIGHT,protractor.Key.BACK_SPACE);
     }
+    pickApprovedCurrentDate = () => {
+        this.getElementByName('date_approved').sendKeys(protractor.Key.ARROW_DOWN);
+    }
     queryManualSearchWithFutureDate = () => {
         this.getElementByName('date_from').sendKeys(protractor.Key.ARROW_UP);
     }

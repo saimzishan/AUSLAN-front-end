@@ -33,6 +33,7 @@ export class UserFactory {
                 inte.address_attributes = <Address> data.address_attributes;
                 inte.availability_blocks_attributes = data.availability_blocks_attributes;
                 inte.interpreter_type = data.interpreter_type;
+                inte.linked_account_number = data.linked_account_number;
                 return inte;
             default:
                 return new User(data);
@@ -49,6 +50,7 @@ export class User {
     public role: ROLE;
     public first_name: string;
     public last_name: string;
+    public gender: string;
     public id: number;
     public mobile: string;
     public phone: string;
@@ -60,6 +62,7 @@ export class User {
     public photo_url = '';
     public state_where_most_bookings_occur: string;
     public business_name = '';
+    public linked_account_number = '';
 
     protected get user_type() {
         return '';
@@ -131,6 +134,7 @@ export class OrganisationalRepresentative extends Organisational {
             'id': this.id,
             'first_name': this.first_name,
             'last_name': this.last_name,
+            'gender': this.gender,
             'type': this.type,
             'email': this.email,
             'avatar': this.avatar,
@@ -153,6 +157,7 @@ export class OrganisationalRepresentative extends Organisational {
                     'preferred_contact_method': this.organisation_billing_account.preferred_contact_method,
                     'address_attributes': this.address_attributes,
                     'preference_allocations_attributes': this.prefferedInterpreters,
+                    'linked_account_number': this.linked_account_number,
                     'billing_account_attributes': {
                         'id': this.organisation_billing_account.id,
                         'primary_contact_first_name': this.organisation_primary_contact.first_name,
@@ -254,6 +259,7 @@ export class OrganisationalRepresentative extends Organisational {
         this.organisation_billing_account.external_reference = obj.organisation.billing_account.external_reference;
         this.organisation_billing_account.id = obj.organisation.billing_account.id;
         this.organisation_billing_account.preferred_contact_method = obj.organisation.preferred_contact_method;
+        this.linked_account_number = obj.organisation.linked_account_number;
 
     }
 }
@@ -277,6 +283,7 @@ export class IndividualClient extends User {
     public ndis_budget_limit: number;
     public ndis_validity_start_date: Date;
     public ndis_validity_end_date: Date;
+    public ur_id: string;
     public eaf_id: string;
     public eaf_budget_limit: number;
     public eaf_start_date: Date;
@@ -322,12 +329,14 @@ export class IndividualClient extends User {
             'id': this.id,
             'photo_url': this.photo_url,
             'first_name': this.first_name, 'last_name': this.last_name, 'email': this.email, 'password': this.password,
+            'gender': this.gender,
             'type': this.type, 'special_instructions': this.special_instructions,
             'avatar': this.avatar,
             'discovery_of_auslan': this.reffered_by === 'OTHER' ?
                 'O:' + this.reffered_other : this.reffered_by,
             'mobile': this.mobile, 'ndis_id': this.ndis_id, 'ndis_budget_limit': this.ndis_budget_limit,
             'ndis_validity_start_date': this.ndis_validity_start_date, 'ndis_validity_end_date': this.ndis_validity_end_date,
+            'ur_id': this.ur_id,
             'eaf_id': this.eaf_id, 'eaf_budget_limit': this.eaf_budget_limit, 'eaf_start_date': this.eaf_start_date,
             'eaf_end_date': this.eaf_end_date,
             'business_hours_phone': this.phone,
@@ -335,6 +344,7 @@ export class IndividualClient extends User {
             'communication_preference': this.preferred_contact_method,
             'preference_allocations_attributes': this.prefferedInterpreters,
             'state_where_most_bookings_occur': this.state_where_most_bookings_occur,
+            'linked_account_number': this.linked_account_number,
             'billing_account_attributes': {
                 'id': this.individual_client_billing_account.id,
                 'primary_contact_first_name': this.individual_client_primary_contact.first_name,
@@ -354,6 +364,7 @@ export class IndividualClient extends User {
         this.first_name = obj.first_name;
         this.last_name = obj.last_name;
         this.email = obj.email;
+        this.gender = obj.gender;
         this.password = obj.password;
         this.ndis_id = obj.ndis_id;
         this.phone  = obj.business_hours_phone;
@@ -361,6 +372,7 @@ export class IndividualClient extends User {
         this.ndis_validity_start_date = obj.ndis_validity_start_date;
         this.ndis_validity_end_date = obj.ndis_validity_end_date;
         this.mobile = obj.mobile;
+        this.ur_id = obj.ur_id;
         this.eaf_id = obj.eaf_id;
         this.eaf_budget_limit = obj.eaf_budget_limit;
         this.eaf_start_date = obj.eaf_start_date;
@@ -379,6 +391,7 @@ export class IndividualClient extends User {
         this.individual_client_primary_contact.phone_number = obj.billing_account_attributes.primary_contact_phone_number;
         this.individual_client_billing_account.organisation_billing_address = obj.billing_account_attributes.address_attributes;
         this.individual_client_billing_account.id = obj.billing_account_attributes.id;
+        this.linked_account_number = obj.linked_account_number;
     }
 }
 
@@ -413,6 +426,7 @@ export class Interpreter extends User {
     public naati_validity_end_date: string;
     public business_hours_phone: string;
     public date_of_birth: string;
+    public date_approved: string;
     public address_attributes: Address = new Address();
     public long_term_availability: interpreter_avalability;
     public override_availabilty: blockout_availability;
@@ -428,7 +442,6 @@ export class Interpreter extends User {
     public blocked = false;
     public booked = false;
     public blockout = false;
-
 
     get user_type() {
         return 'Interpreter';

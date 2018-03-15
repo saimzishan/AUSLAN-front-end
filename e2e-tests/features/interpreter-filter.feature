@@ -6,7 +6,7 @@ Feature: Nearby Interpreter Filter
     Given There exist 1 bookings
 
   @ignoreThis
-  Scenario: Given 1 verified Administrator Officer, I can filter the list of interpreters by Preferred column Yes and No
+  Scenario: Given 1 verified Administrator Officer, I can filter the list of interp's by Preferred column Yes and No
     Given There exist 5 verified interpreters
     Given The first 2 interpreters have preference 'Preferred'
     Given The last 3 interpreters have preference 'Blocked'
@@ -22,7 +22,7 @@ Feature: Nearby Interpreter Filter
     Then I can see a list of 3 verified interpreters
 
   @runThis
-  Scenario: Given 1 verified Administrator Officer, I can filter the list of interpreters by some text of first name
+  Scenario: Given 1 verified Administrator Officer, I can filter the list of interp's by some text of first name
     Given There exist 5 verified interpreters
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
@@ -34,7 +34,7 @@ Feature: Nearby Interpreter Filter
     Then I can see a list of 1 verified interpreters
 
   @runThis
-  Scenario: Given 1 verified Administrator Officer, I can filter the list of interpreters by some text of last name
+  Scenario: Given 1 verified Administrator Officer, I can filter the list of interp's by some text of last name
     Given There exist 5 verified interpreters
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
@@ -46,7 +46,7 @@ Feature: Nearby Interpreter Filter
     Then I can see a list of 1 verified interpreters
 
   @runThis
-  Scenario: Given 1 verified Administrator Officer, I can filter the list of interpreters by some combined text of first and last name
+  Scenario: Given 1 verified Administrator Officer, I can filter the list of interp's by some combined text of first and last name
     Given There exist 5 verified interpreters
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
@@ -58,7 +58,7 @@ Feature: Nearby Interpreter Filter
     Then I can see a list of 1 verified interpreters
 
   @runThis
-  Scenario: Given 1 verified Administrator Officer, I can filter the list of interpreters by Lvl column
+  Scenario: Given 1 verified Administrator Officer, I can filter the list of interp's by Lvl column
     Given There exist 5 verified interpreters
     Given The first 2 interpreters have skill level 'Notetaking'
     Given I exist as an Administrator
@@ -75,7 +75,7 @@ Feature: Nearby Interpreter Filter
     Then I can see a list of 5 verified interpreters
 
   @runThis
-  Scenario: Given 1 verified Administrator Officer, I can filter the list of interpreters by Suburb column
+  Scenario: Given 1 verified Administrator Officer, I can filter the list of interp's by Suburb column
     Given There exist 5 verified interpreters
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
@@ -87,7 +87,7 @@ Feature: Nearby Interpreter Filter
     Then I can see a list of 1 verified interpreters
 
   @ignoreThis
-  Scenario: Given 1 verified Administrator Officer, I can filter the list of interpreters by Pay Travel column
+  Scenario: Given 1 verified Administrator Officer, I can filter the list of interp's by Pay Travel column
     Given There exist 5 verified interpreters
     Given The first 2 interpreters have travel pay status 'Y'
     Given The last 3 interpreters have travel pay status 'N'
@@ -105,7 +105,7 @@ Feature: Nearby Interpreter Filter
     Then I can see a list of 5 verified interpreters
 
   @runThis
-  Scenario: Given 1 verified Administrator Officer, I can search the interpreters by some text of first name
+  Scenario: Given 1 verified Administrator Officer, I can search the interp's by some text of first name
     Given There exist 5 verified interpreters
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
@@ -119,7 +119,7 @@ Feature: Nearby Interpreter Filter
     Then I can see a list of 5 verified interpreters
 
   @runThis
-  Scenario: Given 1 verified Administrator Officer, I can search the interpreters by some text of last name
+  Scenario: Given 1 verified Administrator Officer, I can search the interp's by some text of last name
     Given There exist 5 verified interpreters
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
@@ -133,7 +133,7 @@ Feature: Nearby Interpreter Filter
     Then I can see a list of 5 verified interpreters
 
   @runThis
-  Scenario: Given 1 verified Administrator Officer, I can search the interpreters by some combined text of first and last name
+  Scenario: Given 1 verified Administrator Officer, I can search the interp's by some combined text of first and last name
     Given There exist 5 verified interpreters
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
@@ -147,7 +147,7 @@ Feature: Nearby Interpreter Filter
     Then I can see a list of 5 verified interpreters
 
   @runThis
-  Scenario: Given 1 verified Administrator Officer, I can search the interpreters by text in suburb
+  Scenario: Given 1 verified Administrator Officer, I can search the interp's by text in suburb
     Given There exist 10 verified interpreters
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
