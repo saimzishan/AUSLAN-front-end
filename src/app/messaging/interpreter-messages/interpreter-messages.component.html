@@ -72,7 +72,7 @@
   <section class="messages__wrapper" id="messages-wrapper">
     <ng-container *ngFor="let message of messages">
 
-      <section class="messages__message messages__message_right" *ngIf="message_thread_id === userId" >
+    <section class="messages__message" [ngClass]="{ 'messages__message_right' : message_thread_id === userId, 'messages__message_left' : message_thread_id !== userId }">
         <figure class="messages__figure">
           <img src="{{message.sender.photo_url}}" alt="">
         </figure>
@@ -88,29 +88,13 @@
         </section>
     </section>
 
-      <section class="messages__message messages__message_left" *ngIf="message_thread_id !== userId">
-        <figure class="messages__figure">
-          <img src="{{message.sender.photo_url}}" alt="">
-        </figure>
-        <section class="messages__inner">
-          <div class="messages__title">
-            <strong class="messages__person">{{message.sender.first_name}}</strong>
-            <span class="messages__time">
-              <i class="icon-time"></i> {{message.created_at | date: 'medium' }}</span>
-          </div>
-          <p class="messages__text">{{message.message_body}}
-            <a href="#">#{{message_tage}}</a> booking!</p>
-          <button class="messages__button">{{message.sender.id}}</button>
-        </section>
-      </section>
-
     </ng-container>
   </section>
     <form class="messages__form" style="position: fixed;">
       <button *ngIf='isTagShow' (click)="sendMessageTagHide()" class="button messages__formButton">{{message_tage}} x</button>
       <section class="messages__formInner">
-        <textarea [(ngModel)]="message_body" name="message_body" class="messages__formInput"></textarea>
-        <button (click)="sendInterpreterMessages()" class="messages__formSend"></button>
+        <textarea [(ngModel)]="message_body" required (keyup)="checkEmpty()" name="message_body" class="messages__formInput"></textarea>
+        <button [disabled]="!message_body" (click)="sendInterpreterMessages()" class="messages__formSend"></button>
       </section>
     </form>
 </section>

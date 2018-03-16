@@ -24,7 +24,7 @@ export class InterpreterMessagesComponent implements OnInit, OnDestroy {
   search;
   totalItems;
   bookings: Array<Booking> = [];
-  isTagShow;
+  isTagShow = true;
   message_body = null;
   message_tage;
   messages;
@@ -33,14 +33,13 @@ export class InterpreterMessagesComponent implements OnInit, OnDestroy {
     private rolePermission: RolePermission) { }
 
   ngOnInit() {
-    this.isTagShow = true;
 
     if ( Boolean(GLOBAL.currentUser) && GLOBAL.currentUser.id > 0) {
-      this.getInterpreterMessages(this.getCurrentUser());
+      this.getInterpreterMessages(this.getCurrentUserID());
     }
     this.message_tage = localStorage.getItem('bookingId');
   }
-  getCurrentUser() {
+  getCurrentUserID() {
     return GLOBAL.currentUser.id;
   }
   backClicked() {
@@ -68,13 +67,10 @@ export class InterpreterMessagesComponent implements OnInit, OnDestroy {
   }
 
   sendInterpreterMessages() {
+
     let url = (this.platformLocation as any).location.href;
-    if (!this.message_body || this.message_body.trim().length === 0  ) {
-      this.notificationServiceBus.launchNotification(true, 'Type something before send!');
-      return;
-    }
     this.spinnerService.requestInProcess(true);
-    this.messagingService.sendInterpreterMessages(this.getCurrentUser(), url,  this.message_tage, this.message_body )
+    this.messagingService.sendInterpreterMessages(this.getCurrentUserID(), url,  this.message_tage, this.message_body )
         .subscribe((res: any) => {
           if (res.status === 200) {
             this.ngOnInit();
@@ -87,6 +83,12 @@ export class InterpreterMessagesComponent implements OnInit, OnDestroy {
           let e = errors.json();
           this.notificationServiceBus.launchNotification(true, e);
         });
+  }
+
+  checkEmpty() {
+    if (!this.message_body || this.message_body.trim().length === 0) {
+      this.message_body = null;
+    }
   }
 
   ngOnDestroy() {

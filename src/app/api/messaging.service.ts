@@ -32,7 +32,7 @@ export class MessagingService extends ApiService {
         let headers = new Headers({ 'Accept': 'application/json' });
         let options = new RequestOptions({ headers: headers });
         const obj = { message: { message_inbox_url: url, message_body: message_body } };
-        console.log(obj);
+
          return this.http
              .post(GLOBAL.USER_API + '/' + user_id + '/messages', JSON.stringify(obj), options)
             .map(this.extractData)
