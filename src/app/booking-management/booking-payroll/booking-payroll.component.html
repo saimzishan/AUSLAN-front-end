@@ -14,9 +14,9 @@
                 <section class="payroll-card__content">
                     <section class="common-form">
                         PAYROLL AS
-                        <select name="{{'payrollAs_' + i}}" (change)="staffToCasualToggle(i)" [(ngModel)]="payroll.payroll_as" class="menu custom gray">
-                            <option *ngFor="let staff_casual_toggle of  ['staff','casual']" [value]="staff_casual_toggle">{{staff_casual_toggle.toUpperCase()}}</option>
-                        </select>
+                    <select name="{{'payrollAs_' + i}}" [(ngModel)]="payroll.payroll_as" class="menu custom gray" disabled>
+                        <option [value]="payroll.payroll_as">{{payroll.payroll_as.toUpperCase()}}</option>
+                    </select>
  
                     </section>
                     <section>
@@ -30,8 +30,7 @@
                             <md-checkbox name="{{'cbPayTravel_' + i}}" [(ngModel)]="payroll.pay_travel" [disabled]="!payroll.pay_interpreter"
                                                                         (change)="cbChanged('payroll_attributes','pay_travel',i)">
                                 Pay travel
-                                <span *ngIf="payroll.payroll_as !== 'staff'" class="note note_block note_small">NOT RECOMMENDED</span>
-                                <span *ngIf="payroll.payroll_as == 'staff'" class="note note_block note_green note_small">RECOMMENDED</span>
+                                <span class="note note_block note_small">NOT RECOMMENDED</span>
                         </md-checkbox>
                         </div>
                     </section>
