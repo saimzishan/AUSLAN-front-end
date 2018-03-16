@@ -86,7 +86,7 @@ export class InterpreterMessagesComponent implements OnInit, OnDestroy {
   }
 
   checkEmpty() {
-    if (!this.message_body || this.message_body.trim().length === 0) {
+    if (this.message_body.trim().length === 0) {
       this.message_body = null;
     }
   }
