@@ -314,6 +314,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             }
             if (!this.forEdit) {
                 this.onSelectionChange();
+                this.setClientAsRequestedBy();
                 this.onClientSelectionChange();
                 this.onStandardInvoice();
             }
@@ -415,6 +416,16 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         }
     }
 
+    public setClientAsRequestedBy() {
+        let user = this.isUserAdminORBookOfficer ? this.bookable : GLOBAL.currentUser;
+        if (user) {
+            ['first_name', 'last_name'].forEach((field) => {
+                let value = user[field];
+                this.bookingModel.requested_by[field] = value;
+            });
+        }
+    }
+
     public onBookingAddressChange() {
         let user = GLOBAL.currentUser;
         if (user) {
@@ -461,6 +472,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         this.bookingModel.bookable_id = selectedObject.id;
         this.userModel = this.isUserAdminORBookOfficer ? this.bookable : this.userModel;
         this.onSelectionChange();
+        this.setClientAsRequestedBy();
         this.onClientSelectionChange();
         this.setInvoiceField();
     }
@@ -555,6 +567,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                     this.bookingModel.bookable_id = singleUser.id;
                     this.userModel = this.isUserAdminORBookOfficer ? this.bookable : this.userModel;
                     this.onSelectionChange();
+                    this.setClientAsRequestedBy();
                     this.onClientSelectionChange();
                     this.setInvoiceField();
                 }
