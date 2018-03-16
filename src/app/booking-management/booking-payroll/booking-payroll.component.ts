@@ -215,12 +215,4 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
                 return 'Service Completed';
         }
     }
-
-    staffToCasualToggle(index) {
-        if (this.payments.payroll_attributes[index].payroll_as === 'staff') {
-            this.payments.payroll_attributes[index].pay_travel = true;
-        } else {
-            this.payments.payroll_attributes[index].pay_travel = false;
-        }
-    }
 }
