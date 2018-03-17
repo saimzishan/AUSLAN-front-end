@@ -93,7 +93,7 @@ export class UserListComponent {
     }
 
     userTypes() {
-        let keys = ['Administrator', 'Booking Officer', 'Individual Client', 'Interpreter', 'Organisational Representative'];
+        let keys = ['Accountant', 'Administrator', 'Booking Officer', 'Individual Client', 'Interpreter', 'Organisational Representative'];
         return ['All', ...keys];
     }
 

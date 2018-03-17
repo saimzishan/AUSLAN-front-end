@@ -2,12 +2,15 @@ import {expect} from '../../config/helpers/chai-imports';
 import {defineSupportCode} from 'cucumber';
 import {browser, by, element, $, $$, protractor} from 'protractor';
 import {PageObject} from '../../po/app.po';
-import {User, Administrator, BookingOfficer, Interpreter, Organisation, Client} from '../../helper';
+import {User, Administrator, BookingOfficer, Interpreter, Organisation, Client, Heroku} from '../../helper';
 import {UserManagementPage} from '../../po/user-management-page.po';
 
 defineSupportCode(({Given, Then, When}) => {
 
     let userManagementPO = new UserManagementPage();
+
+    Given(/^There exist all types of verified users$/, Heroku.preloadAllTypesVerifiedUsers);
+    Given(/^I (disabled|unverified) the (first|last) (.*)$/, Heroku.setUserStatus);
     // ================================== CREATING USER ========================================
     Then(/^I am on the 'User Management' list page$/, userManagementPO.browse);
 
@@ -55,5 +58,10 @@ defineSupportCode(({Given, Then, When}) => {
 
     // ================================== TRIGGER PASSWORD RESET ========================================
     When(/^I click on reset password for an (.*) existing (.*)$/, userManagementPO.clickOnResetPassword);
+
+    Then(/^I can see a list of (.*) records on the page$/, userManagementPO.checkListOfRecordOnScreen);
+    When(/^I query user by form field (.*) and value '(.*)'$/, userManagementPO.queryUserByFormField);
+    When(/^I hover on the (.*) dropdown on user list table header and select '(.*)'$/, userManagementPO.hoverOnUserTableHeader);
+    When(/^I search users with '(.*)'$/, userManagementPO.searchUsersWithText);
 
 });

@@ -204,6 +204,43 @@ export class UserManagementPage extends PageObject {
         });
     }
 
+    checkListOfRecordOnScreen = (num) => {
+        const totalRows = $$('table.custom tbody tr');
+        return totalRows.count().then(countTotal => {
+            expect(countTotal).to.eql(parseInt(num, 10));
+        });
+    }
+
+    queryUserByFormField = (field: string, value: string) => {
+        let userFormInput = this.getElementByCss('form input[name=' + field + ']');
+        let userNameFormInput = this.getParent(userFormInput);
+        userFormInput.sendKeys(value);
+        return userNameFormInput.submit();
+    }
+
+    hoverOnUserTableHeader = (headerTitle: string, selection: string) => {
+        let headerCss = '.dropdown#' + {
+            'Type': 'user-type',
+            'Status': 'user-status'
+        }[headerTitle];
+        let el = this.getElementByCss(headerCss);
+        return browser.actions().mouseMove(el).perform().then(() => {
+            let listEl = this.getElementByCSSandText(headerCss + ' ul li a', selection);
+            this.currentPath().then((path) => {
+                browser.wait(protractor.ExpectedConditions.presenceOf(listEl), 10000).then(() => {
+                    return listEl.click();
+                });
+            });
+        });
+    }
+
+    searchUsersWithText = (searchText: string) => {
+        let searchInput = this.getElementByCss('form input[name=search]');
+        let searchForm = this.getParent(searchInput);
+        searchText === 'empty' ? searchInput.click() : searchInput.sendKeys(searchText);
+        return searchForm.submit();
+    }
+
     updateValidUserFields = (type: string) => {
         let type_valid_user = this.returnTypeAndUser(type, true);
         let valid_user = type_valid_user.user;
