@@ -44,7 +44,7 @@ export class UserManagementComponent implements OnInit {
     onPageEmit(page: number) {
         this.newUser = null;
         this.spinnerService.requestInProcess(true);
-        this.userDataService.fetchPaginatedUsers(page)
+        this.userDataService.fetchPaginatedUsers(page, GLOBAL.getUserSearchParameters())
             .subscribe((res: any) => {
                     if (res.status === 200) {
                         let userList = res.data.users.filter((u) => {
@@ -59,7 +59,6 @@ export class UserManagementComponent implements OnInit {
                 },
                 err => {
                     this.spinnerService.requestInProcess(false);
-
                     console.log(err);
                 });
     }
