@@ -511,14 +511,15 @@ export class Heroku {
             'Organisational Representative': 'OrganisationalRepresentative'
         }[userType];
 
-        let updatableField = status === 'disabled' ? 'disabled' : 'verified';
-        let statusValue = true;
+        let updatableFields = '';
         if (status === 'disabled') {
-            statusValue = true;
+            updatableFields = 'disabled: true';
         } else if (status === 'unverified') {
-            statusValue = false;
+            updatableFields = 'disabled: false, verified: false';
+        } else if (status === 'active') {
+            updatableFields = 'disabled: false, verified: true';
         }
-        let command = '' + user + '.' + record + '.update_attributes(' + updatableField + ': ' + statusValue + ')'
+        let command = '' + user + '.' + record + '.update_attributes(' + updatableFields + ')'
         Heroku.sendCommandToHeroku(command);
     }
 

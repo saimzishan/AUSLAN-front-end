@@ -93,7 +93,12 @@ export class UserListComponent {
     }
 
     userTypes() {
-        let keys = ['Accountant', 'Administrator', 'Booking Officer', 'Individual Client', 'Interpreter', 'Organisational Representative'];
+        let keys;
+        if (Boolean(GLOBAL.currentUser instanceof Administrator)) {
+          keys = ['Accountant', 'Administrator', 'Booking Officer', 'Individual Client', 'Interpreter', 'Organisational Representative'];
+        } else {
+            keys = ['Accountant', 'Booking Officer', 'Individual Client', 'Interpreter', 'Organisational Representative'];
+        }
         return ['All', ...keys];
     }
 

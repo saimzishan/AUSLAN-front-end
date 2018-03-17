@@ -63,5 +63,6 @@ defineSupportCode(({Given, Then, When}) => {
     When(/^I query user by form field (.*) and value '(.*)'$/, userManagementPO.queryUserByFormField);
     When(/^I hover on the (.*) dropdown on user list table header and select '(.*)'$/, userManagementPO.hoverOnUserTableHeader);
     When(/^I search users with '(.*)'$/, userManagementPO.searchUsersWithText);
-
+    When(/^I click on the user list table header '(.*)'$/, userManagementPO.clickOnUserTableHeader);
+    Then(/^I can see the user list in (ascending|descending) order of (.*)$/, userManagementPO.checkUserListOrder);
 });

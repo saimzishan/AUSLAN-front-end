@@ -68,7 +68,7 @@ Feature: All Users Filter
     Then I go to the 'User Management' list page
     And I can see a list of 6 records on the page
     When I hover on the Status dropdown on user list table header and select 'Active'
-    Then I can see a list of 5 records on the page
+    Then I can see a list of 4 records on the page
     When I hover on the Status dropdown on user list table header and select 'Disabled'
     Then I can see a list of 1 records on the page
     When I hover on the Status dropdown on user list table header and select 'Unverified'

@@ -4,6 +4,9 @@ import {expect} from '../config/helpers/chai-imports';
 import {User, Administrator, BookingOfficer, Interpreter, Client, Organisation, Accountant} from '../helper';
 import {NotificationObject} from './notification';
 
+enum UserTableHeaders {
+    None, 'First Name', 'Last Name', Type, Organisation, Email, Mobile, Status
+}
 export class UserManagementPage extends PageObject {
     /*
      * The Syntax below is mandatory, for TS to recognize the method from base class
@@ -239,6 +242,37 @@ export class UserManagementPage extends PageObject {
         let searchForm = this.getParent(searchInput);
         searchText === 'empty' ? searchInput.click() : searchInput.sendKeys(searchText);
         return searchForm.submit();
+    }
+
+    clickOnUserTableHeader = (text: string) => {
+        let el = this.getElementByCSSandText('table thead tr th > span', text);
+        return el.click();
+    }
+
+    comparisonExpectation = (firstRowText: any, lastRowText: any, isAscending: boolean) => {
+        if (firstRowText === lastRowText) {
+            throw new Error('Text found to be same for first row and last row. Probably the table is not updated with latest data.');
+        }
+        if (isAscending) {
+            return expect(lastRowText > firstRowText).to.be.eq(true);
+        } else {
+            return expect(lastRowText < firstRowText).to.be.eq(true);
+        }
+    }
+
+    compareByText = (firstEl, lastEl, isAscending) => {
+        return firstEl.getText().then((firstRowText) => {
+            return lastEl.getText().then((lastRowText) => {
+                return this.comparisonExpectation(firstRowText, lastRowText, isAscending);
+            });
+        });
+    }
+
+    checkUserListOrder = (ascending: string, tableHeader: string) => {
+        let firstEl = this.getElementByCss('.users table tbody tr:first-child td:nth-child(' + UserTableHeaders[tableHeader] + ')');
+        let lastEl = this.getElementByCss('.users table tbody tr:last-child td:nth-child(' + UserTableHeaders[tableHeader] + ')');
+        let isAscending = ascending === 'ascending';
+        return this.compareByText(firstEl, lastEl, isAscending);
     }
 
     updateValidUserFields = (type: string) => {
