@@ -59,11 +59,25 @@ export class UserListComponent {
         return user instanceof OrganisationalRepresentative;
     }
 
+    clearSearch() {
+        this.searchParams = '';
+        this.search();
+    }
+
+    search() {
+        GLOBAL._filterUserVal.set('search', this.searchParams);
+        this.onPageEmit.emit(this.p);
+    }
+
     filterUsers(field: string, value: string) {
         this.userFilter[field] = this.formattedValueFor(field, value);
         for (let k in this.userFilter) {
             if (this.userFilter.hasOwnProperty(k)) {
-                this.filterUserParams.set('filter[' + k + ']', this.userFilter[k]);
+                if (k === 'type') {
+                    this.filterUserParams.set('filter[' + k + ']', this.userFilter[k].replace(/\s/g, ''));
+                } else {
+                    this.filterUserParams.set('filter[' + k + ']', this.userFilter[k]);
+                }
             }
         }
         GLOBAL._filterUserVal = this.filterUserParams;
@@ -74,9 +88,6 @@ export class UserListComponent {
         if (value !== undefined && value.toLowerCase() === 'all') {
             return '';
         }
-        if (field === 'type') {
-            return value.replace(/\s/g, '');
-        }
         return value;
     }
 
@@ -86,7 +97,7 @@ export class UserListComponent {
     }
 
     filterUserType() {
-        return this.userFilter.user_type;
+        return this.userFilter.type;
     }
 
     userStatuses() {

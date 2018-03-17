@@ -1,5 +1,16 @@
 <main>
     <h1>ALL USERS</h1>
+    <section id="filters">
+        <section class="user-search-bar search-bar">
+            <form #filterBySearch="ngForm" class="common-form compact" (ngSubmit)="search()" novalidate>
+                <input type="text" name="search" id="search" (blur)="search()" [(ngModel)]="searchParams" (click)="'' !== searchParams && clearSearch()" placeholder="Search...">
+            </form>
+            <button>
+                <i (click)="filter()" class="icon-glass"></i>
+            </button>
+        </section>
+    </section>
+
     <section class="users">
         <table class="custom">
             <thead>
