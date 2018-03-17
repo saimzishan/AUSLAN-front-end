@@ -25,6 +25,7 @@ export class UserListComponent {
     userFilter:  UserFilter = {};
     searchParams: string;
     private filterUserParams = new URLSearchParams();
+    private currentSort = {'field': 'first_name', 'order': 'asc'};
 
     constructor(private linkAuth: LinkAuth) {
 
@@ -114,6 +115,31 @@ export class UserListComponent {
             return 'All';
         }
         return str.replace(/_/g, ' ');
+    }
+
+    private isCurrentSort(field: string) {
+        return this.currentSort.field === field;
+    }
+
+    private setCurrentSort(field: string) {
+        let order = 'asc';
+        if (this.isCurrentSort(field)) {
+            order = this.currentSort.order === 'asc' ? 'desc' : 'asc';
+        }
+        this.currentSort.field = field;
+        this.currentSort.order = order;
+    }
+
+    getSortOrder(field: string) {
+        return this.isCurrentSort(field) ? this.currentSort.order : '';
+    }
+
+    sortUsers(field: string) {
+        this.setCurrentSort(field);
+        this.filterUserParams.set('sort', this.currentSort.field);
+        this.filterUserParams.set('direction', this.currentSort.order);
+        GLOBAL._filterUserVal = this.filterUserParams;
+        this.onPageEmit.emit(this.p);
     }
 
 }

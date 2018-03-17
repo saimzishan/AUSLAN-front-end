@@ -17,7 +17,7 @@
             <tr>
 
                 <th width="11%">
-                    <span class=" asc">First Name</span>
+                    <span class="order" [ngClass]="getSortOrder('first_name')" (click)="sortUsers('first_name')">First Name</span>
                     <form #filterByFirstName="ngForm" class="common-form compact"
                           (ngSubmit)="filterUsers('first_name', filterByFirstName.value.first_name)" novalidate>
                         <input type="text" name="first_name" (blur)="filterUsers('first_name', filterByFirstName.value.first_name)"
@@ -25,7 +25,7 @@
                     </form>
                 </th>
                 <th width="11%">
-                    <span class=" asc">Last Name</span>
+                    <span class="order" [ngClass]="getSortOrder('last_name')" (click)="sortUsers('last_name')">Last Name</span>
                     <form #filterByLastName="ngForm" class="common-form compact"
                           (ngSubmit)="filterUsers('last_name', filterByLastName.value.last_name)" novalidate>
                         <input type="text" name="last_name" (blur)="filterUsers('last_name', filterByLastName.value.last_name)"
@@ -33,7 +33,7 @@
                     </form>
                 </th>
                 <th width="10%">
-                    <span class=" asc">Type</span>
+                    <span class="order" [ngClass]="getSortOrder('type')" (click)="sortUsers('type')">Type</span>
                     <ul class="dropdown menu custom" id="user-type" data-dropdown-menu>
                         <li>
                             <a href="javascript:void(0)">{{underScoreToSpaces(filterUserType())}}</a>
@@ -63,7 +63,7 @@
                     <!--<input type="text" name="mobile">-->
                 </th>
                 <th width="8%">
-                    <span class=" asc">Status</span>
+                    <span class="order" [ngClass]="getSortOrder('account_status')" (click)="sortUsers('account_status')">Status</span>
                     <ul class="dropdown menu custom" id="user-status" data-dropdown-menu>
                         <li>
                             <a href="javascript:void(0)">{{underScoreToSpaces(filterUserStatus())}}</a>
