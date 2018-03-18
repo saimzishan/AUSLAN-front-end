@@ -579,6 +579,12 @@ export class Heroku {
         Heroku.sendCommandToHeroku(command);
     }
 
+    static changeUserBusiness(userType: string) {
+        let command = 'o=' + userType + '.first;';
+            command += 'o.update(state_where_most_bookings_occur: "NSW");';
+        Heroku.sendCommandToHeroku(command);
+    }
+
     static assignEntityToDependant(entity: string, dependant: string) {
         let command = entity.replace(' ', '') + '.last.update(';
         command += dependant.replace(' ', '_').toLowerCase() + ': ';

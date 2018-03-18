@@ -34,7 +34,7 @@ defineSupportCode(({Given, Then, When}) => {
     Given(/^I can see the '(.*)' auto populated$/, createBookingPO.sectionAutoPopulated);
     Given(/^I can see the booking address is '(.*)'$/, createBookingPO.bookingAddressPopulated);
     Given(/^There exist (\d+) verified interpreters$/, Heroku.preloadVerifiedInterpreters);
-
+    Given(/^The user '(.*)' is of type dsq$/, Heroku.changeUserBusiness);
     When(/^I click at the (.*) one of (.*) (.*) Bookings$/, bookingManagementPO.clickAtOneofTheBooking);
     When(/^I click on 'New Booking'$/, bookingManagementPO.clickOnNewBooking);
     When(/^I see (one|\d+) rows? with state '(.*)'$/, bookingManagementPO.bookingWithStateExists);

@@ -61,6 +61,7 @@ export class User {
     public avatar: any;
     public photo_url = '';
     public state_where_most_bookings_occur: string;
+    public business_name = '';
     public linked_account_number = '';
 
     protected get user_type() {
