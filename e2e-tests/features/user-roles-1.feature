@@ -35,7 +35,8 @@ Feature: User Role and Permissions Management
     And I sign in with valid Organisational Representative credentials
     Then I will be shown the bookings page
 
-  @runThis
+    # I am not sure if this is the right test
+  @ignoreThis
   Scenario: Given 1 verified Interpreter, as a Booking Officer I should not be able to visit block_out
     Given I exist as a Booking Officer
     And I sign in with valid Booking Officer credentials
