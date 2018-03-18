@@ -478,6 +478,11 @@ export class Heroku {
         Heroku.sendTaskToHeroku(task);
     }
 
+    static preloadAllTypesVerifiedUsers() {
+        let task = 'seed:test_data:preload_users:all_types';
+        Heroku.sendTaskToHeroku(task);
+    }
+
     static createSingleUser(data) {
         let return_command = '';
         let userType = User.user_type(data.type);
@@ -500,9 +505,29 @@ export class Heroku {
 
     static verifyAllInterpreter() {
         Heroku.sendCommandToHeroku('Interpreter.first.update_attributes(verified:' + true + ')');
-
     }
 
+    static setUserStatus(status: string, record: string, userType: string) {
+        let user = {
+            'Accountant': 'Accountant',
+            'Administrator': 'Administrator',
+            'Booking Officer': 'BookingOfficer',
+            'Individual Client': 'IndividualClient',
+            'Interpreter': 'Interpreter',
+            'Organisational Representative': 'OrganisationalRepresentative'
+        }[userType];
+
+        let updatableFields = '';
+        if (status === 'disabled') {
+            updatableFields = 'disabled: true';
+        } else if (status === 'unverified') {
+            updatableFields = 'disabled: false, verified: false';
+        } else if (status === 'active') {
+            updatableFields = 'disabled: false, verified: true';
+        }
+        let command = '' + user + '.' + record + '.update_attributes(' + updatableFields + ')'
+        Heroku.sendCommandToHeroku(command);
+    }
 
     static createBulkAdministrator(numberOfUser: string) {
         const num_of_user = parseInt(numberOfUser, 10);

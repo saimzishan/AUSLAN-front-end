@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Headers, RequestOptions} from '@angular/http';
+import {Headers, RequestOptions, URLSearchParams} from '@angular/http';
 import {IndividualClient, OrganisationalRepresentative, User} from '../shared/model/user.entity';
 import {ROLE} from '../shared/model/role.enum';
 import {GLOBAL} from '../shared/global';
@@ -123,9 +123,9 @@ export class UserService extends ApiService {
     /*
       The Api should be able to fetch all the users in paged response
     */
-    fetchPaginatedUsers(page: number): Observable<Object> {
+    fetchPaginatedUsers(page: number, search?: URLSearchParams): Observable<Object> {
         let headers = new Headers({'Accept': 'application/json'});
-        let options = new RequestOptions({ headers: headers });
+        let options = new RequestOptions({ headers: headers, search: search });
         return this.http.get(GLOBAL.USER_API + '?page=' + page , options)
             .map(this.extractData)
             .catch((err) => { return this.handleError(err); });

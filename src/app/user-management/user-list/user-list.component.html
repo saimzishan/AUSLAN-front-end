@@ -1,101 +1,127 @@
 <main>
     <h1>ALL USERS</h1>
-    <section class="users" *ngIf="userList?.length > 0">
+    <section id="filters">
+        <section class="user-search-bar search-bar">
+            <form #filterBySearch="ngForm" class="common-form compact" (ngSubmit)="search()" novalidate>
+                <input type="text" name="search" id="search" (blur)="search()" [(ngModel)]="searchParams" (click)="'' !== searchParams && clearSearch()" placeholder="Search...">
+            </form>
+            <button>
+                <i (click)="filter()" class="icon-glass"></i>
+            </button>
+        </section>
+    </section>
+
+    <section class="users">
         <table class="custom">
             <thead>
             <tr>
-
                 <th width="11%">
-                    <span class=" asc">First Name</span>
-                    <!--<input type="text" name="first_name">-->
+                    <span class="order" [ngClass]="getSortOrder('first_name')" (click)="sortUsers('first_name')">First Name</span>
+                    <form #filterByFirstName="ngForm" class="common-form compact"
+                          (ngSubmit)="filterUsers('first_name', filterByFirstName.value.first_name)" novalidate>
+                        <input type="text" name="first_name" (blur)="filterUsers('first_name', filterByFirstName.value.first_name)"
+                               [(ngModel)]="userFilter.first_name">
+                    </form>
                 </th>
                 <th width="11%">
-                    <span class=" asc">Last Name</span>
-                    <!--<input type="text" name="last_name">-->
+                    <span class="order" [ngClass]="getSortOrder('last_name')" (click)="sortUsers('last_name')">Last Name</span>
+                    <form #filterByLastName="ngForm" class="common-form compact"
+                          (ngSubmit)="filterUsers('last_name', filterByLastName.value.last_name)" novalidate>
+                        <input type="text" name="last_name" (blur)="filterUsers('last_name', filterByLastName.value.last_name)"
+                               [(ngModel)]="userFilter.last_name">
+                    </form>
                 </th>
                 <th width="10%">
-                    <span class=" asc">Type</span>
-                    <!--<ul class="dropdown menu custom" data-dropdown-menu>-->
-                    <!--<li>-->
-                    <!--<a href="#">All</a>-->
-                    <!--<ul class="menu smaller">-->
-                    <!--<li><a href="#"><i></i> Auslan </a></li>-->
-                    <!--</ul>-->
-                    <!--</li>-->
-                    <!--</ul>-->
+                    <span class="order" [ngClass]="getSortOrder('type')" (click)="sortUsers('type')">Type</span>
+                    <ul class="dropdown menu custom" id="user-type" data-dropdown-menu>
+                        <li>
+                            <a href="javascript:void(0)">{{underScoreToSpaces(filterUserType())}}</a>
+                            <ul class="menu smaller">
+                                <li *ngFor="let utype of userTypes()">
+                                    <a href="javascript:void(0)" (click)="filterUsers('type', utype)">
+                                        <i></i>{{underScoreToSpaces(utype)}}
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
                 </th>
                 <th width="15%">
                     <span class=" desc">Organisation</span>
-                    <!--<input type="text" name="organisation">-->
+                    <form #filterByOrganisation="ngForm" class="common-form compact"
+                          (ngSubmit)="filterUsers('organisation', filterByOrganisation.value.organisation)" novalidate>
+                        <input type="text" name="organisation" (blur)="filterUsers('organisation', filterByOrganisation.value.organisation)"
+                               [(ngModel)]="userFilter.organisation">
+                    </form>
                 </th>
                 <th width="15%">
                     <span class=" desc">Email</span>
-                    <!--<input type="text" name="email">-->
                 </th>
                 <th width="8%">
                     <span class=" asc">Mobile</span>
                     <!--<input type="text" name="mobile">-->
                 </th>
                 <th width="8%">
-                    <span class=" asc">Status</span>
-                    <!--<ul class="dropdown menu custom" data-dropdown-menu>-->
-                    <!--<li>-->
-                    <!--<a href="#">All</a>-->
-                    <!--<ul class="menu smaller">-->
-                    <!--<li ><a><i></i> Active </a></li>-->
-                    <!--<li><a><i></i>  Disabled </a></li>-->
-                    <!--<li><a><i></i>  Unverified</a></li>-->
-                    <!--</ul>-->
-                    <!--</li>-->
-                    <!--</ul>-->
+                    <span class="order" [ngClass]="getSortOrder('account_status')" (click)="sortUsers('account_status')">Status</span>
+                    <ul class="dropdown menu custom" id="user-status" data-dropdown-menu>
+                        <li>
+                            <a href="javascript:void(0)">{{underScoreToSpaces(filterUserStatus())}}</a>
+                            <ul class="menu smaller">
+                                <li *ngFor="let status of userStatuses()">
+                                    <a href="javascript:void(0)" (click)="filterUsers('account_status', status)">
+                                        <i></i>{{underScoreToSpaces(status)}}
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
                 </th>
-
                 <th width="9%">
                     <span>Actions</span>
                 </th>
             </tr>
             </thead>
-            <tbody>
-            <tr *ngFor="let user of userList | paginate: { itemsPerPage: 10, currentPage: p, totalItems: totalItems }">
+            <tbody *ngIf="userList?.length > 0">
+                <tr *ngFor="let user of userList | paginate: { itemsPerPage: 10, currentPage: p, totalItems: totalItems }">
 
-                <td>{{user.first_name}}</td>
-                <td>{{user.last_name}}</td>
-                <td class="truncated-text">{{ user.type | spacer}}</td>
-                <td> {{isUserOrOrgrep(user) ? user.organisation_attributes.name : 'Auslan'}}</td>
-                <td class="truncated-text">
-                    <a href="mailto:{{user.email}}">{{user.email}}</a>
-                </td>
-                <td class="truncated-text">{{user.mobile}}</td>
-                <td [ngClass]="{'active':user.verified}">{{ user.disabled ? 'Disabled' : !user.verified ? 'Unverified' :
-                    'Active' }}
-                </td>
+                    <td>{{user.first_name}}</td>
+                    <td>{{user.last_name}}</td>
+                    <td class="truncated-text">{{ user.type | spacer}}</td>
+                    <td> {{isUserOrOrgrep(user) ? user.organisation_attributes.name : 'Auslan'}}</td>
+                    <td class="truncated-text">
+                        <a href="mailto:{{user.email}}">{{user.email}}</a>
+                    </td>
+                    <td class="truncated-text">{{user.mobile}}</td>
+                    <td [ngClass]="{'active':user.verified}">{{ user.disabled ? 'Disabled' : !user.verified ? 'Unverified' :
+                        'Active' }}
+                    </td>
 
-                <td *ngIf="canEditLink('user-management',user.type)">
-                    <ul class="dropdown menu custom actions" data-dropdown-menu>
-                        <li>
-                            <a href="javascript:void(0)"><i class="icon-actions"></i></a>
-                            <ul class="menu right-side green">
-                                <li>
-                                    <a name="lnkEditUser" [routerLink]="['/init']" [queryParams]="{selectedRole:getQueryableRole(user),uid:user.id, edit_user:
-												stringifyUser(user)}">
-                                        <i class="icon-edit"></i> Edit</a></li>
-                                <li *ngIf="isUserInterpreter(user)">
-                                    <a id="lnkProfileSkill"
-                                       [routerLink]="['/user-management/' + user.id +'/skills']"><i
-                                            class="icon-skill-matrix"></i> Skill Matrix</a></li>
-                                <li *ngIf="isUserOrOrgrep(user)">
-                                    <a id="lnkDuplicateOrgRep"
-                                       [routerLink]="['/init']" [queryParams]="{selectedRole:getQueryableRole(user) ,uid:user.id,
-                                       isduplicate:'true', edit_user:
-												stringifyUser(user)}">
-                                        <i class="icon-duplicate-orgrep icon-glass"></i> Duplicate </a></li>
-                                <li><a (click)="onResetPassword(user)"><i class="icon-reset-password"></i> Reset
-                                    password</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
+                    <td *ngIf="canEditLink('user-management',user.type)">
+                        <ul class="dropdown menu custom actions" data-dropdown-menu>
+                            <li>
+                                <a href="javascript:void(0)"><i class="icon-actions"></i></a>
+                                <ul class="menu right-side green">
+                                    <li>
+                                        <a name="lnkEditUser" [routerLink]="['/init']" [queryParams]="{selectedRole:getQueryableRole(user),uid:user.id, edit_user:
+                                                    stringifyUser(user)}">
+                                            <i class="icon-edit"></i> Edit</a></li>
+                                    <li *ngIf="isUserInterpreter(user)">
+                                        <a id="lnkProfileSkill"
+                                           [routerLink]="['/user-management/' + user.id +'/skills']"><i
+                                                class="icon-skill-matrix"></i> Skill Matrix</a></li>
+                                    <li *ngIf="isUserOrOrgrep(user)">
+                                        <a id="lnkDuplicateOrgRep"
+                                           [routerLink]="['/init']" [queryParams]="{selectedRole:getQueryableRole(user) ,uid:user.id,
+                                           isduplicate:'true', edit_user:
+                                                    stringifyUser(user)}">
+                                            <i class="icon-duplicate-orgrep icon-glass"></i> Duplicate </a></li>
+                                    <li><a (click)="onResetPassword(user)"><i class="icon-reset-password"></i> Reset
+                                        password</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
             </tbody>
         </table>
         <div class="pagination">
