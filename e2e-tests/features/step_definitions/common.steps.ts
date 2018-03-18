@@ -299,6 +299,10 @@ defineSupportCode(({Given, When, Then}) => {
             expect(count).to.be.greaterThan(0);
         });
     }
+    Given(/^I set a interpreter as '(.*)'$/, setInterpreterAsCasual);
+    function setInterpreterAsCasual(value: string) {
+        Heroku.setInterpreterType(value);
+    }
 
     When(/^I debug$/, () => {
         return browser.pause();
@@ -561,7 +565,6 @@ defineSupportCode(({Given, When, Then}) => {
             }
         });
     }
-
     Then(/^I can see that form '(.*)' is '(.*)'$/, checkFormDisabled);
     function checkFormDisabled (name: string, disabled: string) {
         let isEnabled = disabled.toLowerCase() === 'disabled';

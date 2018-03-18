@@ -133,6 +133,7 @@ defineSupportCode(({Given, Then, When}) => {
     Then(/^I should be able to edit only specific fields$/, bookingEditPO.checkEditableFields);
     Then(/^I should not be able to edit other fields$/, bookingEditPO.checkNonEditableFields);
     Then(/^I see an option '(.*)' in '(.*)' dropdown$/, createBookingPO.optionExistsInDropDown);
+    Then(/^I see selected option '(.*)' in dropdown$/, createBookingPO.selectedOptionExistsInDropDown);
     Then(/^I should see the value under (.*) column as '(.*)'$/, bookingJobPO.checkTableDetails);
     Then(/^I should (not)?\s?see the link id in booking details$/, bookingJobPO.checkLinkIdInTableDetails);
     Then(/^I note the value under (.*) column$/, bookingJobPO.noteTableDetails);

@@ -80,6 +80,12 @@ export class BookingPage extends PageObject {
             expect(val).to.be.eq(true);
         });
     }
+    selectedOptionExistsInDropDown = (option_text: string) => {
+        let sel = this.getElementByTagName('select');
+        return sel.getAttribute('ng-reflect-model').then((val) => {
+            expect(val.toUpperCase()).to.equal(option_text);
+        });
+    }
     clickOnOption = (option_text: string, drop_down: string, for_type: string) => {
         const selected_label = this.getElementByCSSandText('label', drop_down);
         const div = this.getParent(selected_label);

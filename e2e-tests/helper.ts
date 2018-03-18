@@ -454,6 +454,12 @@ export class Heroku {
         command += 'FactoryGirl.create_list(:booking, ' + count + ', bookable: IndividualClient.first)';
         Heroku.sendCommandToHeroku(command);
     }
+    static setInterpreterType(type: string) {
+       let command = 'i=Interpreter.first;';
+        command += 'i.update_attributes(employment_type: ' + type + ');';
+        command += 'i.save;';
+        Heroku.sendCommandToHeroku(command);
+    }
 
     static createBulkBookingsWithLinkId(count: number, negate: string) {
         const newLinkIdRequired = String(!(negate === 'out'));
