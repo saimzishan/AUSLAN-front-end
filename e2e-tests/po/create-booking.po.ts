@@ -80,6 +80,12 @@ export class BookingPage extends PageObject {
             expect(val).to.be.eq(true);
         });
     }
+    selectedOptionExistsInDropDown = (option_text: string) => {
+        let sel = this.getElementByTagName('select');
+        return sel.getAttribute('ng-reflect-model').then((val) => {
+            expect(val.toUpperCase()).to.equal(option_text);
+        });
+    }
     clickOnOption = (option_text: string, drop_down: string, for_type: string) => {
         const selected_label = this.getElementByCSSandText('label', drop_down);
         const div = this.getParent(selected_label);
@@ -176,7 +182,7 @@ export class BookingPage extends PageObject {
             return single_input.getAttribute('value').then((val) => {
 
                 return single_input.getAttribute('name').then((nam) => {
-                    if (['ext_ref_num', 'deaf_person_eaf', 'search_address'].indexOf(nam) === -1) {
+                    if (['ext_ref_num', 'deaf_person_ndis','deaf_person_ur','deaf_person_eaf', 'search_address'].indexOf(nam) === -1) {
                         expect(!!val).to.be.true;
                     }
 
@@ -279,7 +285,7 @@ export class BookingPage extends PageObject {
         date = date.toString();
         return ('00' + date).slice(date.length);
     }
-    private getDateAfterNDays = (n: number): string => {
+    getDateAfterNDays = (n: number): string => {
         const currentDate = new Date();
         const dateStart = new Date(new Date(currentDate).setDate(currentDate.getDate() + n));
         return [

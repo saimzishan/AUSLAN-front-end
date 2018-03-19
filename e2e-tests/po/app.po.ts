@@ -93,6 +93,9 @@ export class PageObject {
     getElementInsideByTag(ele, tag: string) {
         return ele.element(by.tagName(tag));
     }
+    getElementByTagName(tag: string) {
+        return element(by.tagName(tag));
+    }
 
     getAllByTagNameInElement(ele, tag: string) {
         return ele.all(by.tagName(tag));

@@ -14,9 +14,9 @@
                 <section class="payroll-card__content">
                     <section class="common-form">
                         PAYROLL AS
-                        <select name="{{'payrollAs_' + i}}" class="menu custom gray">
-                            <option [value]="Casual">Casual</option>
-                        </select>
+                    <select name="{{'payrollAs_' + i}}" [(ngModel)]="payroll.payroll_as" class="menu custom gray" disabled>
+                        <option [value]="payroll.payroll_as">{{payroll.payroll_as.toUpperCase()}}</option>
+                    </select>
  
                     </section>
                     <section>

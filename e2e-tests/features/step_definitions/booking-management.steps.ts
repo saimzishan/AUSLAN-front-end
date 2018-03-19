@@ -30,10 +30,11 @@ defineSupportCode(({Given, Then, When}) => {
     Given(/^One booking has org name as '(.*)'$/, Heroku.updateBookingWithOrgName);
     Given(/^One booking has suburb as '(.*)'$/, Heroku.updateBookingWithSuburb);
     Given(/^One booking has start and end dates as first and last days of next week$/, Heroku.updateBookingStartAndEndDateTime);
+    Given(/^One booking has created date as of yesterday$/, Heroku.updateBookingCreatedDateTime);
     Given(/^I can see the '(.*)' auto populated$/, createBookingPO.sectionAutoPopulated);
     Given(/^I can see the booking address is '(.*)'$/, createBookingPO.bookingAddressPopulated);
     Given(/^There exist (\d+) verified interpreters$/, Heroku.preloadVerifiedInterpreters);
-
+    Given(/^The user '(.*)' is of type dsq$/, Heroku.changeUserBusiness);
     When(/^I click at the (.*) one of (.*) (.*) Bookings$/, bookingManagementPO.clickAtOneofTheBooking);
     When(/^I click on 'New Booking'$/, bookingManagementPO.clickOnNewBooking);
     When(/^I see (one|\d+) rows? with state '(.*)'$/, bookingManagementPO.bookingWithStateExists);
@@ -70,6 +71,7 @@ defineSupportCode(({Given, Then, When}) => {
     When(/^I click on one non-editable field$/, bookingEditPO.clickOnNonEditableField);
     When(/^I query search with '(.*)'$/, bookingManagementPO.querySearchWith);
     When(/^I query search with empty date$/, bookingManagementPO.querySearchWithEmptyDate);
+    When(/^I enter approved date$/, bookingManagementPO.pickApprovedCurrentDate);
     When(/^I query search with future date$/, bookingManagementPO.queryManualSearchWithFutureDate);
     When(/^I query search with current date manually$/, bookingManagementPO.queryManualSearchWithCurrentDate);
     When(/^I press enter$/, bookingManagementPO.enterPressed);
@@ -131,6 +133,7 @@ defineSupportCode(({Given, Then, When}) => {
     Then(/^I should be able to edit only specific fields$/, bookingEditPO.checkEditableFields);
     Then(/^I should not be able to edit other fields$/, bookingEditPO.checkNonEditableFields);
     Then(/^I see an option '(.*)' in '(.*)' dropdown$/, createBookingPO.optionExistsInDropDown);
+    Then(/^I see selected option '(.*)' in dropdown$/, createBookingPO.selectedOptionExistsInDropDown);
     Then(/^I should see the value under (.*) column as '(.*)'$/, bookingJobPO.checkTableDetails);
     Then(/^I should (not)?\s?see the link id in booking details$/, bookingJobPO.checkLinkIdInTableDetails);
     Then(/^I note the value under (.*) column$/, bookingJobPO.noteTableDetails);

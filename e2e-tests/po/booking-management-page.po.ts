@@ -7,7 +7,7 @@ import { debug } from 'util';
 
 enum BookingTableHeaders {
     None, Empty, Job, Status, State, Date, Org,
-    Client, Suburb, Interpreter, Nature, Method, 'Service Type'
+    Client, Suburb, Interpreter, Nature, Method, 'Service Type', Notice
 }
 
 export class BookingManagementPage extends PageObject {
@@ -281,6 +281,9 @@ export class BookingManagementPage extends PageObject {
     querySearchWithEmptyDate = () => {
         this.getElementByName('date_from').sendKeys(protractor.Key.BACK_SPACE,protractor.Key.ARROW_RIGHT,protractor.Key.BACK_SPACE,protractor.Key.ARROW_RIGHT,protractor.Key.BACK_SPACE);
     }
+    pickApprovedCurrentDate = () => {
+        this.getElementByName('date_approved').sendKeys(protractor.Key.ARROW_DOWN);
+    }
     queryManualSearchWithFutureDate = () => {
         this.getElementByName('date_from').sendKeys(protractor.Key.ARROW_UP);
     }
@@ -471,9 +474,9 @@ export class BookingManagementPage extends PageObject {
             Interpreter: 'compareByText', // Dragana < 'To be filled' - default text
             Nature: 'compareByText', // Dragana < 'To be filled' - default text
             Method: 'compareByText', // Dragana < 'To be filled' - default text
-            'Service Type': 'compareByText' // Dragana < 'To be filled' - default text
+            'Service Type': 'compareByText', // Dragana < 'To be filled' - default text
+            'Notice': 'compareByText'
         }[tableHeader];
-
         return this[compareMethod].call(BookingManagementPage, firstEl, lastEl, isAscending);
     }
 }
