@@ -65,7 +65,7 @@
                             <span *ngIf="dpEventDate_endtime.touched && (dpEventDate_endtime.errors?.required);"
                                   class="inline-icon error">
 									<span>End Time is required.</span>!</span>
-                            <span *ngIf="start_time.getTime() === end_time.getTime()"
+                            <span *ngIf="isTimeEqual()"
                                   class="inline-icon error">
 									<span>End Time should be greater than start time</span>!</span>
                         </div>

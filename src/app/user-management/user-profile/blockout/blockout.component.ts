@@ -96,44 +96,49 @@ export class BlockoutComponent implements OnDestroy, OnInit {
     public isRecurrenceDayCheckboxDisabled(day) {
         return this.bookingDate && this.bookingDate.getDay() === this.repeat_days.indexOf(day);
     }
+    isTimeEqual() {
+        return Boolean(this.start_time) && Boolean(this.end_time) && this.start_time.getTime() === this.end_time.getTime();
+    }
     ngOnInit() {
         this.staff_availability = false;
         this.href = this.router.url.split('/');
         if (this.href[3] === 'staff-availability') {
             this.staff_availability = true;
         }
-        this.userID = this.interpreter !== null ? localStorage.getItem('userId') : -1;
-        this.userDataService.getUser(this.userID)
-            .subscribe((res: any) => {
-                if (res.status === 200) {
-                    delete res.data.assignments_attributes;
-                    this.interpreter = res.data;
-                    this.userID = this.interpreter !== null ? this.interpreter.id : -1;
-                    this.end_time.setTime(this.start_time.getTime() + (1 * 60 * 60 * 1000));
-                    this.end_date = this.end_time;
-                    this.sub = this.route.params.subscribe(params => {
-                        let param_id = params['id'] || '';
-                        if (Boolean(param_id) && parseInt(param_id, 10) > 0) {
-                            this.param_id = parseInt(param_id, 10);
-                            if (this.staff_availability) {
-                                this.interpreter.staff_availabilities_attributes
-                                    .filter(a => a.id === this.param_id)
-                                    .map(a =>
-                                        this.availabilityBlock = a
-                                    );
-                            } else {
-                                this.interpreter.availability_blocks_attributes
-                                    .filter(a => a.id === this.param_id)
-                                    .map(a =>
-                                        this.availabilityBlock = a
-                                    );
+        this.userID = localStorage.getItem('userId');
+        if (this.userID > 0) {
+            this.userDataService.getUser(this.userID)
+                .subscribe((res: any) => {
+                    if (res.status === 200) {
+                        delete res.data.assignments_attributes;
+                        this.interpreter = res.data;
+                        this.userID = Boolean(this.interpreter) ? this.interpreter.id : -1;
+                        this.end_time.setTime(this.start_time.getTime() + (1 * 60 * 60 * 1000));
+                        this.end_date = this.end_time;
+                        this.sub = this.route.params.subscribe(params => {
+                            let param_id = params['id'] || '';
+                            if (Boolean(param_id) && parseInt(param_id, 10) > 0) {
+                                this.param_id = parseInt(param_id, 10);
+                                if (this.staff_availability) {
+                                    this.interpreter.staff_availabilities_attributes
+                                        .filter(a => a.id === this.param_id)
+                                        .map(a =>
+                                            this.availabilityBlock = a
+                                        );
+                                } else {
+                                    this.interpreter.availability_blocks_attributes
+                                        .filter(a => a.id === this.param_id)
+                                        .map(a =>
+                                            this.availabilityBlock = a
+                                        );
+                                }
+                                this.settingTime();
                             }
-                            this.settingTime();
-                        }
-                    });
-                    this.roundOffMinutes();
-                }
-            });
+                        });
+                        this.roundOffMinutes();
+                    }
+                });
+        }
     }
     public setRecurring_week_days() {
         for (let i = 0; i < this.repeat_days.length; i++) {
