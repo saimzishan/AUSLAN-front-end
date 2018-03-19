@@ -149,7 +149,7 @@ Feature: Booking Management
     When I search for 'ted' in autocomplete
     Then I am shown ted Individual Client as a suggestion
 
-  @runThis
+  @ignoreThis
   Scenario: Clicking on New Booking should reset the booking form for Administrator
     Given I sign in with valid Administrator credentials
     When I click on 'New Booking'

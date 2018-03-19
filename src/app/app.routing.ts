@@ -24,6 +24,8 @@ import {BlockoutComponent} from './user-management/user-profile/blockout/blockou
 import {BookingPayrollComponent} from './booking-management/booking-payroll/booking-payroll.component';
 import { StaffCalendarComponent } from './user-management/staff-calendar/staff-calendar.component';
 import { InterpreterMessagesComponent } from './messaging/interpreter-messages/interpreter-messages.component';
+import {UserPayrollBillingComponent} from './user-management/user-payroll-billing/user-payroll-billing.component';
+
 const appRoutes: Routes = [
   { path: 'user-management', component: UserManagementComponent, canActivate: [AuthGuard]},
   { path: 'user-management/profile', component: UserProfileComponent, canActivate: [AuthGuard]},
@@ -31,7 +33,8 @@ const appRoutes: Routes = [
   { path: 'user-management/:id/skills', component: SkillMatrixComponent, canActivate: [AuthGuard]},
   { path: 'user-management/:id/block_out', component: BlockoutComponent, canActivate: [AuthGuard] },
   { path: 'user-management/:id/staff-availability', component: BlockoutComponent, canActivate: [AuthGuard]},
-  { path: 'user-management/staff_calendar', component: StaffCalendarComponent, canActivate: [AuthGuard]},
+  { path: 'user-management/:id/staff_calendar', component: StaffCalendarComponent, canActivate: [AuthGuard]},
+  { path: 'user-management/payroll-billing', component: UserPayrollBillingComponent, canActivate: [AuthGuard]},
   { path: 'booking-management', component: BookingComponent, canActivate: [AuthGuard]},
   { path: 'booking-management/:id/create-booking', component: BookingDetailComponent, canActivate: [AuthGuard]},
   { path: 'booking-management/create-booking', component: BookingDetailComponent, canActivate: [AuthGuard]},

@@ -7,6 +7,7 @@ import { UserHeaderComponent } from './user-header.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import {LinkHelper, LinkAuth} from '../../shared/router/linkhelper';
 import {RolePermission} from '../../shared/role-permission/role-permission';
+import {MaterialModule, MdDialog} from '@angular/material';
 
 describe('UserHeaderComponent', () => {
   let component: UserHeaderComponent;
@@ -15,8 +16,8 @@ describe('UserHeaderComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ UserHeaderComponent ],
-      imports: [RouterTestingModule, HttpModule],
-      providers: [LinkHelper, LinkAuth, RolePermission]
+      imports: [RouterTestingModule, HttpModule, MaterialModule],
+      providers: [LinkHelper, LinkAuth, RolePermission, MdDialog]
     })
     .compileComponents();
   }));

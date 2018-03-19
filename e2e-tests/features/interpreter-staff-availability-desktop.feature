@@ -15,6 +15,7 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER STAF
     When I click on the option  staff calender
     When I click on BUTTON 'ADD STAFF AVAILABILITY'
     Then I will be taken to staff-calendar page
+    When I refresh
     And I enter blockout name 'singleEvent'
     And I click on BUTTON 'SAVE'
     And I get success message: 'Staff Availability successfully added'
@@ -35,6 +36,8 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER STAF
     When I click on the option  staff calender
     When I click on BUTTON 'ADD STAFF AVAILABILITY'
     Then I will be taken to staff-calendar page
+    When I refresh
+    Then I can see the button state 'ADD STAFF AVAILABILITY' is enabled
     Then I fill the field 'blockout_name' with value 'test-blockout'
     Then I click on BUTTON name 'sldRecurring'
     When I select option WEEKLY from dropdown FREQUENCY
@@ -44,6 +47,10 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER STAF
     Then I change the value of end date
     And I click on BUTTON 'SAVE'
     And I get success message: 'Staff Availability successfully added'
+    Then I click on button with css '.fc-listYear-button'
+    Then I can count the element with css '.fc-list-heading-main' to be atleast '6'
+    When I refresh
+    When I wait for 10000 milli-seconds
     Then I click on button with css '.fc-listYear-button'
     Then I can count the element with css '.fc-list-heading-main' to be atleast '6'
 
@@ -80,7 +87,3 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER STAF
     And I click on BUTTON name 'save_blockout'
     And I get success message: 'Blockout successfully added'
     Then I can count the element with css 'tr.fc-list-item' to be '2'
-
-
-  
-  

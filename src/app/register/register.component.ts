@@ -5,7 +5,7 @@ import {
     User, UserFactory
 } from '../shared/model/user.entity';
 import {ROLE} from '../shared/model/role.enum';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, Router, NavigationExtras} from '@angular/router';
 import {NotificationServiceBus} from '../notification/notification.service';
 import {FormGroup, FormControl, NgForm, NgModel} from '@angular/forms';
 import {SpinnerService} from '../spinner/spinner.service';
@@ -27,6 +27,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     termsAndConditionAccepted = false;
     selectedStatus = '';
     userStatusArray = GLOBAL.userStatusArray;
+    userId;
     otherGender = '';
 
     constructor(public userService: UserService,
@@ -47,6 +48,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
             let jsonData = this.isEdit ?
                 JSON.parse(params['edit_user']) : {};
             jsonData.id = params['uid'] || '';
+            this.userId = jsonData.id;
+            localStorage.setItem('userId', this.userId);
             switch (this.selectedRole) {
                 case 'Interpreter'.toUpperCase():
                     let int1: Interpreter = this.isEdit ? <Interpreter>UserFactory.createUser(jsonData) : new Interpreter();
@@ -222,6 +225,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
         return Boolean(GLOBAL.currentUser instanceof Administrator ||
             GLOBAL.currentUser instanceof BookingOfficer) ;
     }
+
+    isUserDsqAdmin(): Boolean {
+        return Boolean(GLOBAL.currentUser instanceof Administrator && GLOBAL.currentUser.business_name === 'DSQ');
+    }
+
     handleFileSelect(evt) {
         let files = evt.target.files;
         let file = files[0];
@@ -237,5 +245,13 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
     _handleReaderLoaded(readerEvt) {
         this.model.avatar = readerEvt.target.result;
+    }
+
+    navigateToPayroll() {
+        let navigationExtras: NavigationExtras = {
+            queryParams: {userId: this.selectedRole === 'ORGANISATION' ? this.model.organisation_attributes.id : this.model.id,
+                          selectedRole: this.selectedRole}
+        };
+        this.router.navigate(['/user-management/', 'payroll-billing'], navigationExtras);
     }
 }

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Headers, RequestOptions} from '@angular/http';
+import {Headers, RequestOptions, URLSearchParams} from '@angular/http';
 import {IndividualClient, OrganisationalRepresentative, User} from '../shared/model/user.entity';
 import {ROLE} from '../shared/model/role.enum';
 import {GLOBAL} from '../shared/global';
@@ -13,6 +13,7 @@ import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/observable/throw';
 import {AvailabilityBlock} from '../shared/model/availability-block.entity';
+import {UserPayrollBilling} from '../shared/model/user-payroll-billing.entity';
 
 @Injectable()
 export class UserService extends ApiService {
@@ -123,9 +124,9 @@ export class UserService extends ApiService {
     /*
       The Api should be able to fetch all the users in paged response
     */
-    fetchPaginatedUsers(page: number): Observable<Object> {
+    fetchPaginatedUsers(page: number, search?: URLSearchParams): Observable<Object> {
         let headers = new Headers({'Accept': 'application/json'});
-        let options = new RequestOptions({ headers: headers });
+        let options = new RequestOptions({ headers: headers, search: search });
         return this.http.get(GLOBAL.USER_API + '?page=' + page , options)
             .map(this.extractData)
             .catch((err) => { return this.handleError(err); });
@@ -407,4 +408,27 @@ export class UserService extends ApiService {
             .catch((err) => { return Observable.throw(err); });
     }
 
+    getUserPayrollOrBilling(userID: number, isOrg: boolean): Observable<Object> {
+        let headers = new Headers({'Accept': 'application/json'});
+        let options = new RequestOptions({ headers: headers });
+        let reqUrl = '/payment_settings/?' + (isOrg ? 'organisation_id=' : 'user_id=') + userID;
+
+        return this.http
+            .get(GLOBAL.USER_API_ENDPOINT + reqUrl, options)
+            .map(this.extractData)
+            .catch((err) => { return Observable.throw(err); });
+    }
+
+    updateUserPayrollOrBilling(payrollBilling: UserPayrollBilling): Observable<Object> {
+
+        let headers = new Headers({'Accept': 'application/json',
+            'Content-Type': 'application/json'});
+        let options = new RequestOptions({ headers: headers });
+        let userId = payrollBilling.id;
+        let obj = { 'payment_setting':  payrollBilling.createJSON() };
+
+        return this.http.put(GLOBAL.USER_API_ENDPOINT + '/payment_settings/' + userId, JSON.stringify(obj), options)
+            .catch((err) => { return this.handleError(err); });
+
+    }
 }
