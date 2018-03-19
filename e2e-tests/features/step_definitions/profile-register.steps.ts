@@ -15,6 +15,8 @@ defineSupportCode(({Then, When}) => {
 
     When(/^'(.*)' will be created$/, profileRegisterPage.userCreated);
 
+    When(/^I will check the address fields has value '(.*)'$/, profileRegisterPage.checkAppAddressForm)
+
     Then(/^I will be taken to the 'Choose Profile' page$/, profilePage.browse);
     Then(/^I will be taken to the '(.*) Signup' page$/, profileRegisterPage.showSignupPage);
 
