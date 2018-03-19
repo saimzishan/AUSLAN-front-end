@@ -49,7 +49,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
                 JSON.parse(params['edit_user']) : {};
             jsonData.id = params['uid'] || '';
             this.userId = jsonData.id;
-            localStorage.setItem('userId', this.userId);
             switch (this.selectedRole) {
                 case 'Interpreter'.toUpperCase():
                     let int1: Interpreter = this.isEdit ? <Interpreter>UserFactory.createUser(jsonData) : new Interpreter();
@@ -57,6 +56,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
                     this.setIfOtherGender();
                     this.model.role = ROLE.Interpreter;
                     GLOBAL.currentInterpreter = this.isEdit ? int1 : GLOBAL.currentInterpreter;
+                    localStorage.setItem('userId', this.userId);
                     break;
 
                 case 'IndividualClient'.toUpperCase():

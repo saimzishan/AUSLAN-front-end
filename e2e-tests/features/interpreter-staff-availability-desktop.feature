@@ -48,11 +48,11 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER STAF
     And I click on BUTTON 'SAVE'
     And I get success message: 'Staff Availability successfully added'
     Then I click on button with css '.fc-listYear-button'
-    Then I can count the element with css '.fc-list-heading-main' to be atleast '6'
+    Then I can count the element with css '.fc-list-heading-main' to be greater than '6'
     When I refresh
     When I wait for 10000 milli-seconds
     Then I click on button with css '.fc-listYear-button'
-    Then I can count the element with css '.fc-list-heading-main' to be atleast '6'
+    Then I can count the element with css '.fc-list-heading-main' to be greater than '6'
 
   @runThis
   Scenario: As Administrator I can add INTERPRETER blockouts on desktop
@@ -75,15 +75,12 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER STAF
     And I will be taken to the 'INTERPRETER Signup' page
     And I click on BUTTON name 'modify_blockouts'
     And I will be taken to blockout page
-   
     Then I fill the field 'blockout_name' with value 'test-blockout'
     Then I click on BUTTON name 'sldRecurring'
     When I select option WEEKLY from dropdown FREQUENCY
     Then I wait for 2000 milli-seconds
-    Then I click on material checkbox name 'Monday'
-    Then I click on material checkbox name 'Tuesday'
     Then I change the value of end date
-
     And I click on BUTTON name 'save_blockout'
     And I get success message: 'Blockout successfully added'
-    Then I can count the element with css 'tr.fc-list-item' to be '2'
+    Then I click on element with css 'button.fc-listYear-button.fc-button.fc-state-default'
+    Then I can count the element with css 'tr.fc-list-item' to be greater than '2'

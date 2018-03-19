@@ -392,15 +392,16 @@ defineSupportCode(({Given, When, Then}) => {
             expect(val).to.be.eq(isDisplayed);
         });
     }
-    When(/^I can count the element with css '(.*)' to be (atleast)?\s?'(.*)'$/, elementWithCSSCount);
-    function elementWithCSSCount(css: string, checkMin: string, count: string) {
-        const checkOnlyMin = checkMin === 'atleast';
+    When(/^I can count the element with css '(.*)' to be '(.*)'$/, elementWithCSSCount);
+    function elementWithCSSCount(css: string, count: string) {
         return page.getAllElementByCSS(css).count().then((cnt) => {
-            if (checkOnlyMin) {
-                return expect(cnt).to.be.gte(+count);  
-            } else {
                 return expect(cnt).to.be.eq(+count);
-            }
+        });
+    }
+    When(/^I can count the element with css '(.*)' to be greater than '(.*)'$/, elementWithCSSCountGte);
+    function elementWithCSSCountGte(css: string, count: string) {
+        return page.getAllElementByCSS(css).count().then((cnt) => {
+                return expect(cnt).to.be.gte(+count);
         });
     }
     When(/^I can see the element with name '(.*)' is '(.*)'$/, isElementWithNameVisible);

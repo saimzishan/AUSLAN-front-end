@@ -48,6 +48,10 @@ export class UserProfileComponent implements OnInit {
         this.selectedStatus = Boolean(this.userModel && this.userModel.disabled === false) ?
             this.userStatusArray[0].name : this.userStatusArray[1].name;
         this.setGenderIfOther();
+        if (GLOBAL.currentUser instanceof Interpreter) {
+            localStorage.setItem('userId', this.userModel.id);
+        }
+
     }
 
     setGenderIfOther() {
