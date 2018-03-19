@@ -157,3 +157,25 @@ Feature: Booking Management
     And I fill the field 'ext_ref_num' with value '1234'
     When I click on 'New Booking'
     Then I can verify the input 'ext_ref_num' will have the value ''
+
+  @runThis
+  Scenario: Individual Client can create a non-standard booking will prefill requested by name
+    Given I exist as an Individual Client
+    And I sign in with valid Individual Client credentials
+    And I am on the bookings page
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    Then I can verify the input 'raw_booking_requested_by' will have the value 'ted'
+    Then I can verify the input 'raw_booking_requested_by_ln' will have the value 'Individual Client'
+
+  @runThis
+  Scenario: Given 1 verified Individual Client, Administrator can create a booking with prefill requested by name
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on the bookings page
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    When I fill New Booking form fields correctly
+    And I select the bookable for client
+    Then I can verify the input 'raw_booking_requested_by' will have the value 'ted'
+    Then I can verify the input 'raw_booking_requested_by_ln' will have the value 'Individual Client'
