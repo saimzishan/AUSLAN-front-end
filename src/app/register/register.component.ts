@@ -5,7 +5,7 @@ import {
     User, UserFactory
 } from '../shared/model/user.entity';
 import {ROLE} from '../shared/model/role.enum';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, Router, NavigationExtras} from '@angular/router';
 import {NotificationServiceBus} from '../notification/notification.service';
 import {FormGroup, FormControl, NgForm, NgModel} from '@angular/forms';
 import {SpinnerService} from '../spinner/spinner.service';
@@ -27,6 +27,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
     termsAndConditionAccepted = false;
     selectedStatus = '';
     userStatusArray = GLOBAL.userStatusArray;
+    userId;
+    otherGender = '';
 
     constructor(public userService: UserService,
         public notificationServiceBus: NotificationServiceBus,
@@ -46,10 +48,13 @@ export class RegisterComponent implements OnInit, OnDestroy {
             let jsonData = this.isEdit ?
                 JSON.parse(params['edit_user']) : {};
             jsonData.id = params['uid'] || '';
+            this.userId = jsonData.id;
+            localStorage.setItem('userId', this.userId);
             switch (this.selectedRole) {
                 case 'Interpreter'.toUpperCase():
                     let int1: Interpreter = this.isEdit ? <Interpreter>UserFactory.createUser(jsonData) : new Interpreter();
                     this.model = int1;
+                    this.setIfOtherGender();
                     this.model.role = ROLE.Interpreter;
                     GLOBAL.currentInterpreter = this.isEdit ? int1 : GLOBAL.currentInterpreter;
                     break;
@@ -57,6 +62,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
                 case 'IndividualClient'.toUpperCase():
                     let ic = this.isEdit ? UserFactory.createUser(jsonData) : new IndividualClient(jsonData);
                     this.model = ic;
+                    this.setIfOtherGender();
                     this.model.role = ROLE.IndividualClient;
 
                     break;
@@ -64,6 +70,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
                 case 'Organisation'.toUpperCase():
                     let org = this.isEdit || this.isDuplicate ? UserFactory.createUser(jsonData) : new OrganisationalRepresentative(jsonData);
                     this.model = org;
+                    this.setIfOtherGender();
                     this.model.role = ROLE.Organisation;
                     if (this.isDuplicate) {
                         this.model.first_name = this.model.last_name =
@@ -102,6 +109,14 @@ export class RegisterComponent implements OnInit, OnDestroy {
         this.model.state_where_most_bookings_occur = 'VIC';
         this.model.staff_to_casual_toggle = this.model.employment_type;
     }
+
+    setIfOtherGender() {
+        if (this.model.gender !== 'Male' && this.model.gender !== 'Female' && this.model.gender !== null && this.isEdit) {
+            this.otherGender = this.model.gender;
+            this.model.gender = 'Other';
+        }
+    }
+
     staffToCasualToggle() {
         if (this.model.id > 0) {
             this.userService.toggle_employment_type(this.model.id)
@@ -148,6 +163,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
         });
     }
     addUser() {
+        this.model.gender = this.model.gender === 'Other' ? this.otherGender : this.model.gender;
         this.userService.createUser(this.model)
             .subscribe((res: any) => {
                 if (res.data.id && 0 < res.data.id) {
@@ -166,7 +182,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     }
 
     editUser() {
-
+        this.model.gender = this.model.gender === 'Other' ? this.otherGender : this.model.gender;
         this.model.disabled = this.selectedStatus === 'Disabled';
         this.selectedStatus = '';
         this.userService.updateUser(this.model)
@@ -209,6 +225,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
         return Boolean(GLOBAL.currentUser instanceof Administrator ||
             GLOBAL.currentUser instanceof BookingOfficer) ;
     }
+
+    isUserDsqAdmin(): Boolean {
+        return Boolean(GLOBAL.currentUser instanceof Administrator && GLOBAL.currentUser.business_name === 'DSQ');
+    }
+
     handleFileSelect(evt) {
         let files = evt.target.files;
         let file = files[0];
@@ -224,5 +245,13 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
     _handleReaderLoaded(readerEvt) {
         this.model.avatar = readerEvt.target.result;
+    }
+
+    navigateToPayroll() {
+        let navigationExtras: NavigationExtras = {
+            queryParams: {userId: this.selectedRole === 'ORGANISATION' ? this.model.organisation_attributes.id : this.model.id,
+                          selectedRole: this.selectedRole}
+        };
+        this.router.navigate(['/user-management/', 'payroll-billing'], navigationExtras);
     }
 }

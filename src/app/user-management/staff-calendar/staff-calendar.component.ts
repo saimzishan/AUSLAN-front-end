@@ -27,12 +27,13 @@ export class StaffCalendarComponent implements OnInit {
     updateCalendar = false;
     userID;
     interpreter: Interpreter;
-    constructor(public userDataService: UserService, private route: ActivatedRoute, private router: Router) {
+    constructor(public routes: ActivatedRoute, public userDataService: UserService, private route: ActivatedRoute, private router: Router) {
         this.userModel = new Interpreter();
     }
     isUserLogin() {
         return Boolean(GLOBAL.currentUser);
     }
+
     ngOnInit() {
         let d = new DatePipe('en-us');
         this.userModel.naati_validity_start_date =
@@ -44,22 +45,23 @@ export class StaffCalendarComponent implements OnInit {
 
         delete this.userModel.assignments_attributes;
         delete this.userModel.password;
-
-        this.interpreter = Boolean(GLOBAL.currentUser) &&
-            GLOBAL.currentUser instanceof Interpreter ? <Interpreter>GLOBAL.currentUser :
-            this.isUserAdminOrBO() ? GLOBAL.currentInterpreter : null;
-        this.userID = this.interpreter !== null ? this.interpreter.id : -1;
-        if (this.userID !== -1) {
-            this.userDataService.getUser(this.userID)
-                .subscribe((res: any) => {
-                    if (res.status === 200) {
-                        delete res.data.assignments_attributes;
-                        this.userModel.staff_availabilities_attributes = res.data.staff_availabilities_attributes;
-                        this.StaffAvialabilityToUpdate();
-                    }
-                });
-        }
+        this.routes.params.subscribe(params => {
+             this.userID = +params['id'] || false;
+             if (this.userID) {
+                localStorage.setItem('userId', this.userID);
+                this.userDataService.getUser(this.userID)
+                    .subscribe((res: any) => {
+                        if (res.status === 200) {
+                            delete res.data.assignments_attributes;
+                            this.interpreter = res.data;
+                            this.userModel.staff_availabilities_attributes = res.data.staff_availabilities_attributes;
+                            this.StaffAvialabilityToUpdate();
+                        }
+                    });
+            }
+         });
     }
+
     isUserAdminOrBO() {
         return GLOBAL.currentUser instanceof Administrator ||
             GLOBAL.currentUser instanceof BookingOfficer;
@@ -175,5 +177,4 @@ export class StaffCalendarComponent implements OnInit {
         let timeZone = Booking.getNamedTimeZone(this.interpreter.address_attributes.state, this.interpreter.address_attributes.post_code.toString());
         return momentTimeZone(time).tz(timeZone).format('HH:mm:ss');
     }
-
 }
