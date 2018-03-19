@@ -15,7 +15,7 @@ Feature: Booking Payroll and Billing
     Then I am on the individual booking page
     When I click on link 'Payroll & Billing'
     Then I should be on the payroll and billing page
-
+    
   @runThis
   Scenario: Given 1 verified Booking Officer, I will see an explanation mark if I type incorrect value in input fields and error notification when saving, INTERPRETER exists
     Given I exist as an Booking Officer
@@ -217,15 +217,25 @@ Feature: Booking Payroll and Billing
     And I can see the element with name 'btnClaim' is 'not visible'
 
   @ignoreThis
-  Scenario: Given 1 verified Administrator and Booking Officer, As an admin I can see the save and claim buttons when booking is in Cancelled charge state and I can not see the claim button as book officer, CASUAL INTERPRETER exists
-    Given I set a interpreter as 'casual'
+  Scenario: Given 1 verified Individual Client, Administrator can create a booking, STAFF INTERPRETER exists
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
     And I am on the bookings page
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    When I fill New Booking form fields with specfic time correctly
+    And I select the bookable for client
+    Then I move to element name 'tnc'
+    Then I click on checkbox name 'tnc'
+    And I click the create booking button
+    Then I get a valid create booking notification
+    And I am on the bookings page
+    And I will be shown with bookings
     When I click on an individual booking
     Then I am on the individual booking page
     Then I select 1 Interpreter
     And I click on BUTTON name 'reassingBtn'
+    Then I wait for 5000 milli-seconds
     Then I can see the button 'Save' is enabled
     And I click on BUTTON 'Save'
     Then I wait for 1000 milli-seconds
@@ -250,6 +260,30 @@ Feature: Booking Payroll and Billing
     When I click on link 'Payroll & Billing'
     Then I can see the element with name 'btnSave' is 'visible'
     And I can see the element with name 'btnClaim' is 'not visible'
+
+@ignoreThis
+  Scenario: Given 1 verified Administrator and Booking Officer, As an admin I can see the save and claim buttons when booking is in Cancelled charge state and I can not see the claim button as book officer, CASUAL INTERPRETER exists
+    Given I set a interpreter as 'casual'
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on the bookings page
+    When I click on an individual booking
+    Then I am on the individual booking page
+    Then I select 1 Interpreter
+    And I click on BUTTON name 'reassingBtn'
+    Then I can see the button 'Save' is enabled
+    And I click on BUTTON 'Save'
+    Then I wait for 1000 milli-seconds
+    Then I get valid message: 'The interpreter have been assigned'
+    When I click on BUTTON 'Cancel Booking'
+    Then I will be shown a popup message 'Would you like to cancel only this booking, or all linked bookings?'
+    Then I click on BUTTON name 'yesBtn'
+    Then I wait for 1200 milli-seconds
+    Then I will be shown a popup message 'Are you sure you want to cancel this booking? This is permanent. We recommend to cancel this booking as Cancelled No Charge since the start date is not within 48 hours.'
+    Then I click on BUTTON name 'noBtn'
+    Then I get a valid 'Cancelled with Charge' notification for state
+    When I click on link 'Payroll & Billing'
+    Then I see selected option 'CASUAL' in dropdown
 
   @runThis
   Scenario: Given 1 verified Administrator, As an admin i will be moved to payroll tab when booking is in Cancelled charge, service completed or claimed state, INTERPRETER exists
