@@ -213,6 +213,13 @@
                                         [(ngModel)]="model.linked_account_number" name="linked_account_number" #linked_account_number="ngModel">
                             </div>
                         </div>
+                        <div *ngIf="checkUserAdminORBookOfficer() && isUserVicdeaf() && (selectedRole === 'INTERPRETER') && (model.staff_to_casual_toggle === 'staff')" class="medium-6 columns">
+                            <div class="form-field">
+                                <label>STAFF ID</label>
+                                <input type="text" placeholder="Enter your staff id"
+                                         name="staff_id" #staff_id="ngModel">
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <br>
