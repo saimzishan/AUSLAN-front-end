@@ -13,6 +13,7 @@ export class OrgRepComponent implements  OnInit, AfterViewInit {
   @ViewChild('orgRepForm') public orgRepform: NgForm;
   @Input() userModel: OrganisationalRepresentative;
   @Input() isDuplicate = false;
+  @Input() isEdit = false;
   @Input() parentForm: NgForm;
   address_title = 'ORGANISATION ADDRESS';
   ngAfterViewInit() {

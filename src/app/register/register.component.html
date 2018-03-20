@@ -216,7 +216,7 @@
                     </div>
                 </div>
                 <br>
-                <app-org-rep [isDuplicate]="isDuplicate" [userModel]="model"
+                <app-org-rep [isDuplicate]="isDuplicate" [isEdit]="isEdit" [userModel]="model"
                 [parentForm]="registerForm" #orgRepForm="ctOrgRepForm" *ngIf="selectedRole === 'ORGANISATION'"></app-org-rep> 
                 <app-interpreter [displayCalendar]="isEdit && checkUserAdminORBookOfficer()"
                  [parentForm]="registerForm" #interpreterForm="ctInterpreterForm" [userModel]="model" [canCalculateDistance]="true"

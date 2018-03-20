@@ -802,6 +802,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
 
             let cells = '';
             let offset = '';
+            let color = '';
             let st = this.startTime.getHours() - 2;
             if (sd.getHours() >= st) {
                 offset = 'offset' + (sd.getHours() - st);
@@ -813,7 +814,9 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                 cells = 'cells' + (edt.getHours() - sd.getHours());
 
             }
-            toRet = cells + ' ' + offset + ' pink';
+            color = avail_block.booking_id === null ? 'badge_orange' :
+            avail_block.booking_id === this.selectedBookingModel.id ? 'badge_green' : 'badge_pink';
+            toRet = cells + ' ' + offset + ' ' + color;
         }
         return toRet;
     }
