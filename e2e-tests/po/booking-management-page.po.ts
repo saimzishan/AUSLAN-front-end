@@ -305,6 +305,9 @@ export class BookingManagementPage extends PageObject {
     clickOnBooking = () => {
         return this.getElementByID('lnkBooking').click();
     }
+    clickOnMessages = () => {
+        return this.getElementByID('lnkMessages').click();
+    }
     // Adds a '0' in the start if the date < 10
     private prettyDate = (date: number|string): string => {
         date = date.toString();

@@ -1,3 +1,4 @@
+import { User } from './../../../../e2e-tests/helper';
 import {Component, OnDestroy, Input, OnInit} from '@angular/core';
 import {GLOBAL} from '../../shared/global';
 import {UserNameService} from '../../shared/user-name.service';
@@ -37,9 +38,11 @@ export class HeaderComponent implements OnDestroy, OnInit {
       '';
         this.userIsActive = Boolean(GLOBAL.currentUser && this.fullName && this.fullName.length > 0
         && this.fullName === GLOBAL.currentUser.first_name + ' '  + GLOBAL.currentUser.last_name);
-      if (Boolean(GLOBAL.currentUser) && GLOBAL.currentUser.id > 0) {
-        this.interpreterID = GLOBAL.currentUser.id;
-      }
+      // if (Boolean(GLOBAL.currentUser) ) {
+      //   // let user = JSON.parse(localStorage.getItem('user'));
+      //   // this.interpreterID = user.id;
+      //   console.log(localStorage.getItem('user'));
+      // }
   }
 
   getPicturePath() {
@@ -67,12 +70,19 @@ export class HeaderComponent implements OnDestroy, OnInit {
       this.notificationServiceBus.launchNotification(true, 'Please select any booking before');
       return false;
     }
-    this.setActiveLink(7);
+    this.setActiveLink(this.linkName.messages);
     return true;
   }
 
   navigateToMessaging() {
-    this.router.navigate(['users/', this.interpreterID, 'messages']);
+    // console.log(GLOBAL.currentUser.id);
+    this.router.navigate(['users/', GLOBAL.currentUser.id, 'messages']);
+  }
+
+  showMessageButton() {
+    if (Boolean(GLOBAL.currentUser) && GLOBAL.currentUser.id > 0) {
+      this.interpreterID = GLOBAL.currentUser.id;
+    }
   }
 
 }

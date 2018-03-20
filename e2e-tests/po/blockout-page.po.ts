@@ -16,7 +16,7 @@ export class BlockoutPagePo extends PageObject {
      * */
     saveBtn;
     createBookingPO = new BookingPage();
-    
+
     browse = () => {
         return this.currentPath().then((currentPath) => {
             expect(currentPath).to.contain('block_out');
@@ -27,7 +27,14 @@ export class BlockoutPagePo extends PageObject {
     browseStaff = () => {
         const EC = protractor.ExpectedConditions;
         return this.currentPath().then((currentPath) => {
-            const urlMatchCondition = EC.or(EC.urlContains('staff-availability'), EC.urlContains('staff_calendar'))
+            const urlMatchCondition = EC.or(EC.urlContains('staff-availability'), EC.urlContains('staff_calendar'));
+            browser.wait(urlMatchCondition, 30000);
+        });
+    }
+    browseInterpreterMessages = () => {
+        const EC = protractor.ExpectedConditions;
+        return this.currentPath().then((currentPath) => {
+            const urlMatchCondition = EC.or(EC.urlContains('messages'), EC.urlContains('messages'));
             browser.wait(urlMatchCondition, 30000);
         });
     }

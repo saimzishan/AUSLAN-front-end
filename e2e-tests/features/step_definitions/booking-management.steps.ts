@@ -79,6 +79,7 @@ defineSupportCode(({Given, Then, When}) => {
     When(/^I empty the search field '(.*)'$/, bookingManagementPO.emptyTheField);
     When(/^I click out of the text box$/, bookingManagementPO.clickOutSide);
     When(/^I click on Booking$/, bookingManagementPO.clickOnBooking);
+    When(/^I click on Messages$/, bookingManagementPO.clickOnMessages);
     When(/^I change the bookable type/, createBookingPO.changeBookableType);
 
 
