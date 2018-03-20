@@ -2,7 +2,7 @@
     <header *ngIf="false === isUserLogin()" id="header">
         <a href="/"><i class="icons icons-logo"></i></a>
     </header>
-    <section id="submenu" *ngIf="checkUserAdminORBookOfficer()">
+    <section id="submenu" *ngIf="checkUserAdminORBookOfficer() && checkIsEditInterpreter()">
        <section>
             <a id="TABStaffCalendar" [routerLink]="['/user-management/',userId,'staff_calendar']"> Staff Calender</a>
             <a *ngIf="isUserDsqAdmin() && (selectedRole === 'INTERPRETER' || selectedRole === 'INDIVIDUALCLIENT' || selectedRole === 'ORGANISATION')"

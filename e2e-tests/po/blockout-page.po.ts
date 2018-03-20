@@ -16,7 +16,7 @@ export class BlockoutPagePo extends PageObject {
      * */
     saveBtn;
     createBookingPO = new BookingPage();
-    
+
     browse = () => {
         return this.currentPath().then((currentPath) => {
             expect(currentPath).to.contain('block_out');

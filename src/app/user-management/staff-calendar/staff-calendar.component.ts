@@ -74,7 +74,7 @@ export class StaffCalendarComponent implements OnInit {
                 height: 'auto',
                 fixedWeekCount: false,
                 weekends: true, // will hide Saturdays and Sundays
-                timezone: 'local',
+                // timezone: 'local',
                 slotDuration: '01:00:00',
                 header: {
                     left: 'title',
@@ -115,6 +115,8 @@ export class StaffCalendarComponent implements OnInit {
             };
             for (let avail_block of this.userModel.staff_availabilities_attributes) {
                 let startDate = new Date(avail_block.start_time);
+                let temp = avail_block.start_time;
+                temp = temp.substring(11, 19);
                 let endDate;
                 if (!avail_block.recurring) {
                     endDate = new Date(avail_block.start_time);
@@ -133,12 +135,14 @@ export class StaffCalendarComponent implements OnInit {
 
                 let event: any = ({
                     title: avail_block.name,
-                    color: avail_block.recurring ? '#00ff00' : '#02b86e',
+                    color: avail_block.booking_id ? '#3bb69c' : '#02b86e',
                     id: avail_block.id,
                     textColor: '#ffffff',
                     booking_id: avail_block.booking_id,
-                    start: avail_block.recurring === false ? eventStart : ' ',
-                    end: avail_block.recurring === false ? eventEnd : ' ',
+                    start: avail_block.recurring === false ? eventStart : ('' + moment.duration(startTime).get('hours') +
+                        ':' + moment.duration(startTime).get('minutes') + ':00'),
+                    end: avail_block.recurring === false ? eventEnd : ('' + moment.duration(endTime).get('hours') +
+                        ':' + moment.duration(endTime).get('minutes') + ':00'),
                     recurring: avail_block.recurring,
                     frequency: avail_block.frequency
                 });

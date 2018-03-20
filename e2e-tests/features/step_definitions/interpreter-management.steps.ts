@@ -17,5 +17,6 @@ defineSupportCode(({Given, Then, When}) => {
     Then(/^I should see the verified interpreters in (ascending|descending) order of (.*)$/, intManagementPO.checkInterpreterOrder);
 
     When(/^I search interpreters with '(.*)'$/, intManagementPO.searchInterpretersWithText);
+    Then(/I can see the list item time is$/, intManagementPO.checkStaffAvailabilityTime);
 
 });
