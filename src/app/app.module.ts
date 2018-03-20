@@ -119,7 +119,7 @@ import {ShortTimePipe} from './shared/pipe/short-time.pipe';
         HttpModule, SimpleNotificationsModule.forRoot(),
         ReactiveFormsModule, Md2Module.forRoot(),
         MaterialModule, CalendarModule, PrimeNgCalendarModule, AgmCoreModule.forRoot({
-            apiKey: 'AIzaSyA-BDtGjVcaDl5VrgsGiwDLEvDQ1XOsWAw',
+            apiKey: 'AIzaSyAhNu-VrvCjd1AliJerDQIy329iPy2vABU',
             libraries: ['places']
         }),
         AutoCompleteModule
