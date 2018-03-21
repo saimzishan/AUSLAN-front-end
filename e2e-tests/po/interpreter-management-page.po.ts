@@ -75,10 +75,10 @@ export class InterpreterManagementPage extends PageObject {
         return this[compareMethod].call(InterpreterManagementPage, firstEl, lastEl, isAscending);
     }
 
-    checkStaffAvailabilityTime = () => {
+    checkStaffAvailabilityTime = (fullTime) => {
         let listItem = this.getElementByCss('table.fc-list-table tbody tr.fc-list-item td.fc-list-item-time');
         return listItem.getText().then((txt) => {
-            return expect(txt).to.be.eq('6:25am - 7:25am');
+            return expect(txt).to.be.eq(fullTime);
         });
     }
 }

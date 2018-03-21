@@ -74,7 +74,6 @@ export class StaffCalendarComponent implements OnInit {
                 height: 'auto',
                 fixedWeekCount: false,
                 weekends: true, // will hide Saturdays and Sundays
-                // timezone: 'local',
                 slotDuration: '01:00:00',
                 header: {
                     left: 'title',
@@ -115,8 +114,6 @@ export class StaffCalendarComponent implements OnInit {
             };
             for (let avail_block of this.userModel.staff_availabilities_attributes) {
                 let startDate = new Date(avail_block.start_time);
-                let temp = avail_block.start_time;
-                temp = temp.substring(11, 19);
                 let endDate;
                 if (!avail_block.recurring) {
                     endDate = new Date(avail_block.start_time);

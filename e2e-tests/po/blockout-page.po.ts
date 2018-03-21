@@ -64,6 +64,19 @@ export class BlockoutPagePo extends PageObject {
             expect(val).to.be.eq('09:25 AM');
         });
     }
+    checkEndTimeOFBlockout = (value) => {
+        let endTime = this.getElementByCss('input[name="dpEventDate_endtime"]');
+        return endTime.getAttribute('value').then((val) => {
+            expect(val).to.be.eq(value);
+        });
+    }
+    checkValuOFBlockoutName = (value) => {
+        let endTime = this.getElementByCss('input[name="blockout_name"]');
+        return endTime.getAttribute('value').then((val) => {
+            expect(val).to.be.eq(value);
+        });
+    }
+
     changeEndDateOFBlockout = () => {
         let endDate = this.getElementByCss('input[name="dpEventDate_end"]');
         endDate.clear();
