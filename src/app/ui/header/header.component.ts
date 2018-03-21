@@ -38,11 +38,7 @@ export class HeaderComponent implements OnDestroy, OnInit {
       '';
         this.userIsActive = Boolean(GLOBAL.currentUser && this.fullName && this.fullName.length > 0
         && this.fullName === GLOBAL.currentUser.first_name + ' '  + GLOBAL.currentUser.last_name);
-      // if (Boolean(GLOBAL.currentUser) ) {
-      //   // let user = JSON.parse(localStorage.getItem('user'));
-      //   // this.interpreterID = user.id;
-      //   console.log(localStorage.getItem('user'));
-      // }
+       localStorage.setItem('bookingId' , '-1');
   }
 
   getPicturePath() {

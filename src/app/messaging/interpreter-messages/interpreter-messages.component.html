@@ -94,7 +94,7 @@
       <button *ngIf='isTagShow' (click)="sendMessageTagHide()" class="button messages__formButton">{{message_tage}} x</button>
       <section class="messages__formInner">
         <textarea [(ngModel)]="message_body" required (keyup)="checkEmpty()" name="message_body" class="messages__formInput"></textarea>
-        <button [disabled]="!message_body" (click)="sendInterpreterMessages()" class="messages__formSend"></button>
+        <button [disabled]="!message_body" name="messages__formSend" (click)="sendInterpreterMessages()" class="messages__formSend"></button>
       </section>
     </form>
 </section>

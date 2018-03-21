@@ -25,11 +25,12 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN,  I can send messages and ca
         When I sign in with valid Interpreter credentials
         And I am on the bookings page
         Then I click on Messages
-        And I get error message: 'Oops! Please select any booking before'
+        And I get error message: 'Please select any booking before'
         When I click on an individual booking
         Then I am on the individual booking page
         Then I click on element by id 'lnkMessages'
         Then I will be taken to messages page
         Then I fill the field 'message_body' with value 'Test message'
+        Then I wait for 10000 milli-seconds
         Then I click on BUTTON name 'messages__formSend'
         And I get success message: 'Message sent successfully..'
