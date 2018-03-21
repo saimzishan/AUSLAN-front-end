@@ -1,4 +1,5 @@
 Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER STAFF-AVAILABILITY ON DESKTOP
+
   @runThis
   Scenario: As Administrator I can add INTERPRETER STAFF-AVAILABILITY on desktop
     Given I go to the website
@@ -39,6 +40,7 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER STAF
     When I refresh
     Then I can see the button state 'ADD STAFF AVAILABILITY' is enabled
     Then I fill the field 'blockout_name' with value 'test-blockout'
+    Then I check that the start time and end time is 6:25am - 7:25am
     Then I click on BUTTON name 'sldRecurring'
     When I select option WEEKLY from dropdown FREQUENCY
     Then I wait for 2000 milli-seconds
@@ -53,6 +55,14 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER STAF
     When I wait for 5000 milli-seconds
     Then I click on button with css '.fc-listYear-button'
     Then I can count the element with css '.fc-list-heading-main' to be greater than '6'
+    Then I can see the time in full calendar is '6:25am - 7:25am'
+    Then I click on button with css '.fc-month-button'
+    Then I click on element with css '.fc-day-grid-event'
+    Then I will be taken to staff-calendar page
+    When I wait for 10000 milli-seconds
+    Then I check the value of endTime is '07:25 AM'
+    Then I check the value of availability is 'test-blockout'
+    Then I see selected option 'WEEKLY' in dropdown
 
   @runThis
   Scenario: As Administrator I can add INTERPRETER blockouts on desktop
@@ -76,6 +86,7 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER STAF
     And I click on BUTTON name 'modify_blockouts'
     And I will be taken to blockout page
     Then I fill the field 'blockout_name' with value 'test-blockout'
+    Then I check that the start time and end time is 6:25am - 7:25am
     Then I click on BUTTON name 'sldRecurring'
     When I select option WEEKLY from dropdown FREQUENCY
     Then I wait for 2000 milli-seconds
@@ -84,3 +95,11 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER STAF
     And I get success message: 'Blockout successfully added'
     Then I click on element with css 'button.fc-listYear-button.fc-button.fc-state-default'
     Then I can count the element with css 'tr.fc-list-item' to be greater than '2'
+    Then I can see the time in full calendar is '6:25am - 7:25am'
+    Then I click on button with css '.fc-month-button'
+    Then I click on element with css '.fc-day-grid-event'
+    And I will be taken to blockout page
+    When I wait for 10000 milli-seconds
+    Then I check the value of endTime is '07:25 AM'
+    Then I check the value of availability is 'test-blockout'
+    Then I see selected option 'WEEKLY' in dropdown
