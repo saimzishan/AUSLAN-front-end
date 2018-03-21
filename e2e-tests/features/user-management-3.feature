@@ -179,3 +179,28 @@ Feature: Create, read, update and delete a User
     And I enter approved date
     And I click on BUTTON name 'register_user'
     Then I see success notification
+
+  @runThis
+  Scenario: As Administrator I can activate/disable an Interpreter
+    Given I disabled the last Interpreter
+    When I try to sign in with valid Interpreter credentials
+    Then I will get an error message saying "Email or password not found"
+    Given I sign in with valid Administrator credentials
+    Then I am on my admin home screen
+    When I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    And I click on activate for an existing Interpreter
+    Then I click on my name
+    And I click on logout
+    When I sign in with valid Interpreter credentials
+    Then I will be shown the bookings page
+    Then I click on my name
+    And I click on logout
+    Given I sign in with valid Administrator credentials
+    When I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    And I click on deactivate for an existing Interpreter
+    Then I click on my name
+    And I click on logout
+    When I try to sign in with valid Interpreter credentials
+    Then I will get an error message saying "Email or password not found"

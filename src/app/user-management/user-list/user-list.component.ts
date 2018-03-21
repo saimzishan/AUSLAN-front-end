@@ -9,6 +9,7 @@ import {ROLE} from '../../shared/model/role.enum';
 import {GLOBAL} from '../../shared/global';
 import {UserFilter} from '../../shared/model/user-filter.interface';
 import {URLSearchParams} from '@angular/http';
+import {UserService} from '../../api/user.service';
 
 
 @Component({
@@ -27,9 +28,10 @@ export class UserListComponent {
     private filterUserParams = new URLSearchParams();
     private currentSort = {'field': 'first_name', 'order': 'asc'};
 
-    constructor(private linkAuth: LinkAuth) {
-
-    }
+    constructor(
+        private linkAuth: LinkAuth,
+        private userDataService: UserService
+    ) {}
 
     getQueryableRole(user) {
         return ROLE[user.getRole()].toUpperCase().replace(/\s/g, '');
@@ -147,4 +149,25 @@ export class UserListComponent {
         this.onPageEmit.emit(this.p);
     }
 
+    activateUser(id: number, index: number) {
+        return this.userDataService.activateUser(id)
+            .subscribe((res: any) => {
+                if (res.status === 200) {
+                    return this.userList[index].disabled = false;
+                }
+            }, err => {
+                console.log(err)
+            });
+    }
+
+    deactivateUser(id: number, index: number) {
+        return this.userDataService.deactivateUser(id)
+            .subscribe((res: any) => {
+                if (res.status === 200) {
+                    return this.userList[index].disabled = true;
+                }
+            }, err => {
+                console.log(err)
+            });
+    }
 }

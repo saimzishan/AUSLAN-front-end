@@ -336,6 +336,16 @@ export class UserManagementPage extends PageObject {
             return edit.click();
         });
     }
+    clickOnActivateUser = (type: string) => {
+        return this.findClickableActionButton('check-mobile', '', type).then(edit => {
+            return edit.click();
+        });
+    }
+    clickOnDeactivateUser = (type: string) => {
+        return this.findClickableActionButton('decline', '', type).then(edit => {
+            return edit.click();
+        });
+    }
     clickOnDuplicateUser = (active: string, type: string) => {
         return this.findClickableActionButton('duplicate-orgrep', active, type).then((duplicate) => {
             return duplicate.isPresent().then( (v) => {
