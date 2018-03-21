@@ -256,9 +256,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
     }
 
     checkIsEditInterpreter() {
-        if (this.isEditInterpreter === 'INTERPRETER') {
-            return true;
-        }
-        return false;
+        return (this.isEditInterpreter === 'INTERPRETER');
     }
 }
