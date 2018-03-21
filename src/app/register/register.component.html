@@ -176,7 +176,7 @@
                             <div class="form-field">
                               <label>{{(selectedRole === 'INDIVIDUALCLIENT' || selectedRole === 'ORGANISATION') ? 'IN WHICH STATE WILL MOST OF YOUR BOOKINGS TAKE PLACE * ?' : 'WORK PREFERENCE *'}}</label>
                               <select aria-label="A"
-                                      [(ngModel)]="model.state_where_most_bookings_occur" name="location_pref"
+                                      disabled="true" [(ngModel)]="model.state_where_most_bookings_occur" name="location_pref"
                                       #location_pref="ngModel" required>
                       
                                 <option *ngFor="let loc_name of  ['ACT','NSW','QLD', 'TAS', 'VIC','WA', 'NT']"
