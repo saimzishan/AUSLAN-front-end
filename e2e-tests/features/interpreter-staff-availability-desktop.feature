@@ -50,7 +50,7 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER STAF
     Then I click on button with css '.fc-listYear-button'
     Then I can count the element with css '.fc-list-heading-main' to be greater than '6'
     When I refresh
-    When I wait for 10000 milli-seconds
+    When I wait for 5000 milli-seconds
     Then I click on button with css '.fc-listYear-button'
     Then I can count the element with css '.fc-list-heading-main' to be greater than '6'
 
