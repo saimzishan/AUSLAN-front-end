@@ -169,9 +169,9 @@ Feature: Create, read, update and delete a User
 
   @runThis
   Scenario: As Administrator I can update approve date Interpreter
-    And I exist as an Administrator
+    Given I exist as an Administrator
     And I sign in with valid Administrator credentials
-    And I am on my admin home screen
+    Then I am on my admin home screen
     And I hover on the 'Profile'
     And I go to the 'User Management' list page
     Then I click on edit for an active existing Interpreter
