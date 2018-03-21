@@ -28,12 +28,7 @@ export class OrgRepComponent implements  OnInit, AfterViewInit {
     }
 
     billingAddressNotAsOrg() {
-        if (!this.userModel.billingAddressIsSame) {
-            this.userModel.organisation_billing_account
-                .organisation_billing_address = new Address();
-        } else {
-            this.userModel.organisation_billing_account
-                .organisation_billing_address = this.userModel.address_attributes;
-        }
+        this.userModel.organisation_billing_account.organisation_billing_address =
+            !this.userModel.billingAddressIsSame ? new Address() : this.userModel.address_attributes;
     }
 }

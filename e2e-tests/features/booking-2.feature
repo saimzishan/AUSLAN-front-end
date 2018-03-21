@@ -159,7 +159,7 @@ Feature: Booking Management
     Then I can verify the input 'ext_ref_num' will have the value ''
 
   @runThis
-  Scenario: Individual Client can create a non-standard booking will prefill requested by name
+  Scenario: Individual Client can create a booking to be sure that there is no issue with prefill requested by name
     Given I exist as an Individual Client
     And I sign in with valid Individual Client credentials
     And I am on the bookings page

@@ -418,7 +418,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
 
     public setClientAsRequestedBy() {
         let user = this.isUserAdminORBookOfficer ? this.bookable : GLOBAL.currentUser;
-        if (user) {
+        if (Boolean(user)) {
             ['first_name', 'last_name'].forEach((field) => {
                 let value = user[field];
                 this.bookingModel.requested_by[field] = value;
