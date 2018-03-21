@@ -19,7 +19,8 @@ Feature: User Role and Permissions Management
     Then I am on the bookings page
     Then I should not be able to navigate to 'user-management/2/block_out'
 
-  @runThis
+    #I am not sure if this is the right test
+  @ignoreThis
   Scenario: Given 1 verified Interpreter, as an Administrator I should not be able to visit block_out
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials

@@ -454,6 +454,12 @@ export class Heroku {
         command += 'FactoryGirl.create_list(:booking, ' + count + ', bookable: IndividualClient.first)';
         Heroku.sendCommandToHeroku(command);
     }
+    static setInterpreterType(type: string) {
+       let command = 'i=Interpreter.first;';
+        command += 'i.update_attributes(employment_type: ' + type + ');';
+        command += 'i.save;';
+        Heroku.sendCommandToHeroku(command);
+    }
 
     static createBulkBookingsWithLinkId(count: number, negate: string) {
         const newLinkIdRequired = String(!(negate === 'out'));
@@ -469,6 +475,11 @@ export class Heroku {
 
     static preloadVerifiedInterpreters(count: string) {
         let task = 'seed:test_data:preloaded_interpreters[' + count + ']';
+        Heroku.sendTaskToHeroku(task);
+    }
+
+    static preloadAllTypesVerifiedUsers() {
+        let task = 'seed:test_data:preload_users:all_types';
         Heroku.sendTaskToHeroku(task);
     }
 
@@ -494,9 +505,29 @@ export class Heroku {
 
     static verifyAllInterpreter() {
         Heroku.sendCommandToHeroku('Interpreter.first.update_attributes(verified:' + true + ')');
-
     }
 
+    static setUserStatus(status: string, record: string, userType: string) {
+        let user = {
+            'Accountant': 'Accountant',
+            'Administrator': 'Administrator',
+            'Booking Officer': 'BookingOfficer',
+            'Individual Client': 'IndividualClient',
+            'Interpreter': 'Interpreter',
+            'Organisational Representative': 'OrganisationalRepresentative'
+        }[userType];
+
+        let updatableFields = '';
+        if (status === 'disabled') {
+            updatableFields = 'disabled: true';
+        } else if (status === 'unverified') {
+            updatableFields = 'disabled: false, verified: false';
+        } else if (status === 'active') {
+            updatableFields = 'disabled: false, verified: true';
+        }
+        let command = '' + user + '.' + record + '.update_attributes(' + updatableFields + ')'
+        Heroku.sendCommandToHeroku(command);
+    }
 
     static createBulkAdministrator(numberOfUser: string) {
         const num_of_user = parseInt(numberOfUser, 10);
@@ -545,6 +576,12 @@ export class Heroku {
         let command = 'o=OrganisationalRepresentative.first;';
         command += 'o.special_instructions="I am special";';
         command += 'o.save;';
+        Heroku.sendCommandToHeroku(command);
+    }
+
+    static changeUserBusiness(userType: string) {
+        let command = 'o=' + userType + '.first;';
+            command += 'o.update(state_where_most_bookings_occur: "NSW");';
         Heroku.sendCommandToHeroku(command);
     }
 

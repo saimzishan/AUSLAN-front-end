@@ -183,7 +183,7 @@ defineSupportCode(({Given, When, Then}) => {
     Given(/^I fill the payroll field '(.*)' with value '(.*)'/, fillPayrollField);
 
         function fillPayrollField(lblString: string, value: string) {
-            let input = page.getElementByCss('input[ng-reflect-name="'+lblString+'"]');
+            let input = page.getElementByCss('input[ng-reflect-name="' + lblString + '"]');
             expect(input).to.exist;
             input.clear();
             return page.setValue(input, value);
@@ -299,12 +299,16 @@ defineSupportCode(({Given, When, Then}) => {
             expect(count).to.be.greaterThan(0);
         });
     }
+    Given(/^I set a interpreter as '(.*)'$/, setInterpreterAsCasual);
+    function setInterpreterAsCasual(value: string) {
+        Heroku.setInterpreterType(value);
+    }
 
     When(/^I debug$/, () => {
         return browser.pause();
     });
     When(/^I refresh/, () => {
-        return browser.refresh();
+        return browser.getCurrentUrl().then(u => browser.driver.navigate().to(u));
     });
     When(/^I click on button '(.*)'$/, clickOnButton);
     function clickOnButton(btnLabel: string) {
@@ -562,7 +566,6 @@ defineSupportCode(({Given, When, Then}) => {
             }
         });
     }
-
     Then(/^I can see that form '(.*)' is '(.*)'$/, checkFormDisabled);
     function checkFormDisabled (name: string, disabled: string) {
         let isEnabled = disabled.toLowerCase() === 'disabled';

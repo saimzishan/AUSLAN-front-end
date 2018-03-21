@@ -94,6 +94,15 @@
 <app-address  [parentForm]="interpreterForm" [address]="userModel.address_attributes" #addressForm="ctAddressForm" [canCalculateDistance]="canCalculateDistance" [userModel]="userModel"></app-address>
 
 <ng-container *ngIf="isUserAdminORBookOfficer()">
+    <div class="medium-6 columns">
+        <div class="form-field">
+          <label>DATE APPROVED</label>
+          <input type="date" placeholder="Please enter approve date"
+                  [ngModel]="userModel.date_approved"
+                 (ngModelChange)="userModel.date_approved = $event"
+                 name="date_approved" #date_approved="ngModel">
+        </div>
+    </div>
     <div class="medium-12 columns">
         <div class="form-field">
             <label>INTERPRETER NOTES
