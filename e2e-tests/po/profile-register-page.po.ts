@@ -34,6 +34,8 @@ export class ProfileRegisterPage extends PageObject {
                     'strangeTypeOfUser@auslan.com.au'
         );
         this.getElementByName('mobile').sendKeys('0490394517');
+        //this.getElementByName('location_pref').sendKeys('TAS');
+        
     }
 
     fillDuplicateBasicData  = (type: string) => {
@@ -48,6 +50,11 @@ export class ProfileRegisterPage extends PageObject {
         );
         this.getElementByName('mobile').sendKeys('0490394517');
         this.getElementByName('location_pref').sendKeys('VIC');
+    }
+
+    fillWorkPref = (state: string) => {
+        let loc_pref = this.getElementByName('location_pref');
+        loc_pref.sendKeys(state);
     }
 
     fillAllDataForRegister = (type: string, prefComm: string) => {
@@ -84,7 +91,9 @@ export class ProfileRegisterPage extends PageObject {
         }
         if (type !== 'ADMINISTRATOR' && type !== 'BOOKINGOFFICER' && type !== 'ACCOUNTANT' ) {
 
-            this.getElementByName('comm_pref').sendKeys(prefComm);
+            if (type !== 'ORGANISATIONALREPRESENTATIVE') {
+            this.getElementByName('comm_pref').sendKeys(prefComm);                
+            }
             this.getElementByName('address_unit_num').sendKeys('22');
             this.getElementByName('address_street_number').sendKeys('62');
             this.getElementByName('address_street').sendKeys('Dave');

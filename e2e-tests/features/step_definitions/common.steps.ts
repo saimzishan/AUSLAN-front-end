@@ -362,9 +362,9 @@ defineSupportCode(({Given, When, Then}) => {
     }
     When(/^I can see the element with name '(.*)' as (.*)$/, isElementWithNameDisabled);
 
-    function isElementWithNameDisabled(css: string, disabled: string) {
+    function isElementWithNameDisabled(name: string, disabled: string) {
         let isEnabled = disabled.toLowerCase() === 'enabled';
-        return page.getElementByCss(css).isEnabled().then((val) => {
+        return page.getElementByName(name).isEnabled().then((val) => {
             expect(val).to.be.eq(isEnabled);
         });
     }
