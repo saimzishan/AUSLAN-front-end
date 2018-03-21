@@ -165,8 +165,22 @@ Feature: Booking Management
     And I am on the bookings page
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
+    Then I click on element by name 'rdBookingAddressNo'
+    And I click on element by name 'rdStandardInvoiceNo'
+    When I fill New Booking form fields correctly
     Then I can verify the input 'raw_booking_requested_by' will have the value 'ted'
     Then I can verify the input 'raw_booking_requested_by_ln' will have the value 'Individual Client'
+    Then I click on checkbox name 'tnc'
+    And I click the create booking button
+    Then I get a valid create booking notification
+    And I will be shown with bookings
+    When I click on an individual booking
+    Then I am on the individual booking page
+    When I click on link 'Booking details'
+    Then I should be on the edit booking page
+    Then I can verify the input 'raw_booking_requested_by' will have the value 'ted'
+    Then I can verify the input 'raw_booking_requested_by_ln' will have the value 'Individual Client'
+    
 
   @runThis
   Scenario: Given 1 verified Individual Client, Administrator can create a booking with prefill requested by name
@@ -177,5 +191,15 @@ Feature: Booking Management
     And I will be taken to the 'New Booking' form
     When I fill New Booking form fields correctly
     And I select the bookable for client
+    Then I can verify the input 'raw_booking_requested_by' will have the value 'ted'
+    Then I can verify the input 'raw_booking_requested_by_ln' will have the value 'Individual Client'
+    Then I click on checkbox name 'tnc'
+    And I click the create booking button
+    Then I get a valid create booking notification
+    And I will be shown with bookings
+    When I click on an individual booking
+    Then I am on the individual booking page
+    When I click on link 'Booking details'
+    Then I should be on the edit booking page
     Then I can verify the input 'raw_booking_requested_by' will have the value 'ted'
     Then I can verify the input 'raw_booking_requested_by_ln' will have the value 'Individual Client'

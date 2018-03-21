@@ -135,7 +135,6 @@ export class ProfileRegisterPage extends PageObject {
 
     checkAppAddressForm = (value: string) => {
         const clientOptionLabel = this.getElementByClassName('billing-address');
-        //const divClientDetails = this.getNextSibling(clientOptionLabel, 'div');
         const all_input_in_div = this.getAllByTagNameInElement(clientOptionLabel, 'input');
         return all_input_in_div.then((inputDiv) => {
             for (let i = 0; i < inputDiv.length; i++) {
