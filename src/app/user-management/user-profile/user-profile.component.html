@@ -106,12 +106,14 @@
 
     <app-interpreter-box
             [isPreffered]="true"
+            [isUserPage]="true"
             [selectedInterpreters]="userModel.prefferedInterpreters"
             *ngIf="userModel.type === 'IndividualClient' || userModel.type === 'Organisation' || userModel.type === 'OrganisationalRepresentative'"
     ></app-interpreter-box>
     <br>
     <app-interpreter-box
             [isPreffered]="false"
+            [isUserPage]="true"
             [selectedInterpreters]="userModel.prefferedInterpreters"
             *ngIf="userModel.type === 'IndividualClient' || userModel.type === 'Organisation' || userModel.type === 'OrganisationalRepresentative'"
     ></app-interpreter-box>

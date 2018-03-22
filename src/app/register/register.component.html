@@ -228,6 +228,7 @@
                 <app-interpreter-box
                         [isReadOnly]="isDuplicate"
                         [isPreffered]="true"
+                        [isUserPage]="true"
                         [selectedInterpreters]="model.prefferedInterpreters"
                         [state_where_most_bookings_occur]="model.state_where_most_bookings_occur"
                         *ngIf="selectedRole === 'ORGANISATION' || selectedRole === 'INDIVIDUALCLIENT'"
@@ -236,6 +237,7 @@
                 <app-interpreter-box
                         [isReadOnly]="isDuplicate"
                         [isPreffered]="false"
+                        [isUserPage]="true"
                         [selectedInterpreters]="model.prefferedInterpreters"
                         [state_where_most_bookings_occur]="model.state_where_most_bookings_occur"
                         *ngIf="selectedRole === 'ORGANISATION' || selectedRole === 'INDIVIDUALCLIENT'"
