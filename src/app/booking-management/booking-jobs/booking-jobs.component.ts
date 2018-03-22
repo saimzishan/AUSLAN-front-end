@@ -840,7 +840,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         dt.setHours(dt.getHours() - 2);
         for (let i = 0; i < 13; i++) {
             let amPm = dt.getHours() >= 12 ? 'pm' : 'am';
-            let val = dt.getHours() % 12
+            let val = dt.getHours() % 12;
             val = val === 0 ? 12 : val;
             array.push(val + ' ' + amPm);
             dt.setHours(dt.getHours() + 1);
