@@ -937,7 +937,7 @@
         </div>
         <div class="medium-6 columns">
           <div class="form-field">
-            <label>CONTACT LAST NAME
+            <label>CONTACT LAST NAME *
               <span mdTooltip="Enter Contact Last Name">
                 <i class="inline-icon-tip"></i>
               </span>
@@ -1348,7 +1348,7 @@
 
     <div class="actions" *ngIf="!isDisableForClientOrgBookOfficer">
       <button name="btnCreateBooking" (click)="onCreateBooking(booking_form,addressForm,billingForm,uploader);">SAVE</button>
-      <button name="btnCancelBooking" (click)="onCancelBooking();">CANCEL</button>
+      <button name="btnCancelBooking" (click)="onCancelBooking();" class="cncl-btn">CANCEL</button>
     </div>
    </fieldset>
   </form>

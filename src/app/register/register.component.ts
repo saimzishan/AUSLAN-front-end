@@ -29,7 +29,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     userStatusArray = GLOBAL.userStatusArray;
     userId;
     otherGender = '';
-
+    isEditInterpreter;
     constructor(public userService: UserService,
         public notificationServiceBus: NotificationServiceBus,
         public spinnerService: SpinnerService,
@@ -41,7 +41,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.sub_param = this.routes.queryParams.subscribe(params => {
-            let p = params['selectedRole'] || '';
+            let p = this.isEditInterpreter = params['selectedRole'] || '';
             this.isEdit = Boolean(params['edit_user']);
             this.isDuplicate = Boolean(params['isduplicate']);
             this.selectedRole = Boolean(p && p.length > 1) ? p : this.selectedRole;
@@ -257,5 +257,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
                           selectedRole: this.selectedRole}
         };
         this.router.navigate(['/user-management/', 'payroll-billing'], navigationExtras);
+    }
+
+    checkIsEditInterpreter() {
+        return (this.isEditInterpreter === 'INTERPRETER');
     }
 }
