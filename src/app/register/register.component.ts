@@ -111,7 +111,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     }
 
     setIfOtherGender() {
-        if (this.model.gender !== 'Male' && this.model.gender !== 'Female' && this.model.gender !== null && this.isEdit) {
+        if (this.model.gender !== 'Male' && this.model.gender !== 'Female' && this.model.gender !== null && this.isEdit && this.isDuplicate) {
             this.otherGender = this.model.gender;
             this.model.gender = 'Other';
         }
