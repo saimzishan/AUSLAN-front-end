@@ -10,7 +10,7 @@ import {GLOBAL} from '../../shared/global';
 import {UserFilter} from '../../shared/model/user-filter.interface';
 import {URLSearchParams} from '@angular/http';
 import {UserService} from '../../api/user.service';
-
+import {NotificationServiceBus} from '../../notification/notification.service';
 
 @Component({
     selector: 'app-user-list',
@@ -30,7 +30,8 @@ export class UserListComponent {
 
     constructor(
         private linkAuth: LinkAuth,
-        private userDataService: UserService
+        private userDataService: UserService,
+        private notificationServiceBus: NotificationServiceBus
     ) {}
 
     getQueryableRole(user) {
@@ -156,7 +157,8 @@ export class UserListComponent {
                     return this.userList[index].disabled = false;
                 }
             }, err => {
-                console.log(err)
+                console.log(err);
+                this.notificationServiceBus.launchNotification(true, 'The operation raised an error. Please refresh your browser and try again.');
             });
     }
 
@@ -167,7 +169,8 @@ export class UserListComponent {
                     return this.userList[index].disabled = true;
                 }
             }, err => {
-                console.log(err)
+                console.log(err);
+                this.notificationServiceBus.launchNotification(true, 'The operation raised an error. Please refresh your browser and try again.');
             });
     }
 }
