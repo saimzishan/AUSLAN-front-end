@@ -512,6 +512,14 @@ defineSupportCode(({Given, When, Then}) => {
         });
     }
 
+    When(/^I verify radiobutton id '(.*)' and is checked$/, verifyOnRBById);
+    function verifyOnRBById(name: string) {
+        let elm = page.getElementByName(name);
+        return elm.isPresent().then(presence => {
+            return expect(elm.getAttribute('class')).to.eventually.contain('mat-radio-checked');
+        });
+    }
+
     When(/^I click on table header '(.*)'$/, clickOnTableHeader);
 
     function clickOnTableHeader(text: string) {
