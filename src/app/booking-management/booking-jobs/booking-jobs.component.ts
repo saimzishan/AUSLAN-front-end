@@ -826,8 +826,8 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     }
 
     getTimelineMoverStyle() {
-        let diff = Math.abs(this.endTime.getTime() - this.startTime.getTime()) / 36e5;
-        let cellVal = parseInt(diff.toString(), 10).toString() + (this.endTime.getMinutes() > 29 && this.startTime.getMinutes() < 30  ? 'half' : '');
+        let cellVal = '' + (this.endTime.getHours() - this.startTime.getHours());
+        cellVal += this.endTime.getMinutes() > 29 ? 'half' : '';
         let offsetVal = this.startTime.getMinutes() > 29 ? 'half' : '';
         let toRet = 'cells' + cellVal + ' offset2' + offsetVal;
         return toRet;
