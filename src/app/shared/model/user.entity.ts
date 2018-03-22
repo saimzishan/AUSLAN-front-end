@@ -61,6 +61,7 @@ export class User {
     public avatar: any;
     public photo_url = '';
     public state_where_most_bookings_occur: string;
+    public business_name = '';
     public linked_account_number = '';
 
     protected get user_type() {
@@ -425,6 +426,7 @@ export class Interpreter extends User {
     public naati_validity_end_date: string;
     public business_hours_phone: string;
     public date_of_birth: string;
+    public date_approved: string;
     public address_attributes: Address = new Address();
     public long_term_availability: interpreter_avalability;
     public override_availabilty: blockout_availability;

@@ -1,0 +1,6 @@
+@media only screen and (max-width: 999px) {
+  #job-details-responsive tbody tr td:nth-child(4),#job-details-responsive tbody tr td:nth-child(8),#job-details-responsive tbody tr td:nth-child(9),#job-details-responsive tbody tr td:nth-child(11),#job-details-responsive tbody tr td:nth-child(12),#job-details-responsive tbody tr td:nth-child(13) {
+    display: block !important
+  }
+}
+

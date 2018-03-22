@@ -34,7 +34,7 @@ defineSupportCode(({Given, Then, When}) => {
     Given(/^I can see the '(.*)' auto populated$/, createBookingPO.sectionAutoPopulated);
     Given(/^I can see the booking address is '(.*)'$/, createBookingPO.bookingAddressPopulated);
     Given(/^There exist (\d+) verified interpreters$/, Heroku.preloadVerifiedInterpreters);
-
+    Given(/^The user '(.*)' is of type dsq$/, Heroku.changeUserBusiness);
     When(/^I click at the (.*) one of (.*) (.*) Bookings$/, bookingManagementPO.clickAtOneofTheBooking);
     When(/^I click on 'New Booking'$/, bookingManagementPO.clickOnNewBooking);
     When(/^I see (one|\d+) rows? with state '(.*)'$/, bookingManagementPO.bookingWithStateExists);
@@ -71,6 +71,7 @@ defineSupportCode(({Given, Then, When}) => {
     When(/^I click on one non-editable field$/, bookingEditPO.clickOnNonEditableField);
     When(/^I query search with '(.*)'$/, bookingManagementPO.querySearchWith);
     When(/^I query search with empty date$/, bookingManagementPO.querySearchWithEmptyDate);
+    When(/^I enter approved date$/, bookingManagementPO.pickApprovedCurrentDate);
     When(/^I query search with future date$/, bookingManagementPO.queryManualSearchWithFutureDate);
     When(/^I query search with current date manually$/, bookingManagementPO.queryManualSearchWithCurrentDate);
     When(/^I press enter$/, bookingManagementPO.enterPressed);

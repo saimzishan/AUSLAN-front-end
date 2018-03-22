@@ -33,7 +33,7 @@ export class BlockoutComponent implements OnDestroy, OnInit {
     public availabilityBlock: AvailabilityBlock = new AvailabilityBlock();
     dialogRef: MdDialogRef<any>;
     dialogSub;
-    userID = -1;
+    userID;
     queryParamSub;
     defaultDateTime: Date;
     public href;
@@ -96,42 +96,50 @@ export class BlockoutComponent implements OnDestroy, OnInit {
     public isRecurrenceDayCheckboxDisabled(day) {
         return this.bookingDate && this.bookingDate.getDay() === this.repeat_days.indexOf(day);
     }
+    isTimeEqual() {
+        return Boolean(this.start_time) && Boolean(this.end_time) && this.start_time.getTime() === this.end_time.getTime();
+    }
     ngOnInit() {
         this.staff_availability = false;
         this.href = this.router.url.split('/');
         if (this.href[3] === 'staff-availability') {
             this.staff_availability = true;
         }
-        this.interpreter = Boolean(GLOBAL.currentUser) &&
-        GLOBAL.currentUser instanceof Interpreter ?  <Interpreter>GLOBAL.currentUser :
-           this.isUserAdminOrBO() ?  GLOBAL.currentInterpreter : null;
-        if (this.interpreter === null ) {
-            this.router.navigate(['/user-management']);
+
+        this.userID = localStorage.getItem('userId');
+        if (this.userID > 0) {
+            this.userDataService.getUser(this.userID)
+                .subscribe((res: any) => {
+                    if (res.status === 200) {
+                        delete res.data.assignments_attributes;
+                        this.interpreter = <Interpreter>res.data;
+                        this.userID = Boolean(this.interpreter) ? this.interpreter.id : -1;
+                        this.end_time.setTime(this.start_time.getTime() + (1 * 60 * 60 * 1000));
+                        this.end_date = this.end_time;
+                        this.sub = this.route.params.subscribe(params => {
+                            let param_id = params['id'] || '';
+                            if (Boolean(param_id) && parseInt(param_id, 10) > 0) {
+                                this.param_id = parseInt(param_id, 10);
+                                if (this.staff_availability) {
+                                    this.interpreter.staff_availabilities_attributes
+                                        .filter(a => a.id === this.param_id)
+                                        .map(a =>
+                                            this.availabilityBlock = a
+                                        );
+                                } else {
+                                    this.interpreter.availability_blocks_attributes
+                                        .filter(a => a.id === this.param_id)
+                                        .map(a =>
+                                            this.availabilityBlock = a
+                                        );
+                                }
+                                this.settingTime();
+                            }
+                        });
+                        this.roundOffMinutes();
+                    }
+                });
         }
-        this.userID = this.interpreter !== null ? this.interpreter.id : -1;
-        this.end_time.setTime(this.start_time.getTime() + (1 * 60 * 60 * 1000));
-        this.end_date = this.end_time;
-        this.sub = this.route.params.subscribe(params => {
-            let param_id = params['id'] || '';
-            if (Boolean(param_id) && parseInt(param_id, 10) > 0) {
-                this.param_id = parseInt(param_id, 10);
-                if (this.staff_availability) {
-                    this.interpreter.staff_availabilities_attributes
-                        .filter(a => a.id === this.param_id)
-                        .map(a =>
-                            this.availabilityBlock = a
-                        );
-                } else {
-                    this.interpreter.availability_blocks_attributes
-                        .filter(a => a.id === this.param_id)
-                        .map(a =>
-                            this.availabilityBlock = a
-                        );
-                }
-                this.settingTime();
-            }
-        });
-        this.roundOffMinutes();
     }
     public setRecurring_week_days() {
         for (let i = 0; i < this.repeat_days.length; i++) {
@@ -139,10 +147,6 @@ export class BlockoutComponent implements OnDestroy, OnInit {
                 this.availabilityBlock.recurring_week_days.push(this.repeat_days[i].sendValue);
             }
         }
-    }
-    isUserAdminOrBO () {
-        return GLOBAL.currentUser instanceof Administrator ||
-        GLOBAL.currentUser instanceof BookingOfficer;
     }
     checkIsWeekely() {
         this.isWeekely = false;
@@ -209,9 +213,6 @@ export class BlockoutComponent implements OnDestroy, OnInit {
                                 this.availabilityBlock = new AvailabilityBlock();
                                 this.param_id = -1;
                                 this.spinnerService.requestInProcess(false);
-                                if (this.isUserAdminOrBO() === false) {
-                                    AuthGuard.refreshUser(this.interpreter);
-                                }
                                 this.notificationServiceBus.launchNotification(false, 'Blockout successfully deleted');
                                 this._location.back();
                             }
@@ -229,14 +230,11 @@ export class BlockoutComponent implements OnDestroy, OnInit {
             .subscribe((res: any) => {
                 if (res.status === 204) {
                     // UI Notification
-                    let idx = this.interpreter.availability_blocks_attributes.indexOf(this.availabilityBlock);
-                    this.interpreter.availability_blocks_attributes.splice(idx, 1);
+                    let idx = this.interpreter.staff_availabilities_attributes.indexOf(this.availabilityBlock);
+                    this.interpreter.staff_availabilities_attributes.splice(idx, 1);
                     this.availabilityBlock = new AvailabilityBlock();
                     this.param_id = -1;
                     this.spinnerService.requestInProcess(false);
-                    if (this.isUserAdminOrBO() === false) {
-                        AuthGuard.refreshUser(this.interpreter);
-                    }
                     this.notificationServiceBus.launchNotification(false, 'Staff Availability successfully deleted');
                     this._location.back();
                 }
@@ -266,9 +264,6 @@ export class BlockoutComponent implements OnDestroy, OnInit {
                     this.interpreter.availability_blocks_attributes.filter(o => o.id === this.availabilityBlock.id)
                         .map(o => o = this.availabilityBlock);
                     this.spinnerService.requestInProcess(false);
-                    if (this.isUserAdminOrBO() === false) {
-                        AuthGuard.refreshUser(this.interpreter);
-                    }
                     this.notificationServiceBus.launchNotification(false, 'Blockout successfully updated');
                     this._location.back();
                 }
@@ -290,12 +285,9 @@ export class BlockoutComponent implements OnDestroy, OnInit {
             .subscribe((res: any) => {
                 if (res.status === 204) {
                     // UI Notification
-                    this.interpreter.availability_blocks_attributes.filter(o => o.id === this.availabilityBlock.id)
+                    this.interpreter.staff_availabilities_attributes.filter(o => o.id === this.availabilityBlock.id)
                         .map(o => o = this.availabilityBlock);
                     this.spinnerService.requestInProcess(false);
-                    if (this.isUserAdminOrBO() === false) {
-                        AuthGuard.refreshUser(this.interpreter);
-                    }
                     this.notificationServiceBus.launchNotification(false, 'Staff-Availability successfully updated');
                     this._location.back();
                 }
@@ -339,11 +331,9 @@ export class BlockoutComponent implements OnDestroy, OnInit {
                         this.availabilityBlock.id = res.json().id;
                         this.spinnerService.requestInProcess(false);
                         this.interpreter.availability_blocks_attributes.push(this.availabilityBlock);
-                        if (this.isUserAdminOrBO() === false) {
-                            AuthGuard.refreshUser(this.interpreter);
-                        }
-                        this._location.back();
                         this.notificationServiceBus.launchNotification(false, 'Blockout successfully added');
+                        this._location.back();
+
                     }
                 }, errors => {
                     this.spinnerService.requestInProcess(false);
@@ -359,12 +349,10 @@ export class BlockoutComponent implements OnDestroy, OnInit {
                 if (res.status === 200) {
                     this.availabilityBlock.id = res.json().id;
                     this.spinnerService.requestInProcess(false);
-                    this.interpreter.availability_blocks_attributes.push(this.availabilityBlock);
-                    if (this.isUserAdminOrBO() === false) {
-                        AuthGuard.refreshUser(this.interpreter);
-                    }
-                    this._location.back();
+                    this.interpreter.staff_availabilities_attributes.push(this.availabilityBlock);
                     this.notificationServiceBus.launchNotification(false, 'Staff Availability successfully added');
+                    this._location.back();
+
                 }
             }, errors => {
                 this.spinnerService.requestInProcess(false);

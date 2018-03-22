@@ -29,11 +29,10 @@
 						<section id="static-flow">
 							<section id="submenu">
 								<div>
+									<button name="resend_code" class="login button rvc-color" [disabled]="(userID < 1)" (click)="resendVerificationCode()">Resend Verification
+					Code</button>
 									<button name="verify_user" class="login button" [disabled]="verification_code.errors" (click)="verifyUser()">
 					Verify User</button>
-
-									<button name="resend_code" class="login button" [disabled]="(userID < 1)" (click)="resendVerificationCode()">Resend Verification
-					Code</button>
 								</div>
 							</section>
 						</section>

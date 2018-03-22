@@ -20,8 +20,8 @@ import {DatePipe} from '@angular/common';
 import {URLSearchParams} from '@angular/http';
 import {InterpreterFilter} from '../../shared/model/interpreter-filter.interface';
 import * as moment from 'moment';
-import * as momentTimeZone from 'moment-timezone';
 import * as $ from 'jquery';
+import * as momentTimeZone from 'moment-timezone';
 
 @Component({
     selector: 'app-booking-jobs',

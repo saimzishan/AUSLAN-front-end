@@ -132,6 +132,20 @@ export class ProfileRegisterPage extends PageObject {
         return elm.get(index - 1).click();
 
     }
+
+    checkAppAddressForm = (value: string) => {
+        const clientOptionLabel = this.getElementByClassName('billing-address');
+        const all_input_in_div = this.getAllByTagNameInElement(clientOptionLabel, 'input');
+        return all_input_in_div.then((inputDiv) => {
+            for (let i = 0; i < inputDiv.length; i++) {
+                const street_input = inputDiv[i];
+                return street_input.getAttribute('value').then((val) => {
+                    expect(val).to.equal(value);
+                });
+            }
+        });
+    }
+
     validateAlphabeticalOrder = () => {
         let sorted = [], unSorted = [];
         let i = 0;

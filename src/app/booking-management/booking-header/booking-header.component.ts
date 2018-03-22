@@ -3,7 +3,7 @@ import {BookingHeaderService} from '../booking-header/booking-header.service';
 import {BOOKING_STATE} from '../../shared/model/booking-state.enum';
 import {Booking} from '../../shared/model/booking.entity';
 import {GLOBAL} from '../../shared/global';
-import {Administrator, BookingOfficer, Interpreter, OrganisationalRepresentative} from '../../shared/model/user.entity';
+import {Administrator, BookingOfficer, Interpreter, OrganisationalRepresentative, IndividualClient} from '../../shared/model/user.entity';
 import {Router, NavigationExtras} from '@angular/router';
 import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
 import {PopupComponent} from '../../shared/popup/popup.component';
@@ -172,6 +172,7 @@ export class BookingHeaderComponent implements OnInit, OnDestroy {
 
     gotoBookingInfo() {
         let route = GLOBAL.currentUser instanceof Interpreter || GLOBAL.currentUser instanceof OrganisationalRepresentative
+         || GLOBAL.currentUser instanceof IndividualClient
             ? 'job-detail' : 'booking-job';
         GLOBAL.selBookingID = Boolean(GLOBAL.selBookingID) && GLOBAL.selBookingID.length > 0 ? GLOBAL.selBookingID : this.bookingModel.id;
         this.router.navigate(['/booking-management/' + GLOBAL.selBookingID, route]);
