@@ -338,6 +338,7 @@ defineSupportCode(({Given, When, Then}) => {
 
     function isButtonDisabled(btnLabel: string, disabled: string) {
         let isEnabled = disabled.toLowerCase() === 'enabled';
+        browser.waitForAngular();
         return page.getElementByCSSandText('.button', btnLabel).isEnabled().then((val) => {
             expect(val).to.be.eq(isEnabled);
         });
