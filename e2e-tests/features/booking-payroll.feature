@@ -260,8 +260,8 @@ Feature: Booking Payroll and Billing
     When I click on link 'Payroll & Billing'
     Then I see selected option 'STAFF' in dropdown
 
-  @ignoreThis
-  Scenario: Given 1 verified Individual Client, Administrator can create a booking, STAFF INTERPRETER exists
+  @runThis
+  Scenario: Given 1 verified Individual Client, Administrator and Booking Officer can create a booking, STAFF INTERPRETER exists
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
     And I am on the bookings page
@@ -305,7 +305,7 @@ Feature: Booking Payroll and Billing
     Then I can see the element with name 'btnSave' is 'visible'
     And I can see the element with name 'btnClaim' is 'not visible'
 
-@ignoreThis
+@runThis
   Scenario: Given 1 verified Administrator and Booking Officer, As an admin I can see the save and claim buttons when booking is in Cancelled charge state and I can not see the claim button as book officer, CASUAL INTERPRETER exists
     Given I set a interpreter as 'casual'
     Given I exist as an Administrator
