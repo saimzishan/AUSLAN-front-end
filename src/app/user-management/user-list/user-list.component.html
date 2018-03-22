@@ -6,7 +6,7 @@
                 <input type="text" name="search" id="search" (blur)="search()" [(ngModel)]="searchParams" (click)="'' !== searchParams && clearSearch()" placeholder="Search...">
             </form>
             <button>
-                <i (click)="filter()" class="icon-glass"></i>
+                <i (click)="search()" class="icon-glass"></i>
             </button>
         </section>
     </section>
