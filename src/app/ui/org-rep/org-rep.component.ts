@@ -1,7 +1,8 @@
 import { Component, Input, OnInit, AfterViewInit, ViewChild } from '@angular/core';
-import { OrganisationalRepresentative } from '../../shared/model/user.entity';
+import { OrganisationalRepresentative, Administrator, BookingOfficer } from '../../shared/model/user.entity';
 import { AddressComponent } from '../address/address.component';
 import {NgForm} from '@angular/forms';
+import { GLOBAL } from '../../shared/global';
 
 @Component({
   selector: 'app-org-rep',
@@ -25,5 +26,10 @@ export class OrgRepComponent implements  OnInit, AfterViewInit {
   }
     ngOnInit() {
         delete this.userModel.password;
+    }
+
+    checkUserAdminORBookOfficer(): Boolean {
+        return Boolean(GLOBAL.currentUser instanceof Administrator ||
+            GLOBAL.currentUser instanceof BookingOfficer) ;
     }
 }

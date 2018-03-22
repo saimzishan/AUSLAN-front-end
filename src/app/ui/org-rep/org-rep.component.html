@@ -69,6 +69,13 @@
                 </select>
             </div>
         </div>
+        <div *ngIf="checkUserAdminORBookOfficer()" class="medium-6 columns">
+            <div class="form-field">
+                <label>ACCOUNT NUMBER</label>
+                <input type="text" placeholder="Enter your account number"
+                        [(ngModel)]="userModel.linked_account_number" name="linked_account_number" #linked_account_number="ngModel">
+            </div>
+        </div>
     </div>
 </div>
 
