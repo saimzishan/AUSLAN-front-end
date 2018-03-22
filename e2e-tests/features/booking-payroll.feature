@@ -203,7 +203,7 @@ Feature: Booking Payroll and Billing
     Then I click on BUTTON name 'noBtn'
     Then I get a valid 'Cancelled with Charge' notification for state
     When I click on link 'Payroll & Billing'
-    Then I see selected option 'STAFF' in dropdown
+    Then I see selected option 'CASUAL' in dropdown
     Then I can see the element with name 'btnSave' is 'visible'
     And I can see the element with name 'btnClaim' is 'visible'
     Then I click on my name in the top corner
