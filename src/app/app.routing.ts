@@ -24,6 +24,7 @@ import {BlockoutComponent} from './user-management/user-profile/blockout/blockou
 import {BookingPayrollComponent} from './booking-management/booking-payroll/booking-payroll.component';
 import {StaffCalendarComponent} from './user-management/staff-calendar/staff-calendar.component';
 import {UserPayrollBillingComponent} from './user-management/user-payroll-billing/user-payroll-billing.component';
+import { InboxComponent } from './messaging/inbox/inbox.component';
 
 const appRoutes: Routes = [
   { path: 'user-management', component: UserManagementComponent, canActivate: [AuthGuard]},
@@ -41,6 +42,7 @@ const appRoutes: Routes = [
   { path: 'booking-management/:id/job-detail', component: BookingJobsComponent, canActivate: [AuthGuard]},
   { path: 'booking-management/edit-booking', component: BookingDetailComponent, canActivate: [AuthGuard]},
   { path: 'booking-management/:id/payroll-billing', component: BookingPayrollComponent, canActivate: [AuthGuard]},
+  { path: 'users/:id/inbox', component: InboxComponent, canActivate: [AuthGuard] },
   { path: 'authenticate', component: AuthComponent , canActivate: [NoAuthGuard] },
   { path: 'authenticate/logout', component: AuthComponent },
   { path: '404', component: NotFoundComponent },

@@ -3,6 +3,9 @@
 
 	<nav *ngIf="userIsActive">
 		<a id="lnkBooking" *ngIf="canShowLink('booking-management')" [ngClass]="{'active':isActiveLink(linkName.booking)}" (click)="setActiveLink(linkName.booking)" [routerLink]="['/booking-management']"><span><i class="icon-bookings"></i> BOOKINGS</span></a>
+		<a id="lnkBooking" *ngIf="canShowLink('booking-management')" [ngClass]="{'active':isActiveLink(linkName.messages)}" (click)="setActiveLink(linkName.messages)" [routerLink]="['/users/',getActiveUserId(),'inbox']">
+			<span><i class="icon-messages"></i> MESSAGES</span>
+		</a>
 	</nav>
 
 	<a *ngIf="userIsActive && canShowLink('create-booking')" id="lnkNewBooking" [ngClass]="{'active':isActiveLink(linkName.booking)}" (click)="setActiveLink(linkName.booking);refreshBooking()" class="button" [routerLink]="['/booking-management','create-booking']">+ New Booking</a>

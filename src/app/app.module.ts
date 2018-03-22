@@ -82,6 +82,9 @@ import {PayrollTimeComponent} from './booking-management/payroll-time/payroll-ti
 import { StaffCalendarComponent } from './user-management/staff-calendar/staff-calendar.component';
 import {ShortTimePipe} from './shared/pipe/short-time.pipe';
 import {UserPayrollBillingComponent} from './user-management/user-payroll-billing/user-payroll-billing.component';
+import { InboxComponent } from './messaging/inbox/inbox.component';
+import { MessagingService } from './api/messaging.service';
+
 
 @NgModule({
     declarations: [
@@ -111,7 +114,7 @@ import {UserPayrollBillingComponent} from './user-management/user-payroll-billin
         SkillMatrixComponent, AddressComponent, AccountantComponent,
         UserPasswordComponent, PreComponent, BlockoutComponent, TermandconditionComponent,
         InterpreterBoxComponent, InterpreterPopupComponent, RemoveSpacePipe, LinkidPopupComponent, MobileHeaderComponent,
-        BookingInfoComponent, BookingPayrollComponent, PayrollTimeComponent, StaffCalendarComponent, ShortTimePipe, UserPayrollBillingComponent
+        BookingInfoComponent, BookingPayrollComponent, PayrollTimeComponent, StaffCalendarComponent, ShortTimePipe, UserPayrollBillingComponent, InboxComponent
     ],
     entryComponents: [PopupComponent, InterpreterPopupComponent, LinkidPopupComponent],
     imports: [CustomFormsModule, routing, FileUploadModule,
@@ -126,7 +129,7 @@ import {UserPayrollBillingComponent} from './user-management/user-payroll-billin
         AutoCompleteModule
     ], providers: [DatePipe, LinkAuth, UserNameService, RolePermission, AuthGuard, NoAuthGuard, Title, LinkHelper,
         NotificationServiceBus, SpinnerService, BookingService, UserService,
-        PreferedAllocationService, BookingHeaderService, GmapsApiService,
+        PreferedAllocationService, BookingHeaderService, GmapsApiService, MessagingService,
         {provide: APP_BASE_HREF, useValue: '/'},
         {
             provide: AuthHttp,

@@ -3,6 +3,10 @@ import {GLOBAL} from '../../shared/global';
 import {UserNameService} from '../../shared/user-name.service';
 import {LinkHelper, LINK, LinkAuth} from '../../shared/router/linkhelper';
 import {BookingHeaderService} from '../../booking-management/booking-header/booking-header.service';
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
+import { MessagingService } from '../../api/messaging.service';
+import { NotificationServiceBus } from '../../notification/notification.service';
 
 @Component({
   selector: 'app-header',
@@ -15,7 +19,12 @@ export class HeaderComponent implements OnDestroy, OnInit {
   userIsActive = false;
   fullName = '';
 
-  constructor(private bookingHeaderService: BookingHeaderService, public userNameService: UserNameService, private linkAuth: LinkAuth) {
+  interpreterID;
+  route: string;
+  href;
+  constructor(public notificationServiceBus: NotificationServiceBus, private bookingHeaderService: BookingHeaderService,
+      private messagingModel: MessagingService, location: Location, private router: Router, public userNameService: UserNameService, private linkAuth: LinkAuth) {
+     this.route = location.path();
   }
   ngOnInit () {
       this.sub = this.userNameService.loggedInUser$.subscribe(
@@ -54,5 +63,8 @@ export class HeaderComponent implements OnDestroy, OnInit {
 
   refreshBooking() {
     this.bookingHeaderService.notifyOther({option: 'refreshBooking'});
+  }
+  getActiveUserId() {
+    return GLOBAL.currentUser.id;
   }
 }
