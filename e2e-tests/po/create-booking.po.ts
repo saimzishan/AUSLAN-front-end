@@ -322,9 +322,6 @@ export class BookingPage extends PageObject {
         this.getElementByName('nature_of_appointment').sendKeys('COURT');
         this.getElementByName('specific_nature_of_appointment').sendKeys('DHS ORDER');
 
-        this.getElementByName('raw_booking_requested_by').sendKeys('Luke');
-        this.getElementByName('raw_booking_requested_by_ln').sendKeys('Orange');
-
         // this.getElementByName('ext_ref_num').sendKeys('321');
 
         this.getElementByName('cn_first_name').sendKeys('John');

@@ -74,4 +74,11 @@ export class InterpreterManagementPage extends PageObject {
         }[tableHeader];
         return this[compareMethod].call(InterpreterManagementPage, firstEl, lastEl, isAscending);
     }
+
+    checkStaffAvailabilityTime = (fullTime) => {
+        let listItem = this.getElementByCss('table.fc-list-table tbody tr.fc-list-item td.fc-list-item-time');
+        return listItem.getText().then((txt) => {
+            return expect(txt).to.be.eq(fullTime);
+        });
+    }
 }

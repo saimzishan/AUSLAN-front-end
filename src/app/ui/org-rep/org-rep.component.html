@@ -92,6 +92,7 @@
                 <md-checkbox  [disabled]="isDuplicate"
                               type="checkbox"
                              [(ngModel)]="userModel.billingAddressIsSame"
+                             (change)="billingAddressNotAsOrg()"
                              name="billingAddressIsDifferent_confirmation"
                              #billingAddressIsDifferent_confirmation="ngModel">Yes
                 </md-checkbox>

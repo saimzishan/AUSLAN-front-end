@@ -183,7 +183,7 @@ defineSupportCode(({Given, When, Then}) => {
     Given(/^I fill the payroll field '(.*)' with value '(.*)'/, fillPayrollField);
 
         function fillPayrollField(lblString: string, value: string) {
-            let input = page.getElementByCss('input[ng-reflect-name="'+lblString+'"]');
+            let input = page.getElementByCss('input[ng-reflect-name="' + lblString + '"]');
             expect(input).to.exist;
             input.clear();
             return page.setValue(input, value);

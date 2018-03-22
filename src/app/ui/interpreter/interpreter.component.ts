@@ -117,7 +117,7 @@ export class InterpreterComponent implements OnInit , AfterViewInit {
                 if (!avail_block.recurring) {
                     endDate = new Date(avail_block.start_time);
                 } else {
-                    endDate = new Date(avail_block.end_date || avail_block.start_time);
+                    endDate = new Date(avail_block.end_date);
                 }
                 let startTime = this.interpreterStateTimeZone(avail_block.start_time);
                 let endTime = this.interpreterStateTimeZone(avail_block.end_time);
@@ -134,8 +134,10 @@ export class InterpreterComponent implements OnInit , AfterViewInit {
                     id: avail_block.id,
                     textColor: '#ffffff',
                     booking_id: avail_block.booking_id,
-                    start: avail_block.recurring === false ? eventStart : ' ',
-                    end: avail_block.recurring === false ? eventEnd : ' ',
+                    start: avail_block.recurring === false ? eventStart : ('' + moment.duration(startTime).get('hours') +
+                     ':' + moment.duration(startTime).get('minutes') + ':00'),
+                    end: avail_block.recurring === false ? eventEnd : ('' + moment.duration(endTime).get('hours') +
+                        ':' + moment.duration(endTime).get('minutes') + ':00' ),
                     recurring: avail_block.recurring,
                     frequency: avail_block.frequency
                 });

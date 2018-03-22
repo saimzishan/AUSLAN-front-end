@@ -3,6 +3,7 @@ import { OrganisationalRepresentative, Administrator, BookingOfficer } from '../
 import { AddressComponent } from '../address/address.component';
 import {NgForm} from '@angular/forms';
 import { GLOBAL } from '../../shared/global';
+import { Address } from '../../shared/model/venue.entity';
 
 @Component({
   selector: 'app-org-rep',
@@ -30,6 +31,10 @@ export class OrgRepComponent implements  OnInit, AfterViewInit {
 
     checkUserAdminORBookOfficer(): Boolean {
         return Boolean(GLOBAL.currentUser instanceof Administrator ||
-            GLOBAL.currentUser instanceof BookingOfficer) ;
+            GLOBAL.currentUser instanceof BookingOfficer);
+    }
+    billingAddressNotAsOrg() {
+        this.userModel.organisation_billing_account.organisation_billing_address =
+            !this.userModel.billingAddressIsSame ? new Address() : this.userModel.address_attributes;
     }
 }
