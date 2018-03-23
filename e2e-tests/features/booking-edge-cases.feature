@@ -32,7 +32,49 @@ Feature: Booking Management edge cases
     And I can see the element with name 'inviteBtn' is 'not visible'
 
   @runThis
-  Scenario: Administrator should be able to edit booking time to overlap with another booking allocated to Interpreter
+  Scenario: Administrator cannot undo cancel a booking which overlaps an assigned Interpreter blockout
+    Given There exist 2 bookings
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on the bookings page
+    Then I see 2 rows with state 'Requested'
+    And I will be shown with bookings
+    When I click on an individual booking of type 'Requested'
+    Then I will be shown the booking job page
+    And I can see the button 'Save' is disabled
+    When I select 1 Interpreter
+    And I click on BUTTON name 'reassingBtn'
+    Then I can see the button 'Save' is enabled
+    When I click on BUTTON 'Save'
+    Then I get valid message: 'The interpreter have been assigned'
+    When I click on BUTTON 'Cancel Booking'
+    Then I will be shown a popup message 'Would you like to cancel only this booking, or all linked bookings?'
+    And I click on BUTTON name 'yesBtn'
+    And I wait for 1200 milli-seconds
+    Then I will be shown a popup message 'Are you sure you want to cancel this booking? This is permanent. We recommend to cancel this booking as Cancelled No Charge since the start date is not within 48 hours.'
+    And I click on BUTTON name 'noBtn'
+    Then I get a valid 'Cancelled with Charge' notification for state
+    When I click on Bookings
+    And I am on the bookings page
+    Then I see one row with state 'Cancelled Chargeable'
+    And I see one row with state 'Requested'
+    When I click on an individual booking of type 'Requested'
+    Then I will be shown the booking job page
+    And I can see the button 'Save' is disabled
+    When I select 1 Interpreter
+    And I click on BUTTON name 'reassingBtn'
+    Then I can see the button 'Save' is enabled
+    When I click on BUTTON 'Save'
+    Then I get valid message: 'The interpreter have been assigned'
+    When I click on Bookings
+    And I am on the bookings page
+    Then I see one row with state 'Cancelled Chargeable'
+    And I see one row with state 'In progress'
+    When I click on an individual booking of type 'Cancelled Chargeable'
+    Then I will be shown the booking job page
+
+  @runThis
+  Scenario: Administrator should not be able to edit booking time to overlap with another booking allocated to Interpreter
     Given There exist 2 bookings with different times
     Given I sign in with valid Administrator credentials
     And I am on the bookings page
