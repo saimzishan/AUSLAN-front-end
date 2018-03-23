@@ -431,4 +431,23 @@ export class UserService extends ApiService {
             .catch((err) => { return this.handleError(err); });
 
     }
+
+    activateUser(userID: number): Observable<Object> {
+        let headers = new Headers({'Accept': 'application/json'});
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http
+            .patch(`${GLOBAL.USER_API_ENDPOINT}/users/${userID}/enable`, options)
+            .map(this.extractData)
+            .catch((err) => { return Observable.throw(err); });
+    }
+    deactivateUser(userID: number): Observable<Object> {
+        let headers = new Headers({'Accept': 'application/json'});
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http
+            .patch(`${GLOBAL.USER_API_ENDPOINT}/users/${userID}/disable`, options)
+            .map(this.extractData)
+            .catch((err) => { return Observable.throw(err); });
+    }
 }

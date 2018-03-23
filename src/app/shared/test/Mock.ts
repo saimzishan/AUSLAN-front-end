@@ -120,6 +120,16 @@ export class MockUserService extends ApiService {
             return res;
         });
     }
+    activateUser(id: number): Observable<Object> {
+        return Observable.of(mock_empty_response).map(res => {
+            return res;
+        });
+    }
+    deactivateUser(id: number): Observable<Object> {
+        return Observable.of(mock_empty_response).map(res => {
+            return res;
+        });
+    }
 }
 
 

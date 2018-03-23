@@ -82,7 +82,7 @@
             </tr>
             </thead>
             <tbody *ngIf="userList?.length > 0">
-                <tr *ngFor="let user of userList | paginate: { itemsPerPage: 10, currentPage: p, totalItems: totalItems }">
+                <tr *ngFor="let user of userList | paginate: { itemsPerPage: 10, currentPage: p, totalItems: totalItems }; let i = index">
 
                     <td>{{user.first_name}}</td>
                     <td>{{user.last_name}}</td>
@@ -102,21 +102,45 @@
                                 <a href="javascript:void(0)"><i class="icon-actions"></i></a>
                                 <ul class="menu right-side green">
                                     <li>
-                                        <a name="lnkEditUser" [routerLink]="['/init']" [queryParams]="{selectedRole:getQueryableRole(user),uid:user.id, edit_user:
-                                                    stringifyUser(user)}">
-                                            <i class="icon-edit"></i> Edit</a></li>
+                                        <a name="lnkEditUser"
+                                           [routerLink]="['/init']"
+                                           [queryParams]="{selectedRole:getQueryableRole(user), uid:user.id, edit_user:stringifyUser(user)}">
+                                            <i class="icon-edit"></i> Edit
+                                        </a>
+                                    </li>
                                     <li *ngIf="isUserInterpreter(user)">
                                         <a id="lnkProfileSkill"
-                                           [routerLink]="['/user-management/' + user.id +'/skills']"><i
-                                                class="icon-skill-matrix"></i> Skill Matrix</a></li>
+                                           [routerLink]="['/user-management/' + user.id +'/skills']">
+                                          <i class="icon-skill-matrix"></i>
+                                          Skill Matrix
+                                        </a>
+                                    </li>
+                                    <li *ngIf="isUserInterpreter(user) && user.disabled">
+                                      <a id="lnkActivateUser" (click)="activateUser(user.id, i)">
+                                          <i class="icon-check-mobile"></i>
+                                          Activate
+                                        </a>
+                                    </li>
+                                    <li *ngIf="isUserInterpreter(user) && !user.disabled">
+                                      <a id="lnkDisableUser" (click)="deactivateUser(user.id, i)">
+                                          <i class="icon-decline"></i>
+                                          Disable
+                                        </a>
+                                    </li>
                                     <li *ngIf="isUserOrOrgrep(user)">
                                         <a id="lnkDuplicateOrgRep"
-                                           [routerLink]="['/init']" [queryParams]="{selectedRole:getQueryableRole(user) ,uid:user.id,
-                                           isduplicate:'true', edit_user:
-                                                    stringifyUser(user)}">
-                                            <i class="icon-duplicate-orgrep icon-glass"></i> Duplicate </a></li>
-                                    <li><a (click)="onResetPassword(user)"><i class="icon-reset-password"></i> Reset
-                                        password</a></li>
+                                           [routerLink]="['/init']"
+                                           [queryParams]="{selectedRole:getQueryableRole(user) ,uid:user.id, isduplicate:'true', edit_user: stringifyUser(user)}">
+                                            <i class="icon-duplicate-orgrep icon-glass"></i>
+                                            Duplicate
+                                        </a>
+                                    </li>
+                                    <li>
+                                      <a (click)="onResetPassword(user)">
+                                        <i class="icon-reset-password"></i>
+                                        Reset password
+                                      </a>
+                                    </li>
                                 </ul>
                             </li>
                         </ul>

@@ -518,14 +518,18 @@ export class Heroku {
         }[userType];
 
         let updatableFields = '';
-        if (status === 'disabled') {
-            updatableFields = 'disabled: true';
-        } else if (status === 'unverified') {
-            updatableFields = 'disabled: false, verified: false';
-        } else if (status === 'active') {
-            updatableFields = 'disabled: false, verified: true';
+        switch (status) {
+            case 'disabled':
+                updatableFields = 'disabled: true';
+                break;
+            case 'unverified':
+                updatableFields = 'disabled: false, verified: false';
+                break;
+            case 'active':
+                updatableFields = 'disabled: false, verified: true';
+                break;
         }
-        let command = '' + user + '.' + record + '.update_attributes(' + updatableFields + ')'
+        const command = user + '.' + record + '.update_attributes(' + updatableFields + ')'
         Heroku.sendCommandToHeroku(command);
     }
 
@@ -540,8 +544,7 @@ export class Heroku {
 
     static addVerifiedUser(valid_login_user: User, type: string) {
         Heroku.createUser(valid_login_user, type);
-        Heroku.sendCommandToHeroku(User.user_type(type) + '.find_by(email: "' + valid_login_user.email +
-            '").update_attributes(verified:' + true + ')');
+        Heroku.setUserStatus('active', 'last', type.replace(/[0-9]/g, ''));
     }
 
     static createUser(valid_login_user: User, type: string) {
