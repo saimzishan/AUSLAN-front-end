@@ -272,6 +272,7 @@ Feature: Booking Payroll and Billing
     Then I move to element name 'tnc'
     Then I click on checkbox name 'tnc'
     And I click the create booking button
+    And If I am shown popups, I approve all of them
     Then I get a valid create booking notification
     And I am on the bookings page
     And I will be shown with bookings
@@ -279,10 +280,8 @@ Feature: Booking Payroll and Billing
     Then I am on the individual booking page
     Then I select 1 Interpreter
     And I click on BUTTON name 'reassingBtn'
-    Then I wait for 5000 milli-seconds
     Then I can see the button 'Save' is enabled
     And I click on BUTTON 'Save'
-    Then I wait for 1000 milli-seconds
     Then I get valid message: 'The interpreter have been assigned'
     When I click on BUTTON 'Cancel Booking'
     Then I will be shown a popup message 'Would you like to cancel only this booking, or all linked bookings?'

@@ -29,9 +29,7 @@ export class BookingPage extends PageObject {
     }
 
     getSuccessNotificationForBulkUploadContent = () => {
-        return browser.sleep(2500).then(() => {
-            NotificationObject.getNotificationContent('The Bookings in your bulk upload file have been created.');
-        });
+        return NotificationObject.getNotificationContent('The Bookings in your bulk upload file have been created.');
     }
 
     getErrorNotificationContentForBulkUpload = (message: string) => {
