@@ -357,3 +357,21 @@ Feature: Booking Payroll and Billing
     Then I wait for 1500 milli-seconds
     When I click on link 'Booking info'
     Then I will be shown a popup message 'There are unsaved changes on this page. Are you sure you want to leave?'
+
+  @runThis
+  Scenario: Given 1 verified Booking Officer, Administrator,  Individual Client, INTERPRETER exists
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    And I am on the bookings page
+    And I can see the element with name 'booking_status' is 'visible'
+    When I click on an individual booking
+    Then I am on the individual booking page
+    And I can see the element with name 'unable_to_Service' is 'visible'
+    Then I click on my name in the top corner
+    And I click on logout
+    And I sign in with valid Individual Client credentials
+    And I am on the bookings page
+    And I can see the element with name 'booking_status' is 'not visible'
+    When I click on an individual booking
+    Then I am on the individual booking page
+    And I can see the element with name 'unable_to_Service' is 'not visible'
