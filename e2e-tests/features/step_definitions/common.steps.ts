@@ -250,6 +250,12 @@ defineSupportCode(({Given, When, Then}) => {
         });
     }
 
+    When(/^I try to sign in with valid (.*) credentials$/, enterEmailPasswordLoginPage);
+
+    function enterEmailPasswordLoginPage(type: string) {
+        return homePage.signInWithValidCredential(type);
+    }
+
     When(/^If I am shown a popup message '(.*)', I approve it$/, approveIfPopupWithMessage);
 
     function approveIfPopupWithMessage(message) {

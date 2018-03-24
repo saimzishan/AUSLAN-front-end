@@ -106,6 +106,7 @@ export class PageObject {
     }
 
     setValue(ele, value: string) {
+        ele.clear();
         ele.sendKeys(value);
     }
 
