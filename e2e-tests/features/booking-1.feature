@@ -71,7 +71,7 @@ Feature: Booking Management
     Then I am shown with 1 booking
     When I query booking with org name 'Curve'
     Then I am shown with 1 booking
-    Then I see one row with org name 'Curve Tomorrow'
+    Then I see one row with org name 'Charles Barkley'
 
 # ---------------------------------------- AUSLAN1-903 -> START ----------------------------------------
   @runThis
