@@ -172,13 +172,13 @@ Feature: Create, read, update and delete a User
     And I will be taken to the 'INTERPRETER Signup' page
     And The cell of GENDER will be populated with MALE
     And I select option OTHER from dropdown GENDER
-    And I fill the field 'genderSpecify' with value 'Cheeti'
+    And I fill the field 'genderSpecify' with value 'Other'
     And I click on update
     Then I see success notification
     Then I click on edit for an active existing Interpreter
     And I will be taken to the 'INTERPRETER Signup' page
     And The cell of GENDER will be populated with OTHER
-    Then I can verify the input 'genderSpecify' will have the value 'Cheeti'
+    Then I can verify the input 'genderSpecify' will have the value 'Other'
 
   @runThis
   Scenario: Booking Officer should be able to update an Individual Client gender
@@ -196,13 +196,13 @@ Feature: Create, read, update and delete a User
     And I will be taken to the 'INDIVIDUALCLIENT Signup' page
     And The cell of GENDER will be populated with MALE
     And I select option OTHER from dropdown GENDER
-    And I fill the field 'genderSpecify' with value 'Cheeti'
+    And I fill the field 'genderSpecify' with value 'Other'
     And I click on update
     Then I see success notification
     Then I click on edit for an active existing Individual Client
     And I will be taken to the 'INDIVIDUALCLIENT Signup' page
     And The cell of GENDER will be populated with OTHER
-    Then I can verify the input 'genderSpecify' will have the value 'Cheeti'
+    Then I can verify the input 'genderSpecify' will have the value 'Other'
 
     @runThis
   Scenario: Booking Officer should be able to update an Organisational Representative gender
@@ -220,10 +220,10 @@ Feature: Create, read, update and delete a User
     And I will be taken to the 'ORGANISATION Signup' page
     And The cell of GENDER will be populated with MALE
     And I select option OTHER from dropdown GENDER
-    And I fill the field 'genderSpecify' with value 'Cheeti'
+    And I fill the field 'genderSpecify' with value 'Other'
     And I click on update
     Then I see success notification
     Then I click on edit for an active existing Organisational Representative
     And I will be taken to the 'ORGANISATION Signup' page
     And The cell of GENDER will be populated with OTHER
-    Then I can verify the input 'genderSpecify' will have the value 'Cheeti'
+    Then I can verify the input 'genderSpecify' will have the value 'Other'
