@@ -813,9 +813,12 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                 cells = 'cells' + (edt.getHours() - sd.getHours());
 
             }
+            // This needs to be double checked
+            let color = avail_block.booking_id === null ? 'badge_orange' :
+                avail_block.booking_id === this.selectedBookingModel.id ? 'badge_green' : 'badge_pink';
             let cellVal = this.endTime.getMinutes() > 29 ? 'half' : '';
             let offsetVal = this.startTime.getMinutes() > 29 ? 'half' : '';
-            toRet = cells + cellVal + ' ' + offset + offsetVal + ' pink';
+            toRet = cells + cellVal + ' ' + offset + offsetVal + ' ' + color;
         }
         return toRet;
     }
