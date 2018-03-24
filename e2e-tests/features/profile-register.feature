@@ -156,11 +156,11 @@ Feature: Create Profile
     Then I click on checkbox name 'tnc'
     When I fill all the details correctly for -> 'INTERPRETER' with the pref communication is 'SMS AND EMAIL'
     Then 'INTERPRETER' will be created
+    Then I unverified the last Interpreter
     And I am shown the login screen, with picture and signup button
     Then I fill the field 'email' with value 'dragana@auslan.com.au'
     Then I fill the field 'pass' with value 'Abcd#1234'
     Then I click on button 'Log In'
-    Then I wait for 1200 milli-seconds
     Then I am shown the verify screen
     When I click on BUTTON name 'resend_code'
     Then I will get an error notification saying "An email has been sent with your verification code"

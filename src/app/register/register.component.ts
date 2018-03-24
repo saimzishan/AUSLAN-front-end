@@ -230,6 +230,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
         return Boolean(GLOBAL.currentUser instanceof Administrator && GLOBAL.currentUser.business_name === 'DSQ');
     }
 
+    isUserVicdeaf(): Boolean {
+        return Boolean(GLOBAL.currentUser.business_name === 'Vicdeaf');
+    }
+
     handleFileSelect(evt) {
         let files = evt.target.files;
         let file = files[0];

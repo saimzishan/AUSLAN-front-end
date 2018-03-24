@@ -422,6 +422,7 @@ export class Interpreter extends User {
 
 
     public naati_id: string;
+    public staff_id: string;
     public naati_validity_start_date: string;
     public naati_validity_end_date: string;
     public business_hours_phone: string;
