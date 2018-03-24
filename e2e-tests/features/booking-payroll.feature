@@ -360,8 +360,7 @@ Feature: Booking Payroll and Billing
 
   @runThis
   Scenario: Given 1 verified Booking Officer, Administrator,  Individual Client, INTERPRETER exists
-    Given I exist as an Booking Officer
-    And I sign in with valid Booking Officer credentials
+    And I sign in with valid Administrator credentials
     And I am on the bookings page
     And I can see the element with name 'booking_status' is 'visible'
     When I click on an individual booking
@@ -375,3 +374,29 @@ Feature: Booking Payroll and Billing
     When I click on an individual booking
     Then I am on the individual booking page
     And I can see the element with name 'unable_to_Service' is 'not visible'
+    Then I click on my name in the top corner
+    And I click on logout
+    And I sign in with valid Administrator credentials
+    And I am on the bookings page
+    When I click on an individual booking
+    Then I select 1 Interpreter
+    When I wait for 10000 milli-seconds
+    And I click on BUTTON name 'reassingBtn'
+    Then I can see the button 'Save' is enabled
+    And I click on BUTTON 'Save'
+    Then I wait for 1000 milli-seconds
+    Then I get valid message: 'The interpreter have been assigned'
+    When I click on BUTTON 'Cancel Booking'
+    Then I will be shown a popup message 'Would you like to cancel only this booking, or all linked bookings?'
+    Then I click on BUTTON name 'yesBtn'
+    Then I wait for 1200 milli-seconds
+    Then I will be shown a popup message 'Are you sure you want to cancel this booking? This is permanent. We recommend to cancel this booking as Cancelled No Charge since the start date is not within 48 hours.'
+    Then I click on BUTTON name 'noBtn'
+    Then I get a valid 'Cancelled with Charge' notification for state
+    Then I click on Booking
+    And I am on the bookings page
+    Then I click on my name in the top corner
+    And I click on logout
+    And I sign in with valid Interpreter credentials
+    And I am on the bookings page
+    And I can see the element with name 'icon_requested' is 'not visible'
