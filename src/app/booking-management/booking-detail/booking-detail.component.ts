@@ -399,7 +399,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 let value = this.currentUserIsClient ? user[currentUserField] : '';
                 let mapForNsid = {ndis_id: 'eaf'};
                 field = mapForNsid[field] || field;
-                this.bookingModel.deaf_person[field] = value;
+                this.bookingModel.deaf_person[field] = this.bookingModel.deaf_person[field];
             });
         }
     }
