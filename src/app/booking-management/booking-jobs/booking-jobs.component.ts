@@ -170,7 +170,11 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
 
             this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
                 if (result) {
-                    this.cancelBooking(isCancel, false, true);
+                    if (!isCancel) {
+                        this.changeBookingState(isCancel, false, false);
+                    } else {
+                        this.cancelBooking(isCancel, false, true);
+                    }
                 }
             });
         }
