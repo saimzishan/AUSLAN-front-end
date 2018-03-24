@@ -12,6 +12,7 @@ defineSupportCode(({Then, When}) => {
     When(/^I fill in basic details correctly for -> '(.*)'$/, profileRegisterPage.fillBasicData);
     When(/^I fill in all the details correctly for -> '(.*)'$/, profileRegisterPage.fillAllDataForAdmin);
     When(/^I fill in basic details correctly for duplicate -> '(.*)'$/, profileRegisterPage.fillDuplicateBasicData);
+    When(/^I fill in work preference correctly '(.*)'$/, profileRegisterPage.fillWorkPref);
 
     When(/^'(.*)' will be created$/, profileRegisterPage.userCreated);
 

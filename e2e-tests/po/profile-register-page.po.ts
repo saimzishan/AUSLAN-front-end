@@ -50,6 +50,11 @@ export class ProfileRegisterPage extends PageObject {
         this.getElementByName('location_pref').sendKeys('VIC');
     }
 
+    fillWorkPref = (state: string) => {
+        let loc_pref = this.getElementByName('location_pref');
+        loc_pref.sendKeys(state);
+    }
+
     fillAllDataForRegister = (type: string, prefComm: string) => {
         this.fillBasicData(type);
         if (type === 'INDIVIDUALCLIENT') {
@@ -84,7 +89,9 @@ export class ProfileRegisterPage extends PageObject {
         }
         if (type !== 'ADMINISTRATOR' && type !== 'BOOKINGOFFICER' && type !== 'ACCOUNTANT' ) {
 
-            this.getElementByName('comm_pref').sendKeys(prefComm);
+            if (type !== 'ORGANISATIONALREPRESENTATIVE') {
+                this.getElementByName('comm_pref').sendKeys(prefComm);
+            }
             this.getElementByName('address_unit_num').sendKeys('22');
             this.getElementByName('address_street_number').sendKeys('62');
             this.getElementByName('address_street').sendKeys('Dave');
