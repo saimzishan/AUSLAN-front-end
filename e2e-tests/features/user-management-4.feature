@@ -24,10 +24,9 @@ Feature: Create, read, update and delete a User
 
     ############################### Duplicate Organisational Representative ##############################
 
-  @ignoreThis
+  @runThis
   Scenario: Administrator should be able to duplicate an Organisational Representative
-    And I exist as an Administrator
-    And I sign in with valid Administrator credentials
+    Given I sign in with valid Administrator credentials
     And I am on my admin home screen
     And I hover on the 'Profile'
     And I go to the 'User Management' list page
@@ -40,11 +39,9 @@ Feature: Create, read, update and delete a User
     And I go to the 'User Management' list page
     Then The 2 valid ORGANISATIONAL REPRESENTATIVE should be in the list
 
-
-  @ignoreThis
+  @runThis
   Scenario: Booking Officer  should be able to duplicate an Organisational Representative
-    And I exist as an Booking Officer
-    And I sign in with valid Booking Officer credentials
+    Given I sign in with valid Booking Officer credentials
     And I am on my admin home screen
     And I hover on the 'Profile'
     And I go to the 'User Management' list page
@@ -57,11 +54,9 @@ Feature: Create, read, update and delete a User
     And I go to the 'User Management' list page
     Then The 2 valid ORGANISATIONAL REPRESENTATIVE should be in the list
 
-
-  @ignoreThis
+  @runThis
   Scenario: Organisational Representative should be able to duplicate an Organisational Representative, Booking Officer, Administrator
-    And I exist as an Organisational Representative
-    And I sign in with valid Organisational Representative credentials
+    Given I sign in with valid Organisational Representative credentials
     And I am on my dashboard screen
     And I hover on the 'Profile'
     And I go to the 'User Management' list page
