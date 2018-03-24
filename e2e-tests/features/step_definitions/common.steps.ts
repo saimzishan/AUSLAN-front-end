@@ -82,6 +82,8 @@ defineSupportCode(({Given, When, Then}) => {
     Given(/^I am on my admin home screen$/, bookingManagementPage.verify);
     Given(/^I am on my dashboard screen$/, bookingManagementPage.verify);
     Given(/^I fill New Booking form fields correctly$/, bookingPage.createBooking);
+    Given(/^I fill New Booking form fields with specfic time correctly$/, bookingPage.createBookingWithTime);
+    Given(/^I fill New Booking form fields with specfic new time correctly$/, bookingPage.createBookingWithNewTime);
     Given(/^I fill New Booking form fields correctly with yesterday date$/, bookingPage.createBookingWithYesterdayDate);
     Given(/^I update the booking to be within 48 hours with vicdeaf$/, bookingPage.editBookingWithDayAfterTomorrowDateWith_VICDEAF_STATE);
     Given(/^I fill New Booking form fields correctly with DSQ state$/, bookingPage.editBookingWith_DSQ_STATES);
@@ -342,6 +344,7 @@ defineSupportCode(({Given, When, Then}) => {
 
     function isButtonDisabled(btnLabel: string, disabled: string) {
         let isEnabled = disabled.toLowerCase() === 'enabled';
+        browser.waitForAngular();
         return page.getElementByCSSandText('.button', btnLabel).isEnabled().then((val) => {
             expect(val).to.be.eq(isEnabled);
         });
