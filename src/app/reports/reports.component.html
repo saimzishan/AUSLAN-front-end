@@ -12,8 +12,8 @@
               <select name="exportType" class="menu custom gray" [(ngModel)]="exportType" required>
                 <option *ngIf="isBusinessVicdeaf();else dsq_options" value="Vicdeaf">Vicdeaf billing & payroll</option>
                 <ng-template #dsq_options>
-                  <option value="Weekly">Weekly Payroll</option>
-                  <option value="Monthly">Monthly Payroll</option>
+                  <option value="dsq_weekly">Weekly Payroll</option>
+                  <option value="dsq_monthly">Monthly Payroll</option>
                 </ng-template>
               </select>
             </section>
