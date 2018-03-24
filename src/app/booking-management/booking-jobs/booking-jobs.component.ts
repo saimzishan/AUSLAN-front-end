@@ -802,6 +802,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
 
             let cells = '';
             let offset = '';
+            let color = '';
             let st = this.startTime.getHours() - 2;
             if (sd.getHours() >= st) {
                 offset = 'offset' + (sd.getHours() - st);
@@ -819,6 +820,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
             let cellVal = this.endTime.getMinutes() > 29 ? 'half' : '';
             let offsetVal = this.startTime.getMinutes() > 29 ? 'half' : '';
             toRet = cells + cellVal + ' ' + offset + offsetVal + ' ' + color;
+
         }
         return toRet;
     }

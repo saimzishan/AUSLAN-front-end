@@ -181,6 +181,68 @@ Feature: Create, read, update and delete a User
     Then I see success notification
 
   @runThis
+  Scenario: Administrator should be able to add a new orgrep with state other than victoria
+    And I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on my admin home screen
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    And I click out of the text box
+    Then I click on element by name 'user-roles'
+    When I hover on the userlist dropdown and select 'Organisation'
+    And I will be taken to the 'ORGANISATION Signup' page
+    And I can see the element with name 'location_pref' as enabled    
+    When I fill in work preference correctly 'TAS' 
+    When I fill all the details correctly for -> 'ORGANISATIONALREPRESENTATIVE' with the pref communication is 'SMS AND EMAIL'
+    Then 'ORGANISATIONALREPRESENTATIVE' will be created
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then The 1 valid ORGANISATIONAL REPRESENTATIVE should be in the list
+    Then I wait for 500 milli-seconds
+    Then I click on edit for an active existing Organisational Representative
+    And I will be taken to the 'ORGANISATIONALREPRESENTATIVE Signup' page
+    And I can see the element with name 'location_pref' as disabled
+    #And I can verify the input 'location_pref' will have the value 'TAS'
+
+  @runThis
+  Scenario: As Administrator I cannot update work preference of Individual Client and Interpreter
+    And I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on my admin home screen
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then I click on edit for an active existing Interpreter
+    And I will be taken to the 'INTERPRETER Signup' page
+    And I can see the element with name 'location_pref' as disabled
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then I click on edit for an active existing Individual Client
+    And I will be taken to the 'INDIVIDUALCLIENT Signup' page
+    And I can see the element with name 'location_pref' as disabled
+
+  @runThis
+  Scenario: As Administrator create an Organisation and communication pref is hide
+    And I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on my admin home screen
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    And I click out of the text box
+    Then I click on element by name 'user-roles'
+    When I hover on the userlist dropdown and select 'Organisation'
+    And I will be taken to the 'ORGANISATION Signup' page
+    And I can see the element with name 'comm_pref' is 'not visible'
+    When I fill all the details correctly for -> 'ORGANISATIONALREPRESENTATIVE' with the pref communication is 'SMS AND EMAIL'
+    Then 'ORGANISATIONALREPRESENTATIVE' will be created
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then The 1 valid ORGANISATIONAL REPRESENTATIVE should be in the list
+    Then I wait for 500 milli-seconds
+    Then I click on edit for an active existing Organisational Representative
+    And I will be taken to the 'ORGANISATIONALREPRESENTATIVE Signup' page
+    And I can see the element with name 'comm_pref' is 'visible'
+
+    @runThis
   Scenario: As Administrator I can activate/disable an Interpreter
     Given I disabled the last Interpreter
     When I try to sign in with valid Interpreter credentials

@@ -60,13 +60,20 @@
                 </select>
             </div>
         </div>
-        <div class="medium-6 columns">
+        <div *ngIf="isEdit" class="medium-6 columns">
             <div class="form-field">
                 <label>COMM. PREFERENCE *</label>
                 <select name="comm_pref"  [disabled]="isDuplicate"
                         [(ngModel)]="userModel.preferred_contact_method">
                     <option value="email_only">EMAIL</option>
                 </select>
+            </div>
+        </div>
+        <div *ngIf="checkUserAdminORBookOfficer()" class="medium-6 columns">
+            <div class="form-field">
+                <label>ACCOUNT NUMBER</label>
+                <input type="text" placeholder="Enter your account number"
+                        [(ngModel)]="userModel.linked_account_number" name="linked_account_number" #linked_account_number="ngModel">
             </div>
         </div>
     </div>
