@@ -106,6 +106,8 @@ export class Organisational extends User {
     public billingAddressIsSame = true;
     public prefferedInterpreters = [];
     public displayName: string;
+    public general_notes = '';
+    public claim_notes = '';
 
     constructor(data) {
         super(data);
@@ -142,6 +144,8 @@ export class OrganisationalRepresentative extends Organisational {
             'business_hours_phone': this.phone,
             'mobile': this.mobile,
             'special_instructions': this.special_instructions,
+            'general_notes': this.general_notes,
+            'claim_notes': this.claim_notes,
             'discovery_of_auslan': this.reffered_by === 'OTHER' ?
                 'O:' + this.reffered_other : this.reffered_by,
             'customer_reference': this.customer_ref,
@@ -184,6 +188,8 @@ export class OrganisationalRepresentative extends Organisational {
             'communication_preference': this.preferred_contact_method,
             'mobile': this.mobile,
             'special_instructions': this.special_instructions,
+            'general_notes': this.general_notes,
+            'claim_notes': this.claim_notes,
             'discovery_of_auslan': this.reffered_by === 'OTHER' ?
                 'O:' + this.reffered_other : this.reffered_by,
             'customer_reference': this.customer_ref,
@@ -241,6 +247,8 @@ export class OrganisationalRepresentative extends Organisational {
         this.organisation_name = obj.organisation.name;
         this.group_email = obj.organisation.group_email;
         this.special_instructions = obj.special_instructions;
+        this.general_notes = obj.general_notes;
+        this.claim_notes = obj.claim_notes;
         this.branch_office = obj.organisation.branch_office;
         this.reffered_by = Boolean(obj.discovery_of_auslan) ? obj.discovery_of_auslan.startsWith('O:') ?
             'Other' : obj.discovery_of_auslan : '';
@@ -288,6 +296,8 @@ export class IndividualClient extends User {
     public eaf_start_date: Date;
     public eaf_end_date: Date;
     public special_instructions = '';
+    public general_notes = '';
+    public claim_notes = '';
     public preferred_contact_method = 'email_and_sms';
     public individual_client_primary_contact: Contact = new Contact();
     public address_attributes: Address = new Address();
@@ -330,6 +340,7 @@ export class IndividualClient extends User {
             'first_name': this.first_name, 'last_name': this.last_name, 'email': this.email, 'password': this.password,
             'gender': this.gender,
             'type': this.type, 'special_instructions': this.special_instructions,
+            'general_notes': this.general_notes, 'claim_notes': this.claim_notes,
             'avatar': this.avatar,
             'discovery_of_auslan': this.reffered_by === 'OTHER' ?
                 'O:' + this.reffered_other : this.reffered_by,
@@ -377,6 +388,8 @@ export class IndividualClient extends User {
         this.eaf_start_date = obj.eaf_start_date;
         this.eaf_end_date = obj.eaf_end_date;
         this.special_instructions = obj.special_instructions;
+        this.general_notes = obj.general_notes;
+        this.claim_notes = obj.claim_notes;
         this.preferred_contact_method = obj.communication_preference;
         this.prefferedInterpreters = obj.preference_allocations_attributes;
         this.reffered_by = Boolean(obj.discovery_of_auslan) ? obj.discovery_of_auslan.startsWith('O:') ?
