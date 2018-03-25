@@ -45,11 +45,11 @@ export class InterpreterBoxComponent implements OnInit, AfterContentInit, OnDest
     }
 
     ngAfterContentInit() {
-        this.needInterpreter = this.isHidden ? true : false;
+        this.needInterpreter = this.isHidden;
         if (this.isUserPage && this.isPreffered) {
-            this.needInterpreter = (this.selectedInterpreters.filter(inter => inter.preference === 'preferred').length > 0) ? true : false;
+            this.needInterpreter = (this.selectedInterpreters.filter(inter => inter.preference === 'preferred').length > 0);
         } else if (this.isUserPage && !this.isPreffered) {
-            this.needInterpreter = (this.selectedInterpreters.filter(inter => inter.preference === 'blocked').length > 0) ? true : false;
+            this.needInterpreter = (this.selectedInterpreters.filter(inter => inter.preference === 'blocked').length > 0);
         }
     }
 
