@@ -513,8 +513,8 @@ defineSupportCode(({Given, When, Then}) => {
     }
 
     When(/^I verify radiobutton id '(.*)' and is checked$/, verifyOnRBById);
-    function verifyOnRBById(name: string) {
-        let elm = page.getElementByName(name);
+    function verifyOnRBById(id: string) {
+        let elm = page.getElementByID(id);
         return elm.isPresent().then(presence => {
             return expect(elm.getAttribute('class')).to.eventually.contain('mat-radio-checked');
         });
