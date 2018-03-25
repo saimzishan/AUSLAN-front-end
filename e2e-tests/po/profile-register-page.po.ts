@@ -47,7 +47,6 @@ export class ProfileRegisterPage extends PageObject {
                     'strangeTypeOfUser@auslan.com.au'
         );
         this.getElementByName('mobile').sendKeys('0490394517');
-        this.getElementByName('location_pref').sendKeys('VIC');
     }
 
     fillWorkPref = (state: string) => {
