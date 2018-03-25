@@ -4,7 +4,9 @@
     </header>
     <section id="submenu" *ngIf="checkUserAdminORBookOfficer()">
        <section>
-            <a id="TABStaffCalendar" [routerLink]="['/user-management/','staff_calendar']"> Staff Calender</a>
+            <a *ngIf="checkIsEditInterpreter()" id="TABStaffCalendar" [routerLink]="['/user-management/',userId,'staff_calendar']"> Staff Calender</a>
+            <a *ngIf="isUserDsqAdmin() && (selectedRole === 'INTERPRETER' || selectedRole === 'INDIVIDUALCLIENT' || selectedRole === 'ORGANISATION')"
+                id="interpreterPayroll" (click)="navigateToPayroll()"> Payroll</a>
         </section>
     </section>
     <section id="page-signup-organisation">
@@ -101,7 +103,7 @@
                             <ng-container *ngIf="model.gender === 'Other'">
                                 <div class="medium-6 columns">
                                     <div class="form-field">
-                                        <label>GENDER SPECIFY</label>
+                                        <label>SPECIFY YOUR GENDER</label>
                                         <input id="genderSpecify" name="genderSpecify" type="text" placeholder="Please specify your gender" [(ngModel)]="otherGender"
                                             name="genderSpecify" #genderSpecify="ngModel">
                                     </div>
@@ -209,6 +211,13 @@
                                 <label>ACCOUNT NUMBER</label>
                                 <input type="text" placeholder="Enter your account number"
                                         [(ngModel)]="model.linked_account_number" name="linked_account_number" #linked_account_number="ngModel">
+                            </div>
+                        </div>
+                        <div *ngIf="checkUserAdminORBookOfficer() && isUserVicdeaf() && (selectedRole === 'INTERPRETER') && (model.staff_to_casual_toggle === 'staff')" class="medium-6 columns">
+                            <div class="form-field">
+                                <label>STAFF ID</label>
+                                <input type="text" placeholder="Enter your staff id"
+                                        [(ngModel)]="model.staff_id" name="staff_id" #staff_id="ngModel">
                             </div>
                         </div>
                     </div>

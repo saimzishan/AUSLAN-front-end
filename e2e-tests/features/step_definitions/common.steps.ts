@@ -183,7 +183,7 @@ defineSupportCode(({Given, When, Then}) => {
     Given(/^I fill the payroll field '(.*)' with value '(.*)'/, fillPayrollField);
 
         function fillPayrollField(lblString: string, value: string) {
-            let input = page.getElementByCss('input[ng-reflect-name="'+lblString+'"]');
+            let input = page.getElementByCss('input[ng-reflect-name="' + lblString + '"]');
             expect(input).to.exist;
             input.clear();
             return page.setValue(input, value);
@@ -250,6 +250,12 @@ defineSupportCode(({Given, When, Then}) => {
         });
     }
 
+    When(/^I try to sign in with valid (.*) credentials$/, enterEmailPasswordLoginPage);
+
+    function enterEmailPasswordLoginPage(type: string) {
+        return homePage.signInWithValidCredential(type);
+    }
+
     When(/^If I am shown a popup message '(.*)', I approve it$/, approveIfPopupWithMessage);
 
     function approveIfPopupWithMessage(message) {
@@ -299,12 +305,16 @@ defineSupportCode(({Given, When, Then}) => {
             expect(count).to.be.greaterThan(0);
         });
     }
+    Given(/^I set a interpreter as '(.*)'$/, setInterpreterAsCasual);
+    function setInterpreterAsCasual(value: string) {
+        Heroku.setInterpreterType(value);
+    }
 
     When(/^I debug$/, () => {
         return browser.pause();
     });
     When(/^I refresh/, () => {
-        return browser.refresh();
+        return browser.getCurrentUrl().then(u => browser.driver.navigate().to(u));
     });
     When(/^I click on button '(.*)'$/, clickOnButton);
     function clickOnButton(btnLabel: string) {
@@ -388,15 +398,16 @@ defineSupportCode(({Given, When, Then}) => {
             expect(val).to.be.eq(isDisplayed);
         });
     }
-    When(/^I can count the element with css '(.*)' to be (atleast)?\s?'(.*)'$/, elementWithCSSCount);
-    function elementWithCSSCount(css: string, checkMin: string, count: string) {
-        const checkOnlyMin = checkMin === 'atleast';
+    When(/^I can count the element with css '(.*)' to be '(.*)'$/, elementWithCSSCount);
+    function elementWithCSSCount(css: string, count: string) {
         return page.getAllElementByCSS(css).count().then((cnt) => {
-            if (checkOnlyMin) {
-                return expect(cnt).to.be.gte(+count);  
-            } else {
                 return expect(cnt).to.be.eq(+count);
-            }
+        });
+    }
+    When(/^I can count the element with css '(.*)' to be greater than '(.*)'$/, elementWithCSSCountGte);
+    function elementWithCSSCountGte(css: string, count: string) {
+        return page.getAllElementByCSS(css).count().then((cnt) => {
+                return expect(cnt).to.be.gte(+count);
         });
     }
     When(/^I can see the element with name '(.*)' is '(.*)'$/, isElementWithNameVisible);
@@ -561,7 +572,6 @@ defineSupportCode(({Given, When, Then}) => {
             }
         });
     }
-
     Then(/^I can see that form '(.*)' is '(.*)'$/, checkFormDisabled);
     function checkFormDisabled (name: string, disabled: string) {
         let isEnabled = disabled.toLowerCase() === 'disabled';

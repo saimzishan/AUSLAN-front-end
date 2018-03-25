@@ -2,6 +2,7 @@ import { Component, Input, OnInit, AfterViewInit, ViewChild } from '@angular/cor
 import { OrganisationalRepresentative } from '../../shared/model/user.entity';
 import { AddressComponent } from '../address/address.component';
 import {NgForm} from '@angular/forms';
+import { Address } from '../../shared/model/venue.entity';
 
 @Component({
   selector: 'app-org-rep',
@@ -24,5 +25,10 @@ export class OrgRepComponent implements  OnInit, AfterViewInit {
   }
     ngOnInit() {
         delete this.userModel.password;
+    }
+
+    billingAddressNotAsOrg() {
+        this.userModel.organisation_billing_account.organisation_billing_address =
+            !this.userModel.billingAddressIsSame ? new Address() : this.userModel.address_attributes;
     }
 }

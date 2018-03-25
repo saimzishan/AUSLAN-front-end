@@ -21,7 +21,7 @@
         <th>Special Instructions</th>
         <th>Attached</th>
       </ng-container>
-      <th *ngIf='isCurrentUserAdminOrBookingOfficer() || isOrgRep()'>Date Added</th>
+      <th *ngIf='isCurrentUserAdminOrBookingOfficer() || isClientOrOrgRep()'>Date Added</th>
       <ng-container *ngIf='isCurrentUserAdminOrBookingOfficer()'>
         <th>Days Notice</th>
         <th>Updated</th>
@@ -30,7 +30,7 @@
   </thead>
   <tbody>
     <tr>
-      <td data-title="JOB">
+      <td data-title="JOB NUMBER">
         {{selectedBookingModel.id | PrettyID}}
         <span data-title="Link ID" *ngIf="isCurrentUserAdminOrBookingOfficer() && !!selectedBookingModel.link_id" class="linkId">
           <a>#{{selectedBookingModel.link_id}}</a>

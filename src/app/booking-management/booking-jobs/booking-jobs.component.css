@@ -1,30 +1,31 @@
-@media(max-width: 768px) {
-  .manage-interpreters-wrapper, #job-booking h2, #job-booking #invite-interpreters, #job-booking .interpreters-list {
+@media(max-width: 999px) {
+  .manage-interpreters-wrapper, #job-booking h2, #job-booking #invite-interpreters, #job-booking .interpreters-list, .job-description, .job-description+p {
     display: none !important;
   }
 }
+
 .interpreters-list .pagination {
-    font-size: 0.820rem !important;
-    margin: 5px  10px;
+  font-size: 0.820rem !important;
+  margin: 5px  10px;
 }
 
 .my-pagination /deep/ .ngx-pagination .current {
-    background: #02b86e !important;
+  background: #02b86e !important;
 }
 #job-booking main #filters .icon-glass{
-    transform: none;
+  transform: none;
 }
 
 .preff-icon {
-    color: #02b86e;
-    font-size: 17px;
-    float: left;
+  color: #02b86e;
+  font-size: 17px;
+  float: left;
 }
 
 .half-opacity {
-    opacity: 0.5;
+  opacity: 0.5;
 }
 
 .full-opacity {
-    opacity: 1;
+  opacity: 1;
 }

@@ -27,12 +27,13 @@ export class StaffCalendarComponent implements OnInit {
     updateCalendar = false;
     userID;
     interpreter: Interpreter;
-    constructor(public userDataService: UserService, private route: ActivatedRoute, private router: Router) {
+    constructor(public routes: ActivatedRoute, public userDataService: UserService, private route: ActivatedRoute, private router: Router) {
         this.userModel = new Interpreter();
     }
     isUserLogin() {
         return Boolean(GLOBAL.currentUser);
     }
+
     ngOnInit() {
         let d = new DatePipe('en-us');
         this.userModel.naati_validity_start_date =
@@ -44,22 +45,23 @@ export class StaffCalendarComponent implements OnInit {
 
         delete this.userModel.assignments_attributes;
         delete this.userModel.password;
-
-        this.interpreter = Boolean(GLOBAL.currentUser) &&
-            GLOBAL.currentUser instanceof Interpreter ? <Interpreter>GLOBAL.currentUser :
-            this.isUserAdminOrBO() ? GLOBAL.currentInterpreter : null;
-        this.userID = this.interpreter !== null ? this.interpreter.id : -1;
-        if (this.userID !== -1) {
-            this.userDataService.getUser(this.userID)
-                .subscribe((res: any) => {
-                    if (res.status === 200) {
-                        delete res.data.assignments_attributes;
-                        this.userModel.staff_availabilities_attributes = res.data.staff_availabilities_attributes;
-                        this.StaffAvialabilityToUpdate();
-                    }
-                });
-        }
+        this.routes.params.subscribe(params => {
+             this.userID = +params['id'] || false;
+             if (this.userID) {
+                localStorage.setItem('userId', this.userID);
+                this.userDataService.getUser(this.userID)
+                    .subscribe((res: any) => {
+                        if (res.status === 200) {
+                            delete res.data.assignments_attributes;
+                            this.interpreter = res.data;
+                            this.userModel.staff_availabilities_attributes = res.data.staff_availabilities_attributes;
+                            this.StaffAvialabilityToUpdate();
+                        }
+                    });
+            }
+         });
     }
+
     isUserAdminOrBO() {
         return GLOBAL.currentUser instanceof Administrator ||
             GLOBAL.currentUser instanceof BookingOfficer;
@@ -72,7 +74,6 @@ export class StaffCalendarComponent implements OnInit {
                 height: 'auto',
                 fixedWeekCount: false,
                 weekends: true, // will hide Saturdays and Sundays
-                timezone: 'local',
                 slotDuration: '01:00:00',
                 header: {
                     left: 'title',
@@ -131,12 +132,14 @@ export class StaffCalendarComponent implements OnInit {
 
                 let event: any = ({
                     title: avail_block.name,
-                    color: avail_block.recurring ? '#00ff00' : '#02b86e',
+                    color: avail_block.booking_id ? '#3bb69c' : '#02b86e',
                     id: avail_block.id,
                     textColor: '#ffffff',
                     booking_id: avail_block.booking_id,
-                    start: avail_block.recurring === false ? eventStart : ' ',
-                    end: avail_block.recurring === false ? eventEnd : ' ',
+                    start: avail_block.recurring === false ? eventStart : ('' + moment.duration(startTime).get('hours') +
+                        ':' + moment.duration(startTime).get('minutes') + ':00'),
+                    end: avail_block.recurring === false ? eventEnd : ('' + moment.duration(endTime).get('hours') +
+                        ':' + moment.duration(endTime).get('minutes') + ':00'),
                     recurring: avail_block.recurring,
                     frequency: avail_block.frequency
                 });
@@ -175,5 +178,4 @@ export class StaffCalendarComponent implements OnInit {
         let timeZone = Booking.getNamedTimeZone(this.interpreter.address_attributes.state, this.interpreter.address_attributes.post_code.toString());
         return momentTimeZone(time).tz(timeZone).format('HH:mm:ss');
     }
-
 }

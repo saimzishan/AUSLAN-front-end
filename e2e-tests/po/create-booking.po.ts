@@ -80,6 +80,12 @@ export class BookingPage extends PageObject {
             expect(val).to.be.eq(true);
         });
     }
+    selectedOptionExistsInDropDown = (option_text: string) => {
+        let sel = this.getElementByTagName('select');
+        return sel.getAttribute('ng-reflect-model').then((val) => {
+            expect(val.toUpperCase()).to.equal(option_text);
+        });
+    }
     clickOnOption = (option_text: string, drop_down: string, for_type: string) => {
         const selected_label = this.getElementByCSSandText('label', drop_down);
         const div = this.getParent(selected_label);
@@ -315,9 +321,6 @@ export class BookingPage extends PageObject {
 
         this.getElementByName('nature_of_appointment').sendKeys('COURT');
         this.getElementByName('specific_nature_of_appointment').sendKeys('DHS ORDER');
-
-        this.getElementByName('raw_booking_requested_by').sendKeys('Luke');
-        this.getElementByName('raw_booking_requested_by_ln').sendKeys('Orange');
 
         // this.getElementByName('ext_ref_num').sendKeys('321');
 
