@@ -802,7 +802,6 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
 
             let cells = '';
             let offset = '';
-            let color = '';
             let st = this.startTime.getHours() - 2;
             if (sd.getHours() >= st) {
                 offset = 'offset' + (sd.getHours() - st);
@@ -814,9 +813,13 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                 cells = 'cells' + (edt.getHours() - sd.getHours());
 
             }
-            color = avail_block.booking_id === null ? 'badge_orange' :
-            avail_block.booking_id === this.selectedBookingModel.id ? 'badge_green' : 'badge_pink';
-            toRet = cells + ' ' + offset + ' ' + color;
+            // This needs to be double checked
+            let color = avail_block.booking_id === null ? 'badge_orange' :
+                avail_block.booking_id === this.selectedBookingModel.id ? 'badge_green' : 'badge_pink';
+            let cellVal = this.endTime.getMinutes() > 29 ? 'half' : '';
+            let offsetVal = this.startTime.getMinutes() > 29 ? 'half' : '';
+            toRet = cells + cellVal + ' ' + offset + offsetVal + ' ' + color;
+
         }
         return toRet;
     }
@@ -827,8 +830,11 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     }
 
     getTimelineMoverStyle() {
-        let diff = Math.abs(this.endTime.getTime() - this.startTime.getTime()) / 36e5;
-        return 'cells' + diff + ' offset2';
+        let cellVal = '' + (this.endTime.getHours() - this.startTime.getHours());
+        cellVal += this.endTime.getMinutes() > 29 ? 'half' : '';
+        let offsetVal = this.startTime.getMinutes() > 29 ? 'half' : '';
+        let toRet = 'cells' + cellVal + ' offset2' + offsetVal;
+        return toRet;
     }
 
     getTimelineStartTime() {
@@ -838,7 +844,9 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         dt.setHours(dt.getHours() - 2);
         for (let i = 0; i < 13; i++) {
             let amPm = dt.getHours() >= 12 ? 'pm' : 'am';
-            array.push(dt.getHours() % 12 + ' ' + amPm);
+            let val = dt.getHours() % 12;
+            val = val === 0 ? 12 : val;
+            array.push(val + ' ' + amPm);
             dt.setHours(dt.getHours() + 1);
 
         }
