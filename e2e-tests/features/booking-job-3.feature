@@ -478,7 +478,7 @@ Feature: Booking Admin Management
     Then I get a valid 'Cancelled with Charge' notification for state
     When I click on BUTTON 'Undo cancel'
     Then I get a valid 'Allocated' notification for state
-    Then I can count the element with css 'span.pink' to be '3'
+    Then I can count the element with css 'span.badge_green' to be '3'
 
   @runThis
   Scenario: Booking Officer can Undo cancel booking from cancelled no charge and no interpreters are assigned, exist Interpreter, Interpreter1, Interpreter2

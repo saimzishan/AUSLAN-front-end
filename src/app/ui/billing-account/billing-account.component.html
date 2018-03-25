@@ -41,7 +41,7 @@
                 <label class="icon-email">
                     CONTACT EMAIL * </label>
                 <input [readonly]="isReadOnly"
-                       type="email" id="email" placeholder="Enter your email" [(ngModel)]="primaryContact.email"
+                       type="email" id="cn_email" placeholder="Enter your email" [(ngModel)]="primaryContact.email"
                        name="cn_email" #cn_email="ngModel" email
                        required>
                 <span *ngIf="cn_email.touched && !cn_email.errors?.email;"

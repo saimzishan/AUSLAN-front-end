@@ -29,9 +29,7 @@ export class BookingPage extends PageObject {
     }
 
     getSuccessNotificationForBulkUploadContent = () => {
-        return browser.sleep(2500).then(() => {
-            NotificationObject.getNotificationContent('The Bookings in your bulk upload file have been created.');
-        });
+        return NotificationObject.getNotificationContent('The Bookings in your bulk upload file have been created.');
     }
 
     getErrorNotificationContentForBulkUpload = (message: string) => {
@@ -226,6 +224,12 @@ export class BookingPage extends PageObject {
     }
     createBooking = () => {
         return this.createBookingWithTimeAndInterpreter('standard', '10:15 AM', '11:15 AM', '2', 'auslanInterpreters_count');
+    }
+    createBookingWithTime = () => {
+        return this.createBookingWithTimeAndInterpreter('standard', '10:15 AM', '8:15 PM', '2', 'auslanInterpreters_count');
+    }
+    createBookingWithNewTime = () => {
+        return this.createBookingWithTimeAndInterpreter('standard', '09:00 PM', '10:00 PM', '2', 'auslanInterpreters_count');
     }
     createBookingWithYesterdayDate = () => {
         this.previousDate = true;

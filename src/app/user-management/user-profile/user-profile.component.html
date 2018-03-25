@@ -44,7 +44,7 @@
           <ng-container *ngIf="userModel.gender === 'Other'">
               <div class="medium-6 columns">
                   <div class="form-field">
-                      <label>GENDER SPECIFY</label>
+                      <label>SPECIFY YOUR GENDER</label>
                       <input id="genderSpecify" name="genderSpecify" type="text" placeholder="Please specify your gender" [(ngModel)]="otherGender"
                           name="genderSpecify" #genderSpecify="ngModel">
                   </div>
@@ -102,7 +102,8 @@
     </div>
     <app-interpreter [displayCalendar]="true" *ngIf="userModel.type === 'Interpreter'" [userModel]="userModel"></app-interpreter>
     <app-ind-client *ngIf="userModel.type === 'IndividualClient'" [userModel]="userModel"></app-ind-client>
-    <app-org-rep *ngIf="userModel.type === 'Organisation' || userModel.type === 'OrganisationalRepresentative'" [userModel]="userModel"></app-org-rep>
+    <app-org-rep *ngIf="userModel.type === 'Organisation' || userModel.type === 'OrganisationalRepresentative'"
+                 [isEdit]="true" [userModel]="userModel"></app-org-rep>
 
     <app-interpreter-box
             [isPreffered]="true"
