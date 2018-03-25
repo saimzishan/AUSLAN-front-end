@@ -176,7 +176,7 @@
                             <div class="form-field">
                               <label>{{(selectedRole === 'INDIVIDUALCLIENT' || selectedRole === 'ORGANISATION') ? 'IN WHICH STATE WILL MOST OF YOUR BOOKINGS TAKE PLACE * ?' : 'WORK PREFERENCE *'}}</label>
                               <select aria-label="A"
-                                      [(ngModel)]="model.state_where_most_bookings_occur" name="location_pref"
+                                      [disabled]="isEdit" [(ngModel)]="model.state_where_most_bookings_occur" name="location_pref"
                                       #location_pref="ngModel" required>
                       
                                 <option *ngFor="let loc_name of  ['ACT','NSW','QLD', 'TAS', 'VIC','WA', 'NT']"
@@ -206,7 +206,7 @@
                                 </span>
                             </div>
                         </div>
-                        <div *ngIf="checkUserAdminORBookOfficer() && ((selectedRole === 'INTERPRETER') || (selectedRole === 'ORGANISATION') || (selectedRole === 'INDIVIDUALCLIENT'))" class="medium-6 columns">
+                        <div *ngIf="checkUserAdminORBookOfficer() && ((selectedRole === 'INTERPRETER') || (selectedRole === 'INDIVIDUALCLIENT'))" class="medium-6 columns">
                             <div class="form-field">
                                 <label>ACCOUNT NUMBER</label>
                                 <input type="text" placeholder="Enter your account number"
@@ -223,7 +223,7 @@
                     </div>
                 </div>
                 <br>
-                <app-org-rep [isDuplicate]="isDuplicate" [userModel]="model"
+                <app-org-rep [isDuplicate]="isDuplicate" [isEdit]="isEdit" [userModel]="model"
                 [parentForm]="registerForm" #orgRepForm="ctOrgRepForm" *ngIf="selectedRole === 'ORGANISATION'"></app-org-rep> 
                 <app-interpreter [displayCalendar]="isEdit && checkUserAdminORBookOfficer()"
                  [parentForm]="registerForm" #interpreterForm="ctInterpreterForm" [userModel]="model" [canCalculateDistance]="true"
