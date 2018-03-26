@@ -25,8 +25,8 @@ export class ReportsComponent {
         }
 
         let data = {
-            'date_from': this.datePipe.transform(this.date_from, 'dd/MM/yyyy'),
-            'date_to': this.datePipe.transform(this.date_to, 'dd/MM/yyyy'),
+            'date_from': this.datePipe.transform(this.date_from, 'yyyy-MM-dd'),
+            'date_to': this.datePipe.transform(this.date_to, 'yyyy-MM-dd'),
             'export_type': this.exportType
         };
 
