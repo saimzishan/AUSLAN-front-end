@@ -150,6 +150,7 @@ Feature: Create, read, update and delete a User
     And I click on update
     Then I see success notification
 
+  @runThis
   Scenario: Administrator should be able to add a new orgrep and if uncheck 'IS YOUR BILLING ADDRESS THE SAME AS YOUR ORGANISATION'S ADDRESS' will remove address attributes from billing address
     And I exist as an Administrator
     And I sign in with valid Administrator credentials
@@ -296,7 +297,7 @@ Feature: Create, read, update and delete a User
     And I will be taken to the 'ORGANISATIONALREPRESENTATIVE Signup' page
     And I can see the element with name 'comm_pref' is 'visible'
 
-    @runThis
+  @runThis
   Scenario: As Administrator I can activate/disable an Interpreter
     Given I disabled the last Interpreter
     When I try to sign in with valid Interpreter credentials
