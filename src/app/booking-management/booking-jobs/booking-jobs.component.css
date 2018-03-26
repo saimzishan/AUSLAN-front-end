@@ -29,3 +29,8 @@
 .full-opacity {
   opacity: 1;
 }
+
+#filters .filters .button:hover {
+  color: #fff;
+  background: #02b86e
+}

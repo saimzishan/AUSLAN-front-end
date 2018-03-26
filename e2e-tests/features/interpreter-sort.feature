@@ -29,7 +29,8 @@ Feature: Nearby Interpreter Sort by columns
     When I click on an individual booking
     Then I am on the individual booking page
     And I can see a list of 5 verified interpreters
-    When I click on the interpreter table header 'Name'
+    When I click on the 'Recommended' link
+    And I wait for 2000 milli-seconds
     Then I should see the verified interpreters in ascending order of Name
     When I click on the interpreter table header 'Name'
     Then I should see the verified interpreters in descending order of Name
@@ -44,6 +45,8 @@ Feature: Nearby Interpreter Sort by columns
     When I click on an individual booking
     Then I am on the individual booking page
     And I can see a list of 5 verified interpreters
+    When I click on the 'Recommended' link
+    And I wait for 2000 milli-seconds
     When I click on the interpreter table header 'Lvl'
     Then I should see the verified interpreters in ascending order of Lvl
     When I click on the interpreter table header 'Lvl'
@@ -59,6 +62,8 @@ Feature: Nearby Interpreter Sort by columns
     When I click on an individual booking
     Then I am on the individual booking page
     And I can see a list of 5 verified interpreters
+    When I click on the 'Recommended' link
+    And I wait for 2000 milli-seconds
     When I click on the interpreter table header 'Suburb'
     Then I should see the verified interpreters in ascending order of Suburb
     When I click on the interpreter table header 'Suburb'
