@@ -26,8 +26,7 @@ Feature: Create, read, update and delete a User
 
   @runThis
   Scenario: Administrator should be able to duplicate an Organisational Representative
-    And I exist as an Administrator
-    And I sign in with valid Administrator credentials
+    Given I sign in with valid Administrator credentials
     And I am on my admin home screen
     And I hover on the 'Profile'
     And I go to the 'User Management' list page
@@ -39,12 +38,10 @@ Feature: Create, read, update and delete a User
     And I hover on the 'Profile'
     And I go to the 'User Management' list page
     Then The 2 valid ORGANISATIONAL REPRESENTATIVE should be in the list
-
 
   @runThis
   Scenario: Booking Officer  should be able to duplicate an Organisational Representative
-    And I exist as an Booking Officer
-    And I sign in with valid Booking Officer credentials
+    Given I sign in with valid Booking Officer credentials
     And I am on my admin home screen
     And I hover on the 'Profile'
     And I go to the 'User Management' list page
@@ -57,11 +54,9 @@ Feature: Create, read, update and delete a User
     And I go to the 'User Management' list page
     Then The 2 valid ORGANISATIONAL REPRESENTATIVE should be in the list
 
-
   @runThis
   Scenario: Organisational Representative should be able to duplicate an Organisational Representative, Booking Officer, Administrator
-    And I exist as an Organisational Representative
-    And I sign in with valid Organisational Representative credentials
+    Given I sign in with valid Organisational Representative credentials
     And I am on my dashboard screen
     And I hover on the 'Profile'
     And I go to the 'User Management' list page
@@ -164,6 +159,67 @@ Feature: Create, read, update and delete a User
     And I can verify the input 'interpreter_notes' will have the value 'testing notes'
 
   @runThis
+  Scenario: Administrator can save the interpreter payroll settings and will get the unsaved changes warning when changing tabs if changes has been made
+    Given I exist as an Administrator
+    Given The user 'Administrator' is of type dsq
+    Given The user 'Interpreter' is of type dsq
+    And I sign in with valid Administrator credentials
+    And I am on my admin home screen
+    Then I click on my name in the top corner
+    And I go to the 'User Management' list page
+    When I click on edit for an active existing Interpreter
+    Then I will be taken to the 'INTERPRETER Signup' page
+    And I click on link 'Payroll'
+    Then I fill the field 'ordinaryHours' with value '10.2'
+    And I fill the field 'weekend' with value '5.0'
+    When I click on link 'Manage Users'
+    Then I will be shown a popup message 'There are unsaved changes on this page. Are you sure you want to leave?'
+    And I click on BUTTON name 'yesBtn'
+    Then I wait for 1000 milli-seconds
+    When I click on BUTTON 'Save'
+    Then I get valid message: 'Details have been updated.'
+
+  @runThis
+  Scenario: Administrator can save the individual client billing settings and will get the unsaved changes warning when changing tabs if changes has been made 
+    Given I exist as an Administrator
+    Given The user 'Administrator' is of type dsq
+    Given The user 'IndividualClient' is of type dsq
+    And I sign in with valid Administrator credentials
+    And I am on my admin home screen
+    Then I click on my name in the top corner
+    And I go to the 'User Management' list page
+    When I click on edit for an active existing Individual Client
+    Then I will be taken to the 'INDIVIDUALCLIENT Signup' page
+    And I click on link 'Payroll'
+    Then I fill the field 'ordinaryHours' with value '10.2'
+    And I fill the field 'weekend' with value '5.0'
+    When I click on link 'Manage Users'
+    Then I will be shown a popup message 'There are unsaved changes on this page. Are you sure you want to leave?'
+    And I click on BUTTON name 'yesBtn'
+    Then I wait for 1000 milli-seconds
+    When I click on BUTTON 'Save'
+    Then I get valid message: 'Details have been updated.'
+  
+  @runThis
+  Scenario: Administrator can save the organisational representative billing settings and will get the unsaved changes warning when changing tabs if changes has been made
+    Given I exist as an Administrator
+    Given The user 'Administrator' is of type dsq
+    Given The user 'OrganisationalRepresentative' is of type dsq
+    And I sign in with valid Administrator credentials
+    And I am on my admin home screen
+    Then I click on my name in the top corner
+    And I go to the 'User Management' list page
+    When I click on edit for an active existing Organisational Representative
+    Then I will be taken to the 'ORGANISATIONALREPRESENTATIVE Signup' page
+    And I click on link 'Payroll'
+    Then I fill the field 'ordinaryHours' with value '10.2'
+    And I fill the field 'weekend' with value '5.0'
+    When I click on link 'Manage Users'
+    Then I will be shown a popup message 'There are unsaved changes on this page. Are you sure you want to leave?'
+    And I click on BUTTON name 'yesBtn'
+    Then I wait for 1000 milli-seconds
+    When I click on BUTTON 'Save'
+    Then I get valid message: 'Details have been updated.'
   Scenario: Booking Officer can save the account number of Individual Client
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials

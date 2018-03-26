@@ -15,7 +15,7 @@ Feature: Booking Payroll and Billing
     Then I am on the individual booking page
     When I click on link 'Payroll & Billing'
     Then I should be on the payroll and billing page
-
+    
   @runThis
   Scenario: Given 1 verified Booking Officer, I will see an explanation mark if I type incorrect value in input fields and error notification when saving, INTERPRETER exists
     Given I exist as an Booking Officer
@@ -183,7 +183,7 @@ Feature: Booking Payroll and Billing
     And I can see the element with name 'linkPayroll' is 'not visible'
 
   @runThis
-  Scenario: Given 1 verified Administrator and Booking Officer, As an admin I can see the save and claim buttons when booking is in Cancelled charge state and I can not see the claim button as book officer, INTERPRETER exists
+  Scenario: Given 1 verified Administrator and Booking Officer, As an admin I can see the save and claim buttons when booking is in Cancelled charge state and I can not see the claim button as book officer, STAFF INTERPRETER exists
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
     And I am on the bookings page
@@ -203,6 +203,7 @@ Feature: Booking Payroll and Billing
     Then I click on BUTTON name 'noBtn'
     Then I get a valid 'Cancelled with Charge' notification for state
     When I click on link 'Payroll & Billing'
+    Then I see selected option 'CASUAL' in dropdown
     Then I can see the element with name 'btnSave' is 'visible'
     And I can see the element with name 'btnClaim' is 'visible'
     Then I click on my name in the top corner
@@ -214,6 +215,118 @@ Feature: Booking Payroll and Billing
     When I click on link 'Payroll & Billing'
     Then I can see the element with name 'btnSave' is 'visible'
     And I can see the element with name 'btnClaim' is 'not visible'
+
+  @runThis
+  Scenario: As Administrator and Booking Officer I can add INTERPRETER STAFF-AVAILABILITY on desktop, STAFF INTERPRETER exists
+    Given I go to the website
+    And I am on a computer
+    And I am shown the login screen, with picture and signup button
+    And I sign in with valid Administrator credentials
+    Then I will be shown the bookings page
+    When I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then The valid Interpreter should be in the list
+    When I hover on the 'Actions' of the Interpreter
+    Then I click on edit for an active existing Interpreter
+    And I will be taken to the 'INTERPRETER Signup' page
+    When I click on the option  staff calender
+    When I click on BUTTON 'ADD STAFF AVAILABILITY'
+    Then I will be taken to staff-calendar page
+    When I refresh
+    Then I check that the start time and end time is 09:00PM - 10:00PM
+    And I enter blockout name 'singleEvent'
+    And I click on BUTTON 'SAVE'
+    And I get success message: 'Staff Availability successfully added'
+    Then I click on my name in the top corner
+    And I click on logout
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on the bookings page
+    When I click on an individual booking
+    Then I am on the individual booking page
+    Then I select 1 Interpreter
+    And I click on BUTTON name 'reassingBtn'
+    Then I can see the button 'Save' is enabled
+    And I click on BUTTON 'Save'
+    Then I wait for 1000 milli-seconds
+    Then I get valid message: 'The interpreter have been assigned'
+    When I click on BUTTON 'Cancel Booking'
+    Then I will be shown a popup message 'Would you like to cancel only this booking, or all linked bookings?'
+    Then I click on BUTTON name 'yesBtn'
+    Then I wait for 1200 milli-seconds
+    Then I will be shown a popup message 'Are you sure you want to cancel this booking? This is permanent. We recommend to cancel this booking as Cancelled No Charge since the start date is not within 48 hours.'
+    Then I click on BUTTON name 'noBtn'
+    Then I get a valid 'Cancelled with Charge' notification for state
+    When I click on link 'Payroll & Billing'
+    Then I see selected option 'STAFF' in dropdown
+
+  @runThis
+  Scenario: Given 1 verified Individual Client, Administrator and Booking Officer can create a booking, STAFF INTERPRETER exists
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on the bookings page
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    When I fill New Booking form fields with specfic time correctly
+    And I select the bookable for client
+    Then I move to element name 'tnc'
+    Then I click on checkbox name 'tnc'
+    And I click the create booking button
+    And If I am shown popups, I approve all of them
+    Then I get a valid create booking notification
+    And I am on the bookings page
+    And I will be shown with bookings
+    When I click on an individual booking
+    Then I am on the individual booking page
+    Then I select 1 Interpreter
+    And I click on BUTTON name 'reassingBtn'
+    Then I can see the button 'Save' is enabled
+    And I click on BUTTON 'Save'
+    Then I get valid message: 'The interpreter have been assigned'
+    When I click on BUTTON 'Cancel Booking'
+    Then I will be shown a popup message 'Would you like to cancel only this booking, or all linked bookings?'
+    Then I click on BUTTON name 'yesBtn'
+    Then I wait for 1200 milli-seconds
+    Then I will be shown a popup message 'Are you sure you want to cancel this booking? This is permanent. We recommend to cancel this booking as Cancelled No Charge since the start date is not within 48 hours.'
+    Then I click on BUTTON name 'noBtn'
+    Then I get a valid 'Cancelled with Charge' notification for state
+    When I click on link 'Payroll & Billing'
+    Then I see selected option 'CASUAL' in dropdown
+    Then I can see the element with name 'btnSave' is 'visible'
+    And I can see the element with name 'btnClaim' is 'visible'
+    Then I click on my name in the top corner
+    And I click on logout
+    When I sign in with valid Booking Officer credentials
+    And I am on the bookings page
+    When I click on an individual booking
+    Then I am on the individual booking page
+    When I click on link 'Payroll & Billing'
+    Then I can see the element with name 'btnSave' is 'visible'
+    And I can see the element with name 'btnClaim' is 'not visible'
+
+@runThis
+  Scenario: Given 1 verified Administrator and Booking Officer, As an admin I can see the save and claim buttons when booking is in Cancelled charge state and I can not see the claim button as book officer, CASUAL INTERPRETER exists
+    Given I set a interpreter as 'casual'
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on the bookings page
+    When I click on an individual booking
+    Then I am on the individual booking page
+    Then I select 1 Interpreter
+    And I click on BUTTON name 'reassingBtn'
+    Then I can see the button 'Save' is enabled
+    And I click on BUTTON 'Save'
+    Then I wait for 1000 milli-seconds
+    Then I get valid message: 'The interpreter have been assigned'
+    When I click on BUTTON 'Cancel Booking'
+    Then I will be shown a popup message 'Would you like to cancel only this booking, or all linked bookings?'
+    Then I click on BUTTON name 'yesBtn'
+    Then I wait for 1200 milli-seconds
+    Then I will be shown a popup message 'Are you sure you want to cancel this booking? This is permanent. We recommend to cancel this booking as Cancelled No Charge since the start date is not within 48 hours.'
+    Then I click on BUTTON name 'noBtn'
+    Then I get a valid 'Cancelled with Charge' notification for state
+    When I click on link 'Payroll & Billing'
+    Then I see selected option 'CASUAL' in dropdown
 
   @runThis
   Scenario: Given 1 verified Administrator, As an admin i will be moved to payroll tab when booking is in Cancelled charge, service completed or claimed state, INTERPRETER exists

@@ -20,8 +20,8 @@ import {DatePipe} from '@angular/common';
 import {URLSearchParams} from '@angular/http';
 import {InterpreterFilter} from '../../shared/model/interpreter-filter.interface';
 import * as moment from 'moment';
-import * as momentTimeZone from 'moment-timezone';
 import * as $ from 'jquery';
+import * as momentTimeZone from 'moment-timezone';
 
 @Component({
     selector: 'app-booking-jobs',
@@ -813,7 +813,13 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                 cells = 'cells' + (edt.getHours() - sd.getHours());
 
             }
-            toRet = cells + ' ' + offset + ' pink';
+            // This needs to be double checked
+            let color = avail_block.booking_id === null ? 'badge_orange' :
+                avail_block.booking_id === this.selectedBookingModel.id ? 'badge_green' : 'badge_pink';
+            let cellVal = this.endTime.getMinutes() > 29 ? 'half' : '';
+            let offsetVal = this.startTime.getMinutes() > 29 ? 'half' : '';
+            toRet = cells + cellVal + ' ' + offset + offsetVal + ' ' + color;
+
         }
         return toRet;
     }
@@ -824,8 +830,11 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     }
 
     getTimelineMoverStyle() {
-        let diff = Math.abs(this.endTime.getTime() - this.startTime.getTime()) / 36e5;
-        return 'cells' + diff + ' offset2';
+        let cellVal = '' + (this.endTime.getHours() - this.startTime.getHours());
+        cellVal += this.endTime.getMinutes() > 29 ? 'half' : '';
+        let offsetVal = this.startTime.getMinutes() > 29 ? 'half' : '';
+        let toRet = 'cells' + cellVal + ' offset2' + offsetVal;
+        return toRet;
     }
 
     getTimelineStartTime() {
@@ -835,7 +844,9 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         dt.setHours(dt.getHours() - 2);
         for (let i = 0; i < 13; i++) {
             let amPm = dt.getHours() >= 12 ? 'pm' : 'am';
-            array.push(dt.getHours() % 12 + ' ' + amPm);
+            let val = dt.getHours() % 12;
+            val = val === 0 ? 12 : val;
+            array.push(val + ' ' + amPm);
             dt.setHours(dt.getHours() + 1);
 
         }

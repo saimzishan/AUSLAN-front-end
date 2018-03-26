@@ -45,7 +45,10 @@ export class InterpreterComponent implements OnInit , AfterViewInit {
             d.transform(this.userModel.naati_validity_end_date, 'yyyy-MM-dd');
         this.userModel.date_of_birth =
             d.transform(this.userModel.date_of_birth, 'yyyy-MM-dd');
-
+        if (this.isUserAdminORBookOfficer) {
+            this.userModel.date_approved =
+                d.transform(this.userModel.date_approved, 'yyyy-MM-dd');
+        }
         delete this.userModel.assignments_attributes;
         delete this.userModel.password;
         if (this.userModel) {
@@ -114,7 +117,7 @@ export class InterpreterComponent implements OnInit , AfterViewInit {
                 if (!avail_block.recurring) {
                     endDate = new Date(avail_block.start_time);
                 } else {
-                    endDate = new Date(avail_block.end_date || avail_block.start_time);
+                    endDate = new Date(avail_block.end_date);
                 }
                 let startTime = this.interpreterStateTimeZone(avail_block.start_time);
                 let endTime = this.interpreterStateTimeZone(avail_block.end_time);
@@ -131,8 +134,10 @@ export class InterpreterComponent implements OnInit , AfterViewInit {
                     id: avail_block.id,
                     textColor: '#ffffff',
                     booking_id: avail_block.booking_id,
-                    start: avail_block.recurring === false ? eventStart : ' ',
-                    end: avail_block.recurring === false ? eventEnd : ' ',
+                    start: avail_block.recurring === false ? eventStart : ('' + moment.duration(startTime).get('hours') +
+                     ':' + moment.duration(startTime).get('minutes') + ':00'),
+                    end: avail_block.recurring === false ? eventEnd : ('' + moment.duration(endTime).get('hours') +
+                        ':' + moment.duration(endTime).get('minutes') + ':00' ),
                     recurring: avail_block.recurring,
                     frequency: avail_block.frequency
                 });

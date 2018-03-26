@@ -6,3 +6,7 @@
 .clear-pull{
     clear: both;
 }
+.cncl-btn{
+    background: #fd4264 !important;
+    border: #fd4264 !important;
+}

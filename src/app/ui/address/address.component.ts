@@ -29,6 +29,7 @@ export class AddressComponent implements AfterViewInit, OnInit {
 
     isTravelCostApplicable = false;
     addressTypes = {
+        'floor' : 'short_name',
         'premise' : 'short_name',
         'subpremise' : 'short_name',
         'street_number' : 'short_name',
@@ -38,6 +39,7 @@ export class AddressComponent implements AfterViewInit, OnInit {
         'postal_code' : 'short_name'
     };
     addressAttrs = {
+        'floor' : 'unit_number',
         'premise' : 'unit_number',
         'subpremise' : 'unit_number',
         'street_number' : 'street_number',
@@ -73,6 +75,7 @@ export class AddressComponent implements AfterViewInit, OnInit {
                     let place: google.maps.places.PlaceResult = autocomplete.getPlace();
                     if (place.geometry !== undefined || place.geometry !== null) {
                         this.address.unit_number = '';
+                        this.address.street_number = '';
                         for (let component of place.address_components) {
                             let addressType = this.addressTypes[component['types'][0]];
                             let addressAttr = this.addressAttrs[component['types'][0]];

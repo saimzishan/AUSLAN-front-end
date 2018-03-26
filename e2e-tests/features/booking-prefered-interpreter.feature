@@ -449,7 +449,7 @@ Feature: Create Booking with preferred or blocked interpreters
     And I can count the element with css 'section.interpreter_selected_prefered' to be '1'
 
   @runThis
-  Scenario: As an Organisational Representative, I should be able to see paginated interpreter list on new booking form
+  Scenario: As an Organisational Representative, I should be able to see paginated interp list on new booking form
     Given There exist 12 verified interpreters
     Given I exist as an Organisational Representative
     And I sign in with valid Organisational Representative credentials

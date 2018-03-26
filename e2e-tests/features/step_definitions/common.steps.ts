@@ -82,6 +82,8 @@ defineSupportCode(({Given, When, Then}) => {
     Given(/^I am on my admin home screen$/, bookingManagementPage.verify);
     Given(/^I am on my dashboard screen$/, bookingManagementPage.verify);
     Given(/^I fill New Booking form fields correctly$/, bookingPage.createBooking);
+    Given(/^I fill New Booking form fields with specfic time correctly$/, bookingPage.createBookingWithTime);
+    Given(/^I fill New Booking form fields with specfic new time correctly$/, bookingPage.createBookingWithNewTime);
     Given(/^I fill New Booking form fields correctly with yesterday date$/, bookingPage.createBookingWithYesterdayDate);
     Given(/^I update the booking to be within 48 hours with vicdeaf$/, bookingPage.editBookingWithDayAfterTomorrowDateWith_VICDEAF_STATE);
     Given(/^I fill New Booking form fields correctly with DSQ state$/, bookingPage.editBookingWith_DSQ_STATES);
@@ -183,7 +185,7 @@ defineSupportCode(({Given, When, Then}) => {
     Given(/^I fill the payroll field '(.*)' with value '(.*)'/, fillPayrollField);
 
         function fillPayrollField(lblString: string, value: string) {
-            let input = page.getElementByCss('input[ng-reflect-name="'+lblString+'"]');
+            let input = page.getElementByCss('input[ng-reflect-name="' + lblString + '"]');
             expect(input).to.exist;
             input.clear();
             return page.setValue(input, value);
@@ -250,6 +252,12 @@ defineSupportCode(({Given, When, Then}) => {
         });
     }
 
+    When(/^I try to sign in with valid (.*) credentials$/, enterEmailPasswordLoginPage);
+
+    function enterEmailPasswordLoginPage(type: string) {
+        return homePage.signInWithValidCredential(type);
+    }
+
     When(/^If I am shown a popup message '(.*)', I approve it$/, approveIfPopupWithMessage);
 
     function approveIfPopupWithMessage(message) {
@@ -299,12 +307,16 @@ defineSupportCode(({Given, When, Then}) => {
             expect(count).to.be.greaterThan(0);
         });
     }
+    Given(/^I set a interpreter as '(.*)'$/, setInterpreterAsCasual);
+    function setInterpreterAsCasual(value: string) {
+        Heroku.setInterpreterType(value);
+    }
 
     When(/^I debug$/, () => {
         return browser.pause();
     });
     When(/^I refresh/, () => {
-        return browser.refresh();
+        return browser.getCurrentUrl().then(u => browser.driver.navigate().to(u));
     });
     When(/^I click on button '(.*)'$/, clickOnButton);
     function clickOnButton(btnLabel: string) {
@@ -332,6 +344,7 @@ defineSupportCode(({Given, When, Then}) => {
 
     function isButtonDisabled(btnLabel: string, disabled: string) {
         let isEnabled = disabled.toLowerCase() === 'enabled';
+        browser.waitForAngular();
         return page.getElementByCSSandText('.button', btnLabel).isEnabled().then((val) => {
             expect(val).to.be.eq(isEnabled);
         });
@@ -358,9 +371,9 @@ defineSupportCode(({Given, When, Then}) => {
     }
     When(/^I can see the element with name '(.*)' as (.*)$/, isElementWithNameDisabled);
 
-    function isElementWithNameDisabled(css: string, disabled: string) {
+    function isElementWithNameDisabled(name: string, disabled: string) {
         let isEnabled = disabled.toLowerCase() === 'enabled';
-        return page.getElementByCss(css).isEnabled().then((val) => {
+        return page.getElementByName(name).isEnabled().then((val) => {
             expect(val).to.be.eq(isEnabled);
         });
     }
@@ -388,15 +401,16 @@ defineSupportCode(({Given, When, Then}) => {
             expect(val).to.be.eq(isDisplayed);
         });
     }
-    When(/^I can count the element with css '(.*)' to be (atleast)?\s?'(.*)'$/, elementWithCSSCount);
-    function elementWithCSSCount(css: string, checkMin: string, count: string) {
-        const checkOnlyMin = checkMin === 'atleast';
+    When(/^I can count the element with css '(.*)' to be '(.*)'$/, elementWithCSSCount);
+    function elementWithCSSCount(css: string, count: string) {
         return page.getAllElementByCSS(css).count().then((cnt) => {
-            if (checkOnlyMin) {
-                return expect(cnt).to.be.gte(+count);  
-            } else {
                 return expect(cnt).to.be.eq(+count);
-            }
+        });
+    }
+    When(/^I can count the element with css '(.*)' to be greater than '(.*)'$/, elementWithCSSCountGte);
+    function elementWithCSSCountGte(css: string, count: string) {
+        return page.getAllElementByCSS(css).count().then((cnt) => {
+                return expect(cnt).to.be.gte(+count);
         });
     }
     When(/^I can see the element with name '(.*)' is '(.*)'$/, isElementWithNameVisible);
@@ -507,6 +521,14 @@ defineSupportCode(({Given, When, Then}) => {
         });
     }
 
+    When(/^I verify radiobutton id '(.*)' and is checked$/, verifyOnRBById);
+    function verifyOnRBById(id: string) {
+        let elm = page.getElementByID(id);
+        return elm.isPresent().then(presence => {
+            return expect(elm.getAttribute('class')).to.eventually.contain('mat-radio-checked');
+        });
+    }
+
     When(/^I click on table header '(.*)'$/, clickOnTableHeader);
 
     function clickOnTableHeader(text: string) {
@@ -561,7 +583,6 @@ defineSupportCode(({Given, When, Then}) => {
             }
         });
     }
-
     Then(/^I can see that form '(.*)' is '(.*)'$/, checkFormDisabled);
     function checkFormDisabled (name: string, disabled: string) {
         let isEnabled = disabled.toLowerCase() === 'disabled';

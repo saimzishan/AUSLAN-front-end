@@ -29,9 +29,7 @@ export class BookingPage extends PageObject {
     }
 
     getSuccessNotificationForBulkUploadContent = () => {
-        return browser.sleep(2500).then(() => {
-            NotificationObject.getNotificationContent('The Bookings in your bulk upload file have been created.');
-        });
+        return NotificationObject.getNotificationContent('The Bookings in your bulk upload file have been created.');
     }
 
     getErrorNotificationContentForBulkUpload = (message: string) => {
@@ -78,6 +76,12 @@ export class BookingPage extends PageObject {
         let sel = this.getElementByName(dropdown_name);
         return sel.element(by.cssContainingText('option', option_text)).isPresent().then(val => {
             expect(val).to.be.eq(true);
+        });
+    }
+    selectedOptionExistsInDropDown = (option_text: string) => {
+        let sel = this.getElementByTagName('select');
+        return sel.getAttribute('ng-reflect-model').then((val) => {
+            expect(val.toUpperCase()).to.equal(option_text);
         });
     }
     clickOnOption = (option_text: string, drop_down: string, for_type: string) => {
@@ -221,6 +225,12 @@ export class BookingPage extends PageObject {
     createBooking = () => {
         return this.createBookingWithTimeAndInterpreter('standard', '10:15 AM', '11:15 AM', '2', 'auslanInterpreters_count');
     }
+    createBookingWithTime = () => {
+        return this.createBookingWithTimeAndInterpreter('standard', '10:15 AM', '8:15 PM', '2', 'auslanInterpreters_count');
+    }
+    createBookingWithNewTime = () => {
+        return this.createBookingWithTimeAndInterpreter('standard', '09:00 PM', '10:00 PM', '2', 'auslanInterpreters_count');
+    }
     createBookingWithYesterdayDate = () => {
         this.previousDate = true;
         return this.createBookingWithTimeAndInterpreter('standard', '10:15 AM', '11:15 AM', '2', 'auslanInterpreters_count');
@@ -315,9 +325,6 @@ export class BookingPage extends PageObject {
 
         this.getElementByName('nature_of_appointment').sendKeys('COURT');
         this.getElementByName('specific_nature_of_appointment').sendKeys('DHS ORDER');
-
-        this.getElementByName('raw_booking_requested_by').sendKeys('Luke');
-        this.getElementByName('raw_booking_requested_by_ln').sendKeys('Orange');
 
         // this.getElementByName('ext_ref_num').sendKeys('321');
 

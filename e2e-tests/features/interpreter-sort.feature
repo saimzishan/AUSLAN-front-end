@@ -6,7 +6,7 @@ Feature: Nearby Interpreter Sort by columns
     Given There exist 1 bookings
 
   @ignoreThis
-  Scenario: Given 1 verified Administrator Officer, I can sort the list of interpreters by Preferred column
+  Scenario: Given 1 verified Administrator Officer, I can sort the list of interp by Preferred column
     Given There exist 5 verified interpreters
     Given The first 1 interpreters have preference 'Preferred'
     Given I exist as an Administrator
@@ -21,7 +21,7 @@ Feature: Nearby Interpreter Sort by columns
     Then I should see the verified interpreters in ascending order of Preferred
 
   @runThis
-  Scenario: Given 1 verified Administrator Officer, I can sort the list of interpreters by Name
+  Scenario: Given 1 verified Administrator Officer, I can sort the list of interp by Name
     Given There exist 5 verified interpreters
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
@@ -35,7 +35,7 @@ Feature: Nearby Interpreter Sort by columns
     Then I should see the verified interpreters in descending order of Name
 
   @runThis
-  Scenario: Given 1 verified Administrator Officer, I can sort the list of interpreters by Lvl column
+  Scenario: Given 1 verified Administrator Officer, I can sort the list of interp by Lvl column
     Given There exist 5 verified interpreters
     Given The first 1 interpreters have skill level 'Notetaking'
     Given I exist as an Administrator
@@ -51,7 +51,7 @@ Feature: Nearby Interpreter Sort by columns
 
 
   @runThis
-  Scenario: Given 1 verified Administrator Officer, I can sort the list of interpreters by Suburb column
+  Scenario: Given 1 verified Administrator Officer, I can sort the list of interp by Suburb column
     Given There exist 5 verified interpreters
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
@@ -65,7 +65,7 @@ Feature: Nearby Interpreter Sort by columns
     Then I should see the verified interpreters in descending order of Suburb
 
   @ignoreThis
-  Scenario: Given 1 verified Administrator Officer, I can sort the list of interpreters by Km column
+  Scenario: Given 1 verified Administrator Officer, I can sort the list of interp by Km column
     Given There exist 5 verified interpreters
     Given The first 1 interpreters have travel pay status 'Yes'
     Given I exist as an Administrator

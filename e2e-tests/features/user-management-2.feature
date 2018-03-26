@@ -172,3 +172,26 @@ Feature: Create, read, update and delete a User
     And I update some Individual Client fields
     And I click on update
     Then I see success notification
+
+  @runThis
+  Scenario: Administrator should be able to update an Interpreter staff id
+    And I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on my admin home screen
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then I click on edit for an active existing Interpreter
+    And I will be taken to the 'INTERPRETER Signup' page
+    When I select option CASUAL from dropdown Staff/Casual
+    Then I can see the element with name 'staff_id' is 'not visible'
+    When I select option STAFF from dropdown Staff/Casual 
+    Then I can see the element with name 'staff_id' is 'visible'
+    And I fill the field 'staff_id' with value '123'
+    And I click on update
+    Then I see success notification
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then I click on edit for an active existing Interpreter
+    And I will be taken to the 'INTERPRETER Signup' page
+    Then I can verify the input 'staff_id' will have the value '123'
+    

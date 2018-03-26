@@ -1,7 +1,7 @@
 <section id="filters">
   <section class="search-bar">
     <form #filterBySearch="ngForm" class="common-form compact" (ngSubmit)="filter()" novalidate>
-      <input type="text" name="search" id="search" (blur)="filter()" [(ngModel)]="extRefNumber" (click)="'' !== extRefNumber && clear()" placeholder="Search...">
+      <input type="text" name="search" id="search" (blur)="filter()" [(ngModel)]="extRefNumber" (click)="'' !== extRefNumber && clear()" placeholder="Search External Ref No">
     </form>
     <button>
       <i (click)="filter()" class="icon-glass"></i>
@@ -31,33 +31,4 @@
       </li>
     </ul>
   </section -->
-
-  <section class="filters hidden-mobile">
-    <button class="button">Allocated</button>
-    <button class="button">Invited</button>
-    <button class="button">Service<br>Completed</button>
-    <div class="separator"></div>
-
-    <ul class="dropdown menu custom gray" data-dropdown-menu>
-      <li>
-        <a href="javascript:void(0)">All Job Types</a>
-        <ul class="menu">
-          <li><a href="javascript:void(0)">Allocated</a></li>
-          <li><a href="javascript:void(0)">Invited</a></li>
-          <li><a href="javascript:void(0)">Service Completed</a></li>
-        </ul>
-      </li>
-    </ul>
-
-    <ul class="dropdown menu custom" data-dropdown-menu>
-      <li>
-        <a href="javascript:void(0)">Actions</a>
-        <ul class="menu right-side">
-          <li><a href="javascript:void(0)"><i></i> Use as template</a></li>
-          <li><a href="javascript:void(0)"><i></i> Add attachments</a></li>
-          <li><a href="javascript:void(0)"><i></i> Cancel</a></li>
-        </ul>
-      </li>
-    </ul>
-  </section>
 </section>
