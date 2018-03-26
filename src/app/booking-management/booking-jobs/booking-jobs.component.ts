@@ -189,7 +189,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         config.viewContainerRef = this.viewContainerRef;
         this.dialogRef = this.dialog.open(PopupComponent, config);
         this.dialogRef.componentInstance.title = isCancel ? 'Cancel linked booking' : 'Unable to service linked booking';
-        this.dialogRef.componentInstance.cancelTitle = isCancel ? 'Cancel all bookings' : 'Unable to service all bookings';
+        this.dialogRef.componentInstance.cancelTitle = isCancel ? 'Cancel all bookings' : '';
         this.dialogRef.componentInstance.okTitle = isCancel ? 'Cancel only this booking' : 'Unable to service this booking';
         this.dialogRef.componentInstance.closeVal = 'close';
         this.dialogRef.componentInstance.popupMessage =
