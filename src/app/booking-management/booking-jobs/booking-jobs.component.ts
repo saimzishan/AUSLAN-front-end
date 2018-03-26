@@ -938,9 +938,15 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
 
     filterInterpreters(field: string, value: string) {
         this.isRecommended = false;
+        const formattedValue = this.formatterValueFor(field, value);
+        if (formattedValue && formattedValue.length) {
+            this.interpreterFilter[field] = formattedValue;
+        } else {
+            delete this.interpreterFilter[field];
+            this.filterInterpreterParams.delete('filter[' + field + ']');
+        }
         for (let k in this.interpreterFilter) {
             if (this.interpreterFilter.hasOwnProperty(k)) {
-                this.interpreterFilter[field] = this.formatterValueFor(field, value);
                 this.filterInterpreterParams.set('filter[' + k + ']', this.interpreterFilter[k]);
             }
         }

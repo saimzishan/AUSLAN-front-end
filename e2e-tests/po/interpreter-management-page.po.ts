@@ -83,6 +83,7 @@ export class InterpreterManagementPage extends PageObject {
     }
 
     clickOnAllocatedLink = () => {
-        return this.getElementByID('lnk-recommended-interpreters').click();
+        this.getElementByID('lnk-recommended-interpreters').click();
+        return browser.waitForAngular();
     }
 }
