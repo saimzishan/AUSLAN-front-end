@@ -10,8 +10,8 @@ export interface ModalOptions {
 }
 /* Change this class to use Using Application Providers import { Data } from "../../providers/data/data" */
 export class GLOBAL {
-    public static MOCK_BOOKING_SERVER_PORT = 3000;
-    public static MOCK_USER_SERVER_PORT = 3000;
+    public static MOCK_BOOKING_SERVER_PORT = 1233;
+    public static MOCK_USER_SERVER_PORT = 1234;
     public static RAILS_LOCAL_SERVER_PORT = 3000;
 
     public static BOOKING_JOB_INVITE =
