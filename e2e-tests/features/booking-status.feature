@@ -64,6 +64,7 @@ Feature: Booking Status
     Then I am on the bookings page
     Then I will be shown with bookings
     Then I see one row with state 'Requested'
+    And I can see the element with name 'booking_status' is 'not visible'
 
   @runThis
   Scenario: Given a booking is created, Organisational Representative cannot see a list of booking and their status
