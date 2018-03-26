@@ -66,6 +66,11 @@
       </ng-container>
       <td data-title="NATURE">{{selectedBookingModel.nature_of_appointment}}</td>
       <td data-title="SPECIFIC">{{selectedBookingModel.specific_nature_of_appointment}}</td>
+      <td data-title="STATE">{{selectedBookingModel.venue.state}}</td>
+      <td data-title="STREET NAME ">{{selectedBookingModel.venue.street_name}}</td>
+      <td data-title="STREET # ">{{selectedBookingModel.venue.street_number}}</td>
+      <td data-title="UNIT # ">{{selectedBookingModel.venue.UNIT_NUMBER}}</td>
+      <td data-title="POST CODE">{{selectedBookingModel.venue.POST_CODE}}</td>
       <ng-container *ngIf='!isClientInterpAndBookInProgress()'>
         <td data-title="NUMBER OF PEOPLE">{{selectedBookingModel.venue.expected_attendance}}</td>
         <td data-title="SPECIAL INSTRUCTIONS" class="new-line">
