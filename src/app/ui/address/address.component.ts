@@ -67,7 +67,7 @@ export class AddressComponent implements AfterViewInit, OnInit {
     ngOnInit() {
         this.mapsAPILoader.load().then(() => {
             let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
-                types: ['establishment'],
+                types: ['address'],
                 componentRestrictions: {country: 'au'}
             });
             autocomplete.addListener('place_changed', () => {

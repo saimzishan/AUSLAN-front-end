@@ -55,6 +55,23 @@ export class BlockoutPagePo extends PageObject {
             expect(val).to.be.eq('07:25 AM');
         });
     }
+    chengeEndTimeAgainstStartTime = () => {
+        let startTime = this.getElementByCss('input[name="dpEventDate_st"]');
+        let today = new Date();
+        today.setDate(today.getDate() + 7);
+        const currentDate = [
+            Heroku.prettyDate(today.getDate()),
+            Heroku.prettyDate(today.getMonth() + 1), // January is 0!,
+            today.getFullYear().toString()
+        ].join('/');
+        startTime.clear();
+        startTime.sendKeys(currentDate + ' 09:00 PM');
+        let endTime = this.getElementByCss('input[name="dpEventDate_endtime"]');
+        this.clickOutSide();
+        return endTime.getAttribute('value').then((val) => {
+            expect(val).to.be.eq('10:00 PM');
+        });
+    }
     changeEndTimeOFBlockout = () => {
         let endTime = this.getElementByCss('input[name="dpEventDate_endtime"]');
         endTime.clear();

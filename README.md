@@ -86,3 +86,7 @@ Change into the project directory and run the following commands
         * `ls -d -1 e2e-tests/features/* > test_features_for_split_container.txt`
    5. Run the e2e tests
         * `./run-e2e-test.sh`
+
+## Deploy to prod
+   1. `ng build --aot --env=prod`
+   2. `aws s3 sync dist/  s3://auslan.deafservicesqld.org.au/ --delete --cache-control max-age=60 --acl public-read`

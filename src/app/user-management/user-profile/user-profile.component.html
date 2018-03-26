@@ -102,16 +102,19 @@
     </div>
     <app-interpreter [displayCalendar]="true" *ngIf="userModel.type === 'Interpreter'" [userModel]="userModel"></app-interpreter>
     <app-ind-client *ngIf="userModel.type === 'IndividualClient'" [userModel]="userModel"></app-ind-client>
-    <app-org-rep *ngIf="userModel.type === 'Organisation' || userModel.type === 'OrganisationalRepresentative'" [userModel]="userModel"></app-org-rep>
+    <app-org-rep *ngIf="userModel.type === 'Organisation' || userModel.type === 'OrganisationalRepresentative'"
+                 [isEdit]="true" [userModel]="userModel"></app-org-rep>
 
     <app-interpreter-box
             [isPreffered]="true"
+            [isUserPage]="true"
             [selectedInterpreters]="userModel.prefferedInterpreters"
             *ngIf="userModel.type === 'IndividualClient' || userModel.type === 'Organisation' || userModel.type === 'OrganisationalRepresentative'"
     ></app-interpreter-box>
     <br>
     <app-interpreter-box
             [isPreffered]="false"
+            [isUserPage]="true"
             [selectedInterpreters]="userModel.prefferedInterpreters"
             *ngIf="userModel.type === 'IndividualClient' || userModel.type === 'Organisation' || userModel.type === 'OrganisationalRepresentative'"
     ></app-interpreter-box>

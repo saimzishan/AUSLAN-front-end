@@ -104,7 +104,7 @@ export class StaffCalendarComponent implements OnInit {
                 },
                 defaultView: $(window).width() < 768 ? 'listMonth' : 'month',
                 eventClick: (calEvent, jsEvent, view) => {
-                    if (view.name !== 'listYear' && view.name !== 'listMonth') {
+                    if (view.name === 'listYear' || view.name === 'listMonth') {
                         this.router.navigate(['/user-management/', calEvent.id, 'staff-availability']);
                     }
                 },
