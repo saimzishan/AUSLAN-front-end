@@ -21,7 +21,7 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER STAF
     And I click on BUTTON 'SAVE'
     And I get success message: 'Staff Availability successfully added'
 
-  @ignoreThis
+  @runThis
   Scenario: As Administrator I can add INTERPRETER STAFF-AVAILABILITY on desktop
     Given I go to the website
     And I am on a computer
@@ -56,8 +56,7 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER STAF
     Then I click on button with css '.fc-listYear-button'
     Then I can count the element with css '.fc-list-heading-main' to be greater than '6'
     Then I can see the time in full calendar is '6:25am - 7:25am'
-    Then I click on button with css '.fc-month-button'
-    Then I click on element with css '.fc-day-grid-event'
+    Then I click on element with css '.fc-list-item-title'
     Then I will be taken to staff-calendar page
     When I wait for 10000 milli-seconds
     Then I check the value of endTime is '07:25 AM'
@@ -96,8 +95,7 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER STAF
     Then I click on element with css 'button.fc-listYear-button.fc-button.fc-state-default'
     Then I can count the element with css 'tr.fc-list-item' to be greater than '2'
     Then I can see the time in full calendar is '6:25am - 7:25am'
-    Then I click on button with css '.fc-month-button'
-    Then I click on element with css '.fc-day-grid-event'
+    Then I click on element with css '.fc-list-item-title'
     And I will be taken to blockout page
     When I wait for 10000 milli-seconds
     Then I check the value of endTime is '07:25 AM'
