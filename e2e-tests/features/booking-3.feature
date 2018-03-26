@@ -87,13 +87,13 @@ Feature: Booking Management
     Then I am shown with 1 booking
 
   @runThis
-  Scenario: Individual Client can't have special instruction fields
+  Scenario: Individual Client can see special instruction fields
     Given I exist as an Individual Client
     And I sign in with valid Individual Client credentials
     And I am on the bookings page
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
-    Then I can't see the txtSpecialInstruction field
+    Then I can see the txtSpecialInstruction field
  # ---------------------------------------- AUSLAN1-40 -> END ----------------------------------------
 
   @runThis
