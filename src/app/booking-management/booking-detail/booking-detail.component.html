@@ -736,12 +736,12 @@
 
       <div class="medium-12 columns">
         <div class="form-field">
-          <label>NOTES
+          <label>NOTES FOR BOOKING OFFICE
             <span mdTooltip="Any Important Notes">
               <i class="inline-icon-tip"></i>
             </span>
           </label>
-          <textarea placeholder="Important Notes" name="important_notes" [(ngModel)]="bookingModel.notes"></textarea>
+          <textarea placeholder="Important Notes for the Booking Office" name="important_notes" [(ngModel)]="bookingModel.notes"></textarea>
 
           <span *ngIf="bookingModel.raw_nature_of_appointment === 'Other' && (!bookingModel.notes || (bookingModel.notes && bookingModel.notes.length < 2))"
                 class="inline-icon error">
@@ -750,10 +750,10 @@
         </div>
       </div>
     </div>
-    <ng-container *ngIf="isUserOrgRep()">
+    <ng-container *ngIf="isUserOrgRepORIndClientTemp() || isUserAdminORBookOfficer">
       <div class="separator"></div>
 
-      <h4 class="text-center">SPECIAL INSTRUCTION</h4>
+      <h4 class="text-center">SPECIAL INSTRUCTIONS</h4>
       <div class="row">
         <div class="medium-12 columns">
           <div class="form-field">
@@ -779,7 +779,7 @@
               <input [(ngModel)]="bookingModel.special_instructions"
                      name='txtSpecialInstruction'
                      (click)="fireNotification($event)"
-                     type='text' placeholder="Enter Special instructions">
+                     type='text' placeholder="Special Instructions for the Interpreter(s)">
             </div>
           </div>
         </div>
