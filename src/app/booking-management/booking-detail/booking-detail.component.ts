@@ -392,13 +392,15 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     public onClientSelectionChange() {
         let user = this.isUserAdminORBookOfficer ? this.bookable : GLOBAL.currentUser;
         if (user) {
-            ['first_name', 'last_name', 'email', 'mobile_number', 'ndis_id'].forEach((field) => {
+            ['first_name', 'last_name', 'email', 'mobile_number', 'ndis_id', 'general_notes', 'claim_notes'].forEach((field) => {
                 let currentUserFieldMap = {mobile_number: 'mobile'};
                 let currentUserField = currentUserFieldMap[field] || field;
                 let value = this.currentUserIsClient ? user[currentUserField] : '';
                 let mapForNsid = {ndis_id: 'eaf'};
                 field = mapForNsid[field] || field;
                 this.bookingModel.deaf_person[field] = value;
+                this.bookingModel.general_notes = field === 'general_notes' ? value : '';
+                this.bookingModel.claim_notes = field === 'claim_notes' ? value : '';
             });
         }
     }
