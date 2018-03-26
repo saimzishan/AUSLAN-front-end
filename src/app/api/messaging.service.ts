@@ -19,13 +19,13 @@ export class MessagingService extends ApiService {
         }
 
         getInterpreterMessages(user_id): Observable < any > {
-        let headers = new Headers({ 'Accept': 'application/json' });
-        let options = new RequestOptions({ headers: headers });
+            let headers = new Headers({ 'Accept': 'application/json' });
+            let options = new RequestOptions({ headers: headers });
 
             return this.http.get(GLOBAL.USER_API + '/' + user_id + '/messages' + '?page=' + 1 + '&amp;per_page=' + 100, options)
                     .map(this.extractData)
                     .catch((err) => { return this.handleError(err); });
-    }
+        }
 
         sendInterpreterMessages(user_id, url, inbox_url_id, message_body): Observable < Object > {
         let headers = new Headers({ 'Accept': 'application/json' });
@@ -35,6 +35,15 @@ export class MessagingService extends ApiService {
              return this.http.post(GLOBAL.USER_API + '/' + user_id + '/messages', JSON.stringify(obj), options)
                     .map(this.extractData)
                     .catch((err) => { return this.handleError(err); });
-    }
+        }
 
-    }
+        allMeesageThreads(businessId): Observable<any> {
+            let headers = new Headers({ 'Accept': 'application/json' });
+            let options = new RequestOptions({ headers: headers });
+
+            return this.http.get(GLOBAL.USER_APPI + '/business/' + businessId + '/message_threads' + '?page=' + 1 + '&amp;per_page=' + 100, options)
+                .map(this.extractData)
+                .catch((err) => { return this.handleError(err); });
+        }
+}
+

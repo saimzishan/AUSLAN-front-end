@@ -103,7 +103,8 @@
           &nbsp;
         </div>
       </section>
-      <section class="messages__conversation">
+      
+      <section class="messages__conversation" *ngFor='let message of meesageThreads' >
         <div>
           <div class="checkbox">
             <input type="checkbox" name="" value="1" id="job-2a">
@@ -114,205 +115,18 @@
           <md-checkbox></md-checkbox>
         </div>
         <div>
-          <span>5:15 PM</span> |
-          <span>Emmelie Jimpson</span>
-          <p class="messages__conversation-text">Hey there, I have to give back the job as I was previously booked on a job elsewhere and hav...</p>
+          <a>
+            <span>{{message.last_messaging_time}}</span> |
+            <span>{{message.user_name}}</span>
+            <p class="messages__conversation-text">Hey there, I have to give back the job as I was previously booked on a job elsewhere and hav...</p>
+          </a>
         </div>
       </section>
-      <section class="messages__conversation messages__conversation_active">
-        <div>
-          <div class="checkbox">
-            <input type="checkbox" name="" value="1" id="job-2b">
-            <label for="job-2b"></label>
-          </div>
-        </div>
-        <div>
-          <md-checkbox></md-checkbox>
-        </div>
-        <div>
-          <span>5:15 PM</span> |
-          <span>Emmelie Jimpson</span>
-          <p class="messages__conversation-text">Hey there, I have to give back the job as I was previously booked on a job elsewhere and hav...</p>
-        </div>
-      </section>
-      <section class="messages__conversation">
-        <div>
-          <div class="checkbox">
-            <input type="checkbox" name="" value="1" id="job-2c">
-            <label for="job-2c"></label>
-          </div>
-        </div>
-        <div>
-          <md-checkbox></md-checkbox>
-        </div>
-        <div>
-          <span>5:15 PM</span> |
-          <span>Emmelie Jimpson</span>
-          <p class="messages__conversation-text">Hey there, I have to give back the job as I was previously booked on a job elsewhere and hav...</p>
-        </div>
-      </section>
-      <section class="messages__conversation">
-        <div>
-          <div class="checkbox">
-            <input type="checkbox" name="" value="1" id="job-2d">
-            <label for="job-2d"></label>
-          </div>
-        </div>
-        <div>
-          <md-checkbox></md-checkbox>
-        </div>
-        <div>
-          <span>5:15 PM</span> |
-          <span>Emmelie Jimpson</span>
-          <p class="messages__conversation-text">Hey there, I have to give back the job as I was previously booked on a job elsewhere and hav...</p>
-        </div>
-      </section>
-      <section class="messages__conversation">
-        <div>
-          <div class="checkbox">
-            <input type="checkbox" name="" value="1" id="job-2e">
-            <label for="job-2e"></label>
-          </div>
-        </div>
-        <div>
-          <md-checkbox></md-checkbox>
-        </div>
-        <div>
-          <span>5:15 PM</span> |
-          <span>Emmelie Jimpson</span>
-          <p class="messages__conversation-text">Hey there, I have to give back the job as I was previously booked on a job elsewhere and hav...</p>
-        </div>
-      </section>
-      <section class="messages__conversation">
-        <div>
-          <div class="checkbox">
-            <input type="checkbox" name="" value="1" id="job-2f">
-            <label for="job-2f"></label>
-          </div>
-        </div>
-        <div>
-          <md-checkbox></md-checkbox>
-        </div>
-        <div>
-          <span>5:15 PM</span> |
-          <span>Emmelie Jimpson</span>
-          <p class="messages__conversation-text">Hey there, I have to give back the job as I was previously booked on a job elsewhere and hav...</p>
-        </div>
-      </section>
-      <section class="messages__conversation">
-        <div>
-          <div class="checkbox">
-            <input type="checkbox" name="" value="1" id="job-2h">
-            <label for="job-2h"></label>
-          </div>
-        </div>
-        <div>
-          <md-checkbox></md-checkbox>
-        </div>
-        <div>
-          <span>5:15 PM</span> |
-          <span>Emmelie Jimpson</span>
-          <p class="messages__conversation-text">Hey there, I have to give back the job as I was previously booked on a job elsewhere and hav...</p>
-        </div>
-      </section>
-      <section class="messages__conversation">
-        <div>
-          <div class="checkbox">
-            <input type="checkbox" name="" value="1" id="job-2i">
-            <label for="job-2i"></label>
-          </div>
-        </div>
-        <div>
-          <md-checkbox></md-checkbox>
-        </div>
-        <div>
-          <span>5:15 PM</span> |
-          <span>Emmelie Jimpson</span>
-          <p class="messages__conversation-text">Hey there, I have to give back the job as I was previously booked on a job elsewhere and hav...</p>
-        </div>
-      </section>
-      <section class="messages__conversation">
-        <div>
-          <div class="checkbox">
-            <input type="checkbox" name="" value="1" id="job-2j">
-            <label for="job-2j"></label>
-          </div>
-        </div>
-        <div>
-          <md-checkbox></md-checkbox>
-        </div>
-        <div>
-          <span>5:15 PM</span> |
-          <span>Emmelie Jimpson</span>
-          <p class="messages__conversation-text">Hey there, I have to give back the job as I was previously booked on a job elsewhere and hav...</p>
-        </div>
-      </section>
-      <section class="messages__conversation">
-        <div>
-          <div class="checkbox">
-            <input type="checkbox" name="" value="1" id="job-2k">
-            <label for="job-2k"></label>
-          </div>
-        </div>
-        <div>
-          <md-checkbox></md-checkbox>
-        </div>
-        <div>
-          <span>5:15 PM</span> |
-          <span>Emmelie Jimpson</span>
-          <p class="messages__conversation-text">Hey there, I have to give back the job as I was previously booked on a job elsewhere and hav...</p>
-        </div>
-      </section>
-      <section class="messages__conversation">
-        <div>
-          <div class="checkbox">
-            <input type="checkbox" name="" value="1" id="job-2l">
-            <label for="job-2l"></label>
-          </div>
-        </div>
-        <div>
-          <md-checkbox></md-checkbox>
-        </div>
-        <div>
-          <span>5:15 PM</span> |
-          <span>Emmelie Jimpson</span>
-          <p class="messages__conversation-text">Hey there, I have to give back the job as I was previously booked on a job elsewhere and hav...</p>
-        </div>
-      </section>
-      <section class="messages__conversation">
-        <div>
-          <div class="checkbox">
-            <input type="checkbox" name="" value="1" id="job-2m">
-            <label for="job-2m"></label>
-          </div>
-        </div>
-        <div>
-          <md-checkbox></md-checkbox>
-        </div>
-        <div>
-          <span>5:15 PM</span> |
-          <span>Emmelie Jimpson</span>
-          <p class="messages__conversation-text">Hey there, I have to give back the job as I was previously booked on a job elsewhere and hav...</p>
-        </div>
-      </section>
-      <section class="messages__conversation">
-        <div>
-          <div class="checkbox">
-            <input type="checkbox" name="" value="1" id="job-2n">
-            <label for="job-2n"></label>
-          </div>
-        </div>
-        <div>
-          <md-checkbox></md-checkbox>
-        </div>
-        <div>
-          <span>5:15 PM</span> |
-          <span>Emmelie Jimpson</span>
-          <p class="messages__conversation-text">Hey there, I have to give back the job as I was previously booked on a job elsewhere and hav...</p>
-        </div>
-      </section>
+     
     </section>
   </section>
+
+
   <section class="messages__wrapper messages__wrapper_aside" id="messages-wrapper">
     <section class="messages__message messages__message_left">
       <figure class="messages__figure">
