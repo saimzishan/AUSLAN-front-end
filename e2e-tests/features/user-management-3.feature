@@ -149,3 +149,58 @@ Feature: Create, read, update and delete a User
     And I update some Organisational Representative fields
     And I click on update
     Then I see success notification
+
+  @runThis
+  Scenario: Booking Officer and Administrator should be able to update an Organisational Representative and Individual Client claim and general notes
+    And I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    And I am on my admin home screen
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then I click on edit for an active existing Organisational Representative
+    And I will be taken to the 'ORGANISATIONALREPRESENTATIVE Signup' page
+    And I fill the field 'general_notes' with value 'general notes'
+    And I fill the field 'claim_notes' with value 'claim notes'
+    And I click on update
+    Then I see success notification
+    Then I click on edit for an active existing Organisational Representative
+    And I will be taken to the 'ORGANISATIONALREPRESENTATIVE Signup' page
+    And I can verify the input 'general_notes' will have the value 'general notes'
+    And I can verify the input 'claim_notes' will have the value 'claim notes'
+    And I hover on the 'Profile'
+    And I click on logout
+    And I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on my admin home screen
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then I click on edit for an active existing Individual Client
+    And I will be taken to the 'INDIVIDUALCLIENT Signup' page
+    And I fill the field 'general_notes' with value 'general notes'
+    And I fill the field 'claim_notes' with value 'claim notes'
+    And I click on update
+    Then I see success notification
+    Then I click on edit for an active existing Individual Client
+    And I will be taken to the 'INDIVIDUALCLIENT Signup' page
+    And I can verify the input 'general_notes' will have the value 'general notes'
+    And I can verify the input 'claim_notes' will have the value 'claim notes'
+    And I hover on the 'Profile'
+    And I click on logout
+    And I exist as an Organisational Representative
+    And I sign in with valid Organisational Representative credentials
+    And I am on my admin home screen
+    And I hover on the 'Profile'
+    And I click on the option  profile
+    And I will be taken to my individual profile page
+    And I can see the element with name 'general_notes' is 'not visible'
+    And I can see the element with name 'claim_notes' is 'not visible'
+    And I hover on the 'Profile'
+    And I click on logout
+    And I exist as an Individual Client
+    And I sign in with valid Individual Client credentials
+    And I am on my admin home screen
+    And I hover on the 'Profile'
+    And I click on the option  profile
+    And I will be taken to my individual profile page
+    And I can see the element with name 'general_notes' is 'not visible'
+    And I can see the element with name 'claim_notes' is 'not visible'

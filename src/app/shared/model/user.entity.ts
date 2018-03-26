@@ -144,8 +144,6 @@ export class OrganisationalRepresentative extends Organisational {
             'business_hours_phone': this.phone,
             'mobile': this.mobile,
             'special_instructions': this.special_instructions,
-            'general_notes': this.general_notes,
-            'claim_notes': this.claim_notes,
             'discovery_of_auslan': this.reffered_by === 'OTHER' ?
                 'O:' + this.reffered_other : this.reffered_by,
             'customer_reference': this.customer_ref,
@@ -161,6 +159,8 @@ export class OrganisationalRepresentative extends Organisational {
                     'address_attributes': this.address_attributes,
                     'preference_allocations_attributes': this.prefferedInterpreters,
                     'linked_account_number': this.linked_account_number,
+                    'general_notes': this.general_notes,
+                    'claim_notes': this.claim_notes,
                     'billing_account_attributes': {
                         'id': this.organisation_billing_account.id,
                         'primary_contact_first_name': this.organisation_primary_contact.first_name,
@@ -188,8 +188,6 @@ export class OrganisationalRepresentative extends Organisational {
             'communication_preference': this.preferred_contact_method,
             'mobile': this.mobile,
             'special_instructions': this.special_instructions,
-            'general_notes': this.general_notes,
-            'claim_notes': this.claim_notes,
             'discovery_of_auslan': this.reffered_by === 'OTHER' ?
                 'O:' + this.reffered_other : this.reffered_by,
             'customer_reference': this.customer_ref,
@@ -204,6 +202,8 @@ export class OrganisationalRepresentative extends Organisational {
                     'preferred_contact_method': this.organisation_billing_account.preferred_contact_method,
                     'address_attributes': this.address_attributes,
                     'preference_allocations_attributes': this.prefferedInterpreters,
+                    'general_notes': this.general_notes,
+                    'claim_notes': this.claim_notes,
                     'billing_account_attributes': {
                         'id': this.organisation_billing_account.id,
                         'primary_contact_first_name': this.organisation_primary_contact.first_name,
@@ -247,8 +247,8 @@ export class OrganisationalRepresentative extends Organisational {
         this.organisation_name = obj.organisation.name;
         this.group_email = obj.organisation.group_email;
         this.special_instructions = obj.special_instructions;
-        this.general_notes = obj.general_notes;
-        this.claim_notes = obj.claim_notes;
+        this.general_notes = obj.organisation.general_notes;
+        this.claim_notes = obj.organisation.claim_notes;
         this.branch_office = obj.organisation.branch_office;
         this.reffered_by = Boolean(obj.discovery_of_auslan) ? obj.discovery_of_auslan.startsWith('O:') ?
             'Other' : obj.discovery_of_auslan : '';
