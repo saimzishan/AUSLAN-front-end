@@ -26,6 +26,8 @@ export class Booking {
     public interpreters_required = 0;
     public notes = '';
     public special_instructions = '';
+    public general_notes = '';
+    public claim_notes = '';
     public primaryContact = new Contact();
     public client: OrganisationalRepresentative = new OrganisationalRepresentative({});
     public documents_attributes = [];
@@ -124,6 +126,8 @@ export class Booking {
         this.client.organisation_primary_contact.email = '';
         this.client.organisation_billing_account.external_reference = '';
         this.special_instructions = '';
+        this.general_notes = '';
+        this.claim_notes = '';
         this.deaf_person.first_name = '';
         this.deaf_person.last_name = '';
         this.deaf_person.email = '';
@@ -206,6 +210,8 @@ export class Booking {
         this.client.organisation_name = data.created_by.organisation;
         this.client.organisation_billing_account.external_reference = '';
         this.special_instructions = data.special_instructions;
+        this.general_notes = data.general_notes;
+        this.claim_notes = data.claim_notes;
         this.deaf_person.first_name = data.deaf_persons_first_name;
         this.deaf_person.last_name = data.deaf_persons_last_name;
         this.deaf_person.email = data.deaf_persons_email;
@@ -303,6 +309,8 @@ export class Booking {
             new_link_id_required: this.new_link_id_required || false,
             state: _state,
             special_instructions: this.special_instructions,
+            general_notes: this.general_notes,
+            claim_notes: this.claim_notes,
             venue: this.venue.title,
             requested_by_first_name: this.requested_by.first_name,
             requested_by_last_name: this.requested_by.last_name,
