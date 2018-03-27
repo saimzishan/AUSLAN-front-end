@@ -133,13 +133,13 @@
       
       <ng-container *ngFor="let message of meesageThread">
          
-        <section class="messages__message" [ngClass]="{ 'messages__message_right' : message_thread_id === userId, 'messages__message_left' : message_thread_id !== userId }">
+        <section class="messages__message" [ngClass]="{ 'messages__message_left' : message.sender.id === userId, 'messages__message_right' : message.sender.id !== userId }">
           
           <figure class="messages__figure">
             <img src="{{message.sender.photo_url}}" alt="">  </figure>
           <section class="messages__inner">
             <div class="messages__title">
-              <strong class="messages__person">{{message.sender.first_name}}</strong>  
+              <strong class="messages__person">{{message.sender.first_name}} {{ message.sender.last_name}}</strong>  
               <span class="messages__time">  
                 <i class="icon-time"></i> {{message.created_at | date: 'medium' }}</span>
                </div>
@@ -155,7 +155,7 @@
   <i name='messages__Xtag' *ngIf='isTagShow'>x</i>
 </button>    <section class="messages__formInner">
       <textarea [(ngModel)]="message_body" required (keyup)="checkEmpty()" name="message_body" class="messages__formInput"></textarea>
-      <button [disabled]="!message_body" name="messages__formSend" (click)="sendInterpreterMessages()" class="messages__formSend"></button>
+      <button [disabled]="!message_body" name="messages__formSend" (click)="sendMessage()" class="messages__formSend"></button>
     </section>
   </form>
 </section>

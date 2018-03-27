@@ -37,6 +37,16 @@ export class MessagingService extends ApiService {
                     .catch((err) => { return this.handleError(err); });
         }
 
+        sendMessages(user_id, receiver_id ,  url, inbox_url_id, message_body): Observable<Object> {
+            let headers = new Headers({ 'Accept': 'application/json' });
+            let options = new RequestOptions({ headers: headers });
+            const obj = { message: { receiver_id: receiver_id, message_inbox_url: url, message_body: message_body } };
+
+            return this.http.post(GLOBAL.USER_API + '/' + user_id + '/messages', JSON.stringify(obj), options)
+                .map(this.extractData)
+                .catch((err) => { return this.handleError(err); });
+        }
+
         allMeesageThreads(businessId): Observable<any> {
             let headers = new Headers({ 'Accept': 'application/json' });
             let options = new RequestOptions({ headers: headers });

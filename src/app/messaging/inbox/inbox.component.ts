@@ -26,7 +26,8 @@ export class InboxComponent implements OnInit {
   message_body;
   message_tage = 4321;
   isTagShow = true;
-  business_name = GLOBAL.currentUser.business_name;
+  // http://localhost:4200/#/users/6/messages
+  loginUserID = GLOBAL.currentUser.id;
   business_id = GLOBAL.currentUser.business_id;
 
   constructor(private userService: UserService, private notificationServiceBus: NotificationServiceBus, public platformLocation: PlatformLocation,
@@ -35,7 +36,6 @@ export class InboxComponent implements OnInit {
 
   ngOnInit() {
     this.getAllMeesageThreads(this.business_id);
-    console.log( (this.platformLocation as any).location.href);
   }
 
   getAllMeesageThreads(businessId) {
@@ -45,6 +45,7 @@ export class InboxComponent implements OnInit {
             .subscribe((res: any) => {
                 if (res.status === 200) {
                   this.meesageThreads = res.data.message_threads;
+                  console.log(this.meesageThreads);
                   this.meesageThread = this.meesageThreads[0].messages;
                   this.userId = this.meesageThreads[0].user_id;
                   }
@@ -55,6 +56,27 @@ export class InboxComponent implements OnInit {
                   let e = errors.json();
                   this.notificationServiceBus.launchNotification(true, e);
           });
+  }
+
+  sendMessage() {
+    let url = (this.platformLocation as any).location.href;
+      url = url.substr(0, 30);
+      url += this.userId + '/messages';
+    this.spinnerService.requestInProcess(true);
+
+    this.messagingService.sendMessages(this.loginUserID, this.userId , url, this.message_tage, this.message_body)
+      .subscribe((res: any) => {
+          if (res.status === 200) {
+              this.ngOnInit();
+              this.notificationServiceBus.launchNotification(false, 'Message sent successfully..');
+              this.message_body = '';
+          }
+          this.spinnerService.requestInProcess(false);
+      }, errors => {
+            this.spinnerService.requestInProcess(false);
+          let e = errors.json();
+          this.notificationServiceBus.launchNotification(true, e);
+        });
   }
 
   showSingleMessageThread(index) {
