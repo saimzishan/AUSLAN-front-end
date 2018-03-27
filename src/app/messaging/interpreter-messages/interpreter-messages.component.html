@@ -72,7 +72,7 @@
   <section class="messages__wrapper" id="messages-wrapper">
     <ng-container *ngFor="let message of messages">
 
-    <section class="messages__message" [ngClass]="{ 'messages__message_right' : message_thread_id === userId, 'messages__message_left' : message_thread_id !== userId }">
+    <section class="messages__message" [ngClass]="{ 'messages__message_right' : message.sender.id === getCurrentUserID(), 'messages__message_left' : message.sender.id !== getCurrentUserID() }">
         <figure class="messages__figure">
           <img src="{{message.sender.photo_url}}" alt="">
         </figure>
