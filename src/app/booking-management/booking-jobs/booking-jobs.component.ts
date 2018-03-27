@@ -422,7 +422,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     }
 
     fetchNearbyinterpreters(booking_id) {
-        this.filterSearchParam = this.isRecommended ? this.getRecommendedParams() : GLOBAL.getInterpreterSearchParameters()
+        this.filterSearchParam = this.isRecommended ? this.getRecommendedParams() : GLOBAL.getInterpreterSearchParameters();
         this.spinnerService.requestInProcess(true);
         this.bookingService.nearbyBookings(booking_id, this.currentPage, this.filterSearchParam)
             .subscribe((res: any) => {
