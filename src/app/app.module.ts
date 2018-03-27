@@ -84,6 +84,7 @@ import {ShortTimePipe} from './shared/pipe/short-time.pipe';
 import {UserPayrollBillingComponent} from './user-management/user-payroll-billing/user-payroll-billing.component';
 import { InboxComponent } from './messaging/inbox/inbox.component';
 import { MessagingService } from './api/messaging.service';
+import { MdCheckboxModule } from '@angular/material';
 
 
 @NgModule({
@@ -117,7 +118,7 @@ import { MessagingService } from './api/messaging.service';
         BookingInfoComponent, BookingPayrollComponent, PayrollTimeComponent, StaffCalendarComponent, ShortTimePipe, UserPayrollBillingComponent, InboxComponent
     ],
     entryComponents: [PopupComponent, InterpreterPopupComponent, LinkidPopupComponent],
-    imports: [CustomFormsModule, routing, FileUploadModule,
+    imports: [CustomFormsModule, routing, FileUploadModule, MdCheckboxModule,
         BrowserModule, RouterModule, CommonModule, MobileFooterModule,
         FormsModule, BrowserAnimationsModule, NgxPaginationModule,
         HttpModule, SimpleNotificationsModule.forRoot(),

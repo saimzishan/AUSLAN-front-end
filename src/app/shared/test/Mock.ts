@@ -174,3 +174,18 @@ export class FakeOpMapsAPILoader implements MapsAPILoader {
         return Promise.resolve();
     }
 }
+
+
+@Injectable()
+export class MockMessageService extends ApiService {
+    getInterpreterMessages(user_id): Observable < Object > {
+        return Observable.of(mock_empty_response).map(res => {
+            return res;
+        });
+    }
+   sendInterpreterMessages(user_id, url, inbox_url_id, message_body): Observable < Object > {
+        return Observable.of(mock_empty_response).map(res => {
+                        return res;
+        });
+    }
+}

@@ -12,13 +12,14 @@ import { UserService } from '../../api/user.service';
 import { MessagingService } from '../../api/messaging.service';
 import { NotificationServiceBus } from '../../notification/notification.service';
 import { PlatformLocation } from '@angular/common';
+import { Administrator, BookingOfficer } from '../../shared/model/user.entity';
 
 @Component({
   selector: 'app-inbox',
   templateUrl: './inbox.component.html',
   styleUrls: ['./inbox.component.css']
 })
-export class InboxComponent implements OnInit {
+export class InboxComponent implements OnInit, OnDestroy {
 
   meesageThreads;
   meesageThread;
@@ -26,6 +27,7 @@ export class InboxComponent implements OnInit {
   message_body;
   message_tage = 4321;
   isTagShow = true;
+  messages;
   // http://localhost:4200/#/users/6/messages
   loginUserID = GLOBAL.currentUser.id;
   business_id = GLOBAL.currentUser.business_id;
@@ -35,8 +37,47 @@ export class InboxComponent implements OnInit {
     private rolePermission: RolePermission) { }
 
   ngOnInit() {
-    this.getAllMeesageThreads(this.business_id);
+    if (this.isCurrentUserAdminOrBookingOfficer()) {
+      this.getAllMeesageThreads(this.business_id);
+    } else {
+      this.getInterpreterMessages(GLOBAL.currentUser.id);
+    }
   }
+
+  getInterpreterMessages(userId) {
+     this.spinnerService.requestInProcess(true);
+     this.messagingService.getInterpreterMessages(userId)
+          .subscribe((res: any) => {
+            if (res.status === 200) {
+                  this.messages = res.data.messages;
+                  this.userId = userId;
+                }
+              this.spinnerService.requestInProcess(false);
+             },
+               errors => {
+            this.spinnerService.requestInProcess(false);
+            let e = errors.json();
+               this.notificationServiceBus.launchNotification(true, e);
+        });
+  }
+
+   sendInterpreterMessages() {
+      let url = (this.platformLocation as any).location.href;
+    this.spinnerService.requestInProcess(true);
+     this.messagingService.sendInterpreterMessages(this.loginUserID, url, this.message_tage, this.message_body)
+          .subscribe((res: any) => {
+              if (res.status === 200) {
+                   this.ngOnInit();
+                   this.notificationServiceBus.launchNotification(false, 'Message sent successfully..');
+                   this.message_body = '';
+                 }
+              this.spinnerService.requestInProcess(false);
+             }, errors => {
+                 this.spinnerService.requestInProcess(false);
+                let e = errors.json();
+                this.notificationServiceBus.launchNotification(true, e);
+               });
+   }
 
   getAllMeesageThreads(businessId) {
     this.spinnerService.requestInProcess(true);
@@ -61,7 +102,7 @@ export class InboxComponent implements OnInit {
   sendMessage() {
     let url = (this.platformLocation as any).location.href;
       url = url.substr(0, 30);
-      url += this.userId + '/messages';
+      url += this.userId + '/inbox';
     this.spinnerService.requestInProcess(true);
 
     this.messagingService.sendMessages(this.loginUserID, this.userId , url, this.message_tage, this.message_body)
@@ -91,6 +132,18 @@ export class InboxComponent implements OnInit {
   }
   sendMessageTagHide() {
     this.isTagShow = false;
+  }
+
+  isCurrentUserAdminOrBookingOfficer(): boolean {
+    return Boolean(GLOBAL.currentUser instanceof Administrator || GLOBAL.currentUser instanceof BookingOfficer);
+  }
+
+  backClicked() {
+      this._location.back();
+  }
+
+  ngOnDestroy() {
+        localStorage.setItem('bookingId', '-1');
   }
 
 }
