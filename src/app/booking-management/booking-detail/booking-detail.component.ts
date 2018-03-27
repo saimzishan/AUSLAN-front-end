@@ -801,7 +801,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         this.dialogRef.componentInstance.title = title;
         this.dialogRef.componentInstance.cancelTitle = (options && options.cancelTitle) || 'BACK';
         this.dialogRef.componentInstance.okTitle = (options && options.okTitle) ? options.okTitle :
-        this.forEdit? 'UPDATE' : 'CREATE';
+        this.forEdit ? 'UPDATE' : 'CREATE';
         this.dialogRef.componentInstance.closeVal = (options && options.closeVal) || false;
         this.dialogRef.componentInstance.popupMessage = message;
     }
