@@ -85,6 +85,10 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         this.headerSubscription = this.bookingHeaderService.notifyObservable$.subscribe((res) => {
             this.callRelatedFunctions(res);
         });
+        this.filterInterpreterParams = GLOBAL._filterInterpreterVal;
+        this.filterInterpreterParams.paramsMap.forEach((value: string[], key: string) => {
+            GLOBAL._filterInterpreterVal.delete(key);
+        });
     }
 
     callRelatedFunctions(res) {
@@ -913,9 +917,9 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     }
 
     filterInterpreters(field: string, value: string) {
-        this.interpreterFilter[field] = this.formatterValueFor(field, value);
         for (let k in this.interpreterFilter) {
             if (this.interpreterFilter.hasOwnProperty(k)) {
+                this.interpreterFilter[field] = this.formatterValueFor(field, value);
                 this.filterInterpreterParams.set('filter[' + k + ']', this.interpreterFilter[k]);
             }
         }

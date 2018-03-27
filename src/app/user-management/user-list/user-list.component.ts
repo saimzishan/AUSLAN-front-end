@@ -1,4 +1,4 @@
-import {Component, Input, Output, EventEmitter} from '@angular/core';
+import {Component, Input, Output, EventEmitter, OnInit} from '@angular/core';
 import {
     Administrator, BookingOfficer, IndividualClient, Interpreter, OrganisationalRepresentative,
     User
@@ -17,7 +17,7 @@ import {NotificationServiceBus} from '../../notification/notification.service';
     templateUrl: './user-list.component.html',
     styleUrls: ['./user-list.component.css']
 })
-export class UserListComponent {
+export class UserListComponent implements OnInit {
     @Input('userList') userList: Array<any> = [];
     @Output() onResetPass = new EventEmitter<User>();
     @Output() onPageEmit = new EventEmitter<number>();
@@ -33,6 +33,14 @@ export class UserListComponent {
         private userDataService: UserService,
         private notificationServiceBus: NotificationServiceBus
     ) {}
+
+    ngOnInit() {
+        this.filterUserParams = GLOBAL._filterUserVal;
+        this.filterUserParams.paramsMap.forEach((value: string[], key: string) => {
+            GLOBAL._filterUserVal.delete(key);
+        });
+        this.filterUsers('', '');
+    }
 
     getQueryableRole(user) {
         return ROLE[user.getRole()].toUpperCase().replace(/\s/g, '');
@@ -74,9 +82,9 @@ export class UserListComponent {
     }
 
     filterUsers(field: string, value: string) {
-        this.userFilter[field] = this.formattedValueFor(field, value);
         for (let k in this.userFilter) {
             if (this.userFilter.hasOwnProperty(k)) {
+                this.userFilter[field] = this.formattedValueFor(field, value);
                 if (k === 'type') {
                     this.filterUserParams.set('filter[' + k + ']', this.userFilter[k].replace(/\s/g, ''));
                 } else {
