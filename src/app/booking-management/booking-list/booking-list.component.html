@@ -16,7 +16,7 @@
                         <input type="text" name="booking_ids" (blur)="filter('booking_ids', filterByBookingIds.value.booking_ids)"  [(ngModel)]="bookingFilter.booking_ids">
                     </form>
                 </th>
-                <th width="7%">
+                <th width="7%" name="booking_status" *ngIf="isCurrentUserAdminOrBookingOfficer()">
                     <span class="order" [ngClass]="getSortOrder('booking_status')" (click)="sort('booking_status')">Status</span>
                     <ul class="dropdown menu custom" id="booking-status" data-dropdown-menu>
                         <li>
@@ -165,7 +165,7 @@
                         </span>
                     </div>
                 </td>
-                <td class="text-center">
+                <td class="text-center" *ngIf="isCurrentUserAdminOrBookingOfficer()">
                     <i class="status"
                        [ngClass]="{'icon-small icon-small-green': booking.status === 'green', 'icon-small icon-small-red': booking.status === 'red', 'icon-small icon-small-yellow': booking.status === 'orange'}">
                     </i>
@@ -185,7 +185,7 @@
                                 </span>
                             </span>
                         </span>
-                        <i *ngIf="isCurrentUserInvitedInterpreter(booking.interpreters)" class="icon-requested"></i>
+                        <i *ngIf="isCurrentUserInvitedInterpreter(booking.interpreters) && !isCurrentUserAllowed()" name="icon_requested" class="icon-requested"></i>
                     </div>
                 </td>
                 <td>{{booking.client.organisation_name}}</td>

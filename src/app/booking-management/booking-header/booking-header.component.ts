@@ -186,5 +186,8 @@ export class BookingHeaderComponent implements OnInit, OnDestroy {
         return Boolean(GLOBAL.currentUser instanceof Administrator ||
             GLOBAL.currentUser instanceof BookingOfficer);
     }
+    isCurrentUserIndividualClientOrOrg() {
+        return (GLOBAL.currentUser instanceof IndividualClient || GLOBAL.currentUser instanceof OrganisationalRepresentative);
+    }
 
 }
