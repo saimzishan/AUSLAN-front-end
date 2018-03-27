@@ -13,10 +13,10 @@
                     <md-radio-group
                             name="{{'rdNeedInterpreter_' + isPreffered}} "
                                     [(ngModel)]="needInterpreter">
-                        <md-radio-button [disabled]="isReadOnly"
+                        <md-radio-button [disabled]="isReadOnly" id="{{'yes_' + (isPreffered ? 'prefered' : 'blocked')}}"
                                 [ngClass]="{'btnYes_prefered' : isPreffered ,
                          'btnYes_blocked' : !isPreffered}" [value]=true>YES</md-radio-button>
-                        <md-radio-button [disabled]="isReadOnly" [ngClass]="{'btnNo_prefered' : isPreffered ,
+                        <md-radio-button [disabled]="isReadOnly" id="{{'no_' + (isPreffered ? 'prefered' : 'blocked')}}" [ngClass]="{'btnNo_prefered' : isPreffered ,
                          'btnNo_blocked' : !isPreffered}"  [value]=false>NO</md-radio-button>
                     </md-radio-group>
                 </div>

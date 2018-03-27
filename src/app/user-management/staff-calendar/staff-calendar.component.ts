@@ -74,7 +74,6 @@ export class StaffCalendarComponent implements OnInit {
                 height: 'auto',
                 fixedWeekCount: false,
                 weekends: true, // will hide Saturdays and Sundays
-                timezone: 'local',
                 slotDuration: '01:00:00',
                 header: {
                     left: 'title',
@@ -105,7 +104,7 @@ export class StaffCalendarComponent implements OnInit {
                 },
                 defaultView: $(window).width() < 768 ? 'listMonth' : 'month',
                 eventClick: (calEvent, jsEvent, view) => {
-                    if (view.name !== 'listYear' && view.name !== 'listMonth') {
+                    if (view.name === 'listYear' || view.name === 'listMonth') {
                         this.router.navigate(['/user-management/', calEvent.id, 'staff-availability']);
                     }
                 },
@@ -133,12 +132,14 @@ export class StaffCalendarComponent implements OnInit {
 
                 let event: any = ({
                     title: avail_block.name,
-                    color: avail_block.recurring ? '#00ff00' : '#02b86e',
+                    color: avail_block.booking_id ? '#3bb69c' : '#02b86e',
                     id: avail_block.id,
                     textColor: '#ffffff',
                     booking_id: avail_block.booking_id,
-                    start: avail_block.recurring === false ? eventStart : ' ',
-                    end: avail_block.recurring === false ? eventEnd : ' ',
+                    start: avail_block.recurring === false ? eventStart : ('' + moment.duration(startTime).get('hours') +
+                        ':' + moment.duration(startTime).get('minutes') + ':00'),
+                    end: avail_block.recurring === false ? eventEnd : ('' + moment.duration(endTime).get('hours') +
+                        ':' + moment.duration(endTime).get('minutes') + ':00'),
                     recurring: avail_block.recurring,
                     frequency: avail_block.frequency
                 });

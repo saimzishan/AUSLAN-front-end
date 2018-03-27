@@ -16,7 +16,7 @@ export class BlockoutPagePo extends PageObject {
      * */
     saveBtn;
     createBookingPO = new BookingPage();
-    
+
     browse = () => {
         return this.currentPath().then((currentPath) => {
             expect(currentPath).to.contain('block_out');
@@ -55,6 +55,23 @@ export class BlockoutPagePo extends PageObject {
             expect(val).to.be.eq('07:25 AM');
         });
     }
+    chengeEndTimeAgainstStartTime = () => {
+        let startTime = this.getElementByCss('input[name="dpEventDate_st"]');
+        let today = new Date();
+        today.setDate(today.getDate() + 7);
+        const currentDate = [
+            Heroku.prettyDate(today.getDate()),
+            Heroku.prettyDate(today.getMonth() + 1), // January is 0!,
+            today.getFullYear().toString()
+        ].join('/');
+        startTime.clear();
+        startTime.sendKeys(currentDate + ' 09:00 PM');
+        let endTime = this.getElementByCss('input[name="dpEventDate_endtime"]');
+        this.clickOutSide();
+        return endTime.getAttribute('value').then((val) => {
+            expect(val).to.be.eq('10:00 PM');
+        });
+    }
     changeEndTimeOFBlockout = () => {
         let endTime = this.getElementByCss('input[name="dpEventDate_endtime"]');
         endTime.clear();
@@ -64,6 +81,19 @@ export class BlockoutPagePo extends PageObject {
             expect(val).to.be.eq('09:25 AM');
         });
     }
+    checkEndTimeOFBlockout = (value) => {
+        let endTime = this.getElementByCss('input[name="dpEventDate_endtime"]');
+        return endTime.getAttribute('value').then((val) => {
+            expect(val).to.be.eq(value);
+        });
+    }
+    checkValuOFBlockoutName = (value) => {
+        let endTime = this.getElementByCss('input[name="blockout_name"]');
+        return endTime.getAttribute('value').then((val) => {
+            expect(val).to.be.eq(value);
+        });
+    }
+
     changeEndDateOFBlockout = () => {
         let endDate = this.getElementByCss('input[name="dpEventDate_end"]');
         endDate.clear();

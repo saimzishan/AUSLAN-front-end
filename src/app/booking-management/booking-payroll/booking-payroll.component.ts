@@ -23,7 +23,6 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
   claimPressed = false;
   undoClaimPressed = false;
   isReadonlyForBO = false;
-
   constructor(public spinnerService: SpinnerService, public bookingService: BookingService,
               private route: ActivatedRoute, public notificationServiceBus: NotificationServiceBus) { }
 

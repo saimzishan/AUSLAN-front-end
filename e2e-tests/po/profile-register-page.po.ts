@@ -47,7 +47,11 @@ export class ProfileRegisterPage extends PageObject {
                     'strangeTypeOfUser@auslan.com.au'
         );
         this.getElementByName('mobile').sendKeys('0490394517');
-        this.getElementByName('location_pref').sendKeys('VIC');
+    }
+
+    fillWorkPref = (state: string) => {
+        let loc_pref = this.getElementByName('location_pref');
+        loc_pref.sendKeys(state);
     }
 
     fillAllDataForRegister = (type: string, prefComm: string) => {
@@ -84,7 +88,9 @@ export class ProfileRegisterPage extends PageObject {
         }
         if (type !== 'ADMINISTRATOR' && type !== 'BOOKINGOFFICER' && type !== 'ACCOUNTANT' ) {
 
-            this.getElementByName('comm_pref').sendKeys(prefComm);
+            if (type !== 'ORGANISATIONALREPRESENTATIVE') {
+                this.getElementByName('comm_pref').sendKeys(prefComm);
+            }
             this.getElementByName('address_unit_num').sendKeys('22');
             this.getElementByName('address_street_number').sendKeys('62');
             this.getElementByName('address_street').sendKeys('Dave');
@@ -132,6 +138,20 @@ export class ProfileRegisterPage extends PageObject {
         return elm.get(index - 1).click();
 
     }
+
+    checkAppAddressForm = (value: string) => {
+        const clientOptionLabel = this.getElementByClassName('billing-address');
+        const all_input_in_div = this.getAllByTagNameInElement(clientOptionLabel, 'input');
+        return all_input_in_div.then((inputDiv) => {
+            for (let i = 0; i < inputDiv.length; i++) {
+                const street_input = inputDiv[i];
+                return street_input.getAttribute('value').then((val) => {
+                    expect(val).to.equal(value);
+                });
+            }
+        });
+    }
+
     validateAlphabeticalOrder = () => {
         let sorted = [], unSorted = [];
         let i = 0;

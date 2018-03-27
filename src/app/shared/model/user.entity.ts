@@ -61,6 +61,7 @@ export class User {
     public avatar: any;
     public photo_url = '';
     public state_where_most_bookings_occur: string;
+    public business_name = '';
     public linked_account_number = '';
 
     protected get user_type() {
@@ -106,6 +107,8 @@ export class Organisational extends User {
     public billingAddressIsSame = true;
     public prefferedInterpreters = [];
     public displayName: string;
+    public general_notes = '';
+    public claim_notes = '';
 
     constructor(data) {
         super(data);
@@ -157,6 +160,8 @@ export class OrganisationalRepresentative extends Organisational {
                     'address_attributes': this.address_attributes,
                     'preference_allocations_attributes': this.prefferedInterpreters,
                     'linked_account_number': this.linked_account_number,
+                    'general_notes': this.general_notes,
+                    'claim_notes': this.claim_notes,
                     'billing_account_attributes': {
                         'id': this.organisation_billing_account.id,
                         'primary_contact_first_name': this.organisation_primary_contact.first_name,
@@ -198,6 +203,8 @@ export class OrganisationalRepresentative extends Organisational {
                     'preferred_contact_method': this.organisation_billing_account.preferred_contact_method,
                     'address_attributes': this.address_attributes,
                     'preference_allocations_attributes': this.prefferedInterpreters,
+                    'general_notes': this.general_notes,
+                    'claim_notes': this.claim_notes,
                     'billing_account_attributes': {
                         'id': this.organisation_billing_account.id,
                         'primary_contact_first_name': this.organisation_primary_contact.first_name,
@@ -241,6 +248,8 @@ export class OrganisationalRepresentative extends Organisational {
         this.organisation_name = obj.organisation.name;
         this.group_email = obj.organisation.group_email;
         this.special_instructions = obj.special_instructions;
+        this.general_notes = obj.organisation.general_notes;
+        this.claim_notes = obj.organisation.claim_notes;
         this.branch_office = obj.organisation.branch_office;
         this.reffered_by = Boolean(obj.discovery_of_auslan) ? obj.discovery_of_auslan.startsWith('O:') ?
             'Other' : obj.discovery_of_auslan : '';
@@ -288,6 +297,8 @@ export class IndividualClient extends User {
     public eaf_start_date: Date;
     public eaf_end_date: Date;
     public special_instructions = '';
+    public general_notes = '';
+    public claim_notes = '';
     public preferred_contact_method = 'email_and_sms';
     public individual_client_primary_contact: Contact = new Contact();
     public address_attributes: Address = new Address();
@@ -330,6 +341,7 @@ export class IndividualClient extends User {
             'first_name': this.first_name, 'last_name': this.last_name, 'email': this.email, 'password': this.password,
             'gender': this.gender,
             'type': this.type, 'special_instructions': this.special_instructions,
+            'general_notes': this.general_notes, 'claim_notes': this.claim_notes,
             'avatar': this.avatar,
             'discovery_of_auslan': this.reffered_by === 'OTHER' ?
                 'O:' + this.reffered_other : this.reffered_by,
@@ -377,6 +389,8 @@ export class IndividualClient extends User {
         this.eaf_start_date = obj.eaf_start_date;
         this.eaf_end_date = obj.eaf_end_date;
         this.special_instructions = obj.special_instructions;
+        this.general_notes = obj.general_notes;
+        this.claim_notes = obj.claim_notes;
         this.preferred_contact_method = obj.communication_preference;
         this.prefferedInterpreters = obj.preference_allocations_attributes;
         this.reffered_by = Boolean(obj.discovery_of_auslan) ? obj.discovery_of_auslan.startsWith('O:') ?
@@ -421,6 +435,7 @@ export class Interpreter extends User {
 
 
     public naati_id: string;
+    public staff_id: string;
     public naati_validity_start_date: string;
     public naati_validity_end_date: string;
     public business_hours_phone: string;
