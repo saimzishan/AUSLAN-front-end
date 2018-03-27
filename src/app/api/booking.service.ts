@@ -236,4 +236,15 @@ export class BookingService extends ApiService {
             .map(this.extractData)
             .catch((err) => { return this.handleError(err); });
     }
+
+    exportBookings(fromTo): Observable<Object> {
+
+        let headers = new Headers({'Accept': 'application/json',
+            'Content-Type': 'application/json'});
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http.post(GLOBAL.USER_API_ENDPOINT + '/exports' , JSON.stringify(fromTo), options)
+            .map(this.extractData)
+            .catch((err) => { return this.handleError(err); });
+    }
 }

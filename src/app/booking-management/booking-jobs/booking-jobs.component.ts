@@ -947,6 +947,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         }
         for (let k in this.interpreterFilter) {
             if (this.interpreterFilter.hasOwnProperty(k)) {
+                this.interpreterFilter[field] = this.formatterValueFor(field, value);
                 this.filterInterpreterParams.set('filter[' + k + ']', this.interpreterFilter[k]);
             }
         }
