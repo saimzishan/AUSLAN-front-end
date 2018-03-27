@@ -82,9 +82,15 @@ export class UserListComponent implements OnInit {
     }
 
     filterUsers(field: string, value: string) {
+        const formattedValue = this.formattedValueFor(field, value);
+        if (formattedValue && formattedValue.length) {
+            this.userFilter[field] = formattedValue;
+        } else {
+            delete this.userFilter[field];
+            this.filterUserParams.delete('filter[' + field + ']');
+        }
         for (let k in this.userFilter) {
             if (this.userFilter.hasOwnProperty(k)) {
-                this.userFilter[field] = this.formattedValueFor(field, value);
                 if (k === 'type') {
                     this.filterUserParams.set('filter[' + k + ']', this.userFilter[k].replace(/\s/g, ''));
                 } else {
