@@ -805,7 +805,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         this.dialogRef = this.dialog.open(PopupComponent, config);
         this.dialogRef.componentInstance.title = title;
         this.dialogRef.componentInstance.cancelTitle = (options && options.cancelTitle) || 'BACK';
-        this.dialogRef.componentInstance.okTitle = (options && options.okTitle) || this.forEdit ? 'UPDATE' : 'CREATE';
+        this.dialogRef.componentInstance.okTitle = (options && options.okTitle) ? options.okTitle :
+        this.forEdit ? 'UPDATE' : 'CREATE';
         this.dialogRef.componentInstance.closeVal = (options && options.closeVal) || false;
         this.dialogRef.componentInstance.popupMessage = message;
     }
@@ -866,7 +867,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         if (this.isUserAdminORBookOfficer && !!this.bookingModel.link_id) {
             const message = 'Would you like to save these changes for all bookings or only for this one?';
             const title = 'Change all bookings?';
-            this.createModal(title, message, {okTitle: 'Update only this booking', cancelTitle: 'Update all bookings', closeVal: 'cancel'});
+            this.createModal(title, message, {okTitle: 'Update this booking', cancelTitle: 'Update all bookings', closeVal: 'cancel'});
             this.dialogSub = this.dialogRef.afterClosed().subscribe(updateOnlyThisBooking => {
                 if (updateOnlyThisBooking !== 'cancel') {
                     this.bookingModel.update_all_linked_bookings = !updateOnlyThisBooking;
