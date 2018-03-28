@@ -862,7 +862,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         if (this.isUserAdminORBookOfficer && !!this.bookingModel.link_id) {
             const message = 'Would you like to save these changes for all bookings or only for this one?';
             const title = 'Change all bookings?';
-            this.createModal(title, message, {okTitle: 'Update only this booking', cancelTitle: 'Update all bookings', closeVal: 'cancel'});
+            this.createModal(title, message, {okTitle: 'Update this booking', cancelTitle: 'Update all bookings', closeVal: 'cancel'});
             this.dialogSub = this.dialogRef.afterClosed().subscribe(updateOnlyThisBooking => {
                 if (updateOnlyThisBooking !== 'cancel') {
                     this.bookingModel.update_all_linked_bookings = !updateOnlyThisBooking;
