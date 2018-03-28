@@ -141,9 +141,10 @@
             <img src="{{message.sender.photo_url}}" alt="">  </figure>
           <section class="messages__inner">
             <div class="messages__title">
-              <strong class="messages__person">{{message.sender.first_name}} {{ message.sender.last_name}}</strong>  
+              <strong class="messages__person" *ngIf=' message.sender.id === userId'>{{message.sender.first_name}} {{ message.sender.last_name.charAt(0)}}</strong>
+              <strong class="messages__person" *ngIf=' message.sender.id !== userId'>Me</strong>  
               <span class="messages__time">  
-                <i class="icon-time"></i> {{message.created_at | date: 'medium' }}</span>
+                <i class="icon-time"></i> {{message.created_at | date: ' d MMM  y | h:mma' }}</span>
                </div>
             <p class="messages__text">{{message.message_body}} 
               <a href="#">#{{message_tage}}</a> booking!</p>

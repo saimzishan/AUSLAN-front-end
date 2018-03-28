@@ -25,7 +25,8 @@ export class InboxComponent implements OnInit, OnDestroy {
   meesageThread;
   userId;
   message_body;
-  message_tage = 4321;
+  message_tage = '-000000';
+  checked = false;
   isTagShow = true;
   messages;
   // http://localhost:4200/#/users/6/messages
@@ -144,6 +145,10 @@ export class InboxComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
         localStorage.setItem('bookingId', '-1');
+  }
+
+  changeState(id) {
+    // alert(id);
   }
 
 }
