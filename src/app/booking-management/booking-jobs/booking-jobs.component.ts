@@ -51,7 +51,10 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     disableReject = false;
     private currentStatus = 'Invited';
     private filterInterpreterParams = new URLSearchParams();
-    private currentSort = {'field': 'distance', 'order': 'asc'};
+    private currentSort = {'field': 'name', 'order': 'asc'};
+    private recommendedParam = new URLSearchParams();
+    filterSearchParam = new URLSearchParams();
+    isRecommended = false;
     interpreterFilter: InterpreterFilter = {};
     stateStr = '';
     hideInvite = false;
@@ -82,9 +85,11 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
 
 
     ngOnInit() {
+        this.isRecommended = true;
         this.headerSubscription = this.bookingHeaderService.notifyObservable$.subscribe((res) => {
             this.callRelatedFunctions(res);
         });
+        this.removeFilters();
     }
 
     callRelatedFunctions(res) {
@@ -421,8 +426,9 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     }
 
     fetchNearbyinterpreters(booking_id) {
+        this.filterSearchParam = this.isRecommended ? this.getRecommendedParams() : GLOBAL.getInterpreterSearchParameters();
         this.spinnerService.requestInProcess(true);
-        this.bookingService.nearbyBookings(booking_id, this.currentPage, GLOBAL.getInterpreterSearchParameters())
+        this.bookingService.nearbyBookings(booking_id, this.currentPage, this.filterSearchParam)
             .subscribe((res: any) => {
                     if (res.status === 200) {
                         this.totalItems = Boolean(res.data.paginates) ? res.data.paginates.total_records : res.data.users.length;
@@ -806,7 +812,6 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
 
             let cells = '';
             let offset = '';
-            let color = '';
             let st = this.startTime.getHours() - 2;
             if (sd.getHours() >= st) {
                 offset = 'offset' + (sd.getHours() - st);
@@ -818,9 +823,13 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                 cells = 'cells' + (edt.getHours() - sd.getHours());
 
             }
-            color = avail_block.booking_id === null ? 'badge_orange' :
-            avail_block.booking_id === this.selectedBookingModel.id ? 'badge_green' : 'badge_pink';
-            toRet = cells + ' ' + offset + ' ' + color;
+            // This needs to be double checked
+            let color = avail_block.booking_id === null ? 'badge_orange' :
+                avail_block.booking_id === this.selectedBookingModel.id ? 'badge_green' : 'badge_pink';
+            let cellVal = this.endTime.getMinutes() > 29 ? 'half' : '';
+            let offsetVal = this.startTime.getMinutes() > 29 ? 'half' : '';
+            toRet = cells + cellVal + ' ' + offset + offsetVal + ' ' + color;
+
         }
         return toRet;
     }
@@ -831,8 +840,11 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     }
 
     getTimelineMoverStyle() {
-        let diff = Math.abs(this.endTime.getTime() - this.startTime.getTime()) / 36e5;
-        return 'cells' + diff + ' offset2';
+        let cellVal = '' + (this.endTime.getHours() - this.startTime.getHours());
+        cellVal += this.endTime.getMinutes() > 29 ? 'half' : '';
+        let offsetVal = this.startTime.getMinutes() > 29 ? 'half' : '';
+        let toRet = 'cells' + cellVal + ' offset2' + offsetVal;
+        return toRet;
     }
 
     getTimelineStartTime() {
@@ -842,7 +854,9 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         dt.setHours(dt.getHours() - 2);
         for (let i = 0; i < 13; i++) {
             let amPm = dt.getHours() >= 12 ? 'pm' : 'am';
-            array.push(dt.getHours() % 12 + ' ' + amPm);
+            let val = dt.getHours() % 12;
+            val = val === 0 ? 12 : val;
+            array.push(val + ' ' + amPm);
             dt.setHours(dt.getHours() + 1);
 
         }
@@ -872,7 +886,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     }
 
     getSortOrder(field: string) {
-        return this.isCurrentSort(field) ? this.currentSort.order : '';
+        return this.isCurrentSort(field) && !this.isRecommended ? this.currentSort.order : '';
     }
 
     sortInterpreters(field: string) {
@@ -893,8 +907,26 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         }
         return value;
     }
+    toggleRecommended() {
+        if (this.isRecommended) {
+            this.isRecommended = false;
+        } else {
+                this.isRecommended = true;
+                this.removeFilters();
+        }
+        this.route.params.subscribe(params => {
+            this.currentPage = 1;
+            let param_id = params['id'] || '';
+            this.fetchNearbyinterpreters(param_id);
+        });
+    }
 
+    getRecommendedParams() {
+        this.recommendedParam.set('recommended', 'true');
+        return this.recommendedParam;
+    }
     search() {
+        this.isRecommended = false;
         GLOBAL._filterInterpreterVal.set('search', this.searchParams);
         this.route.params.subscribe(params => {
             this.currentPage = 1;
@@ -909,7 +941,14 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     }
 
     filterInterpreters(field: string, value: string) {
-        this.interpreterFilter[field] = this.formatterValueFor(field, value);
+        this.isRecommended = false;
+        const formattedValue = this.formatterValueFor(field, value);
+        if (formattedValue && formattedValue.length) {
+            this.interpreterFilter[field] = formattedValue;
+        } else {
+            delete this.interpreterFilter[field];
+            this.filterInterpreterParams.delete('filter[' + field + ']');
+        }
         for (let k in this.interpreterFilter) {
             if (this.interpreterFilter.hasOwnProperty(k)) {
                 this.filterInterpreterParams.set('filter[' + k + ']', this.interpreterFilter[k]);
@@ -920,6 +959,18 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
             this.currentPage = 1;
             let param_id = params['id'] || '';
             this.fetchNearbyinterpreters(param_id);
+        });
+    }
+
+    private removeFilters() {
+        for (let k in this.interpreterFilter) {
+            if (this.interpreterFilter.hasOwnProperty(k)) {
+                this.interpreterFilter[k] = '';
+            }
+        }
+        this.filterInterpreterParams = GLOBAL._filterInterpreterVal;
+        this.filterInterpreterParams.paramsMap.forEach((value: string[], key: string) => {
+            GLOBAL._filterInterpreterVal.delete(key);
         });
     }
 
