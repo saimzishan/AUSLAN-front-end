@@ -96,6 +96,7 @@ defineSupportCode(({Given, Then, When}) => {
     Then(/^I can not see a list of interpreters$/, bookingJobPO.listofInterpreterDoesNotExists);
     Then(/^I can verify the image of myself in the list of interpreter start with '(.*)'$/, bookingJobPO.verifyPictureOfYourself);
     Then(/^I can see the Interpreter status is '(.*)'$/, bookingJobPO.checkInterpreterStatus);
+    When(/^I click on Messages$/, bookingManagementPO.clickOnMessages);
 
     // Filling in specific fields in the booking form
     Then(/^I set the (\w+) time as (\d+) days (?:(\d+) hours?)?\s?from now$/, createBookingPO.setTime);

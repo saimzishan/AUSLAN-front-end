@@ -104,24 +104,27 @@
         </div>
       </section>
       
-      <section class="messages__conversation" *ngFor='let message of meesageThreads let i = index' >
-        <div>
-          <div class="checkbox">
-            <input type="checkbox" name="" value="1" id="job-2a">
-            <label for="job-2a"></label>
-          </div>
-        </div>
-        <div>
-          <md-checkbox></md-checkbox>
-        </div>
-        <a (click)='showSingleMessageThread(i)'>  
-          <div>
-              <span>{{message.last_messaging_time}}</span> |
-              <span>{{message.user_name}}</span>
-              <p class="messages__conversation-text"></p>
-          </div>
+      <ng-container  *ngFor='let message of meesageThreads let i = index' >
+        <section class="messages__conversation" [ngClass]="{'messages__conversation_active': message.user_id === userId}">
+        
+            <div>
+              <div class="checkbox">
+                <input type="checkbox" name="" value="1" id="job-2a">
+                <label for="job-2a"></label>
+              </div>
+            </div>
+            <div>
+              <md-checkbox></md-checkbox>
+            </div>
+            <a (click)='showSingleMessageThread(i)'>
+              <div>
+                  <span>{{message.last_messaging_time}}</span> |
+                  <span>{{message.user_name}}</span>
+                  <p class="messages__conversation-text"></p>
+              </div>
           </a>
-      </section>
+        </section>
+      </ng-container>
      
     </section>
   </section>
