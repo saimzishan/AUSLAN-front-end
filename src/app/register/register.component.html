@@ -235,6 +235,7 @@
                 <app-interpreter-box
                         [isReadOnly]="isDuplicate"
                         [isPreffered]="true"
+                        [isUserPage]="true"
                         [selectedInterpreters]="model.prefferedInterpreters"
                         [state_where_most_bookings_occur]="model.state_where_most_bookings_occur"
                         *ngIf="selectedRole === 'ORGANISATION' || selectedRole === 'INDIVIDUALCLIENT'"
@@ -243,11 +244,32 @@
                 <app-interpreter-box
                         [isReadOnly]="isDuplicate"
                         [isPreffered]="false"
+                        [isUserPage]="true"
                         [selectedInterpreters]="model.prefferedInterpreters"
                         [state_where_most_bookings_occur]="model.state_where_most_bookings_occur"
                         *ngIf="selectedRole === 'ORGANISATION' || selectedRole === 'INDIVIDUALCLIENT'"
                 ></app-interpreter-box>
                 <br>
+                <ng-container *ngIf="checkUserAdminORBookOfficer() && selectedRole === 'ORGANISATION' || selectedRole === 'INDIVIDUALCLIENT'">
+                    <div class="medium-12 columns">
+                        <div class="form-field">
+                        <label>GENERAL NOTES</label>
+                        <textarea type="text" class="inline-icon inline-icon-txt"
+                                [(ngModel)]="model.general_notes" cols="30" rows="10" name="general_notes">
+                        </textarea>
+                        </div>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="checkUserAdminORBookOfficer() && selectedRole === 'ORGANISATION' || selectedRole === 'INDIVIDUALCLIENT'">
+                    <div class="medium-12 columns">
+                        <div class="form-field">
+                        <label>CLAIM NOTES</label>
+                        <textarea type="text" class="inline-icon inline-icon-txt"
+                                [(ngModel)]="model.claim_notes" cols="30" rows="10" name="claim_notes">
+                        </textarea>
+                        </div>
+                    </div>
+                </ng-container>
                 <ng-container *ngIf="!isDuplicate">
                     <app-termandcondition (termAndConditionStatusChange)="tocChanged($event)"
                                           [termsAndConditionAccepted]="termsAndConditionAccepted"></app-termandcondition>

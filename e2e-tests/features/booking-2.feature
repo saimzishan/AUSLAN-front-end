@@ -203,3 +203,73 @@ Feature: Booking Management
     Then I should be on the edit booking page
     Then I can verify the input 'raw_booking_requested_by' will have the value 'ted'
     Then I can verify the input 'raw_booking_requested_by_ln' will have the value 'Individual Client'
+
+  @runThis
+  Scenario: Administrator and Booking Officer can create a booking with prefill general and claim notes of Individual Client and Organisational Representative 
+    And I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    And I am on my admin home screen
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then I click on edit for an active existing Organisational Representative
+    And I will be taken to the 'ORGANISATIONALREPRESENTATIVE Signup' page
+    And I fill the field 'general_notes' with value 'general notes'
+    And I fill the field 'claim_notes' with value 'claim notes'
+    And I click on update
+    Then I see success notification
+    And I hover on the 'Profile'
+    And I click on logout
+    And I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on my admin home screen
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then I click on edit for an active existing Individual Client
+    And I will be taken to the 'INDIVIDUALCLIENT Signup' page
+    And I fill the field 'general_notes' with value 'general notes'
+    And I fill the field 'claim_notes' with value 'claim notes'
+    And I click on update
+    Then I see success notification
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    When I fill New Booking form fields correctly with non-standard time from 04:00 AM to 05:00 AM with 1 'auslanInterpreters_count'
+    And I select the bookable for client
+    Then I can verify the input 'general_notes' will have the value 'general notes'
+    Then I can verify the input 'claim_notes' will have the value 'claim notes'
+    And I fill the field 'general_notes' with value 'general notes updated'
+    And I fill the field 'claim_notes' with value 'claim notes updated'
+    Then I click on checkbox name 'tnc'
+    And I click the create booking button
+    And If I am shown a popup, I approve it
+    Then I get a valid create booking notification
+    And I will be shown with bookings
+    When I click on an individual booking
+    Then I am on the individual booking page
+    When I click on link 'Booking details'
+    Then I should be on the edit booking page
+    Then I can verify the input 'general_notes' will have the value 'general notes updated'
+    When I click on link 'Payroll & Billing'
+    Then I should be on the payroll and billing page
+    Then I can verify the input 'claim_notes' will have the value 'claim notes updated'
+    And I hover on the 'Profile'
+    And I click on logout
+    And I exist as an Individual Client
+    And I sign in with valid Individual Client credentials
+    And I will be shown with bookings
+    When I click on an individual booking
+    Then I am on the individual booking page
+    When I click on link 'Booking details'
+    Then I should be on the edit booking page
+    And I can see the element with name 'general_notes' is 'not visible'
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    And I can see the element with name 'general_notes' is 'not visible'
+    And I can see the element with name 'claim_notes' is 'not visible'
+    And I hover on the 'Profile'
+    And I click on logout
+    And I exist as an Organisational Representative
+    And I sign in with valid Organisational Representative credentials
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    And I can see the element with name 'general_notes' is 'not visible'
+    And I can see the element with name 'claim_notes' is 'not visible'
