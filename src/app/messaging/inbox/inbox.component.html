@@ -104,12 +104,12 @@
         </div>
       </section>
       
-      <ng-container  *ngFor='let message of meesageThreads let i = index' >
-        <section class="messages__conversation" [ngClass]="{'messages__conversation_active': message.user_id === userId}">
+      <ng-container  *ngFor='let mesg of meesageThreads let i = index' >
+        <section class="messages__conversation" [ngClass]="{'messages__conversation_active': mesg.user_id === userId}">
         
             <div>
               <div class="checkbox">
-                <input type="checkbox" name="" value="1" id="job-2a">
+                <input type="checkbox" name=""  value="1" id="job-2a">
                 <label for="job-2a"></label>
               </div>
             </div>
@@ -117,10 +117,15 @@
               <md-checkbox></md-checkbox>
             </div>
             <a (click)='showSingleMessageThread(i)'>
-              <div>
-                  <span>{{message.last_messaging_time}}</span> |
-                  <span>{{message.user_name}}</span>
-                  <p class="messages__conversation-text"></p>
+              <div *ngIf='mesg.messages.length > 0'>
+                  <span *ngIf='checkDayIsToday(mesg.messages[0].created_at)'>{{mesg.messages[0].created_at | date: 'h:mma' }}</span> |
+                  <span>{{mesg.user_name}}</span>
+                  <p class="messages__conversation-text">{{mesg.messages[0].message_body.substring(0,75)}}</p>
+              </div>
+              <div *ngIf='mesg.messages.length <= 0'>
+                <span>{{mesg.last_messaging_time | date: ' d MMM y' }}</span> |
+                <span>{{mesg.user_name}}</span>
+                <p class="messages__conversation-text"></p>
               </div>
           </a>
         </section>
@@ -141,8 +146,7 @@
             <img src="{{message.sender.photo_url}}" alt="">  </figure>
           <section class="messages__inner">
             <div class="messages__title">
-              <strong class="messages__person" *ngIf=' message.sender.id === userId'>{{message.sender.first_name}} {{ message.sender.last_name.charAt(0)}}</strong>
-              <strong class="messages__person" *ngIf=' message.sender.id !== userId'>Me</strong>  
+              <strong class="messages__person">{{message.sender.first_name}} {{ message.sender.last_name.charAt(0)}}</strong>
               <span class="messages__time">  
                 <i class="icon-time"></i> {{message.created_at | date: ' d MMM  y | h:mma' }}</span>
                </div>

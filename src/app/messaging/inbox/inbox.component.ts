@@ -87,7 +87,6 @@ export class InboxComponent implements OnInit, OnDestroy {
             .subscribe((res: any) => {
                 if (res.status === 200) {
                   this.meesageThreads = res.data.message_threads;
-                  console.log(this.meesageThreads);
                   this.meesageThread = this.meesageThreads[0].messages;
                   this.userId = this.meesageThreads[0].user_id;
                   }
@@ -147,8 +146,11 @@ export class InboxComponent implements OnInit, OnDestroy {
         localStorage.setItem('bookingId', '-1');
   }
 
-  changeState(id) {
-    // alert(id);
+  checkDayIsToday(lastMesgDate) {
+    let curentDate = new Date();
+    let curentDay = curentDate.getDate();
+    let lastMesgDay = lastMesgDate.substring(8, 10);
+    return (lastMesgDay == curentDay);
   }
 
 }
