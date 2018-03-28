@@ -17,7 +17,10 @@
                     <select name="{{'payrollAs_' + i}}" [(ngModel)]="payroll.payroll_as" class="menu custom gray" disabled>
                         <option [value]="payroll.payroll_as">{{payroll.payroll_as.toUpperCase()}}</option>
                     </select>
- 
+                    <section class="recommended_payroll">
+                        RECOMMENDED
+                        <span class="note note_block note_green recommended_payroll_as" id="recommended_payroll_as">{{payroll.recommended.payroll_as.toUpperCase()}}</span>
+                    </section>   
                     </section>
                     <section>
                         <div class="payroll-card__option">
@@ -68,11 +71,23 @@
         </section>
     </ng-container>
     </fieldset>
+    <fieldset>
+        <ng-container *ngIf="isCurrentUserAdmin() || isCurrentUserBO()">
+            <div class="medium-12">
+                <div class="form-field">
+                    <h2>CLAIM NOTES</h2>
+                    <textarea type="text" class="inline-icon inline-icon-txt"
+                           [(ngModel)]="bookingModel.claim_notes" cols="30" rows="10" name="claim_notes">
+                    </textarea>
+                </div>
+            </div>
+        </ng-container>
+    </fieldset>
         <div *ngIf="payments.payroll_attributes.length > 0" class="actions">
-                <button *ngIf="isCurrentUserAdmin() && isStateCompleteOrCancelCharge()" name="btnClaim" (click)="claimPressed = true">Claim</button>
-                <button *ngIf="isCurrentUserAdmin() && isActiveState('Cancelled_claimed')" name="btnUndoClaim" (click)="undoClaimPressed = true">Undo claim</button>
-                <button *ngIf="isCurrentUserAdmin() && isActiveState('Claimed')" name="btnUndoClaim" (click)="undoClaimPressed = true">Undo claim</button>
-                <button *ngIf="!isReadonlyForBO" name="btnSave" (click)="updatePayment(payroll_form)">Save</button>
+            <button *ngIf="isCurrentUserAdmin() && isStateCompleteOrCancelCharge()" name="btnClaim" (click)="claimPressed = true">Claim</button>
+            <button *ngIf="isCurrentUserAdmin() && isActiveState('Cancelled_claimed')" name="btnUndoClaim" (click)="undoClaimPressed = true">Undo claim</button>
+            <button *ngIf="isCurrentUserAdmin() && isActiveState('Claimed')" name="btnUndoClaim" (click)="undoClaimPressed = true">Undo claim</button>
+            <button *ngIf="!isReadonlyForBO" name="btnSave" (click)="updatePayment(payroll_form)">Save</button>
         </div>
     </form>  
     </main>

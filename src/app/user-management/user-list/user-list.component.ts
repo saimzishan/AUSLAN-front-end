@@ -1,4 +1,4 @@
-import {Component, Input, Output, EventEmitter} from '@angular/core';
+import {Component, Input, Output, EventEmitter, OnInit} from '@angular/core';
 import {
     Administrator, BookingOfficer, IndividualClient, Interpreter, OrganisationalRepresentative,
     User
@@ -9,14 +9,15 @@ import {ROLE} from '../../shared/model/role.enum';
 import {GLOBAL} from '../../shared/global';
 import {UserFilter} from '../../shared/model/user-filter.interface';
 import {URLSearchParams} from '@angular/http';
-
+import {UserService} from '../../api/user.service';
+import {NotificationServiceBus} from '../../notification/notification.service';
 
 @Component({
     selector: 'app-user-list',
     templateUrl: './user-list.component.html',
     styleUrls: ['./user-list.component.css']
 })
-export class UserListComponent {
+export class UserListComponent implements OnInit {
     @Input('userList') userList: Array<any> = [];
     @Output() onResetPass = new EventEmitter<User>();
     @Output() onPageEmit = new EventEmitter<number>();
@@ -27,8 +28,18 @@ export class UserListComponent {
     private filterUserParams = new URLSearchParams();
     private currentSort = {'field': 'first_name', 'order': 'asc'};
 
-    constructor(private linkAuth: LinkAuth) {
+    constructor(
+        private linkAuth: LinkAuth,
+        private userDataService: UserService,
+        private notificationServiceBus: NotificationServiceBus
+    ) {}
 
+    ngOnInit() {
+        this.filterUserParams = GLOBAL._filterUserVal;
+        this.filterUserParams.paramsMap.forEach((value: string[], key: string) => {
+            GLOBAL._filterUserVal.delete(key);
+        });
+        this.filterUsers('', '');
     }
 
     getQueryableRole(user) {
@@ -71,7 +82,13 @@ export class UserListComponent {
     }
 
     filterUsers(field: string, value: string) {
-        this.userFilter[field] = this.formattedValueFor(field, value);
+        const formattedValue = this.formattedValueFor(field, value);
+        if (formattedValue && formattedValue.length) {
+            this.userFilter[field] = formattedValue;
+        } else {
+            delete this.userFilter[field];
+            this.filterUserParams.delete('filter[' + field + ']');
+        }
         for (let k in this.userFilter) {
             if (this.userFilter.hasOwnProperty(k)) {
                 if (k === 'type') {
@@ -147,4 +164,27 @@ export class UserListComponent {
         this.onPageEmit.emit(this.p);
     }
 
+    activateUser(id: number, index: number) {
+        return this.userDataService.activateUser(id)
+            .subscribe((res: any) => {
+                if (res.status === 200) {
+                    return this.userList[index].disabled = false;
+                }
+            }, err => {
+                console.log(err);
+                this.notificationServiceBus.launchNotification(true, 'The operation raised an error. Please refresh your browser and try again.');
+            });
+    }
+
+    deactivateUser(id: number, index: number) {
+        return this.userDataService.deactivateUser(id)
+            .subscribe((res: any) => {
+                if (res.status === 200) {
+                    return this.userList[index].disabled = true;
+                }
+            }, err => {
+                console.log(err);
+                this.notificationServiceBus.launchNotification(true, 'The operation raised an error. Please refresh your browser and try again.');
+            });
+    }
 }

@@ -145,7 +145,7 @@ export class BookingManagementPage extends PageObject {
             const totalNumofType = allBooking.length;
             expect(posth).not.to.be.greaterThan(totalNumofType);
         }).then(() => {
-            return allTypeBooking.get(posth - 1).click();
+            return this.getParent(allTypeBooking.get(posth - 1)).click();
         });
     }
 

@@ -11,6 +11,7 @@
 				<i class="icon-messages"></i>
 				 MESSAGES </span>
 		 </a>
+		<a id="lnkReport" *ngIf="canShowLink('reports')" [ngClass]="{'active':isActiveLink(linkName.reports)}" (click)="setActiveLink(linkName.reports)" [routerLink]="['/reports']"><span><i class="icon-reports"></i> REPORTS </span></a>
 	</nav>
 
 	<a *ngIf="userIsActive && canShowLink('create-booking')" id="lnkNewBooking" [ngClass]="{'active':isActiveLink(linkName.booking)}" (click)="setActiveLink(linkName.booking);refreshBooking()" class="button" [routerLink]="['/booking-management','create-booking']">+ New Booking</a>

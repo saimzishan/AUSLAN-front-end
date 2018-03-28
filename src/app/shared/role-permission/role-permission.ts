@@ -14,6 +14,7 @@ export class RolePermission {
     "default-route": "booking-management",
     "booking-officer":{
     "not-allowed-routes": [
+        "reports"
     ],
         "routes-with-data-permissions": {
             "user-management": {
@@ -23,7 +24,7 @@ export class RolePermission {
     },
      "accountant":{
       "not-allowed-routes": [
-    "block_out"
+    "block_out", "reports"
     ],
         "routes-with-data-permissions": {
             "user-management": {
@@ -37,7 +38,7 @@ export class RolePermission {
     "interpreter": {
         "not-allowed-routes": [
             "user-management",
-            "booking-job", "create-booking"
+            "booking-job", "create-booking", "reports"
         ],
         "routes-with-data-permissions": {
             "booking-management": {
@@ -51,7 +52,7 @@ export class RolePermission {
     "organisational-representative": {
         "not-allowed-routes": [
             "block_out",
-            "booking-job"
+            "booking-job", "reports"
         ],
         "routes-with-data-permissions": {
             "booking-management": {
@@ -70,7 +71,7 @@ export class RolePermission {
     "individual-client": {
         "not-allowed-routes": [
             "user-management",
-            "booking-job", "block_out"
+            "booking-job", "block_out", "reports"
         ],
         "routes-with-data-permissions": {
             "booking-management": {

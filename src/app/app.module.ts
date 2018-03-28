@@ -86,6 +86,7 @@ import { InboxComponent } from './messaging/inbox/inbox.component';
 import { MessagingService } from './api/messaging.service';
 import { MdCheckboxModule } from '@angular/material';
 
+import { ReportsComponent } from './reports/reports.component';
 
 @NgModule({
     declarations: [
@@ -116,6 +117,7 @@ import { MdCheckboxModule } from '@angular/material';
         UserPasswordComponent, PreComponent, BlockoutComponent, TermandconditionComponent,
         InterpreterBoxComponent, InterpreterPopupComponent, RemoveSpacePipe, LinkidPopupComponent, MobileHeaderComponent,
         BookingInfoComponent, BookingPayrollComponent, PayrollTimeComponent, StaffCalendarComponent, ShortTimePipe, UserPayrollBillingComponent, InboxComponent
+        , BookingPayrollComponent, PayrollTimeComponent, StaffCalendarComponent, ShortTimePipe, UserPayrollBillingComponent, ReportsComponent
     ],
     entryComponents: [PopupComponent, InterpreterPopupComponent, LinkidPopupComponent],
     imports: [CustomFormsModule, routing, FileUploadModule, MdCheckboxModule,

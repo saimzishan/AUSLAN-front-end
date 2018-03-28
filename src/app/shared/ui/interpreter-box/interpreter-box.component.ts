@@ -19,6 +19,7 @@ export class InterpreterBoxComponent implements OnInit, AfterContentInit, OnDest
     private dialogSub: any;
     dialogRef: MdDialogRef<any>;
     title = '';
+    @Input() isUserPage = false;
     @Input() isHidden = false;
     @Input() isEditable = true;
     @Input() state_where_most_bookings_occur = 'VIC';
@@ -44,7 +45,12 @@ export class InterpreterBoxComponent implements OnInit, AfterContentInit, OnDest
     }
 
     ngAfterContentInit() {
-        this.needInterpreter = this.isHidden ? true : false ;
+        this.needInterpreter = this.isHidden;
+        if (this.isUserPage && this.isPreffered) {
+            this.needInterpreter = (this.selectedInterpreters.filter(inter => inter.preference === 'preferred').length > 0);
+        } else if (this.isUserPage && !this.isPreffered) {
+            this.needInterpreter = (this.selectedInterpreters.filter(inter => inter.preference === 'blocked').length > 0);
+        }
     }
 
     getIndex(interpreter) {
