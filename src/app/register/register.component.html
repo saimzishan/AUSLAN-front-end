@@ -179,8 +179,8 @@
                                       [disabled]="isEdit" [(ngModel)]="model.state_where_most_bookings_occur" name="location_pref"
                                       #location_pref="ngModel" required>
                       
-                                <option *ngFor="let loc_name of  ['ACT','NSW','QLD', 'TAS', 'VIC','WA', 'NT']"
-                                        [value]="loc_name">{{loc_name.toUpperCase()}}</option>
+                                <option *ngFor="let loc_name of stateBookingOccur"
+                                        [value]="loc_name">{{loc_name}}</option>
                       
                               </select>
                               <span *ngIf="location_pref.touched && !location_pref.errors?.required && !location_pref.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
