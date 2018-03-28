@@ -179,9 +179,9 @@
                             </button>
                         </section>
                         <section class="filters">
-
+                            <a href="javascript:void(0);" class="button" id="lnk-recommended-interpreters"
+                               [ngClass]="isRecommended ? 'active' : ''" (click)="toggleRecommended()">Recommended</a>
                             <div class="separator"></div>
-
                             <button *ngIf="!hideInvite" class="button active" name='inviteBtn' (click)="inviteInterpreters()">
                                 <i class="icon-shape"></i> Invite
                             </button>

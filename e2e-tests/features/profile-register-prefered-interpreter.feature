@@ -377,3 +377,30 @@ Feature: Create Profile with prefered or blocked interpreters
     Then I will be taken to my individual profile page
     Then I can count the element with css 'section.interpreter_selected_prefered' to be '0'
 # --------------------------------------- AUSLAN1-379 END ------------------------------------------------
+
+  @runThis
+  Scenario: Individual Client can edit prefered-interpreters once logs in, Interpreter exists
+    And I go to the website
+    And I sign in with valid Individual Client credentials
+    And I am on the bookings page
+    When I click on my name in the top corner
+    When I click on the option  profile
+    Then I will be taken to my individual profile page
+    Then I can see the element with name 'interpreter_block_prefered' is 'visible'
+    Then I can see the element with css '.btnYes_prefered' is 'visible'
+    When I click on element with css '.btnYes_prefered'
+    And  I click on BUTTON name 'btnManageInterpreter_prefered'
+    Then I can see the element with css 'div.md-dialog' is 'visible'
+    When I click on '1' interpreter
+    Then I can see the element with css 'section[name="interpreters"].selected' is 'visible'
+    Then I click on BUTTON name 'selectBtn'
+    Then I wait for 2000 milli-seconds
+    Then I can see the element with css 'div.md-dialog' is 'hidden'
+    Then I can count the element with css 'section.interpreter_selected_prefered' to be '1'
+    And I click on BUTTON 'SAVE'
+    Then I get valid message: 'User details updated Successfully'
+    When I click on my name in the top corner
+    When I click on the option  profile
+    Then I will be taken to my individual profile page
+    Then I verify radiobutton id 'yes_prefered' and is checked
+    Then I verify radiobutton id 'no_blocked' and is checked

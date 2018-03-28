@@ -98,7 +98,7 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
 
     savePayment() {
         this.spinnerService.requestInProcess(true);
-        this.bookingService.updateBookingPayments(this.bookingModel.id, this.payments).subscribe((res: any) => {
+        this.bookingService.updateBookingPayments(this.bookingModel.id, this.payments, this.bookingModel.claim_notes).subscribe((res: any) => {
             if (res.status === 204) {
                 this.notificationServiceBus.launchNotification(false, 'Hurray! Payroll & Billing details have been updated.');
             }
@@ -201,6 +201,10 @@ export class BookingPayrollComponent implements OnInit, OnDestroy {
 
     isCurrentUserAdmin() {
         return GLOBAL.currentUser instanceof Administrator;
+    }
+
+    isCurrentUserBO() {
+        return GLOBAL.currentUser instanceof BookingOfficer;
     }
 
     setNotificationState(state) {

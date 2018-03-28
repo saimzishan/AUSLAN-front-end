@@ -18,5 +18,6 @@ defineSupportCode(({Given, Then, When}) => {
 
     When(/^I search interpreters with '(.*)'$/, intManagementPO.searchInterpretersWithText);
     Then(/I can see the time in full calendar is '(.*)'$/, intManagementPO.checkStaffAvailabilityTime);
+    When(/I click on the 'Recommended' link$/, intManagementPO.clickOnAllocatedLink);
 
 });
