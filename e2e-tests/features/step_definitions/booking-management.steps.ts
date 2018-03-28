@@ -15,7 +15,9 @@ defineSupportCode(({Given, Then, When}) => {
     let bookingEditPO = new BookingEditPage();
     let bookingPayrollPO = new BookingPayrollPage();
 
-    Given(/^The booking has status '(.*)'$/, Heroku.updateBookingWithStatus);
+    // last is the default
+    Given(/^The booking has status '(.*)'$/, Heroku.updateLastBookingWithStatus);
+    Given(/^The first booking has status '(.*)'$/, Heroku.updateFirstBookingWithStatus);
     Given(/^The booking has method type '(.*)'$/, Heroku.updateBookingWithMethodType);
     Given(/^The booking has service type '(.*)'$/, Heroku.updateBookingWithServiceType);
     Given(/^The booking has assignment category '(.*)'$/, Heroku.updateBookingWithCategory);

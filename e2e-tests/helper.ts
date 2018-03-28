@@ -607,14 +607,23 @@ export class Heroku {
         Heroku.sendCommandToHeroku(command);
     }
 
-    static updateBookingWithStatus(status: string) {
+    private static updateBookingWithStatus(status: string, updateFirst?: boolean) {
         const greenStatus = status === 'green';
+        const updateIndex = updateFirst ? 'first' : 'last'; // the default is last
         let command = '';
         if (greenStatus) {
-            command += 'Booking.last.update(number_of_interpreters_required: 0);';
+            command += `Booking.${updateIndex}.update(number_of_interpreters_required: 0);`;
         }
-        command += 'Booking.last.update_status';
+        command += `Booking.${updateIndex}.update_status`;
         Heroku.sendCommandToHeroku(command);
+    }
+
+    static updateFirstBookingWithStatus(status: string) {
+        Heroku.updateBookingWithStatus(status, true);
+    }
+
+    static updateLastBookingWithStatus(status: string) {
+        Heroku.updateBookingWithStatus(status, false);
     }
 
     static updateBookingWithMethodType(method: string) {
