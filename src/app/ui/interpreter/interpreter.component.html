@@ -89,61 +89,6 @@
       </div>
     </div>
   </div>
-  <ng-container *ngIf="isUserAdminORBookOfficer()">
-    <header>
-      <h4 class="text-center" style="margin-top: 42%;">CERTIFICATIONS</h4>
-    </header>
-    <div class="row-wrapper">
-      <div class="medium-6 columns">
-        <div class="form-field">
-          <label>Working with children check</label>
-          <input type="tel" placeholder="Please enter working with children check"
-                  [(ngModel)]="userModel.working_with_childrens_check" name="working_with_child_check"
-                  #working_with_child_check="ngModel">
-        </div>
-      </div>
-      <div class="medium-6 columns">
-        <div class="form-field">
-          <label>Yellow card</label>
-          <input type="tel" placeholder="Please enter yellow card"
-                  [(ngModel)]="userModel.yellow_card" name="yellow_card"
-                  #yellow_card="ngModel">
-        </div>
-      </div>
-      <div class="medium-6 columns">
-        <div class="form-field">
-          <label>Immunisation</label>
-          <input type="tel" placeholder="Please enter immunisation"
-                  [(ngModel)]="userModel.immunisations" name="immunisations"
-                  #immunisations="ngModel">
-        </div>
-      </div>
-      <div class="medium-6 columns">
-        <div class="form-field">
-          <label>Police check</label>
-          <input type="tel" placeholder="Please enter police check"
-                  [(ngModel)]="userModel.police_check" name="police_check"
-                  #police_check="ngModel">
-        </div>
-      </div>
-      <div class="medium-6 columns">
-        <div class="form-field">
-          <label>From 27A</label>
-          <input type="tel" placeholder="Please enter from 27a"
-                  [(ngModel)]="userModel.from_27a" name="from_27a"
-                  #from_27a="ngModel">
-        </div>
-      </div>
-      <div class="medium-6 columns">
-        <div class="form-field">
-          <label>Recorded Booking</label>
-          <input type="tel" placeholder="Please enter recoeded booking"
-                  [(ngModel)]="userModel.are_you_okay_with_bookings_that_will_be_recorded_or_published" name="recorded_booking"
-                  #recorded_booking="ngModel">
-        </div>
-      </div>
-    </div>
-  </ng-container>
 </div>
 
 <br>
@@ -177,7 +122,61 @@
     </div>
   </div>
 </div>
-
+<ng-container *ngIf="isUserAdminORBookOfficer()">
+  <header>
+    <h4 class="text-center">CERTIFICATIONS</h4>
+  </header>
+  <div class="row-wrapper" style="margin-bottom: 45%;">
+    <div class="medium-6 columns">
+      <div class="form-field">
+        <label>Working with children check</label>
+        <input type="text" placeholder="Please enter working with children check"
+                [(ngModel)]="userModel.working_with_childrens_check" name="working_with_child_check"
+                #working_with_child_check="ngModel">
+      </div>
+    </div>
+    <div class="medium-6 columns">
+      <div class="form-field">
+        <label>Yellow card</label>
+        <input type="text" placeholder="Please enter yellow card"
+                [(ngModel)]="userModel.yellow_card" name="yellow_card"
+                #yellow_card="ngModel">
+      </div>
+    </div>
+    <div class="medium-6 columns">
+      <div class="form-field">
+        <label>Immunisation</label>
+        <input type="text" placeholder="Please enter immunisation"
+                [(ngModel)]="userModel.immunisations" name="immunisations"
+                #immunisations="ngModel">
+      </div>
+    </div>
+    <div class="medium-6 columns">
+      <div class="form-field">
+        <label>Police check</label>
+        <input type="text" placeholder="Please enter police check"
+                [(ngModel)]="userModel.police_check" name="police_check"
+                #police_check="ngModel">
+      </div>
+    </div>
+    <div class="medium-6 columns">
+      <div class="form-field">
+        <label>From 27A</label>
+        <input type="text" placeholder="Please enter from 27a"
+                [(ngModel)]="userModel.from_27a" name="from_27a"
+                #from_27a="ngModel">
+      </div>
+    </div>
+    <div class="medium-6 columns">
+      <div class="form-field">
+        <label>Recorded Booking</label>
+        <input type="text" placeholder="Please enter recoeded booking"
+                [(ngModel)]="userModel.are_you_okay_with_bookings_that_will_be_recorded_or_published" name="recorded_booking"
+                #recorded_booking="ngModel">
+      </div>
+    </div>
+  </div>
+</ng-container>
 <ng-container *ngIf="displayCalendar && updateCalendar">
   <h1>BLOCKOUTS</h1>
   <angular2-fullcalendar id="mycal" #mycal [options]="calendarOptions"></angular2-fullcalendar>
