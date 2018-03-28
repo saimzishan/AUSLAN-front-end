@@ -162,6 +162,7 @@ Feature: Create, read, update and delete a User
     When I hover on the userlist dropdown and select 'Organisation'
     And I will be taken to the 'ORGANISATION Signup' page
     When I fill all the details correctly for -> 'ORGANISATIONALREPRESENTATIVE' with the pref communication is 'SMS AND EMAIL'
+    Then I wait for 2000 milli-seconds
     Then I click on edit for an active existing Organisational Representative
     And I will be taken to the 'ORGANISATIONALREPRESENTATIVE Signup' page
     Then I click on checkbox name 'billingAddressIsDifferent_confirmation'
