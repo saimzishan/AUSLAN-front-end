@@ -275,3 +275,31 @@ Feature: Skill Matrix 1.0
     When I hover on the 'Actions' of the Interpreter
     And I click on 'Skill Matrix' for an active existing Interpreter
     Then I should not see the updated skills
+
+  @runThis
+  Scenario: Given 1 verified Interpreter, as a Administrator I can change skills of an Interpreter from Skills section
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    Then I am on the bookings page
+    When I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then The valid Interpreter should be in the list
+    When I hover on the 'Actions' of the Interpreter
+    And I click on 'Skill Matrix' for an active existing Interpreter
+    Then I should be on the skill matrix page
+    Then I can see the button 'Save' is disabled
+    And I click on link 'Skills'
+    When I change 1 of the skills
+    Then I can see the button 'Save' is enabled
+    When I click on button 'Save'
+    Then I wait for 1000 milli-seconds
+    Then I get a success message: 'User details updated Successfully'
+    Then I click on Bookings
+    And I am on the bookings page
+    When I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then The valid Interpreter should be in the list
+    When I hover on the 'Actions' of the Interpreter
+    And I click on 'Skill Matrix' for an active existing Interpreter
+    And I click on link 'Skills'    
+    Then I should see the updated skills
