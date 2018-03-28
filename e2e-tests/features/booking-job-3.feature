@@ -65,7 +65,7 @@ Feature: Booking Admin Management
     And I am on the bookings page
     When I click on an individual booking
     Then I am on the individual booking page
-    Then I should see the attachment icons under Attached column
+    Then I should not see the attachment icons under Attached column
 
   ########### REQUESTED TO CANCEL for linked bookings #######################################
 
