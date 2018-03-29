@@ -331,6 +331,8 @@ export class BlockoutComponent implements OnDestroy, OnInit {
             if (this.availabilityBlock.frequency === 'weekly' && this.availabilityBlock.recurring_week_days.length === 0) {
                 this.notificationServiceBus.launchNotification(true, GLOBAL.MISSING_FIELDS_ERROR_MESSAGE);
                 return;
+            } else if (this.availabilityBlock.frequency === 'daily') {
+                this.availabilityBlock.recurring_week_days = [];
             }
         }
         this.spinnerService.requestInProcess(true);
