@@ -97,9 +97,24 @@ export class ProfileRegisterPage extends PageObject {
             this.getElementByName('address_post_code').sendKeys('3064');
             this.getElementByName('address_suburb').sendKeys('Crazy');
             this.getElementByName('address_state').sendKeys('VIC'); // dropdown
-            this.getElementByName('location_pref').sendKeys('ACT');
+            this.getElementByName('location_pref').sendKeys('TAS');
         }
         return this.getElementByName('register_user').click();
+    }
+
+    fillAppAddressForm = (value: string) => {
+        const clientOptionLabel = this.getElementByClassName('billing-address');
+        const all_input_in_div = this.getAllByTagNameInElement(clientOptionLabel, 'input');
+        const select_in_div = this.getAllByTagNameInElement(clientOptionLabel, 'select');
+        return all_input_in_div.then((inputDiv) => {
+            for (let i = 0; i < inputDiv.length; i++) {
+                const street_input = inputDiv[i];
+                street_input.sendKeys(value);
+            }
+            select_in_div.then((selectDiv) =>{
+                selectDiv[0].sendKeys('VIC');
+            });
+        });
     }
 
     acceptTC = () => {
