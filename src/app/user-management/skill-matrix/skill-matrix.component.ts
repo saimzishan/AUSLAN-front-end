@@ -5,6 +5,7 @@ import {UserService} from '../../api/user.service';
 import {NotificationServiceBus} from '../../notification/notification.service';
 import {SpinnerService} from '../../spinner/spinner.service';
 import {Interpreter} from '../../shared/model/user.entity';
+import {DatePipe} from '@angular/common';
 
 @Component({
     selector: 'app-skill-matrix',
@@ -115,7 +116,9 @@ export class SkillMatrixComponent implements OnInit {
             location.reload();
         } else {
             this.spinnerService.requestInProcess(true);
-
+            let d = new DatePipe('en-us');
+            this.userModel.date_of_birth =
+                d.transform(this.userModel.date_of_birth, 'yyyy-MM-dd');
             this.userService.updateUser(this.userModel)
                 .subscribe((res: any) => {
                         if (res.status === 200) {

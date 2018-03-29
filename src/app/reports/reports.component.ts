@@ -45,7 +45,7 @@ export class ReportsComponent {
                 });
     }
 
-    private isBusinessVicdeaf(): boolean {
+    isBusinessVicdeaf(): boolean {
         return (GLOBAL.currentUser.business_name === 'Vicdeaf');
     }
 }

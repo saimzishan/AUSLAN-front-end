@@ -5,7 +5,7 @@
 
     <section>
         <a href="#" class="header__message"><i class="icon-messages"></i></a>
-        <ul class="dropdown menu" data-disable-hover="true" data-click-open="true" data-dropdown-menu>
+        <ul class="dropdown menu click-handler" data-disable-hover="true" data-click-open="true" data-dropdown-menu onclick="this.classList.toggle('opened');">
             <li>
                 <a class="header__profile">
                     <img class="ImgSize" src={{getPicturePath()}}></a>
