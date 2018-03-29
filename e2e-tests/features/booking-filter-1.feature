@@ -55,6 +55,10 @@ Feature: Booking Filter
     When I hover on the State dropdown and select 'In progress'
     Then I am shown with 1 booking
     Then I see one row with state 'In progress'
+    When I hover on the State dropdown and select 'Requested'
+    Then I am shown with 5 bookings
+    Then I see one row with state 'In progress'
+    Then I see 4 rows with state 'Requested'
 
   @runThis
   Scenario: Given 1 verified Booking Officer, 1 verified Interpreter exists, I should be able to filter by booking state
