@@ -22,10 +22,11 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN,  I can send messages and ca
         Then I click on my name in the top corner
         And I click on logout
         And I am shown the login screen, with picture and signup button
+        Given I exist as an Interpreter
         When I sign in with valid Interpreter credentials
         And I am on the bookings page
-        Then I click on Messages
-        And I get error message: 'Please select any booking before'
+        #Then I click on Messages
+        #And I get error message: 'Please select any booking before'
         When I click on an individual booking
         Then I am on the individual booking page
         Then I click on element by id 'lnkMessages'
