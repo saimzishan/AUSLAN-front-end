@@ -258,6 +258,7 @@ Feature: Booking Payroll and Billing
     Then I click on BUTTON name 'noBtn'
     Then I get a valid 'Cancelled with Charge' notification for state
     When I click on link 'Payroll & Billing'
+    Then I wait for 2000 milli-seconds
     Then I see selected option 'STAFF' in dropdown
 
   @runThis
