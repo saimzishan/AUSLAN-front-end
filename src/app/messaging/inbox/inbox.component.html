@@ -1,26 +1,19 @@
 
 <header id="header-mobile">
-  <button (click)="backClicked()" class="icon-back"></button>
-  <h1>JOB #4353435</h1>
-  <section>
-    <a href="#" class="header__message">
-      <i class="icon-messages"></i>
-    </a>
-    <ul class="dropdown menu" data-disable-hover="true" data-click-open="true" data-dropdown-menu>
-      <li>
-        <a href="#" class="header__profile">
-          <img src="assets/img/dummy/profile.png">
-        </a>
-        <ul class="menu">
-          <li>
-            <a href="#">
-              <i class="icon-logout"></i> Log Out</a>
-          </li>
-        </ul>
-      </li>
-    </ul>
-  </section>
-</header>
+	    <button (click)="backClicked()" class="icon-back"></button>
+	    <h1>JOB #4353435</h1>
+		<section>
+			<a href="#" class="header__message"><i class="icon-messages"></i></a>
+	        <ul class="dropdown menu" data-disable-hover="true" data-click-open="true" data-dropdown-menu>
+	            <li>
+	                <a href="#" class="header__profile"><img src="assets/img/dummy/profile.png"></a>
+	                <ul class="menu">
+	                    <li><a href="#"><i class="icon-logout"></i> Log Out</a></li>
+	                </ul>
+	            </li>
+	        </ul>
+		</section>
+	</header>
 
 <section id="page-messages">
   <section id="filters">
@@ -89,24 +82,9 @@
 <section class="messages" *ngIf='isCurrentUserAdminOrBookingOfficer()'>
   <section class="messages__conversations">
     <section class="messages__conversations-wrapper" id="conversations-wrapper">
-      <section class="messages__conversation">
-        <div>
-          <div class="checkbox">
-            <input type="checkbox" name="" value="1" id="job">
-            <label for="job"></label>
-          </div>
-        </div>
-        <div>
-          <md-checkbox></md-checkbox>
-        </div>
-        <div>
-          &nbsp;
-        </div>
-      </section>
-      
       <ng-container  *ngFor='let mesg of meesageThreads let i = index' >
-        <section class="messages__conversation" [ngClass]="{'messages__conversation_active': mesg.user_id === userId}">
-        
+        <section *ngIf="mesg.messages.length" class="messages__conversation" [ngClass]="{'messages__conversation_active': mesg.user_id === userId}">
+
             <div>
               <div class="checkbox">
                 <input type="checkbox" name=""  value="1" id="job-2a">
@@ -130,27 +108,27 @@
           </a>
         </section>
       </ng-container>
-     
+
     </section>
   </section>
 
   <section class="messages__wrapper messages__wrapper_aside" id="messages-wrapper">
-     
+
     <section class="messages__wrapper" id="messages-wrapper">
-      
+
       <ng-container *ngFor="let message of meesageThread">
-         
+
         <section class="messages__message" [ngClass]="{ 'messages__message_left' : message.sender.id === userId, 'messages__message_right' : message.sender.id !== userId }">
-          
+
           <figure class="messages__figure">
             <img src="{{message.sender.photo_url}}" alt="">  </figure>
           <section class="messages__inner">
             <div class="messages__title">
               <strong class="messages__person">{{message.sender.first_name}} {{ message.sender.last_name.charAt(0)}}</strong>
-              <span class="messages__time">  
+              <span class="messages__time">
                 <i class="icon-time"></i> {{message.created_at | date: ' d MMM  y | h:mma' }}</span>
                </div>
-            <p class="messages__text">{{message.message_body}} 
+            <p class="messages__text">{{message.message_body}}
               <a href="#">#{{message_tage}}</a> booking!</p>
             <button class="messages__button">{{message.sender.id}}</button>
           </section>

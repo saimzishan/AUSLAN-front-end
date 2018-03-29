@@ -216,7 +216,7 @@ Feature: Booking Payroll and Billing
     Then I can see the element with name 'btnSave' is 'visible'
     And I can see the element with name 'btnClaim' is 'not visible'
 
-  @runThis
+  @ignoreThis
   Scenario: As Administrator and Booking Officer I can add INTERPRETER STAFF-AVAILABILITY on desktop, STAFF INTERPRETER exists
     Given I go to the website
     And I am on a computer

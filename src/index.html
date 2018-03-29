@@ -55,7 +55,26 @@
                 if(!event.newValue) { window.location.href = '/' }
             }
         }
-        window.addEventListener('storage', storageChange, false)
+        window.addEventListener('storage', storageChange, false);
+        var rescale = function () {
+            var hMobile = $("#header-mobile").is(":visible") ? $("#header-mobile").outerHeight(true) : 0;
+            var hDesktop = $("#header").is(":visible") ? $("#header").outerHeight(true) : 0;
+            $('.messages').height(
+                $(window).height() - hDesktop - hMobile - $("#page-messages").outerHeight(true)
+            );
+        };
+
+        $(window).resize(function () {
+            rescale();
+        });
+        setTimeout(
+            function() {
+                rescale();
+                $('#conversations-wrapper').perfectScrollbar({
+                    suppressScrollX: true
+                });
+                $('#messages-wrapper').perfectScrollbar();
+            }, 5000 );
     });
 </script>
 </body>

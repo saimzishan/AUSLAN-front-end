@@ -29,6 +29,7 @@ export class InboxComponent implements OnInit, OnDestroy {
   checked = false;
   isTagShow = true;
   messages;
+  selected = -1;
   // http://localhost:4200/#/users/6/messages
   loginUserID = GLOBAL.currentUser.id;
   business_id = GLOBAL.currentUser.business_id;
@@ -86,9 +87,18 @@ export class InboxComponent implements OnInit, OnDestroy {
     this.messagingService.allMeesageThreads(businessId)
             .subscribe((res: any) => {
                 if (res.status === 200) {
+                    let i = 0;
                   this.meesageThreads = res.data.message_threads;
-                  this.meesageThread = this.meesageThreads[0].messages;
-                  this.userId = this.meesageThreads[0].user_id;
+                    for (let m  of this.meesageThreads) {
+                        if (m.messages.length > 0) {
+                            this.selected = i;
+                            break;
+                        }
+                        i = i + 1;
+                    }
+
+                  this.meesageThread = this.meesageThreads[this.selected].messages;
+                  this.userId = this.meesageThreads[this.selected].user_id;
                   }
                 this.spinnerService.requestInProcess(false);
               },
@@ -150,7 +160,7 @@ export class InboxComponent implements OnInit, OnDestroy {
     let curentDate = new Date();
     let curentDay = curentDate.getDate();
     let lastMesgDay = lastMesgDate.substring(8, 10);
-    return (lastMesgDay == curentDay);
+    return (+lastMesgDay === curentDay);
   }
 
 }
