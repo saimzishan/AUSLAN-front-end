@@ -23,6 +23,7 @@ import {PreComponent} from './register/pre/pre.component';
 import {BlockoutComponent} from './user-management/user-profile/blockout/blockout.component';
 import {BookingPayrollComponent} from './booking-management/booking-payroll/booking-payroll.component';
 import {UserPayrollBillingComponent} from './user-management/user-payroll-billing/user-payroll-billing.component';
+import { InboxComponent } from './messaging/inbox/inbox.component';
 import { StaffCalendarComponent } from './user-management/staff-calendar/staff-calendar.component';
 import { ReportsComponent } from './reports/reports.component';
 
@@ -42,6 +43,7 @@ const appRoutes: Routes = [
   { path: 'booking-management/:id/job-detail', component: BookingJobsComponent, canActivate: [AuthGuard]},
   { path: 'booking-management/edit-booking', component: BookingDetailComponent, canActivate: [AuthGuard]},
   { path: 'booking-management/:id/payroll-billing', component: BookingPayrollComponent, canActivate: [AuthGuard]},
+  { path: 'users/:id/inbox', component: InboxComponent, canActivate: [AuthGuard] },
   { path: 'reports', component: ReportsComponent, canActivate: [AuthGuard]},
   { path: 'authenticate', component: AuthComponent , canActivate: [NoAuthGuard] },
   { path: 'authenticate/logout', component: AuthComponent },

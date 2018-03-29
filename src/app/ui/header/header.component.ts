@@ -3,6 +3,11 @@ import {GLOBAL} from '../../shared/global';
 import {UserNameService} from '../../shared/user-name.service';
 import {LinkHelper, LINK, LinkAuth} from '../../shared/router/linkhelper';
 import {BookingHeaderService} from '../../booking-management/booking-header/booking-header.service';
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
+import { MessagingService } from '../../api/messaging.service';
+import { NotificationServiceBus } from '../../notification/notification.service';
+import { Administrator, BookingOfficer } from '../../shared/model/user.entity';
 
 @Component({
   selector: 'app-header',
@@ -15,7 +20,12 @@ export class HeaderComponent implements OnDestroy, OnInit {
   userIsActive = false;
   fullName = '';
 
-  constructor(private bookingHeaderService: BookingHeaderService, public userNameService: UserNameService, private linkAuth: LinkAuth) {
+  interpreterID;
+  route: string;
+  href;
+  constructor(public notificationServiceBus: NotificationServiceBus, private bookingHeaderService: BookingHeaderService,
+      private messagingModel: MessagingService, location: Location, private router: Router, public userNameService: UserNameService, private linkAuth: LinkAuth) {
+     this.route = location.path();
   }
   ngOnInit () {
       this.sub = this.userNameService.loggedInUser$.subscribe(
@@ -30,6 +40,7 @@ export class HeaderComponent implements OnDestroy, OnInit {
       '';
         this.userIsActive = Boolean(GLOBAL.currentUser && this.fullName && this.fullName.length > 0
         && this.fullName === GLOBAL.currentUser.first_name + ' '  + GLOBAL.currentUser.last_name);
+        if (+localStorage.getItem('bookingId') <= 0) { localStorage.setItem('bookingId', '-1'); }
   }
 
   getPicturePath() {
@@ -55,4 +66,26 @@ export class HeaderComponent implements OnDestroy, OnInit {
   refreshBooking() {
     this.bookingHeaderService.notifyOther({option: 'refreshBooking'});
   }
+  getActiveUserId() {
+    return GLOBAL.currentUser.id;
+  }
+
+  isCurrentUserAdminOrBookingOfficer(): boolean {
+    return Boolean(GLOBAL.currentUser instanceof Administrator || GLOBAL.currentUser instanceof BookingOfficer);
+  }
+
+    checkBeforeNavigation() {
+      if (+localStorage.getItem('bookingId') === -1) {
+          this.notificationServiceBus.launchNotification(true, 'Please select any booking before');
+          return false;
+        }
+   this.setActiveLink(this.linkName.messages);
+     return true;
+  }
+
+  navigateToMessaging() {
+       this.router.navigate(['users/', GLOBAL.currentUser.id, 'inbox']);
+   }
+
 }
+

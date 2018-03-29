@@ -31,6 +31,7 @@ export class GLOBAL {
                     (environment.production) ? 'https://api.auslanconnections.com/api/v1' :
                     `http://localhost:${GLOBAL.MOCK_BOOKING_SERVER_PORT}/api/v1`;
     public static USER_API = GLOBAL.USER_API_ENDPOINT + '/users';
+    public static USER_APPI = GLOBAL.USER_API_ENDPOINT;
 
     public static BOOKING_API = GLOBAL.BOOKING_API_ENDPOINT + '/bookings';
     public static TITLE = 'Auslan Booking System';

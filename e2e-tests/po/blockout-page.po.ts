@@ -31,6 +31,13 @@ export class BlockoutPagePo extends PageObject {
             browser.wait(urlMatchCondition, 30000);
         });
     }
+    browseMessages = () => {
+        const EC = protractor.ExpectedConditions;
+        return this.currentPath().then((currentPath) => {
+            const urlMatchCondition = EC.or(EC.urlContains('inbox'), EC.urlContains('inbox'));
+            browser.wait(urlMatchCondition, 30000);
+        });
+    }
 
     enterBlockoutName = (blockout_name: string) => {
 
