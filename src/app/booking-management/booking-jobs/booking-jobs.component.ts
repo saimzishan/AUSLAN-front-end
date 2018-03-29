@@ -77,6 +77,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         /** http://stackoverflow.com/questions/38008334/angular2-rxjs-when-should-i-unsubscribe-from-subscription */
         this.sub = this.route.params.subscribe(params => {
             let param_id = params['id'] || '';
+            localStorage.setItem('bookingId', param_id );
             if (Boolean(param_id) && parseInt(param_id, 10) > 0) {
                 this.fetchBookingInterpreters(param_id);
             }
@@ -175,7 +176,11 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
 
             this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
                 if (result) {
-                    this.cancelBooking(isCancel, false, true);
+                    if (false === isCancel) {
+                        this.changeBookingState(false, false, false);
+                    } else {
+                        this.cancelBooking(isCancel, false, true);
+                    }
                 }
             });
         }
@@ -188,7 +193,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         config.viewContainerRef = this.viewContainerRef;
         this.dialogRef = this.dialog.open(PopupComponent, config);
         this.dialogRef.componentInstance.title = isCancel ? 'Cancel linked booking' : 'Unable to service linked booking';
-        this.dialogRef.componentInstance.cancelTitle = isCancel ? 'Cancel all bookings' : 'Unable to service all bookings';
+        this.dialogRef.componentInstance.cancelTitle = isCancel ? 'Cancel all bookings' : '';
         this.dialogRef.componentInstance.okTitle = isCancel ? 'Cancel only this booking' : 'Unable to service this booking';
         this.dialogRef.componentInstance.closeVal = 'close';
         this.dialogRef.componentInstance.popupMessage =
@@ -1025,4 +1030,11 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
          serviceName = flag ? serviceName : serviceName.toUpperCase();
          return serviceName;
         }
+
+    getInterpreterId() {
+        if (Boolean(GLOBAL.currentUser) && GLOBAL.currentUser.id > 0) {
+                return GLOBAL.currentUser.id;
+        }
+        return -1;
+    }
 }

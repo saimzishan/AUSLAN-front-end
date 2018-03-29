@@ -13,7 +13,7 @@
 
 	<div>
 		<md-dialog-actions>
-			<button name="noBtn"  (click)="closeDialog(false)" class="button red"> {{cancelTitle}} </button>
+			<button *ngIf="cancelTitle.length > 0" name="noBtn"  (click)="closeDialog(false)" class="button red"> {{cancelTitle}} </button>
 			<button name="yesBtn" (click)="closeDialog(true)" class="button"> {{okTitle}} </button>
 		</md-dialog-actions>
 	</div>
