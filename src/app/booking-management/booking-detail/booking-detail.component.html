@@ -1332,6 +1332,39 @@
       </div>
     </div>
 
+    <h4 class="text-center" name="cert_heading">CERTIFICATIONS</h4>
+
+    <div class="row">
+      <div class="medium-12 columns">
+        <div class="form-field">
+          <label name="certReqQue">Do you have required interpreter certifications for this booking?</label>
+          <md-radio-group name="rdIntCertRequired" [(ngModel)]="isCertRequired">
+            <md-radio-button name="rdCertYes" [value]="true">YES</md-radio-button>
+            <md-radio-button name="rdCertNo" [value]="false">NO</md-radio-button>
+          </md-radio-group>
+        </div>
+      </div>
+      <ng-container *ngIf="isCertRequired">
+        <p class="p-top-mrg" name="cert_required">Do you require one of the following? Please select multiple if relevant</p>
+        <div class="row" id="cert-types">
+          <div class="medium-3 columns"> <md-checkbox name="cb_yellow_card" #cb_yellow_card [(ngModel)]="bookingModel.cbYellowCard" >YELLOW CARD</md-checkbox> </div>
+          <div class="medium-3 columns"> <md-checkbox name="cb_imminisations" #cb_imminisations [(ngModel)]="bookingModel.cbImminisations">IMMUNISATIONS</md-checkbox> </div>
+          <div class="medium-3 columns"> <md-checkbox name="cb_police_check" #cb_police_check [(ngModel)]="bookingModel.cbPoliceCheck">POLICE CHECK</md-checkbox> </div>
+          <div class="medium-3 columns"> <md-checkbox name="cb_form_27a" #cb_form_27a [(ngModel)]="bookingModel.cbForm27A">FORM 27A</md-checkbox> </div>
+          <div class="medium-3 columns"> <md-checkbox name="cb_work_with_child_check" #cb_work_with_child_check [(ngModel)]="bookingModel.cbworkWithChildCheck" >WORKING WITH CHILDREN CHECK</md-checkbox> </div>
+       </div>
+       <div class="medium-12 columns div-top-mrg">
+        <div class="form-field">
+          <label name="certReqQue">Will the booking be recorded and published/distributed?</label>
+          <md-radio-group name="rdbookingRecorded" [(ngModel)]="bookingModel.isBookingBeRecorded">
+            <md-radio-button name="rdbookingRecordedYes" [value]="true">YES</md-radio-button>
+            <md-radio-button name="rdbookingRecordedNo" [value]="false">NO</md-radio-button>
+          </md-radio-group>
+        </div>
+      </div>
+      </ng-container>
+    </div>
+
     <div class="row">
       <div class="medium-12 columns" id="travel-cost-applicable" *ngIf="addressForm.isTravelCostApplicable">
         <div class="form-field">
@@ -1341,7 +1374,7 @@
         </div>
       </div>
       <ng-container *ngIf="checkUserAdminORBookOfficer()">
-        <div class="medium-12 columns">
+        <div class="medium-12 columns note-top-mrg">
             <div class="form-field">
                 <label>GENERAL NOTES</label>
                 <textarea type="text" class="inline-icon inline-icon-txt"

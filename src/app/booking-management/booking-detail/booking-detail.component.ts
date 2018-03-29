@@ -99,6 +99,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     hasBlockInt: Boolean = false;
     hasPrefInt: Boolean = false;
     duplicatingBookable: number;
+    isCertRequired = false;
     repeat_days = [
         {
             display: 'S',
@@ -153,10 +154,11 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         this.sub = this.route.queryParams.subscribe(params => {
             let param = params['bookingModel'] || '';
             let shouldEdit = params['shouldEdit'] || '';
-            this.forEdit = Boolean(shouldEdit.length > 0 && shouldEdit === 'edit');
+            this.forEdit = this.isCertRequired = Boolean(shouldEdit.length > 0 && shouldEdit === 'edit');
             this.assignedInterpreter = params['assignedInterpreter'] || '';
             if (param.length > 0 && shouldEdit === '') {
                 this.isDuplicate = true;
+                this.isCertRequired = true;
             } else {
                 this.isDuplicate = false;
             }
