@@ -278,7 +278,7 @@ Feature: Booking Management
 
     #----------------------------------------- AUSLAN1-977 -> END ----------------------------------------
 
-  @runThis
+  @ignoreThis
   Scenario: Administrator will get important fields change pop up only when interpreter is assigned to a booking. Interpreter exists.
     Given There exist 1 bookings
     Given I exist as an Administrator
