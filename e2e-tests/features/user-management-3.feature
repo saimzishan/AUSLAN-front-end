@@ -33,6 +33,7 @@ Feature: Create, read, update and delete a User
     Then I click on element by name 'user-roles'
     When I hover on the userlist dropdown and select 'Accountant'
     And I will be taken to the 'ACCOUNTANT Signup' page
+    And I fill in work preference correctly 'TAS'
     And I fill in all the details correctly for -> 'ACCOUNTANT'
     Then 'ACCOUNTANT' will be created
     And I hover on the 'Profile'
