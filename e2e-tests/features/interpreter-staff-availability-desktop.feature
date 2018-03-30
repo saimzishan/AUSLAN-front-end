@@ -62,6 +62,10 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER STAF
     Then I check the value of endTime is '07:25 AM'
     Then I check the value of availability is 'test-blockout'
     Then I see selected option 'WEEKLY' in dropdown
+    When I verify material checkbox name 'Monday' is checked 'true'
+    When I verify material checkbox name 'Tuesday' is checked 'true'
+    When I verify material slide-toggle name 'sldRecurring' is disabled 'true'
+    And I can see the element with name 'save_blockout' is 'not visible'
 
   @runThis
   Scenario: As Administrator I can add INTERPRETER blockouts on desktop

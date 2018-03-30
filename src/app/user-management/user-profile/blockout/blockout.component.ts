@@ -184,7 +184,6 @@ export class BlockoutComponent implements OnDestroy, OnInit {
 
         dt.setTime(this.start_time.getTime() + (1 * 60 * 60 * 1000));
         this.end_time = dt;
-        this.end_date = dt;
     }
     roundOffMinutes() {
         let dt = this.end_time;

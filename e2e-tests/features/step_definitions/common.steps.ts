@@ -508,6 +508,14 @@ defineSupportCode(({Given, When, Then}) => {
         });
     }
 
+    When(/^I verify material slide-toggle name '(.*)' is disabled '(.*)'$/, verifyMaterialST);
+    function verifyMaterialST(btnName: string, checkedState: 'True' | 'true') {
+        const checkbox = page.getElementByCss('md-slide-toggle[name="' + btnName + '"]');
+        return checkbox.getAttribute('ng-reflect-is-disabled').then(val => {
+            return expect(val).to.be.eq(checkedState.toLowerCase());
+        });
+    }
+
     When(/^I click on material checkbox name '(.*)'$/, clickMaterialCB);
     function clickMaterialCB(cbName: string) {
         return page.getElementByCss('md-checkbox[ng-reflect-name="' + cbName + '"]').click();

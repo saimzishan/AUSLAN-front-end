@@ -40,7 +40,7 @@
                         <div class="form-field">
                             <label>START DATE & TIME *</label>
 
-                            <p-calendar name='dpEventDate_st' [(ngModel)]="start_time"
+                            <p-calendar name='dpEventDate_st' [(ngModel)]="start_time" (onClose)="onStartTimeChanged()"
                             [stepMinute]="5" [defaultDate]="defaultDateTime" required #dpEventDate_st="ngModel" 
                             showTime="true"  dateFormat="dd/mm/yy" hourFormat="12"></p-calendar>
                             
