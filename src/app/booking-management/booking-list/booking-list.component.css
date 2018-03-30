@@ -9,3 +9,6 @@
         display: none;
     }
 }
+.first-th{
+    vertical-align: baseline !important;
+}
