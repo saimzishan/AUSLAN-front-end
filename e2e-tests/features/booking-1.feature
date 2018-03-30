@@ -83,7 +83,7 @@ Feature: Booking Management
     And I will be taken to the 'New Booking' form
     When I fill New Booking form fields with address greater than 40 kilometers
     And I select the bookable for client
-    And I click on checkbox name 'travel_cost_applicable'
+    And I can see the element with name 'travel-cost-applicable' is 'visible'
     Then I click on checkbox name 'tnc'
     And I click the create booking button
     Then I get a valid create booking notification
@@ -93,7 +93,7 @@ Feature: Booking Management
     Then I can see the button 'Save' is disabled
     And I click on BUTTON 'Duplicate'
     Then I will be taken to the 'New Booking' form
-    Then I can see the travel_cost_applicable field
+    And I can see the element with name 'travel-cost-applicable' is 'visible'
 
 # ---------------------------------------- AUSLAN1-903 -> END ----------------------------------------
 
