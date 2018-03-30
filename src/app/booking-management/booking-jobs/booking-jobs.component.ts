@@ -69,6 +69,8 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     isRequestedProgressOrAllocated = false;
     searchParams: string;
     serviceNameToDisplay;
+    otherAcceptedRolesAttributes;
+    counterChek= 0;
     constructor(public dialog: MdDialog,
                 public viewContainerRef: ViewContainerRef, public spinnerService: SpinnerService,
                 public notificationServiceBus: NotificationServiceBus,
@@ -453,6 +455,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                     } else if (res.status === 200) {
                         this.jobAccessError = false;
                         let data = res.data;
+                        this.otherAcceptedRolesAttributes = res.data.other_accepted_roles_attributes;
                         this.selectedBookingModel.fromJSON(data);
                         this.selectedBookingModel.interpreters.sort((i, j) =>
                             i.state === 'Accepted' ? -1 : j.state === 'Accepted' ? 1 : 0

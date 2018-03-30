@@ -47,19 +47,28 @@
                                             Unassign
                                         </button>
                                     </div>
+                                    <ng-container *ngFor="let interpreter of otherAcceptedRolesAttributes; let i=index">
+                                        <div class="half-opacity">
+                                            <b>{{serviceNameToDisplay}} {{selectedBookingModel.interpreters.length + i + 1}} :</b>
+                                            <span class='interpreter-accepted'>{{interpreter.first_name}} {{interpreter.last_name}}</span>
+                                        </div>
+                                    </ng-container>
                                 </ng-container>
+
                                 <ng-container *ngIf="(selectedBookingModel.interpreters_required - selectedBookingModel.interpreters.length) > 0">
                                     <ng-container *ngFor="let numb of counter(selectedBookingModel.interpreters_required - selectedBookingModel.interpreters.length ); let ii=index">
                                         <ng-container *ngIf="ii < (selectedBookingModel.interpreters_required - selectedBookingModel.interpreters.length)">
                                             <div>
                                                 <strong>
-                                                    {{serviceNameToDisplay}} {{selectedBookingModel.interpreters.length + ii + 1}} :
+                                                    {{serviceNameToDisplay}} {{otherAcceptedRolesAttributes.length + ii + 2}} :
                                                 </strong>
                                                 <span>To be filled</span>
                                             </div>
                                         </ng-container>
                                     </ng-container>
+                                   
                                 </ng-container>
+                                
                             </section>
                         </section>
                     </div>
@@ -96,6 +105,16 @@
                                     <span>To be filled</span>
                                 </div>
                             </ng-container>
+                        </ng-container>
+                        <ng-container *ngFor="let interpreter of otherAcceptedRolesAttributes; let i=index">
+                            <div class="half-opacity row with-border">
+                            <div>
+                                {{serviceNameToDisplay}} {{i + 1}}
+                            </div>
+                            <span class="with-avatar">
+                                <img class="img-circle" src="{{interpreter.photo_url}}" alt=""> {{interpreter.first_name}} {{interpreter.last_name}}
+                            </span>
+                            </div>
                         </ng-container>
                         <ng-container
                                 *ngIf="(selectedBookingModel.interpreters_required - selectedBookingModel.interpreters.length) > 0">
