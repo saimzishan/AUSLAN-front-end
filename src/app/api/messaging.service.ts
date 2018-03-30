@@ -22,7 +22,7 @@ export class MessagingService extends ApiService {
             let headers = new Headers({ 'Accept': 'application/json' });
             let options = new RequestOptions({ headers: headers });
 
-            return this.http.get(GLOBAL.USER_API + '/' + user_id + '/messages' + '?page=' + 1 + '&amp;per_page=' + 100, options)
+            return this.http.get(GLOBAL.USER_API + '/' + user_id + '/messages' + '?page=' + 1 + '&amp;per_page=' + 10, options)
                     .map(this.extractData)
                     .catch((err) => { return this.handleError(err); });
         }
