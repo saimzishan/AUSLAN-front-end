@@ -236,3 +236,129 @@ Feature: Booking Management
     And I click the create booking button
     Then I will be shown a popup message
 # ---------------------------------------- AUSLAN1-252 -> END ----------------------------------------
+
+  @runThis
+  Scenario: Given 1 verified Individual Client, Administrator can add certification detail when create a booking
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on the bookings page
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    When I fill New Booking form fields correctly
+    And I select the bookable for client
+    Then I click on checkbox name 'tnc'
+    And I can see the element with name 'certReqQue' is 'visible'
+    Then I verify radiobutton name 'rdCertNo' and is checked
+    And I can see the element with name 'cert_required' is 'not visible'
+    Then I click on element by name 'rdCertYes'
+    Then I click on material checkbox name 'cb_yellow_card'
+    And I verify checkbox name 'cb_yellow_card' is checked 'true'
+    Then I click on checkbox name 'cb_police_check'
+    And I verify checkbox name 'cb_police_check' is checked 'true'
+    Then I click on element by name 'rdbookingRecordedYes'
+    And I click the create booking button
+    Then I get a valid create booking notification
+    And I am on the bookings page
+    And I will be shown with bookings
+    When I click on an individual booking
+    Then I am on the individual booking page
+    When I click on link 'Booking details'
+    Then I should be on the edit booking page
+    And I verify checkbox name 'cb_yellow_card' is checked 'true'
+    And I verify checkbox name 'cb_police_check' is checked 'true'
+    Then I verify radiobutton name 'rdbookingRecordedYes' and is checked
+
+  @runThis
+  Scenario: Given 1 verified Organisational Representative, Booking Officer can add certification detail when create a booking
+    Given I exist as an Booking Officer
+    And I sign in with valid Booking Officer credentials
+    And I am on the bookings page
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    When I fill New Booking form fields correctly
+    And I select the bookable for org rep
+    Then I click on checkbox name 'tnc'
+    And I can see the element with name 'certReqQue' is 'visible'
+    Then I verify radiobutton name 'rdCertNo' and is checked
+    And I can see the element with name 'cert_required' is 'not visible'
+    Then I click on element by name 'rdCertYes'
+    Then I click on material checkbox name 'cb_yellow_card'
+    And I verify checkbox name 'cb_yellow_card' is checked 'true'
+    Then I click on checkbox name 'cb_police_check'
+    And I verify checkbox name 'cb_police_check' is checked 'true'
+    Then I click on element by name 'rdbookingRecordedYes'
+    And I click the create booking button
+    Then I get a valid create booking notification
+    And I am on the bookings page
+    And I will be shown with bookings
+    When I click on an individual booking
+    Then I am on the individual booking page
+    When I click on link 'Booking details'
+    Then I should be on the edit booking page
+    And I verify checkbox name 'cb_yellow_card' is checked 'true'
+    And I verify checkbox name 'cb_police_check' is checked 'true'
+    Then I verify radiobutton name 'rdbookingRecordedYes' and is checked
+
+  @runThis
+  Scenario: Individual Client can add certification detail when create a booking
+    Given I exist as an Individual Client
+    And I sign in with valid Individual Client credentials
+    And I am on the bookings page
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    Then I click on element by name 'rdBookingAddressNo'
+    And I click on element by name 'rdStandardInvoiceNo'
+    When I fill New Booking form fields correctly
+    And I can see the element with name 'certReqQue' is 'visible'
+    Then I verify radiobutton name 'rdCertNo' and is checked
+    And I can see the element with name 'cert_required' is 'not visible'
+    Then I click on element by name 'rdCertYes'
+    Then I click on material checkbox name 'cb_yellow_card'
+    And I verify checkbox name 'cb_yellow_card' is checked 'true'
+    Then I click on checkbox name 'cb_police_check'
+    And I verify checkbox name 'cb_police_check' is checked 'true'
+    Then I click on element by name 'rdbookingRecordedYes'
+    Then I click on checkbox name 'tnc'
+    And I click the create booking button
+    Then I get a valid create booking notification
+    And I am on the bookings page
+    And I will be shown with bookings
+    When I click on an individual booking
+    Then I am on the individual booking page
+    When I click on link 'Booking details'
+    Then I should be on the edit booking page
+    And I verify checkbox name 'cb_yellow_card' is checked 'true'
+    And I verify checkbox name 'cb_police_check' is checked 'true'
+    Then I verify radiobutton name 'rdbookingRecordedYes' and is checked
+
+  @runThis
+  Scenario: Organisational Representative can add certification detail when create a booking
+    Given I exist as an Organisational Representative
+    And I sign in with valid Organisational Representative credentials
+    And I am on the bookings page
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    Then I click on element by name 'rdBookingAddressNo'
+    And I click on element by name 'rdStandardInvoiceNo'
+    When I fill New Booking form fields correctly
+    And I can see the element with name 'certReqQue' is 'visible'
+    Then I verify radiobutton name 'rdCertNo' and is checked
+    And I can see the element with name 'cert_required' is 'not visible'
+    Then I click on element by name 'rdCertYes'
+    Then I click on material checkbox name 'cb_yellow_card'
+    And I verify checkbox name 'cb_yellow_card' is checked 'true'
+    Then I click on checkbox name 'cb_police_check'
+    And I verify checkbox name 'cb_police_check' is checked 'true'
+    Then I click on element by name 'rdbookingRecordedYes'
+    Then I click on checkbox name 'tnc'
+    And I click the create booking button
+    Then I get a valid create booking notification
+    And I am on the bookings page
+    And I will be shown with bookings
+    When I click on an individual booking
+    Then I am on the individual booking page
+    When I click on link 'Booking details'
+    Then I should be on the edit booking page
+    And I verify checkbox name 'cb_yellow_card' is checked 'true'
+    And I verify checkbox name 'cb_police_check' is checked 'true'
+    Then I verify radiobutton name 'rdbookingRecordedYes' and is checked
