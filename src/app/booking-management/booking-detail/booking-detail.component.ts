@@ -825,7 +825,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         if (isDisabled) {
             this.repeat_days[this.repeat_days.indexOf(day)].selected = true;
         }
-        return isDisabled;
+        return false;
     }
 
     private getRecurrenceDays() {
