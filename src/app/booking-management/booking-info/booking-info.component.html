@@ -71,6 +71,8 @@
         <td data-title="SPECIAL INSTRUCTIONS" class="new-line">
           {{selectedBookingModel.special_instructions}}
         </td>
+      </ng-container>
+      <ng-container *ngIf='!isClientAndBookingInProgress() && isAcceptedByCurrentInterpreter()'>
         <td align="center" data-title="ATTACHMENTS">
           <ul *ngIf="selectedBookingModel.documents_attributes.length > 0"
                            class="dropdown menu custom"

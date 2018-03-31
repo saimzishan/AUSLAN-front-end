@@ -4,6 +4,7 @@ import {Administrator, BookingOfficer, Interpreter, IndividualClient, Organisati
 import {GLOBAL} from '../../shared/global';
 import {BOOKING_STATE} from '../../shared/model/booking-state.enum';
 import * as moment from 'moment';
+import { BookingInterpreter } from '../../shared/model/contact.entity';
 
 @Component({
     selector: 'app-booking-info',
@@ -38,6 +39,19 @@ export class BookingInfoComponent {
 
     isClientInterpAndBookInProgress(): boolean {
         return this.isClientOrInterpreter() && this.isBookingInProgress();
+    }
+
+    isClientAndBookingInProgress(): boolean {
+        return Boolean(GLOBAL.currentUser instanceof IndividualClient && this.isBookingInProgress())
+    }
+
+    isAcceptedByCurrentInterpreter(): boolean {
+        if (GLOBAL.currentUser instanceof Interpreter && this.selectedBookingModel.interpreters.length > 0) {
+            let currentInterpreter: BookingInterpreter = this.selectedBookingModel.interpreters.find(i => i.id === GLOBAL.currentUser.id);
+            return (currentInterpreter.state === 'Accepted') ? true : false;
+        } else {
+            return true;
+        }
     }
 
     calculateDaysAgo(created_at) {
