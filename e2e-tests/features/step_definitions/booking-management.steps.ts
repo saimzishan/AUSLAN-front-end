@@ -139,7 +139,7 @@ defineSupportCode(({Given, Then, When}) => {
     Then(/^I should (not)?\s?see the link id in booking details$/, bookingJobPO.checkLinkIdInTableDetails);
     Then(/^I note the value under (.*) column$/, bookingJobPO.noteTableDetails);
     Then(/^The value under the (.*) column is the same as I noted above$/, bookingJobPO.checkNotedTableDetails);
-    Then(/^I should\s?(not)? see the attachment icons under Attached column$/, bookingJobPO.checkAttachmentIcons);
+    Then(/^I should\s?(not)? see the attachment icons under Attached column number '(.*)'$/, bookingJobPO.checkAttachmentIcons);
     Then(/^I should be on the payroll and billing page$/, bookingPayrollPO.verify);
     Then(/^I verify that payroll '(.*)' input fields are non editable$/, bookingPayrollPO.checkReadonlyFields);
     Then(/^I verify that payroll '(.*)' input fields have zero value$/, bookingPayrollPO.checkInputValues);
