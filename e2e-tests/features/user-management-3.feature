@@ -326,3 +326,27 @@ Feature: Create, read, update and delete a User
     And I click on logout
     When I try to sign in with valid Interpreter credentials
     Then I will get an error message saying "Email or password not found"
+
+  @runThis
+  Scenario: As Administrator I can update certification fields Interpreter
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    Then I am on my admin home screen
+    And I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then I click on edit for an active existing Interpreter
+    And I will be taken to the 'INTERPRETER Signup' page
+    And I fill in certification details of interpreter
+    And I click on BUTTON name 'register_user'
+    Then I see success notification
+    Then I click on edit for an active existing Interpreter
+    And I will be taken to the 'INTERPRETER Signup' page
+    And I can verify the input 'recorded_booking' will have the value 'recorded'
+    Then I click on my name
+    And I click on logout
+    Then I exist as an Interpreter
+    And I sign in with valid Interpreter credentials
+    And I hover on the 'Profile'
+    And I click on the option  profile
+    And I will be taken to my individual profile page
+    And I can see the element with name 'cert_section' is 'not visible'

@@ -51,7 +51,7 @@ export class MessagingService extends ApiService {
             let headers = new Headers({ 'Accept': 'application/json' });
             let options = new RequestOptions({ headers: headers });
 
-            return this.http.get(GLOBAL.USER_APPI + '/business/' + businessId + '/message_threads' + '?page=' + 1 + '&amp;per_page=' + 100, options)
+            return this.http.get(GLOBAL.USER_APPI + '/business/' + businessId + '/message_threads' + '?page=' + 1 + '&amp;per_page=' + 500, options)
                 .map(this.extractData)
                 .catch((err) => { return this.handleError(err); });
         }
