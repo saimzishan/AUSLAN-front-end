@@ -23,6 +23,16 @@ export class ProfileRegisterPage extends PageObject {
     fillAllDataForAdmin = (type: string) => {
         this.fillAllDataForRegister(type, '');
     }
+
+    fillCertificationDataOfInterpreter  = () => {
+        this.getElementByName('working_with_child_check').sendKeys('work');
+        this.getElementByName('yellow_card').sendKeys('card');
+        this.getElementByName('immunisations').sendKeys('good');
+        this.getElementByName('police_check').sendKeys('police');
+        this.getElementByName('from_27a').sendKeys('27A');
+        this.getElementByName('recorded_booking').sendKeys('recorded');
+    }
+
     fillBasicData  = (type: string) => {
         this.getElementByName('first_name').sendKeys('George');
         this.getElementByName('last_name').sendKeys('Charalambous');

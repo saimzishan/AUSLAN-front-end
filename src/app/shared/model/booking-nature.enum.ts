@@ -12,6 +12,7 @@ export enum BOOKING_NATURE {
   Police = <any>'Police',
   Social = <any>'Social/Private',
   Theatre = <any>'Theatre',
+  Skills = <any>'Skills',
   Other = <any>'Other',
   None = <any>'None'
 }
@@ -137,6 +138,18 @@ export class BA {
           'Community',
           'School',
           'Stage show', 'Other'].sort();
+    BA.DISSCUSSION_ITEM[BOOKING_NATURE.Skills] =
+      ['Deaf Interpreter',
+          'Visual Frame',
+          'Tactile',
+          'Platform',
+          'ASL',
+          'BSL',
+          'ISL',
+          'Signed English',
+          'Indigenous Sign',
+          'Notetaking',
+          'Captioning'].sort();
     BA.DISSCUSSION_ITEM[BOOKING_NATURE.Media] =
       ['Interview – Other',
           'Interview – Radio',

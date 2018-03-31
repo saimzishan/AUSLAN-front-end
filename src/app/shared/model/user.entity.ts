@@ -445,6 +445,12 @@ export class Interpreter extends User {
     public long_term_availability: interpreter_avalability;
     public override_availabilty: blockout_availability;
     public skill_level;
+    public working_with_childrens_check = '';
+    public yellow_card = '';
+    public immunisations = '';
+    public police_check = '';
+    public from_27a = '';
+    public are_you_okay_with_bookings_that_will_be_recorded_or_published = '';
     public location_pref = 'VIC';
     public employment_type;
     public communication_preference = 'email_and_sms';
