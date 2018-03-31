@@ -29,16 +29,13 @@ export class OrgRepComponent implements  OnInit, AfterViewInit {
         delete this.userModel.password;
         let orgAddrss = this.userModel.address_attributes;
         let billingAddress = this.userModel.organisation_billing_account.organisation_billing_address;
-        if (orgAddrss.street_name === billingAddress.street_name &&
+
+        this.userModel.billingAddressIsSame = (orgAddrss.street_name === billingAddress.street_name &&
             orgAddrss.street_number === billingAddress.street_number &&
             orgAddrss.state === billingAddress.state &&
             orgAddrss.suburb === billingAddress.suburb &&
             orgAddrss.unit_number === billingAddress.unit_number &&
-            orgAddrss.post_code === billingAddress.post_code) {
-                this.userModel.billingAddressIsSame = true;
-            } else {
-                this.userModel.billingAddressIsSame = false;
-            }
+            orgAddrss.post_code === billingAddress.post_code);
     }
 
     checkUserAdminORBookOfficer(): Boolean {
