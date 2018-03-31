@@ -42,7 +42,7 @@ export class BookingInfoComponent {
     }
 
     isClientAndBookingInProgress(): boolean {
-        return Boolean(GLOBAL.currentUser instanceof IndividualClient && this.isBookingInProgress())
+        return Boolean(GLOBAL.currentUser instanceof IndividualClient && this.isBookingInProgress());
     }
 
     isAcceptedByCurrentInterpreter(): boolean {

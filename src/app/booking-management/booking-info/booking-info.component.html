@@ -21,6 +21,9 @@
         <th>Special Instructions</th>
         <th>Attached</th>
       </ng-container>
+      <ng-container *ngIf='!isClientAndBookingInProgress() && isAcceptedByCurrentInterpreter()'>
+        <th>Attached</th>
+      </ng-container>
       <th *ngIf='isCurrentUserAdminOrBookingOfficer() || isClientOrOrgRep()'>Date Added</th>
       <ng-container *ngIf='isCurrentUserAdminOrBookingOfficer()'>
         <th>Days Notice</th>
