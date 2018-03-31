@@ -187,7 +187,7 @@ Feature: Create, read, update and delete a User
     And I click on BUTTON name 'register_user'
     Then I see success notification
 
-  @runThis
+  @ignoreThis
   Scenario: Administrator should be able to add a new orgrep with state other than victoria
     Given There is a active Administrator of TAS state
     And I sign in with valid Administrator credentials
