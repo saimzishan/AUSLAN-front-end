@@ -13,6 +13,7 @@ Feature: Create Profile with prefered or blocked interpreters
     And I click on button 'Client'
     And I will be taken to the 'INDIVIDUALCLIENT Signup' page
     Then I wait for 2000 milli-seconds
+    When I fill in work preference correctly 'TAS'
     Then I move to element name 'tnc'
     Then I click on checkbox name 'tnc'
     Then I wait for 2000 milli-seconds
@@ -51,6 +52,7 @@ Feature: Create Profile with prefered or blocked interpreters
     And I click on button 'Organisation'
     And I will be taken to the 'ORGANISATION Signup' page
     Then I wait for 2000 milli-seconds
+    When I fill in work preference correctly 'TAS'
     Then I move to element name 'tnc'
     Then I click on checkbox name 'tnc'
     Then I wait for 2000 milli-seconds
@@ -89,6 +91,7 @@ Feature: Create Profile with prefered or blocked interpreters
     And I click on button 'Client'
     And I will be taken to the 'INDIVIDUALCLIENT Signup' page
     Then I wait for 2000 milli-seconds
+    When I fill in work preference correctly 'TAS'
     Then I move to element name 'tnc'
     Then I click on checkbox name 'tnc'
     Then I wait for 2000 milli-seconds
@@ -127,6 +130,7 @@ Feature: Create Profile with prefered or blocked interpreters
     And I click on button 'Organisation'
     And I will be taken to the 'ORGANISATION Signup' page
     Then I wait for 2000 milli-seconds
+    When I fill in work preference correctly 'TAS'
     Then I move to element name 'tnc'
     Then I click on checkbox name 'tnc'
     Then I wait for 2000 milli-seconds
@@ -165,6 +169,7 @@ Feature: Create Profile with prefered or blocked interpreters
     And I click on button 'Organisation'
     And I will be taken to the 'ORGANISATION Signup' page
     Then I wait for 2000 milli-seconds
+    When I fill in work preference correctly 'TAS'
     Then I move to element name 'tnc'
     Then I click on checkbox name 'tnc'
     Then I wait for 2000 milli-seconds

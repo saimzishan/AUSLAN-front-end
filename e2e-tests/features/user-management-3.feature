@@ -33,6 +33,7 @@ Feature: Create, read, update and delete a User
     Then I click on element by name 'user-roles'
     When I hover on the userlist dropdown and select 'Accountant'
     And I will be taken to the 'ACCOUNTANT Signup' page
+    And I fill in work preference correctly 'TAS'
     And I fill in all the details correctly for -> 'ACCOUNTANT'
     Then 'ACCOUNTANT' will be created
     And I hover on the 'Profile'
@@ -167,6 +168,12 @@ Feature: Create, read, update and delete a User
     And I will be taken to the 'ORGANISATIONALREPRESENTATIVE Signup' page
     Then I click on checkbox name 'billingAddressIsDifferent_confirmation'
     Then I will check the address fields has value ''
+    And I fill in the address fields with value '4200'
+    And I click on BUTTON name 'register_user'
+    Then I see success notification
+    Then I click on edit for an active existing Organisational Representative
+    And I will be taken to the 'ORGANISATIONALREPRESENTATIVE Signup' page
+    And I verify checkbox name 'billingAddressIsDifferent_confirmation' is checked 'false'
 
   @runThis
   Scenario: As Administrator I can update approve date Interpreter
@@ -181,9 +188,9 @@ Feature: Create, read, update and delete a User
     And I click on BUTTON name 'register_user'
     Then I see success notification
 
-  @runThis
+  @ignoreThis
   Scenario: Administrator should be able to add a new orgrep with state other than victoria
-    And I exist as an Administrator
+    Given There is a active Administrator of TAS state
     And I sign in with valid Administrator credentials
     And I am on my admin home screen
     And I hover on the 'Profile'
@@ -193,7 +200,7 @@ Feature: Create, read, update and delete a User
     When I hover on the userlist dropdown and select 'Organisation'
     And I will be taken to the 'ORGANISATION Signup' page
     And I can see the element with name 'location_pref' as enabled    
-    When I fill in work preference correctly 'TAS' 
+    When I fill in work preference correctly 'VIC'
     When I fill all the details correctly for -> 'ORGANISATIONALREPRESENTATIVE' with the pref communication is 'SMS AND EMAIL'
     Then 'ORGANISATIONALREPRESENTATIVE' will be created
     And I hover on the 'Profile'
@@ -203,7 +210,8 @@ Feature: Create, read, update and delete a User
     Then I click on edit for an active existing Organisational Representative
     And I will be taken to the 'ORGANISATIONALREPRESENTATIVE Signup' page
     And I can see the element with name 'location_pref' as disabled
-    #And I can verify the input 'location_pref' will have the value 'TAS'
+    #because the admin which is creating Org. Rep. is from TAS.
+    And I can verify the input 'location_pref' will have the value 'TAS'
 
   @runThis
   Scenario: As Administrator I cannot update work preference of Individual Client and Interpreter
