@@ -21,7 +21,7 @@ import { Administrator, BookingOfficer } from '../../shared/model/user.entity';
 })
 export class InboxComponent implements OnInit, OnDestroy {
 
-  meesageThreads;
+  meesageThreads = [];
   meesageThread;
   userId;
   message_body;
@@ -30,7 +30,6 @@ export class InboxComponent implements OnInit, OnDestroy {
   isTagShow = true;
   messages;
   selected = -1;
-  // http://localhost:4200/#/users/6/messages
   loginUserID = GLOBAL.currentUser.id;
   business_id = GLOBAL.currentUser.business_id;
 
@@ -82,31 +81,28 @@ export class InboxComponent implements OnInit, OnDestroy {
    }
 
   getAllMeesageThreads(businessId) {
-    this.spinnerService.requestInProcess(true);
+      this.spinnerService.requestInProcess(true);
 
-    this.messagingService.allMeesageThreads(businessId)
-            .subscribe((res: any) => {
-                if (res.status === 200) {
-                    let i = 0;
-                  this.meesageThreads = res.data.message_threads;
-                    for (let m  of this.meesageThreads) {
-                        if (m.messages.length > 0) {
-                            this.selected = i;
-                            break;
-                        }
-                        i = i + 1;
-                    }
-
-                  this.meesageThread = this.meesageThreads[this.selected].messages;
-                  this.userId = this.meesageThreads[this.selected].user_id;
+      this.messagingService.allMeesageThreads(businessId)
+          .subscribe((res: any) => {
+                  if (res.status === 200) {
+                      this.meesageThreads = res.data.message_threads
+                          .filter( m => m.messages.length > 0 )
+                          .sort((a, b) => {
+                          new Date(a.last_messaging_time).getTime() >
+                          new Date(b.last_messaging_time).getTime();
+                      });
+                      this.selected = 0;
+                      this.meesageThread = this.meesageThreads[this.selected].messages;
+                      this.userId = this.meesageThreads[this.selected].user_id;
                   }
-                this.spinnerService.requestInProcess(false);
+                  this.spinnerService.requestInProcess(false);
               },
-                errors => {
+              errors => {
                   this.spinnerService.requestInProcess(false);
                   let e = errors.json();
                   this.notificationServiceBus.launchNotification(true, e);
-          });
+              });
   }
 
   sendMessage() {

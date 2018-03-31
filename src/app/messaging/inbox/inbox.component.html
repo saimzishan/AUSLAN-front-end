@@ -96,7 +96,7 @@
             </div>
             <a (click)='showSingleMessageThread(i)'>
               <div *ngIf='mesg.messages.length > 0'>
-                  <span *ngIf='checkDayIsToday(mesg.messages[0].created_at)'>{{mesg.messages[0].created_at | date: 'h:mma' }}</span> |
+                  <span>{{mesg.messages[0].created_at | date: 'h:mma' }}</span> |
                   <span>{{mesg.user_name}}</span>
                   <p class="messages__conversation-text">{{mesg.messages[0].message_body.substring(0,75)}}</p>
               </div>
