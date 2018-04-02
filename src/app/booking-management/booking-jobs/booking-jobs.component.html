@@ -295,12 +295,12 @@
                                 <td>{{user.distance}}</td>
                                 <td>{{ travelPayStatus(user)}}</td>
                                 <td class="truncated-text" [title]="user.booking_office_notes">{{user.booking_office_notes}}</td>
-                                <td class="truncated-text" [title]="user.working_with_childrens_check">{{user.working_with_childrens_check}}</td>
-                                <td class="truncated-text" [title]="user.yellow_card">{{user.yellow_card}}</td>
-                                <td class="truncated-text" [title]="user.immunisations">{{user.immunisations}}</td>
-                                <td class="truncated-text" [title]="user.police_check">{{user.police_check}}</td>
-                                <td class="truncated-text" [title]="user.from_27a">{{user.from_27a}}</td>
-                                <td class="truncated-text" [title]="user.are_you_okay_with_bookings_that_will_be_recorded_or_published">{{user.are_you_okay_with_bookings_that_will_be_recorded_or_published}}</td>
+                                <td *ngIf="selectedBookingModel.cbworkWithChildCheck" class="truncated-text" [title]="user.working_with_childrens_check">{{user.working_with_childrens_check}}</td>
+                                <td *ngIf="selectedBookingModel.cbYellowCard" class="truncated-text" [title]="user.yellow_card">{{user.yellow_card}}</td>
+                                <td *ngIf="selectedBookingModel.cbImminisations" class="truncated-text" [title]="user.immunisations">{{user.immunisations}}</td>
+                                <td *ngIf="selectedBookingModel.cbPoliceCheck" class="truncated-text" [title]="user.police_check">{{user.police_check}}</td>
+                                <td *ngIf="selectedBookingModel.cbForm27A" class="truncated-text" [title]="user.from_27a">{{user.from_27a}}</td>
+                                <td *ngIf="selectedBookingModel.isBookingBeRecorded" class="truncated-text" [title]="user.are_you_okay_with_bookings_that_will_be_recorded_or_published">{{user.are_you_okay_with_bookings_that_will_be_recorded_or_published}}</td>
                             </tr>
                             </tbody>
                         </table>
