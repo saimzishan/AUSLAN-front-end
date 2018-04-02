@@ -632,9 +632,18 @@ export class Heroku {
         Heroku.sendCommandToHeroku(command);
     }
 
-    static updateBookingWithServiceType(serviceType: string) {
-        let command = 'Booking.last.update(type: ' + serviceType + ')';
+    private static updateBookingWithServiceType(serviceType: string, updateFirst?: boolean) {
+        const updateIndex = updateFirst ? 'first' : 'last'; // the default is last
+        const command = `Booking.${updateIndex}.update(type: '${serviceType}')`;
         Heroku.sendCommandToHeroku(command);
+    }
+
+    static updateFirstBookingWithServiceType(serviceType: string) {
+        Heroku.updateBookingWithServiceType(serviceType, true);
+    }
+
+    static updateLastBookingWithServiceType(serviceType: string) {
+        Heroku.updateBookingWithServiceType(serviceType, false);
     }
 
     static updateBookingWithClientName(client_name: string) {
