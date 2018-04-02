@@ -1164,6 +1164,16 @@
             </span>
           </div>
         </div>
+        <div class="medium-6 columns" *ngIf="bookingModel.bookable_type === 'OrganisationalRepresentative' ">
+          <div class="form-field">
+            <label>Search
+              <span mdTooltip="Searching">
+                <i class="inline-icon-tip"></i>
+              </span>
+            </label>
+            <button class="btn btn-success">Search</button>
+          </div>
+        </div>
       </div>
     </div>
 
