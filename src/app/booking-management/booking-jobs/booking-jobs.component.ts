@@ -456,7 +456,6 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                         this.jobAccessError = false;
                         let data = res.data;
                         this.otherAcceptedRolesAttributes = res.data.other_accepted_roles_attributes;
-                        console.log(this.otherAcceptedRolesAttributes);
                         this.selectedBookingModel.fromJSON(data);
                         this.selectedBookingModel.interpreters.sort((i, j) =>
                             i.state === 'Accepted' ? -1 : j.state === 'Accepted' ? 1 : 0
