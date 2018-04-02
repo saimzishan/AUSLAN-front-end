@@ -250,3 +250,33 @@ Feature: Booking Admin Management
     And I am on the bookings page
     Then I see one row with state 'Requested'
 
+@runThis
+Scenario: Administrator And Interpreter, Interpreter1 exist
+    Given I exist as an Administrator
+    Given There exist 2 bookings
+    And I sign in with valid Administrator credentials
+    And I am on the bookings page
+    When I click on an individual booking
+    Then I am on the individual booking page
+    When I click on an booking of index 1
+    Then I am on the individual booking page
+    Then I select 1 Interpreter
+    And I click on BUTTON name 'reassingBtn'
+    Then I can see the button 'Save' is enabled
+    And I click on BUTTON 'Save'
+    Then I wait for 1000 milli-seconds
+    Then I get valid message: 'The interpreter have been assigned'
+    When I click on Booking
+    And I am on the bookings page
+    When I click on an booking of index 1
+    Then I am on the individual booking page
+    Then I select Interpreter 1
+    And I click on BUTTON name 'reassingBtn'
+    Then I can see the button 'Save' is enabled
+    And I click on BUTTON 'Save'
+    Then I wait for 1000 milli-seconds
+    Then I get valid message: 'The interpreter have been assigned'
+    And I can see the element with name 'unassingBtn_1' is 'visible'
+    And I can see the element with name 'unassingBtn_2' is 'not visible'
+
+

@@ -156,6 +156,7 @@ defineSupportCode(({Given, When, Then}) => {
     Given(/^I get a valid '(.*)' notification for state$/, bookingJob.getSuccessNotificationContentForState);
     Given(/^I get a valid invite notification$/, bookingJob.getSuccessNotificationContentForInvite);
     Given(/^I select (\d+) Interpreter$/, bookingJob.selectInterpreters);
+    Given(/^I select Interpreter (\d+)$/, bookingJob.selectInterpretersOfIndex);
     Given(/^I see (\d+) interpreter has accepted the booking$/, bookingJob.bookingAccepted);
     Given(/^I see attachment '(.*)' does '(.*)'$/, bookingJob.attachmentIsPresent);
 

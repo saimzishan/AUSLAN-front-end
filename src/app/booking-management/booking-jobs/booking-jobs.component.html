@@ -51,6 +51,9 @@
                                         <div class="half-opacity">
                                             <b>{{serviceNameToDisplay}} {{selectedBookingModel.interpreters.length + i + 1}} :</b>
                                             <span class='interpreter-accepted'>{{interpreter.first_name}} {{interpreter.last_name}}</span>
+                                            <button hidden name="{{'unassingBtn_' + +(i + 1)}}" (click)="unAssignInterpreters(interpreter.id)" *ngIf="!isCurrentUserInterpreter() && (false === isActiveState('Unable_to_service') && false === isActiveState('Cancelled_no_charge')) && interpreter.state === 'Accepted'">
+                                                Unassign
+                                            </button>
                                         </div>
                                     </ng-container>
                                 </ng-container>

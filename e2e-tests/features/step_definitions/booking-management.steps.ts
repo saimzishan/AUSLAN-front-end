@@ -46,6 +46,7 @@ defineSupportCode(({Given, Then, When}) => {
     When(/^I click on an individual booking of type '(.*)'$/, bookingManagementPO.clickOnIndividualBookingOfType);
     When(/^I do not see any booking rows$/, bookingManagementPO.noBookingExists);
     When(/^I click on an individual booking$/, bookingManagementPO.clickOnIndividualBooking);
+    When(/^I click on an booking of index (.*)$/, bookingManagementPO.clickOnIndividualBookingWithIndex);
 
     // --------------------------------- AUTO POPULATE CLIENT DETAILS
     When(/^I specify i am the client of this booking$/, createBookingPO.specifyAsClientOfBooking);
