@@ -87,11 +87,7 @@ export class InboxComponent implements OnInit, OnDestroy {
           .subscribe((res: any) => {
                   if (res.status === 200) {
                       this.meesageThreads = res.data.message_threads
-                          .filter( m => m.messages.length > 0 )
-                          .sort((a, b) =>
-                          new Date(a.last_messaging_time).getTime() >
-                          new Date(b.last_messaging_time).getTime()
-                      );
+                          .filter( m => m.messages.length > 0 );
                       this.selected = 0;
                       this.meesageThread = this.meesageThreads[this.selected].messages;
                       this.userId = this.meesageThreads[this.selected].user_id;
