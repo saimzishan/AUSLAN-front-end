@@ -80,7 +80,7 @@ defineSupportCode(({Given, Then, When}) => {
     When(/^I click out of the text box$/, bookingManagementPO.clickOutSide);
     When(/^I click on Booking$/, bookingManagementPO.clickOnBooking);
     When(/^I change the bookable type/, createBookingPO.changeBookableType);
-
+    When(/^I query search with future date after '(\d+)' Days manually$/, bookingManagementPO.querySearchWithManualFutureDate);
 
     Then(/^I will be taken to the 'New Booking' form$/, createBookingPO.browse);
     Then(/^The field '(.*)' will be populated with '(.*)'$/, createBookingPO.theFieldWillBePopulated);
