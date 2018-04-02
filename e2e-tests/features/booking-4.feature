@@ -289,7 +289,7 @@ Feature: Booking Management
     And I fill the field 'address_suburb' with value 'jupiter'
     When I click on BUTTON 'SAVE'
     And If I am shown a popup message 'This booking is not within the standard booking hours (8AM - 6PM). Do you still want to update booking?', I approve it
-    Then I wait for 1000 milli-seconds
+    Then I wait for 1500 milli-seconds
     And If I am shown a popup message 'Would you like to save these changes for all bookings or only for this one?', I approve it
     Then I should get a valid booking update notification
     Then I wait for 3300 milli-seconds
@@ -304,9 +304,9 @@ Feature: Booking Management
     And I fill the field 'address_suburb' with value 'saturn'
     When I click on BUTTON 'SAVE'
     And If I am shown a popup message 'This booking is not within the standard booking hours (8AM - 6PM). Do you still want to update booking?', I approve it
-    Then I wait for 1000 milli-seconds
+    Then I wait for 1500 milli-seconds
     And If I am shown a popup message 'Would you like to save these changes for all bookings or only for this one?', I approve it
-    Then I wait for 1000 milli-seconds
+    Then I wait for 1500 milli-seconds
     And I will be shown a popup message 'Interpreter(s) have been/is allocated for this job. You're changing important fields of the booking. Do you have confirmation from the interpreter(s) that these changes are OK?'
 
   @runThis
