@@ -48,7 +48,7 @@ export class BookingInfoComponent {
     isAcceptedByCurrentInterpreter(): boolean {
         if (GLOBAL.currentUser instanceof Interpreter && this.selectedBookingModel.interpreters.length > 0) {
             let currentInterpreter: BookingInterpreter = this.selectedBookingModel.interpreters.find(i => i.id === GLOBAL.currentUser.id);
-            return (currentInterpreter.state === 'Accepted') ? true : false;
+            return (currentInterpreter.state === 'Accepted');
         } else {
             return true;
         }
