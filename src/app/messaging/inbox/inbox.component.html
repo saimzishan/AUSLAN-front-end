@@ -60,7 +60,8 @@
 
       <ng-container *ngFor="let message of meesageThread">
 
-        <section class="messages__message" [ngClass]="{ 'messages__message_left' : message.sender.type !== Interpreter, 'messages__message_right' : message.sender.type === Interpreter }">
+        <section class="messages__message" [ngClass]="{ 'messages__message_left' : message.sender.type !== 'Interpreter'
+        , 'messages__message_right' : message.sender.type === 'Interpreter' }">
 
           <figure class="messages__figure">
             <img src="{{message.sender.photo_url}}" alt="">  </figure>
