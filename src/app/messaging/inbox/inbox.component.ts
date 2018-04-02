@@ -27,7 +27,7 @@ export class InboxComponent implements OnInit, OnDestroy {
   message_body;
   message_tage = '-000000';
   checked = false;
-  isTagShow = true;
+  isTagShow = false;
   messages;
   selected = -1;
   loginUserID = GLOBAL.currentUser.id;
@@ -51,6 +51,7 @@ export class InboxComponent implements OnInit, OnDestroy {
           .subscribe((res: any) => {
             if (res.status === 200) {
                   this.messages = res.data.messages;
+                  this.meesageThread = this.messages;
                   this.userId = userId;
                 }
               this.spinnerService.requestInProcess(false);
@@ -88,9 +89,11 @@ export class InboxComponent implements OnInit, OnDestroy {
                   if (res.status === 200) {
                       this.meesageThreads = res.data.message_threads
                           .filter( m => m.messages.length > 0 );
-                      this.selected = 0;
-                      this.meesageThread = this.meesageThreads[this.selected].messages;
-                      this.userId = this.meesageThreads[this.selected].user_id;
+                      if (this.meesageThreads.length > 0) {
+                          this.selected = 0;
+                          this.meesageThread = this.meesageThreads[this.selected].messages;
+                          this.userId = this.meesageThreads[this.selected].user_id;
+                      }
                   }
                   this.spinnerService.requestInProcess(false);
               },
