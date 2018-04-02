@@ -279,16 +279,38 @@ export class BookingManagementPage extends PageObject {
         return searchForm.submit();
     }
     querySearchWithEmptyDate = () => {
-        this.getElementByName('date_from').sendKeys(protractor.Key.BACK_SPACE,protractor.Key.ARROW_RIGHT,protractor.Key.BACK_SPACE,protractor.Key.ARROW_RIGHT,protractor.Key.BACK_SPACE);
+        this.getElementByName('date_from').sendKeys(protractor.Key.BACK_SPACE,
+            protractor.Key.ARROW_RIGHT,
+            protractor.Key.BACK_SPACE,
+            protractor.Key.ARROW_RIGHT,
+            protractor.Key.BACK_SPACE);
     }
     pickApprovedCurrentDate = () => {
         this.getElementByName('date_approved').sendKeys(protractor.Key.ARROW_DOWN);
     }
     queryManualSearchWithFutureDate = () => {
         this.getElementByName('date_from').sendKeys(protractor.Key.ARROW_UP);
+        this.getElementByName('date_from').sendKeys(protractor.Key.TAB);
+        this.getElementByName('date_from').sendKeys(protractor.Key.ARROW_UP);
+
     }
     queryManualSearchWithCurrentDate = () => {
         this.getElementByName('date_from').sendKeys(protractor.Key.ARROW_DOWN);
+        this.getElementByName('date_from').sendKeys(protractor.Key.TAB);
+        this.getElementByName('date_from').sendKeys(protractor.Key.ARROW_DOWN);
+
+
+    }
+    querySearchWithManualFutureDate = (n: number) => {
+            const currentDate = new Date();
+            const dateStart = new Date(new Date(currentDate).setDate(currentDate.getDate() + n));
+            const futureDate = [
+                this.prettyDate(dateStart.getDate()),
+                this.prettyDate(dateStart.getMonth() + 1),
+                dateStart.getFullYear().toString()
+            ].join('/');
+        this.getElementByName('date_from').sendKeys(futureDate);
+
     }
     enterPressed = () => {
         this.getElementByName('date_from').sendKeys(protractor.Key.ENTER);

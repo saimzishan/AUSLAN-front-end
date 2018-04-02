@@ -30,6 +30,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
     userId;
     otherGender = '';
     isEditInterpreter;
+    vicDeaf = ['VIC', 'TAS', 'SA', 'WA'];
+    dsq = ['ACT', 'NSW', 'QLD', 'NT'];
+    stateBookingOccur = [];
     constructor(public userService: UserService,
         public notificationServiceBus: NotificationServiceBus,
         public spinnerService: SpinnerService,
@@ -106,8 +109,14 @@ export class RegisterComponent implements OnInit, OnDestroy {
                 this.userStatusArray[0].name : this.userStatusArray[1].name;
         });
         this.termsAndConditionAccepted = this.isUserLogin();
-        this.model.state_where_most_bookings_occur = 'VIC';
         this.model.staff_to_casual_toggle = this.model.employment_type;
+        if (this.isUserDsqAdmin()) {
+            this.stateBookingOccur = this.dsq;
+        } else if (this.isUserVicdeaf()) {
+            this.stateBookingOccur = this.vicDeaf;
+        } else {
+            this.stateBookingOccur = this.vicDeaf.concat(this.dsq);
+        }
     }
 
     setIfOtherGender() {
@@ -231,7 +240,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     }
 
     isUserVicdeaf(): Boolean {
-        return Boolean(GLOBAL.currentUser.business_name === 'Vicdeaf');
+        return Boolean(GLOBAL.currentUser instanceof Administrator && GLOBAL.currentUser.business_name === 'Vicdeaf');
     }
 
     handleFileSelect(evt) {

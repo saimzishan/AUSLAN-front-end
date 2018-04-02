@@ -77,7 +77,7 @@ export class User {
         let firstName = 'MOH';
         let lastName = 'JAY';
         let mobileNum = '0444555666';
-        let stateWhereMostBookingsOccur = 'VIC';
+        let stateWhereMostBookingsOccur = 'TAS';
 
         if (typeof user !== 'undefined') {
             email = user.email;

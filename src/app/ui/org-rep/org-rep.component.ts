@@ -27,6 +27,15 @@ export class OrgRepComponent implements  OnInit, AfterViewInit {
   }
     ngOnInit() {
         delete this.userModel.password;
+        let orgAddrss = this.userModel.address_attributes;
+        let billingAddress = this.userModel.organisation_billing_account.organisation_billing_address;
+
+        this.userModel.billingAddressIsSame = (orgAddrss.street_name === billingAddress.street_name &&
+            orgAddrss.street_number === billingAddress.street_number &&
+            orgAddrss.state === billingAddress.state &&
+            orgAddrss.suburb === billingAddress.suburb &&
+            orgAddrss.unit_number === billingAddress.unit_number &&
+            orgAddrss.post_code === billingAddress.post_code);
     }
 
     checkUserAdminORBookOfficer(): Boolean {
@@ -34,7 +43,13 @@ export class OrgRepComponent implements  OnInit, AfterViewInit {
             GLOBAL.currentUser instanceof BookingOfficer);
     }
     billingAddressNotAsOrg() {
+        let billingAddress;
+        if (this.userModel.billingAddressIsSame) {
+            billingAddress = new Address();
+            billingAddress = this.userModel.address_attributes;
+            delete billingAddress.id;
+        }
         this.userModel.organisation_billing_account.organisation_billing_address =
-            !this.userModel.billingAddressIsSame ? new Address() : this.userModel.address_attributes;
+            this.userModel.billingAddressIsSame ? billingAddress : new Address();
     }
 }
