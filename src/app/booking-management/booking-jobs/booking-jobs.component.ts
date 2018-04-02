@@ -456,35 +456,6 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                         this.jobAccessError = false;
                         let data = res.data;
                         this.otherAcceptedRolesAttributes = res.data.other_accepted_roles_attributes;
-                        this.otherAcceptedRolesAttributes = [
-                            {
-                                'id': 6,
-                                'state': 'Accepted',
-                                'email': 'dragana@auslan.com.au',
-                                'first_name': 'Dragana',
-                                'last_name': 'Djokovic',
-                                'mobile': '0400000000',
-                                'photo_url': 'https://s3-ap-southeast-2.amazonaws.com/auslan-public-bucket/missing.svg'
-                            },
-                            {
-                                'id': 7,
-                                'state': 'Accepted',
-                                'email': 'saim@auslan.com.au',
-                                'first_name': 'Saim',
-                                'last_name': 'Djokovic',
-                                'mobile': '0400000000',
-                                'photo_url': 'https://s3-ap-southeast-2.amazonaws.com/auslan-public-bucket/missing.svg'
-                            },
-                            {
-                                'id': 6,
-                                'state': 'Accepted',
-                                'email': 'Moh@auslan.com.au',
-                                'first_name': 'Moh',
-                                'last_name': 'Djokovic',
-                                'mobile': '0400000000',
-                                'photo_url': 'https://s3-ap-southeast-2.amazonaws.com/auslan-public-bucket/missing.svg'
-                            }
-                        ];
                         this.selectedBookingModel.fromJSON(data);
                         this.selectedBookingModel.interpreters.sort((i, j) =>
                             i.state === 'Accepted' ? -1 : j.state === 'Accepted' ? 1 : 0
