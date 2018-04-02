@@ -3,13 +3,7 @@
         <table id="jobs-responsive" class="custom">
             <thead>
             <tr>
-                <th width="4%">
-                    <div class="checkbox">
-                        <input type="checkbox" name="cbForAll" value="1" id="cbForAll">
-                        <label for="cbForAll"></label>
-                    </div>
-                </th>
-                <th width="5%">
+                <th class="first-th" width="5%">
                     <span class="order" [ngClass]="getSortOrder('job')" (click)="sort('job')">Job</span>
                     <form #filterByBookingIds="ngForm" class="common-form compact"
                           (ngSubmit)="filter('booking_ids', filterByBookingIds.value.booking_ids)" novalidate>
@@ -148,12 +142,6 @@
             <tr [ngClass]="{'active': isSelectedBooking(booking.id)}"
                 *ngFor="let booking of bookingList | paginate: { itemsPerPage: 10, currentPage: p, totalItems: totalItems } let i = index"
                 (click)="setClickedRow(booking)">
-                <td>
-                    <div class="checkbox" (click)="$event.stopPropagation()">
-                        <input type="checkbox" name="{{'cb_booking_'+i}}" id="{{'job-'+i}}" (click)="cbClicked(booking.id, $event.target.checked)">
-                        <label for="{{'job-'+i}}"></label>
-                    </div>
-                </td>
                 <td class="bookingID">
                     <div class="actions-container">
                         <span>{{booking.id | PrettyID}}</span>

@@ -6,7 +6,7 @@ import {BookingPage} from './create-booking.po';
 import { debug } from 'util';
 
 enum BookingTableHeaders {
-    None, Empty, Job, Status, State, Date, Org,
+    Empty, Job, Status, State, Date, Org,
     Client, Suburb, Interpreter, Nature, Method, 'Service Type', Notice
 }
 
@@ -402,7 +402,7 @@ export class BookingManagementPage extends PageObject {
     bookingExistsWithInterpreterFirstName = (interpreter_name: string) => {
         let tblRows = this.getAllElementByCSS('table tbody tr');
         expect(tblRows.count()).to.eventually.be.least(1);
-        let clientNameTd = this.getElementByCss('table tbody tr:first-child td:nth-child(9)');
+        let clientNameTd = this.getElementByCss('table tbody tr:first-child td:nth-child(8)');
         return clientNameTd.getText().then((txt) => {
             return expect(txt).to.be.eq(interpreter_name);
         });
@@ -410,7 +410,7 @@ export class BookingManagementPage extends PageObject {
     bookingExistsWithInterpreterLastName = (interpreter_name: string) => {
         let tblRows = this.getAllElementByCSS('table tbody tr');
         expect(tblRows.count()).to.eventually.be.least(1);
-        let clientNameTd = this.getElementByCss('table tbody tr:first-child td:nth-child(9)');
+        let clientNameTd = this.getElementByCss('table tbody tr:first-child td:nth-child(8)');
         return clientNameTd.getText().then((txt) => {
             return expect(txt).to.be.eq(interpreter_name);
         });
