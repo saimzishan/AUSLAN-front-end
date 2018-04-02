@@ -13,6 +13,7 @@ defineSupportCode(({Given, Then, When}) => {
     When(/^I hover on the (.*) dropdown on interpreter table header and select '(.*)'$/, intManagementPO.hoverOnInterpreterTableHeader);
     When(/^I query interpreter by form field (.*) and value '(.*)'$/, intManagementPO.queryInterpreterByFormField);
     When(/^I click on the interpreter table header '(.*)'$/, intManagementPO.clickOnInterpreterTableHeader);
+    When(/^I can see the interpreter table header has column '(.*)'$/, intManagementPO.checkInterpreterTableHeaderColumn);
 
     Then(/^I should see the verified interpreters in (ascending|descending) order of (.*)$/, intManagementPO.checkInterpreterOrder);
 
