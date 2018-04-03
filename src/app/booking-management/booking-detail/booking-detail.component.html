@@ -1166,14 +1166,29 @@
         </div>
         <div class="medium-6 columns" *ngIf="bookingModel.bookable_type === 'OrganisationalRepresentative' ">
           <div class="form-field">
-            <label>Search
+            <label>SEARCH
               <span mdTooltip="Searching">
                 <i class="inline-icon-tip"></i>
               </span>
             </label>
-            <button class="btn btn-success">Search</button>
+            <button (click)='checkClientAvailability()' class="btn btn-success">Search</button>
           </div>
         </div>
+    
+        <div class="medium-12 columns" *ngIf="(bookingModel.bookable_type === 'OrganisationalRepresentative') && isclientAvailable">
+          <label [ngClass]="{'note_green': isClientFound, 'note_red': !isClientFound}">{{availabilityMesg}}</label>
+            <div class="form-field" *ngIf='isClientFound'>
+              <label>Do you want to link the client to this.booking?</label>
+              <span mdTooltip="Searching">
+                <i class="inline-icon-tip"></i>
+              </span>
+              <md-radio-group name="clientAvailability" [(ngModel)]="bookingModel.clientAvailability">
+                <md-radio-button value="1">YES</md-radio-button>
+                <md-radio-button [checked]='true' value="2">NO</md-radio-button>
+              </md-radio-group>
+            </div>
+        </div>
+
       </div>
     </div>
 

@@ -247,4 +247,20 @@ export class BookingService extends ApiService {
             .map(this.extractData)
             .catch((err) => { return this.handleError(err); });
     }
+
+    checkClientAvailability(obj = {}) {
+        let headers = new Headers(
+            {
+                 'Accept': 'application/json',
+                 'Content-Type': 'application/json'
+             }
+         );
+
+        let options = new RequestOptions({ headers: headers});
+        options = Object.assign(options, { params: obj });
+
+        return this.http.get(GLOBAL.USER_API + '/find_client', options)
+            .map(this.extractData)
+            .catch((err) => { return this.handleError(err); });
+    }
 }

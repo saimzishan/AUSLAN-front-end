@@ -75,6 +75,7 @@ export class Booking {
     public cbPoliceCheck: boolean;
     public cbForm27A: boolean;
     public isBookingBeRecorded: boolean;
+    public clientAvailability: boolean;
     // Is it a limitation on interpreters invitation.
 
     static getNamedTimeZone(state: string, postCode: string) {

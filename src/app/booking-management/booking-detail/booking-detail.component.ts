@@ -100,6 +100,10 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     hasPrefInt: Boolean = false;
     duplicatingBookable: number;
     isCertRequired = false;
+    isclientAvailable = false;
+    clientAvailability;
+    isClientFound = false;
+    availabilityMesg = '';
     repeat_days = [
         {
             display: 'S',
@@ -1119,5 +1123,31 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         this.oldInterpreterPreference = [];
         this.showPreferred = this.showProfilePreferred = this.showBlocked = this.showProfileBlocked = false;
         this.hasPrefInt = this.hasBlockInt = false;
+    }
+
+    checkClientAvailability() {
+        delete this.bookingModel.deaf_person.photo_url;
+        this.spinnerService.requestInProcess(true);
+        const obj = {'user':  {
+                'first_name': this.bookingModel.deaf_person.first_name, 'last_name': this.bookingModel.deaf_person.last_name,
+                'mobile': this.bookingModel.deaf_person.mobile_number, 'email': this.bookingModel.deaf_person.email, 'eaf_id': this.bookingModel.deaf_person.eaf,
+                'ndis_id': this.bookingModel.deaf_person.ndis_id, 'ur_id': this.bookingModel.deaf_person.ur_number
+            } };
+        this.bookingService.checkClientAvailability(obj)
+            .subscribe((res: any) => {
+                this.spinnerService.requestInProcess(false);
+                this.isclientAvailable = true;
+                if (res.status === 200) {
+                    this.isClientFound = true;
+                    this.availabilityMesg = 'This client is available in our system';
+                } else if (res.status === 404) {
+                    this.availabilityMesg = 'This client is not available in our system';
+                }
+            },
+            errors => {
+                this.spinnerService.requestInProcess(false);
+                let e = errors.json();
+                this.notificationServiceBus.launchNotification(true, e);
+            });
     }
 }
