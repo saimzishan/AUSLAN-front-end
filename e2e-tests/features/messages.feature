@@ -35,5 +35,5 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN,  I can send messages and ca
         Then I wait for 10000 milli-seconds
         Then I click on BUTTON name 'messages__formSend'
         And I get success message: 'Message sent successfully..'
-        Then I click on button with css '.messages__formButton'
-        And I can see the element with name 'messages__Xtag' is 'not visible'
+        #Then I click on button with css '.messages__formButton'
+        #And I can see the element with name 'messages__Xtag' is 'not visible'
