@@ -98,8 +98,10 @@ export class RolePermission {
     private refreshUserDetail() {
         let curr_role: ROLE = ROLE.NONE;
         let u: User = GLOBAL.currentUser;
-        curr_role = u.getRole();
-        this.curr_role = this.hyphen_pipe.transform(ROLE[curr_role]);
+        if (Boolean(u)) {
+            curr_role = (<User>u).getRole();
+            this.curr_role = this.hyphen_pipe.transform(ROLE[curr_role]);
+        }
     }
 
     loadData() {

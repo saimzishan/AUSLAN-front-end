@@ -17,6 +17,13 @@ import { MockBackend, MockConnection } from '@angular/http/testing';
 import { MockMessageService } from '../../shared/test/Mock';
 import { InboxComponent } from './inbox.component';
 
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+
+const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
+    suppressScrollX: true
+};
+
 describe('InboxComponent', () => {
   let component: InboxComponent;
   let fixture: ComponentFixture<InboxComponent>;
@@ -26,7 +33,9 @@ describe('InboxComponent', () => {
           declarations: [InboxComponent],
             providers: [RolePermission, { provide: UserService }, NotificationServiceBus, { provide: MessagingService, useClass: MockMessageService },
                 SpinnerService, { provide: AuthHttp, useClass: MockBackend }],
-          imports: [FormsModule, RouterTestingModule, HttpModule, MdCheckboxModule]
+          imports: [FormsModule, RouterTestingModule, HttpModule,
+              PerfectScrollbarModule.forRoot(PERFECT_SCROLLBAR_CONFIG),
+              MdCheckboxModule]
           })
         .compileComponents();
     }));
