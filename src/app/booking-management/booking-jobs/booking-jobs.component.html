@@ -256,6 +256,9 @@
                                 <th *ngIf="selectedBookingModel.cbworkWithChildCheck" width="11%">
                                     <span class="">WWCC</span>
                                 </th>
+                                <th *ngIf="selectedBookingModel.cbBlueCard" width="9%">
+                                    <span class="">Blue</span>
+                                </th>
                                 <th *ngIf="selectedBookingModel.cbYellowCard" width="10%">
                                     <span class="">Yellow</span>
                                 </th>
@@ -296,6 +299,7 @@
                                 <td>{{ travelPayStatus(user)}}</td>
                                 <td class="truncated-text" [title]="user.booking_office_notes">{{user.booking_office_notes}}</td>
                                 <td *ngIf="selectedBookingModel.cbworkWithChildCheck" class="truncated-text" [title]="user.working_with_childrens_check">{{user.working_with_childrens_check}}</td>
+                                <td *ngIf="selectedBookingModel.cbBlueCard" class="truncated-text" [title]="user.blue_card">{{user.blue_card}}</td>
                                 <td *ngIf="selectedBookingModel.cbYellowCard" class="truncated-text" [title]="user.yellow_card">{{user.yellow_card}}</td>
                                 <td *ngIf="selectedBookingModel.cbImminisations" class="truncated-text" [title]="user.immunisations">{{user.immunisations}}</td>
                                 <td *ngIf="selectedBookingModel.cbPoliceCheck" class="truncated-text" [title]="user.police_check">{{user.police_check}}</td>
