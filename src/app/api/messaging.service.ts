@@ -18,11 +18,11 @@ export class MessagingService extends ApiService {
             return (this.http !== undefined || this.http !== null);
         }
 
-        getInterpreterMessages(user_id): Observable < any > {
+        getInterpreterMessages(user_id, page): Observable < any > {
             let headers = new Headers({ 'Accept': 'application/json' });
             let options = new RequestOptions({ headers: headers });
 
-            return this.http.get(GLOBAL.USER_API + '/' + user_id + '/messages' + '?page=' + 1 + '&amp;per_page=' + 10, options)
+            return this.http.get(GLOBAL.USER_API + '/' + user_id + '/messages' + '?page=' + page + '&amp;per_page=' + 10, options)
                     .map(this.extractData)
                     .catch((err) => { return this.handleError(err); });
         }

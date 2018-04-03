@@ -34,6 +34,7 @@ export class InboxComponent implements OnInit, OnDestroy {
   loginUserID = -1;
   business_id = -1;
   sub;
+    messagePage = 1;
   constructor(private userService: UserService, private notificationServiceBus: NotificationServiceBus, public platformLocation: PlatformLocation,
     private messagingService: MessagingService, private _location: Location, public spinnerService: SpinnerService,
     private rolePermission: RolePermission, private router: Router, private route: ActivatedRoute) { }
@@ -55,10 +56,17 @@ export class InboxComponent implements OnInit, OnDestroy {
           }
       });
   }
-
+    loadMore() {
+      this.messagePage += 1;
+        if (this.isCurrentUserAdminOrBookingOfficer()) {
+            this.getAllMessageThreads(this.business_id);
+        } else {
+            this.getInterpreterMessages(this.loginUserID);
+        }
+    }
   getInterpreterMessages(userId) {
      this.spinnerService.requestInProcess(true);
-     this.messagingService.getInterpreterMessages(userId)
+     this.messagingService.getInterpreterMessages(userId, this.messagePage)
           .subscribe((res: any) => {
             if (res.status === 200) {
                   this.messages = res.data.messages;
