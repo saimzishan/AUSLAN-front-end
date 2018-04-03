@@ -175,6 +175,7 @@ export class BookingManagementPage extends PageObject {
             'red': 'icon-small-red',
             'orange': 'icon-small-yellow'
         }[booking_status];
+        browser.waitForAngular();
         return this.getAllElementByCSS('i[class="status ' + className + '"]').count().then((cnt) => {
             expect(cnt.toString()).to.be.eq(count);
         });
