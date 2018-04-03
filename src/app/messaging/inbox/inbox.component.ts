@@ -27,7 +27,7 @@ export class InboxComponent implements OnInit, OnDestroy {
   message_body;
   message_tage = '-000000';
   checked = false;
-  isTagShow = false;
+  isTagShow = true;
   messages;
   selected = -1;
   loginUserID = GLOBAL.currentUser.id;

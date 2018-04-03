@@ -67,27 +67,6 @@
         $(window).resize(function () {
             rescale();
         });
-        var count = 0;
-        if (count < 10) {
-            // call the function.
-         	try{
-                rescale();
-                $('#conversations-wrapper').perfectScrollbar({
-                    suppressScrollX: true
-                });
-                $('#messages-wrapper').perfectScrollbar();
-			}catch (e) {
-
-            }
-            // The currently executing function which is an anonymous function.
-            var caller = arguments.callee;
-            window.setTimeout(function() {
-                // the caller and the count variables are
-                // captured in a closure as they are defined
-                // in the outside scope.
-                caller(count + 1);
-            }, 1000);
-        }
     });
 </script>
 </body>
