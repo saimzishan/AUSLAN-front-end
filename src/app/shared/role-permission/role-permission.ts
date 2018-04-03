@@ -24,7 +24,7 @@ export class RolePermission {
     },
      "accountant":{
       "not-allowed-routes": [
-    "block_out", "reports"
+    "block_out", "reports", "messages"
     ],
         "routes-with-data-permissions": {
             "user-management": {
@@ -51,7 +51,7 @@ export class RolePermission {
     },
     "organisational-representative": {
         "not-allowed-routes": [
-            "block_out",
+            "block_out", "messages",
             "booking-job", "reports"
         ],
         "routes-with-data-permissions": {
@@ -70,7 +70,7 @@ export class RolePermission {
     },
     "individual-client": {
         "not-allowed-routes": [
-            "user-management",
+            "user-management", "messages",
             "booking-job", "block_out", "reports"
         ],
         "routes-with-data-permissions": {
