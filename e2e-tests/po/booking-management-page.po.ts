@@ -121,6 +121,13 @@ export class BookingManagementPage extends PageObject {
             return bookingR[0].click();
         });
     }
+
+    clickOnIndividualBookingWithIndex = (index: number) => {
+        const bookingRows = $$('tbody tr');
+        return bookingRows.then((bookingR) => {
+            return bookingR[index].click();
+        });
+    }
     clickOnIndividualBookingOfType = (booking_type: string) => {
         return this.clickAtOneofTheBooking('1', '1', booking_type);
     }

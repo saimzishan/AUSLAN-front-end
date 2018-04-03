@@ -156,6 +156,7 @@ defineSupportCode(({Given, When, Then}) => {
     Given(/^I get a valid '(.*)' notification for state$/, bookingJob.getSuccessNotificationContentForState);
     Given(/^I get a valid invite notification$/, bookingJob.getSuccessNotificationContentForInvite);
     Given(/^I select (\d+) Interpreter$/, bookingJob.selectInterpreters);
+    Given(/^I select Interpreter (\d+)$/, bookingJob.selectInterpretersOfIndex);
     Given(/^I see (\d+) interpreter has accepted the booking$/, bookingJob.bookingAccepted);
     Given(/^I see attachment '(.*)' does '(.*)'$/, bookingJob.attachmentIsPresent);
 
@@ -504,6 +505,14 @@ defineSupportCode(({Given, When, Then}) => {
     function verifyMaterialCB(btnName: string, checkedState: 'True' | 'true') {
         const checkbox = page.getElementByCss('md-checkbox[ng-reflect-name="' + btnName + '"]');
         return checkbox.getAttribute('ng-reflect-model').then(val => {
+            return expect(val).to.be.eq(checkedState.toLowerCase());
+        });
+    }
+
+    When(/^I verify material slide-toggle name '(.*)' is disabled '(.*)'$/, verifyMaterialST);
+    function verifyMaterialST(btnName: string, checkedState: 'True' | 'true') {
+        const checkbox = page.getElementByCss('md-slide-toggle[name="' + btnName + '"]');
+        return checkbox.getAttribute('ng-reflect-is-disabled').then(val => {
             return expect(val).to.be.eq(checkedState.toLowerCase());
         });
     }

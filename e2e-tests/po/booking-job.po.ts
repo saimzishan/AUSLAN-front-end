@@ -81,6 +81,16 @@ export class BookingJobPage extends PageObject {
         });
     }
 
+    selectInterpretersOfIndex = (index: number) => {
+        return $$('section.interpreters-list md-checkbox').each((ef, ind) => {
+            const isClickable = protractor.ExpectedConditions.invisibilityOf(this.getElementByCss('.notification__wrapper'));
+            browser.wait(isClickable, 5000);
+            if (ind === index) {
+                return ef.click();
+            }
+        });
+    }
+
     /* TODO: Also check here interpreter name */
     bookingAccepted = (numOfInterpreters: number) => {
         return this.getAll('span.interpreter-accepted').count().then((cnt) => {
