@@ -277,6 +277,6 @@ Scenario: Administrator And Interpreter, Interpreter1 exist
     Then I wait for 1000 milli-seconds
     Then I get valid message: 'The interpreter have been assigned'
     And I can see the element with name 'unassingBtn_1' is 'visible'
-    And I can see the element with name 'unassingBtn_2' is 'not visible'
+    And I can see the element with name 'unassingBtn_4' is 'not visible'
 
 
