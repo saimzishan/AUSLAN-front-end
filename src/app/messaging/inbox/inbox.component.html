@@ -54,9 +54,9 @@
     </section>
   </section>
 
-    <section [ngClass]="{'messages__wrapper messages__wrapper_aside': isCurrentUserAdminOrBookingOfficer()}" id="messages-wrapper">
+    <section class="messages__wrapper" [ngClass]="{'messages__wrapper_aside': isCurrentUserAdminOrBookingOfficer()}" id="messages-wrapper">
 
-
+<perfect-scrollbar>
       <ng-container *ngFor="let message of meesageThread">
 
         <section class="messages__message" [ngClass]="{ 'messages__message_left' : message.sender.type !== 'Interpreter'
@@ -76,6 +76,7 @@
           </section>
         </section>
       </ng-container>
+</perfect-scrollbar>
   </section>
   <form class="messages__form" [ngClass]="{'messages__form_reduced':isCurrentUserAdminOrBookingOfficer()}" style="position: fixed;">
   <button *ngIf='isTagShow' (click)="sendMessageTagHide()" class="button messages__formButton">{{message_tage }}
