@@ -199,8 +199,16 @@ export class BookingListComponent implements OnInit, OnChanges {
         }
     }
 
+    private unsetFilter(field: string): void {
+        delete this.bookingFilter[field];
+        this.filterParams.delete(`filter[${field}]`);
+        GLOBAL._filterVal.delete(`filter[${field}]`);
+    }
+
     filter(field: string, value: string, toggle?: boolean) {
-        if (toggle) {
+        if (value.toLowerCase() === 'all') {
+            this.unsetFilter(field);
+        } else if (toggle) {
             this.toggleDropdownFilter(field, value);
         } else {
             this.bookingFilter[field] = this.formatterValueFor(field, value);

@@ -109,7 +109,6 @@ Feature: Booking Filter
   Scenario: Given 1 verified Booking Officer, I should be able to filter by service type
     Given The booking has service type 'Captioning'
     Given The first booking has service type 'NoteTaking'
-    Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
     When I am on the bookings page
     Then I am shown with 5 bookings
