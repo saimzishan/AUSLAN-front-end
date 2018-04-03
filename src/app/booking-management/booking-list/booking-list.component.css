@@ -12,3 +12,7 @@
 .first-th{
     vertical-align: baseline !important;
 }
+.dropdown.menu>li .menu>li a.active {
+  color: #fff;
+  background: #02b86e;
+}

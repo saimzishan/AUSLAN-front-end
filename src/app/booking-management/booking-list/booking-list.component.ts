@@ -152,7 +152,13 @@ export class BookingListComponent implements OnInit, OnChanges {
     }
 
     filterStatus() {
-        return BOOKING_STATUS[this.bookingFilter.booking_status];
+        if (this.bookingFilter.booking_status) {
+            return this.bookingFilter.booking_status.split(',').map(status => {
+                return BOOKING_STATUS[status];
+            }).join(',');
+        } else {
+            return 'All';
+        }
     }
 
     private formatterValueFor(field: string, value: string) {
@@ -223,6 +229,11 @@ export class BookingListComponent implements OnInit, OnChanges {
 
     getSortOrder(field: string) {
         return this.isCurrentSort(field) ? this.currentSort.order : '';
+    }
+
+    isDropdownItemActive(field: string, value: string): ('active'|'') {
+        const formattedValue = value !== 'All' && this.formatterValueFor(field, value);
+        return this.bookingFilter[field] && this.bookingFilter[field].indexOf(formattedValue) > -1 ? 'active' : '';
     }
 
     sort(field: string) {
