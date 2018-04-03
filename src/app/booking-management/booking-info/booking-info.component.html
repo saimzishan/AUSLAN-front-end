@@ -70,7 +70,7 @@
       <td data-title="SPECIFIC">{{selectedBookingModel.specific_nature_of_appointment}}</td>
       <ng-container *ngIf='!isClientInterpAndBookInProgress()'>
         <td data-title="NUMBER OF PEOPLE">{{selectedBookingModel.venue.expected_attendance}}</td>
-        <td data-title="SPECIAL INSTRUCTIONS" class="new-line">
+        <td data-title="SPECIAL INSTRUCTIONS FOR INTERPRETERS" class="new-line">
           {{selectedBookingModel.special_instructions}}
         </td>
       </ng-container>
