@@ -24,7 +24,7 @@
 <section class="messages">
   <section *ngIf='isCurrentUserAdminOrBookingOfficer()' class="messages__conversations">
     <section class="messages__conversations-wrapper" id="conversations-wrapper">
-      <ng-container  *ngFor='let mesg of meesageThreads let i = index' >
+      <ng-container  *ngFor="let mesg of messageThreads let i = index" >
         <section *ngIf="mesg.messages.length" class="messages__conversation" [ngClass]="{'messages__conversation_active': mesg.user_id === userId}">
             <a (click)='showSingleMessageThread(i)'>
               <div *ngIf='mesg.messages.length > 0'>
@@ -47,7 +47,7 @@
     <section class="messages__wrapper" [ngClass]="{'messages__wrapper_aside': isCurrentUserAdminOrBookingOfficer()}" id="messages-wrapper">
 
 <perfect-scrollbar>
-      <ng-container *ngFor="let message of meesageThread">
+      <ng-container *ngFor="let message of inboxThread">
 
         <section class="messages__message" [ngClass]="{ 'messages__message_left' : message.sender.type !== 'Interpreter'
         , 'messages__message_right' : message.sender.type === 'Interpreter' }">
@@ -61,7 +61,7 @@
                 <i class="icon-time"></i> {{message.created_at | date: ' d MMM  y | h:mma' }}</span>
                </div>
             <p class="messages__text">{{message.message_body}}
-              <a href="#">#{{message_tage}}</a> booking!</p>
+              <a href="#">#{{message_tag}}</a> booking!</p>
             <button class="messages__button">{{message.sender.id}}</button>
           </section>
         </section>
@@ -69,7 +69,7 @@
 </perfect-scrollbar>
   </section>
   <form class="messages__form" [ngClass]="{'messages__form_reduced':isCurrentUserAdminOrBookingOfficer()}" style="position: fixed;">
-  <button *ngIf='isTagShow' (click)="sendMessageTagHide()" class="button messages__formButton">{{message_tage }}
+  <button *ngIf='isTagShow' (click)="sendMessageTagHide()" class="button messages__formButton">{{message_tag }}
     <i name='messages__Xtag' *ngIf='isTagShow'>x</i>
   </button>
     <section class="messages__formInner">

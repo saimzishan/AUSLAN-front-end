@@ -79,7 +79,6 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         /** http://stackoverflow.com/questions/38008334/angular2-rxjs-when-should-i-unsubscribe-from-subscription */
         this.sub = this.route.params.subscribe(params => {
             let param_id = params['id'] || '';
-            localStorage.setItem('bookingId', param_id );
             if (Boolean(param_id) && parseInt(param_id, 10) > 0) {
                 this.fetchBookingInterpreters(param_id);
             }

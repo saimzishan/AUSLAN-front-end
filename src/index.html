@@ -49,7 +49,7 @@
 
 <script>
     $(document).ready(function () {
-        console.log('in ready');
+        console.log('document ready');
         function storageChange (event) {
             if(event.key === 'token') {
                 if(!event.newValue) { window.location.href = '/' }
@@ -68,22 +68,24 @@
             rescale();
         });
         var count = 0;
-        if (count < 10) {
-            // call the function.
-            try{
-                rescale();
-            }catch (e) {
+        $(function () {
+            if (count < 5) {
+                // call the function.
+                try {
+                    console.log('document rescale');
+                    rescale();
+                } catch (e) {
 
+                }
+                // The currently executing function which is an anonymous function.
+                var caller = arguments.callee;
+                window.setTimeout(function () {
+                    count = count + 1;
+                    caller();
+                }, 1000);
             }
-            // The currently executing function which is an anonymous function.
-            var caller = arguments.callee;
-            window.setTimeout(function() {
-                // the caller and the count variables are
-                // captured in a closure as they are defined
-                // in the outside scope.
-                caller(count + 1);
-            }, 1000);
-        }    });
+        });
+    });
 </script>
 </body>
 </html>
