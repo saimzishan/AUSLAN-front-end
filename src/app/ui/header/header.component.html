@@ -3,14 +3,11 @@
 
 	<nav *ngIf="userIsActive">
 		<a id="lnkBooking" *ngIf="canShowLink('booking-management')" [ngClass]="{'active':isActiveLink(linkName.booking)}" (click)="setActiveLink(linkName.booking)" [routerLink]="['/booking-management']"><span><i class="icon-bookings"></i> BOOKINGS</span></a>
-		<a id="lnkBooking" *ngIf="canShowLink('booking-management') && isCurrentUserAdminOrBookingOfficer()" [ngClass]="{'active':isActiveLink(linkName.messages)}" (click)="setActiveLink(linkName.messages)" [routerLink]="['/users/',getActiveUserId(),'inbox']">
+		<a id="lnkMessages" *ngIf="canShowLink('messages')"
+		   [ngClass]="{'active':isActiveLink(linkName.messages)}"
+		   (click)="setActiveLink(linkName.messages)" [routerLink]="['/users/',getActiveUserId(),'inbox']">
 			<span><i class="icon-messages"></i> MESSAGES</span>
 		</a>
-		<a id="lnkMessages" *ngIf='!isCurrentUserAdminOrBookingOfficer()'  [ngClass]="{'active':isActiveLink(linkName.messages)}" (click)="checkBeforeNavigation()? navigateToMessaging(linkName.messages): ''">
-			<span>
-				<i class="icon-messages"></i>
-				 MESSAGES </span>
-		 </a>
 		<a id="lnkReport" *ngIf="canShowLink('reports')" [ngClass]="{'active':isActiveLink(linkName.reports)}" (click)="setActiveLink(linkName.reports)" [routerLink]="['/reports']"><span><i class="icon-reports"></i> REPORTS </span></a>
 	</nav>
 
