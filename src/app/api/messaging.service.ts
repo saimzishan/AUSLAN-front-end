@@ -22,7 +22,7 @@ export class MessagingService extends ApiService {
             let headers = new Headers({ 'Accept': 'application/json' });
             let options = new RequestOptions({ headers: headers });
 
-            return this.http.get(GLOBAL.USER_API + '/' + user_id + '/messages' + '?page=' + page + '&amp;per_page=' + 10, options)
+            return this.http.get(GLOBAL.USER_API + '/' + user_id + '/messages' + '?page=' + 1 + '&amp;per_page=' + page * 10, options)
                     .map(this.extractData)
                     .catch((err) => { return this.handleError(err); });
         }
@@ -47,11 +47,11 @@ export class MessagingService extends ApiService {
                 .catch((err) => { return this.handleError(err); });
         }
 
-        allMeesageThreads(businessId): Observable<any> {
+        allMessageThreads(businessId, page): Observable<any> {
             let headers = new Headers({ 'Accept': 'application/json' });
             let options = new RequestOptions({ headers: headers });
 
-            return this.http.get(GLOBAL.USER_APPI + '/business/' + businessId + '/message_threads' + '?page=' + 1 + '&amp;per_page=' + 500, options)
+            return this.http.get(GLOBAL.USER_APPI + '/business/' + businessId + '/message_threads' + '?page=' + page + '&amp;per_page=' + 10, options)
                 .map(this.extractData)
                 .catch((err) => { return this.handleError(err); });
         }

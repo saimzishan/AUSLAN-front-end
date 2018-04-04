@@ -25,18 +25,19 @@
   <section *ngIf='isCurrentUserAdminOrBookingOfficer()' class="messages__conversations">
     <section class="messages__conversations-wrapper" id="conversations-wrapper">
       <ng-container  *ngFor="let mesg of messageThreads let i = index" >
-        <section *ngIf="mesg.messages.length" class="messages__conversation" [ngClass]="{'messages__conversation_active': mesg.user_id === userId}">
+        <section class="messages__conversation" [ngClass]="{'messages__conversation_active': i === selectedMessageThread}">
             <a (click)='showSingleMessageThread(i)'>
-              <div *ngIf='mesg.messages.length > 0'>
-                  <span>{{mesg.messages[0].created_at | date: 'h:mma' }}</span> |
+              <div *ngIf='mesg.messages_count > 0'>
+                  <span>{{mesg.last_messaging_time | date: 'h:mma' }}</span> |
                   <span>{{mesg.user_name}}</span>
-                  <p class="messages__conversation-text">{{mesg.messages[0].message_body.substring(0,75)}}</p>
+                  <p class="messages__conversation-text">{{mesg.last_message_body.substring(0,75)}}</p>
               </div>
-              <div *ngIf='mesg.messages.length <= 0'>
-                <span>{{mesg.last_messaging_time | date: ' d MMM y' }}</span> |
-                <span>{{mesg.user_name}}</span>
-                <p class="messages__conversation-text"></p>
-              </div>
+                <div *ngIf='mesg.messages_count < 1'>
+                    <span>{{mesg.last_messaging_time | date: 'h:mma' }}</span> |
+                    <span>{{mesg.user_name}}</span>
+                    <p class="messages__conversation-text"> ..... </p>
+                </div>
+
           </a>
         </section>
       </ng-container>
@@ -47,7 +48,7 @@
     <section class="messages__wrapper" [ngClass]="{'messages__wrapper_aside': isCurrentUserAdminOrBookingOfficer()}" id="messages-wrapper">
 
 <perfect-scrollbar>
-      <ng-container *ngFor="let message of inboxThread">
+      <ng-container *ngFor="let message of this.messageThreads[this.selectedMessageThread]?.messages">
 
         <section class="messages__message" [ngClass]="{ 'messages__message_left' : message.sender.type !== 'Interpreter'
         , 'messages__message_right' : message.sender.type === 'Interpreter' }">
@@ -65,9 +66,10 @@
             <button class="messages__button">{{message.sender.id}}</button>
           </section>
         </section>
+
       </ng-container>
 </perfect-scrollbar>
-        <button (click)="loadMore()" class="button messages__formButton">Load More ..
+        <button *ngIf="this.messageThreads[this.selectedMessageThread]?.messages_count > messagePage * 10" (click)="loadMore()" class="button messages__formButton">Load More ..
 
         </button>
   </section>
