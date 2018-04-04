@@ -1346,6 +1346,7 @@
       <ng-container *ngIf="isCertRequired">
         <p class="p-top-mrg" name="cert_required">Do you require one of the following? Please select multiple if relevant</p>
         <div class="row" id="cert-types">
+          <div class="medium-3 columns"> <md-checkbox name="cb_blue_card" #cb_blue_card [(ngModel)]="bookingModel.cbBlueCard" >Blue CARD</md-checkbox> </div>
           <div class="medium-3 columns"> <md-checkbox name="cb_yellow_card" #cb_yellow_card [(ngModel)]="bookingModel.cbYellowCard" >YELLOW CARD</md-checkbox> </div>
           <div class="medium-3 columns"> <md-checkbox name="cb_imminisations" #cb_imminisations [(ngModel)]="bookingModel.cbImminisations">IMMUNISATIONS</md-checkbox> </div>
           <div class="medium-3 columns"> <md-checkbox name="cb_police_check" #cb_police_check [(ngModel)]="bookingModel.cbPoliceCheck">POLICE CHECK</md-checkbox> </div>
