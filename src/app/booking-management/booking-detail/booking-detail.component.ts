@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewContainerRef, ViewChild, ChangeDetectorRef} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewContainerRef, ViewChild, ChangeDetectorRef, Input} from '@angular/core';
 import {Booking} from '../../shared/model/booking.entity';
 import {BookingService} from '../../api/booking.service';
 import {BA, BOOKING_NATURE} from '../../shared/model/booking-nature.enum';
@@ -76,8 +76,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     minDate = new Date();
     minDateForRecurrenceEnd = this.minDate;
     maxDate: Date;
-    bookingStartTime: Date;
-    bookingEndTime: Date;
+    bookingStartTime;
+    bookingEndTime;
     isDuplicate: boolean;
     cbCaptioner = false;
     cbNotetaker = false;
@@ -100,6 +100,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     hasPrefInt: Boolean = false;
     duplicatingBookable: number;
     isCertRequired = false;
+    @Input() keepInvalid = false;
+    start_time;
     repeat_days = [
         {
             display: 'S',
@@ -1120,5 +1122,26 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         this.oldInterpreterPreference = [];
         this.showPreferred = this.showProfilePreferred = this.showBlocked = this.showProfileBlocked = false;
         this.hasPrefInt = this.hasBlockInt = false;
+    }
+    checkMe(event) {
+        this.start_time = event.target.value;
+    }
+
+    assignMe(timeControl) {
+        this.start_time = this.start_time.replace(/\s/g, '');
+        let bookingTime = '';
+        if (this.start_time.length >= 5) {
+            let str = this.start_time.substring(this.start_time.length - 2, this.start_time.length);
+            if (str === '') {
+                bookingTime += this.start_time + ' AM';
+            } else {
+                bookingTime += this.start_time + ' ' + str;
+            }
+        }
+        if (timeControl === 'startTimeControl') {
+            this.bookingStartTime = bookingTime;
+        } else {
+            this.bookingEndTime = bookingTime;
+        }
     }
 }
