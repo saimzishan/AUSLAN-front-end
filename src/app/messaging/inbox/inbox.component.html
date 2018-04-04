@@ -47,7 +47,7 @@
 
     <section class="messages__wrapper" [ngClass]="{'messages__wrapper_aside': isCurrentUserAdminOrBookingOfficer()}" id="messages-wrapper">
 
-<perfect-scrollbar>
+<perfect-scrollbar fxFlex [config]="config" [scrollIndicators]="true">
       <ng-container *ngFor="let message of this.messageThreads[this.selectedMessageThread]?.messages">
 
         <section class="messages__message" [ngClass]="{ 'messages__message_left' : message.sender.type !== 'Interpreter'

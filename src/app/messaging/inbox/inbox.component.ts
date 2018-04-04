@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnInit, OnDestroy, AfterViewChecked, ViewChild} from '@angular/core';
 import {Location} from '@angular/common';
 import {URLSearchParams} from '@angular/http';
 import {SpinnerService} from '../../spinner/spinner.service';
@@ -14,13 +14,14 @@ import {NotificationServiceBus} from '../../notification/notification.service';
 import {PlatformLocation} from '@angular/common';
 import {Administrator, BookingOfficer} from '../../shared/model/user.entity';
 import {ActivatedRoute, Router} from '@angular/router';
+import {PerfectScrollbarComponent, PerfectScrollbarConfigInterface, PerfectScrollbarDirective} from 'ngx-perfect-scrollbar';
 
 @Component({
     selector: 'app-inbox',
     templateUrl: './inbox.component.html',
     styleUrls: ['./inbox.component.css']
 })
-export class InboxComponent implements OnInit, OnDestroy {
+export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
 
     messageThreads = [];
     userId;
@@ -35,11 +36,17 @@ export class InboxComponent implements OnInit, OnDestroy {
     messageThreadPage = -1;
     messagePage = 1;
     selectedMessageThread = 0;
+
+    public config: PerfectScrollbarConfigInterface = {};
+
+    @ViewChild(PerfectScrollbarComponent) componentScroll: PerfectScrollbarComponent;
     constructor(private userService: UserService, private notificationServiceBus: NotificationServiceBus, public platformLocation: PlatformLocation,
                 private messagingService: MessagingService, private _location: Location, public spinnerService: SpinnerService,
                 private rolePermission: RolePermission, private router: Router, private route: ActivatedRoute) {
     }
+    ngAfterViewChecked() {
 
+    }
     ngOnInit() {
         this.business_id = GLOBAL.currentUser.business_id;
         this.sub = this.route.params.subscribe(params => {
@@ -72,9 +79,12 @@ export class InboxComponent implements OnInit, OnDestroy {
                         this.messages = res.data.messages;
                         this.messageThreads[this.selectedMessageThread]['messages'] = this.messages;
                         this.userId = id;
+                        setTimeout(() => {
+                            this.componentScroll.scrollToBottom();
+                            this.spinnerService.requestInProcess(false);
+                        }, 500);
 
                     }
-                    this.spinnerService.requestInProcess(false);
                 },
                 errors => {
                     this.spinnerService.requestInProcess(false);
@@ -128,7 +138,6 @@ export class InboxComponent implements OnInit, OnDestroy {
         this.messagingService.sendMessages(this.loginUserID, this.userId, url, this.message_tag, this.message_body)
             .subscribe((res: any) => {
                 if (res.status === 200) {
-                    this.ngOnInit();
                     this.notificationServiceBus.launchNotification(false, 'Message sent successfully..');
                     this.message_body = '';
                 }
