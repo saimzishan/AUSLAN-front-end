@@ -45,8 +45,8 @@ export class InterpreterManagementPage extends PageObject {
     }
 
     checkInterpreterTableHeaderColumn = (text: string) => {
-        let el = this.getElementByCSSandText('table thead tr th > span', text);
-        return el.isPresent().then(v => expect(v).to.be.true);
+        let ele = this.getElementByCSSandText('table thead tr th > span', text);
+        return ele.isPresent().then(v => expect(v).to.be.true);
     }
 
     comparisonExpectation = (firstRowText: any, lastRowText: any, isAscending: boolean) => {
