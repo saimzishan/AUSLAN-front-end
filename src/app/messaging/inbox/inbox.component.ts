@@ -35,6 +35,7 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
     sub;
     messageThreadPage = -1;
     messagePage = 1;
+    totalItems = 0;
     selectedMessageThread = 0;
 
     public config: PerfectScrollbarConfigInterface = {};
@@ -98,6 +99,7 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
             .subscribe((res: any) => {
                     if (res.status === 200) {
                         this.messageThreads = res.data.message_threads;
+                        this.totalItems = res.data.message_threads_count;
                         this.userId = this.messageThreads[this.selectedMessageThread].user_id;
                         this.getInterpreterMessages();
                     }
