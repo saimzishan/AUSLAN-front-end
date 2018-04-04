@@ -425,7 +425,7 @@ defineSupportCode(({Given, When, Then}) => {
     When(/^I can see the interpreter table header has not column '(.*)'$/, isElementOfHeaderVisible);
     function isElementOfHeaderVisible(text: string) {
         let el = page.getElementByCSSandText('table thead tr th > span', text);
-        return el ? false : true;
+        return el.isPresent().then(v => expect(v).to.be.false);
     }
 
     When(/^I can see the button '(.*)' is '(.*)'$/, isElementActive);
