@@ -78,9 +78,8 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
                     if (res.status === 200) {
                         this.messages = res.data.messages;
                         this.messageThreads[this.selectedMessageThread]['messages'] = this.messages;
-                        this.userId = id;
                         setTimeout(() => {
-                            this.componentScroll.scrollToBottom();
+                            this.componentScroll.directiveRef.scrollToBottom();
                             this.spinnerService.requestInProcess(false);
                         }, 500);
 
@@ -93,32 +92,14 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
                 });
     }
 
-    sendInterpreterMessages() {
-        let url = (this.platformLocation as any).location.href;
-        this.spinnerService.requestInProcess(true);
-        this.messagingService.sendInterpreterMessages(this.loginUserID, url, this.message_tag, this.message_body)
-            .subscribe((res: any) => {
-                if (res.status === 200) {
-                    this.ngOnInit();
-                    this.notificationServiceBus.launchNotification(false, 'Message sent successfully..');
-                    this.message_body = '';
-                }
-                this.spinnerService.requestInProcess(false);
-            }, errors => {
-                this.spinnerService.requestInProcess(false);
-                let e = errors.json();
-                this.notificationServiceBus.launchNotification(true, e);
-            });
-    }
-
     getAllMessageThreads(businessId) {
         this.spinnerService.requestInProcess(true);
         this.messagingService.allMessageThreads(businessId, this.messageThreadPage)
             .subscribe((res: any) => {
                     if (res.status === 200) {
                         this.messageThreads = res.data.message_threads;
+                        this.userId = this.messageThreads[this.selectedMessageThread].user_id;
                         this.getInterpreterMessages();
-
                     }
                     this.spinnerService.requestInProcess(false);
                 },
@@ -140,6 +121,7 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
                 if (res.status === 200) {
                     this.notificationServiceBus.launchNotification(false, 'Message sent successfully..');
                     this.message_body = '';
+                    this.getInterpreterMessages();
                 }
                 this.spinnerService.requestInProcess(false);
             }, errors => {
