@@ -152,7 +152,13 @@ export class BookingListComponent implements OnInit, OnChanges {
     }
 
     filterStatus() {
-        return BOOKING_STATUS[this.bookingFilter.booking_status];
+        if (this.bookingFilter.booking_status) {
+            return this.bookingFilter.booking_status.split(',').map(status => {
+                return BOOKING_STATUS[status];
+            }).join(',');
+        } else {
+            return 'All';
+        }
     }
 
     private formatterValueFor(field: string, value: string) {
@@ -165,10 +171,14 @@ export class BookingListComponent implements OnInit, OnChanges {
             value = value.replace(/,$/g, '');
             switch (field) {
                 case 'booking_status':
-                    formattedValue = BOOKING_STATUS.hasOwnProperty(value) ? BOOKING_STATUS[value].toString() : '';
+                    formattedValue = value.split(',')
+                        .filter(statusValue => BOOKING_STATUS.hasOwnProperty(statusValue))
+                        .map(statusValue => BOOKING_STATUS[statusValue].toString()).join(',');
                     break;
                 case 'booking_type':
-                    formattedValue = BOOKING_NATURE.hasOwnProperty(value) ? BOOKING_NATURE[value].toString() : '';
+                    formattedValue = value.split(',')
+                        .filter(typeValue => BOOKING_NATURE.hasOwnProperty(typeValue))
+                        .map(filteredTypeValue => BOOKING_NATURE[filteredTypeValue].toString()).join(',');
                     break;
                 default:
                     formattedValue = value;
@@ -178,8 +188,31 @@ export class BookingListComponent implements OnInit, OnChanges {
         return formattedValue;
     }
 
-    filter(field: string, value: string) {
-        this.bookingFilter[field] = this.formatterValueFor(field, value);
+    private toggleDropdownFilter(field: string, value: string) {
+        const newValue = this.formatterValueFor(field, value);
+        const currentValue = this.bookingFilter[field];
+        const removeFilter = currentValue && currentValue.indexOf(newValue) > -1;
+        if (removeFilter) {
+            this.bookingFilter[field] = currentValue.replace(newValue, '').replace(/,,/g, ',').replace(/^,|,$/, '');
+        } else {
+            this.bookingFilter[field] = currentValue && currentValue.length ? currentValue + ',' + newValue : newValue;
+        }
+    }
+
+    private unsetFilter(field: string): void {
+        delete this.bookingFilter[field];
+        this.filterParams.delete(`filter[${field}]`);
+        GLOBAL._filterVal.delete(`filter[${field}]`);
+    }
+
+    filter(field: string, value: string, toggle?: boolean) {
+        if (value.toLowerCase() === 'all') {
+            this.unsetFilter(field);
+        } else if (toggle) {
+            this.toggleDropdownFilter(field, value);
+        } else {
+            this.bookingFilter[field] = this.formatterValueFor(field, value);
+        }
         for (let k in this.bookingFilter) {
             if (this.bookingFilter.hasOwnProperty(k)) {
                 this.filterParams.set('filter[' + k + ']', this.bookingFilter[k]);
@@ -204,6 +237,11 @@ export class BookingListComponent implements OnInit, OnChanges {
 
     getSortOrder(field: string) {
         return this.isCurrentSort(field) ? this.currentSort.order : '';
+    }
+
+    isDropdownItemActive(field: string, value: string): ('active'|'') {
+        const formattedValue = value !== 'All' && this.formatterValueFor(field, value);
+        return this.bookingFilter[field] && this.bookingFilter[field].indexOf(formattedValue) > -1 ? 'active' : '';
     }
 
     sort(field: string) {

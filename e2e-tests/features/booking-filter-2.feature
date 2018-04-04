@@ -55,8 +55,7 @@ Feature: Booking Filter
 
   @runThis
   Scenario: Given 1 verified Booking Officer, 1 verified Interpreter exists, I should be able to reset filter by booking state
-    Given I exist as an Booking Officer
-    And I sign in with valid Booking Officer credentials
+    Given I sign in with valid Booking Officer credentials
     When I am on the bookings page
     Then I will be shown with bookings
     Then I click on an individual booking of type 'Requested'
