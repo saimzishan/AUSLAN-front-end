@@ -21,21 +21,11 @@
   </main>
 </section>
 
-<section class="messages" *ngIf='isCurrentUserAdminOrBookingOfficer()'>
-  <section class="messages__conversations">
+<section class="messages">
+  <section *ngIf='isCurrentUserAdminOrBookingOfficer()' class="messages__conversations">
     <section class="messages__conversations-wrapper" id="conversations-wrapper">
-      <ng-container  *ngFor='let mesg of meesageThreads let i = index' >
+      <ng-container  *ngFor="let mesg of messageThreads let i = index" >
         <section *ngIf="mesg.messages.length" class="messages__conversation" [ngClass]="{'messages__conversation_active': mesg.user_id === userId}">
-
-            <div>
-              <div class="checkbox">
-                <input type="checkbox" name=""  value="1" id="job-2a">
-                <label for="job-2a"></label>
-              </div>
-            </div>
-            <div>
-              <md-checkbox></md-checkbox>
-            </div>
             <a (click)='showSingleMessageThread(i)'>
               <div *ngIf='mesg.messages.length > 0'>
                   <span>{{mesg.messages[0].created_at | date: 'h:mma' }}</span> |
@@ -54,13 +44,13 @@
     </section>
   </section>
 
-  <section class="messages__wrapper messages__wrapper_aside" id="messages-wrapper">
+    <section class="messages__wrapper" [ngClass]="{'messages__wrapper_aside': isCurrentUserAdminOrBookingOfficer()}" id="messages-wrapper">
 
-    <section class="messages__wrapper" id="messages-wrapper">
+<perfect-scrollbar>
+      <ng-container *ngFor="let message of inboxThread">
 
-      <ng-container *ngFor="let message of meesageThread">
-
-        <section class="messages__message" [ngClass]="{ 'messages__message_left' : message.sender.type !== Interpreter, 'messages__message_right' : message.sender.type === Interpreter }">
+        <section class="messages__message" [ngClass]="{ 'messages__message_left' : message.sender.type !== 'Interpreter'
+        , 'messages__message_right' : message.sender.type === 'Interpreter' }">
 
           <figure class="messages__figure">
             <img src="{{message.sender.photo_url}}" alt="">  </figure>
@@ -71,57 +61,20 @@
                 <i class="icon-time"></i> {{message.created_at | date: ' d MMM  y | h:mma' }}</span>
                </div>
             <p class="messages__text">{{message.message_body}}
-              <a href="#">#{{message_tage}}</a> booking!</p>
+              <a href="#">#{{message_tag}}</a> booking!</p>
             <button class="messages__button">{{message.sender.id}}</button>
           </section>
         </section>
       </ng-container>
+</perfect-scrollbar>
   </section>
-  <form class="messages__form messages__form_reduced" style="position: fixed;">
-  <button (click)="sendMessageTagHide()" class="button messages__formButton">{{message_tage }}
+  <form class="messages__form" [ngClass]="{'messages__form_reduced':isCurrentUserAdminOrBookingOfficer()}" style="position: fixed;">
+  <button *ngIf='isTagShow' (click)="sendMessageTagHide()" class="button messages__formButton">{{message_tag }}
     <i name='messages__Xtag' *ngIf='isTagShow'>x</i>
-  </button>    <section class="messages__formInner">
+  </button>
+    <section class="messages__formInner">
         <textarea [(ngModel)]="message_body" required (keyup)="checkEmpty()" name="message_body" class="messages__formInput"></textarea>
         <button [disabled]="!message_body" name="messages__formSend" (click)="sendMessage()" class="messages__formSend"></button>
       </section>
     </form>
-  </section>
-</section>
-
-<section class="messages" *ngIf='!isCurrentUserAdminOrBookingOfficer()'>
-
-  <section class="messages__wrapper" id="messages-wrapper">
-
-    <ng-container *ngFor="let message of messages">
-
-      <section class="messages__message" [ngClass]="{ 'messages__message_left' : message.sender.id === !userId, 'messages__message_right' : message.sender.id == userId }">
-
-        <figure class="">
-          <img src="{{message.sender.photo_url}}" alt=""> </figure>
-        <section class="messages__inner">
-          <div class="messages__title">
-            <strong class="messages__person">{{message.sender.first_name}} {{ message.sender.last_name}}</strong>
-            <span class="messages__time">
-              <i class="icon-time"></i> {{message.created_at | date: 'medium' }}</span>
-          </div>
-          <p class="messages__text">{{message.message_body}}
-            <a href="#">#{{message_tage}}</a> booking!</p>
-          <button class="messages__button">{{message.sender.id}}</button>
-        </section>
-      </section>
-    </ng-container>
-  </section>
-
-  <form class="messages__form" style="position: fixed;">
-
-    <button (click)="sendMessageTagHide()" class="button messages__formButton">{{message_tage }}
-      <i name='messages__Xtag' *ngIf='isTagShow'>x</i>
-    </button>
-
-    <section class="messages__formInner">
-
-      <textarea [(ngModel)]="message_body" required (keyup)="checkEmpty()" name="message_body" class="messages__formInput"></textarea>
-      <button [disabled]="!message_body" name="messages__formSend" (click)="sendInterpreterMessages()" class="messages__formSend"></button>
-    </section>
-  </form>
 </section>

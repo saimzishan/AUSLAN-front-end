@@ -165,3 +165,16 @@ Feature: Create Profile
     When I click on BUTTON name 'resend_code'
     Then I will get an error notification saying "An email has been sent with your verification code"
 # --------------------------------------- AUSLAN1-1114 END ------------------------------------------------
+ @runThis
+  Scenario: An individual-client cannot see claim and general notes
+    And I click on button 'Client'
+    And I will be taken to the 'INDIVIDUALCLIENT Signup' page
+    And I can see the element with name 'general_notes' is 'not visible'
+    And I can see the element with name 'claim_notes' is 'not visible'
+
+ @runThis
+  Scenario: An org rep cannot see claim and general notes
+    And I click on button 'Organisation'
+    And I will be taken to the 'ORGANISATION Signup' page
+    And I can see the element with name 'general_notes' is 'not visible'
+    And I can see the element with name 'claim_notes' is 'not visible'

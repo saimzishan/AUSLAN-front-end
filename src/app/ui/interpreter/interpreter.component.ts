@@ -53,7 +53,7 @@ export class InterpreterComponent implements OnInit , AfterViewInit {
         }
         delete this.userModel.assignments_attributes;
         delete this.userModel.password;
-        if (this.userModel) {
+        if (this.userModel && this.userModel.id) {
             this.spinnerService.requestInProcess(true);
             this.userDataService.getUser(this.userModel.id)
                 .subscribe((res: any) => {
@@ -63,6 +63,9 @@ export class InterpreterComponent implements OnInit , AfterViewInit {
                         this.userModel.staff_availabilities_attributes = res.data.staff_availabilities_attributes;
                         this.BlockoutToUpdate();
                     }
+                    this.spinnerService.requestInProcess(false);
+                }, err => {
+                    console.log(err);
                     this.spinnerService.requestInProcess(false);
                 });
         }

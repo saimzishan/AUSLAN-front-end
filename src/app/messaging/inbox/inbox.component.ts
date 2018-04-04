@@ -13,6 +13,7 @@ import { MessagingService } from '../../api/messaging.service';
 import { NotificationServiceBus } from '../../notification/notification.service';
 import { PlatformLocation } from '@angular/common';
 import { Administrator, BookingOfficer } from '../../shared/model/user.entity';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-inbox',
@@ -21,28 +22,38 @@ import { Administrator, BookingOfficer } from '../../shared/model/user.entity';
 })
 export class InboxComponent implements OnInit, OnDestroy {
 
-  meesageThreads = [];
-  meesageThread;
+  messageThreads = [];
+  inboxThread;
   userId;
   message_body;
-  message_tage = '-000000';
+  message_tag = '-000000';
   checked = false;
-  isTagShow = true;
+  isTagShow = false;
   messages;
   selected = -1;
-  loginUserID = GLOBAL.currentUser.id;
-  business_id = GLOBAL.currentUser.business_id;
-
+  loginUserID = -1;
+  business_id = -1;
+  sub;
   constructor(private userService: UserService, private notificationServiceBus: NotificationServiceBus, public platformLocation: PlatformLocation,
     private messagingService: MessagingService, private _location: Location, public spinnerService: SpinnerService,
-    private rolePermission: RolePermission) { }
+    private rolePermission: RolePermission, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    if (this.isCurrentUserAdminOrBookingOfficer()) {
-      this.getAllMeesageThreads(this.business_id);
-    } else {
-      this.getInterpreterMessages(GLOBAL.currentUser.id);
-    }
+      this.business_id = GLOBAL.currentUser.business_id;
+      this.sub = this.route.params.subscribe(params => {
+          this.loginUserID = params['id'] || -1;
+          if (this.loginUserID > 0) {
+              this.isTagShow = Boolean(params['id2']);
+              if (this.isTagShow) {
+                  this.message_tag = params['id2'];
+              }
+          }
+          if (this.isCurrentUserAdminOrBookingOfficer()) {
+              this.getAllMessageThreads(this.business_id);
+          } else {
+              this.getInterpreterMessages(this.loginUserID);
+          }
+      });
   }
 
   getInterpreterMessages(userId) {
@@ -51,6 +62,7 @@ export class InboxComponent implements OnInit, OnDestroy {
           .subscribe((res: any) => {
             if (res.status === 200) {
                   this.messages = res.data.messages;
+                  this.inboxThread = this.messages;
                   this.userId = userId;
                 }
               this.spinnerService.requestInProcess(false);
@@ -65,7 +77,7 @@ export class InboxComponent implements OnInit, OnDestroy {
    sendInterpreterMessages() {
       let url = (this.platformLocation as any).location.href;
     this.spinnerService.requestInProcess(true);
-     this.messagingService.sendInterpreterMessages(this.loginUserID, url, this.message_tage, this.message_body)
+     this.messagingService.sendInterpreterMessages(this.loginUserID, url, this.message_tag, this.message_body)
           .subscribe((res: any) => {
               if (res.status === 200) {
                    this.ngOnInit();
@@ -80,17 +92,19 @@ export class InboxComponent implements OnInit, OnDestroy {
                });
    }
 
-  getAllMeesageThreads(businessId) {
+  getAllMessageThreads(businessId) {
       this.spinnerService.requestInProcess(true);
 
       this.messagingService.allMeesageThreads(businessId)
           .subscribe((res: any) => {
                   if (res.status === 200) {
-                      this.meesageThreads = res.data.message_threads
+                      this.messageThreads = res.data.message_threads
                           .filter( m => m.messages.length > 0 );
-                      this.selected = 0;
-                      this.meesageThread = this.meesageThreads[this.selected].messages;
-                      this.userId = this.meesageThreads[this.selected].user_id;
+                      if (this.messageThreads.length > 0) {
+                          this.selected = 0;
+                          this.inboxThread = this.messageThreads[this.selected].messages;
+                          this.userId = this.messageThreads[this.selected].user_id;
+                      }
                   }
                   this.spinnerService.requestInProcess(false);
               },
@@ -107,7 +121,7 @@ export class InboxComponent implements OnInit, OnDestroy {
       url += this.userId + '/inbox';
     this.spinnerService.requestInProcess(true);
 
-    this.messagingService.sendMessages(this.loginUserID, this.userId , url, this.message_tage, this.message_body)
+    this.messagingService.sendMessages(this.loginUserID, this.userId , url, this.message_tag, this.message_body)
       .subscribe((res: any) => {
           if (res.status === 200) {
               this.ngOnInit();
@@ -123,8 +137,8 @@ export class InboxComponent implements OnInit, OnDestroy {
   }
 
   showSingleMessageThread(index) {
-    this.meesageThread = this.meesageThreads[index].messages;
-    this.userId = this.meesageThreads[index].user_id;
+    this.inboxThread = this.messageThreads[index].messages;
+    this.userId = this.messageThreads[index].user_id;
   }
 
   checkEmpty() {

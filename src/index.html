@@ -28,7 +28,7 @@
 	<link rel="manifest" href="assets/img/favicon/manifest.json">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
-		<link href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.8.1/css/perfect-scrollbar.css" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.8.1/css/perfect-scrollbar.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.0/css/foundation.min.css">
 	<link rel="stylesheet" href="https://cdn.rawgit.com/angular/bower-material/master/angular-material.css">
 	<link rel='stylesheet' href='assets/thirdparty/primeng/theme.css' />
@@ -49,7 +49,7 @@
 
 <script>
     $(document).ready(function () {
-        console.log('in ready');
+        console.log('document ready');
         function storageChange (event) {
             if(event.key === 'token') {
                 if(!event.newValue) { window.location.href = '/' }
@@ -67,14 +67,24 @@
         $(window).resize(function () {
             rescale();
         });
-        setTimeout(
-            function() {
-                rescale();
-                $('#conversations-wrapper').perfectScrollbar({
-                    suppressScrollX: true
-                });
-                $('#messages-wrapper').perfectScrollbar();
-            }, 5000 );
+        var count = 0;
+        $(function () {
+            if (count < 20) {
+                // call the function.
+                try {
+                    console.log('document rescale');
+                    rescale();
+                } catch (e) {
+
+                }
+                // The currently executing function which is an anonymous function.
+                var caller = arguments.callee;
+                window.setTimeout(function () {
+                    count = count + 1;
+                    caller();
+                }, 1000);
+            }
+        });
     });
 </script>
 </body>

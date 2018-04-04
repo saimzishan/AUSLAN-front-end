@@ -95,6 +95,11 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER STAF
     Then I wait for 2000 milli-seconds
     Then I change the value of end date
     And I click on BUTTON name 'save_blockout'
+    And I get error message: 'Oops! Please fill in all the fields correctly.'
+    Then I click on material checkbox name 'Monday'
+    Then I click on material checkbox name 'Tuesday'
+    Then I change the value of end date
+    And I click on BUTTON name 'save_blockout'
     And I get success message: 'Blockout successfully added'
     Then I click on element with css 'button.fc-listYear-button.fc-button.fc-state-default'
     Then I can count the element with css 'tr.fc-list-item' to be greater than '2'
