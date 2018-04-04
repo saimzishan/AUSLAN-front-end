@@ -9,6 +9,7 @@
                             [hasLinkId]="!!selectedBookingModel.link_id"
                             [isCancelOrUnable]="isCancelledOrUnableToServe"
                             [invitePress]="invitePressed"
+                            [autoInvitePress]="autoInvitePressed"
                             [unAssignPress]="unAssignPressed"
                             [reAssignPress]="reAssignPressed"
                             [unlinkPress]="unlinkPressed"
@@ -219,10 +220,13 @@
                             <a href="javascript:void(0);" class="button" id="lnk-recommended-interpreters"
                                [ngClass]="isRecommended ? 'active' : ''" (click)="toggleRecommended()">Recommended</a>
                             <div class="separator"></div>
-                            <button *ngIf="!hideInvite" class="button active" name='inviteBtn' (click)="inviteInterpreters()">
+                            <button *ngIf="hideAccept_showAutoInvite" class="button active" name='inviteBtn' (click)="autoInviteInterpreters()">
+                                <i class="icon-shape"></i> Auto Invite
+                            </button>
+                            <button *ngIf="!hideInvite" class="button active" name='autoInviteBtn' (click)="inviteInterpreters()">
                                 <i class="icon-shape"></i> Invite
                             </button>
-                            <button *ngIf="!hideAccept" class="button red" (click)="reAssignInterpreters()" name="reassingBtn">
+                            <button *ngIf="!hideAccept_showAutoInvite" class="button red" (click)="reAssignInterpreters()" name="reassingBtn">
                                 <i class="icon-assign"></i> Assign
                             </button>
                         </section>

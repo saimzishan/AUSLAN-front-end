@@ -35,6 +35,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     invitePressed = false;
     unAssignPressed = false;
     reAssignPressed = false;
+    autoInvitePressed = false;
     unlinkPressed = false;
     isVicdeaf = false;
     diffInHours: number;
@@ -59,7 +60,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     interpreterFilter: InterpreterFilter = {};
     stateStr = '';
     hideInvite = false;
-    hideAccept = false;
+    hideAccept_showAutoInvite = false;
     showCalendar = false;
     undoState = false;
     startTime: Date;
@@ -385,7 +386,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                     .filter(i => i.state === 'Accepted' &&
                         inte.id === i.id).length > 0) : hide_accept;
         }
-        this.hideAccept = hide_accept;
+        this.hideAccept_showAutoInvite = hide_accept;
         this.hideInvite = hide_invite;
     }
 
@@ -541,19 +542,24 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     }
 
     inviteInterpreters() {
-        this.unAssignPressed = this.reAssignPressed = false;
+        this.unAssignPressed = this.reAssignPressed = this.autoInvitePressed = false;
         this.invitePressed = this.selectedInterpreterIDs.length > 0;
     }
 
     unAssignInterpreters(int_id: number) {
-        this.invitePressed = this.reAssignPressed = false;
+        this.invitePressed = this.reAssignPressed = this.autoInvitePressed = false;
         this.unAssignPressed = true;
         this.selectedActionableInterpreterID = int_id;
     }
 
     reAssignInterpreters() {
-        this.invitePressed = this.reAssignPressed = false;
+        this.invitePressed = this.reAssignPressed = this.autoInvitePressed = false;
         this.reAssignPressed = this.selectedInterpreterIDs.length > 0;
+    }
+
+    autoInviteInterpreters() {
+        this.invitePressed = this.reAssignPressed = this.unAssignPressed = false;
+        this.autoInvitePressed = this.selectedInterpreterIDs.length > 0;
     }
 
     sendInvite(interpreters) {
@@ -669,6 +675,8 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
             this.selectedInterpreterIDs = [];
             this.invitePressed = false;
             this.sendInvite(selectedInt);
+        } else if (this.autoInvitePressed) {
+
         } else if (this.unAssignPressed) {
             this.spinnerService.requestInProcess(true);
             this.unAssignPressed = false;

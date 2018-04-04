@@ -13,7 +13,7 @@
             <button *ngIf='!isCancelOrUnable' (click)="showDialogBoxClick(true)" class="button pink">Cancel Booking</button>
             <button name="dupBtn" (click)="duplicateClick()" class="button inverse">Duplicate</button>
             <div class="sep"></div>
-            <button (click)="saveClick()" name="saveBtn" [disabled]="!invitePress && !unAssignPress && !reAssignPress && !unlinkPress" class="button inverse">Save</button>
+            <button (click)="saveClick()" name="saveBtn" [disabled]="!invitePress && !autoInvitePress && !unAssignPress && !reAssignPress && !unlinkPress" class="button inverse">Save</button>
         </div>
         <div *ngIf="isCurrentUserInterpreter()">
             <button  [routerLink]="['/users/'+ getInterpreterId() +'/inbox/' + bookingModel.id]" class="button green">MESSAGE OFFICE</button>

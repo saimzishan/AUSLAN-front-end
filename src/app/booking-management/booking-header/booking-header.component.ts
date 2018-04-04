@@ -22,6 +22,7 @@ export class BookingHeaderComponent implements OnInit, OnDestroy {
     @Input() oldModel: any;
     @Input() isCancelOrUnable = false;
     @Input() invitePress = false;
+    @Input() autoInvitePress = false;
     @Input() unAssignPress = false;
     @Input() reAssignPress = false;
     @Input() unlinkPress = false;
