@@ -6,7 +6,7 @@ import {BookingPage} from './create-booking.po';
 import { debug } from 'util';
 
 enum BookingTableHeaders {
-    None, Empty, Job, Status, State, Date, Org,
+    Empty, Job, Status, State, Date, Org,
     Client, Suburb, Interpreter, Nature, Method, 'Service Type', Notice
 }
 
@@ -121,6 +121,13 @@ export class BookingManagementPage extends PageObject {
             return bookingR[0].click();
         });
     }
+
+    clickOnIndividualBookingWithIndex = (index: number) => {
+        const bookingRows = $$('tbody tr');
+        return bookingRows.then((bookingR) => {
+            return bookingR[index].click();
+        });
+    }
     clickOnIndividualBookingOfType = (booking_type: string) => {
         return this.clickAtOneofTheBooking('1', '1', booking_type);
     }
@@ -145,7 +152,7 @@ export class BookingManagementPage extends PageObject {
             const totalNumofType = allBooking.length;
             expect(posth).not.to.be.greaterThan(totalNumofType);
         }).then(() => {
-            return allTypeBooking.get(posth - 1).click();
+            return this.getParent(allTypeBooking.get(posth - 1)).click();
         });
     }
 
@@ -175,6 +182,7 @@ export class BookingManagementPage extends PageObject {
             'red': 'icon-small-red',
             'orange': 'icon-small-yellow'
         }[booking_status];
+        browser.waitForAngular();
         return this.getAllElementByCSS('i[class="status ' + className + '"]').count().then((cnt) => {
             expect(cnt.toString()).to.be.eq(count);
         });
@@ -279,16 +287,38 @@ export class BookingManagementPage extends PageObject {
         return searchForm.submit();
     }
     querySearchWithEmptyDate = () => {
-        this.getElementByName('date_from').sendKeys(protractor.Key.BACK_SPACE,protractor.Key.ARROW_RIGHT,protractor.Key.BACK_SPACE,protractor.Key.ARROW_RIGHT,protractor.Key.BACK_SPACE);
+        this.getElementByName('date_from').sendKeys(protractor.Key.BACK_SPACE,
+            protractor.Key.ARROW_RIGHT,
+            protractor.Key.BACK_SPACE,
+            protractor.Key.ARROW_RIGHT,
+            protractor.Key.BACK_SPACE);
     }
     pickApprovedCurrentDate = () => {
         this.getElementByName('date_approved').sendKeys(protractor.Key.ARROW_DOWN);
     }
     queryManualSearchWithFutureDate = () => {
         this.getElementByName('date_from').sendKeys(protractor.Key.ARROW_UP);
+        this.getElementByName('date_from').sendKeys(protractor.Key.TAB);
+        this.getElementByName('date_from').sendKeys(protractor.Key.ARROW_UP);
+
     }
     queryManualSearchWithCurrentDate = () => {
         this.getElementByName('date_from').sendKeys(protractor.Key.ARROW_DOWN);
+        this.getElementByName('date_from').sendKeys(protractor.Key.TAB);
+        this.getElementByName('date_from').sendKeys(protractor.Key.ARROW_DOWN);
+
+
+    }
+    querySearchWithManualFutureDate = (n: number) => {
+            const currentDate = new Date();
+            const dateStart = new Date(new Date(currentDate).setDate(currentDate.getDate() + n));
+            const futureDate = [
+                this.prettyDate(dateStart.getDate()),
+                this.prettyDate(dateStart.getMonth() + 1),
+                dateStart.getFullYear().toString()
+            ].join('/');
+        this.getElementByName('date_from').sendKeys(futureDate);
+
     }
     enterPressed = () => {
         this.getElementByName('date_from').sendKeys(protractor.Key.ENTER);
@@ -304,6 +334,9 @@ export class BookingManagementPage extends PageObject {
     }
     clickOnBooking = () => {
         return this.getElementByID('lnkBooking').click();
+    }
+    clickOnMessages = () => {
+           return this.getElementByID('lnkMessages').click();
     }
     // Adds a '0' in the start if the date < 10
     private prettyDate = (date: number|string): string => {
@@ -377,7 +410,7 @@ export class BookingManagementPage extends PageObject {
     bookingExistsWithInterpreterFirstName = (interpreter_name: string) => {
         let tblRows = this.getAllElementByCSS('table tbody tr');
         expect(tblRows.count()).to.eventually.be.least(1);
-        let clientNameTd = this.getElementByCss('table tbody tr:first-child td:nth-child(9)');
+        let clientNameTd = this.getElementByCss('table tbody tr:first-child td:nth-child(8)');
         return clientNameTd.getText().then((txt) => {
             return expect(txt).to.be.eq(interpreter_name);
         });
@@ -385,7 +418,7 @@ export class BookingManagementPage extends PageObject {
     bookingExistsWithInterpreterLastName = (interpreter_name: string) => {
         let tblRows = this.getAllElementByCSS('table tbody tr');
         expect(tblRows.count()).to.eventually.be.least(1);
-        let clientNameTd = this.getElementByCss('table tbody tr:first-child td:nth-child(9)');
+        let clientNameTd = this.getElementByCss('table tbody tr:first-child td:nth-child(8)');
         return clientNameTd.getText().then((txt) => {
             return expect(txt).to.be.eq(interpreter_name);
         });

@@ -77,7 +77,7 @@ export class User {
         let firstName = 'MOH';
         let lastName = 'JAY';
         let mobileNum = '0444555666';
-        let stateWhereMostBookingsOccur = 'VIC';
+        let stateWhereMostBookingsOccur = 'TAS';
 
         if (typeof user !== 'undefined') {
             email = user.email;
@@ -607,14 +607,23 @@ export class Heroku {
         Heroku.sendCommandToHeroku(command);
     }
 
-    static updateBookingWithStatus(status: string) {
+    private static updateBookingWithStatus(status: string, updateFirst?: boolean) {
         const greenStatus = status === 'green';
+        const updateIndex = updateFirst ? 'first' : 'last'; // the default is last
         let command = '';
         if (greenStatus) {
-            command += 'Booking.last.update(number_of_interpreters_required: 0);';
+            command += `Booking.${updateIndex}.update(number_of_interpreters_required: 0);`;
         }
-        command += 'Booking.last.update_status';
+        command += `Booking.${updateIndex}.update_status`;
         Heroku.sendCommandToHeroku(command);
+    }
+
+    static updateFirstBookingWithStatus(status: string) {
+        Heroku.updateBookingWithStatus(status, true);
+    }
+
+    static updateLastBookingWithStatus(status: string) {
+        Heroku.updateBookingWithStatus(status, false);
     }
 
     static updateBookingWithMethodType(method: string) {
@@ -623,9 +632,18 @@ export class Heroku {
         Heroku.sendCommandToHeroku(command);
     }
 
-    static updateBookingWithServiceType(serviceType: string) {
-        let command = 'Booking.last.update(type: ' + serviceType + ')';
+    private static updateBookingWithServiceType(serviceType: string, updateFirst?: boolean) {
+        const updateIndex = updateFirst ? 'first' : 'last'; // the default is last
+        const command = `Booking.${updateIndex}.update(type: '${serviceType}')`;
         Heroku.sendCommandToHeroku(command);
+    }
+
+    static updateFirstBookingWithServiceType(serviceType: string) {
+        Heroku.updateBookingWithServiceType(serviceType, true);
+    }
+
+    static updateLastBookingWithServiceType(serviceType: string) {
+        Heroku.updateBookingWithServiceType(serviceType, false);
     }
 
     static updateBookingWithClientName(client_name: string) {

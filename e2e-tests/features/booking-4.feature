@@ -17,11 +17,8 @@ Feature: Booking Management
     And I will be taken to the 'New Booking' form
     When I fill New Booking form fields with address greater than 40 kilometers
     And I select the bookable for client
+    And I can see the element with name 'travel-cost-applicable' is 'visible'
     And I click the create booking button
-    Then I will get an error notification saying "Travel cost must be applicable as your booking distance is more than 40 kms"
-    And I move to element name 'travel_cost_applicable'
-    And I click on checkbox name 'travel_cost_applicable'
-    When I click the create booking button
     Then I will get an error notification saying "Kindly accept Terms and Conditions"
     Then I move to element name 'lnkTC'
     Then I verify that the link with name 'lnkTC' href is 'https://s3-ap-southeast-2.amazonaws.com/auslan-public-bucket/Auslan_Online_Terms_And_Conditions.pdf'
@@ -278,7 +275,7 @@ Feature: Booking Management
 
     #----------------------------------------- AUSLAN1-977 -> END ----------------------------------------
 
-  @runThis
+  @ignoreThis
   Scenario: Administrator will get important fields change pop up only when interpreter is assigned to a booking. Interpreter exists.
     Given There exist 1 bookings
     Given I exist as an Administrator
@@ -292,7 +289,7 @@ Feature: Booking Management
     And I fill the field 'address_suburb' with value 'jupiter'
     When I click on BUTTON 'SAVE'
     And If I am shown a popup message 'This booking is not within the standard booking hours (8AM - 6PM). Do you still want to update booking?', I approve it
-    Then I wait for 1000 milli-seconds
+    Then I wait for 1500 milli-seconds
     And If I am shown a popup message 'Would you like to save these changes for all bookings or only for this one?', I approve it
     Then I should get a valid booking update notification
     Then I wait for 3300 milli-seconds
@@ -307,9 +304,9 @@ Feature: Booking Management
     And I fill the field 'address_suburb' with value 'saturn'
     When I click on BUTTON 'SAVE'
     And If I am shown a popup message 'This booking is not within the standard booking hours (8AM - 6PM). Do you still want to update booking?', I approve it
-    Then I wait for 1000 milli-seconds
+    Then I wait for 1500 milli-seconds
     And If I am shown a popup message 'Would you like to save these changes for all bookings or only for this one?', I approve it
-    Then I wait for 1000 milli-seconds
+    Then I wait for 1500 milli-seconds
     And I will be shown a popup message 'Interpreter(s) have been/is allocated for this job. You're changing important fields of the booking. Do you have confirmation from the interpreter(s) that these changes are OK?'
 
   @runThis

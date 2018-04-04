@@ -15,9 +15,12 @@ defineSupportCode(({Given, Then, When}) => {
     let bookingEditPO = new BookingEditPage();
     let bookingPayrollPO = new BookingPayrollPage();
 
-    Given(/^The booking has status '(.*)'$/, Heroku.updateBookingWithStatus);
+    // last is the default
+    Given(/^The booking has status '(.*)'$/, Heroku.updateLastBookingWithStatus);
+    Given(/^The first booking has status '(.*)'$/, Heroku.updateFirstBookingWithStatus);
     Given(/^The booking has method type '(.*)'$/, Heroku.updateBookingWithMethodType);
-    Given(/^The booking has service type '(.*)'$/, Heroku.updateBookingWithServiceType);
+    Given(/^The booking has service type '(.*)'$/, Heroku.updateLastBookingWithServiceType);
+    Given(/^The first booking has service type '(.*)'$/, Heroku.updateFirstBookingWithServiceType);
     Given(/^The booking has assignment category '(.*)'$/, Heroku.updateBookingWithCategory);
     Given(/^There exist (\d+) bookings$/, Heroku.createBulkBookings);
     Given(/^There exist (\d+) bookings? with(out)? link id$/, Heroku.createBulkBookingsWithLinkId);
@@ -46,6 +49,7 @@ defineSupportCode(({Given, Then, When}) => {
     When(/^I click on an individual booking of type '(.*)'$/, bookingManagementPO.clickOnIndividualBookingOfType);
     When(/^I do not see any booking rows$/, bookingManagementPO.noBookingExists);
     When(/^I click on an individual booking$/, bookingManagementPO.clickOnIndividualBooking);
+    When(/^I click on an booking of index (.*)$/, bookingManagementPO.clickOnIndividualBookingWithIndex);
 
     // --------------------------------- AUTO POPULATE CLIENT DETAILS
     When(/^I specify i am the client of this booking$/, createBookingPO.specifyAsClientOfBooking);
@@ -80,7 +84,7 @@ defineSupportCode(({Given, Then, When}) => {
     When(/^I click out of the text box$/, bookingManagementPO.clickOutSide);
     When(/^I click on Booking$/, bookingManagementPO.clickOnBooking);
     When(/^I change the bookable type/, createBookingPO.changeBookableType);
-
+    When(/^I query search with future date after '(\d+)' Days manually$/, bookingManagementPO.querySearchWithManualFutureDate);
 
     Then(/^I will be taken to the 'New Booking' form$/, createBookingPO.browse);
     Then(/^The field '(.*)' will be populated with '(.*)'$/, createBookingPO.theFieldWillBePopulated);
@@ -96,6 +100,7 @@ defineSupportCode(({Given, Then, When}) => {
     Then(/^I can not see a list of interpreters$/, bookingJobPO.listofInterpreterDoesNotExists);
     Then(/^I can verify the image of myself in the list of interpreter start with '(.*)'$/, bookingJobPO.verifyPictureOfYourself);
     Then(/^I can see the Interpreter status is '(.*)'$/, bookingJobPO.checkInterpreterStatus);
+    When(/^I click on Messages$/, bookingManagementPO.clickOnMessages);
 
     // Filling in specific fields in the booking form
     Then(/^I set the (\w+) time as (\d+) days (?:(\d+) hours?)?\s?from now$/, createBookingPO.setTime);
@@ -138,7 +143,7 @@ defineSupportCode(({Given, Then, When}) => {
     Then(/^I should (not)?\s?see the link id in booking details$/, bookingJobPO.checkLinkIdInTableDetails);
     Then(/^I note the value under (.*) column$/, bookingJobPO.noteTableDetails);
     Then(/^The value under the (.*) column is the same as I noted above$/, bookingJobPO.checkNotedTableDetails);
-    Then(/^I should\s?(not)? see the attachment icons under Attached column$/, bookingJobPO.checkAttachmentIcons);
+    Then(/^I should\s?(not)? see the attachment icons under Attached column number '(.*)'$/, bookingJobPO.checkAttachmentIcons);
     Then(/^I should be on the payroll and billing page$/, bookingPayrollPO.verify);
     Then(/^I verify that payroll '(.*)' input fields are non editable$/, bookingPayrollPO.checkReadonlyFields);
     Then(/^I verify that payroll '(.*)' input fields have zero value$/, bookingPayrollPO.checkInputValues);

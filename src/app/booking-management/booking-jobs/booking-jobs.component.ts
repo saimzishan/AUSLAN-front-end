@@ -22,6 +22,7 @@ import {InterpreterFilter} from '../../shared/model/interpreter-filter.interface
 import * as moment from 'moment';
 import * as $ from 'jquery';
 import * as momentTimeZone from 'moment-timezone';
+import {LinkAuth} from '../../shared/router/linkhelper';
 
 @Component({
     selector: 'app-booking-jobs',
@@ -51,7 +52,10 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     disableReject = false;
     private currentStatus = 'Invited';
     private filterInterpreterParams = new URLSearchParams();
-    private currentSort = {'field': 'distance', 'order': 'asc'};
+    private currentSort = {'field': 'name', 'order': 'asc'};
+    private recommendedParam = new URLSearchParams();
+    filterSearchParam = new URLSearchParams();
+    isRecommended = false;
     interpreterFilter: InterpreterFilter = {};
     stateStr = '';
     hideInvite = false;
@@ -66,11 +70,14 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     isRequestedProgressOrAllocated = false;
     searchParams: string;
     serviceNameToDisplay;
+    otherAcceptedRolesAttributes;
+    counterChek= 0;
     constructor(public dialog: MdDialog,
                 public viewContainerRef: ViewContainerRef, public spinnerService: SpinnerService,
                 public notificationServiceBus: NotificationServiceBus,
                 public userDataService: UserService, public bookingService: BookingService, public bookingHeaderService: BookingHeaderService,
-                private router: Router, private route: ActivatedRoute, private datePipe: DatePipe) {
+                private router: Router, private route: ActivatedRoute, private datePipe: DatePipe,
+                private linkAuth: LinkAuth) {
         /** http://stackoverflow.com/questions/38008334/angular2-rxjs-when-should-i-unsubscribe-from-subscription */
         this.sub = this.route.params.subscribe(params => {
             let param_id = params['id'] || '';
@@ -82,9 +89,11 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
 
 
     ngOnInit() {
+        this.isRecommended = true;
         this.headerSubscription = this.bookingHeaderService.notifyObservable$.subscribe((res) => {
             this.callRelatedFunctions(res);
         });
+        this.removeFilters();
     }
 
     callRelatedFunctions(res) {
@@ -170,7 +179,11 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
 
             this.dialogSub = this.dialogRef.afterClosed().subscribe(result => {
                 if (result) {
-                    this.cancelBooking(isCancel, false, true);
+                    if (false === isCancel) {
+                        this.changeBookingState(false, false, false);
+                    } else {
+                        this.cancelBooking(isCancel, false, true);
+                    }
                 }
             });
         }
@@ -183,7 +196,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         config.viewContainerRef = this.viewContainerRef;
         this.dialogRef = this.dialog.open(PopupComponent, config);
         this.dialogRef.componentInstance.title = isCancel ? 'Cancel linked booking' : 'Unable to service linked booking';
-        this.dialogRef.componentInstance.cancelTitle = isCancel ? 'Cancel all bookings' : 'Unable to service all bookings';
+        this.dialogRef.componentInstance.cancelTitle = isCancel ? 'Cancel all bookings' : '';
         this.dialogRef.componentInstance.okTitle = isCancel ? 'Cancel only this booking' : 'Unable to service this booking';
         this.dialogRef.componentInstance.closeVal = 'close';
         this.dialogRef.componentInstance.popupMessage =
@@ -417,8 +430,9 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     }
 
     fetchNearbyinterpreters(booking_id) {
+        this.filterSearchParam = this.isRecommended ? this.getRecommendedParams() : GLOBAL.getInterpreterSearchParameters();
         this.spinnerService.requestInProcess(true);
-        this.bookingService.nearbyBookings(booking_id, this.currentPage, GLOBAL.getInterpreterSearchParameters())
+        this.bookingService.nearbyBookings(booking_id, this.currentPage, this.filterSearchParam)
             .subscribe((res: any) => {
                     if (res.status === 200) {
                         this.totalItems = Boolean(res.data.paginates) ? res.data.paginates.total_records : res.data.users.length;
@@ -443,6 +457,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                     } else if (res.status === 200) {
                         this.jobAccessError = false;
                         let data = res.data;
+                        this.otherAcceptedRolesAttributes = res.data.other_accepted_roles_attributes;
                         this.selectedBookingModel.fromJSON(data);
                         this.selectedBookingModel.interpreters.sort((i, j) =>
                             i.state === 'Accepted' ? -1 : j.state === 'Accepted' ? 1 : 0
@@ -876,7 +891,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     }
 
     getSortOrder(field: string) {
-        return this.isCurrentSort(field) ? this.currentSort.order : '';
+        return this.isCurrentSort(field) && !this.isRecommended ? this.currentSort.order : '';
     }
 
     sortInterpreters(field: string) {
@@ -897,8 +912,26 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         }
         return value;
     }
+    toggleRecommended() {
+        if (this.isRecommended) {
+            this.isRecommended = false;
+        } else {
+                this.isRecommended = true;
+                this.removeFilters();
+        }
+        this.route.params.subscribe(params => {
+            this.currentPage = 1;
+            let param_id = params['id'] || '';
+            this.fetchNearbyinterpreters(param_id);
+        });
+    }
 
+    getRecommendedParams() {
+        this.recommendedParam.set('recommended', 'true');
+        return this.recommendedParam;
+    }
     search() {
+        this.isRecommended = false;
         GLOBAL._filterInterpreterVal.set('search', this.searchParams);
         this.route.params.subscribe(params => {
             this.currentPage = 1;
@@ -913,7 +946,14 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     }
 
     filterInterpreters(field: string, value: string) {
-        this.interpreterFilter[field] = this.formatterValueFor(field, value);
+        this.isRecommended = false;
+        const formattedValue = this.formatterValueFor(field, value);
+        if (formattedValue && formattedValue.length) {
+            this.interpreterFilter[field] = formattedValue;
+        } else {
+            delete this.interpreterFilter[field];
+            this.filterInterpreterParams.delete('filter[' + field + ']');
+        }
         for (let k in this.interpreterFilter) {
             if (this.interpreterFilter.hasOwnProperty(k)) {
                 this.filterInterpreterParams.set('filter[' + k + ']', this.interpreterFilter[k]);
@@ -924,6 +964,18 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
             this.currentPage = 1;
             let param_id = params['id'] || '';
             this.fetchNearbyinterpreters(param_id);
+        });
+    }
+
+    private removeFilters() {
+        for (let k in this.interpreterFilter) {
+            if (this.interpreterFilter.hasOwnProperty(k)) {
+                this.interpreterFilter[k] = '';
+            }
+        }
+        this.filterInterpreterParams = GLOBAL._filterInterpreterVal;
+        this.filterInterpreterParams.paramsMap.forEach((value: string[], key: string) => {
+            GLOBAL._filterInterpreterVal.delete(key);
         });
     }
 
@@ -982,4 +1034,14 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
          serviceName = flag ? serviceName : serviceName.toUpperCase();
          return serviceName;
         }
+
+    getInterpreterId() {
+        if (Boolean(GLOBAL.currentUser) && GLOBAL.currentUser.id > 0) {
+                return GLOBAL.currentUser.id;
+        }
+        return -1;
+    }
+    canShowLink(linkName) {
+        return this.linkAuth.canShowLink(linkName);
+    }
 }

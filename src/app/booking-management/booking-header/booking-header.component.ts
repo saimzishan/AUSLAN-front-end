@@ -127,6 +127,9 @@ export class BookingHeaderComponent implements OnInit, OnDestroy {
         return parseInt(this.bookingModel.state.toString(), 10) >
             parseInt(BOOKING_STATE[bookingStatus].toString(), 10);
     }
+    getInterpreterId() {
+        return Boolean(GLOBAL.currentUser) ? GLOBAL.currentUser.id : -1;
+    }
 
     infoClick() {
         if (this.isActive('booking-job') || this.isActive('job-detail')) {
@@ -185,6 +188,9 @@ export class BookingHeaderComponent implements OnInit, OnDestroy {
     isCurrentUserAdminOrBookingOfficer(): boolean {
         return Boolean(GLOBAL.currentUser instanceof Administrator ||
             GLOBAL.currentUser instanceof BookingOfficer);
+    }
+    isCurrentUserIndividualClientOrOrg() {
+        return (GLOBAL.currentUser instanceof IndividualClient || GLOBAL.currentUser instanceof OrganisationalRepresentative);
     }
 
 }

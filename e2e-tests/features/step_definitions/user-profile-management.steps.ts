@@ -32,12 +32,14 @@ defineSupportCode(({Given, Then, When}) => {
         }
     }
     Then(/^I will be taken to blockout page$/, blockoutPage.browse);
+    Then(/^I will be taken to message page$/, blockoutPage.browseMessages);
     Then(/^I will be taken to staff-calendar page$/, blockoutPage.browseStaff);
     Then(/^I enter blockout name '(.*)'$/, blockoutPage.enterBlockoutName);
     Then(/^I check that the end time is greater then start time$/, blockoutPage.checkEndTimeAgainstStartTime);
     Then(/^I check that the start time and end time is 6:25am - 7:25am$/, blockoutPage.checkEndTimeAgainstStartTime);
-    Then(/^I check that the start time and end time is 09:00PM - 10:00PM$/, blockoutPage.chengeEndTimeAgainstStartTime);
+    Then(/^I check that the start time and end time is 08:00PM - 09:00PM$/, blockoutPage.chengeEndTimeAgainstStartTime);
     Then(/^I check the value of endTime is '(.*)'$/, blockoutPage.checkEndTimeOFBlockout);
+    Then(/^I check the value of endTime is to be '(.*)'$/, blockoutPage.checkEndTimeOFBlockoutAgainstStartTime);
     Then(/^I check the value of availability is '(.*)'$/, blockoutPage.checkValuOFBlockoutName);
     Then(/^I change the value of end time$/, blockoutPage.changeEndTimeOFBlockout);
     Then(/^I change the value of end date$/, blockoutPage.changeEndDateOFBlockout);

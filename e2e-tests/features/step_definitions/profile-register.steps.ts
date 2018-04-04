@@ -13,10 +13,12 @@ defineSupportCode(({Then, When}) => {
     When(/^I fill in all the details correctly for -> '(.*)'$/, profileRegisterPage.fillAllDataForAdmin);
     When(/^I fill in basic details correctly for duplicate -> '(.*)'$/, profileRegisterPage.fillDuplicateBasicData);
     When(/^I fill in work preference correctly '(.*)'$/, profileRegisterPage.fillWorkPref);
+    When(/^I fill in certification details of interpreter$/, profileRegisterPage.fillCertificationDataOfInterpreter);
 
     When(/^'(.*)' will be created$/, profileRegisterPage.userCreated);
 
     When(/^I will check the address fields has value '(.*)'$/, profileRegisterPage.checkAppAddressForm)
+    When(/^I fill in the address fields with value '(.*)'$/, profileRegisterPage.fillAppAddressForm)
 
     Then(/^I will be taken to the 'Choose Profile' page$/, profilePage.browse);
     Then(/^I will be taken to the '(.*) Signup' page$/, profileRegisterPage.showSignupPage);

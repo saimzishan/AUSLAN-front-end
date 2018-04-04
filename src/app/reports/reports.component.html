@@ -1,0 +1,38 @@
+<section id="page-common">
+  <h1>
+    <br> </h1>
+  <section id="job-booking">
+    <main>
+      <form #report_form="ngForm" class="common-form reduced-top">
+        <h2>Reporting</h2>
+        <section class="payroll-card">
+          <section class="payroll-card__content width-full">
+            <section>
+              <label>SELECT EXPORT</label>
+              <select name="exportType" class="menu custom gray" [(ngModel)]="exportType" required>
+                <option *ngIf="isBusinessVicdeaf();else dsq_options" value="Vicdeaf">Vicdeaf billing & payroll</option>
+                <ng-template #dsq_options>
+                  <option value="dsq_weekly">Weekly Payroll</option>
+                  <option value="dsq_monthly">Monthly Payroll</option>
+                </ng-template>
+              </select>
+            </section>
+            <section class="no-border">
+              <label>START DATE</label>
+              <p-calendar name='startDate' [(ngModel)]="date_from" dateFormat="dd/mm/yy" dateOnly="true" required></p-calendar>
+            </section>
+            <section class="no-border">
+              <label>END DATE</label>
+              <p-calendar name='endDate' [(ngModel)]="date_to" dateFormat="dd/mm/yy" dateOnly="true" required></p-calendar>
+            </section>
+            <section class="no-border">
+              <div>
+                <button name="btnExport" class="btn-margin" (click)="exportClick(report_form)">EXPORT</button>
+              </div>
+            </section>
+          </section>
+        </section>
+      </form>
+    </main>
+  </section>
+</section>

@@ -47,8 +47,8 @@
                                             Unassign
                                         </button>
                                     </div>
-                                </ng-container>
-                                <ng-container *ngIf="(selectedBookingModel.interpreters_required - selectedBookingModel.interpreters.length) > 0">
+                                
+                                <ng-container *ngIf="(selectedBookingModel.interpreters_required - (selectedBookingModel.interpreters.length + otherAcceptedRolesAttributes.length) ) > 0">
                                     <ng-container *ngFor="let numb of counter(selectedBookingModel.interpreters_required - selectedBookingModel.interpreters.length ); let ii=index">
                                         <ng-container *ngIf="ii < (selectedBookingModel.interpreters_required - selectedBookingModel.interpreters.length)">
                                             <div>
@@ -59,11 +59,23 @@
                                             </div>
                                         </ng-container>
                                     </ng-container>
+                                    </ng-container>
+                                    <ng-container>
+                                        <div *ngFor="let interpreter of otherAcceptedRolesAttributes; let i=index" class="half-opacity">
+                                            <b>{{serviceNameToDisplay}} {{(selectedBookingModel.interpreters_required - selectedBookingModel.interpreters.length)+selectedBookingModel.interpreters.length
+                                                + i + 1}} :</b>
+                                            <span class='interpreter-accepted'>{{interpreter.first_name}} {{interpreter.last_name}}</span>
+                                            <button hidden name="{{'unassingBtn_' + +(i + 1)}}" (click)="unAssignInterpreters(interpreter.id)" *ngIf="!isCurrentUserInterpreter() && (false === isActiveState('Unable_to_service') && false === isActiveState('Cancelled_no_charge')) && interpreter.state === 'Accepted'">
+                                                Unassign
+                                            </button>
+                                        </div>
+                                    </ng-container>
                                 </ng-container>
                             </section>
                         </section>
                     </div>
                 </ng-container>
+
                 <ng-container *ngIf="!anyInterpreterAccepted() && !isCurrentUserInterpreter()">
                     <div class="manage-interpreters-wrapper">
                         <section name="manage-interpreters-b"  class="manage-interpreters">
@@ -72,6 +84,14 @@
                                     <b id="serviceName" >{{serviceNameToDisplay}} {{i + 1}} :</b>
                                     <span>To be filled</span>
                                 </div>
+                                    <div *ngFor="let interpreter of otherAcceptedRolesAttributes; let i=index" class="half-opacity">
+                                        <b>{{serviceNameToDisplay}} {{(selectedBookingModel.interpreters_required - selectedBookingModel.interpreters.length)+selectedBookingModel.interpreters.length
+                                            + i + 1}} :</b>
+                                        <span class='interpreter-accepted'>{{interpreter.first_name}} {{interpreter.last_name}}</span>
+                                        <button hidden name="{{'unassingBtn_' + +(i + 1)}}" (click)="unAssignInterpreters(interpreter.id)" *ngIf="!isCurrentUserInterpreter() && (false === isActiveState('Unable_to_service') && false === isActiveState('Cancelled_no_charge')) && interpreter.state === 'Accepted'">
+                                            Unassign
+                                        </button>
+                                    </div>
                             </section>
                         </section>
                     </div>
@@ -97,6 +117,7 @@
                                 </div>
                             </ng-container>
                         </ng-container>
+                        
                         <ng-container
                                 *ngIf="(selectedBookingModel.interpreters_required - selectedBookingModel.interpreters.length) > 0">
                             <ng-container
@@ -121,6 +142,22 @@
                                 </div>
                             </ng-container>
                         </ng-container>
+                    </ng-container>
+
+                    <ng-container>
+                        <div class="half-opacity">
+                            <div *ngFor="let interpreter of otherAcceptedRolesAttributes; let i=index">
+                                <div>{{serviceNameToDisplay}} {{(selectedBookingModel.interpreters_required - selectedBookingModel.interpreters.length)+selectedBookingModel.interpreters.length
+                                    + i + 1}} :</div>
+                                <span class='interpreter-accepted'>
+                                    <img class="img-circle" src="{{interpreter.photo_url}}" alt="">
+                                    {{interpreter.first_name}} {{interpreter.last_name}}
+                                </span>
+                                <button hidden name="{{'unassingBtn_' + +(i + 1)}}" (click)="unAssignInterpreters(interpreter.id)" *ngIf="!isCurrentUserInterpreter() && (false === isActiveState('Unable_to_service') && false === isActiveState('Cancelled_no_charge')) && interpreter.state === 'Accepted'">
+                                    Unassign
+                                </button>
+                            </div>
+                        </div>
                     </ng-container>
 
                     <div *ngIf="(selectedBookingModel.notes) && selectedBookingModel.notes.length > 0 && isCurrentUserInterpreter()"
@@ -179,9 +216,9 @@
                             </button>
                         </section>
                         <section class="filters">
-
+                            <a href="javascript:void(0);" class="button" id="lnk-recommended-interpreters"
+                               [ngClass]="isRecommended ? 'active' : ''" (click)="toggleRecommended()">Recommended</a>
                             <div class="separator"></div>
-
                             <button *ngIf="!hideInvite" class="button active" name='inviteBtn' (click)="inviteInterpreters()">
                                 <i class="icon-shape"></i> Invite
                             </button>
@@ -375,3 +412,10 @@
         </span>
     </div>
 </ng-container>
+<section>
+    <ul class="dropdown menu custom actions hidden-desktop reduced" data-dropdown-menu>
+        <li>
+            <button  *ngIf="canShowLink('messages')" [routerLink]="['/users/'+ getInterpreterId() +'/inbox/' + selectedBookingModel.id]" class="button green wide" style="width: 100%;">MESSAGE OFFICE</button>
+        </li>
+    </ul>
+</section>

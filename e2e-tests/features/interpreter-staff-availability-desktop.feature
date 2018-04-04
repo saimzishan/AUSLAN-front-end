@@ -62,6 +62,10 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER STAF
     Then I check the value of endTime is '07:25 AM'
     Then I check the value of availability is 'test-blockout'
     Then I see selected option 'WEEKLY' in dropdown
+    When I verify material checkbox name 'Monday' is checked 'true'
+    When I verify material checkbox name 'Tuesday' is checked 'true'
+    When I verify material slide-toggle name 'sldRecurring' is disabled 'true'
+    And I can see the element with name 'save_blockout' is 'not visible'
 
   @runThis
   Scenario: As Administrator I can add INTERPRETER blockouts on desktop
@@ -89,6 +93,11 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER STAF
     Then I click on BUTTON name 'sldRecurring'
     When I select option WEEKLY from dropdown FREQUENCY
     Then I wait for 2000 milli-seconds
+    Then I change the value of end date
+    And I click on BUTTON name 'save_blockout'
+    And I get error message: 'Oops! Please fill in all the fields correctly.'
+    Then I click on material checkbox name 'Monday'
+    Then I click on material checkbox name 'Tuesday'
     Then I change the value of end date
     And I click on BUTTON name 'save_blockout'
     And I get success message: 'Blockout successfully added'

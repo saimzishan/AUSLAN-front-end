@@ -26,6 +26,8 @@ export class Booking {
     public interpreters_required = 0;
     public notes = '';
     public special_instructions = '';
+    public general_notes = '';
+    public claim_notes = '';
     public primaryContact = new Contact();
     public client: OrganisationalRepresentative = new OrganisationalRepresentative({});
     public documents_attributes = [];
@@ -67,6 +69,12 @@ export class Booking {
     public recurrence_end_date: Date;
     public repeat_booking_on_days: Array<string>;
     public method_name: string;
+    public cbworkWithChildCheck: boolean;
+    public cbYellowCard: boolean;
+    public cbImminisations: boolean;
+    public cbPoliceCheck: boolean;
+    public cbForm27A: boolean;
+    public isBookingBeRecorded: boolean;
     // Is it a limitation on interpreters invitation.
 
     static getNamedTimeZone(state: string, postCode: string) {
@@ -124,6 +132,8 @@ export class Booking {
         this.client.organisation_primary_contact.email = '';
         this.client.organisation_billing_account.external_reference = '';
         this.special_instructions = '';
+        this.general_notes = '';
+        this.claim_notes = '';
         this.deaf_person.first_name = '';
         this.deaf_person.last_name = '';
         this.deaf_person.email = '';
@@ -142,6 +152,12 @@ export class Booking {
         this.new_link_id_required = false;
         this.how_would_you_like_to_receive_notes = 'Digitally';
         this.frequency = 'weekly';
+        this.cbworkWithChildCheck = false;
+        this.cbYellowCard = false;
+        this.cbImminisations = false;
+        this.cbPoliceCheck = false;
+        this.cbForm27A = false;
+        this.isBookingBeRecorded = false;
     }
 
     clean(theObject) {
@@ -206,6 +222,14 @@ export class Booking {
         this.client.organisation_name = data.created_by.organisation;
         this.client.organisation_billing_account.external_reference = '';
         this.special_instructions = data.special_instructions;
+        this.general_notes = data.general_notes;
+        this.claim_notes = data.claim_notes;
+        this.cbworkWithChildCheck = data.working_with_childrens_check_required;
+        this.cbYellowCard = data.yellow_card_required;
+        this.cbImminisations = data.immunisations_required;
+        this.cbPoliceCheck = data.police_check_required;
+        this.cbForm27A = data.from_27a_required;
+        this.isBookingBeRecorded = data.are_you_okay_with_bookings_that_will_be_recorded_or_published;
         this.deaf_person.first_name = data.deaf_persons_first_name;
         this.deaf_person.last_name = data.deaf_persons_last_name;
         this.deaf_person.email = data.deaf_persons_email;
@@ -303,6 +327,8 @@ export class Booking {
             new_link_id_required: this.new_link_id_required || false,
             state: _state,
             special_instructions: this.special_instructions,
+            general_notes: this.general_notes,
+            claim_notes: this.claim_notes,
             venue: this.venue.title,
             requested_by_first_name: this.requested_by.first_name,
             requested_by_last_name: this.requested_by.last_name,
@@ -375,7 +401,13 @@ export class Booking {
             bookable_type: this.bookable_type,
             notes: this.notes,
             created_by_admin: this.created_by_admin,
-            travel_cost_applicable: this.travel_cost_applicable
+            travel_cost_applicable: this.travel_cost_applicable,
+            working_with_childrens_check_required: this.cbworkWithChildCheck,
+            yellow_card_required: this.cbYellowCard,
+            immunisations_required: this.cbImminisations,
+            police_check_required: this.cbPoliceCheck,
+            from_27a_required: this.cbForm27A,
+            are_you_okay_with_bookings_that_will_be_recorded_or_published: this.isBookingBeRecorded
         });
         return o;
     }

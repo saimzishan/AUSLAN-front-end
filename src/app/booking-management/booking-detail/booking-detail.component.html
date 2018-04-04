@@ -214,7 +214,6 @@
           <div *ngFor="let day of repeat_days" class='medium-1 columns'>
             <md-checkbox [(ngModel)]="day.selected"
                          name="{{day.value}}"
-                         [disabled]="isRecurrenceDayCheckboxDisabled(day)"
                          [align]='right'
                          [required]='isRecurringBooking'>
               {{day.display}}
@@ -736,12 +735,12 @@
 
       <div class="medium-12 columns">
         <div class="form-field">
-          <label>NOTES
+          <label>NOTES FOR BOOKING OFFICE
             <span mdTooltip="Any Important Notes">
               <i class="inline-icon-tip"></i>
             </span>
           </label>
-          <textarea placeholder="Important Notes" name="important_notes" [(ngModel)]="bookingModel.notes"></textarea>
+          <textarea placeholder="Important Notes for the Booking Office" name="important_notes" [(ngModel)]="bookingModel.notes"></textarea>
 
           <span *ngIf="bookingModel.raw_nature_of_appointment === 'Other' && (!bookingModel.notes || (bookingModel.notes && bookingModel.notes.length < 2))"
                 class="inline-icon error">
@@ -750,10 +749,10 @@
         </div>
       </div>
     </div>
-    <ng-container *ngIf="isUserOrgRep()">
+    <ng-container *ngIf="isUserOrgRepORIndClientTemp() || isUserAdminORBookOfficer">
       <div class="separator"></div>
 
-      <h4 class="text-center">SPECIAL INSTRUCTION</h4>
+      <h4 class="text-center">SPECIAL INSTRUCTIONS</h4>
       <div class="row">
         <div class="medium-12 columns">
           <div class="form-field">
@@ -779,7 +778,7 @@
               <input [(ngModel)]="bookingModel.special_instructions"
                      name='txtSpecialInstruction'
                      (click)="fireNotification($event)"
-                     type='text' placeholder="Enter Special instructions">
+                     type='text' placeholder="Special Instructions for the Interpreter(s)">
             </div>
           </div>
         </div>
@@ -1332,12 +1331,63 @@
       </div>
     </div>
 
+    <h4 class="text-center" name="cert_heading">CERTIFICATIONS</h4>
+
     <div class="row">
-      <div class="medium-12 columns" id="travel-cost-applicable" *ngIf="addressForm.isTravelCostApplicable">
+      <div class="medium-12 columns">
         <div class="form-field">
-          <md-checkbox type="checkbox" [(ngModel)]="bookingModel.travel_cost_applicable" name="travel_cost_applicable" #travelCost="ngModel">
+          <label name="certReqQue">Do you have required interpreter certifications for this booking?</label>
+          <md-radio-group name="rdIntCertRequired" [(ngModel)]="isCertRequired">
+            <md-radio-button name="rdCertYes" [value]="true">YES</md-radio-button>
+            <md-radio-button name="rdCertNo" [value]="false">NO</md-radio-button>
+          </md-radio-group>
+        </div>
+      </div>
+      <ng-container *ngIf="isCertRequired">
+        <p class="p-top-mrg" name="cert_required">Do you require one of the following? Please select multiple if relevant</p>
+        <div class="row" id="cert-types">
+          <div class="medium-3 columns"> <md-checkbox name="cb_yellow_card" #cb_yellow_card [(ngModel)]="bookingModel.cbYellowCard" >YELLOW CARD</md-checkbox> </div>
+          <div class="medium-3 columns"> <md-checkbox name="cb_imminisations" #cb_imminisations [(ngModel)]="bookingModel.cbImminisations">IMMUNISATIONS</md-checkbox> </div>
+          <div class="medium-3 columns"> <md-checkbox name="cb_police_check" #cb_police_check [(ngModel)]="bookingModel.cbPoliceCheck">POLICE CHECK</md-checkbox> </div>
+          <div class="medium-3 columns"> <md-checkbox name="cb_form_27a" #cb_form_27a [(ngModel)]="bookingModel.cbForm27A">FORM 27A</md-checkbox> </div>
+          <div class="medium-3 columns"> <md-checkbox name="cb_work_with_child_check" #cb_work_with_child_check [(ngModel)]="bookingModel.cbworkWithChildCheck" >WORKING WITH CHILDREN CHECK</md-checkbox> </div>
+       </div>
+       <div class="medium-12 columns div-top-mrg">
+        <div class="form-field">
+          <label name="certReqQue">Will the booking be recorded and published/distributed?</label>
+          <md-radio-group name="rdbookingRecorded" [(ngModel)]="bookingModel.isBookingBeRecorded">
+            <md-radio-button name="rdbookingRecordedYes" [value]="true">YES</md-radio-button>
+            <md-radio-button name="rdbookingRecordedNo" [value]="false">NO</md-radio-button>
+          </md-radio-group>
+        </div>
+      </div>
+      </ng-container>
+    </div>
+
+    <div class="row">
+      <ng-container *ngIf="checkUserAdminORBookOfficer()">
+        <div class="medium-12 columns note-top-mrg">
+            <div class="form-field">
+                <label>GENERAL NOTES</label>
+                <textarea type="text" class="inline-icon inline-icon-txt"
+                    [(ngModel)]="bookingModel.general_notes" cols="30" rows="10" name="general_notes">
+                </textarea>
+            </div>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="checkUserAdminORBookOfficer() && !forEdit">
+        <div class="medium-12 columns">
+            <div class="form-field">
+                <label>CLAIM NOTES</label>
+                <textarea type="text" class="inline-icon inline-icon-txt"
+                    [(ngModel)]="bookingModel.claim_notes" cols="30" rows="10" name="claim_notes">
+                </textarea>
+            </div>
+        </div>
+      </ng-container>
+      <div class="medium-12 columns top-gap" id="travel-cost-applicable" name="travel-cost-applicable" *ngIf="addressForm.isTravelCostApplicable">
+        <div class="form-field">
             This is a regional booking and travel costs might be billed when there is no regional interpreter available.<br/> I give permission to book a metro interpreter if needed.
-          </md-checkbox>
         </div>
       </div>
       <section>
@@ -1347,8 +1397,8 @@
     </div>
 
     <div class="actions" *ngIf="!isDisableForClientOrgBookOfficer">
-      <button name="btnCreateBooking" (click)="onCreateBooking(booking_form,addressForm,billingForm,uploader);">SAVE</button>
       <button name="btnCancelBooking" (click)="onCancelBooking();" class="cncl-btn">CANCEL</button>
+      <button name="btnCreateBooking" (click)="onCreateBooking(booking_form,addressForm,billingForm,uploader);">SAVE</button>
     </div>
    </fieldset>
   </form>

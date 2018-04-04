@@ -99,6 +99,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     hasBlockInt: Boolean = false;
     hasPrefInt: Boolean = false;
     duplicatingBookable: number;
+    isCertRequired = false;
     repeat_days = [
         {
             display: 'S',
@@ -153,10 +154,11 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         this.sub = this.route.queryParams.subscribe(params => {
             let param = params['bookingModel'] || '';
             let shouldEdit = params['shouldEdit'] || '';
-            this.forEdit = Boolean(shouldEdit.length > 0 && shouldEdit === 'edit');
+            this.forEdit = this.isCertRequired = Boolean(shouldEdit.length > 0 && shouldEdit === 'edit');
             this.assignedInterpreter = params['assignedInterpreter'] || '';
             if (param.length > 0 && shouldEdit === '') {
                 this.isDuplicate = true;
+                this.isCertRequired = true;
             } else {
                 this.isDuplicate = false;
             }
@@ -169,6 +171,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 this.oldInterpreterPreference = jsonData.preference_allocations_attributes;
                 this.bookingModel.documents_attributes = [];
                 this.bookingDate = new Date(this.datePipe.transform(this.bookingModel.venue.start_time_iso, 'MM/dd/yyyy'));
+                this.recurrenceDayCheckboxChecked();
                 this.setTime();
                 this.natureOfApptChange(null);
                 this.checkInterpreterBoxes();
@@ -393,13 +396,18 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     public onClientSelectionChange() {
         let user = this.isUserAdminORBookOfficer ? this.bookable : GLOBAL.currentUser;
         if (user) {
-            ['first_name', 'last_name', 'email', 'mobile_number', 'ndis_id'].forEach((field) => {
+            ['first_name', 'last_name', 'email', 'mobile_number', 'ndis_id', 'general_notes', 'claim_notes'].forEach((field) => {
                 let currentUserFieldMap = {mobile_number: 'mobile'};
                 let currentUserField = currentUserFieldMap[field] || field;
                 let value = this.currentUserIsClient ? user[currentUserField] : '';
                 let mapForNsid = {ndis_id: 'eaf'};
                 field = mapForNsid[field] || field;
                 this.bookingModel.deaf_person[field] = value;
+                if (field === 'general_notes') {
+                    this.bookingModel.general_notes = value;
+                } else if (field === 'claim_notes') {
+                    this.bookingModel.claim_notes = value;
+                }
             });
         }
     }
@@ -643,10 +651,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
       Calling this method will create a new booking
     */
     public onCreateBooking(form: any, addressForm: any, billingForm: any, uploader: FileUploader) {
-        if (addressForm.isTravelCostApplicable && !form.value.travel_cost_applicable) {
-            this.notificationServiceBus.launchNotification(true, 'Travel cost must be applicable as your booking distance is more than 40 kms');
-            return;
-        }
+        this.bookingModel.travel_cost_applicable = addressForm.isTravelCostApplicable ? true : false;
+
         if (this.shouldSelectDeafBlindOtherLanguage()) {
             let msg = this.cbDeafBlindInterpreter ? 'deaf blind interpreter' : '"Other Language Needs"';
             this.notificationServiceBus.launchNotification(true, 'Select at least one type of ' + msg);
@@ -800,7 +806,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         this.dialogRef = this.dialog.open(PopupComponent, config);
         this.dialogRef.componentInstance.title = title;
         this.dialogRef.componentInstance.cancelTitle = (options && options.cancelTitle) || 'BACK';
-        this.dialogRef.componentInstance.okTitle = (options && options.okTitle) || this.forEdit ? 'UPDATE' : 'CREATE';
+        this.dialogRef.componentInstance.okTitle = (options && options.okTitle) ? options.okTitle :
+        this.forEdit ? 'UPDATE' : 'CREATE';
         this.dialogRef.componentInstance.closeVal = (options && options.closeVal) || false;
         this.dialogRef.componentInstance.popupMessage = message;
     }
@@ -814,12 +821,12 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 || endDate.getSeconds() > 0)) || endDate.getHours() > 20);
     }
 
-    public isRecurrenceDayCheckboxDisabled(day) {
-        const isDisabled = this.bookingDate && this.bookingDate.getDay() === this.repeat_days.indexOf(day);
-        if (isDisabled) {
-            this.repeat_days[this.repeat_days.indexOf(day)].selected = true;
-        }
-        return isDisabled;
+    public recurrenceDayCheckboxChecked() {
+        this.repeat_days.forEach(day => {
+            if (this.bookingDate && this.bookingDate.getDay() === this.repeat_days.indexOf(day)) {
+                this.repeat_days[this.repeat_days.indexOf(day)].selected = true;
+            }
+        });
     }
 
     private getRecurrenceDays() {
@@ -861,7 +868,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         if (this.isUserAdminORBookOfficer && !!this.bookingModel.link_id) {
             const message = 'Would you like to save these changes for all bookings or only for this one?';
             const title = 'Change all bookings?';
-            this.createModal(title, message, {okTitle: 'Update only this booking', cancelTitle: 'Update all bookings', closeVal: 'cancel'});
+            this.createModal(title, message, {okTitle: 'Update this booking', cancelTitle: 'Update all bookings', closeVal: 'cancel'});
             this.dialogSub = this.dialogRef.afterClosed().subscribe(updateOnlyThisBooking => {
                 if (updateOnlyThisBooking !== 'cancel') {
                     this.bookingModel.update_all_linked_bookings = !updateOnlyThisBooking;

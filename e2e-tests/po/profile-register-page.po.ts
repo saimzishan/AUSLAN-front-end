@@ -23,6 +23,16 @@ export class ProfileRegisterPage extends PageObject {
     fillAllDataForAdmin = (type: string) => {
         this.fillAllDataForRegister(type, '');
     }
+
+    fillCertificationDataOfInterpreter  = () => {
+        this.getElementByName('working_with_child_check').sendKeys('work');
+        this.getElementByName('yellow_card').sendKeys('card');
+        this.getElementByName('immunisations').sendKeys('good');
+        this.getElementByName('police_check').sendKeys('police');
+        this.getElementByName('from_27a').sendKeys('27A');
+        this.getElementByName('recorded_booking').sendKeys('recorded');
+    }
+
     fillBasicData  = (type: string) => {
         this.getElementByName('first_name').sendKeys('George');
         this.getElementByName('last_name').sendKeys('Charalambous');
@@ -97,9 +107,24 @@ export class ProfileRegisterPage extends PageObject {
             this.getElementByName('address_post_code').sendKeys('3064');
             this.getElementByName('address_suburb').sendKeys('Crazy');
             this.getElementByName('address_state').sendKeys('VIC'); // dropdown
-            this.getElementByName('location_pref').sendKeys('ACT');
+            this.getElementByName('location_pref').sendKeys('TAS');
         }
         return this.getElementByName('register_user').click();
+    }
+
+    fillAppAddressForm = (value: string) => {
+        const clientOptionLabel = this.getElementByClassName('billing-address');
+        const all_input_in_div = this.getAllByTagNameInElement(clientOptionLabel, 'input');
+        const select_in_div = this.getAllByTagNameInElement(clientOptionLabel, 'select');
+        return all_input_in_div.then((inputDiv) => {
+            for (let i = 0; i < inputDiv.length; i++) {
+                const street_input = inputDiv[i];
+                street_input.sendKeys(value);
+            }
+            select_in_div.then((selectDiv) =>{
+                selectDiv[0].sendKeys('VIC');
+            });
+        });
     }
 
     acceptTC = () => {

@@ -179,4 +179,9 @@ Feature: Booking Filter
     When I query search with current date manually
     And I press enter
     Then I am shown with 5 booking
+    When I query search with future date after '8' Days manually
+    And I click out of the text box
+    Then I am shown with 0 booking
+
+
     

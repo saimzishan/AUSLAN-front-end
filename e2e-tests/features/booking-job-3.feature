@@ -48,7 +48,7 @@ Feature: Booking Admin Management
     Then I am on the bookings page
     When I click on an individual booking
     Then I am on the individual booking page
-    And I should not see the attachment icons under Attached column
+    And I should not see the attachment icons under Attached column number '14'
     When I click on link 'Booking details'
     Then I should be on the edit booking page
     And I will upload a document 'sushi.pdf'
@@ -65,7 +65,8 @@ Feature: Booking Admin Management
     And I am on the bookings page
     When I click on an individual booking
     Then I am on the individual booking page
-    Then I should not see the attachment icons under Attached column
+    Then I should see the attachment icons under Attached column number '14'
+
   ########### REQUESTED TO CANCEL for linked bookings #######################################
 
   @runThis
@@ -508,3 +509,54 @@ Feature: Booking Admin Management
     And I can see the element with name 'unassingBtn_2' is 'not visible'
     And I can see the element with name 'unassingBtn_3' is 'not visible'
     Then I can count the element with css 'span.pink' to be '0'    
+
+  @runThis
+  Scenario: Given 1 verified Booking Officer and Interpreter, As a interpreter should see an attchment icon if the booking has attachment and I accept this booking
+    Given There exist 1 bookings
+    Given I exist as a Booking Officer
+    When I sign in with valid Booking Officer credentials
+    Then I am on the bookings page
+    When I click on an individual booking
+    Then I am on the individual booking page
+    And I should not see the attachment icons under Attached column number '14'
+    When I click on link 'Booking details'
+    Then I should be on the edit booking page
+    And I will upload a document 'sushi.pdf'
+    When I will see attachment 'sushi.pdf'
+    Then I will close the file upload
+    And I click on checkbox name 'tnc'
+    And I click the create booking button
+    And If I am shown a popup message 'This booking is not within the standard booking hours (8AM - 6PM). Do you still want to update booking?', I approve it
+    Then I wait for 1200 milli-seconds
+    Then If I am shown a popup message 'Would you like to save these changes for all bookings or only for this one?', I approve it
+    Then I should get a valid booking update notification
+    Then I am on the individual booking page
+    Then I click on Bookings
+    And I am on the bookings page
+    When I click on an individual booking
+    Then I am on the individual booking page
+    Then I should see the attachment icons under Attached column number '14'
+    Then I can see the button 'Save' is disabled
+    Then I select 1 Interpreter
+    And I click on BUTTON name 'inviteBtn'
+    Then I can see the button 'Save' is enabled
+    And I click on BUTTON 'Save'
+    Then I get a valid invite notification
+    Then I click on Bookings
+    And I am on the bookings page
+    Then I see one row with state 'In progress'
+    And I hover on the 'Profile'
+    And I click on logout
+    And I exist as an Interpreter
+    And I sign in with valid Interpreter credentials
+    Then I am on the bookings page
+    When I click on an individual booking
+    Then I am on the individual booking page
+    And I can see the element with name '_attach' is 'not visible'
+    Then I can see the button 'Accept' is enabled
+    Then I click on button 'Accept'
+    Then I will be shown a popup message
+    Then I click on BUTTON name 'yesBtn'
+    And I wait for 1000 milli-seconds
+    And I can see the element with name '_attach' is 'visible'
+    Then I should see the attachment icons under Attached column number '10'
