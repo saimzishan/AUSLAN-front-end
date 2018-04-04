@@ -163,4 +163,20 @@ Feature: Booking Management
     And I can see the element with name 'interpreterMsg' has text 'What kind of interpreter(s) does the organisation need? Select multiple if relevant'
     And I can see the element with name 'contactMsg' has text 'DO YOU WANT TO USE THE STANDARD CONTACT PERSON FOR THIS BOOKING? *'
     And I can see the element with name 'invoiceMsg' has text 'Do you want to use standard invoice details for this booking? *'
+
+  @runThis
+  Scenario: Given 1 verified Individual Client, Administrator can create a booking
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on the bookings page
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    Then I change the value of end time of booking '01:02'
+    Then I check the value of endTime should be '01:02 AM'
+    Then I wait for 1000 milli-seconds
+    Then I change the value of end time of booking '01:02am'
+    Then I check the value of endTime should be '01:02 AM'
+    Then I wait for 1000 milli-seconds
+    Then I change the value of end time of booking '01:02        am'
+    Then I check the value of endTime should be '01:02 AM'
 # ---------------------------------------- AUSLAN1-727 -> START ----------------------------------------

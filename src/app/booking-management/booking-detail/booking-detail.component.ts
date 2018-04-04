@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewContainerRef, ViewChild, ChangeDetectorRef, Input} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewContainerRef, ViewChild, ChangeDetectorRef} from '@angular/core';
 import {Booking} from '../../shared/model/booking.entity';
 import {BookingService} from '../../api/booking.service';
 import {BA, BOOKING_NATURE} from '../../shared/model/booking-nature.enum';
@@ -9,7 +9,7 @@ import {NotificationServiceBus} from '../../notification/notification.service';
 import {BookingHeaderService} from '../booking-header/booking-header.service';
 import {Router, ActivatedRoute} from '@angular/router';
 import {RolePermission} from '../../shared/role-permission/role-permission';
-import {DatePipe} from '@angular/common';
+import {DatePipe} from  '@angular/common';
 import {FormGroup, FormControl} from '@angular/forms';
 import {FileUploader} from 'ng2-file-upload';
 import {Address} from '../../shared/model/venue.entity';
@@ -100,7 +100,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     hasPrefInt: Boolean = false;
     duplicatingBookable: number;
     isCertRequired = false;
-    @Input() keepInvalid = false;
     start_time;
     repeat_days = [
         {
