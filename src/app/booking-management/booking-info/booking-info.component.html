@@ -19,7 +19,9 @@
       <ng-container *ngIf='!isClientInterpAndBookInProgress()'>
         <th>People</th>
         <th>Special Instructions</th>
-        <th>Attached</th>
+      </ng-container>
+      <ng-container *ngIf='!isClientAndBookingInProgress() && isAcceptedByCurrentInterpreter()'>
+        <th name="_attach">Attached</th>
       </ng-container>
       <th *ngIf='isCurrentUserAdminOrBookingOfficer() || isClientOrOrgRep()'>Date Added</th>
       <ng-container *ngIf='isCurrentUserAdminOrBookingOfficer()'>
@@ -71,6 +73,8 @@
         <td data-title="SPECIAL INSTRUCTIONS" class="new-line">
           {{selectedBookingModel.special_instructions}}
         </td>
+      </ng-container>
+      <ng-container *ngIf='!isClientAndBookingInProgress() && isAcceptedByCurrentInterpreter()'>
         <td align="center" data-title="ATTACHMENTS">
           <ul *ngIf="selectedBookingModel.documents_attributes.length > 0"
                            class="dropdown menu custom"

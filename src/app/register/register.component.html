@@ -250,7 +250,7 @@
                         *ngIf="selectedRole === 'ORGANISATION' || selectedRole === 'INDIVIDUALCLIENT'"
                 ></app-interpreter-box>
                 <br>
-                <ng-container *ngIf="checkUserAdminORBookOfficer() && selectedRole === 'ORGANISATION' || selectedRole === 'INDIVIDUALCLIENT'">
+                <ng-container *ngIf="checkUserAdminORBookOfficer() && (selectedRole === 'ORGANISATION' || selectedRole === 'INDIVIDUALCLIENT')">
                     <div class="medium-12 columns">
                         <div class="form-field">
                         <label>GENERAL NOTES</label>
@@ -259,8 +259,6 @@
                         </textarea>
                         </div>
                     </div>
-                </ng-container>
-                <ng-container *ngIf="checkUserAdminORBookOfficer() && selectedRole === 'ORGANISATION' || selectedRole === 'INDIVIDUALCLIENT'">
                     <div class="medium-12 columns">
                         <div class="form-field">
                         <label>CLAIM NOTES</label>

@@ -19,6 +19,7 @@ import {FakeOpMapsAPILoader} from '../../shared/test/Mock';
 import {MapsAPILoader} from '@agm/core';
 import {UserService} from '../../api/user.service';
 import {MockUserService, MockBookingService} from '../../shared/test/Mock';
+import { SpinnerService } from '../../spinner/spinner.service';
 
 describe('InterpreterComponent', () => {
     let component: InterpreterComponent;
@@ -28,7 +29,7 @@ describe('InterpreterComponent', () => {
         TestBed.configureTestingModule({
             declarations: [InterpreterComponent, AddressComponent, BillingAccountComponent, RemoveSpacePipe],
             providers: [NotificationServiceBus, GmapsApiService,  {provide: AuthHttp, useClass: MockBackend}, { provide: MapsAPILoader, useClass: FakeOpMapsAPILoader},
-                { provide: UserService, useClass: MockUserService }],
+                { provide: UserService, useClass: MockUserService }, SpinnerService],
             imports: [FormsModule, CustomFormsModule, SimpleNotificationsModule,
                 RouterTestingModule, MaterialModule, CalendarModule]
         })

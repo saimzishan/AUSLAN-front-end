@@ -46,6 +46,7 @@ defineSupportCode(({Given, Then, When}) => {
     When(/^I click on an individual booking of type '(.*)'$/, bookingManagementPO.clickOnIndividualBookingOfType);
     When(/^I do not see any booking rows$/, bookingManagementPO.noBookingExists);
     When(/^I click on an individual booking$/, bookingManagementPO.clickOnIndividualBooking);
+    When(/^I click on an booking of index (.*)$/, bookingManagementPO.clickOnIndividualBookingWithIndex);
 
     // --------------------------------- AUTO POPULATE CLIENT DETAILS
     When(/^I specify i am the client of this booking$/, createBookingPO.specifyAsClientOfBooking);
@@ -139,7 +140,7 @@ defineSupportCode(({Given, Then, When}) => {
     Then(/^I should (not)?\s?see the link id in booking details$/, bookingJobPO.checkLinkIdInTableDetails);
     Then(/^I note the value under (.*) column$/, bookingJobPO.noteTableDetails);
     Then(/^The value under the (.*) column is the same as I noted above$/, bookingJobPO.checkNotedTableDetails);
-    Then(/^I should\s?(not)? see the attachment icons under Attached column$/, bookingJobPO.checkAttachmentIcons);
+    Then(/^I should\s?(not)? see the attachment icons under Attached column number '(.*)'$/, bookingJobPO.checkAttachmentIcons);
     Then(/^I should be on the payroll and billing page$/, bookingPayrollPO.verify);
     Then(/^I verify that payroll '(.*)' input fields are non editable$/, bookingPayrollPO.checkReadonlyFields);
     Then(/^I verify that payroll '(.*)' input fields have zero value$/, bookingPayrollPO.checkInputValues);
