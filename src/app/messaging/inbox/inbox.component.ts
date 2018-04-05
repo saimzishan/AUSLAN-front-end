@@ -37,7 +37,7 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
     messagePage = 1;
     totalItems = 0;
     selectedMessageThread = 0;
-
+    messageCount = -1;
     public config: PerfectScrollbarConfigInterface = {};
 
     @ViewChild(PerfectScrollbarComponent) componentScroll: PerfectScrollbarComponent;
@@ -65,12 +65,6 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
             }
         });
     }
-
-    isLoadMore() {
-        return this.isCurrentUserAdminOrBookingOfficer() ?
-            this.messageThreads[this.selectedMessageThread].messages_count > this.messagePage * 10 :
-            false;
-    }
     loadMore() {
         this.messagePage += 1;
         this.getInterpreterMessages();
@@ -82,6 +76,8 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
         this.messagingService.getInterpreterMessages(id, this.messagePage)
             .subscribe((res: any) => {
                     if (res.status === 200) {
+                        this.messageCount = Boolean(res.data.message_count) ?
+                            res.data.message_count : res.data.messages.length;
                         this.messages = res.data.messages;
                         setTimeout(() => {
                             this.componentScroll.directiveRef.scrollToBottom();
@@ -117,9 +113,10 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
     }
 
     sendMessage() {
+        let id = Boolean(this.userId) ? this.userId : this.loginUserID;
         let url = (this.platformLocation as any).location.href;
         url = url.substr(0, 30);
-        url += this.userId + '/inbox';
+        url += id + '/inbox';
         this.spinnerService.requestInProcess(true);
 
         this.messagingService.sendMessages(this.loginUserID, url, this.message_body, this.userId)

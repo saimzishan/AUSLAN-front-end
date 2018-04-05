@@ -44,9 +44,9 @@
 
         </section>
     </section>
-    <!--div *ngIf="isCurrentUserAdminOrBookingOfficer()" class="element element_inline">
+    <div *ngIf="totalItems > 10 && isCurrentUserAdminOrBookingOfficer()" class="element element_inline">
         <pagination-controls class="my-pagination"></pagination-controls>
-    </div-->
+    </div>
     <section class="messages__wrapper" [ngClass]="{'messages__wrapper_aside': isCurrentUserAdminOrBookingOfficer()}"
              id="messages-wrapper">
 
@@ -73,9 +73,8 @@
 
             </ng-container>
         </perfect-scrollbar>
-        <button *ngIf="isLoadMore()"
+        <button *ngIf="messageCount > messagePage * 10"
                 (click)="loadMore()" class="button messages__formButton">Load More ..
-
         </button>
 
     </section>
