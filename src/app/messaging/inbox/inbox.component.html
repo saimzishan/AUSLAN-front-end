@@ -21,7 +21,7 @@
 </section>
 <section class="messages">
     <section *ngIf='isCurrentUserAdminOrBookingOfficer()' class="messages__conversations">
-        <section class="messages__conversations-wrapper" id="conversations-wrapper">
+        <section class="messages__conversations"  [ngClass]="{'messages__conversations_withPagination': totalItems > 10}" id="conversations-wrapper">
             <ng-container
                     *ngFor="let mesg of messageThreads  | paginate: { itemsPerPage: 10, currentPage: 1,totalItems: 100 } let i = index">
                 <section class="messages__conversation"
@@ -44,7 +44,7 @@
 
         </section>
     </section>
-    <div *ngIf="totalItems > 10 && isCurrentUserAdminOrBookingOfficer()" class="element element_inline">
+    <div *ngIf="totalItems > 10 && isCurrentUserAdminOrBookingOfficer()" class="element element_inline messages__pagination">
         <pagination-controls class="my-pagination"></pagination-controls>
     </div>
     <section class="messages__wrapper" [ngClass]="{'messages__wrapper_aside': isCurrentUserAdminOrBookingOfficer()}"
