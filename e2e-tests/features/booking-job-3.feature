@@ -48,7 +48,7 @@ Feature: Booking Admin Management
     Then I am on the bookings page
     When I click on an individual booking
     Then I am on the individual booking page
-    And I should not see the attachment icons under Attached column number '14'
+    And I should not see the attachment icons under Attached column number
     When I click on link 'Booking details'
     Then I should be on the edit booking page
     And I will upload a document 'sushi.pdf'
@@ -65,7 +65,7 @@ Feature: Booking Admin Management
     And I am on the bookings page
     When I click on an individual booking
     Then I am on the individual booking page
-    Then I should see the attachment icons under Attached column number '14'
+    Then I should see the attachment icons under Attached column number
 
   ########### REQUESTED TO CANCEL for linked bookings #######################################
 
@@ -518,7 +518,7 @@ Feature: Booking Admin Management
     Then I am on the bookings page
     When I click on an individual booking
     Then I am on the individual booking page
-    And I should not see the attachment icons under Attached column number '14'
+    And I should not see the attachment icons under Attached column number
     When I click on link 'Booking details'
     Then I should be on the edit booking page
     And I will upload a document 'sushi.pdf'
@@ -535,7 +535,7 @@ Feature: Booking Admin Management
     And I am on the bookings page
     When I click on an individual booking
     Then I am on the individual booking page
-    Then I should see the attachment icons under Attached column number '14'
+    Then I should see the attachment icons under Attached column number
     Then I can see the button 'Save' is disabled
     Then I select 1 Interpreter
     And I click on BUTTON name 'inviteBtn'
@@ -559,4 +559,4 @@ Feature: Booking Admin Management
     Then I click on BUTTON name 'yesBtn'
     And I wait for 1000 milli-seconds
     And I can see the element with name '_attach' is 'visible'
-    Then I should see the attachment icons under Attached column number '10'
+    Then I should see the attachment icons under Attached column number

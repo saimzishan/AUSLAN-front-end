@@ -137,6 +137,14 @@
     </div>
     <div class="medium-6 columns">
       <div class="form-field">
+        <label>Blue card</label>
+        <input type="text" placeholder="Please enter blue card"
+                [(ngModel)]="userModel.blue_card" name="blue_card"
+                #blue_card="ngModel">
+      </div>
+    </div>
+    <div class="medium-6 columns">
+      <div class="form-field">
         <label>Yellow card</label>
         <input type="text" placeholder="Please enter yellow card"
                 [(ngModel)]="userModel.yellow_card" name="yellow_card"
