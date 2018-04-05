@@ -12,6 +12,7 @@ import { UserService } from '../../api/user.service';
 import { dashCaseToCamelCase } from '@angular/compiler/src/util';
 import { Booking } from '../../shared/model/booking.entity';
 import * as momentTimeZone from 'moment-timezone';
+import { SpinnerService } from '../../spinner/spinner.service';
 
 
 @Component({
@@ -27,7 +28,8 @@ export class StaffCalendarComponent implements OnInit {
     updateCalendar = false;
     userID;
     interpreter: Interpreter;
-    constructor(public routes: ActivatedRoute, public userDataService: UserService, private route: ActivatedRoute, private router: Router) {
+    constructor(public spinnerService: SpinnerService,
+         public routes: ActivatedRoute, public userDataService: UserService, private route: ActivatedRoute, private router: Router) {
         this.userModel = new Interpreter();
     }
     isUserLogin() {
@@ -45,6 +47,7 @@ export class StaffCalendarComponent implements OnInit {
 
         delete this.userModel.assignments_attributes;
         delete this.userModel.password;
+        this.spinnerService.requestInProcess(true);
         this.routes.params.subscribe(params => {
              this.userID = +params['id'] || false;
              if (this.userID) {
@@ -57,6 +60,7 @@ export class StaffCalendarComponent implements OnInit {
                             this.userModel.staff_availabilities_attributes = res.data.staff_availabilities_attributes;
                             this.StaffAvialabilityToUpdate();
                         }
+                        this.spinnerService.requestInProcess(false);
                     });
             }
          });
@@ -104,9 +108,7 @@ export class StaffCalendarComponent implements OnInit {
                 },
                 defaultView: $(window).width() < 768 ? 'listMonth' : 'month',
                 eventClick: (calEvent, jsEvent, view) => {
-                    if (view.name === 'listYear' || view.name === 'listMonth') {
                         this.router.navigate(['/user-management/', calEvent.id, 'staff-availability']);
-                    }
                 },
                 editable: true,
                 eventLimit: 2, // allow "more" link when too many events
@@ -144,7 +146,7 @@ export class StaffCalendarComponent implements OnInit {
                     frequency: avail_block.frequency
                 });
                 if (avail_block.recurring === true) {
-                    event.dow = avail_block.frequency === 'daily' ? [1, 2, 3, 4, 5] : this.setDays(avail_block.recurring_week_days);
+                    event.dow = avail_block.frequency === 'daily' ? [0, 1, 2, 3, 4, 5, 6] : this.setDays(avail_block.recurring_week_days);
                     event.ranges = [
                         {
                             start: moment().endOf(avail_block.frequency === 'daily' ? 'day' :
@@ -170,7 +172,7 @@ export class StaffCalendarComponent implements OnInit {
     setDays(days) {
         let data = [];
         days.forEach(element => {
-            data.push(+element + 1);
+            data.push(+element);
         });
         return data;
     }

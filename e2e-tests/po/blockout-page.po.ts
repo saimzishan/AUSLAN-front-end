@@ -72,11 +72,11 @@ export class BlockoutPagePo extends PageObject {
             today.getFullYear().toString()
         ].join('/');
         startTime.clear();
-        startTime.sendKeys(currentDate + ' 09:00 PM');
+        startTime.sendKeys(currentDate + ' 08:00 PM');
         let endTime = this.getElementByCss('input[name="dpEventDate_endtime"]');
         this.clickOutSide();
         return endTime.getAttribute('value').then((val) => {
-            expect(val).to.be.eq('10:00 PM');
+            expect(val).to.be.eq('09:00 PM');
         });
     }
     changeEndTimeOFBlockout = () => {
@@ -88,6 +88,18 @@ export class BlockoutPagePo extends PageObject {
             expect(val).to.be.eq('09:25 AM');
         });
     }
+
+    checkEndTimeOFBlockoutAgainstStartTime = (value) => {
+        let endTime = this.getElementByCss('input[name="dpEventDate_endtime"]');
+        endTime.clear();
+        endTime.sendKeys('10:00 PM');
+        this.clickOutSide();
+
+        return endTime.getAttribute('value').then((val) => {
+            expect(val).to.be.eq(value);
+        });
+    }
+
     checkEndTimeOFBlockout = (value) => {
         let endTime = this.getElementByCss('input[name="dpEventDate_endtime"]');
         return endTime.getAttribute('value').then((val) => {

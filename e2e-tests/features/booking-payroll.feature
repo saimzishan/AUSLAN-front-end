@@ -233,7 +233,8 @@ Feature: Booking Payroll and Billing
     When I click on BUTTON 'ADD STAFF AVAILABILITY'
     Then I will be taken to staff-calendar page
     When I refresh
-    Then I check that the start time and end time is 09:00PM - 10:00PM
+    Then I check that the start time and end time is 08:00PM - 09:00PM
+    Then I check the value of endTime is to be '10:00 PM'
     And I enter blockout name 'singleEvent'
     And I click on BUTTON 'SAVE'
     And I get success message: 'Staff Availability successfully added'

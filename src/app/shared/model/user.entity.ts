@@ -446,6 +446,7 @@ export class Interpreter extends User {
     public override_availabilty: blockout_availability;
     public skill_level;
     public working_with_childrens_check = '';
+    public blue_card = '';
     public yellow_card = '';
     public immunisations = '';
     public police_check = '';

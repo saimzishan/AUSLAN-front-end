@@ -39,6 +39,7 @@ export class BlockoutComponent implements OnDestroy, OnInit {
     public href;
     staff_availability;
     bookingDate: Date;
+    sideToggleCheck = false;
     repeat_days = [
         {
             sendValue: '0',
@@ -108,6 +109,7 @@ export class BlockoutComponent implements OnDestroy, OnInit {
 
         this.userID = localStorage.getItem('userId');
         if (this.userID > 0) {
+            this.spinnerService.requestInProcess(true);
             this.userDataService.getUser(this.userID)
                 .subscribe((res: any) => {
                     if (res.status === 200) {
@@ -133,15 +135,22 @@ export class BlockoutComponent implements OnDestroy, OnInit {
                                             this.availabilityBlock = a
                                         );
                                 }
+                                this.sideToggleCheck = this.availabilityBlock.recurring;
+                                for (let day of this.availabilityBlock.recurring_week_days) {
+                                    this.repeat_days[day].selected = true;
+                                }
+                                this.checkIsWeekely();
                                 this.settingTime();
                             }
                         });
                         this.roundOffMinutes();
                     }
+                    this.spinnerService.requestInProcess(false);
                 });
         }
     }
     public setRecurring_week_days() {
+        this.availabilityBlock.recurring_week_days = [];
         for (let i = 0; i < this.repeat_days.length; i++) {
             if (this.repeat_days[i].selected) {
                 this.availabilityBlock.recurring_week_days.push(this.repeat_days[i].sendValue);
@@ -175,7 +184,6 @@ export class BlockoutComponent implements OnDestroy, OnInit {
 
         dt.setTime(this.start_time.getTime() + (1 * 60 * 60 * 1000));
         this.end_time = dt;
-        this.end_date = dt;
     }
     roundOffMinutes() {
         let dt = this.end_time;
@@ -316,11 +324,19 @@ export class BlockoutComponent implements OnDestroy, OnInit {
             this.notificationServiceBus.launchNotification(true, GLOBAL.MISSING_FIELDS_ERROR_MESSAGE);
             return;
         }
+        this.timeFormatting();
+        if (this.availabilityBlock.recurring) {
+            this.setRecurring_week_days();
+            if (this.availabilityBlock.frequency === 'weekly' && this.availabilityBlock.recurring_week_days.length === 0) {
+                this.notificationServiceBus.launchNotification(true, GLOBAL.MISSING_FIELDS_ERROR_MESSAGE);
+                return;
+            } else if (this.availabilityBlock.frequency === 'daily') {
+                this.availabilityBlock.recurring_week_days = [];
+            }
+        }
         this.spinnerService.requestInProcess(true);
         delete this.availabilityBlock.booking_id;
-        this.timeFormatting();
         if (this.staff_availability) {
-            this.setRecurring_week_days();
             this.addStaffAvailabilitie(this.availabilityBlock);
         } else {
             this.userDataService.addBlockout(this.userID, this.availabilityBlock)
@@ -399,6 +415,17 @@ export class BlockoutComponent implements OnDestroy, OnInit {
     interpreterDaylightSavings(startDate) {
         let timeZone = Booking.getNamedTimeZone(this.interpreter.address_attributes.state, this.interpreter.address_attributes.post_code.toString());
         return momentTimeZone(startDate).tz(timeZone).format('Z');
+    }
+    enDateGreterthenTostartDate(endDate, startDate) {
+        return (this.getFullDate(startDate) < this.getFullDate(endDate ) );
+    }
+
+    getFullDate(date) {
+        let month = date.getMonth() + 1;
+        let fullDate = date.getDate();
+        fullDate += '' + month;
+        fullDate += '' + date.getFullYear();
+        return fullDate;
     }
 
 }
