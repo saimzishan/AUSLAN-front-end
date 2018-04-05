@@ -8,8 +8,8 @@
 </section>
 
 <nav *ngIf="isCurrentUserInterpreter()" id="footer-mobile">
-  <button (click)="setActiveFilter('Allocated')" [ngClass]="{'active' : isActiveFilter('All')}"> All </button>
+  <button (click)="setActiveFilter('All')" [ngClass]="{'active' : isActiveFilter('All')}"> All </button>
   <button (click)="setActiveFilter('Allocated')" [ngClass]="{'active' : isActiveFilter('Allocated')}"> Allocated </button>
-  <button (click)="setActiveFilter('Allocated')" [ngClass]="{'active' : isActiveFilter('Open')}"> Open </button>
-  <button (click)="setActiveFilter('Allocated')" [ngClass]="{'active' : isActiveFilter('NewInvites')}"> New Invites </button>
+  <button (click)="setActiveFilter('Open')" [ngClass]="{'active' : isActiveFilter('Open')}"> Open </button>
+  <button (click)="setActiveFilter('NewInvites')" [ngClass]="{'active' : isActiveFilter('NewInvites')}"> New Invites </button>
 </nav>

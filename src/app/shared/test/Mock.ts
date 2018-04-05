@@ -158,7 +158,7 @@ export class MockBookingService extends ApiService {
             return res;
         });
     }
-    fetchPaginatedBookings(page: number , search: URLSearchParams): Observable<Object> {
+    fetchPaginatedBookings(page: number , search: URLSearchParams, filter): Observable<Object> {
         return Observable.of(mock_fetch_booking_response).map(res => {
             return res;
         });
