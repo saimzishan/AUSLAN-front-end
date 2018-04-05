@@ -37,6 +37,9 @@ export class BookingComponent  {
         this.tempPage = page;
         this.getPaginatedBooking();
     }
+    isCurrentUserInterpreter(): boolean {
+        return Boolean(GLOBAL.currentUser instanceof Interpreter);
+    }
     getPaginatedBooking() {
         this.spinnerService.requestInProcess(true);
         this.bookingDataService.fetchPaginatedBookings(this.tempPage, this.search)
