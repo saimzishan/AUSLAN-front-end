@@ -26,6 +26,7 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
     messageThreads = [];
     userId;
     message_body;
+    message_thread_id;
     message_tag = '-000000';
     checked = false;
     isTagShow = false;
@@ -67,7 +68,7 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
     }
     loadMore() {
         this.messagePage += 1;
-        this.getInterpreterMessages();
+        this.getInterpreterMessage(this.message_thread_id);
     }
 
     getInterpreterMessages() {
@@ -92,6 +93,28 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
                     this.notificationServiceBus.launchNotification(true, e);
                 });
     }
+    getInterpreterMessage(id) {
+        this.spinnerService.requestInProcess(true);
+        this.messagingService.getInterpreterMessage(id, this.business_id, this.messagePage)
+            .subscribe((res: any) => {
+                if (res.status === 200) {
+                    this.messageCount = Boolean(res.data.message_count) ?
+                        res.data.message_count : res.data.messages.length;
+                    this.messages = res.data.messages;
+                    setTimeout(() => {
+                        this.componentScroll.directiveRef.scrollToBottom();
+                        this.spinnerService.requestInProcess(false);
+                    }, 500);
+
+                }
+            },
+                errors => {
+                    this.spinnerService.requestInProcess(false);
+                    let e = errors.json();
+                    this.notificationServiceBus.launchNotification(true, e);
+                });
+    }
+
 
     getAllMessageThreads(businessId) {
         this.spinnerService.requestInProcess(true);
@@ -101,7 +124,8 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
                         this.messageThreads = res.data.message_threads;
                         this.totalItems = res.data.message_threads_count;
                         this.userId = this.messageThreads[this.selectedMessageThread].user_id;
-                        this.getInterpreterMessages();
+                        this.message_thread_id = this.messageThreads[this.selectedMessageThread].id;
+                        this.getInterpreterMessage(this.message_thread_id);
                     }
                     this.spinnerService.requestInProcess(false);
                 },
@@ -137,7 +161,7 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
     showSingleMessageThread(index) {
         this.selectedMessageThread = index;
         this.userId = this.messageThreads[index].user_id;
-        this.getInterpreterMessages();
+        this.getInterpreterMessage(this.message_thread_id);
 
     }
 

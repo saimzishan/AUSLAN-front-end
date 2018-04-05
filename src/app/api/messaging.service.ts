@@ -27,6 +27,16 @@ export class MessagingService extends ApiService {
                     .catch((err) => { return this.handleError(err); });
         }
 
+        getInterpreterMessage(message_thread_id, business_id, page): Observable<any> {
+            let headers = new Headers({ 'Accept': 'application/json' });
+            let options = new RequestOptions({ headers: headers });
+
+            return this.http.get(GLOBAL.USER_APPI + '/business/' + business_id + '/message_threads/' + message_thread_id
+                                                    + '?page=' + 1 + '&amp;per_page=' + page * 10, options)
+                .map(this.extractData)
+                .catch((err) => { return this.handleError(err); });
+        }
+
         sendInterpreterMessages(user_id, url, inbox_url_id, message_body): Observable < Object > {
         let headers = new Headers({ 'Accept': 'application/json' });
         let options = new RequestOptions({ headers: headers });
