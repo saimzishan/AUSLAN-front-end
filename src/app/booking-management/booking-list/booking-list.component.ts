@@ -109,7 +109,9 @@ export class BookingListComponent implements OnInit, OnChanges {
         return Boolean(GLOBAL.currentUser instanceof Administrator ||
             GLOBAL.currentUser instanceof BookingOfficer);
     }
-
+    isCurrentUserInterpreter(): boolean {
+        return Boolean(GLOBAL.currentUser instanceof Interpreter);
+    }
     didInterpreterAccepted(interpreters: Array<BookingInterpreter>) {
         return interpreters.filter(i => i.state === 'Accepted').slice(0, 3);
     }
