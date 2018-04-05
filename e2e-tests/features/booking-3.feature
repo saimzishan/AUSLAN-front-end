@@ -179,4 +179,5 @@ Feature: Booking Management
     Then I wait for 1000 milli-seconds
     Then I change the value of end time of booking '01:02        am'
     Then I check the value of endTime should be '01:02 AM'
+
 # ---------------------------------------- AUSLAN1-727 -> START ----------------------------------------
