@@ -220,11 +220,11 @@
                             <a href="javascript:void(0);" class="button" id="lnk-recommended-interpreters"
                                [ngClass]="isRecommended ? 'active' : ''" (click)="toggleRecommended()">Recommended</a>
                             <div class="separator"></div>
-                            <button *ngIf="hideAccept_showAutoInvite" class="button active" name='inviteBtn' (click)="autoInviteInterpreters()">
-                                <i class="icon-shape"></i> Auto Invite
-                            </button>
                             <button *ngIf="!hideInvite" class="button active" name='autoInviteBtn' (click)="inviteInterpreters()">
                                 <i class="icon-shape"></i> Invite
+                            </button>
+                            <button style="width:14%" *ngIf="hideAccept_showAutoInvite && !hideInvite" class="button active" name='inviteBtn' (click)="autoInviteInterpreters()">
+                                <i class="icon-shape"></i> Auto Invite
                             </button>
                             <button *ngIf="!hideAccept_showAutoInvite" class="button red" (click)="reAssignInterpreters()" name="reassingBtn">
                                 <i class="icon-assign"></i> Assign
