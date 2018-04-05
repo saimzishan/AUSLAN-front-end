@@ -181,3 +181,17 @@ Feature: Booking Management
     Then I check the value of endTime should be '01:02 AM'
 
 # ---------------------------------------- AUSLAN1-727 -> START ----------------------------------------
+
+  @runThis
+  Scenario: As Individual Client, I should be able to create booking with multiple interp types
+    Given I sign in with valid Individual Client credentials
+    Then I am on the bookings page
+    And I click on 'New Booking'
+    Then I will be taken to the 'New Booking' form
+    When I fill New Booking form fields correctly
+    And I fill the field 'auslanInterpreters_count' with value '2'
+    And I fill the field 'noteTaker_count' with value '1'
+    Then I click on checkbox name 'tnc'
+    And I click the create booking button
+    And If I am shown popups, I approve all of them
+    Then I get a valid create booking notification
