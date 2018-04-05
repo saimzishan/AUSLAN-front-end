@@ -379,6 +379,21 @@ export class BookingPage extends PageObject {
 
         this.getElementByName('deaf_person_eaf').sendKeys('123');
     }
+
+    createBookingWithoutAddress = () => {
+        // Function to create a booking with minimum effort
+        // The aim is to use as many default and prefilled values as possible
+        const dateToSend = this.getDateAfterNDays(7);
+        this.setDate(dateToSend);
+        this.setStartEndTime('start', '10:15 AM');
+        this.setStartEndTime('end', '11:15 AM');
+
+        this.getElementByName('nature_of_appointment').sendKeys('COURT');
+        this.getElementByName('specific_nature_of_appointment').sendKeys('DHS ORDER');
+        this.getElementByName('attendee_count').sendKeys('1');
+        this.getElementByName('auslanInterpreters_count').sendKeys('1');
+    }
+
     clickCreateBtn = () => {
         return this.getElementByName('btnCreateBooking').click();
     }

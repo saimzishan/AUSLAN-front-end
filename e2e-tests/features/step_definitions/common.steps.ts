@@ -91,9 +91,8 @@ defineSupportCode(({Given, When, Then}) => {
     Given(/^I fill New Booking form fields with address greater than 40 kilometers$/, bookingPage.createBookingForPerth);
     Given(/^I select the bookable for client$/, bookingPage.selectClientAsBookbable);
     Given(/^I select the bookable for org rep/, bookingPage.selectOrgRepAsBookbable);
-    Given(/^I fill New Booking form fields correctly with (.*) time from (.*) to (.*) with (.*) '(.*)'$/,
-        bookingPage.createBookingWithTimeAndInterpreter);
-
+    Given(/^I fill New Booking form fields correctly with (.*) time from (.*) to (.*) with (.*) '(.*)'$/, bookingPage.createBookingWithTimeAndInterpreter);
+    Given(/^I fill New Booking form fields correctly without address$/, bookingPage.createBookingWithoutAddress);
 
     Given(/^I am on a mobile$/, onMobileResolution);
 
@@ -136,15 +135,7 @@ defineSupportCode(({Given, When, Then}) => {
 
     Given(/^I will close the file upload$/, documentUploadClose);
 
-    function documentUploadClose() {
-        /* let elm = element(by.css('input[type="file"]'));
-         return elm.click().then(el => {
-         return elm.sendKeys(protractor.Key.ESCAPE);
-         });
-
-         return browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
-         */
-    }
+    function documentUploadClose() {}
 
     Given(/^I will be shown the booking detail page with id (.*)$/, bookingJob.isOnBookingJobDetails);
     Given(/^I will be shown a valid booking detail page$/, bookingJob.isOnValidBookingJobDetails);
@@ -162,13 +153,7 @@ defineSupportCode(({Given, When, Then}) => {
 
     Given(/^I am on a computer$/, onDesktopResolution);
 
-    function onDesktopResolution() {
-        /*return browser.driver.manage().window().setSize(1400, 900).then( () => {
-
-         browser.driver.manage().window().maximize();
-         });
-         */
-    }
+    function onDesktopResolution() {}
 
     Given(/^I wait for (.*) milli-seconds/, (seconds: string) => {
         return browser.sleep(parseInt(seconds, 10));

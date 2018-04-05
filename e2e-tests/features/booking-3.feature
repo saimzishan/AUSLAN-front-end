@@ -177,7 +177,7 @@ Feature: Booking Management
     Then I change the value of end time of booking '01:02am'
     Then I check the value of endTime should be '01:02 AM'
     Then I wait for 1000 milli-seconds
-    Then I change the value of end time of booking '01:02        am'
+    Then I change the value of end time of booking '01:02am'
     Then I check the value of endTime should be '01:02 AM'
 
 # ---------------------------------------- AUSLAN1-727 -> START ----------------------------------------
@@ -188,7 +188,8 @@ Feature: Booking Management
     Then I am on the bookings page
     And I click on 'New Booking'
     Then I will be taken to the 'New Booking' form
-    When I fill New Booking form fields correctly
+    And I click on material checkbox name 'cbNotetaking'
+    When I fill New Booking form fields correctly without address
     And I fill the field 'auslanInterpreters_count' with value '2'
     And I fill the field 'noteTaker_count' with value '1'
     Then I click on checkbox name 'tnc'
