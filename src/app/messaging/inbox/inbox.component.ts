@@ -161,6 +161,7 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
     showSingleMessageThread(index) {
         this.selectedMessageThread = index;
         this.userId = this.messageThreads[index].user_id;
+        this.message_thread_id = this.messageThreads[index].id;
         this.getInterpreterMessage(this.message_thread_id);
 
     }
