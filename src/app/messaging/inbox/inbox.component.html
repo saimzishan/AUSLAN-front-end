@@ -44,14 +44,14 @@
 
         </section>
     </section>
-    <div class="element element_inline">
+    <!--div *ngIf="isCurrentUserAdminOrBookingOfficer()" class="element element_inline">
         <pagination-controls class="my-pagination"></pagination-controls>
-    </div>
+    </div-->
     <section class="messages__wrapper" [ngClass]="{'messages__wrapper_aside': isCurrentUserAdminOrBookingOfficer()}"
              id="messages-wrapper">
 
         <perfect-scrollbar fxFlex [config]="config" [scrollIndicators]="true">
-            <ng-container *ngFor="let message of this.messageThreads[this.selectedMessageThread]?.messages">
+            <ng-container *ngFor="let message of messages">
 
                 <section class="messages__message" [ngClass]="{ 'messages__message_left' : message.sender.type !== 'Interpreter'
         , 'messages__message_right' : message.sender.type === 'Interpreter' }">
@@ -73,7 +73,7 @@
 
             </ng-container>
         </perfect-scrollbar>
-        <button *ngIf="this.messageThreads[this.selectedMessageThread]?.messages_count > messagePage * 10"
+        <button *ngIf="isLoadMore()"
                 (click)="loadMore()" class="button messages__formButton">Load More ..
 
         </button>

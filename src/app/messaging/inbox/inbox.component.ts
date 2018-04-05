@@ -66,19 +66,23 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
         });
     }
 
+    isLoadMore() {
+        return this.isCurrentUserAdminOrBookingOfficer() ?
+            this.messageThreads[this.selectedMessageThread].messages_count > this.messagePage * 10 :
+            false;
+    }
     loadMore() {
         this.messagePage += 1;
         this.getInterpreterMessages();
     }
 
     getInterpreterMessages() {
-        let id = this.loginUserID > 0 ? this.loginUserID : this.userId;
+        let id = this.isCurrentUserAdminOrBookingOfficer() ? this.userId : this.loginUserID;
         this.spinnerService.requestInProcess(true);
         this.messagingService.getInterpreterMessages(id, this.messagePage)
             .subscribe((res: any) => {
                     if (res.status === 200) {
                         this.messages = res.data.messages;
-                        this.messageThreads[this.selectedMessageThread]['messages'] = this.messages;
                         setTimeout(() => {
                             this.componentScroll.directiveRef.scrollToBottom();
                             this.spinnerService.requestInProcess(false);
@@ -118,7 +122,7 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
         url += this.userId + '/inbox';
         this.spinnerService.requestInProcess(true);
 
-        this.messagingService.sendMessages(this.loginUserID, this.userId, url, this.message_tag, this.message_body)
+        this.messagingService.sendMessages(this.loginUserID, url, this.message_body, this.userId)
             .subscribe((res: any) => {
                 if (res.status === 200) {
                     this.notificationServiceBus.launchNotification(false, 'Message sent successfully..');
