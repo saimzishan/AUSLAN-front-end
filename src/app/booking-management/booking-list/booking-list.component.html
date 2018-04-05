@@ -275,8 +275,8 @@
 <section class="hidden-desktop">
     <section id="page-common">
         <ul class="booking-mobile">
-            <li class="booking-mobile__item"
-                *ngFor="let booking of bookingList | paginate: { itemsPerPage: 10, currentPage: p, totalItems: totalItems } let i = index">
+            <li class="booking-mobile__item" (click)="setClickedRow(booking)"
+                *ngFor="let booking of bookingList | paginate: { itemsPerPage: 10, currentPage: p, totalItems: totalItems }">
                 <section class="booking-mobile__date">
                     <span class="booking-mobile__weekDay">{{booking.venue.start_time_iso | date:'EEE'}}</span>
                     <span class="booking-mobile__day">{{booking.venue.start_time_iso | date:'dd'}}</span>
@@ -291,7 +291,9 @@
                     <div class="booking-mobile__location">{{booking.venue.suburb}}</div>
                 </section>
                 <section *ngIf="isCurrentUserInterpreter()" class="booking-mobile__status">
-                    <span class="badge badge_pink badge_wide badge_opaque50">OPEN</span>
+                    <span *ngIf="interpreterAllowed(booking, 'red')" class="badge badge_pink badge_wide badge_opaque50">OPEN</span>
+                    <span *ngIf="interpreterAllowed(booking,'gray')" class="badge badge_gray badge_wide badge_opaque50">OPEN</span>
+                    <i *ngIf="interpreterAllowed(booking, 'green')" class="booking-mobile__icon icon-check-mobile"></i>
                 </section>
             </li>
         </ul>

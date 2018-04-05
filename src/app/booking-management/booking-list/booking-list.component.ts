@@ -24,6 +24,7 @@ import * as moment from 'moment';
     styleUrls: ['./booking-list.component.css']
 })
 export class BookingListComponent implements OnInit, OnChanges {
+
     @Input() bookingList: Array<Booking> = [];
     @Output() onBookingFilter = new EventEmitter();
     bookingFilter: BookingFilter = {};
@@ -32,7 +33,6 @@ export class BookingListComponent implements OnInit, OnChanges {
     @Output() onPageEmit = new EventEmitter<number>();
     @Input() p = 1;
     @Input() totalItems = 0;
-
     constructor(public router: Router, private datePipe: DatePipe) {
         BA.loadItems();
     }
@@ -121,7 +121,36 @@ export class BookingListComponent implements OnInit, OnChanges {
         return ['All', ...keys.slice(keys.length / 2)];
 
     }
+    interpreterAllowed(booking: Booking, status) {
+        let res = false;
+        // Green Tick => Accepted || Allocated
+        // Gray => Invited , has not responded
+        // Red => Invited , rejected but is not allocated
+        let currentStatus = '';
+        if (this.isCurrentUserInterpreter()) {
+            booking.interpreters.filter(i => i.id === GLOBAL.currentUser.id)
+                .map(i => currentStatus = i.state || 'Invited');
 
+            if (currentStatus === 'Accepted' &&
+                booking.state === BOOKING_STATE.In_progress) {
+                res = status === 'green';
+
+            } else if (currentStatus === 'Accepted' &&
+                booking.state === BOOKING_STATE.Allocated) {
+                res = status === 'green';
+
+            } else if (currentStatus === 'Rejected' &&
+                booking.state === BOOKING_STATE.In_progress) {
+                res = status === 'red';
+
+
+            } else if (currentStatus === 'Invited' &&
+                booking.state !== BOOKING_STATE.In_progress) {
+                res = status === 'gray';
+            }
+        }
+        return res;
+    }
     stateList() {
         let keys = Object.keys(BOOKING_STATE);
         keys = keys.slice(keys.length / 2);
