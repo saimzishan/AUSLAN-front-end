@@ -192,3 +192,18 @@ Feature: Booking Admin Management
     Then I will be shown the booking job page
     And I can see the interpreter table header has column 'Immun.'
     And I can see the interpreter table header has not column 'Yellow'
+
+ @runThis
+  Scenario: As an Administrator when I assign Interpreter, Interpreter1 of differ state to booking should be in same span
+    Given There exist 1 bookings
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on the bookings page
+    When I click on an individual booking
+    Then I will be shown the booking job page
+    Then I select 2 Interpreter
+    And I click on BUTTON name 'reassingBtn'
+    And I click on BUTTON 'Save'
+    Then I get valid message: 'The interpreter have been assigned'
+    Then I can count the element with css 'span.cells4.offset2.badge_green' to be '2'
+    
