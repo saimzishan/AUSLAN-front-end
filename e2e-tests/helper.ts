@@ -125,6 +125,8 @@ export class User {
             case 'Interpreter2':
                 data_to_sent['date_of_birth'] = '20/05/1987';
                 data_to_sent['naati_id'] = 12345;
+                address_attributes_fields['state'] = type === 'Interpreter1' ? 'WA' : 'VIC';
+                address_attributes_fields['post_code'] = type === 'Interpreter1' ? 3054 : 6064;
                 data_to_sent['address_attributes'] = address_attributes_fields;
                 data_to_sent['skill_level'] = 'Captioning';
                 break;

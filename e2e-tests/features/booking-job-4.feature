@@ -205,5 +205,5 @@ Feature: Booking Admin Management
     And I click on BUTTON name 'reassingBtn'
     And I click on BUTTON 'Save'
     Then I get valid message: 'The interpreter have been assigned'
-    Then I can count the element with css 'span.cells4.offset2.badge_green' to be '2'
+    Then I can count the element with css 'span.cells2.offset2.badge_green' to be '2'
     
