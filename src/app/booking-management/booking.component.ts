@@ -17,7 +17,7 @@ import {BookingInterpreter} from '../shared/model/contact.entity';
 })
 export class BookingComponent  {
     bookings: Array<Booking> = [];
-    activeFilter = 'All';
+    activeFilter = 'all';
     totalItems = 0;
     page = 0;
     tempPage = 0;
