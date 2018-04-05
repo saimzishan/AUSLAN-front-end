@@ -84,6 +84,7 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
                         this.messageCount = Boolean(res.data.message_count) ?
                             res.data.message_count : res.data.messages.length;
                         this.messages = res.data.messages;
+                        console.log(this.messages);
                         setTimeout(() => {
                             this.componentScroll.directiveRef.scrollToBottom();
                             this.spinnerService.requestInProcess(false);
@@ -152,7 +153,11 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
                 if (res.status === 200) {
                     this.notificationServiceBus.launchNotification(false, 'Message sent successfully..');
                     this.message_body = '';
-                    this.getInterpreterMessages();
+                    if (this.isCurrentUserAdminOrBookingOfficer()) {
+                        this.getInterpreterMessage(this.message_thread_id);
+                    } else {
+                        this.getInterpreterMessages();
+                    }
                 }
                 this.spinnerService.requestInProcess(false);
             }, errors => {
