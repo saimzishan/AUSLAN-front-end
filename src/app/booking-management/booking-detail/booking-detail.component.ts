@@ -7,9 +7,9 @@ import {BOOKING_STATE} from '../../shared/model/booking-state.enum';
 import {GLOBAL, ModalOptions} from '../../shared/global';
 import {NotificationServiceBus} from '../../notification/notification.service';
 import {BookingHeaderService} from '../booking-header/booking-header.service';
-import {Router, ActivatedRoute} from '@angular/router';
+import { Router, ActivatedRoute, Data } from '@angular/router';
 import {RolePermission} from '../../shared/role-permission/role-permission';
-import {DatePipe} from '@angular/common';
+import {DatePipe} from  '@angular/common';
 import {FormGroup, FormControl} from '@angular/forms';
 import {FileUploader} from 'ng2-file-upload';
 import {Address} from '../../shared/model/venue.entity';
@@ -100,6 +100,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     hasPrefInt: Boolean = false;
     duplicatingBookable: number;
     isCertRequired = false;
+    start_time;
     repeat_days = [
         {
             display: 'S',
@@ -1121,4 +1122,34 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         this.showPreferred = this.showProfilePreferred = this.showBlocked = this.showProfileBlocked = false;
         this.hasPrefInt = this.hasBlockInt = false;
     }
+    checkMe(event) {
+        this.start_time = event.target.value;
+    }
+
+    assignMe(timeControl) {
+        this.start_time = this.start_time.replace(/\s/g, '');
+        let bookingTime = '';
+        let str;
+        if (this.start_time.length >= 5) {
+            str = this.start_time.substring(this.start_time.length - 2, this.start_time.length);
+            this.start_time = this.start_time.substring(0, 5);
+            if (str === 'am' || str === 'AM') {
+                bookingTime += this.start_time + ' 00';
+            } else if (str === 'PM' || str === 'pm') {
+                let hh =  this.start_time.substring(0, 2);
+                let mm = this.start_time.substring(3, 5);
+                hh = +hh + 12;
+                bookingTime = hh + ':' + mm + ' 00';
+            } else {
+                bookingTime += this.start_time + ' 00';
+            }
+            if (timeControl === 'startTimeControl') {
+                this.bookingStartTime = new Date(bookingTime);
+            } else {
+                this.bookingEndTime = new Date(bookingTime);
+            }
+        }
+        this.start_time = '';
+    }
+
 }
