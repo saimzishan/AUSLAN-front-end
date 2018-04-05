@@ -68,7 +68,11 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
     }
     loadMore() {
         this.messagePage += 1;
-        this.getInterpreterMessage(this.message_thread_id);
+        if (this.isCurrentUserAdminOrBookingOfficer()) {
+            this.getInterpreterMessage(this.message_thread_id);
+        } else {
+            this.getInterpreterMessages();
+        }
     }
 
     getInterpreterMessages() {
