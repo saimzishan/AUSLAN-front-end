@@ -22,7 +22,7 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER STAF
     And I get success message: 'Staff Availability successfully added'
 
   @runThis
-  Scenario: As Administrator I can add INTERPRETER STAFF-AVAILABILITY on desktop
+  Scenario: As Administrator I can add recurring INTERPRETER STAFF-AVAILABILITY on desktop
     Given I go to the website
     And I am on a computer
     And I am shown the login screen, with picture and signup button
