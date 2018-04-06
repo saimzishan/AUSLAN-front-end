@@ -11,7 +11,9 @@ export class VerifiedGuard implements CanActivate {
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         return Boolean(GLOBAL.currentUser) && Boolean(GLOBAL.currentUser.verified)
-        && GLOBAL.currentUser.verified === true;
+            && GLOBAL.currentUser.verified === true
+            && GLOBAL.currentUser.disabled === false;
+
     }
 
 }

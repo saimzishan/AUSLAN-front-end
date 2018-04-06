@@ -31,7 +31,9 @@ export class AppComponent  implements OnDestroy, AfterViewChecked {
   }
 
   isLoggedIn() {
-    return AuthGuard.isLoggedIn() && GLOBAL.currentUser.verified === true;
+      return AuthGuard.isLoggedIn()
+          && GLOBAL.currentUser.verified === true
+          && GLOBAL.currentUser.disabled === false;
   }
 
   showProgress(val: boolean) {
