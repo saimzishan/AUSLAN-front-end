@@ -168,9 +168,11 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 let jsonData = JSON.parse(param);
                 this.bookingModel.fromJSON(jsonData);
                 this.duplicatingBookable = jsonData.bookable_id;
-                this.oldDocuments = jsonData.documents_attributes;
-                this.oldInterpreterPreference = jsonData.preference_allocations_attributes;
                 this.bookingModel.documents_attributes = [];
+                if (!this.isDuplicate) {
+                    this.oldDocuments = jsonData.documents_attributes;
+                }
+                this.oldInterpreterPreference = jsonData.preference_allocations_attributes;
                 this.bookingDate = new Date(this.datePipe.transform(this.bookingModel.venue.start_time_iso, 'MM/dd/yyyy'));
                 this.setTime();
                 this.natureOfApptChange(null);
@@ -578,10 +580,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                     this.bookable = singleUser;
                     this.bookingModel.bookable_id = singleUser.id;
                     this.userModel = this.isUserAdminORBookOfficer ? this.bookable : this.userModel;
-                    this.onSelectionChange();
-                    this.setClientAsRequestedBy();
-                    this.onClientSelectionChange();
-                    this.setInvoiceField();
                 }
             });
     }
