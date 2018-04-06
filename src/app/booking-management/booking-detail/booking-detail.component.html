@@ -244,7 +244,7 @@
       <div class="medium-12 columns" *ngIf="isUserOrgRepORIndClientTemp() && !forEdit">
         <div class="form-field">
           <label name="lblQuestionBookAddr">Do you want to use your profile address for this booking?
-            <span mdTooltip="Tooltip!">
+            <span mdTooltip="Please choose Yes/No">
               <i class="inline-icon-tip"></i>
             </span>
           </label>
@@ -761,7 +761,7 @@
         <div class="medium-12 columns">
           <div class="form-field">
             <label>Do you want to use your standard special instructions?
-              <span mdTooltip="Tooltip!">
+              <span mdTooltip="Please select Yes/No">
                 <i class="inline-icon-tip"></i>
               </span>
             </label>
@@ -905,7 +905,7 @@
       <div class="medium-12 columns">
         <div class="form-field">
           <label name="contactMsg">{{isUserAdminORBookOfficer ? "DO YOU WANT TO USE THE STANDARD": "ARE YOU THE"}} CONTACT PERSON FOR THIS BOOKING? *
-            <span mdTooltip="Tooltip!">
+            <span mdTooltip="Please choose Yes/No">
               <i class="inline-icon-tip"></i>
             </span>
           </label>
@@ -1011,7 +1011,7 @@
       <div class="medium-12 columns">
         <div class="form-field">
           <label>ARE YOU THE CLIENT FOR THIS BOOKING? *
-            <span mdTooltip="Tooltip!">
+            <span mdTooltip="Please choose Yes/No">
               <i class="inline-icon-tip"></i>
             </span>
           </label>
@@ -1177,7 +1177,7 @@
       <div class="medium-12 columns" *ngIf="isUserOrgRepORIndClientTemp() || isUserAdminORBookOfficer">
         <div class="form-field">
           <label name="invoiceMsg">Do you want to use standard invoice details{{isUserAdminORBookOfficer ? " for this booking": ""}}? *
-            <span mdTooltip="Tooltip!">
+            <span mdTooltip="Please choose Yes/No">
               <i class="inline-icon-tip"></i>
             </span>
           </label>
