@@ -81,10 +81,8 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
         this.messagingService.getInterpreterMessages(id, this.messagePage)
             .subscribe((res: any) => {
                     if (res.status === 200) {
-                        this.messageCount = Boolean(res.data.message_count) ?
-                            res.data.message_count : res.data.messages.length;
-                        this.messages = res.data.messages;
-                        console.log(this.messages);
+                        this.messageCount = res.data.message_count;
+                        this.messages = res.data.messages.reverse();
                         setTimeout(() => {
                             this.componentScroll.directiveRef.scrollToBottom();
                             this.spinnerService.requestInProcess(false);
