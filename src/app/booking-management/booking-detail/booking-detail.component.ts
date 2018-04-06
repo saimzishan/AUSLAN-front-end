@@ -172,7 +172,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 this.oldInterpreterPreference = jsonData.preference_allocations_attributes;
                 this.bookingModel.documents_attributes = [];
                 this.bookingDate = new Date(this.datePipe.transform(this.bookingModel.venue.start_time_iso, 'MM/dd/yyyy'));
-                this.recurrenceDayCheckboxChecked();
                 this.setTime();
                 this.natureOfApptChange(null);
                 this.checkInterpreterBoxes();
@@ -822,12 +821,12 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 || endDate.getSeconds() > 0)) || endDate.getHours() > 20);
     }
 
-    public recurrenceDayCheckboxChecked() {
-        this.repeat_days.forEach(day => {
-            if (this.bookingDate && this.bookingDate.getDay() === this.repeat_days.indexOf(day)) {
-                this.repeat_days[this.repeat_days.indexOf(day)].selected = true;
-            }
-        });
+    public isRecurrenceDayCheckboxDisabled(day) {
+        const isDisabled = this.bookingDate && this.bookingDate.getDay() === this.repeat_days.indexOf(day);
+        if (isDisabled) {
+            this.repeat_days[this.repeat_days.indexOf(day)].selected = true;
+        }
+        return isDisabled;
     }
 
     private getRecurrenceDays() {
