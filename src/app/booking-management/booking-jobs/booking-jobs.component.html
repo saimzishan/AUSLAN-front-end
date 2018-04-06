@@ -43,7 +43,7 @@
                                         <span *ngIf="interpreter.state !== 'Accepted'">To be filled</span>
                                         <button name="{{'unassingBtn_' + +(i + 1)}}"
                                                 (click)="unAssignInterpreters(interpreter.id)"
-                                                *ngIf="!isCurrentUserInterpreter() && (false === isActiveState('Unable_to_service') && false === isActiveState('Cancelled_no_charge')) && interpreter.state === 'Accepted'">
+                                                *ngIf="isCurrentUserAdminOrBookingOfficer() && (false === isActiveState('Unable_to_service') && false === isActiveState('Cancelled_no_charge')) && interpreter.state === 'Accepted'">
                                             Unassign
                                         </button>
                                     </div>
@@ -65,7 +65,7 @@
                                             <b>{{serviceNameToDisplay}} {{(selectedBookingModel.interpreters_required - selectedBookingModel.interpreters.length)+selectedBookingModel.interpreters.length
                                                 + i + 1}} :</b>
                                             <span class='interpreter-accepted'>{{interpreter.first_name}} {{interpreter.last_name}}</span>
-                                            <button hidden name="{{'unassingBtn_' + +(i + 1)}}" (click)="unAssignInterpreters(interpreter.id)" *ngIf="!isCurrentUserInterpreter() && (false === isActiveState('Unable_to_service') && false === isActiveState('Cancelled_no_charge')) && interpreter.state === 'Accepted'">
+                                            <button hidden name="{{'unassingBtn_' + +(i + 1)}}" (click)="unAssignInterpreters(interpreter.id)" *ngIf="isCurrentUserAdminOrBookingOfficer() && (false === isActiveState('Unable_to_service') && false === isActiveState('Cancelled_no_charge')) && interpreter.state === 'Accepted'">
                                                 Unassign
                                             </button>
                                         </div>
@@ -88,7 +88,7 @@
                                         <b>{{serviceNameToDisplay}} {{(selectedBookingModel.interpreters_required - selectedBookingModel.interpreters.length)+selectedBookingModel.interpreters.length
                                             + i + 1}} :</b>
                                         <span class='interpreter-accepted'>{{interpreter.first_name}} {{interpreter.last_name}}</span>
-                                        <button hidden name="{{'unassingBtn_' + +(i + 1)}}" (click)="unAssignInterpreters(interpreter.id)" *ngIf="!isCurrentUserInterpreter() && (false === isActiveState('Unable_to_service') && false === isActiveState('Cancelled_no_charge')) && interpreter.state === 'Accepted'">
+                                        <button hidden name="{{'unassingBtn_' + +(i + 1)}}" (click)="unAssignInterpreters(interpreter.id)" *ngIf="isCurrentUserAdminOrBookingOfficer() && (false === isActiveState('Unable_to_service') && false === isActiveState('Cancelled_no_charge')) && interpreter.state === 'Accepted'">
                                             Unassign
                                         </button>
                                     </div>
