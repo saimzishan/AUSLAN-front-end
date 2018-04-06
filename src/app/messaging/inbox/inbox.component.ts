@@ -101,9 +101,8 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
         this.messagingService.getInterpreterMessage(id, this.business_id, this.messagePage)
             .subscribe((res: any) => {
                 if (res.status === 200) {
-                    this.messageCount = Boolean(res.data.message_count) ?
-                        res.data.message_count : res.data.messages.length;
-                    this.messages = res.data.messages;
+                    this.messageCount = res.data.message_count;
+                    this.messages = res.data.messages.reverse();
                     setTimeout(() => {
                         this.componentScroll.directiveRef.scrollToBottom();
                         this.spinnerService.requestInProcess(false);
@@ -200,6 +199,10 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
         let curentDay = curentDate.getDate();
         let lastMesgDay = lastMesgDate.substring(8, 10);
         return (+lastMesgDay === curentDay);
+    }
+    getPage(page: number) {
+        this.messageThreadPage = page;
+        this.getAllMessageThreads(this.business_id);
     }
 
 }
