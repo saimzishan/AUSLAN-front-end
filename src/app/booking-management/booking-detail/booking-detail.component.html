@@ -217,6 +217,7 @@
           <div *ngFor="let day of repeat_days" class='medium-1 columns'>
             <md-checkbox [(ngModel)]="day.selected"
                          name="{{day.value}}"
+                         [disabled]="isRecurrenceDayCheckboxDisabled(day)"
                          [align]='right'
                          [required]='isRecurringBooking'>
               {{day.display}}
