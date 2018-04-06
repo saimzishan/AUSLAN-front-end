@@ -149,6 +149,8 @@
             placeholder="STARTING TIME *"
             [timeOnly]="true" hourFormat="12"
             [stepMinute]="5" [defaultDate]="defaultDateTime"
+            (input)='checkMe($event)'
+             (onBlur)="assignMe('startTimeControl')"
             required #dpEventDate="ngModel"></p-calendar>
             <span *ngIf="dpEventDate.touched && !dpEventDate.errors?.required;"
                   class="inline-icon inline-icon-valid valid"></span>
@@ -168,6 +170,7 @@
             placeholder="ENDING TIME *"
             [timeOnly]="true" hourFormat="12"
             [stepMinute]="5" [defaultDate]="defaultDateTime"
+             (input)='checkMe($event)' (onBlur)="assignMe('endTimeControl')"
             required #dpEventEndTime="ngModel"></p-calendar>
             <span *ngIf="dpEventEndTime.touched && !dpEventEndTime.errors?.required;"
                   class="inline-icon inline-icon-valid valid"></span>
@@ -214,6 +217,7 @@
           <div *ngFor="let day of repeat_days" class='medium-1 columns'>
             <md-checkbox [(ngModel)]="day.selected"
                          name="{{day.value}}"
+                         [disabled]="isRecurrenceDayCheckboxDisabled(day)"
                          [align]='right'
                          [required]='isRecurringBooking'>
               {{day.display}}
