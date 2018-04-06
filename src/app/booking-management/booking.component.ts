@@ -27,8 +27,8 @@ export class BookingComponent  {
     }
 
     setActiveFilter(activeFilter: string) {
-        this.onPageEmit(this.tempPage);
         this.activeFilter = activeFilter;
+        this.onPageEmit(this.tempPage);
     }
 
     isActiveFilter(activeFilter: string) {
@@ -43,7 +43,10 @@ export class BookingComponent  {
     }
     getPaginatedBooking() {
         this.spinnerService.requestInProcess(true);
-        this.bookingDataService.fetchPaginatedBookings(this.tempPage, this.search, this.activeFilter)
+        if (this.isCurrentUserInterpreter()) {
+            this.search.set('filter[interpreter_statuses]', this.activeFilter);
+        }
+        this.bookingDataService.fetchPaginatedBookings(this.tempPage, this.search)
             .subscribe((res: any) => {
                     if (res.status === 200) {
                         this.bookings = [];
