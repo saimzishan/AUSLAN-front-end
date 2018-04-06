@@ -579,10 +579,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                     this.bookable = singleUser;
                     this.bookingModel.bookable_id = singleUser.id;
                     this.userModel = this.isUserAdminORBookOfficer ? this.bookable : this.userModel;
-                    this.onSelectionChange();
-                    this.setClientAsRequestedBy();
-                    this.onClientSelectionChange();
-                    this.setInvoiceField();
                 }
             });
     }

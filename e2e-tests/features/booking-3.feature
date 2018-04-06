@@ -196,3 +196,20 @@ Feature: Booking Management
     And I click the create booking button
     And If I am shown popups, I approve all of them
     Then I get a valid create booking notification
+
+  @runThis
+  Scenario: Gien an Organisational Representative, As Administrator, I can duplicate a booking and see the billing details are same
+    Given There exist 1 bookings
+    Given Assigned all bookings to Organisational Representative
+    And I sign in with valid Administrator credentials
+    Then I am on the bookings page
+    Then I am shown with 1 booking
+    Then I click on an individual booking of type 'Requested'
+    Then I will be shown the booking job page
+    And I click on BUTTON 'Duplicate'
+    Then I will be taken to the 'New Booking' form
+    Then I verify radiobutton name 'OrganisationalRepresentative' and is checked
+    And I can see the input with name 'contact_first_name' has text 'Jimmy'
+    And I can see the input with name 'contact_last_name' has text 'Donavan'
+    And I can see the input with name 'deaf_person_name' has text 'Charles'
+    And I can see the input with name 'deaf_person_last_name' has text 'Barkley'
