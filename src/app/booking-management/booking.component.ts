@@ -17,7 +17,7 @@ import {BookingInterpreter} from '../shared/model/contact.entity';
 })
 export class BookingComponent  {
     bookings: Array<Booking> = [];
-    activeFilter = '';
+    activeFilter = 'all';
     totalItems = 0;
     page = 0;
     tempPage = 0;
@@ -28,6 +28,7 @@ export class BookingComponent  {
 
     setActiveFilter(activeFilter: string) {
         this.activeFilter = activeFilter;
+        this.onPageEmit(this.tempPage);
     }
 
     isActiveFilter(activeFilter: string) {
@@ -37,8 +38,14 @@ export class BookingComponent  {
         this.tempPage = page;
         this.getPaginatedBooking();
     }
+    isCurrentUserInterpreter(): boolean {
+        return Boolean(GLOBAL.currentUser instanceof Interpreter);
+    }
     getPaginatedBooking() {
         this.spinnerService.requestInProcess(true);
+        if (this.isCurrentUserInterpreter()) {
+            this.search.set('filter[interpreter_statuses]', this.activeFilter);
+        }
         this.bookingDataService.fetchPaginatedBookings(this.tempPage, this.search)
             .subscribe((res: any) => {
                     if (res.status === 200) {

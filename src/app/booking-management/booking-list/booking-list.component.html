@@ -1,4 +1,4 @@
-<main>
+<main class="hidden-mobile">
     <section class="jobs withOffset">
         <table id="jobs-responsive" class="custom">
             <thead>
@@ -259,16 +259,43 @@
             </tr>
             </tbody>
         </table>
-        <div class="pagination">
-            <div class="element element_inline" id="displayTxt" *ngIf="totalItems > 0">
-                {{'Displaying ' + (((p - 1) * 10) + 1) + ' - '
-                + ( bookingList.length < 10 ? totalItems : (p * 10)) + ' of ' + totalItems + ' Booking' +
-                (bookingList.length > 1 ? 's' : '')}}
-            </div>
-            <div class="element element_inline">
-                <pagination-controls class="my-pagination" *ngIf="totalItems > 10"
-                                     (pageChange)="getPage($event)"></pagination-controls>
-            </div>
-        </div>
     </section>
 </main>
+<section class="hidden-desktop">
+    <section id="page-common">
+        <ul class="booking-mobile">
+            <li class="booking-mobile__item" (click)="setClickedRow(booking)"
+                *ngFor="let booking of bookingList | paginate: { itemsPerPage: 10, currentPage: p, totalItems: totalItems }">
+                <section class="booking-mobile__date">
+                    <span class="booking-mobile__weekDay">{{booking.venue.start_time_iso | date:'EEE'}}</span>
+                    <span class="booking-mobile__day">{{booking.venue.start_time_iso | date:'dd'}}</span>
+                    <span class="booking-mobile__month">{{booking.venue.start_time_iso | date:'MMM'}}</span>
+                </section>
+                <section class="booking-mobile__details">
+                    <div class="booking-mobile__time">
+                        <span class="booking-mobile__time_bold">{{booking.venue.start_time_iso | date:'h:mm a'}}</span>
+                        - {{booking.venue.end_time_iso | date:'h:mm a'}}
+                    </div>
+                    <div class="booking-mobile__agent">{{booking.client.organisation_name}}</div>
+                    <div class="booking-mobile__location">{{booking.venue.suburb}}</div>
+                </section>
+                <section *ngIf="isCurrentUserInterpreter()" class="booking-mobile__status">
+                    <span *ngIf="interpreterAllowed(booking, 'red')" class="badge badge_pink badge_wide badge_opaque50">OPEN</span>
+                    <span *ngIf="interpreterAllowed(booking,'gray')" class="badge badge_gray badge_wide badge_opaque50">OPEN</span>
+                    <i *ngIf="interpreterAllowed(booking, 'green')" class="booking-mobile__icon icon-check-mobile"></i>
+                </section>
+            </li>
+        </ul>
+    </section>
+</section>
+<div class="pagination">
+    <div class="element element_inline" id="displayTxt" *ngIf="totalItems > 0">
+        {{'Displaying ' + (((p - 1) * 10) + 1) + ' - '
+        + ( bookingList.length < 10 ? totalItems : (p * 10)) + ' of ' + totalItems + ' Booking' +
+        (bookingList.length > 1 ? 's' : '')}}
+    </div>
+    <div class="element element_inline">
+        <pagination-controls class="my-pagination" *ngIf="totalItems > 10"
+                             (pageChange)="getPage($event)"></pagination-controls>
+    </div>
+</div>
