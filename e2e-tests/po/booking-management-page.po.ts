@@ -145,6 +145,13 @@ export class BookingManagementPage extends PageObject {
         });
     }
 
+    showTheNumberofBookingInMobile = (num_of_booking: number) => {
+        const allTypeBooking = this.getAllElementByCSS('li.booking-mobile__item');
+        return allTypeBooking.count().then(countNum => {
+            return expect(countNum).to.equal(num_of_booking);
+        });
+    }
+
     clickAtOneofTheBooking = (pos: string, num_of_booking: string, booking_state: string) => {
         let posth = parseInt(pos, 10);
         let allTypeBooking = this.getAllByCSSandText('tbody td', booking_state);
@@ -154,6 +161,14 @@ export class BookingManagementPage extends PageObject {
         }).then(() => {
             return this.getParent(allTypeBooking.get(posth - 1)).click();
         });
+    }
+
+    clickAtOneofTheBookingMobile = () => {
+        const allTypeBooking = this.getAllElementByCSS('li.booking-mobile__item');
+        return allTypeBooking.count().then(countNum => {
+            expect(countNum).to.gte(0);
+            return allTypeBooking.get(0).click();
+        })
     }
 
     bookingWithStateExists = (count: string, booking_state: string) => {
