@@ -34,7 +34,7 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
     loginUserID = -1;
     business_id = -1;
     sub;
-    messageThreadPage = -1;
+    messageThreadPage = 1;
     messagePage = 1;
     totalItems = 0;
     selectedMessageThread = 0;
