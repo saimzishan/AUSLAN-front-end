@@ -89,6 +89,7 @@ import { MdCheckboxModule } from '@angular/material';
 import { ReportsComponent } from './reports/reports.component';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+import {VerifiedGuard} from './auth/verified.guard';
 
 const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true
@@ -137,7 +138,7 @@ const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
             libraries: ['places']
         }),
         AutoCompleteModule
-    ], providers: [DatePipe, LinkAuth, UserNameService, RolePermission, AuthGuard, NoAuthGuard, Title, LinkHelper,
+    ], providers: [DatePipe, LinkAuth, UserNameService, RolePermission, AuthGuard, VerifiedGuard, NoAuthGuard, Title, LinkHelper,
         NotificationServiceBus, SpinnerService, BookingService, UserService,
         PreferedAllocationService, BookingHeaderService, GmapsApiService, MessagingService,
         {provide: APP_BASE_HREF, useValue: '/'},

@@ -90,9 +90,10 @@ export class BookingManagementPage extends PageObject {
 
     onBookingListPage = () => {
         return this.currentPath().then((currentPath1) => {
-            let isRedirecting = currentPath1.indexOf('dashboard?redirectedUrl') !== -1
-            || currentPath1.indexOf('booking-management') !== -1;
-            expect(isRedirecting).to.be.true;
+            let isRedirecting = currentPath1.indexOf('dashboard?redirectedUrl') > -1
+            || currentPath1.indexOf('booking-management') > -1
+            || currentPath1.indexOf('verify') > -1;
+            return expect(isRedirecting).to.be.true;
         });
     }
 
