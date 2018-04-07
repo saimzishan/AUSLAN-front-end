@@ -545,10 +545,9 @@ defineSupportCode(({Given, When, Then}) => {
     Then(/^I should not be able to navigate to '(.*)'$/, notNavigateToUrl);
     function notNavigateToUrl(path: string) {
         return page.currentPath().then(urlPart => {
-            let newPath = urlPart.split('/');
-            let defaultUrl = urlPart.substring(0, urlPart.indexOf('#') + 2);
-            let len = newPath.length;
-            newPath[len - 1] = path;
+            const defaultUrl = urlPart.substring(0, urlPart.indexOf('#') + 2);
+            const newPath = defaultUrl.split('/');
+            newPath[newPath.indexOf('#') + 1] = path;
             return browser.get(newPath.join('/')).then(() => {
                 return page.currentPath().then(currentUrl => {
                     return expect(currentUrl).to.equal(defaultUrl);
