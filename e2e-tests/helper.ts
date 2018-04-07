@@ -453,7 +453,7 @@ export class Heroku {
 
     static createBulkBookings(count: string) {
         let command = 'i=IndividualClient.first;FactoryGirl.create(:ted_individual_client) if !i;';
-        command += 'FactoryGirl.create_list(:booking, ' + count + ', bookable: IndividualClient.first)';
+        command += 'Time.zone = "Hobart";FactoryGirl.create_list(:booking, ' + count + ', bookable: IndividualClient.first, start_time: 1.business_hours.from_now, end_time: 3.business_hours.from_now)';
         Heroku.sendCommandToHeroku(command);
     }
     static setInterpreterType(type: string) {
