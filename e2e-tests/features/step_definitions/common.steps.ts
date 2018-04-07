@@ -315,7 +315,10 @@ defineSupportCode(({Given, When, Then}) => {
     When(/^I click on button with css '(.*)'$/, clickOnElementWithCSS);
     When(/^I click on element with css '(.*)'$/, clickOnElementWithCSS);
     function clickOnElementWithCSS(css: string) {
-        return page.getElementByCss(css).click();
+        const el = page.getElementByCss(css);
+        const elPresent = EC.visibilityOf(el);
+        const elClickable = EC.elementToBeClickable(el);
+        return browser.wait(EC.and(elPresent, elClickable), 5000).then(() => { el.click(); })
     }
     When(/^I click on parent of '(.*)' element with css '(.*)'$/, clickOnSingleElementWithCSS);
     function clickOnSingleElementWithCSS(nth_child: number, css: string) {
