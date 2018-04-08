@@ -57,9 +57,7 @@ defineSupportCode(({Given, When, Then}) => {
     });
     Given(/^I sign in with valid (.*) credentials$/, (type: string) => {
         return homePage.signInWithValidCredential(type).then(() => {
-            browser.sleep(4000).then(() => {
-                bookingManagementPage.onBookingListPage();
-            });
+            return bookingManagementPage.onBookingListPage();
         });
     });
     Given(/^I am shown the verify screen/, bookingManagementPage.showVerifyPage);
@@ -91,9 +89,8 @@ defineSupportCode(({Given, When, Then}) => {
     Given(/^I fill New Booking form fields with address greater than 40 kilometers$/, bookingPage.createBookingForPerth);
     Given(/^I select the bookable for client$/, bookingPage.selectClientAsBookbable);
     Given(/^I select the bookable for org rep/, bookingPage.selectOrgRepAsBookbable);
-    Given(/^I fill New Booking form fields correctly with (.*) time from (.*) to (.*) with (.*) '(.*)'$/,
-        bookingPage.createBookingWithTimeAndInterpreter);
-
+    Given(/^I fill New Booking form fields correctly with (.*) time from (.*) to (.*) with (.*) '(.*)'$/, bookingPage.createBookingWithTimeAndInterpreter);
+    Given(/^I fill New Booking form fields correctly without address$/, bookingPage.createBookingWithoutAddress);
 
     Given(/^I am on a mobile$/, onMobileResolution);
 
@@ -136,15 +133,7 @@ defineSupportCode(({Given, When, Then}) => {
 
     Given(/^I will close the file upload$/, documentUploadClose);
 
-    function documentUploadClose() {
-        /* let elm = element(by.css('input[type="file"]'));
-         return elm.click().then(el => {
-         return elm.sendKeys(protractor.Key.ESCAPE);
-         });
-
-         return browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
-         */
-    }
+    function documentUploadClose() {}
 
     Given(/^I will be shown the booking detail page with id (.*)$/, bookingJob.isOnBookingJobDetails);
     Given(/^I will be shown a valid booking detail page$/, bookingJob.isOnValidBookingJobDetails);
@@ -162,13 +151,7 @@ defineSupportCode(({Given, When, Then}) => {
 
     Given(/^I am on a computer$/, onDesktopResolution);
 
-    function onDesktopResolution() {
-        /*return browser.driver.manage().window().setSize(1400, 900).then( () => {
-
-         browser.driver.manage().window().maximize();
-         });
-         */
-    }
+    function onDesktopResolution() {}
 
     Given(/^I wait for (.*) milli-seconds/, (seconds: string) => {
         return browser.sleep(parseInt(seconds, 10));
@@ -332,7 +315,10 @@ defineSupportCode(({Given, When, Then}) => {
     When(/^I click on button with css '(.*)'$/, clickOnElementWithCSS);
     When(/^I click on element with css '(.*)'$/, clickOnElementWithCSS);
     function clickOnElementWithCSS(css: string) {
-        return page.getElementByCss(css).click();
+        const el = page.getElementByCss(css);
+        const elPresent = EC.visibilityOf(el);
+        const elClickable = EC.elementToBeClickable(el);
+        return browser.wait(EC.and(elPresent, elClickable), 5000).then(() => { el.click(); })
     }
     When(/^I click on parent of '(.*)' element with css '(.*)'$/, clickOnSingleElementWithCSS);
     function clickOnSingleElementWithCSS(nth_child: number, css: string) {
@@ -562,10 +548,9 @@ defineSupportCode(({Given, When, Then}) => {
     Then(/^I should not be able to navigate to '(.*)'$/, notNavigateToUrl);
     function notNavigateToUrl(path: string) {
         return page.currentPath().then(urlPart => {
-            let newPath = urlPart.split('/');
-            let defaultUrl = urlPart.substring(0, urlPart.indexOf('#') + 2);
-            let len = newPath.length;
-            newPath[len - 1] = path;
+            const defaultUrl = urlPart.substring(0, urlPart.indexOf('#') + 2);
+            const newPath = defaultUrl.split('/');
+            newPath[newPath.indexOf('#') + 1] = path;
             return browser.get(newPath.join('/')).then(() => {
                 return page.currentPath().then(currentUrl => {
                     return expect(currentUrl).to.equal(defaultUrl);

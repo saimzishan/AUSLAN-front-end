@@ -13,6 +13,7 @@ angular-cli@1.0.0-beta.24 has been used due to following issue https://github.co
 
  as well as 2.4.0 @angular\compiler version
 
+
 ##PACK DEPENDENCY
 Install pack-mock-service by
 bower install pact-consumer-js-dsl --save-dev

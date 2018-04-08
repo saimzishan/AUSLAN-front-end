@@ -22,7 +22,7 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER STAF
     And I get success message: 'Staff Availability successfully added'
 
   @runThis
-  Scenario: As Administrator I can add INTERPRETER STAFF-AVAILABILITY on desktop
+  Scenario: As Administrator I can add recurring INTERPRETER STAFF-AVAILABILITY on desktop
     Given I go to the website
     And I am on a computer
     And I am shown the login screen, with picture and signup button
@@ -92,7 +92,6 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER STAF
     Then I check that the start time and end time is 6:25am - 7:25am
     Then I click on BUTTON name 'sldRecurring'
     When I select option WEEKLY from dropdown FREQUENCY
-    Then I wait for 2000 milli-seconds
     Then I change the value of end date
     And I click on BUTTON name 'save_blockout'
     And I get error message: 'Oops! Please fill in all the fields correctly.'
@@ -106,7 +105,6 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER STAF
     Then I can see the time in full calendar is '6:25am - 7:25am'
     Then I click on element with css '.fc-list-item-title'
     And I will be taken to blockout page
-    When I wait for 10000 milli-seconds
     Then I check the value of endTime is '07:25 AM'
     Then I check the value of availability is 'test-blockout'
     Then I see selected option 'WEEKLY' in dropdown

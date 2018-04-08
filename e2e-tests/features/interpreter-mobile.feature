@@ -20,8 +20,9 @@ Feature: As INTERPRETER, I can login on mobile
   Scenario: As INTERPRETER, I can accept the booking, if a booking is created and INTERPRETER Invited then
     And I sign in with valid Interpreter credentials
     Then I will be shown the bookings page
-    Then I see one row with state 'In progress'
-    And  I click on an individual booking of type 'In progress'
+    When I click on BUTTON 'Open'
+    Then I am shown with 1 booking in mobile view
+    And  I click on an individual booking in mobile
     Then I can see the valid header in booking detail page
     Then I will be shown a valid booking detail page
     Then I can see the booking state ' IN_PROGRESS - Invited ' in booking detail page
@@ -33,14 +34,16 @@ Feature: As INTERPRETER, I can login on mobile
     # Then I can see the button with css 'div.manage-job-buttons > button.button.button-accept.pushed' is visible
     Then I click on button with css 'button.icon-back'
     And I am on the bookings page
-    Then I see one row with state 'Allocated'
+    When I click on BUTTON 'Allocated'
+    Then I am shown with 1 booking in mobile view
 
   @runThis
   Scenario: As INTERPRETER, I can decline the booking, if a booking is created and INTERPRETER Invited then
     Given I sign in with valid Interpreter credentials
     Then I will be shown the bookings page
-    Then I see one row with state 'In progress'
-    And  I click on an individual booking of type 'In progress'
+    When I click on BUTTON 'Open'
+    Then I am shown with 1 booking in mobile view
+    And  I click on an individual booking in mobile
     Then I can see the valid header in booking detail page
     Then I will be shown a valid booking detail page
     Then I can see the booking state ' IN_PROGRESS - Invited ' in booking detail page
@@ -49,17 +52,14 @@ Feature: As INTERPRETER, I can login on mobile
     Then I click on BUTTON name 'yesBtn'
     Then I wait for 3000 milli-seconds
     Then I can see the booking state ' IN_PROGRESS - Rejected ' in booking detail page
-    # Then I can see the button with css 'div.manage-job-buttons > button.button.button-decline.pushed' is visible
-    Then I click on button with css 'button.icon-back'
-    And I am on the bookings page
-    And  I click on an individual booking of type 'In progress'
 
   @runThis
   Scenario: As INTERPRETER, I can cancel the accept the booking action, if a booking is created and INTERPRETER Invited then
     Given I sign in with valid Interpreter credentials
     Then I will be shown the bookings page
-    Then I see one row with state 'In progress'
-    And  I click on an individual booking of type 'In progress'
+    When I click on BUTTON 'Open'
+    Then I am shown with 1 booking in mobile view
+    And  I click on an individual booking in mobile
     Then I can see the valid header in booking detail page
     Then I will be shown a valid booking detail page
     Then I can see the booking state ' IN_PROGRESS - Invited ' in booking detail page
@@ -68,16 +68,14 @@ Feature: As INTERPRETER, I can login on mobile
     Then I click on BUTTON name 'noBtn'
     Then I can see the button with css 'button.button-accept' is enabled
     Then I can see the button with css 'button.button-decline' is enabled
-    Then I click on button with css 'button.icon-back'
-    And I am on the bookings page
-    Then I see one row with state 'In progress'
 
   @runThis
   Scenario: As INTERPRETER, I can cancel booking, if a booking is created and INTERPRETER Invited then
     Given I sign in with valid Interpreter credentials
     Then I will be shown the bookings page
-    Then I see one row with state 'In progress'
-    And  I click on an individual booking of type 'In progress'
+    When I click on BUTTON 'Open'
+    Then I am shown with 1 booking in mobile view
+    And  I click on an individual booking in mobile
     Then I can see the valid header in booking detail page
     Then I will be shown a valid booking detail page
     Then I can see the booking state ' IN_PROGRESS - Invited ' in booking detail page
@@ -86,17 +84,15 @@ Feature: As INTERPRETER, I can login on mobile
     Then I click on BUTTON name 'noBtn'
     Then I can see the button with css 'button.button-accept' is enabled
     Then I can see the button with css 'button.button-decline' is enabled
-    Then I click on button with css 'button.icon-back'
-    And I am on the bookings page
-    Then I see one row with state 'In progress'
 
     # ---------------------------------------- AUSLAN 1-67 -> START ----------------------------------------
   @runThis
   Scenario: As INTERPRETER, I can  accept the booking, if a booking is created and INTERPRETER Invited then
     Given I sign in with valid Interpreter credentials
     Then I will be shown the bookings page
-    And I see one row with state 'In progress'
-    When I click on an individual booking of type 'In progress'
+    When I click on BUTTON 'Open'
+    Then I am shown with 1 booking in mobile view
+    And  I click on an individual booking in mobile
     Then I can see the valid header in booking detail page
     And I will be shown a valid booking detail page
     And I can see the booking state ' IN_PROGRESS - Invited ' in booking detail page
@@ -113,8 +109,9 @@ Feature: As INTERPRETER, I can login on mobile
   Scenario: As INTERPRETER, I can  accept the booking, if a booking is created and INTERPRETER Invited and Interpreter1 exists then
     Given I sign in with valid Interpreter credentials
     And I will be shown the bookings page
-    And I see one row with state 'In progress'
-    And I click on an individual booking of type 'In progress'
+    When I click on BUTTON 'Open'
+    Then I am shown with 1 booking in mobile view
+    And  I click on an individual booking in mobile
     And I can see the valid header in booking detail page
     And I will be shown a valid booking detail page
     And I store the current url
@@ -130,8 +127,9 @@ Feature: As INTERPRETER, I can login on mobile
   Scenario: As INTERPRETER, I can  accept the booking, if a booking is created and INTERPRETER_ALL Invited and INTERPRETER1 exists then
     Given I sign in with valid Interpreter credentials
     And I will be shown the bookings page
-    And I see one row with state 'In progress'
-    And  I click on an individual booking of type 'In progress'
+    When I click on BUTTON 'Open'
+    Then I am shown with 1 booking in mobile view
+    And  I click on an individual booking in mobile
     And I can see the valid header in booking detail page
     And I will be shown a valid booking detail page
     Then I can see the valid header in booking detail page
@@ -150,8 +148,9 @@ Feature: As INTERPRETER, I can login on mobile
     And I am shown the login screen, with picture and signup button
     And I sign in with valid Interpreter1 credentials
     Then I will be shown the bookings page
-    Then I see one row with state 'In progress'
-    And  I click on an individual booking of type 'In progress'
+    When I click on BUTTON 'Open'
+    Then I am shown with 1 booking in mobile view
+    And  I click on an individual booking in mobile
     Then I can see the valid header in booking detail page
     Then I will be shown a valid booking detail page
     Then I can see the booking state ' IN_PROGRESS - Invited ' in booking detail page
@@ -173,8 +172,9 @@ Feature: As INTERPRETER, I can login on mobile
   Scenario: As INTERPRETER, I can  accept the booking, if a booking is created and INTERPRETER_ALL Invited and INTERPRETER1 exists then
     Given I sign in with valid Interpreter credentials
     And I will be shown the bookings page
-    And I see one row with state 'In progress'
-    And  I click on an individual booking of type 'In progress'
+    When I click on BUTTON 'Open'
+    Then I am shown with 1 booking in mobile view
+    And  I click on an individual booking in mobile
     And I can see the valid header in booking detail page
     And I will be shown a valid booking detail page
     And I store the current url
@@ -183,8 +183,9 @@ Feature: As INTERPRETER, I can login on mobile
     And I am shown the login screen, with picture and signup button
     And I sign in with valid Interpreter1 credentials
     Then I will be shown the bookings page
-    Then I see one row with state 'In progress'
-    And  I click on an individual booking of type 'In progress'
+    When I click on BUTTON 'Open'
+    Then I am shown with 1 booking in mobile view
+    And  I click on an individual booking in mobile
     Then I can see the valid header in booking detail page
     Then I will be shown a valid booking detail page
     Then I can see the booking state ' IN_PROGRESS - Invited ' in booking detail page

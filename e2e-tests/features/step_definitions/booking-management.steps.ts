@@ -49,6 +49,7 @@ defineSupportCode(({Given, Then, When}) => {
     When(/^I click on an individual booking of type '(.*)'$/, bookingManagementPO.clickOnIndividualBookingOfType);
     When(/^I do not see any booking rows$/, bookingManagementPO.noBookingExists);
     When(/^I click on an individual booking$/, bookingManagementPO.clickOnIndividualBooking);
+    When(/^I click on an individual booking in mobile$/, bookingManagementPO.clickAtOneofTheBookingMobile);
     When(/^I click on an booking of index (.*)$/, bookingManagementPO.clickOnIndividualBookingWithIndex);
 
     // --------------------------------- AUTO POPULATE CLIENT DETAILS
@@ -122,6 +123,7 @@ defineSupportCode(({Given, Then, When}) => {
 
     //  Click on Request bookings
     Then(/^I am shown with (\d+) (.*[^\s])?\s?[bB]ookings?$/, bookingManagementPO.showTheNumberofBooking);
+    Then(/^I am shown with (\d+) bookings? in mobile view$/, bookingManagementPO.showTheNumberofBookingInMobile);
     Then(/^I am back on booking page$/, bookingManagementPO.onBookingListPage);
     Then(/^I (.*) see the (.*) field$/, createBookingPO.checkTheFieldExist);
     Then(/^I see one row with the booking id$/, bookingManagementPO.bookingExistsWithId);
@@ -143,7 +145,7 @@ defineSupportCode(({Given, Then, When}) => {
     Then(/^I should (not)?\s?see the link id in booking details$/, bookingJobPO.checkLinkIdInTableDetails);
     Then(/^I note the value under (.*) column$/, bookingJobPO.noteTableDetails);
     Then(/^The value under the (.*) column is the same as I noted above$/, bookingJobPO.checkNotedTableDetails);
-    Then(/^I should\s?(not)? see the attachment icons under Attached column number '(.*)'$/, bookingJobPO.checkAttachmentIcons);
+    Then(/^I should\s?(not)? see the attachment icons under Attached column number$/, bookingJobPO.checkAttachmentIcons);
     Then(/^I should be on the payroll and billing page$/, bookingPayrollPO.verify);
     Then(/^I verify that payroll '(.*)' input fields are non editable$/, bookingPayrollPO.checkReadonlyFields);
     Then(/^I verify that payroll '(.*)' input fields have zero value$/, bookingPayrollPO.checkInputValues);
