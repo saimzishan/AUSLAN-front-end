@@ -67,7 +67,7 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER STAF
     When I verify material slide-toggle name 'sldRecurring' is disabled 'true'
     And I can see the element with name 'save_blockout' is 'not visible'
 
-  @runThis
+  @ignoreThis
   Scenario: As Administrator I can add INTERPRETER blockouts on desktop
     Given I go to the website
     And I am on a computer
