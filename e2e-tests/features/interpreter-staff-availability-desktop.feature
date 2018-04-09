@@ -21,7 +21,7 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER STAF
     And I click on BUTTON 'SAVE'
     And I get success message: 'Staff Availability successfully added'
 
-  @runThis
+  @ignoreThis
   Scenario: As Administrator I can add recurring INTERPRETER STAFF-AVAILABILITY on desktop
     Given I go to the website
     And I am on a computer
