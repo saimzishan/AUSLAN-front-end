@@ -5,7 +5,7 @@ Feature: User Role and Permissions Management
     And I go to the website
     And I am shown the login screen, with picture and signup button
 
-  @ignoreThis
+  @runThis
   Scenario: Given 1 verified Individual Client, As an Individual Client I should be able to visit user-management/secure_pass
     Given I exist as an Individual Client
     And I sign in with valid Individual Client credentials
