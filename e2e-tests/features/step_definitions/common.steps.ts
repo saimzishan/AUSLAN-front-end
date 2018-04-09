@@ -552,9 +552,10 @@ defineSupportCode(({Given, When, Then}) => {
             const newPath = defaultUrl.split('/');
             newPath[newPath.indexOf('#') + 1] = path;
             return browser.get(newPath.join('/')).then(() => {
-                return page.currentPath().then(currentUrl => {
-                    return expect(currentUrl).to.equal(defaultUrl);
-                });
+                browser.wait(
+                    page.currentPath().then(currentUrl => {
+                        return expect(currentUrl).to.equal(defaultUrl);
+                    }), 5000);
             });
         });
     }
@@ -566,9 +567,10 @@ defineSupportCode(({Given, When, Then}) => {
             let len = newPath.length;
             newPath[len - 1] = path;
             return browser.get(newPath.join('/')).then(() => {
-                return page.currentPath().then((currentUrl => {
-                    return expect(currentUrl).to.equal(newPath.join('/'));
-                }));
+                return browser.wait(
+                    page.currentPath().then((currentUrl => {
+                        return expect(currentUrl).to.equal(newPath.join('/'));
+                    })), 5000);
             });
         });
     }
