@@ -27,7 +27,7 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
     userId;
     message_body;
     message_thread_id;
-    message_tag = '-000000';
+    message_tag = '';
     checked = false;
     isTagShow = false;
     messages;
@@ -144,7 +144,8 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
         url = url.substr(0, 30);
         url += id + '/inbox';
         this.spinnerService.requestInProcess(true);
-
+        this.message_body = this.isTagShow && parseInt(this.message_tag, 10) > 0 ?
+            this.message_tag + '#' + this.message_body : this.message_body;
         this.messagingService.sendMessages(this.loginUserID, url, this.message_body, this.userId)
             .subscribe((res: any) => {
                 if (res.status === 200) {
@@ -177,11 +178,23 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
             this.message_body = null;
         }
     }
-
-    sendMessageTagHide() {
-        this.isTagShow = false;
+    normalizeMessageBody(msg) {
+     return this.hasTag(msg) ? this.getMessage(msg) : msg;
     }
-
+    hasTag(message) {
+        let ind = message.indexOf('#') > 0;
+        return ind;
+    }
+    getTag(message) {
+        let ind = message.indexOf('#');
+        let messageTag = message.substring(0, ind);
+        return messageTag;
+    }
+    getMessage(message) {
+        let ind = message.indexOf('#');
+        let messageTag = message.substring(ind + 1, message.length);
+        return messageTag;
+    }
     isCurrentUserAdminOrBookingOfficer(): boolean {
         return Boolean(GLOBAL.currentUser instanceof Administrator || GLOBAL.currentUser instanceof BookingOfficer);
     }

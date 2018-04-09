@@ -54,7 +54,9 @@
                             <span class="messages__time">
                 <i class="icon-time"></i> {{message.created_at | date: ' d MMM  y | h:mma' }}</span>
                         </div>
-                        <p class="messages__text">{{message.message_body}}</p>
+                        <p class="messages__text">{{normalizeMessageBody(message.message_body)}}</p>
+                        <button *ngIf="hasTag(message.message_body)" class="messages__button">{{getTag(message.message_body)}}</button>
+
                     </section>
                 </section>
 
@@ -67,8 +69,7 @@
     </section>
     <form class="messages__form" [ngClass]="{'messages__form_reduced':isCurrentUserAdminOrBookingOfficer()}"
           style="position: fixed;">
-        <button *ngIf='isTagShow' (click)="sendMessageTagHide()" class="button messages__formButton">{{message_tag }}
-            <i name='messages__Xtag' *ngIf='isTagShow'>x</i>
+        <button *ngIf='isTagShow' class="button messages__formButton">{{message_tag }}
         </button>
         <section class="messages__formInner">
             <textarea [(ngModel)]="message_body" required (keyup)="checkEmpty()" name="message_body"
