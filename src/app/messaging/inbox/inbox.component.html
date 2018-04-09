@@ -1,18 +1,5 @@
-<header id="header-mobile">
-    <button (click)="backClicked()" class="icon-back"></button>
-    <h1>JOB #4353435</h1>
-    <section>
-        <a href="#" class="header__message"><i class="icon-messages"></i></a>
-        <ul class="dropdown menu" data-disable-hover="true" data-click-open="true" data-dropdown-menu>
-            <li>
-                <a href="#" class="header__profile"><img src="assets/img/dummy/profile.png"></a>
-                <ul class="menu">
-                    <li><a href="#"><i class="icon-logout"></i> Log Out</a></li>
-                </ul>
-            </li>
-        </ul>
-    </section>
-</header>
+<app-mobile-header title="MESSGES" [showBackLink]="false"></app-mobile-header>
+>
 
 <section id="page-messages">
     <main>
@@ -21,7 +8,8 @@
 </section>
 <section class="messages">
     <section *ngIf='isCurrentUserAdminOrBookingOfficer()' class="messages__conversations">
-        <section class="messages__conversations"  [ngClass]="{'messages__conversations_withPagination': totalItems > 10}" id="conversations-wrapper">
+        <section class="messages__conversations" [ngClass]="{'messages__conversations_withPagination': totalItems > 10}"
+                 id="conversations-wrapper">
             <ng-container
                     *ngFor="let mesg of messageThreads  | paginate: { itemsPerPage: 10, currentPage: messageThreadPage ,totalItems: totalItems } let i = index">
                 <section class="messages__conversation"
@@ -44,7 +32,8 @@
 
         </section>
     </section>
-    <div *ngIf="totalItems > 10 && isCurrentUserAdminOrBookingOfficer()" class="element element_inline messages__pagination">
+    <div *ngIf="totalItems > 10 && isCurrentUserAdminOrBookingOfficer()"
+         class="element element_inline messages__pagination">
         <pagination-controls (pageChange)="getPage($event)" class="my-pagination"></pagination-controls>
     </div>
     <section class="messages__wrapper" [ngClass]="{'messages__wrapper_aside': isCurrentUserAdminOrBookingOfficer()}"
@@ -65,9 +54,7 @@
                             <span class="messages__time">
                 <i class="icon-time"></i> {{message.created_at | date: ' d MMM  y | h:mma' }}</span>
                         </div>
-                        <p class="messages__text">{{message.message_body}}
-                            <a href="#">#{{message_tag}}</a> booking!</p>
-                        <button class="messages__button">{{message.sender.id}}</button>
+                        <p class="messages__text">{{message.message_body}}</p>
                     </section>
                 </section>
 
