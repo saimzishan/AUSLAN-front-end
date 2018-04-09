@@ -144,9 +144,9 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
         url = url.substr(0, 30);
         url += id + '/inbox';
         this.spinnerService.requestInProcess(true);
-        this.message_body = this.isTagShow && parseInt(this.message_tag, 10) > 0 ?
+        let message_body = this.isTagShow && parseInt(this.message_tag, 10) > 0 ?
             this.message_tag + '#' + this.message_body : this.message_body;
-        this.messagingService.sendMessages(this.loginUserID, url, this.message_body, this.userId)
+        this.messagingService.sendMessages(this.loginUserID, url, message_body, this.userId)
             .subscribe((res: any) => {
                 if (res.status === 200) {
                     this.notificationServiceBus.launchNotification(false, 'Message sent successfully..');
