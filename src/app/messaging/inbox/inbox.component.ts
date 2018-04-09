@@ -81,7 +81,7 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
         this.messagingService.getInterpreterMessages(id, this.messagePage)
             .subscribe((res: any) => {
                     if (res.status === 200) {
-                        this.messageCount = res.data.message_count;
+                        this.messageCount = res.data.messages_count;
                         this.messages = res.data.messages.reverse();
                         setTimeout(() => {
                             this.componentScroll.directiveRef.scrollToBottom();
@@ -101,7 +101,7 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
         this.messagingService.getInterpreterMessage(id, this.business_id, this.messagePage)
             .subscribe((res: any) => {
                 if (res.status === 200) {
-                    this.messageCount = res.data.message_count;
+                    this.messageCount = res.data.messages_count;
                     this.messages = res.data.messages.reverse();
                     setTimeout(() => {
                         this.componentScroll.directiveRef.scrollToBottom();
