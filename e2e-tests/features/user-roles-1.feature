@@ -77,7 +77,7 @@ Feature: User Role and Permissions Management
     Then I am on the bookings page
     Then I should not be able to navigate to 'booking-management/create-booking'
 
-  @runThis
+  @ignoreThis
   Scenario: As an unverified Organisational Representative, I should be able to visit certain url
     Given I sign in with valid Organisational Representative credentials
     Then I am shown the verify screen
