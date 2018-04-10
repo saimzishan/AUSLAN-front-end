@@ -65,11 +65,12 @@ export class MessagingService extends ApiService {
                 });
         }
 
-        allMessageThreads(businessId, page): Observable<any> {
+        allMessageThreads(businessId, page, interpreter_search): Observable<any> {
             let headers = new Headers({ 'Accept': 'application/json' });
             let options = new RequestOptions({ headers: headers });
 
-            return this.http.get(GLOBAL.USER_APPI + '/business/' + businessId + '/message_threads' + '?page=' + page + '&amp;per_page=' + 10, options)
+            return this.http.get(GLOBAL.USER_APPI + '/business/' + businessId + '/message_threads'
+                + '?interpreter_name=' + interpreter_search + '&page=' + page + '&amp;per_page=' + 10, options)
                 .map(this.extractData)
                 .catch((err) => { return this.handleError(err); });
         }

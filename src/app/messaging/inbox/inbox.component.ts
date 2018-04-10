@@ -126,7 +126,7 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
 
     getAllMessageThreads(businessId) {
         this.spinnerService.requestInProcess(true);
-        this.messagingService.allMessageThreads(businessId, this.messageThreadPage)
+        this.messagingService.allMessageThreads(businessId, this.messageThreadPage, this.searchInterpreterQuery)
             .subscribe((res: any) => {
                     if (res.status === 200) {
                         this.messageThreads = res.data.message_threads;
@@ -142,6 +142,15 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
                     let e = errors.json();
                     this.notificationServiceBus.launchNotification(true, e);
                 });
+    }
+    searchInterpreter() {
+        this.messageThreadPage = 0;
+        this.messageThreads = [];
+        this.totalItems = 0;
+        this.selectedMessageThread = 0;
+        this.userId = 0;
+        this.message_thread_id = 0;
+        this.getAllMessageThreads(this.business_id);
     }
 
     sendMessage() {
@@ -226,11 +235,6 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
         this.messageThreadPage = page;
         this.getAllMessageThreads(this.business_id);
     }
-
-    searchInterpreter() {
-
-    }
-
     clear() {
         this.searchInterpreterQuery = '';
         this.searchInterpreter();
