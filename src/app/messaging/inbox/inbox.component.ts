@@ -40,6 +40,7 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
     selectedMessageThread = 0;
     messageCount = -1;
     searchInterpreterQuery = '';
+    showLoadMore = false;
     public config: PerfectScrollbarConfigInterface = {};
 
     @ViewChild(PerfectScrollbarComponent) componentScroll: PerfectScrollbarComponent;
@@ -79,7 +80,12 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
             this.getInterpreterMessages();
         }
     }
-
+    scrollReachedAtTop() {
+        this.showLoadMore = true;
+    }
+    scrollReachedAtBottom() {
+        this.showLoadMore = false;
+    }
     getInterpreterMessages() {
         let id = this.isCurrentUserAdminOrBookingOfficer() ? this.userId : this.loginUserID;
         this.spinnerService.requestInProcess(true);
@@ -131,6 +137,7 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
                     if (res.status === 200) {
                         this.messageThreads = res.data.message_threads;
                         this.totalItems = res.data.message_threads_count;
+                        this.selectedMessageThread = 0;
                         this.userId = this.messageThreads[this.selectedMessageThread].user_id;
                         this.message_thread_id = this.messageThreads[this.selectedMessageThread].id;
                         this.getInterpreterMessage(this.message_thread_id);
