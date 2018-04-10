@@ -144,9 +144,10 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
         url = url.substr(0, 30);
         url += id + '/inbox';
         this.spinnerService.requestInProcess(true);
-        let message_body = this.isTagShow && parseInt(this.message_tag, 10) > 0 ?
-            this.message_tag + '#' + this.message_body : this.message_body;
-        this.messagingService.sendMessages(this.loginUserID, url, message_body, this.userId)
+        let message_tag = this.isTagShow && parseInt(this.message_tag, 10) > 0 ?
+            this.message_tag : '';
+        this.messagingService.sendMessages(this.loginUserID, url, this.message_body,
+            this.userId, message_tag )
             .subscribe((res: any) => {
                 if (res.status === 200) {
                     this.notificationServiceBus.launchNotification(false, 'Message sent successfully..');
@@ -178,17 +179,15 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
             this.message_body = null;
         }
     }
-    normalizeMessageBody(msg) {
-     return this.hasTag(msg) ? this.getMessage(msg) : msg;
-    }
+
     hasTag(message) {
-        let ind = message.indexOf('#') > 0;
-        return ind;
+        return Boolean(message.tag) && message.tag.length > 1;
     }
-    getTag(message) {
-        let ind = message.indexOf('#');
-        let messageTag = message.substring(0, ind);
-        return messageTag;
+    onTagClicked(message_tag) {
+        let route = GLOBAL.currentUser instanceof Interpreter || GLOBAL.currentUser instanceof OrganisationalRepresentative
+            || GLOBAL.currentUser instanceof IndividualClient
+                ? 'job-detail' : 'booking-job';
+        this.router.navigate(['/booking-management/' + message_tag, route]);
     }
     getMessage(message) {
         let ind = message.indexOf('#');

@@ -57,9 +57,11 @@
                             <span class="messages__time">
                 <i class="icon-time"></i> {{message.created_at | date: ' d MMM  y | h:mma' }}</span>
                         </div>
-                        <p class="messages__text">{{normalizeMessageBody(message.message_body)}}</p>
-                        <button *ngIf="hasTag(message.message_body)" class="messages__button">
-                            {{getTag(message.message_body)}}
+                        <p class="messages__text">{{message.message_body}}</p>
+                        <button *ngIf="hasTag(message)"
+                                (click)="onTagClicked(message.tag)"
+                                class="messages__button">
+                            {{message.tag}}
                         </button>
                     </section>
                 </section>
