@@ -100,14 +100,10 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     hasPrefInt: Boolean = false;
     duplicatingBookable: number;
     isCertRequired = false;
-<<<<<<< HEAD
     isclientAvailable = false;
     clientAvailability;
     isClientFound = false;
     availabilityMesg = '';
-=======
-    start_time;
->>>>>>> origin/development
     repeat_days = [
         {
             display: 'S',
