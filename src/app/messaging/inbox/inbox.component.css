@@ -1,0 +1,11 @@
+.my-pagination /deep/ .ngx-pagination .current {
+    background: #02b86e;
+}
+@media(max-width: 999px){
+    .icon-more-icon{
+        display: none !important;
+    }
+    #actions-list{
+        display: none;
+    }
+}

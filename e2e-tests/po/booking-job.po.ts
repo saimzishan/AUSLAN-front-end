@@ -222,11 +222,10 @@ export class BookingJobPage extends PageObject {
             return expect(isTextLinkId).to.be.eq(!negate);
         });
     }
-    checkAttachmentIcons = (negate: string, colNumber: number) => {
+    checkAttachmentIcons = (negate: string) => {
         let shouldSee = !(negate === 'not');
-        let bookingDetails = this.getAllElementByCSS('table#job-details-responsive tbody tr td');
-        let el = bookingDetails.get(colNumber-1);
-        return this.getAllByCSSInElement(el, 'i.icon-attach').isPresent()
+        let el = this.getElementByCss('table#job-details-responsive tbody tr td[data-title="ATTACHMENTS"]');
+        return this.getAllByCSSInElement(el, 'a.icon-attach').isPresent()
             .then(presence => {
                 return expect(presence).to.be.eq(shouldSee);
             });

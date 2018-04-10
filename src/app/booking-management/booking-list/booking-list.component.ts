@@ -24,6 +24,7 @@ import * as moment from 'moment';
     styleUrls: ['./booking-list.component.css']
 })
 export class BookingListComponent implements OnInit, OnChanges {
+
     @Input() bookingList: Array<Booking> = [];
     @Output() onBookingFilter = new EventEmitter();
     bookingFilter: BookingFilter = {};
@@ -32,7 +33,6 @@ export class BookingListComponent implements OnInit, OnChanges {
     @Output() onPageEmit = new EventEmitter<number>();
     @Input() p = 1;
     @Input() totalItems = 0;
-
     constructor(public router: Router, private datePipe: DatePipe) {
         BA.loadItems();
     }
@@ -109,7 +109,9 @@ export class BookingListComponent implements OnInit, OnChanges {
         return Boolean(GLOBAL.currentUser instanceof Administrator ||
             GLOBAL.currentUser instanceof BookingOfficer);
     }
-
+    isCurrentUserInterpreter(): boolean {
+        return Boolean(GLOBAL.currentUser instanceof Interpreter);
+    }
     didInterpreterAccepted(interpreters: Array<BookingInterpreter>) {
         return interpreters.filter(i => i.state === 'Accepted').slice(0, 3);
     }
@@ -119,7 +121,36 @@ export class BookingListComponent implements OnInit, OnChanges {
         return ['All', ...keys.slice(keys.length / 2)];
 
     }
+    interpreterAllowed(booking: Booking, status) {
+        let res = false;
+        // Green Tick => Accepted || Allocated
+        // Gray => Invited , has not responded
+        // Red => Invited , rejected but is not allocated
+        let currentStatus = '';
+        if (this.isCurrentUserInterpreter()) {
+            booking.interpreters.filter(i => i.id === GLOBAL.currentUser.id)
+                .map(i => currentStatus = i.state || 'Invited');
 
+            if (currentStatus === 'Accepted' &&
+                booking.state === BOOKING_STATE.In_progress) {
+                res = status === 'green';
+
+            } else if (currentStatus === 'Accepted' &&
+                booking.state === BOOKING_STATE.Allocated) {
+                res = status === 'green';
+
+            } else if (currentStatus === 'Rejected' &&
+                booking.state === BOOKING_STATE.In_progress) {
+                res = status === 'red';
+
+
+            } else if (currentStatus === 'Invited' &&
+                booking.state !== BOOKING_STATE.In_progress) {
+                res = status === 'gray';
+            }
+        }
+        return res;
+    }
     stateList() {
         let keys = Object.keys(BOOKING_STATE);
         keys = keys.slice(keys.length / 2);
@@ -152,7 +183,13 @@ export class BookingListComponent implements OnInit, OnChanges {
     }
 
     filterStatus() {
-        return BOOKING_STATUS[this.bookingFilter.booking_status];
+        if (this.bookingFilter.booking_status) {
+            return this.bookingFilter.booking_status.split(',').map(status => {
+                return BOOKING_STATUS[status];
+            }).join(',');
+        } else {
+            return 'All';
+        }
     }
 
     private formatterValueFor(field: string, value: string) {
@@ -165,10 +202,14 @@ export class BookingListComponent implements OnInit, OnChanges {
             value = value.replace(/,$/g, '');
             switch (field) {
                 case 'booking_status':
-                    formattedValue = BOOKING_STATUS.hasOwnProperty(value) ? BOOKING_STATUS[value].toString() : '';
+                    formattedValue = value.split(',')
+                        .filter(statusValue => BOOKING_STATUS.hasOwnProperty(statusValue))
+                        .map(statusValue => BOOKING_STATUS[statusValue].toString()).join(',');
                     break;
                 case 'booking_type':
-                    formattedValue = BOOKING_NATURE.hasOwnProperty(value) ? BOOKING_NATURE[value].toString() : '';
+                    formattedValue = value.split(',')
+                        .filter(typeValue => BOOKING_NATURE.hasOwnProperty(typeValue))
+                        .map(filteredTypeValue => BOOKING_NATURE[filteredTypeValue].toString()).join(',');
                     break;
                 default:
                     formattedValue = value;
@@ -178,8 +219,31 @@ export class BookingListComponent implements OnInit, OnChanges {
         return formattedValue;
     }
 
-    filter(field: string, value: string) {
-        this.bookingFilter[field] = this.formatterValueFor(field, value);
+    private toggleDropdownFilter(field: string, value: string) {
+        const newValue = this.formatterValueFor(field, value);
+        const currentValue = this.bookingFilter[field];
+        const removeFilter = currentValue && currentValue.indexOf(newValue) > -1;
+        if (removeFilter) {
+            this.bookingFilter[field] = currentValue.replace(newValue, '').replace(/,,/g, ',').replace(/^,|,$/, '');
+        } else {
+            this.bookingFilter[field] = currentValue && currentValue.length ? currentValue + ',' + newValue : newValue;
+        }
+    }
+
+    private unsetFilter(field: string): void {
+        delete this.bookingFilter[field];
+        this.filterParams.delete(`filter[${field}]`);
+        GLOBAL._filterVal.delete(`filter[${field}]`);
+    }
+
+    filter(field: string, value: string, toggle?: boolean) {
+        if (value.toLowerCase() === 'all') {
+            this.unsetFilter(field);
+        } else if (toggle) {
+            this.toggleDropdownFilter(field, value);
+        } else {
+            this.bookingFilter[field] = this.formatterValueFor(field, value);
+        }
         for (let k in this.bookingFilter) {
             if (this.bookingFilter.hasOwnProperty(k)) {
                 this.filterParams.set('filter[' + k + ']', this.bookingFilter[k]);
@@ -204,6 +268,11 @@ export class BookingListComponent implements OnInit, OnChanges {
 
     getSortOrder(field: string) {
         return this.isCurrentSort(field) ? this.currentSort.order : '';
+    }
+
+    isDropdownItemActive(field: string, value: string): ('active'|'') {
+        const formattedValue = value !== 'All' && this.formatterValueFor(field, value);
+        return this.bookingFilter[field] && this.bookingFilter[field].indexOf(formattedValue) > -1 ? 'active' : '';
     }
 
     sort(field: string) {

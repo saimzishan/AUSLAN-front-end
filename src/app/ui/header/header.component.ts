@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { MessagingService } from '../../api/messaging.service';
 import { NotificationServiceBus } from '../../notification/notification.service';
-import { Administrator, BookingOfficer } from '../../shared/model/user.entity';
+import {Administrator, BookingOfficer, Interpreter} from '../../shared/model/user.entity';
 
 @Component({
   selector: 'app-header',
@@ -40,7 +40,6 @@ export class HeaderComponent implements OnDestroy, OnInit {
       '';
         this.userIsActive = Boolean(GLOBAL.currentUser && this.fullName && this.fullName.length > 0
         && this.fullName === GLOBAL.currentUser.first_name + ' '  + GLOBAL.currentUser.last_name);
-        if (+localStorage.getItem('bookingId') <= 0) { localStorage.setItem('bookingId', '-1'); }
   }
 
   getPicturePath() {
@@ -73,19 +72,5 @@ export class HeaderComponent implements OnDestroy, OnInit {
   isCurrentUserAdminOrBookingOfficer(): boolean {
     return Boolean(GLOBAL.currentUser instanceof Administrator || GLOBAL.currentUser instanceof BookingOfficer);
   }
-
-    checkBeforeNavigation() {
-      if (+localStorage.getItem('bookingId') === -1) {
-          this.notificationServiceBus.launchNotification(true, 'Please select any booking before');
-          return false;
-        }
-   this.setActiveLink(this.linkName.messages);
-     return true;
-  }
-
-  navigateToMessaging() {
-       this.router.navigate(['users/', GLOBAL.currentUser.id, 'inbox']);
-   }
-
 }
 

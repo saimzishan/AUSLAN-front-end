@@ -24,6 +24,9 @@ import {BookingInfoComponent} from '../booking-info/booking-info.component';
 import {DatePipe} from '@angular/common';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {ShortTimePipe} from '../../shared/pipe/short-time.pipe';
+import {LinkAuth, LinkHelper} from '../../shared/router/linkhelper';
+import {RolePermission} from '../../shared/role-permission/role-permission';
+import {HttpModule} from '@angular/http';
 
 describe('BookingJobsComponent', () => {
   let component: BookingJobsComponent;
@@ -33,7 +36,7 @@ describe('BookingJobsComponent', () => {
     TestBed.configureTestingModule({
       declarations: [BookingJobsComponent, BookingHeaderComponent, PrettyIDPipe, BookingInfoComponent,
                      ShortTimePipe],
-      providers: [MdDialog,
+      providers: [MdDialog, LinkHelper, LinkAuth, RolePermission,
         ViewContainerRef, SpinnerService, NotificationServiceBus, DatePipe, BookingHeaderService,
         {
           provide: ActivatedRoute,
@@ -44,7 +47,7 @@ describe('BookingJobsComponent', () => {
         { provide: BookingService, useClass: MockBookingService },
         { provide: UserService, useClass: MockUserService }, { provide: AuthHttp, useClass: MockBackend }],
       imports: [SimpleNotificationsModule, MaterialModule, FormsModule, NgxPaginationModule,
-        RouterTestingModule, CustomFormsModule]
+        RouterTestingModule, HttpModule, CustomFormsModule]
     }).compileComponents();
   }));
   beforeEach(() => {

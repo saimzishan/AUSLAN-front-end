@@ -42,7 +42,7 @@
 
                             <p-calendar name='dpEventDate_st' [(ngModel)]="start_time" (onClose)="onStartTimeChanged()"
                             [stepMinute]="5" [defaultDate]="defaultDateTime" required #dpEventDate_st="ngModel" 
-                            showTime="true"  dateFormat="dd/mm/yy" hourFormat="12"></p-calendar>
+                            showTime="true"  dateFormat="dd/mm/yy" hourFormat="12"  (input)="checkMe($event)" (onBlur)="assignMe('startTimeControl')"></p-calendar>
                             
                             <span *ngIf="dpEventDate_st.touched &&  (!dpEventDate_st.errors?.required);"
                                   class="inline-icon inline-icon-valid valid"></span>
@@ -58,6 +58,7 @@
                             <p-calendar name='dpEventDate_endtime' [(ngModel)]="end_time"  (onClose)="setDayMonthYear()"
                             [stepMinute]="5" [defaultDate]="defaultDateTime" 
                             required #dpEventDate_endtime="ngModel" [timeOnly]="true"
+                             (input)="checkMe($event)" (onBlur)="assignMe('endTimeControl')"
                                         hourFormat="12"></p-calendar>
 
                             <span *ngIf="dpEventDate_endtime.touched &&  (!dpEventDate_endtime.errors?.required);"
@@ -138,7 +139,7 @@
         </form>
         <div >
             <div class="manage-buttons">
-                <button name="cancel_blockout" (click)="getRoute()"  class="button decline">CANCEL</button>
+                <button name="cancel_blockout" (click)="getRoute()"  class="button decline">BACK</button>
                 <button *ngIf="availabilityBlock.id > 0 && !(availabilityBlock.booking_id > 0)" name="delete_blockout" (click)="deleteBlockout()" class="button decline">DELETE</button>
                 <button *ngIf="!(availabilityBlock.booking_id > 0) &&!sideToggleCheck" name="save_blockout" (click)="saveBlockouts(user_blockout_form)"  class="button">SAVE</button>
             </div>

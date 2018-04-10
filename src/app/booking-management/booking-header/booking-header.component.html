@@ -16,6 +16,8 @@
             <button (click)="saveClick()" name="saveBtn" [disabled]="!invitePress && !unAssignPress && !reAssignPress && !unlinkPress" class="button inverse">Save</button>
         </div>
         <div *ngIf="isCurrentUserInterpreter()">
+            <button  [routerLink]="['/users/'+ getInterpreterId() +'/inbox/' + bookingModel.id]" class="button green">MESSAGE OFFICE</button>
+
             <button *ngIf="!disableReject && isInProgressOrAllocatedState()" (click)="showDialogBoxInterpreter(true)"
                     class="button pink">Decline
             </button>

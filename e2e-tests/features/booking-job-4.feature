@@ -161,3 +161,70 @@ Feature: Booking Admin Management
     Then I click on BUTTON name 'yesBtn'
     Then I get a valid 'Cancelled with No Charge' notification for state
     
+  @runThis
+  Scenario: As an Administrator when I can see certification columns in interpreters list
+    Given There exist 1 bookings
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on the bookings page
+    When I click on an individual booking
+    Then I will be shown the booking job page
+    When I click on link 'Booking details'
+    Then I should be on the edit booking page
+    Then I click on material checkbox name 'cb_yellow_card'
+    And I verify checkbox name 'cb_yellow_card' is checked 'true'
+    Then I click on checkbox name 'cb_police_check'
+    And I verify checkbox name 'cb_police_check' is checked 'true'
+    Then I click on element by name 'rdbookingRecordedYes'
+    And I click on BUTTON 'SAVE'
+    And If I am shown popups, I approve all of them
+    Then I will be shown the booking job page
+    And I can see the interpreter table header has column 'Yellow'
+    And I can see the interpreter table header has column 'Police'
+    When I click on link 'Booking details'
+    Then I should be on the edit booking page
+    Then I click on material checkbox name 'cb_yellow_card'
+    Then I click on material checkbox name 'cb_imminisations'
+    And I verify checkbox name 'cb_imminisations' is checked 'true'
+    And I verify checkbox name 'cb_yellow_card' is checked 'false'
+    And I click on BUTTON 'SAVE'
+    And If I am shown popups, I approve all of them
+    Then I will be shown the booking job page
+    And I can see the interpreter table header has column 'Immun.'
+    And I can see the interpreter table header has not column 'Yellow'
+
+ @ignoreThis
+  Scenario: As an Administrator when I assign Interpreter, Interpreter1 of differ state to booking should be in same span
+    Given There exist 1 bookings
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on the bookings page
+    When I click on an individual booking
+    Then I will be shown the booking job page
+    Then I select 2 Interpreter
+    And I click on BUTTON name 'reassingBtn'
+    And I click on BUTTON 'Save'
+    Then I get valid message: 'The interpreter have been assigned'
+    Then I can count the element with css 'span.cells2.offset2.badge_green' to be '2'
+    
+  @runThis
+  Scenario: Given Administrator exists, I can check that non-Admin users should not be able to see Unassign button
+    # This step refers to a task in api which creates
+    # Ind Client, booking, and an interpreter all assigned to the booking
+    Given I create the interpreter of type 'booked'
+    And I sign in with valid Individual Client credentials
+    When I click on an individual booking
+    Then I will be shown the booking job page
+    And I can see the element with name 'unassingBtn_1' is 'not visible'
+    And I click on my name in the top corner
+    Then I click on logout
+    And I sign in with valid Administrator credentials
+    When I click on an individual booking
+    Then I will be shown the booking job page
+    And I can see the element with name 'unassingBtn_1' is 'visible'
+    And I click on my name in the top corner
+    Then I click on logout
+    And I sign in with valid Interpreter credentials
+    When I click on an individual booking
+    Then I will be shown the booking job page
+    And I can see the element with name 'unassingBtn_1' is 'not visible'

@@ -177,7 +177,61 @@ Feature: Booking Management
     Then I change the value of end time of booking '01:02am'
     Then I check the value of endTime should be '01:02 AM'
     Then I wait for 1000 milli-seconds
-    Then I change the value of end time of booking '01:02        am'
+    Then I change the value of end time of booking '01:02am'
     Then I check the value of endTime should be '01:02 AM'
 
 # ---------------------------------------- AUSLAN1-727 -> START ----------------------------------------
+
+  @runThis
+  Scenario: As Individual Client, I should be able to create booking with multiple interp types
+    Given I sign in with valid Individual Client credentials
+    Then I am on the bookings page
+    And I click on 'New Booking'
+    Then I will be taken to the 'New Booking' form
+    And I click on material checkbox name 'cbNotetaking'
+    When I fill New Booking form fields correctly without address
+    And I fill the field 'auslanInterpreters_count' with value '2'
+    And I fill the field 'noteTaker_count' with value '1'
+    Then I click on checkbox name 'tnc'
+    And I click the create booking button
+    And If I am shown popups, I approve all of them
+    Then I get a valid create booking notification
+
+  @runThis
+  Scenario: Given an Organisational Representative, As Administrator, I can duplicate a booking and see the billing details are same
+    Given There exist 1 bookings
+    Given Assigned all bookings to Organisational Representative
+    And I sign in with valid Administrator credentials
+    Then I am on the bookings page
+    Then I am shown with 1 booking
+    Then I click on an individual booking of type 'Requested'
+    Then I will be shown the booking job page
+    And I click on BUTTON 'Duplicate'
+    Then I will be taken to the 'New Booking' form
+    Then I verify radiobutton name 'OrganisationalRepresentative' and is checked
+    And I can see the input with name 'contact_first_name' has text 'Jimmy'
+    And I can see the input with name 'contact_last_name' has text 'Donavan'
+    And I can see the input with name 'deaf_person_name' has text 'Charles'
+    And I can see the input with name 'deaf_person_last_name' has text 'Barkley'
+
+  @runThis
+  Scenario: As Administrator, When duplicating a booking, the attchments should not carry over the new booking
+    Given There exist 1 bookings
+    And I sign in with valid Administrator credentials
+    Then I am on the bookings page
+    Then I am shown with 1 booking
+    Then I click on an individual booking of type 'Requested'
+    Then I will be shown the booking job page
+    When I click on link 'Booking details'
+    Then I should be on the edit booking page
+    And I will upload a document 'sushi.pdf'
+    When I will see attachment 'sushi.pdf'
+    Then I will close the file upload
+    And I click on checkbox name 'tnc'
+    And I click the create booking button
+    And If I am shown popups, I approve all of them
+    Then I should get a valid booking update notification
+    And I am on the individual booking page
+    And I click on BUTTON 'Duplicate'
+    Then I will be taken to the 'New Booking' form
+    And I will see attachment 'sushi.pdf' is removed

@@ -87,6 +87,13 @@ import { MessagingService } from './api/messaging.service';
 import { MdCheckboxModule } from '@angular/material';
 
 import { ReportsComponent } from './reports/reports.component';
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+import {VerifiedGuard} from './auth/verified.guard';
+
+const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
+    suppressScrollX: true
+};
 
 @NgModule({
     declarations: [
@@ -125,12 +132,13 @@ import { ReportsComponent } from './reports/reports.component';
         FormsModule, BrowserAnimationsModule, NgxPaginationModule,
         HttpModule, SimpleNotificationsModule.forRoot(),
         ReactiveFormsModule, Md2Module.forRoot(),
+        PerfectScrollbarModule.forRoot(PERFECT_SCROLLBAR_CONFIG),
         MaterialModule, CalendarModule, PrimeNgCalendarModule, AgmCoreModule.forRoot({
             apiKey: 'AIzaSyAhNu-VrvCjd1AliJerDQIy329iPy2vABU',
             libraries: ['places']
         }),
         AutoCompleteModule
-    ], providers: [DatePipe, LinkAuth, UserNameService, RolePermission, AuthGuard, NoAuthGuard, Title, LinkHelper,
+    ], providers: [DatePipe, LinkAuth, UserNameService, RolePermission, AuthGuard, VerifiedGuard, NoAuthGuard, Title, LinkHelper,
         NotificationServiceBus, SpinnerService, BookingService, UserService,
         PreferedAllocationService, BookingHeaderService, GmapsApiService, MessagingService,
         {provide: APP_BASE_HREF, useValue: '/'},

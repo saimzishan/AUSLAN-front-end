@@ -217,6 +217,7 @@
           <div *ngFor="let day of repeat_days" class='medium-1 columns'>
             <md-checkbox [(ngModel)]="day.selected"
                          name="{{day.value}}"
+                         [disabled]="isRecurrenceDayCheckboxDisabled(day)"
                          [align]='right'
                          [required]='isRecurringBooking'>
               {{day.display}}
@@ -243,7 +244,7 @@
       <div class="medium-12 columns" *ngIf="isUserOrgRepORIndClientTemp() && !forEdit">
         <div class="form-field">
           <label name="lblQuestionBookAddr">Do you want to use your profile address for this booking?
-            <span mdTooltip="Tooltip!">
+            <span mdTooltip="Please choose Yes/No">
               <i class="inline-icon-tip"></i>
             </span>
           </label>
@@ -755,12 +756,12 @@
     <ng-container *ngIf="isUserOrgRepORIndClientTemp() || isUserAdminORBookOfficer">
       <div class="separator"></div>
 
-      <h4 class="text-center">SPECIAL INSTRUCTIONS</h4>
+      <h4 class="text-center">SPECIAL INSTRUCTIONS FOR INTERPRETERS</h4>
       <div class="row">
         <div class="medium-12 columns">
           <div class="form-field">
             <label>Do you want to use your standard special instructions?
-              <span mdTooltip="Tooltip!">
+              <span mdTooltip="Please select Yes/No">
                 <i class="inline-icon-tip"></i>
               </span>
             </label>
@@ -773,8 +774,8 @@
         <div class="row-wrapper">
           <div class="medium-12 columns">
             <div class="form-field">
-              <label>Special instructions
-                <span mdTooltip="Enter Special instructions!">
+              <label>Special instructions for interpreters
+                <span mdTooltip="Enter Special instructions for interpreters!">
                   <i class="inline-icon-tip"></i>
                 </span>
               </label>
@@ -904,7 +905,7 @@
       <div class="medium-12 columns">
         <div class="form-field">
           <label name="contactMsg">{{isUserAdminORBookOfficer ? "DO YOU WANT TO USE THE STANDARD": "ARE YOU THE"}} CONTACT PERSON FOR THIS BOOKING? *
-            <span mdTooltip="Tooltip!">
+            <span mdTooltip="Please choose Yes/No">
               <i class="inline-icon-tip"></i>
             </span>
           </label>
@@ -1010,7 +1011,7 @@
       <div class="medium-12 columns">
         <div class="form-field">
           <label>ARE YOU THE CLIENT FOR THIS BOOKING? *
-            <span mdTooltip="Tooltip!">
+            <span mdTooltip="Please choose Yes/No">
               <i class="inline-icon-tip"></i>
             </span>
           </label>
@@ -1176,7 +1177,7 @@
       <div class="medium-12 columns" *ngIf="isUserOrgRepORIndClientTemp() || isUserAdminORBookOfficer">
         <div class="form-field">
           <label name="invoiceMsg">Do you want to use standard invoice details{{isUserAdminORBookOfficer ? " for this booking": ""}}? *
-            <span mdTooltip="Tooltip!">
+            <span mdTooltip="Please choose Yes/No">
               <i class="inline-icon-tip"></i>
             </span>
           </label>
@@ -1349,6 +1350,7 @@
       <ng-container *ngIf="isCertRequired">
         <p class="p-top-mrg" name="cert_required">Do you require one of the following? Please select multiple if relevant</p>
         <div class="row" id="cert-types">
+          <div class="medium-3 columns"> <md-checkbox name="cb_blue_card" #cb_blue_card [(ngModel)]="bookingModel.cbBlueCard" >Blue CARD</md-checkbox> </div>
           <div class="medium-3 columns"> <md-checkbox name="cb_yellow_card" #cb_yellow_card [(ngModel)]="bookingModel.cbYellowCard" >YELLOW CARD</md-checkbox> </div>
           <div class="medium-3 columns"> <md-checkbox name="cb_imminisations" #cb_imminisations [(ngModel)]="bookingModel.cbImminisations">IMMUNISATIONS</md-checkbox> </div>
           <div class="medium-3 columns"> <md-checkbox name="cb_police_check" #cb_police_check [(ngModel)]="bookingModel.cbPoliceCheck">POLICE CHECK</md-checkbox> </div>

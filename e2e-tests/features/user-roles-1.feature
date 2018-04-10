@@ -76,3 +76,28 @@ Feature: User Role and Permissions Management
     And I sign in with valid Interpreter credentials
     Then I am on the bookings page
     Then I should not be able to navigate to 'booking-management/create-booking'
+
+  @ignoreThis
+  Scenario: As an unverified Organisational Representative, I should be able to visit certain url
+    Given I sign in with valid Organisational Representative credentials
+    Then I am shown the verify screen
+    And I should not be able to navigate to 'user-management'
+    And I should not be able to navigate to 'user-management/profile'
+    And I should not be able to navigate to 'user-management/secure_pass'
+    And I should not be able to navigate to 'user-management/1/skills'
+    And I should not be able to navigate to 'user-management/1/block_out'
+    And I should not be able to navigate to 'user-management/1/staff-availability'
+    And I should not be able to navigate to 'user-management/2/staff_calendar'
+    And I should not be able to navigate to 'user-management/payroll-billing'
+    And I should not be able to navigate to 'booking-management'
+    And I should not be able to navigate to 'booking-management/1/create-booking'
+    And I should not be able to navigate to 'booking-management/create-booking'
+    And I should not be able to navigate to 'booking-management/1/booking-job'
+    And I should not be able to navigate to 'booking-management/1/job-detail'
+    And I should not be able to navigate to 'booking-management/edit-booking'
+    And I should not be able to navigate to 'booking-management/2/payroll-billing'
+    And I should not be able to navigate to 'users/1/inbox'
+    And I should not be able to navigate to 'users/1/inbox/2'
+    And I should not be able to navigate to 'reports'
+    And I should not be able to navigate to 'init'
+    And I should not be able to navigate to 'bookings'

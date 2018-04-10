@@ -40,6 +40,7 @@ export class BlockoutComponent implements OnDestroy, OnInit {
     staff_availability;
     bookingDate: Date;
     sideToggleCheck = false;
+    strt_time;
     repeat_days = [
         {
             sendValue: '0',
@@ -428,4 +429,42 @@ export class BlockoutComponent implements OnDestroy, OnInit {
         return fullDate;
     }
 
+    checkMe(event) {
+        this.strt_time = event.target.value;
+    }
+
+        assignMe(timeControl) {
+            this.strt_time = this.strt_time.replace(/\s/g, '');
+            let bookingTime = '';
+            let str;
+            if (this.strt_time.length >= 5) {
+                str = this.strt_time.substring(this.strt_time.length - 2, this.strt_time.length);
+                if (timeControl === 'endTimeControl') {
+                    this.strt_time = this.strt_time.substring(0, 5);
+                    if (str === 'am' || str === 'AM') {
+                        bookingTime = this.strt_time + ' 00';
+                    } else if (str === 'PM' || str === 'pm') {
+                        let hh = this.strt_time.substring(0, 2);
+                        let mm = this.strt_time.substring(3, 5);
+                        hh = +hh + 12;
+                        bookingTime = hh + ':' + mm + ' 00';
+                    } else {
+                        bookingTime = this.strt_time + ' 00';
+                    }
+                    this.end_time = new Date(bookingTime);
+                } else {
+                    let strt_date = this.strt_time.substring(0, 10);
+                    this.strt_time = this.strt_time.substring(11, 15);
+                    if (str === 'am' || str === 'AM') {
+                        bookingTime = strt_date + ' ' + this.strt_time + ' AM';
+                    } else if (str === 'PM' || str === 'pm') {
+                        bookingTime = strt_date + ' ' + this.strt_time + ' PM';
+                    } else {
+                        bookingTime = strt_date + ' ' + this.strt_time + ' AM';
+                    }
+                    this.start_time = new Date(bookingTime);
+                }
+            }
+            this.strt_time = '';
+        }
 }
