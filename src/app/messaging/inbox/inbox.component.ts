@@ -39,7 +39,7 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
     totalItems = 0;
     selectedMessageThread = 0;
     messageCount = -1;
-    searchInterpreterQuery = ''
+    searchInterpreterQuery = '';
     public config: PerfectScrollbarConfigInterface = {};
 
     @ViewChild(PerfectScrollbarComponent) componentScroll: PerfectScrollbarComponent;

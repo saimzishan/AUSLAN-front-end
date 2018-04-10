@@ -77,6 +77,14 @@
                 } catch (e) {
 
                 }
+                try{
+                    $('#conversations-wrapper').perfectScrollbar({
+                        suppressScrollX: true
+                    });
+                    $('#messages-wrapper').perfectScrollbar();
+				}catch (e) {
+					
+                }
                 // The currently executing function which is an anonymous function.
                 var caller = arguments.callee;
                 window.setTimeout(function () {

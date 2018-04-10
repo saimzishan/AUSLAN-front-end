@@ -50,7 +50,7 @@
         <button *ngIf="messageCount > messagePage * 10"
                 (click)="loadMore()" class="button messages__formButton">Load Previous Messages
         </button>
-        <perfect-scrollbar [config]="config" [scrollIndicators]="true">
+        <perfect-scrollbar [config]="config" [scrollIndicators]="false">
             <ng-container *ngFor="let message of messages">
 
                 <section class="messages__message" [ngClass]="{ 'messages__message_left' : message.sender.type !== 'Interpreter'
