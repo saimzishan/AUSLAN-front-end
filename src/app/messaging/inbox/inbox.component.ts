@@ -167,11 +167,11 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
         url += id + '/inbox';
         this.spinnerService.requestInProcess(true);
         this.message_body = this.message_body.trim();
-        let message_tag = ''
+        let message_tag = '';
         if (this.isCurrentUserAdminOrBookingOfficer()) {
             let arr = this.message_body.split(' ');
             let probablyTag = this.message_body.length > 0 && this.message_body.startsWith('#') &&
-            Boolean(arr) && arr.length > 0 && !isNaN(parseInt(arr[0].replace('#', ''), 10))
+            Boolean(arr) && arr.length > 0 && !isNaN(parseInt(arr[0].replace('#', ''), 10));
             message_tag = probablyTag ?
                 arr[0].replace('#', '') : '';
         } else {
