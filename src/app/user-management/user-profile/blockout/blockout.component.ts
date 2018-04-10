@@ -1,19 +1,19 @@
-import {Component, Input, OnDestroy, OnInit, ViewContainerRef} from '@angular/core';
-import {Administrator, blockout_availability, BookingOfficer, Interpreter, UserFactory} from '../../../shared/model/user.entity';
-import {FormGroup} from '@angular/forms';
-import {SpinnerService} from '../../../spinner/spinner.service';
-import {NotificationServiceBus} from '../../../notification/notification.service';
-import {UserService} from '../../../api/user.service';
-import {GLOBAL, ModalOptions} from '../../../shared/global';
-import {ActivatedRoute, Router} from '@angular/router';
-import {AvailabilityBlock} from '../../../shared/model/availability-block.entity';
-import {AuthGuard} from '../../../auth/auth.guard';
-import {MdDialog, MdDialogConfig, MdDialogRef} from '@angular/material';
-import {PopupComponent} from '../../../shared/popup/popup.component';
-import {ROLE} from '../../../shared/model/role.enum';
+import { Component, Input, OnDestroy, OnInit, ViewContainerRef } from '@angular/core';
+import { Administrator, blockout_availability, BookingOfficer, Interpreter, UserFactory } from '../../../shared/model/user.entity';
+import { FormGroup } from '@angular/forms';
+import { SpinnerService } from '../../../spinner/spinner.service';
+import { NotificationServiceBus } from '../../../notification/notification.service';
+import { UserService } from '../../../api/user.service';
+import { GLOBAL, ModalOptions } from '../../../shared/global';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AvailabilityBlock } from '../../../shared/model/availability-block.entity';
+import { AuthGuard } from '../../../auth/auth.guard';
+import { MdDialog, MdDialogConfig, MdDialogRef } from '@angular/material';
+import { PopupComponent } from '../../../shared/popup/popup.component';
+import { ROLE } from '../../../shared/model/role.enum';
 import * as momentTimeZone from 'moment-timezone';
-import {Booking} from '../../../shared/model/booking.entity';
-import {Location} from '@angular/common';
+import { Booking } from '../../../shared/model/booking.entity';
+import { Location } from '@angular/common';
 import { forEach } from '@angular/router/src/utils/collection';
 import { DatePipe } from '@angular/common';
 import * as moment from 'moment';
@@ -87,13 +87,13 @@ export class BlockoutComponent implements OnDestroy, OnInit {
     ];
     isWeekely;
     constructor(public userDataService: UserService,
-                public notificationServiceBus: NotificationServiceBus,
-                public spinnerService: SpinnerService,
-                private route: ActivatedRoute,
-                private router: Router,
-                public dialog: MdDialog,
-                private datePipe: DatePipe,
-                public viewContainerRef: ViewContainerRef, private _location: Location) {
+        public notificationServiceBus: NotificationServiceBus,
+        public spinnerService: SpinnerService,
+        private route: ActivatedRoute,
+        private router: Router,
+        public dialog: MdDialog,
+        private datePipe: DatePipe,
+        public viewContainerRef: ViewContainerRef, private _location: Location) {
     }
     public isRecurrenceDayCheckboxDisabled(day) {
         return this.bookingDate && this.bookingDate.getDay() === this.repeat_days.indexOf(day);
@@ -198,9 +198,9 @@ export class BlockoutComponent implements OnDestroy, OnInit {
     }
     setDayMonthYear() {
         this.end_time = new Date(this.start_time.getFullYear(), this.start_time.getMonth(), this.start_time.getDate(),
-        this.end_time.getHours(), this.end_time.getMinutes());
+            this.end_time.getHours(), this.end_time.getMinutes());
     }
-    getRoute () {
+    getRoute() {
         this._location.back();
     }
     deleteBlockout() {
@@ -253,7 +253,7 @@ export class BlockoutComponent implements OnDestroy, OnInit {
                 this.notificationServiceBus.launchNotification(true, e);
             });
     }
-    interpreterStateTimeZone (time) {
+    interpreterStateTimeZone(time) {
         let timeZone = Booking.getNamedTimeZone(this.interpreter.address_attributes.state, this.interpreter.address_attributes.post_code.toString());
         return momentTimeZone(time).tz(timeZone).format('HH:mm:ss');
     }
@@ -418,7 +418,7 @@ export class BlockoutComponent implements OnDestroy, OnInit {
         return momentTimeZone(startDate).tz(timeZone).format('Z');
     }
     enDateGreterthenTostartDate(endDate, startDate) {
-        return (this.getFullDate(startDate) < this.getFullDate(endDate ) );
+        return (this.getFullDate(startDate) < this.getFullDate(endDate));
     }
 
     getFullDate(date) {
@@ -433,38 +433,74 @@ export class BlockoutComponent implements OnDestroy, OnInit {
         this.strt_time = event.target.value;
     }
 
-        assignMe(timeControl) {
-            this.strt_time = this.strt_time.replace(/\s/g, '');
+    assignMe(timeControl) {
+        let hh;
+        let mm;
+        let amPm;
+        if (timeControl === 'startTimeControl') {
+            let temp = this.strt_time.split(' ');
+            if (temp[0].length !== 10) {
+                return;
+            }
             let bookingTime = '';
             let str;
-            if (this.strt_time.length >= 5) {
-                str = this.strt_time.substring(this.strt_time.length - 2, this.strt_time.length);
-                if (timeControl === 'endTimeControl') {
-                    this.strt_time = this.strt_time.substring(0, 5);
-                    if (str === 'am' || str === 'AM') {
-                        bookingTime = this.strt_time + ' 00';
-                    } else if (str === 'PM' || str === 'pm') {
-                        let hh = this.strt_time.substring(0, 2);
-                        let mm = this.strt_time.substring(3, 5);
-                        hh = +hh + 12;
-                        bookingTime = hh + ':' + mm + ' 00';
-                    } else {
-                        bookingTime = this.strt_time + ' 00';
-                    }
-                    this.end_time = new Date(bookingTime);
-                } else {
-                    let strt_date = this.strt_time.substring(0, 10);
-                    this.strt_time = this.strt_time.substring(11, 15);
-                    if (str === 'am' || str === 'AM') {
-                        bookingTime = strt_date + ' ' + this.strt_time + ' AM';
-                    } else if (str === 'PM' || str === 'pm') {
-                        bookingTime = strt_date + ' ' + this.strt_time + ' PM';
-                    } else {
-                        bookingTime = strt_date + ' ' + this.strt_time + ' AM';
-                    }
-                    this.start_time = new Date(bookingTime);
-                }
+            this.strt_time = this.strt_time.replace(/\s/g, '');
+            let strt_date = temp[0];
+            this.strt_time = this.strt_time.substring(10, 17);
+            this.strt_time = this.strt_time.replace(/\s/g, '');
+            let regularExpression = new RegExp('^([0-9]|0[0-9]|1[0-2]):([0-5][0-9])\s*?([AP]M)?$', 'i');
+            let res = regularExpression.exec(this.strt_time);
+            if (res) {
+                hh = res[1];
+                mm = res[2];
+                amPm = res[3];
+            } else {
+                this.start_time = this.strt_time = null;
+                return;
             }
+            if (amPm) {
+                str = amPm.toLocaleUpperCase();
+                if (str === 'AM') {
+                    bookingTime = strt_date + ' ' + hh + ':' + mm + ' AM';
+                } else if (str === 'PM') {
+                    bookingTime = strt_date + ' ' + hh + ':' + mm + ' PM';
+                }
+            } else {
+                bookingTime = strt_date + ' ' + hh + ':' + mm + ' AM';
+            }
+            this.start_time = new Date(bookingTime);
             this.strt_time = '';
+
+        } else {
+            this.strt_time = this.strt_time.replace(/\s/g, '');
+            let regularExpression = new RegExp('^([0-9]|0[0-9]|1[0-2]):([0-5][0-9])\s*?([AP]M)?$', 'i');
+            let res = regularExpression.exec(this.strt_time);
+            let bookingTime;
+            if (res) {
+                 hh = res[1];
+                 mm = res[2];
+                 amPm = res[3];
+                let hour;
+                if (+hh < 10) {
+                    hour = '0' + hh;
+                }
+                if (amPm) {
+                    amPm = amPm.toLocaleUpperCase();
+                    if (amPm === 'PM') {
+                        hour = (+hh) + 12;
+                    } else {
+                        hour = hh;
+                    }
+                } else {
+                    amPm = 'AM';
+                    hour = hh;
+                }
+                bookingTime = hour + ':' + mm + ' 00';
+                this.end_time = new Date(bookingTime);
+                this.strt_time = '';
+            } else {
+                this.start_time = this.strt_time = null;
+            }
         }
+    }
 }
