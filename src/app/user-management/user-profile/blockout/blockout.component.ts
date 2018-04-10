@@ -40,7 +40,7 @@ export class BlockoutComponent implements OnDestroy, OnInit {
     staff_availability;
     bookingDate: Date;
     sideToggleCheck = false;
-    strt_time;
+    dummy_time;
     repeat_days = [
         {
             sendValue: '0',
@@ -430,77 +430,70 @@ export class BlockoutComponent implements OnDestroy, OnInit {
     }
 
     checkMe(event) {
-        this.strt_time = event.target.value;
+        this.dummy_time = event.target.value;
     }
 
     assignMe(timeControl) {
-        let hh;
-        let mm;
-        let amPm;
         if (timeControl === 'startTimeControl') {
-            let temp = this.strt_time.split(' ');
+            let temp = this.dummy_time.split(' ');
             if (temp[0].length !== 10) {
                 return;
             }
-            let bookingTime = '';
             let str;
-            this.strt_time = this.strt_time.replace(/\s/g, '');
+            this.dummy_time = this.dummy_time.replace(/\s/g, '');
             let strt_date = temp[0];
-            this.strt_time = this.strt_time.substring(10, 17);
-            this.strt_time = this.strt_time.replace(/\s/g, '');
-            let regularExpression = new RegExp('^([0-9]|0[0-9]|1[0-2]):([0-5][0-9])\s*?([AP]M)?$', 'i');
-            let res = regularExpression.exec(this.strt_time);
-            if (res) {
-                hh = res[1];
-                mm = res[2];
-                amPm = res[3];
-            } else {
-                this.start_time = this.strt_time = null;
-                return;
-            }
-            if (amPm) {
-                str = amPm.toLocaleUpperCase();
-                if (str === 'AM') {
-                    bookingTime = strt_date + ' ' + hh + ':' + mm + ' AM';
-                } else if (str === 'PM') {
-                    bookingTime = strt_date + ' ' + hh + ':' + mm + ' PM';
-                }
-            } else {
-                bookingTime = strt_date + ' ' + hh + ':' + mm + ' AM';
-            }
-            this.start_time = new Date(bookingTime);
-            this.strt_time = '';
+            this.dummy_time = this.dummy_time.substring(10, 17);
+            this.dummy_time = this.dummy_time.replace(/\s/g, '');
 
-        } else {
-            this.strt_time = this.strt_time.replace(/\s/g, '');
-            let regularExpression = new RegExp('^([0-9]|0[0-9]|1[0-2]):([0-5][0-9])\s*?([AP]M)?$', 'i');
-            let res = regularExpression.exec(this.strt_time);
-            let bookingTime;
-            if (res) {
-                 hh = res[1];
-                 mm = res[2];
-                 amPm = res[3];
-                let hour;
-                if (+hh < 10) {
-                    hour = '0' + hh;
-                }
-                if (amPm) {
-                    amPm = amPm.toLocaleUpperCase();
-                    if (amPm === 'PM') {
-                        hour = (+hh) + 12;
-                    } else {
-                        hour = hh;
-                    }
-                } else {
-                    amPm = 'AM';
-                    hour = hh;
-                }
-                bookingTime = hour + ':' + mm + ' 00';
-                this.end_time = new Date(bookingTime);
-                this.strt_time = '';
+            let bookingTime = this.correctTimeFormat(this.dummy_time, timeControl);
+            if (bookingTime) {
+                bookingTime = strt_date + ' ' + bookingTime;
+                this.start_time = new Date(bookingTime);
             } else {
-                this.start_time = this.strt_time = null;
+                this.start_time = this.dummy_time = null;
+            }
+        } else {
+            this.dummy_time = this.dummy_time.replace(/\s/g, '');
+            let bookingTime = this.correctTimeFormat(this.dummy_time, timeControl);
+            if (bookingTime) {
+                this.end_time = new Date(bookingTime);
+            } else {
+                this.end_time = this.dummy_time = null;
             }
         }
+    }
+    correctTimeFormat(time, controle) {
+        let hh;
+        let mm;
+        let amPm;
+        this.dummy_time = time.replace(/\s/g, '');
+        let regularExpression = new RegExp('^([0-9]|0[0-9]|1[0-2]):([0-5][0-9])\s*?([AP]M)?$', 'i');
+        let res = regularExpression.exec(time);
+        let bookingTime;
+        if (res) {
+            hh = res[1];
+            mm = res[2];
+            amPm = res[3];
+            let hour;
+            if (+hh < 10) {
+                hour = '0' + hh;
+            } else {
+                hour = hh;
+            }
+            if (amPm) {
+                amPm = amPm.toLocaleUpperCase();
+            } else {
+                amPm = 'AM';
+            }
+            if (controle === 'endTimeControl') {
+                if (amPm === 'PM') {
+                    hour = +hour + 12;
+                }
+                return bookingTime = hour + ':' + mm + ' 00';
+            } else {
+                return bookingTime = hour + ':' + mm + ' ' + amPm;
+            }
+        }
+    return false;
     }
 }
