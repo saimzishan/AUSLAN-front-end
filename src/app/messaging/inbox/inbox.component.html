@@ -39,7 +39,10 @@
     <section class="messages__wrapper" [ngClass]="{'messages__wrapper_aside': isCurrentUserAdminOrBookingOfficer()}"
              id="messages-wrapper">
 
-        <perfect-scrollbar fxFlex [config]="config" [scrollIndicators]="true">
+        <button *ngIf="messageCount > messagePage * 10"
+                (click)="loadMore()" class="button messages__formButton">Load Previous Messages
+        </button>
+        <perfect-scrollbar [config]="config" [scrollIndicators]="true">
             <ng-container *ngFor="let message of messages">
 
                 <section class="messages__message" [ngClass]="{ 'messages__message_left' : message.sender.type !== 'Interpreter'
@@ -55,17 +58,13 @@
                 <i class="icon-time"></i> {{message.created_at | date: ' d MMM  y | h:mma' }}</span>
                         </div>
                         <p class="messages__text">{{normalizeMessageBody(message.message_body)}}</p>
-                        <button *ngIf="hasTag(message.message_body)" class="messages__button">{{getTag(message.message_body)}}</button>
-
+                        <button *ngIf="hasTag(message.message_body)" class="messages__button">
+                            {{getTag(message.message_body)}}
+                        </button>
                     </section>
                 </section>
-
             </ng-container>
         </perfect-scrollbar>
-        <button *ngIf="messageCount > messagePage * 10"
-                (click)="loadMore()" class="button messages__formButton">Load More ..
-        </button>
-
     </section>
     <form class="messages__form" [ngClass]="{'messages__form_reduced':isCurrentUserAdminOrBookingOfficer()}"
           style="position: fixed;">
