@@ -788,7 +788,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     }
 
     isStaff(user) {
-        return false;
+        return user.employment_type === 'staff';
     }
 
     getSuburb(user: Interpreter) {

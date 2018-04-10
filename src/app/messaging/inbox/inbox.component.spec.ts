@@ -19,6 +19,7 @@ import { InboxComponent } from './inbox.component';
 
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true
@@ -35,7 +36,7 @@ describe('InboxComponent', () => {
                 SpinnerService, { provide: AuthHttp, useClass: MockBackend }],
           imports: [FormsModule, RouterTestingModule, HttpModule,
               PerfectScrollbarModule.forRoot(PERFECT_SCROLLBAR_CONFIG),
-              MdCheckboxModule]
+              MdCheckboxModule, NgxPaginationModule]
           })
         .compileComponents();
     }));

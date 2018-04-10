@@ -3,6 +3,7 @@ import { Title } from '@angular/platform-browser';
 import {GLOBAL} from './shared/global';
 import {AuthGuard} from './auth/auth.guard';
 import { SpinnerService } from './spinner/spinner.service';
+import {VerifiedGuard} from './auth/verified.guard';
 
 declare var $: any;
 
@@ -30,7 +31,9 @@ export class AppComponent  implements OnDestroy, AfterViewChecked {
   }
 
   isLoggedIn() {
-    return AuthGuard.isLoggedIn();
+      return AuthGuard.isLoggedIn()
+          && GLOBAL.currentUser.verified === true
+          && GLOBAL.currentUser.disabled === false;
   }
 
   showProgress(val: boolean) {

@@ -140,6 +140,8 @@ export class OrganisationalRepresentative extends Organisational {
             'type': this.type,
             'email': this.email,
             'avatar': this.avatar,
+            'verified': this.verified,
+            'disabled': this.disabled,
             'photo_url': this.photo_url,
             'password': this.password,
             'business_hours_phone': this.phone,
@@ -245,6 +247,8 @@ export class OrganisationalRepresentative extends Organisational {
             obj.organisation.billing_account_attributes;
         this.org_id = obj.organisation.id;
         this.abn = obj.organisation.abn;
+        this.verified = obj.verified;
+        this.disabled = obj.disabled;
         this.organisation_name = obj.organisation.name;
         this.group_email = obj.organisation.group_email;
         this.special_instructions = obj.special_instructions;
@@ -343,6 +347,8 @@ export class IndividualClient extends User {
             'type': this.type, 'special_instructions': this.special_instructions,
             'general_notes': this.general_notes, 'claim_notes': this.claim_notes,
             'avatar': this.avatar,
+            'verified': this.verified,
+            'disabled': this.disabled,
             'discovery_of_auslan': this.reffered_by === 'OTHER' ?
                 'O:' + this.reffered_other : this.reffered_by,
             'mobile': this.mobile, 'ndis_id': this.ndis_id, 'ndis_budget_limit': this.ndis_budget_limit,
@@ -378,6 +384,8 @@ export class IndividualClient extends User {
         this.gender = obj.gender;
         this.password = obj.password;
         this.ndis_id = obj.ndis_id;
+        this.verified = obj.verified;
+        this.disabled = obj.disabled;
         this.phone  = obj.business_hours_phone;
         this.ndis_budget_limit = obj.ndis_budget_limit;
         this.ndis_validity_start_date = obj.ndis_validity_start_date;

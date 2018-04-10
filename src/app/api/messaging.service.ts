@@ -18,13 +18,23 @@ export class MessagingService extends ApiService {
             return (this.http !== undefined || this.http !== null);
         }
 
-        getInterpreterMessages(user_id): Observable < any > {
+        getInterpreterMessages(user_id, page): Observable < any > {
             let headers = new Headers({ 'Accept': 'application/json' });
             let options = new RequestOptions({ headers: headers });
 
-            return this.http.get(GLOBAL.USER_API + '/' + user_id + '/messages' + '?page=' + 1 + '&amp;per_page=' + 10, options)
+            return this.http.get(GLOBAL.USER_API + '/' + user_id + '/messages' + '?page=' + 1 + '&amp;per_page=' + page * 10, options)
                     .map(this.extractData)
                     .catch((err) => { return this.handleError(err); });
+        }
+
+        getInterpreterMessage(message_thread_id, business_id, page): Observable<any> {
+            let headers = new Headers({ 'Accept': 'application/json' });
+            let options = new RequestOptions({ headers: headers });
+
+            return this.http.get(GLOBAL.USER_APPI + '/business/' + business_id + '/message_threads/' + message_thread_id
+                                                    + '?page=' + 1 + '&amp;per_page=' + page * 10, options)
+                .map(this.extractData)
+                .catch((err) => { return this.handleError(err); });
         }
 
         sendInterpreterMessages(user_id, url, inbox_url_id, message_body): Observable < Object > {
@@ -37,21 +47,22 @@ export class MessagingService extends ApiService {
                     .catch((err) => { return this.handleError(err); });
         }
 
-        sendMessages(user_id, receiver_id ,  url, inbox_url_id, message_body): Observable<Object> {
+        sendMessages(logged_in_user_id, inbox_url_id, message_body, receiver_id): Observable<Object> {
             let headers = new Headers({ 'Accept': 'application/json' });
             let options = new RequestOptions({ headers: headers });
-            const obj = { message: { receiver_id: receiver_id, message_inbox_url: url, message_body: message_body } };
+            let obj = Boolean(receiver_id) ? { message: { receiver_id: receiver_id, message_inbox_url: inbox_url_id, message_body: message_body } }
+            : { message: { message_inbox_url: inbox_url_id, message_body: message_body } };
 
-            return this.http.post(GLOBAL.USER_API + '/' + user_id + '/messages', JSON.stringify(obj), options)
+            return this.http.post(GLOBAL.USER_API + '/' + logged_in_user_id + '/messages', JSON.stringify(obj), options)
                 .map(this.extractData)
                 .catch((err) => { return this.handleError(err); });
         }
 
-        allMeesageThreads(businessId): Observable<any> {
+        allMessageThreads(businessId, page): Observable<any> {
             let headers = new Headers({ 'Accept': 'application/json' });
             let options = new RequestOptions({ headers: headers });
 
-            return this.http.get(GLOBAL.USER_APPI + '/business/' + businessId + '/message_threads' + '?page=' + 1 + '&amp;per_page=' + 500, options)
+            return this.http.get(GLOBAL.USER_APPI + '/business/' + businessId + '/message_threads' + '?page=' + page + '&amp;per_page=' + 10, options)
                 .map(this.extractData)
                 .catch((err) => { return this.handleError(err); });
         }
