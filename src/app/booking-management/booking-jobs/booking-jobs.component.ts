@@ -22,6 +22,7 @@ import {InterpreterFilter} from '../../shared/model/interpreter-filter.interface
 import * as moment from 'moment';
 import * as $ from 'jquery';
 import * as momentTimeZone from 'moment-timezone';
+import {LinkAuth} from '../../shared/router/linkhelper';
 
 @Component({
     selector: 'app-booking-jobs',
@@ -69,15 +70,17 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     isRequestedProgressOrAllocated = false;
     searchParams: string;
     serviceNameToDisplay;
+    otherAcceptedRolesAttributes;
+    counterChek= 0;
     constructor(public dialog: MdDialog,
                 public viewContainerRef: ViewContainerRef, public spinnerService: SpinnerService,
                 public notificationServiceBus: NotificationServiceBus,
                 public userDataService: UserService, public bookingService: BookingService, public bookingHeaderService: BookingHeaderService,
-                private router: Router, private route: ActivatedRoute, private datePipe: DatePipe) {
+                private router: Router, private route: ActivatedRoute, private datePipe: DatePipe,
+                private linkAuth: LinkAuth) {
         /** http://stackoverflow.com/questions/38008334/angular2-rxjs-when-should-i-unsubscribe-from-subscription */
         this.sub = this.route.params.subscribe(params => {
             let param_id = params['id'] || '';
-            localStorage.setItem('bookingId', param_id );
             if (Boolean(param_id) && parseInt(param_id, 10) > 0) {
                 this.fetchBookingInterpreters(param_id);
             }
@@ -454,6 +457,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                     } else if (res.status === 200) {
                         this.jobAccessError = false;
                         let data = res.data;
+                        this.otherAcceptedRolesAttributes = res.data.other_accepted_roles_attributes;
                         this.selectedBookingModel.fromJSON(data);
                         this.selectedBookingModel.interpreters.sort((i, j) =>
                             i.state === 'Accepted' ? -1 : j.state === 'Accepted' ? 1 : 0
@@ -784,7 +788,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     }
 
     isStaff(user) {
-        return false;
+        return user.employment_type === 'staff';
     }
 
     getSuburb(user: Interpreter) {
@@ -1036,5 +1040,8 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                 return GLOBAL.currentUser.id;
         }
         return -1;
+    }
+    canShowLink(linkName) {
+        return this.linkAuth.canShowLink(linkName);
     }
 }

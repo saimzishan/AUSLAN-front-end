@@ -1,162 +1,208 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Location } from '@angular/common';
-import { URLSearchParams } from '@angular/http';
-import { SpinnerService } from '../../spinner/spinner.service';
-import { RolePermission } from '../../shared/role-permission/role-permission';
-import { GLOBAL } from '../../shared/global';
-import { IndividualClient, Interpreter, OrganisationalRepresentative, User } from '../../shared/model/user.entity';
-import { Booking } from '../../shared/model/booking.entity';
-import { BookingInterpreter } from '../../shared/model/contact.entity';
-import { BOOKING_STATE } from '../../shared/model/booking-state.enum';
-import { UserService } from '../../api/user.service';
-import { MessagingService } from '../../api/messaging.service';
-import { NotificationServiceBus } from '../../notification/notification.service';
-import { PlatformLocation } from '@angular/common';
-import { Administrator, BookingOfficer } from '../../shared/model/user.entity';
+import {Component, OnInit, OnDestroy, AfterViewChecked, ViewChild} from '@angular/core';
+import {Location} from '@angular/common';
+import {URLSearchParams} from '@angular/http';
+import {SpinnerService} from '../../spinner/spinner.service';
+import {RolePermission} from '../../shared/role-permission/role-permission';
+import {GLOBAL} from '../../shared/global';
+import {IndividualClient, Interpreter, OrganisationalRepresentative, User} from '../../shared/model/user.entity';
+import {Booking} from '../../shared/model/booking.entity';
+import {BookingInterpreter} from '../../shared/model/contact.entity';
+import {BOOKING_STATE} from '../../shared/model/booking-state.enum';
+import {UserService} from '../../api/user.service';
+import {MessagingService} from '../../api/messaging.service';
+import {NotificationServiceBus} from '../../notification/notification.service';
+import {PlatformLocation} from '@angular/common';
+import {Administrator, BookingOfficer} from '../../shared/model/user.entity';
+import {ActivatedRoute, Router} from '@angular/router';
+import {PerfectScrollbarComponent, PerfectScrollbarConfigInterface, PerfectScrollbarDirective} from 'ngx-perfect-scrollbar';
 
 @Component({
-  selector: 'app-inbox',
-  templateUrl: './inbox.component.html',
-  styleUrls: ['./inbox.component.css']
+    selector: 'app-inbox',
+    templateUrl: './inbox.component.html',
+    styleUrls: ['./inbox.component.css']
 })
-export class InboxComponent implements OnInit, OnDestroy {
+export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
 
-  meesageThreads = [];
-  meesageThread;
-  userId;
-  message_body;
-  message_tage = '-000000';
-  checked = false;
-  isTagShow = true;
-  messages;
-  selected = -1;
-  loginUserID = GLOBAL.currentUser.id;
-  business_id = GLOBAL.currentUser.business_id;
+    messageThreads = [];
+    userId;
+    message_body;
+    message_thread_id;
+    message_tag = '-000000';
+    checked = false;
+    isTagShow = false;
+    messages;
+    loginUserID = -1;
+    business_id = -1;
+    sub;
+    messageThreadPage = 1;
+    messagePage = 1;
+    totalItems = 0;
+    selectedMessageThread = 0;
+    messageCount = -1;
+    public config: PerfectScrollbarConfigInterface = {};
 
-  constructor(private userService: UserService, private notificationServiceBus: NotificationServiceBus, public platformLocation: PlatformLocation,
-    private messagingService: MessagingService, private _location: Location, public spinnerService: SpinnerService,
-    private rolePermission: RolePermission) { }
-
-  ngOnInit() {
-    if (this.isCurrentUserAdminOrBookingOfficer()) {
-      this.getAllMeesageThreads(this.business_id);
-    } else {
-      this.getInterpreterMessages(GLOBAL.currentUser.id);
+    @ViewChild(PerfectScrollbarComponent) componentScroll: PerfectScrollbarComponent;
+    constructor(private userService: UserService, private notificationServiceBus: NotificationServiceBus, public platformLocation: PlatformLocation,
+                private messagingService: MessagingService, private _location: Location, public spinnerService: SpinnerService,
+                private rolePermission: RolePermission, private router: Router, private route: ActivatedRoute) {
     }
-  }
+    ngAfterViewChecked() {
 
-  getInterpreterMessages(userId) {
-     this.spinnerService.requestInProcess(true);
-     this.messagingService.getInterpreterMessages(userId)
-          .subscribe((res: any) => {
-            if (res.status === 200) {
-                  this.messages = res.data.messages;
-                  this.userId = userId;
+    }
+    ngOnInit() {
+        this.business_id = GLOBAL.currentUser.business_id;
+        this.sub = this.route.params.subscribe(params => {
+            this.loginUserID = params['id'] || -1;
+            if (this.loginUserID > 0) {
+                this.isTagShow = Boolean(params['id2']);
+                if (this.isTagShow) {
+                    this.message_tag = params['id2'];
                 }
-              this.spinnerService.requestInProcess(false);
-             },
-               errors => {
-            this.spinnerService.requestInProcess(false);
-            let e = errors.json();
-               this.notificationServiceBus.launchNotification(true, e);
+            }
+            if (this.isCurrentUserAdminOrBookingOfficer()) {
+                this.getAllMessageThreads(this.business_id);
+            } else {
+                this.getInterpreterMessages();
+            }
         });
-  }
+    }
+    loadMore() {
+        this.messagePage += 1;
+        if (this.isCurrentUserAdminOrBookingOfficer()) {
+            this.getInterpreterMessage(this.message_thread_id);
+        } else {
+            this.getInterpreterMessages();
+        }
+    }
 
-   sendInterpreterMessages() {
-      let url = (this.platformLocation as any).location.href;
-    this.spinnerService.requestInProcess(true);
-     this.messagingService.sendInterpreterMessages(this.loginUserID, url, this.message_tage, this.message_body)
-          .subscribe((res: any) => {
-              if (res.status === 200) {
-                   this.ngOnInit();
-                   this.notificationServiceBus.launchNotification(false, 'Message sent successfully..');
-                   this.message_body = '';
-                 }
-              this.spinnerService.requestInProcess(false);
-             }, errors => {
-                 this.spinnerService.requestInProcess(false);
+    getInterpreterMessages() {
+        let id = this.isCurrentUserAdminOrBookingOfficer() ? this.userId : this.loginUserID;
+        this.spinnerService.requestInProcess(true);
+        this.messagingService.getInterpreterMessages(id, this.messagePage)
+            .subscribe((res: any) => {
+                    if (res.status === 200) {
+                        this.messageCount = res.data.message_count;
+                        this.messages = res.data.messages.reverse();
+                        setTimeout(() => {
+                            this.componentScroll.directiveRef.scrollToBottom();
+                            this.spinnerService.requestInProcess(false);
+                        }, 500);
+
+                    }
+                },
+                errors => {
+                    this.spinnerService.requestInProcess(false);
+                    let e = errors.json();
+                    this.notificationServiceBus.launchNotification(true, e);
+                });
+    }
+    getInterpreterMessage(id) {
+        this.spinnerService.requestInProcess(true);
+        this.messagingService.getInterpreterMessage(id, this.business_id, this.messagePage)
+            .subscribe((res: any) => {
+                if (res.status === 200) {
+                    this.messageCount = res.data.message_count;
+                    this.messages = res.data.messages.reverse();
+                    setTimeout(() => {
+                        this.componentScroll.directiveRef.scrollToBottom();
+                        this.spinnerService.requestInProcess(false);
+                    }, 500);
+
+                }
+            },
+                errors => {
+                    this.spinnerService.requestInProcess(false);
+                    let e = errors.json();
+                    this.notificationServiceBus.launchNotification(true, e);
+                });
+    }
+
+
+    getAllMessageThreads(businessId) {
+        this.spinnerService.requestInProcess(true);
+        this.messagingService.allMessageThreads(businessId, this.messageThreadPage)
+            .subscribe((res: any) => {
+                    if (res.status === 200) {
+                        this.messageThreads = res.data.message_threads;
+                        this.totalItems = res.data.message_threads_count;
+                        this.userId = this.messageThreads[this.selectedMessageThread].user_id;
+                        this.message_thread_id = this.messageThreads[this.selectedMessageThread].id;
+                        this.getInterpreterMessage(this.message_thread_id);
+                    }
+                    this.spinnerService.requestInProcess(false);
+                },
+                errors => {
+                    this.spinnerService.requestInProcess(false);
+                    let e = errors.json();
+                    this.notificationServiceBus.launchNotification(true, e);
+                });
+    }
+
+    sendMessage() {
+        let id = Boolean(this.userId) ? this.userId : this.loginUserID;
+        let url = (this.platformLocation as any).location.href;
+        url = url.substr(0, 30);
+        url += id + '/inbox';
+        this.spinnerService.requestInProcess(true);
+
+        this.messagingService.sendMessages(this.loginUserID, url, this.message_body, this.userId)
+            .subscribe((res: any) => {
+                if (res.status === 200) {
+                    this.notificationServiceBus.launchNotification(false, 'Message sent successfully..');
+                    this.message_body = '';
+                    if (this.isCurrentUserAdminOrBookingOfficer()) {
+                        this.getInterpreterMessage(this.message_thread_id);
+                    } else {
+                        this.getInterpreterMessages();
+                    }
+                }
+                this.spinnerService.requestInProcess(false);
+            }, errors => {
+                this.spinnerService.requestInProcess(false);
                 let e = errors.json();
                 this.notificationServiceBus.launchNotification(true, e);
-               });
-   }
+            });
+    }
 
-  getAllMeesageThreads(businessId) {
-      this.spinnerService.requestInProcess(true);
+    showSingleMessageThread(index) {
+        this.selectedMessageThread = index;
+        this.userId = this.messageThreads[index].user_id;
+        this.message_thread_id = this.messageThreads[index].id;
+        this.getInterpreterMessage(this.message_thread_id);
 
-      this.messagingService.allMeesageThreads(businessId)
-          .subscribe((res: any) => {
-                  if (res.status === 200) {
-                      this.meesageThreads = res.data.message_threads
-                          .filter( m => m.messages.length > 0 )
-                          .sort((a, b) =>
-                          new Date(a.last_messaging_time).getTime() >
-                          new Date(b.last_messaging_time).getTime()
-                      );
-                      this.selected = 0;
-                      this.meesageThread = this.meesageThreads[this.selected].messages;
-                      this.userId = this.meesageThreads[this.selected].user_id;
-                  }
-                  this.spinnerService.requestInProcess(false);
-              },
-              errors => {
-                  this.spinnerService.requestInProcess(false);
-                  let e = errors.json();
-                  this.notificationServiceBus.launchNotification(true, e);
-              });
-  }
+    }
 
-  sendMessage() {
-    let url = (this.platformLocation as any).location.href;
-      url = url.substr(0, 30);
-      url += this.userId + '/inbox';
-    this.spinnerService.requestInProcess(true);
+    checkEmpty() {
+        if (this.message_body.trim().length === 0) {
+            this.message_body = null;
+        }
+    }
 
-    this.messagingService.sendMessages(this.loginUserID, this.userId , url, this.message_tage, this.message_body)
-      .subscribe((res: any) => {
-          if (res.status === 200) {
-              this.ngOnInit();
-              this.notificationServiceBus.launchNotification(false, 'Message sent successfully..');
-              this.message_body = '';
-          }
-          this.spinnerService.requestInProcess(false);
-      }, errors => {
-            this.spinnerService.requestInProcess(false);
-          let e = errors.json();
-          this.notificationServiceBus.launchNotification(true, e);
-        });
-  }
+    sendMessageTagHide() {
+        this.isTagShow = false;
+    }
 
-  showSingleMessageThread(index) {
-    this.meesageThread = this.meesageThreads[index].messages;
-    this.userId = this.meesageThreads[index].user_id;
-  }
+    isCurrentUserAdminOrBookingOfficer(): boolean {
+        return Boolean(GLOBAL.currentUser instanceof Administrator || GLOBAL.currentUser instanceof BookingOfficer);
+    }
 
-  checkEmpty() {
-    if (this.message_body.trim().length === 0) {
-        this.message_body = null;
-      }
-  }
-  sendMessageTagHide() {
-    this.isTagShow = false;
-  }
+    backClicked() {
+        this._location.back();
+    }
 
-  isCurrentUserAdminOrBookingOfficer(): boolean {
-    return Boolean(GLOBAL.currentUser instanceof Administrator || GLOBAL.currentUser instanceof BookingOfficer);
-  }
-
-  backClicked() {
-      this._location.back();
-  }
-
-  ngOnDestroy() {
+    ngOnDestroy() {
         localStorage.setItem('bookingId', '-1');
-  }
+    }
 
-  checkDayIsToday(lastMesgDate) {
-    let curentDate = new Date();
-    let curentDay = curentDate.getDate();
-    let lastMesgDay = lastMesgDate.substring(8, 10);
-    return (+lastMesgDay === curentDay);
-  }
+    checkDayIsToday(lastMesgDate) {
+        let curentDate = new Date();
+        let curentDay = curentDate.getDate();
+        let lastMesgDay = lastMesgDate.substring(8, 10);
+        return (+lastMesgDay === curentDay);
+    }
+    getPage(page: number) {
+        this.messageThreadPage = page;
+        this.getAllMessageThreads(this.business_id);
+    }
 
 }

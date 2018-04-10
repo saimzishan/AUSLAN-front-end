@@ -19,6 +19,7 @@ import { UserService } from '../../api/user.service';
 import { AuthHttp } from 'angular2-jwt';
 import { MockUserService } from '../../shared/test/Mock';
 import { MockBackend } from '@angular/http/testing';
+import { SpinnerService } from '../../spinner/spinner.service';
 
 describe('StaffCalendarComponent', () => {
   let component: StaffCalendarComponent;
@@ -27,7 +28,8 @@ describe('StaffCalendarComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [StaffCalendarComponent, AddressComponent, MobileHeaderComponent, UserHeaderComponent, InterpreterComponent ],
-      providers: [LinkHelper, LinkAuth, RolePermission, DatePipe, { provide: UserService, useClass: MockUserService }, { provide: AuthHttp, useClass: MockBackend } ],
+      providers: [LinkHelper, LinkAuth, RolePermission, DatePipe, SpinnerService,
+         { provide: UserService, useClass: MockUserService }, { provide: AuthHttp, useClass: MockBackend } ],
       imports: [HttpModule, CalendarModule, FormsModule, MaterialModule, RouterTestingModule, CustomFormsModule, BrowserAnimationsModule]
     })
     .compileComponents();

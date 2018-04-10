@@ -10,6 +10,8 @@ import {UserService} from '../../api/user.service';
 import {NgForm} from '@angular/forms';
 import { Booking } from '../../shared/model/booking.entity';
 import * as momentTimeZone from 'moment-timezone';
+import { SpinnerService } from '../../spinner/spinner.service';
+
 
 @Component({
     selector: 'app-interpreter',
@@ -27,7 +29,7 @@ export class InterpreterComponent implements OnInit , AfterViewInit {
     calendarOptions: Object = {};
     @Input() parentForm: NgForm;
 
-    constructor(private routes: ActivatedRoute, private router: Router, public userDataService: UserService) {
+    constructor(private spinnerService: SpinnerService, private routes: ActivatedRoute, private router: Router, public userDataService: UserService) {
     }
 
     ngAfterViewInit() {
@@ -51,7 +53,8 @@ export class InterpreterComponent implements OnInit , AfterViewInit {
         }
         delete this.userModel.assignments_attributes;
         delete this.userModel.password;
-        if (this.userModel) {
+        if (this.userModel && this.userModel.id) {
+            this.spinnerService.requestInProcess(true);
             this.userDataService.getUser(this.userModel.id)
                 .subscribe((res: any) => {
                     if (res.status === 200) {
@@ -60,6 +63,10 @@ export class InterpreterComponent implements OnInit , AfterViewInit {
                         this.userModel.staff_availabilities_attributes = res.data.staff_availabilities_attributes;
                         this.BlockoutToUpdate();
                     }
+                    this.spinnerService.requestInProcess(false);
+                }, err => {
+                    console.log(err);
+                    this.spinnerService.requestInProcess(false);
                 });
         }
     }
@@ -112,7 +119,7 @@ export class InterpreterComponent implements OnInit , AfterViewInit {
                 events: []
             };
             for (let avail_block of this.userModel.availability_blocks_attributes) {
-                let startDate = new Date(avail_block.start_time);
+                    let startDate = new Date(avail_block.start_time);
                 let endDate;
                 if (!avail_block.recurring) {
                     endDate = new Date(avail_block.start_time);
@@ -142,7 +149,7 @@ export class InterpreterComponent implements OnInit , AfterViewInit {
                     frequency: avail_block.frequency
                 });
                 if (avail_block.recurring === true) {
-                    event.dow = avail_block.frequency === 'daily' ? [1, 2, 3, 4, 5] : [startDate.getDay()];
+                    event.dow = avail_block.frequency === 'daily' ? [0, 1, 2, 3, 4, 5, 6] : this.setDays(avail_block.recurring_week_days);
                     event.ranges = [
                         {
                             start: moment().endOf(avail_block.frequency === 'daily' ? 'day' :
@@ -165,6 +172,14 @@ export class InterpreterComponent implements OnInit , AfterViewInit {
         }
 
     }
+    setDays(days) {
+        let data = [];
+        days.forEach(element => {
+            data.push(+element);
+        });
+        return data;
+    }
+
     interpreterStateTimeZone(time) {
         let timeZone = Booking.getNamedTimeZone(this.userModel.address_attributes.state, this.userModel.address_attributes.post_code.toString());
         return momentTimeZone(time).tz(timeZone).format('HH:mm:ss');

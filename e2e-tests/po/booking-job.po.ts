@@ -81,6 +81,16 @@ export class BookingJobPage extends PageObject {
         });
     }
 
+    selectInterpretersOfIndex = (index: number) => {
+        return $$('section.interpreters-list md-checkbox').each((ef, ind) => {
+            const isClickable = protractor.ExpectedConditions.invisibilityOf(this.getElementByCss('.notification__wrapper'));
+            browser.wait(isClickable, 5000);
+            if (ind === index) {
+                return ef.click();
+            }
+        });
+    }
+
     /* TODO: Also check here interpreter name */
     bookingAccepted = (numOfInterpreters: number) => {
         return this.getAll('span.interpreter-accepted').count().then((cnt) => {
@@ -214,9 +224,8 @@ export class BookingJobPage extends PageObject {
     }
     checkAttachmentIcons = (negate: string) => {
         let shouldSee = !(negate === 'not');
-        let bookingDetails = this.getAllElementByCSS('table#job-details-responsive tbody tr td');
-        let el = bookingDetails.get(13);
-        return this.getAllByCSSInElement(el, 'i.icon-attach').isPresent()
+        let el = this.getElementByCss('table#job-details-responsive tbody tr td[data-title="ATTACHMENTS"]');
+        return this.getAllByCSSInElement(el, 'a.icon-attach').isPresent()
             .then(presence => {
                 return expect(presence).to.be.eq(shouldSee);
             });

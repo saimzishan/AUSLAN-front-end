@@ -1,15 +1,9 @@
-<main>
+<main class="hidden-mobile">
     <section class="jobs withOffset">
         <table id="jobs-responsive" class="custom">
             <thead>
             <tr>
-                <th width="4%">
-                    <div class="checkbox">
-                        <input type="checkbox" name="cbForAll" value="1" id="cbForAll">
-                        <label for="cbForAll"></label>
-                    </div>
-                </th>
-                <th width="5%">
+                <th class="first-th" width="5%">
                     <span class="order" [ngClass]="getSortOrder('job')" (click)="sort('job')">Job</span>
                     <form #filterByBookingIds="ngForm" class="common-form compact"
                           (ngSubmit)="filter('booking_ids', filterByBookingIds.value.booking_ids)" novalidate>
@@ -23,7 +17,11 @@
                             <a href="javascript:void(0)">{{underScoreToSpaces(filterStatus())}}</a>
                             <ul class="menu smaller">
                                 <li *ngFor="let status of statusList()">
-                                    <a href="javascript:void(0)" (click)="filter('booking_status', status)"><i></i>{{underScoreToSpaces(status)}}</a>
+                                    <a href="javascript:void(0)"
+                                       [ngClass]="isDropdownItemActive('booking_status', status)" 
+                                       (click)="filter('booking_status', status, true)">
+                                       {{underScoreToSpaces(status)}}
+                                    </a>
                                 </li>
                             </ul>
                         </li>
@@ -36,7 +34,11 @@
                             <a href="javascript:void(0)">{{underScoreToSpaces(bookingFilter.state)}}</a>
                             <ul class="menu smaller">
                                 <li *ngFor="let state of stateList()">
-                                    <a href="javascript:void(0)" (click)="filter('state', state)"><i></i>{{underScoreToSpaces(state)}}</a>
+                                    <a href="javascript:void(0)"
+                                       [ngClass]="isDropdownItemActive('state', state)" 
+                                       (click)="filter('state', state, true)">
+                                      {{underScoreToSpaces(state)}}
+                                    </a>
                                 </li>
                             </ul>
                         </li>
@@ -101,7 +103,11 @@
                             <a href="javascript:void(0)">{{underScoreToSpaces(bookingFilter.booking_type)}}</a>
                             <ul class="menu smaller">
                                 <li *ngFor="let booking_type of assignmentCategoryList()">
-                                    <a href="javascript:void(0)" (click)="filter('booking_type', booking_type)"><i></i>{{underScoreToSpaces(booking_type)}}</a>
+                                    <a href="javascript:void(0)"
+                                       [ngClass]="isDropdownItemActive('booking_type', booking_type)" 
+                                       (click)="filter('booking_type', booking_type, true)">
+                                      {{underScoreToSpaces(booking_type)}}
+                                    </a>
                                 </li>
                             </ul>
                         </li>
@@ -127,7 +133,11 @@
                             <a href="javascript:void(0)">{{underScoreToSpaces(bookingFilter.service_type)}}</a>
                             <ul class="menu smaller">
                                 <li *ngFor="let service_type of bookingServiceTypes()">
-                                    <a href="javascript:void(0)" (click)="filter('service_type', service_type)"><i></i>{{service_type}}</a>
+                                    <a href="javascript:void(0)"
+                                       [ngClass]="isDropdownItemActive('service_type', service_type)" 
+                                       (click)="filter('service_type', service_type, true)">
+                                      {{service_type}}
+                                    </a>
                                 </li>
                             </ul>
                         </li>
@@ -148,12 +158,6 @@
             <tr [ngClass]="{'active': isSelectedBooking(booking.id)}"
                 *ngFor="let booking of bookingList | paginate: { itemsPerPage: 10, currentPage: p, totalItems: totalItems } let i = index"
                 (click)="setClickedRow(booking)">
-                <td>
-                    <div class="checkbox" (click)="$event.stopPropagation()">
-                        <input type="checkbox" name="{{'cb_booking_'+i}}" id="{{'job-'+i}}" (click)="cbClicked(booking.id, $event.target.checked)">
-                        <label for="{{'job-'+i}}"></label>
-                    </div>
-                </td>
                 <td class="bookingID">
                     <div class="actions-container">
                         <span>{{booking.id | PrettyID}}</span>
@@ -255,16 +259,43 @@
             </tr>
             </tbody>
         </table>
-        <div class="pagination">
-            <div class="element element_inline" id="displayTxt" *ngIf="totalItems > 0">
-                {{'Displaying ' + (((p - 1) * 10) + 1) + ' - '
-                + ( bookingList.length < 10 ? totalItems : (p * 10)) + ' of ' + totalItems + ' Booking' +
-                (bookingList.length > 1 ? 's' : '')}}
-            </div>
-            <div class="element element_inline">
-                <pagination-controls class="my-pagination" *ngIf="totalItems > 10"
-                                     (pageChange)="getPage($event)"></pagination-controls>
-            </div>
-        </div>
     </section>
 </main>
+<section class="hidden-desktop">
+    <section id="page-common">
+        <ul class="booking-mobile">
+            <li class="booking-mobile__item" (click)="setClickedRow(booking)"
+                *ngFor="let booking of bookingList | paginate: { itemsPerPage: 10, currentPage: p, totalItems: totalItems }">
+                <section class="booking-mobile__date">
+                    <span class="booking-mobile__weekDay">{{booking.venue.start_time_iso | date:'EEE'}}</span>
+                    <span class="booking-mobile__day">{{booking.venue.start_time_iso | date:'dd'}}</span>
+                    <span class="booking-mobile__month">{{booking.venue.start_time_iso | date:'MMM'}}</span>
+                </section>
+                <section class="booking-mobile__details">
+                    <div class="booking-mobile__time">
+                        <span class="booking-mobile__time_bold">{{booking.venue.start_time_iso | date:'h:mm a'}}</span>
+                        - {{booking.venue.end_time_iso | date:'h:mm a'}}
+                    </div>
+                    <div class="booking-mobile__agent">{{booking.client.organisation_name}}</div>
+                    <div class="booking-mobile__location">{{booking.venue.suburb}}</div>
+                </section>
+                <section *ngIf="isCurrentUserInterpreter()" class="booking-mobile__status">
+                    <span *ngIf="interpreterAllowed(booking, 'red')" class="badge badge_pink badge_wide badge_opaque50">OPEN</span>
+                    <span *ngIf="interpreterAllowed(booking,'gray')" class="badge badge_gray badge_wide badge_opaque50">OPEN</span>
+                    <i *ngIf="interpreterAllowed(booking, 'green')" class="booking-mobile__icon icon-check-mobile"></i>
+                </section>
+            </li>
+        </ul>
+    </section>
+</section>
+<div class="pagination">
+    <div class="element element_inline" id="displayTxt" *ngIf="totalItems > 0">
+        {{'Displaying ' + (((p - 1) * 10) + 1) + ' - '
+        + ( bookingList.length < 10 ? totalItems : (p * 10)) + ' of ' + totalItems + ' Booking' +
+        (bookingList.length > 1 ? 's' : '')}}
+    </div>
+    <div class="element element_inline">
+        <pagination-controls class="my-pagination" *ngIf="totalItems > 10"
+                             (pageChange)="getPage($event)"></pagination-controls>
+    </div>
+</div>

@@ -43,12 +43,12 @@
                                         <span *ngIf="interpreter.state !== 'Accepted'">To be filled</span>
                                         <button name="{{'unassingBtn_' + +(i + 1)}}"
                                                 (click)="unAssignInterpreters(interpreter.id)"
-                                                *ngIf="!isCurrentUserInterpreter() && (false === isActiveState('Unable_to_service') && false === isActiveState('Cancelled_no_charge')) && interpreter.state === 'Accepted'">
+                                                *ngIf="isCurrentUserAdminOrBookingOfficer() && (false === isActiveState('Unable_to_service') && false === isActiveState('Cancelled_no_charge')) && interpreter.state === 'Accepted'">
                                             Unassign
                                         </button>
                                     </div>
-                                </ng-container>
-                                <ng-container *ngIf="(selectedBookingModel.interpreters_required - selectedBookingModel.interpreters.length) > 0">
+                                
+                                <ng-container *ngIf="(selectedBookingModel.interpreters_required - (selectedBookingModel.interpreters.length + otherAcceptedRolesAttributes.length) ) > 0">
                                     <ng-container *ngFor="let numb of counter(selectedBookingModel.interpreters_required - selectedBookingModel.interpreters.length ); let ii=index">
                                         <ng-container *ngIf="ii < (selectedBookingModel.interpreters_required - selectedBookingModel.interpreters.length)">
                                             <div>
@@ -59,11 +59,23 @@
                                             </div>
                                         </ng-container>
                                     </ng-container>
+                                    </ng-container>
+                                    <ng-container>
+                                        <div *ngFor="let interpreter of otherAcceptedRolesAttributes; let i=index" class="half-opacity">
+                                            <b>{{serviceNameToDisplay}} {{(selectedBookingModel.interpreters_required - selectedBookingModel.interpreters.length)+selectedBookingModel.interpreters.length
+                                                + i + 1}} :</b>
+                                            <span class='interpreter-accepted'>{{interpreter.first_name}} {{interpreter.last_name}}</span>
+                                            <button hidden name="{{'unassingBtn_' + +(i + 1)}}" (click)="unAssignInterpreters(interpreter.id)" *ngIf="isCurrentUserAdminOrBookingOfficer() && (false === isActiveState('Unable_to_service') && false === isActiveState('Cancelled_no_charge')) && interpreter.state === 'Accepted'">
+                                                Unassign
+                                            </button>
+                                        </div>
+                                    </ng-container>
                                 </ng-container>
                             </section>
                         </section>
                     </div>
                 </ng-container>
+
                 <ng-container *ngIf="!anyInterpreterAccepted() && !isCurrentUserInterpreter()">
                     <div class="manage-interpreters-wrapper">
                         <section name="manage-interpreters-b"  class="manage-interpreters">
@@ -72,6 +84,14 @@
                                     <b id="serviceName" >{{serviceNameToDisplay}} {{i + 1}} :</b>
                                     <span>To be filled</span>
                                 </div>
+                                    <div *ngFor="let interpreter of otherAcceptedRolesAttributes; let i=index" class="half-opacity">
+                                        <b>{{serviceNameToDisplay}} {{(selectedBookingModel.interpreters_required - selectedBookingModel.interpreters.length)+selectedBookingModel.interpreters.length
+                                            + i + 1}} :</b>
+                                        <span class='interpreter-accepted'>{{interpreter.first_name}} {{interpreter.last_name}}</span>
+                                        <button hidden name="{{'unassingBtn_' + +(i + 1)}}" (click)="unAssignInterpreters(interpreter.id)" *ngIf="isCurrentUserAdminOrBookingOfficer() && (false === isActiveState('Unable_to_service') && false === isActiveState('Cancelled_no_charge')) && interpreter.state === 'Accepted'">
+                                            Unassign
+                                        </button>
+                                    </div>
                             </section>
                         </section>
                     </div>
@@ -97,6 +117,7 @@
                                 </div>
                             </ng-container>
                         </ng-container>
+                        
                         <ng-container
                                 *ngIf="(selectedBookingModel.interpreters_required - selectedBookingModel.interpreters.length) > 0">
                             <ng-container
@@ -121,6 +142,22 @@
                                 </div>
                             </ng-container>
                         </ng-container>
+                    </ng-container>
+
+                    <ng-container>
+                        <div class="half-opacity">
+                            <div *ngFor="let interpreter of otherAcceptedRolesAttributes; let i=index">
+                                <div>{{serviceNameToDisplay}} {{(selectedBookingModel.interpreters_required - selectedBookingModel.interpreters.length)+selectedBookingModel.interpreters.length
+                                    + i + 1}} :</div>
+                                <span class='interpreter-accepted'>
+                                    <img class="img-circle" src="{{interpreter.photo_url}}" alt="">
+                                    {{interpreter.first_name}} {{interpreter.last_name}}
+                                </span>
+                                <button hidden name="{{'unassingBtn_' + +(i + 1)}}" (click)="unAssignInterpreters(interpreter.id)" *ngIf="!isCurrentUserInterpreter() && (false === isActiveState('Unable_to_service') && false === isActiveState('Cancelled_no_charge')) && interpreter.state === 'Accepted'">
+                                    Unassign
+                                </button>
+                            </div>
+                        </div>
                     </ng-container>
 
                     <div *ngIf="(selectedBookingModel.notes) && selectedBookingModel.notes.length > 0 && isCurrentUserInterpreter()"
@@ -170,7 +207,7 @@
                 </h2>
                 <section id="invite-interpreters">
                     <section id="filters">
-                        <section class="search-bar" style="width:150%">
+                        <section class="search-bar" style="width:100%">
                             <form #filterBySearch="ngForm" class="common-form compact" (ngSubmit)="search()" novalidate>
                                 <input type="text" name="search" id="search" (blur)="search()" [(ngModel)]="searchParams" (click)="'' !== searchParams && clearSearch()" placeholder="Search...">
                             </form>
@@ -179,13 +216,13 @@
                             </button>
                         </section>
                         <section class="filters">
-                            <a href="javascript:void(0);" class="button" id="lnk-recommended-interpreters"
+                            <a style="width:16em" href="javascript:void(0);" class="button" id="lnk-recommended-interpreters"
                                [ngClass]="isRecommended ? 'active' : ''" (click)="toggleRecommended()">Recommended</a>
                             <div class="separator"></div>
-                            <button *ngIf="!hideInvite" class="button active" name='inviteBtn' (click)="inviteInterpreters()">
+                            <button style="width:10em" *ngIf="!hideInvite" class="button active" name='inviteBtn' (click)="inviteInterpreters()">
                                 <i class="icon-shape"></i> Invite
                             </button>
-                            <button *ngIf="!hideAccept" class="button red" (click)="reAssignInterpreters()" name="reassingBtn">
+                            <button style="width:10em" *ngIf="!hideAccept" class="button red" (click)="reAssignInterpreters()" name="reassingBtn">
                                 <i class="icon-assign"></i> Assign
                             </button>
                         </section>
@@ -213,7 +250,7 @@
                                 <th width="9%">
                                     <span class="">Role</span>
                                 </th>
-                                <th width="9%">
+                                <th width="12%">
                                     <span class="order" [ngClass]="getSortOrder('skill_level')" (click)="sortInterpreters('skill_level')">Lvl</span>
                                     <ul class="dropdown menu custom" id="skill-level" data-dropdown-menu>
                                         <li>
@@ -237,7 +274,7 @@
                                 <th width="9%">
                                     <span class="order" [ngClass]="getSortOrder('distance')" (click)="sortInterpreters('distance')">Km</span>
                                 </th>
-                                <th width="9%">
+                                <th width="12%">
                                     <span>Pay Travel</span>
                                     <ul class="dropdown menu custom" id="travel-pay-status" data-dropdown-menu>
                                         <li>
@@ -252,6 +289,27 @@
                                 </th>
                                 <th width="9%">
                                     <span class="">Notes</span>
+                                </th>
+                                <th *ngIf="selectedBookingModel.cbworkWithChildCheck" width="11%">
+                                    <span class="">WWCC</span>
+                                </th>
+                                <th *ngIf="selectedBookingModel.cbBlueCard" width="9%">
+                                    <span class="">Blue</span>
+                                </th>
+                                <th *ngIf="selectedBookingModel.cbYellowCard" width="10%">
+                                    <span class="">Yellow</span>
+                                </th>
+                                <th *ngIf="selectedBookingModel.cbImminisations" width="12%">
+                                    <span class="">Immun.</span>
+                                </th>
+                                <th *ngIf="selectedBookingModel.cbPoliceCheck" width="10%">
+                                    <span class="">Police</span>
+                                </th>
+                                <th *ngIf="selectedBookingModel.cbForm27A" width="9%">
+                                    <span class="">27A</span>
+                                </th>
+                                <th *ngIf="selectedBookingModel.isBookingBeRecorded" width="12%">
+                                    <span class="">Publish</span>
                                 </th>
                             </tr>
                             </thead>
@@ -277,6 +335,13 @@
                                 <td>{{user.distance}}</td>
                                 <td>{{ travelPayStatus(user)}}</td>
                                 <td class="truncated-text" [title]="user.booking_office_notes">{{user.booking_office_notes}}</td>
+                                <td *ngIf="selectedBookingModel.cbworkWithChildCheck" class="truncated-text" [title]="user.working_with_childrens_check">{{user.working_with_childrens_check}}</td>
+                                <td *ngIf="selectedBookingModel.cbBlueCard" class="truncated-text" [title]="user.blue_card">{{user.blue_card}}</td>
+                                <td *ngIf="selectedBookingModel.cbYellowCard" class="truncated-text" [title]="user.yellow_card">{{user.yellow_card}}</td>
+                                <td *ngIf="selectedBookingModel.cbImminisations" class="truncated-text" [title]="user.immunisations">{{user.immunisations}}</td>
+                                <td *ngIf="selectedBookingModel.cbPoliceCheck" class="truncated-text" [title]="user.police_check">{{user.police_check}}</td>
+                                <td *ngIf="selectedBookingModel.cbForm27A" class="truncated-text" [title]="user.from_27a">{{user.from_27a}}</td>
+                                <td *ngIf="selectedBookingModel.isBookingBeRecorded" class="truncated-text" [title]="user.are_you_okay_with_bookings_that_will_be_recorded_or_published">{{user.are_you_okay_with_bookings_that_will_be_recorded_or_published}}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -307,8 +372,8 @@
                                 <div *ngFor="let inte of interpreterList ">
                                     <section>
                                         <ng-container *ngFor="let avail_block of inte.availability_blocks_attributes">
-                                            <ng-container *ngIf="getTimelineBlockoutStyle(avail_block,inte.address_attributes.state,inte.address_attributes.post_code).length > 2">
-                                                <span class="{{getTimelineBlockoutStyle(avail_block,inte.address_attributes.state,inte.address_attributes.post_code)}}"></span>
+                                            <ng-container *ngIf="getTimelineBlockoutStyle(avail_block,selectedBookingModel.venue.state,selectedBookingModel.venue.post_code).length > 2">
+                                                <span class="{{getTimelineBlockoutStyle(avail_block,selectedBookingModel.venue.state,selectedBookingModel.venue.post_code)}}"></span>
                                             </ng-container>
                                         </ng-container>
                                     </section>
@@ -378,8 +443,7 @@
 <section>
     <ul class="dropdown menu custom actions hidden-desktop reduced" data-dropdown-menu>
         <li>
-        
-            <button [routerLink]="['/users/',getInterpreterId(),'inbox']" class="button green wide" style="width: 100%;">MESSAGE OFFICE</button>
+            <button  *ngIf="canShowLink('messages')" [routerLink]="['/users/'+ getInterpreterId() +'/inbox/' + selectedBookingModel.id]" class="button green wide" style="width: 100%;">MESSAGE OFFICE</button>
         </li>
     </ul>
 </section>

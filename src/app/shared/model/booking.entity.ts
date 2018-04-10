@@ -70,6 +70,7 @@ export class Booking {
     public repeat_booking_on_days: Array<string>;
     public method_name: string;
     public cbworkWithChildCheck: boolean;
+    public cbBlueCard: boolean;
     public cbYellowCard: boolean;
     public cbImminisations: boolean;
     public cbPoliceCheck: boolean;
@@ -154,6 +155,7 @@ export class Booking {
         this.how_would_you_like_to_receive_notes = 'Digitally';
         this.frequency = 'weekly';
         this.cbworkWithChildCheck = false;
+        this.cbBlueCard = false;
         this.cbYellowCard = false;
         this.cbImminisations = false;
         this.cbPoliceCheck = false;
@@ -226,6 +228,7 @@ export class Booking {
         this.general_notes = data.general_notes;
         this.claim_notes = data.claim_notes;
         this.cbworkWithChildCheck = data.working_with_childrens_check_required;
+        this.cbBlueCard = data.blue_card_required;
         this.cbYellowCard = data.yellow_card_required;
         this.cbImminisations = data.immunisations_required;
         this.cbPoliceCheck = data.police_check_required;
@@ -404,6 +407,7 @@ export class Booking {
             created_by_admin: this.created_by_admin,
             travel_cost_applicable: this.travel_cost_applicable,
             working_with_childrens_check_required: this.cbworkWithChildCheck,
+            blue_card_required: this.cbBlueCard,
             yellow_card_required: this.cbYellowCard,
             immunisations_required: this.cbImminisations,
             police_check_required: this.cbPoliceCheck,

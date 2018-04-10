@@ -47,15 +47,8 @@ export class BlockoutPagePo extends PageObject {
     }
     checkEndTimeAgainstStartTime = () => {
         let startTime = this.getElementByCss('input[name="dpEventDate_st"]');
-        let today = new Date();
-        today.setDate(today.getDate() + 5);
-        const currentDate = [
-            Heroku.prettyDate(today.getDate()),
-            Heroku.prettyDate(today.getMonth() + 1), // January is 0!,
-            today.getFullYear().toString()
-        ].join('/');
         startTime.clear();
-        startTime.sendKeys(currentDate + ' 06:25 AM');
+        startTime.sendKeys(this.createBookingPO.getDateAfterNDays(2) + ' 06:25 AM');
         let endTime = this.getElementByCss('input[name="dpEventDate_endtime"]');
         this.clickOutSide();
         return endTime.getAttribute('value').then((val) => {
@@ -72,11 +65,11 @@ export class BlockoutPagePo extends PageObject {
             today.getFullYear().toString()
         ].join('/');
         startTime.clear();
-        startTime.sendKeys(currentDate + ' 09:00 PM');
+        startTime.sendKeys(currentDate + ' 08:00 PM');
         let endTime = this.getElementByCss('input[name="dpEventDate_endtime"]');
         this.clickOutSide();
         return endTime.getAttribute('value').then((val) => {
-            expect(val).to.be.eq('10:00 PM');
+            expect(val).to.be.eq('09:00 PM');
         });
     }
     changeEndTimeOFBlockout = () => {
@@ -88,6 +81,33 @@ export class BlockoutPagePo extends PageObject {
             expect(val).to.be.eq('09:25 AM');
         });
     }
+    changeEndTime = (value) => {
+        let endTime = this.getElementByCss('input[name="dpEventEndTime"]');
+        endTime.clear();
+        endTime.sendKeys(value);
+        this.clickOutSide();
+        return endTime.getAttribute('value').then((val) => {
+            expect(val).to.be.eq('01:02 AM');
+        });
+    }
+    checkEndTime = (value) => {
+        let endTime = this.getElementByCss('input[name="dpEventEndTime"]');
+        return endTime.getAttribute('value').then((val) => {
+            expect(val).to.be.eq(value);
+        });
+    }
+
+    checkEndTimeOFBlockoutAgainstStartTime = (value) => {
+        let endTime = this.getElementByCss('input[name="dpEventDate_endtime"]');
+        endTime.clear();
+        endTime.sendKeys('10:00 PM');
+        this.clickOutSide();
+
+        return endTime.getAttribute('value').then((val) => {
+            expect(val).to.be.eq(value);
+        });
+    }
+
     checkEndTimeOFBlockout = (value) => {
         let endTime = this.getElementByCss('input[name="dpEventDate_endtime"]');
         return endTime.getAttribute('value').then((val) => {

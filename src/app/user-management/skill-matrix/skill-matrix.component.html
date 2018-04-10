@@ -34,6 +34,10 @@
                             <table class="no-margin">
                                 <thead>
                                 <tr>
+                                    <th></th>
+                                    <th width="16%" class="font-sz" *ngFor="let head of title_head" [title]="head">{{head.substring(0,10)+'...'}}</th>
+                                </tr>
+                                <tr>
                                     <th>Area of Knowledge</th>
                                     <th width="16%" *ngFor="let lvl of levels">
                                         <md-radio-button class="lvl_skills"

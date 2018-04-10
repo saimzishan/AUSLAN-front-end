@@ -44,6 +44,11 @@ export class InterpreterManagementPage extends PageObject {
         return el.click();
     }
 
+    checkInterpreterTableHeaderColumn = (text: string) => {
+        let ele = this.getElementByCSSandText('table thead tr th > span', text);
+        return ele.isPresent().then(v => expect(v).to.be.true);
+    }
+
     comparisonExpectation = (firstRowText: any, lastRowText: any, isAscending: boolean) => {
         if (firstRowText === lastRowText) {
             throw new Error('Text found to be same for first row and last row. Probably the table is not updated with latest data.');

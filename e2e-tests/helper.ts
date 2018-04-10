@@ -125,6 +125,8 @@ export class User {
             case 'Interpreter2':
                 data_to_sent['date_of_birth'] = '20/05/1987';
                 data_to_sent['naati_id'] = 12345;
+                address_attributes_fields['state'] = type === 'Interpreter1' ? 'WA' : 'VIC';
+                address_attributes_fields['post_code'] = type === 'Interpreter1' ? 3054 : 6064;
                 data_to_sent['address_attributes'] = address_attributes_fields;
                 data_to_sent['skill_level'] = 'Captioning';
                 break;
@@ -451,7 +453,7 @@ export class Heroku {
 
     static createBulkBookings(count: string) {
         let command = 'i=IndividualClient.first;FactoryGirl.create(:ted_individual_client) if !i;';
-        command += 'FactoryGirl.create_list(:booking, ' + count + ', bookable: IndividualClient.first)';
+        command += 'Time.zone = "Hobart";FactoryGirl.create_list(:booking, ' + count + ', bookable: IndividualClient.first, start_time: 7.business_days.from_now, end_time: 7.business_days.from_now + 2.hours)';
         Heroku.sendCommandToHeroku(command);
     }
     static setInterpreterType(type: string) {
@@ -607,14 +609,23 @@ export class Heroku {
         Heroku.sendCommandToHeroku(command);
     }
 
-    static updateBookingWithStatus(status: string) {
+    private static updateBookingWithStatus(status: string, updateFirst?: boolean) {
         const greenStatus = status === 'green';
+        const updateIndex = updateFirst ? 'first' : 'last'; // the default is last
         let command = '';
         if (greenStatus) {
-            command += 'Booking.last.update(number_of_interpreters_required: 0);';
+            command += `Booking.${updateIndex}.update(number_of_interpreters_required: 0);`;
         }
-        command += 'Booking.last.update_status';
+        command += `Booking.${updateIndex}.update_status`;
         Heroku.sendCommandToHeroku(command);
+    }
+
+    static updateFirstBookingWithStatus(status: string) {
+        Heroku.updateBookingWithStatus(status, true);
+    }
+
+    static updateLastBookingWithStatus(status: string) {
+        Heroku.updateBookingWithStatus(status, false);
     }
 
     static updateBookingWithMethodType(method: string) {
@@ -623,9 +634,18 @@ export class Heroku {
         Heroku.sendCommandToHeroku(command);
     }
 
-    static updateBookingWithServiceType(serviceType: string) {
-        let command = 'Booking.last.update(type: ' + serviceType + ')';
+    private static updateBookingWithServiceType(serviceType: string, updateFirst?: boolean) {
+        const updateIndex = updateFirst ? 'first' : 'last'; // the default is last
+        const command = `Booking.${updateIndex}.update(type: '${serviceType}')`;
         Heroku.sendCommandToHeroku(command);
+    }
+
+    static updateFirstBookingWithServiceType(serviceType: string) {
+        Heroku.updateBookingWithServiceType(serviceType, true);
+    }
+
+    static updateLastBookingWithServiceType(serviceType: string) {
+        Heroku.updateBookingWithServiceType(serviceType, false);
     }
 
     static updateBookingWithClientName(client_name: string) {

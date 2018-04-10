@@ -27,7 +27,6 @@ Feature: Booking Payroll and Billing
     And I click on BUTTON name 'reassingBtn'
     Then I can see the button 'Save' is enabled
     And I click on BUTTON 'Save'
-    Then I wait for 1000 milli-seconds
     Then I get valid message: 'The interpreter have been assigned'
     When I click on link 'Payroll & Billing'
     Then I should be on the payroll and billing page
@@ -61,7 +60,6 @@ Feature: Booking Payroll and Billing
     And I click on BUTTON name 'reassingBtn'
     Then I can see the button 'Save' is enabled
     And I click on BUTTON 'Save'
-    Then I wait for 1000 milli-seconds
     Then I get valid message: 'The interpreter have been assigned'
     When I click on link 'Payroll & Billing'
     Then I should be on the payroll and billing page
@@ -79,7 +77,7 @@ Feature: Booking Payroll and Billing
     And I verify that payroll 'client' input fields are non editable
     And I verify that payroll 'client' input fields have zero value
 
-  @runThis
+  @ignoreThis
   Scenario: Given 1 verified Booking Officer, When I check pay interpreter then interp time will be filled based on booking time and preperation time will set to zero, INTERPRETER exists
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
@@ -90,7 +88,6 @@ Feature: Booking Payroll and Billing
     And I click on BUTTON name 'reassingBtn'
     Then I can see the button 'Save' is enabled
     And I click on BUTTON 'Save'
-    Then I wait for 1000 milli-seconds
     Then I get valid message: 'The interpreter have been assigned'
     When I click on link 'Payroll & Billing'
     Then I should be on the payroll and billing page
@@ -115,7 +112,6 @@ Feature: Booking Payroll and Billing
     And I click on BUTTON name 'reassingBtn'
     Then I can see the button 'Save' is enabled
     And I click on BUTTON 'Save'
-    Then I wait for 1000 milli-seconds
     Then I get valid message: 'The interpreter have been assigned'
     And I run all background jobs
     When I click on link 'Payroll & Billing'
@@ -145,7 +141,6 @@ Feature: Booking Payroll and Billing
     And I click on BUTTON name 'reassingBtn'
     Then I can see the button 'Save' is enabled
     And I click on BUTTON 'Save'
-    Then I wait for 1000 milli-seconds
     Then I get valid message: 'The interpreter have been assigned'
     And I run all background jobs
     When I click on link 'Payroll & Billing'
@@ -193,7 +188,6 @@ Feature: Booking Payroll and Billing
     And I click on BUTTON name 'reassingBtn'
     Then I can see the button 'Save' is enabled
     And I click on BUTTON 'Save'
-    Then I wait for 1000 milli-seconds
     Then I get valid message: 'The interpreter have been assigned'
     When I click on BUTTON 'Cancel Booking'
     Then I will be shown a popup message 'Would you like to cancel only this booking, or all linked bookings?'
@@ -233,7 +227,8 @@ Feature: Booking Payroll and Billing
     When I click on BUTTON 'ADD STAFF AVAILABILITY'
     Then I will be taken to staff-calendar page
     When I refresh
-    Then I check that the start time and end time is 09:00PM - 10:00PM
+    Then I check that the start time and end time is 08:00PM - 09:00PM
+    Then I check the value of endTime is to be '10:00 PM'
     And I enter blockout name 'singleEvent'
     And I click on BUTTON 'SAVE'
     And I get success message: 'Staff Availability successfully added'
@@ -248,7 +243,6 @@ Feature: Booking Payroll and Billing
     And I click on BUTTON name 'reassingBtn'
     Then I can see the button 'Save' is enabled
     And I click on BUTTON 'Save'
-    Then I wait for 1000 milli-seconds
     Then I get valid message: 'The interpreter have been assigned'
     When I click on BUTTON 'Cancel Booking'
     Then I will be shown a popup message 'Would you like to cancel only this booking, or all linked bookings?'
@@ -258,6 +252,7 @@ Feature: Booking Payroll and Billing
     Then I click on BUTTON name 'noBtn'
     Then I get a valid 'Cancelled with Charge' notification for state
     When I click on link 'Payroll & Billing'
+    Then I wait for 2000 milli-seconds
     Then I see selected option 'STAFF' in dropdown
 
   @runThis
@@ -284,7 +279,7 @@ Feature: Booking Payroll and Billing
     And I click on BUTTON 'Save'
     Then I get valid message: 'The interpreter have been assigned'
     When I click on BUTTON 'Cancel Booking'
-    Then I will be shown a popup message 'Would you like to cancel only this booking, or all linked bookings?'
+    Then I will be shown a popup message 'Are you sure you want to cancel the booking? The client will be notified of this. This is a permanent action.'
     Then I click on BUTTON name 'yesBtn'
     Then I wait for 1200 milli-seconds
     Then I will be shown a popup message 'Are you sure you want to cancel this booking? This is permanent. We recommend to cancel this booking as Cancelled No Charge since the start date is not within 48 hours.'
@@ -316,7 +311,6 @@ Feature: Booking Payroll and Billing
     And I click on BUTTON name 'reassingBtn'
     Then I can see the button 'Save' is enabled
     And I click on BUTTON 'Save'
-    Then I wait for 1000 milli-seconds
     Then I get valid message: 'The interpreter have been assigned'
     When I click on BUTTON 'Cancel Booking'
     Then I will be shown a popup message 'Would you like to cancel only this booking, or all linked bookings?'
@@ -339,7 +333,6 @@ Feature: Booking Payroll and Billing
     And I click on BUTTON name 'reassingBtn'
     Then I can see the button 'Save' is enabled
     And I click on BUTTON 'Save'
-    Then I wait for 1000 milli-seconds
     Then I get valid message: 'The interpreter have been assigned'
     When I click on BUTTON 'Cancel Booking'
     Then I will be shown a popup message 'Would you like to cancel only this booking, or all linked bookings?'
@@ -382,7 +375,6 @@ Feature: Booking Payroll and Billing
     And I click on BUTTON name 'reassingBtn'
     Then I can see the button 'Save' is enabled
     And I click on BUTTON 'Save'
-    Then I wait for 1000 milli-seconds
     Then I get valid message: 'The interpreter have been assigned'
     When I click on BUTTON 'Cancel Booking'
     Then I will be shown a popup message 'Would you like to cancel only this booking, or all linked bookings?'
@@ -414,7 +406,6 @@ Feature: Booking Payroll and Billing
     And I click on BUTTON name 'reassingBtn'
     Then I can see the button 'Save' is enabled
     And I click on BUTTON 'Save'
-    Then I wait for 1000 milli-seconds
     Then I get valid message: 'The interpreter have been assigned'
     When I click on link 'Payroll & Billing'
     Then I should be on the payroll and billing page
@@ -461,7 +452,6 @@ Feature: Booking Payroll and Billing
     And I click on BUTTON name 'reassingBtn'
     Then I can see the button 'Save' is enabled
     And I click on BUTTON 'Save'
-    Then I wait for 1000 milli-seconds
     Then I get valid message: 'The interpreter have been assigned'
     When I click on BUTTON 'Cancel Booking'
     Then I will be shown a popup message 'Would you like to cancel only this booking, or all linked bookings?'

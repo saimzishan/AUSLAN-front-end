@@ -145,7 +145,9 @@ export class BookingService extends ApiService {
         */
     fetchPaginatedBookings(page: number , search: URLSearchParams): Observable<Object> {
         let headers = new Headers({'Accept': 'application/json'});
-        let options = new RequestOptions({ headers: headers, search: search });
+        let options = new RequestOptions({
+            headers: headers, search: search
+        });
         return this.http.get(GLOBAL.BOOKING_API + '?page=' + page , options)
             .map(this.extractData)
             .catch((err) => { return this.handleError(err); });
