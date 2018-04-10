@@ -2,7 +2,7 @@
   <h1>BOOKINGS</h1>
 </header>
 <app-mobile-header title="BOOKINGS" [showBackLink]="false"></app-mobile-header>
-<section id="page-jobs">
+<section id="page-jobs" class="no-margin no-padding">
   <app-booking-filter (appBookingFilter)="fetchBookings()"></app-booking-filter>
   <app-booking-list (onPageEmit)="onPageEmit($event)" [p]="page" [totalItems]="totalItems" [bookingList]='bookings' (onBookingFilter)="fetchBookings()"></app-booking-list>
 </section>

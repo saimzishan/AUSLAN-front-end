@@ -820,14 +820,14 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
             let st = this.startTime.getHours() - 2;
             if (sd.getHours() >= st) {
                 offset = 'offset' + (sd.getHours() - st);
-                cells = 'cells' + (edt.getHours() - sd.getHours());
 
             } else if (sd.getHours() < st) {
 
                 offset = 'offset' + (st - sd.getHours() > 1 ? '' : (st - sd.getHours()));
-                cells = 'cells' + (edt.getHours() - sd.getHours());
 
             }
+            cells = 'cells' + (edt.getHours() - sd.getHours() >= 10 ?
+                10 : edt.getHours() - sd.getHours());
             // This needs to be double checked
             let color = avail_block.booking_id === null ? 'badge_orange' :
                 avail_block.booking_id === this.selectedBookingModel.id ? 'badge_green' : 'badge_pink';
@@ -845,7 +845,8 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     }
 
     getTimelineMoverStyle() {
-        let cellVal = '' + (this.endTime.getHours() - this.startTime.getHours());
+        let cellVal = '' + (this.endTime.getHours() - this.startTime.getHours() >= 10 ?
+            10 : this.endTime.getHours() - this.startTime.getHours());
         cellVal += this.endTime.getMinutes() > 29 ? 'half' : '';
         let offsetVal = this.startTime.getMinutes() > 29 ? 'half' : '';
         let toRet = 'cells' + cellVal + ' offset2' + offsetVal;
