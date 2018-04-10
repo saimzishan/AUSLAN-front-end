@@ -193,7 +193,7 @@ Feature: Booking Admin Management
     And I can see the interpreter table header has column 'Immun.'
     And I can see the interpreter table header has not column 'Yellow'
 
- @runThis
+ @ignoreThis
   Scenario: As an Administrator when I assign Interpreter, Interpreter1 of differ state to booking should be in same span
     Given There exist 1 bookings
     Given I exist as an Administrator
