@@ -1015,7 +1015,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
 
     serviceName() {
         let flag = ($(window).width() >= 768);
-        let interpreter = 'interptreter';
+        let interpreter = 'Interpreter';
         this.serviceNameToDisplay = this.selectedBookingModel.number_of_note_takers_required > 0 ? this.desktopOrMobile(flag, 'Notetaker')
                                     : this.selectedBookingModel.number_of_captioners_required > 0 ?  this.desktopOrMobile(flag, 'Captioner')
                                     : this.selectedBookingModel.number_of_auslan_interpreters_required > 0 ? this.desktopOrMobile(flag, interpreter)
