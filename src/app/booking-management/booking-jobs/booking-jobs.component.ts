@@ -919,6 +919,9 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                 this.isRecommended = true;
                 this.removeFilters();
         }
+        this.checkList = {};
+        this.selectedInterpreterIDs = [];
+        this.reAssignPressed = this.invitePressed = false;
         this.route.params.subscribe(params => {
             this.currentPage = 1;
             let param_id = params['id'] || '';
@@ -947,6 +950,9 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
 
     filterInterpreters(field: string, value: string) {
         this.isRecommended = false;
+        this.checkList = {};
+        this.selectedInterpreterIDs = [];
+        this.reAssignPressed = this.invitePressed = false;
         const formattedValue = this.formatterValueFor(field, value);
         if (formattedValue && formattedValue.length) {
             this.interpreterFilter[field] = formattedValue;
