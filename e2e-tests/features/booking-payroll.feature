@@ -77,7 +77,7 @@ Feature: Booking Payroll and Billing
     And I verify that payroll 'client' input fields are non editable
     And I verify that payroll 'client' input fields have zero value
 
-  @runThis
+  @ignoreThis
   Scenario: Given 1 verified Booking Officer, When I check pay interpreter then interp time will be filled based on booking time and preperation time will set to zero, INTERPRETER exists
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials

@@ -1,28 +1,28 @@
-<header id="header-mobile">
-    <button (click)="backClicked()" class="icon-back"></button>
-    <h1>JOB #4353435</h1>
-    <section>
-        <a href="#" class="header__message"><i class="icon-messages"></i></a>
-        <ul class="dropdown menu" data-disable-hover="true" data-click-open="true" data-dropdown-menu>
-            <li>
-                <a href="#" class="header__profile"><img src="assets/img/dummy/profile.png"></a>
-                <ul class="menu">
-                    <li><a href="#"><i class="icon-logout"></i> Log Out</a></li>
-                </ul>
-            </li>
-        </ul>
-    </section>
-</header>
+<app-mobile-header title="MESSAGES" backLink="/booking-management" [showBackLink]="true"></app-mobile-header>
+
 
 <section id="page-messages">
-    <main>
+    <section *ngIf='isCurrentUserAdminOrBookingOfficer()' id="filters">
+        <section class="search-bar">
+            <button><i class="icon-glass"></i></button>
+            <form #filterBySearch="ngForm" class="common-form compact" (ngSubmit)="searchInterpreter()" novalidate>
+                <input type="text" name="search" id="search" (blur)="searchInterpreter()" [(ngModel)]="searchInterpreterQuery" (click)="'' !== searchInterpreterQuery && clear()" placeholder="Search Interpreter By Name">
+            </form>
+            <button>
+                <i (click)="searchInterpreter()" class="icon-glass"></i>
+            </button>
+        </section>
+    </section>
+    <main class="hidden-mobile">
         <h1>MESSAGES</h1>
     </main>
 </section>
 <section class="messages">
-    <section *ngIf='isCurrentUserAdminOrBookingOfficer()' class="messages__conversations">
-        <section class="messages__conversations"  [ngClass]="{'messages__conversations_withPagination': totalItems > 10}" id="conversations-wrapper">
-            <ng-container
+    <section *ngIf='isCurrentUserAdminOrBookingOfficer()'
+         class="messages__conversations" [ngClass]="{'messages__conversations_withPagination': totalItems > 10}">
+        <section class="messages__conversations-wrapper" id="conversations-wrapper">
+
+        <ng-container
                     *ngFor="let mesg of messageThreads  | paginate: { itemsPerPage: 10, currentPage: messageThreadPage ,totalItems: totalItems } let i = index">
                 <section class="messages__conversation"
                          [ngClass]="{'messages__conversation_active': i === selectedMessageThread}">
@@ -44,13 +44,14 @@
 
         </section>
     </section>
-    <div *ngIf="totalItems > 10 && isCurrentUserAdminOrBookingOfficer()" class="element element_inline messages__pagination">
-        <pagination-controls (pageChange)="getPage($event)" class="my-pagination"></pagination-controls>
-    </div>
     <section class="messages__wrapper" [ngClass]="{'messages__wrapper_aside': isCurrentUserAdminOrBookingOfficer()}"
              id="messages-wrapper">
-
-        <perfect-scrollbar fxFlex [config]="config" [scrollIndicators]="true">
+        <div class="text-center">
+            <button *ngIf="showLoadMore === true && messageCount > messagePage * 10"
+                    (click)="loadMore()" class="button inline-block">Load Previous Messages
+            </button>
+        </div>
+        <perfect-scrollbar (psYReachStart)="scrollReachedAtTop()"  (psYReachEnd)="scrollReachedAtBottom()" [config]="config" [scrollIndicators]="false">
             <ng-container *ngFor="let message of messages">
 
                 <section class="messages__message" [ngClass]="{ 'messages__message_left' : message.sender.type !== 'Interpreter'
@@ -65,23 +66,24 @@
                             <span class="messages__time">
                 <i class="icon-time"></i> {{message.created_at | date: ' d MMM  y | h:mma' }}</span>
                         </div>
-                        <p class="messages__text">{{message.message_body}}
-                            <a href="#">#{{message_tag}}</a> booking!</p>
-                        <button class="messages__button">{{message.sender.id}}</button>
+                        <p class="messages__text">{{message.message_body}}</p>
+                        <button *ngIf="hasTag(message)"
+                                (click)="onTagClicked(message.tag)"
+                                class="messages__button">
+                            {{message.tag}}
+                        </button>
                     </section>
                 </section>
-
             </ng-container>
         </perfect-scrollbar>
-        <button *ngIf="messageCount > messagePage * 10"
-                (click)="loadMore()" class="button messages__formButton">Load More ..
-        </button>
-
     </section>
+    <div *ngIf="totalItems > 10 && isCurrentUserAdminOrBookingOfficer()"
+         class="element element_inline messages__pagination">
+        <pagination-controls (pageChange)="getPage($event)" class="my-pagination"></pagination-controls>
+    </div>
     <form class="messages__form" [ngClass]="{'messages__form_reduced':isCurrentUserAdminOrBookingOfficer()}"
           style="position: fixed;">
-        <button *ngIf='isTagShow' (click)="sendMessageTagHide()" class="button messages__formButton">{{message_tag }}
-            <i name='messages__Xtag' *ngIf='isTagShow'>x</i>
+        <button *ngIf='isTagShow' class="button messages__formButton">{{message_tag }}
         </button>
         <section class="messages__formInner">
             <textarea [(ngModel)]="message_body" required (keyup)="checkEmpty()" name="message_body"
