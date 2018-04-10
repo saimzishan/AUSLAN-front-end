@@ -2,15 +2,27 @@
 
 
 <section id="page-messages">
+    <section *ngIf='isCurrentUserAdminOrBookingOfficer()' id="filters">
+        <section class="search-bar">
+            <button><i class="icon-glass"></i></button>
+            <form #filterBySearch="ngForm" class="common-form compact" (ngSubmit)="searchInterpreter()" novalidate>
+                <input type="text" name="search" id="search" (blur)="searchInterpreter()" [(ngModel)]="searchInterpreterQuery" (click)="'' !== searchInterpreterQuery && clear()" placeholder="Search External Ref No">
+            </form>
+            <button>
+                <i (click)="searchInterpreter()" class="icon-glass"></i>
+            </button>
+        </section>
+    </section>
     <main>
         <h1>MESSAGES</h1>
     </main>
 </section>
 <section class="messages">
-    <section *ngIf='isCurrentUserAdminOrBookingOfficer()' class="messages__conversations">
-        <section class="messages__conversations" [ngClass]="{'messages__conversations_withPagination': totalItems > 10}"
-                 id="conversations-wrapper">
-            <ng-container
+    <section *ngIf='isCurrentUserAdminOrBookingOfficer()'
+         class="messages__conversations" [ngClass]="{'messages__conversations_withPagination': totalItems > 10}">
+        <section class="messages__conversations-wrapper" id="conversations-wrapper">
+
+        <ng-container
                     *ngFor="let mesg of messageThreads  | paginate: { itemsPerPage: 10, currentPage: messageThreadPage ,totalItems: totalItems } let i = index">
                 <section class="messages__conversation"
                          [ngClass]="{'messages__conversation_active': i === selectedMessageThread}">
@@ -32,10 +44,6 @@
 
         </section>
     </section>
-    <div *ngIf="totalItems > 10 && isCurrentUserAdminOrBookingOfficer()"
-         class="element element_inline messages__pagination">
-        <pagination-controls (pageChange)="getPage($event)" class="my-pagination"></pagination-controls>
-    </div>
     <section class="messages__wrapper" [ngClass]="{'messages__wrapper_aside': isCurrentUserAdminOrBookingOfficer()}"
              id="messages-wrapper">
 
@@ -68,6 +76,10 @@
             </ng-container>
         </perfect-scrollbar>
     </section>
+    <div *ngIf="totalItems > 10 && isCurrentUserAdminOrBookingOfficer()"
+         class="element element_inline messages__pagination">
+        <pagination-controls (pageChange)="getPage($event)" class="my-pagination"></pagination-controls>
+    </div>
     <form class="messages__form" [ngClass]="{'messages__form_reduced':isCurrentUserAdminOrBookingOfficer()}"
           style="position: fixed;">
         <button *ngIf='isTagShow' class="button messages__formButton">{{message_tag }}
