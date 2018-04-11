@@ -21,7 +21,7 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER STAF
     And I click on BUTTON 'SAVE'
     And I get success message: 'Staff Availability successfully added'
 
-  @ignoreThis
+  @runThis
   Scenario: As Administrator I can add recurring INTERPRETER STAFF-AVAILABILITY on desktop
     Given I go to the website
     And I am on a computer
@@ -67,7 +67,7 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER STAF
     When I verify material slide-toggle name 'sldRecurring' is disabled 'true'
     And I can see the element with name 'save_blockout' is 'not visible'
 
-  @ignoreThis
+  @runThis
   Scenario: As Administrator I can add INTERPRETER blockouts on desktop
     Given I go to the website
     And I am on a computer
