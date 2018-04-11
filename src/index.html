@@ -69,21 +69,18 @@
         });
         var count = 0;
         $(function () {
-            if (count < 20) {
-                // call the function.
-                try {
-					// console.log('document recale');
-                    rescale();
-                } catch (e) {
-
-                }
-                // The currently executing function which is an anonymous function.
-                var caller = arguments.callee;
-                window.setTimeout(function () {
-                    count = count + 1;
-                    caller();
-                }, 1000);
+            // call the function.
+            try {
+                rescale();
+            } catch (e) {
             }
+            // The currently executing function which is an anonymous function.
+            var caller = arguments.callee;
+            window.setTimeout(function () {
+                count = count + 1;
+                caller();
+            }, 1000);
+
         });
     });
 </script>
