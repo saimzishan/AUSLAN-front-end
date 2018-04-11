@@ -447,7 +447,16 @@ export class BlockoutComponent implements OnDestroy, OnInit {
 
             let bookingTime = this.correctTimeFormat(this.dummy_time, timeControl);
             if (bookingTime) {
-                bookingTime = strt_date + ' ' + bookingTime;
+                strt_date = strt_date.split('/');
+                if (+strt_date[1] > 12) {
+                    this.start_time = null;
+                    return;
+                }
+                if (isNaN(Date.parse(strt_date + ' ' + bookingTime) ) ) {
+                    bookingTime = strt_date[1] + '/' + strt_date[0] + '/' + strt_date[2] + ' ' + bookingTime;
+                } else {
+                    bookingTime = strt_date + ' ' + bookingTime;
+                }
                 this.start_time = new Date(bookingTime);
             } else {
                 this.start_time = this.dummy_time = null;
@@ -475,7 +484,7 @@ export class BlockoutComponent implements OnDestroy, OnInit {
             mm = res[2];
             amPm = res[3];
             let hour;
-            if (+hh < 10) {
+            if (+hh < 10 && (hh.length === 1)) {
                 hour = '0' + hh;
             } else {
                 hour = hh;
