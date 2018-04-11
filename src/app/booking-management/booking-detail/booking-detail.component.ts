@@ -1154,8 +1154,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             } else {
                 this.bookingEndTime = new Date(bookingTime);
             }
-        } else {
-            bookingTime = null;
         }
         this.start_time = '';
      }
