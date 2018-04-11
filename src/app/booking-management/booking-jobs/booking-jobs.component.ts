@@ -158,6 +158,9 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         if (this.dialogSub) {
             this.dialogSub.unsubscribe();
         }
+        if (this.isCurrentUserAdminOrBookingOfficer() && isCancel) {
+               this.linkedBookingConfirmation(isCancel);
+          } else {
             let config: MdDialogConfig = {
                 disableClose: true
             };
@@ -181,6 +184,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                     }
                 }
             });
+        }
     }
 
     linkedBookingConfirmation(isCancel: Boolean) {
