@@ -39,9 +39,11 @@ defineSupportCode(({Given, Then, When}) => {
     Then(/^I check that the start time and end time is 6:25am - 7:25am$/, blockoutPage.checkEndTimeAgainstStartTime);
     Then(/^I check that the start time and end time is 08:00PM - 09:00PM$/, blockoutPage.chengeEndTimeAgainstStartTime);
     Then(/^I check the value of endTime is '(.*)'$/, blockoutPage.checkEndTimeOFBlockout);
+    Then(/^I check the value of endTime should be '(.*)'$/, blockoutPage.checkEndTime);
     Then(/^I check the value of endTime is to be '(.*)'$/, blockoutPage.checkEndTimeOFBlockoutAgainstStartTime);
     Then(/^I check the value of availability is '(.*)'$/, blockoutPage.checkValuOFBlockoutName);
     Then(/^I change the value of end time$/, blockoutPage.changeEndTimeOFBlockout);
+    Then(/^I change the value of end time of booking '(.*)'$/, blockoutPage.changeEndTime);
     Then(/^I change the value of end date$/, blockoutPage.changeEndDateOFBlockout);
     Then(/^I enter blockout details with booking time same as booking$/, blockoutPage.createBlockoutWithBookingTime);
 

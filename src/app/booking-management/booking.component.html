@@ -2,13 +2,14 @@
   <h1>BOOKINGS</h1>
 </header>
 <app-mobile-header title="BOOKINGS" [showBackLink]="false"></app-mobile-header>
-<section id="page-jobs">
+<section id="page-jobs" class="no-margin no-padding">
   <app-booking-filter (appBookingFilter)="fetchBookings()"></app-booking-filter>
   <app-booking-list (onPageEmit)="onPageEmit($event)" [p]="page" [totalItems]="totalItems" [bookingList]='bookings' (onBookingFilter)="fetchBookings()"></app-booking-list>
 </section>
 
-<nav id="footer-mobile">
-  <button (click)="setActiveFilter('Allocated')" [ngClass]="{'active' : isActiveFilter('Allocated')}">Allocated</button>
-  <button (click)="setActiveFilter('Invited')" [ngClass]="{'active' : isActiveFilter('Invited')}">Invited <span class="badge"><i>0</i></span></button>
-  <button (click)="setActiveFilter('Service_Completed')" [ngClass]="{'active' : isActiveFilter('Service_Completed ')}">Service<br>completed</button>
+<nav *ngIf="isCurrentUserInterpreter()" id="footer-mobile">
+  <button (click)="setActiveFilter('all')" [ngClass]="{'active' : isActiveFilter('all')}"> All </button>
+  <button (click)="setActiveFilter('allocated')" [ngClass]="{'active' : isActiveFilter('allocated')}"> Allocated </button>
+  <button (click)="setActiveFilter('open')" [ngClass]="{'active' : isActiveFilter('open')}"> Open </button>
+  <button (click)="setActiveFilter('new_invites')" [ngClass]="{'active' : isActiveFilter('new_invites')}"> New Invites </button>
 </nav>

@@ -49,6 +49,7 @@ defineSupportCode(({Given, Then, When}) => {
     When(/^I click on an individual booking of type '(.*)'$/, bookingManagementPO.clickOnIndividualBookingOfType);
     When(/^I do not see any booking rows$/, bookingManagementPO.noBookingExists);
     When(/^I click on an individual booking$/, bookingManagementPO.clickOnIndividualBooking);
+    When(/^I click on an individual booking in mobile$/, bookingManagementPO.clickAtOneofTheBookingMobile);
     When(/^I click on an booking of index (.*)$/, bookingManagementPO.clickOnIndividualBookingWithIndex);
 
     // --------------------------------- AUTO POPULATE CLIENT DETAILS
@@ -122,6 +123,7 @@ defineSupportCode(({Given, Then, When}) => {
 
     //  Click on Request bookings
     Then(/^I am shown with (\d+) (.*[^\s])?\s?[bB]ookings?$/, bookingManagementPO.showTheNumberofBooking);
+    Then(/^I am shown with (\d+) bookings? in mobile view$/, bookingManagementPO.showTheNumberofBookingInMobile);
     Then(/^I am back on booking page$/, bookingManagementPO.onBookingListPage);
     Then(/^I (.*) see the (.*) field$/, createBookingPO.checkTheFieldExist);
     Then(/^I see one row with the booking id$/, bookingManagementPO.bookingExistsWithId);

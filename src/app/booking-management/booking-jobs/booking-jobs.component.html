@@ -44,7 +44,7 @@
                                         <span *ngIf="interpreter.state !== 'Accepted'">To be filled</span>
                                         <button name="{{'unassingBtn_' + +(i + 1)}}"
                                                 (click)="unAssignInterpreters(interpreter.id)"
-                                                *ngIf="!isCurrentUserInterpreter() && (false === isActiveState('Unable_to_service') && false === isActiveState('Cancelled_no_charge')) && interpreter.state === 'Accepted'">
+                                                *ngIf="isCurrentUserAdminOrBookingOfficer() && (false === isActiveState('Unable_to_service') && false === isActiveState('Cancelled_no_charge')) && interpreter.state === 'Accepted'">
                                             Unassign
                                         </button>
                                     </div>
@@ -66,7 +66,7 @@
                                             <b>{{serviceNameToDisplay}} {{(selectedBookingModel.interpreters_required - selectedBookingModel.interpreters.length)+selectedBookingModel.interpreters.length
                                                 + i + 1}} :</b>
                                             <span class='interpreter-accepted'>{{interpreter.first_name}} {{interpreter.last_name}}</span>
-                                            <button hidden name="{{'unassingBtn_' + +(i + 1)}}" (click)="unAssignInterpreters(interpreter.id)" *ngIf="!isCurrentUserInterpreter() && (false === isActiveState('Unable_to_service') && false === isActiveState('Cancelled_no_charge')) && interpreter.state === 'Accepted'">
+                                            <button hidden name="{{'unassingBtn_' + +(i + 1)}}" (click)="unAssignInterpreters(interpreter.id)" *ngIf="isCurrentUserAdminOrBookingOfficer() && (false === isActiveState('Unable_to_service') && false === isActiveState('Cancelled_no_charge')) && interpreter.state === 'Accepted'">
                                                 Unassign
                                             </button>
                                         </div>
@@ -89,7 +89,7 @@
                                         <b>{{serviceNameToDisplay}} {{(selectedBookingModel.interpreters_required - selectedBookingModel.interpreters.length)+selectedBookingModel.interpreters.length
                                             + i + 1}} :</b>
                                         <span class='interpreter-accepted'>{{interpreter.first_name}} {{interpreter.last_name}}</span>
-                                        <button hidden name="{{'unassingBtn_' + +(i + 1)}}" (click)="unAssignInterpreters(interpreter.id)" *ngIf="!isCurrentUserInterpreter() && (false === isActiveState('Unable_to_service') && false === isActiveState('Cancelled_no_charge')) && interpreter.state === 'Accepted'">
+                                        <button hidden name="{{'unassingBtn_' + +(i + 1)}}" (click)="unAssignInterpreters(interpreter.id)" *ngIf="isCurrentUserAdminOrBookingOfficer() && (false === isActiveState('Unable_to_service') && false === isActiveState('Cancelled_no_charge')) && interpreter.state === 'Accepted'">
                                             Unassign
                                         </button>
                                     </div>
@@ -208,7 +208,7 @@
                 </h2>
                 <section id="invite-interpreters">
                     <section id="filters">
-                        <section class="search-bar" style="width:150%">
+                        <section class="search-bar" style="width:100%">
                             <form #filterBySearch="ngForm" class="common-form compact" (ngSubmit)="search()" novalidate>
                                 <input type="text" name="search" id="search" (blur)="search()" [(ngModel)]="searchParams" (click)="'' !== searchParams && clearSearch()" placeholder="Search...">
                             </form>
@@ -217,7 +217,7 @@
                             </button>
                         </section>
                         <section class="filters">
-                            <a href="javascript:void(0);" class="button" id="lnk-recommended-interpreters"
+                            <a style="width:16em" href="javascript:void(0);" class="button" id="lnk-recommended-interpreters"
                                [ngClass]="isRecommended ? 'active' : ''" (click)="toggleRecommended()">Recommended</a>
                             <div class="separator"></div>
                             <button *ngIf="!hideInvite" class="button active" name='autoInviteBtn' (click)="inviteInterpreters()">
@@ -376,8 +376,8 @@
                                 <div *ngFor="let inte of interpreterList ">
                                     <section>
                                         <ng-container *ngFor="let avail_block of inte.availability_blocks_attributes">
-                                            <ng-container *ngIf="getTimelineBlockoutStyle(avail_block,inte.address_attributes.state,inte.address_attributes.post_code).length > 2">
-                                                <span class="{{getTimelineBlockoutStyle(avail_block,inte.address_attributes.state,inte.address_attributes.post_code)}}"></span>
+                                            <ng-container *ngIf="getTimelineBlockoutStyle(avail_block,selectedBookingModel.venue.state,selectedBookingModel.venue.post_code).length > 2">
+                                                <span class="{{getTimelineBlockoutStyle(avail_block,selectedBookingModel.venue.state,selectedBookingModel.venue.post_code)}}"></span>
                                             </ng-container>
                                         </ng-container>
                                     </section>
@@ -450,4 +450,6 @@
             <button  *ngIf="canShowLink('messages')" [routerLink]="['/users/'+ getInterpreterId() +'/inbox/' + selectedBookingModel.id]" class="button green wide" style="width: 100%;">MESSAGE OFFICE</button>
         </li>
     </ul>
+    <br>
+    <br>
 </section>

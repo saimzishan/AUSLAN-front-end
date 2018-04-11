@@ -55,10 +55,13 @@ defineSupportCode(({Before}) => {
         if (scenario.scenario.name.toUpperCase().indexOf('Special'.toUpperCase()) >= 0) {
             Heroku.specialOrgRepSetup();
         }
-        if (false === scenario.scenario.name.toUpperCase().indexOf(('unverified').toUpperCase()) < 0) {
-            console.log('Adding UnVerified Interpreter');
-            let currentlyLoggedInUser = User.returnTypeAndUser('Interpreter').user;
-            Heroku.createUser(currentlyLoggedInUser, 'Interpreter');
+
+        const createUnverifiedUser = scenario.scenario.name.match(/unverified\s(Interpreter|Organisational Representative)/);
+
+        if (createUnverifiedUser) {
+            console.log(`Adding UnVerified ${createUnverifiedUser[1]}`);
+            let currentlyLoggedInUser = User.returnTypeAndUser(createUnverifiedUser[1]).user;
+            Heroku.createUser(currentlyLoggedInUser, createUnverifiedUser[1]);
         }
         first_run = true;
     });
