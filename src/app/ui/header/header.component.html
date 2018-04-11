@@ -1,5 +1,5 @@
 <header id="header">
-	<img alt="" width="72" height="46" src="assets/img/auslan-logo.png">
+	<img name="auslanLogo" alt="Auslan Connections" width="72" height="46" src="assets/img/auslan-logo.png">
 	<nav *ngIf="userIsActive">
 		<a id="lnkBooking" *ngIf="canShowLink('booking-management')" [ngClass]="{'active':isActiveLink(linkName.booking)}" (click)="setActiveLink(linkName.booking)" [routerLink]="['/booking-management']"><span><i class="icon-bookings"></i> BOOKINGS</span></a>
 		<a id="lnkMessages" *ngIf="canShowLink('messages')"
