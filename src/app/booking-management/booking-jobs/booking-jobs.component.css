@@ -38,3 +38,7 @@
 .pad-td{
   padding: 20px 10px !important;
 }
+
+.display-flx{
+  display: inline-flex !important;
+}
