@@ -37,6 +37,11 @@ defineSupportCode(({Given, Then, When}) => {
     Then(/^I enter blockout name '(.*)'$/, blockoutPage.enterBlockoutName);
     Then(/^I check that the end time is greater then start time$/, blockoutPage.checkEndTimeAgainstStartTime);
     Then(/^I check that the start time and end time is 6:25am - 7:25am$/, blockoutPage.checkEndTimeAgainstStartTime);
+    Then(/^I set the start time without year$/, blockoutPage.chengeStartTimeWithOutYear);
+    Then(/^I set the start time with wrong year$/, blockoutPage.chengeStartTimeWithWrongYear);
+    Then(/^I set the start time with wrong input$/, blockoutPage.chengeStartTimeWithWrongInput);
+    Then(/^I set the start time with wrong month$/, blockoutPage.chengeStartTimeWithWrongMonth);
+    Then(/^I set the start time with wrong day$/, blockoutPage.chengeStartTimeWithWrongDay);
     Then(/^I check that the start time and end time is 08:00PM - 09:00PM$/, blockoutPage.chengeEndTimeAgainstStartTime);
     Then(/^I check the value of endTime is '(.*)'$/, blockoutPage.checkEndTimeOFBlockout);
     Then(/^I check the value of endTime should be '(.*)'$/, blockoutPage.checkEndTime);
