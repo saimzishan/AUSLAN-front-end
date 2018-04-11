@@ -57,22 +57,27 @@ export class BookingService extends ApiService {
     /*
       The Api should be used to invite interpreters
     */
-    inviteInterpreters(bookingID: number, interpreters: Array<Object>): Observable<Object> {
+    inviteInterpreters(bookingID: number, interpreters: Array<Object>, isAutoInvite: boolean): Observable<Object> {
 
         let headers = new Headers({'Accept': 'application/json',
             'Content-Type': 'application/json'});
         let options = new RequestOptions({ headers: headers });
-        let obj = this.getParamsForInviteOrAssign(bookingID, interpreters);
+        let obj = this.getParamsForInviteOrAssign(bookingID, interpreters, isAutoInvite);
 
         return this.http.post(GLOBAL.BOOKING_API + '/' + bookingID + '/invite_interpreters' , JSON.stringify(obj), options)
             .map(this.extractData)
             .catch((err) => { return this.handleError(err); });
     }
 
-    private getParamsForInviteOrAssign(bookingID: number, interpreters: Array<Object>) {
+    private getParamsForInviteOrAssign(bookingID: number, interpreters: Array<Object>, isAutoInvite: boolean) {
         let invite_url = GLOBAL.BOOKING_JOB_INVITE + bookingID + '/job-detail';
         invite_url = invite_url.startsWith('http') === false ? 'http://' + invite_url : invite_url;
-        let obj = {'invite_url': invite_url, 'interpreters': interpreters};
+        let obj;
+        if (isAutoInvite) {
+            obj = {'invite_url': invite_url, 'interpreters': interpreters, 'auto_invitaion': isAutoInvite};
+        } else {
+            obj = {'invite_url': invite_url, 'interpreters': interpreters};
+        }
         return obj;
     }
 
@@ -84,7 +89,7 @@ export class BookingService extends ApiService {
         let headers = new Headers({'Accept': 'application/json',
             'Content-Type': 'application/json'});
         let options = new RequestOptions({ headers: headers });
-        let obj = this.getParamsForInviteOrAssign(bookingID, interpreters);
+        let obj = this.getParamsForInviteOrAssign(bookingID, interpreters, false);
 
         return this.http.put(GLOBAL.BOOKING_API + '/' + bookingID + '/assign_interpreters/' , JSON.stringify(obj), options)
             .map(this.extractData)

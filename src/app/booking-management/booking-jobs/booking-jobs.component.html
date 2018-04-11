@@ -220,13 +220,16 @@
                             <a style="width:16em" href="javascript:void(0);" class="button" id="lnk-recommended-interpreters"
                                [ngClass]="isRecommended ? 'active' : ''" (click)="toggleRecommended()">Recommended</a>
                             <div class="separator"></div>
-                            <button *ngIf="!hideInvite" class="button active" name='autoInviteBtn' (click)="inviteInterpreters()">
+                            <button style="width:14%" *ngIf="!hideInvite" [disabled]="isAutoInvited" class="button active" name='InviteBtn' (click)="inviteInterpreters()">
                                 <i class="icon-shape"></i> Invite
                             </button>
-                            <button style="width:14%" *ngIf="hideAccept_showAutoInvite && !hideInvite" class="button active" name='inviteBtn' (click)="autoInviteInterpreters()">
+                            <button style="width:14%" *ngIf="hideAccept_showAutoInvite && !hideInvite && !isAutoInvited" class="button active" name='autoInviteBtn' (click)="autoInviteInterpreters()">
                                 <i class="icon-shape"></i> Auto Invite
                             </button>
-                            <button *ngIf="!hideAccept_showAutoInvite" class="button red" (click)="reAssignInterpreters()" name="reassingBtn">
+                            <button style="width:14%" *ngIf="hideAccept_showAutoInvite && !hideInvite && isAutoInvited" class="button active" name='cancelAutoInviteBtn'>
+                                <i class="icon-shape"></i> Cancel Auto Invite
+                            </button>
+                            <button style="width:14%" *ngIf="!hideAccept_showAutoInvite" class="button red" (click)="reAssignInterpreters()" name="reassingBtn">
                                 <i class="icon-assign"></i> Assign
                             </button>
                         </section>

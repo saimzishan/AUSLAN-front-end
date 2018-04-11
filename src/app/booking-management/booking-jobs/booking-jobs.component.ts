@@ -36,6 +36,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     unAssignPressed = false;
     reAssignPressed = false;
     autoInvitePressed = false;
+    isAutoInvited = false;
     unlinkPressed = false;
     isVicdeaf = false;
     diffInHours: number;
@@ -396,7 +397,8 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                     user.booked ? 'booking.svg' :
                     user.blockout ? 'booking.svg' :
                     this.checkInterpreterState(user.id, 'Rejected') ? 'declined.svg' :
-                    this.checkInterpreterState(user.id, 'Invited') ? 'invited.svg' : '');
+                    this.checkInterpreterState(user.id, 'Invited') ? 'invited.svg' :
+                    this.checkInterpreterState(user.id, 'Waiting_to_invite') ? 'scheduled.svg' :  '');
         path = path.length > 0 ? '../../../assets/img/svg-icons/' + path : path;
         return path;
     }
@@ -563,10 +565,18 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     }
 
     sendInvite(interpreters) {
-        this.bookingService.inviteInterpreters(this.selectedBookingModel.id, interpreters)
+        let isAutoInvite;
+        if (this.autoInvitePressed) {
+            isAutoInvite = this.autoInvitePressed;
+            this.autoInvitePressed = false;
+            this.isAutoInvited = true;
+        } else {
+            isAutoInvite = false;
+        }
+        this.bookingService.inviteInterpreters(this.selectedBookingModel.id, interpreters, isAutoInvite)
             .subscribe((res: any) => {
                     if (res.status === 204) {
-                        this.notificationServiceBus.launchNotification(false, 'The interpreters have been invited');
+                        this.notificationServiceBus.launchNotification(false, isAutoInvite ? 'Auto-inviting has been started' : 'The interpreters have been invited');
                         this.selectedBookingModel.state = BOOKING_STATE.In_progress;
                     }
                     this.fetchBookingInterpreters(this.selectedBookingModel.id);
@@ -676,6 +686,15 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
             this.invitePressed = false;
             this.sendInvite(selectedInt);
         } else if (this.autoInvitePressed) {
+            this.spinnerService.requestInProcess(true);
+
+            for (let _id of this.selectedInterpreterIDs) {
+                selectedInt.push(new Object({
+                    id: _id
+                }));
+            }
+            this.selectedInterpreterIDs = [];
+            this.sendInvite(selectedInt);
 
         } else if (this.unAssignPressed) {
             this.spinnerService.requestInProcess(true);
