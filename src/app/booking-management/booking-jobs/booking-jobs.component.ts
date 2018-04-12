@@ -158,11 +158,9 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         if (this.dialogSub) {
             this.dialogSub.unsubscribe();
         }
-
-        if (this.isCurrentUserAdminOrBookingOfficer() && this.selectedBookingModel.link_id) {
-            this.linkedBookingConfirmation(isCancel);
-        } else {
-
+        if (this.isCurrentUserAdminOrBookingOfficer() && isCancel && this.selectedBookingModel.link_id) {
+               this.linkedBookingConfirmation(isCancel);
+          } else {
             let config: MdDialogConfig = {
                 disableClose: true
             };

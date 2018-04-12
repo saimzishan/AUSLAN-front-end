@@ -48,41 +48,41 @@
 <script src="assets/js/scripts.web.js"></script>
 
 <script>
-    $(document).ready(function () {
-        console.log('document ready');
-        function storageChange (event) {
-            if(event.key === 'token') {
-                if(!event.newValue) { window.location.href = '/' }
-            }
-        }
-        window.addEventListener('storage', storageChange, false);
-        var rescale = function () {
-            var hMobile = $("#header-mobile").is(":visible") ? $("#header-mobile").outerHeight(true) : 0;
-            var hDesktop = $("#header").is(":visible") ? $("#header").outerHeight(true) : 0;
-            $('.messages').height(
-                $(window).height() - hDesktop - hMobile - $("#page-messages").outerHeight(true)
-            );
-        };
+   
+	$(document).ready(function () {
+		console.log('document ready');
+		function storageChange(event) {
+			if (event.key === 'token') {
+				if (!event.newValue) { window.location.href = '/' }
+			}
+		}
+		window.addEventListener('storage', storageChange, false);
+		var rescale = function () {
+			var hMobile = $("#header-mobile").is(":visible") ? $("#header-mobile").outerHeight(true) : 0;
+			var hDesktop = $("#header").is(":visible") ? $("#header").outerHeight(true) : 0;
+			$('.messages').height(
+				$(window).height() - hDesktop - hMobile - $("#page-messages").outerHeight(true)
+			);
+		};
 
-        $(window).resize(function () {
-            rescale();
-        });
-        var count = 0;
-        $(function () {
-            // call the function.
-            try {
-                rescale();
-            } catch (e) {
-            }
-            // The currently executing function which is an anonymous function.
-            var caller = arguments.callee;
-            window.setTimeout(function () {
-                count = count + 1;
-                caller();
-            }, 1000);
+		$(window).resize(function () {
+			rescale();
+		});
+		$(function () {
+			// call the function.
+			try {
+				rescale();
+			} catch (e) {
+			}
+			// The currently executing function which is an anonymous function.
+			var caller = arguments.callee;
+			window.setTimeout(function () {
+				caller();
+			}, 1000);
 
-        });
-    });
+		});
+	});
+
 </script>
 </body>
 </html>

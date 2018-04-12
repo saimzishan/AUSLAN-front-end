@@ -103,7 +103,7 @@ Feature: Booking Admin Management
     When I click on an individual booking
     Then I will be shown the booking job page
     When I click on BUTTON 'Unable to Service'
-    Then I will be shown a popup message 'Would you like to mark this booking as unable to service, or all linked bookings?'
+    Then I will be shown a popup message 'Are you sure you want to mark this booking as unable to service? The client will be notified of this. This is a permanent action.'
     Then I click on BUTTON name 'yesBtn'
     Then I get a valid 'Unable to Service' notification for state
     Then I can see the button state 'Cancel Booking' is hidden
@@ -372,7 +372,7 @@ Feature: Booking Admin Management
     When I click on an individual booking
     Then I will be shown the booking job page
     When I click on BUTTON 'Unable to Service'
-    Then I will be shown a popup message 'Would you like to mark this booking as unable to service, or all linked bookings?'
+    Then I will be shown a popup message 'Are you sure you want to mark this booking as unable to service? The client will be notified of this. This is a permanent action.'
     Then I click on BUTTON name 'yesBtn'
     Then I get a valid 'Unable to Service' notification for state
     Then I can see the button state 'Cancel Booking' is hidden
