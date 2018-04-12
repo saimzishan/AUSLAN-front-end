@@ -60,8 +60,8 @@
         <td data-title="ADDRESS">
           <a target="_blank"
              href="{{'https://www.google.com.au/maps/place/' + selectedBookingModel.venue.street_number + ' ' + selectedBookingModel.venue.street_name + ' ' + selectedBookingModel.venue.suburb}}">
-            {{selectedBookingModel.venue.street_number
-            + ' ' + selectedBookingModel.venue.street_name }}
+            {{selectedBookingModel.venue.unit_number? selectedBookingModel.venue.unit_number + '/' : ''}}{{selectedBookingModel.venue.street_number + ' ' + selectedBookingModel.venue.street_name + ' ' + selectedBookingModel.venue.suburb
+            + ' ' + selectedBookingModel.venue.state + ' ' + selectedBookingModel.venue.post_code}}
           </a>
         </td>
         <td data-title="VENUE">{{selectedBookingModel.venue.title}}</td>

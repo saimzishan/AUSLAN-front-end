@@ -21,7 +21,7 @@ jobs:
           name: Setup parallelism
           shell: /bin/bash -l
           command: |
-            if [ $CIRCLE_BRANCH = 'master' ] || [ $CIRCLE_BRANCH = 'development' ] || [ $CIRCLE_BRANCH = 'release-0.8' ];
+            if [ $CIRCLE_BRANCH = 'master' ] || [ $CIRCLE_BRANCH = 'development' ] || [ $CIRCLE_BRANCH = 'release-1.0' ];
               then
                 circleci tests glob "/var/www/booking-system-frontend/e2e-tests/features/*.feature" | circleci tests split > ./test_features_for_split_container.txt
             else
@@ -84,7 +84,7 @@ jobs:
               npm install enhanced-resolve@3.3.0
               ng build --aot --env=canary
               aws s3 sync dist/  s3://auslan-booking-system-ct/ --delete --cache-control max-age=60
-            elif [ "${CIRCLE_BRANCH}" == "release-0.8" ]; then
+            elif [ "${CIRCLE_BRANCH}" == "release-1.0" ]; then
               rm -rf dist
               npm install enhanced-resolve@3.3.0
               ng build --aot --env=stage
