@@ -56,6 +56,7 @@ export class InboxComponent implements OnInit, OnDestroy {
                         this.selectedMessageThread = +this.draftMessage.selected_message_thread;
                         this.message_thread_id = this.draftMessage.thread_id;
                         this.messageThreadPage = this.draftMessage.thread_page_no;
+                        this.searchInterpreterQuery = this.draftMessage.interpreter_name;
                         this.getInterpreterMessage(this.message_thread_id);
                     }
     }
@@ -223,7 +224,8 @@ export class InboxComponent implements OnInit, OnDestroy {
             localStorage.setItem('message',
             `{"user_id": "` + this.userId + `","text": "` + this.message_body + `",
             "selected_message_thread": "` + this.selectedMessageThread + `",
-            "thread_id": "` + this.message_thread_id + `","thread_page_no": "` + this.messageThreadPage + `"}`);
+            "thread_id": "` + this.message_thread_id + `","thread_page_no": "` + this.messageThreadPage + `",
+            "interpreter_name": "` + this.searchInterpreterQuery + `"}`);
         }
     }
 
