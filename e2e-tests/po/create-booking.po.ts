@@ -303,8 +303,6 @@ export class BookingPage extends PageObject {
         const currentDate = new Date();
         currentDate.setHours(currentDate.getHours() - n);
         let tim = moment(currentDate).format('hh:mm A');
-       // let tim = currentDate.getHours() + ':' + currentDate.getMinutes();
-        console.log('timeeeeeeee'+tim);
         return tim;
     }
 
