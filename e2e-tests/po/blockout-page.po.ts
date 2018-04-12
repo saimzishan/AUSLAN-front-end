@@ -72,14 +72,11 @@ export class BlockoutPagePo extends PageObject {
             expect(val).to.be.eq('09:00 PM');
         });
     }
-    chengeStartTimeWithOutYear = () => {
+
+    changeStartTimeWithWrongInput = (input) => {
         let startTime = this.getElementByCss('input[name="dpEventDate_st"]');
-        let today = new Date();
-        today.setDate(today.getDate() + 7);
-        const currentDate = [
-            Heroku.prettyDate(today.getDate()),
-            Heroku.prettyDate(today.getMonth() + 1)
-        ].join('/');
+
+        const currentDate = input;
         startTime.clear();
         startTime.sendKeys(currentDate + ' 08:00 PM');
         this.clickOutSide();
@@ -87,59 +84,10 @@ export class BlockoutPagePo extends PageObject {
             expect(val).to.be.eq('');
         });
     }
-    chengeStartTimeWithWrongYear = () => {
+    checkStartTimeShouldBe = (input) => {
         let startTime = this.getElementByCss('input[name="dpEventDate_st"]');
-        let today = new Date();
-        today.setDate(today.getDate() + 7);
-        const currentDate = [
-            Heroku.prettyDate(today.getDate()),
-            Heroku.prettyDate(today.getMonth() + 1),
-            today.getFullYear().toString().substring(0, 3)
-        ].join('/');
-        startTime.clear();
-        startTime.sendKeys(currentDate + ' 08:00 PM');
-        this.clickOutSide();
-        return startTime.getAttribute('value').then((val) => {
-            expect(val).to.be.eq('');
-        });
-    }
-    chengeStartTimeWithWrongInput = () => {
-        let startTime = this.getElementByCss('input[name="dpEventDate_st"]');
-        let today = new Date();
-        today.setDate(today.getDate() + 7);
-        const currentDate = 'abcdefgh';
-        startTime.clear();
-        startTime.sendKeys(currentDate + ' 08:00 PM');
-        this.clickOutSide();
-        return startTime.getAttribute('value').then((val) => {
-            expect(val).to.be.eq('');
-        });
-    }
-    chengeStartTimeWithWrongMonth = () => {
-        let startTime = this.getElementByCss('input[name="dpEventDate_st"]');
-        let today = new Date();
-        today.setDate(today.getDate() + 7);
-        const currentDate = [
-            Heroku.prettyDate(today.getDate()),
-            Heroku.prettyDate(today.getMonth() + 12),
-            today.getFullYear().toString()
-        ].join('/');
-        startTime.clear();
-        startTime.sendKeys(currentDate + ' 08:00 PM');
-        this.clickOutSide();
-        return startTime.getAttribute('value').then((val) => {
-            expect(val).to.be.eq('');
-        });
-    }
-    chengeStartTimeWithWrongDay = () => {
-        let startTime = this.getElementByCss('input[name="dpEventDate_st"]');
-        let today = new Date();
-        today.setDate(today.getDate() + 7);
-        const currentDate = [
-            Heroku.prettyDate(today.getDate() + 31),
-            Heroku.prettyDate(today.getMonth() + 1),
-            today.getFullYear().toString()
-        ].join('/');
+
+        const currentDate = input;
         startTime.clear();
         startTime.sendKeys(currentDate + ' 08:00 PM');
         this.clickOutSide();

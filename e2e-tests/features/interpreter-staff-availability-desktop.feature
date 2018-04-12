@@ -108,6 +108,7 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER STAF
     Then I check the value of endTime is '07:25 AM'
     Then I check the value of availability is 'test-blockout'
     Then I see selected option 'WEEKLY' in dropdown
+
 @runThis
   Scenario: As Administrator I can add INTERPRETER STAFF-AVAILABILITY on desktop
     Given I go to the website
@@ -126,12 +127,17 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER STAF
     Then I will be taken to staff-calendar page
     Then I check that the start time and end time is 6:25am - 7:25am
     Then I wait for 1000 milli-seconds
-    Then I set the start time without year
+    Then I set the start dateTime without year '02/02/'
+    Then I check the value of start time should be ''
     Then I wait for 1000 milli-seconds
-    Then I set the start time with wrong month
+    Then I set the start dateTime with wrong month '02/14/2018'
+    Then I check the value of start time should be ''
     Then I wait for 1000 milli-seconds
-    Then I set the start time with wrong day
+    Then I set the start dateTime with wrong day '32/04/2018'
+    Then I check the value of start time should be ''
     Then I wait for 1000 milli-seconds
-    Then I set the start time with wrong year
+    Then I set the start dateTime with non numeric value for year '02/02/abcd'
+    Then I check the value of start time should be ''
     Then I wait for 1000 milli-seconds
-    Then I set the start time with wrong input
+    Then I set the start dateTime with non numeric value 'as/as/asad'
+    Then I check the value of start time should be ''
