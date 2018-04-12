@@ -215,8 +215,8 @@ export class BookingPage extends PageObject {
     }
     setDateOnly = (field: string, date: TestDateFormat) => {
         this.getElementByName(field).sendKeys(protractor.Key.BACK_SPACE);
-        this.getElementByName(field).sendKeys(date.mm);
         this.getElementByName(field).sendKeys(date.dd);
+        this.getElementByName(field).sendKeys(date.mm);
         this.getElementByName(field).sendKeys(date.yy);
     }
     setDate= (date: string) => {
