@@ -15,4 +15,8 @@ export class MobileHeaderComponent {
     getPicturePath() {
         return GLOBAL.currentUser.photo_url;
     }
+
+    getActiveUserId() {
+        return GLOBAL.currentUser.id;
+    }
 }

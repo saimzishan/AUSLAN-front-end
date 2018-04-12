@@ -237,6 +237,7 @@ export class BookingListComponent implements OnInit, OnChanges {
     }
 
     filter(field: string, value: string, toggle?: boolean) {
+        value = Boolean(value) ? value : 'all';
         if (value.toLowerCase() === 'all') {
             this.unsetFilter(field);
         } else if (toggle) {

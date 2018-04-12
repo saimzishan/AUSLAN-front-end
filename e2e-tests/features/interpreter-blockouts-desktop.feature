@@ -293,7 +293,7 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER BOOK
     And I wait for 3000 milli-seconds
     And I get error message: 'Unprocessable Entity You have a blockout at this time. Please remove the blockout before accepting the booking'
 
-  @runThis
+  @ignoreThis
   Scenario: As INTERPRETER, I can create edit blockout on desktop to check whether the end time changes or not
     Given I go to the website
     And I am on a computer
