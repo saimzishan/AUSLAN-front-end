@@ -102,28 +102,6 @@ Feature: Booking Filter
     When I filter booking by date range first and last days of next week
     Then I am shown with 2 booking
 
-  @ignoreThis
-  Scenario: As an Individual Client, I should be able to filter by date range
-    Given One booking has start and end dates as first and last days of next week
-    And I exist as an Individual Client
-    And I sign in with valid Individual Client credentials
-    When I am on the bookings page
-    Then I will be shown with bookings
-    When I filter booking by date range first and last days of next week
-    Then I am shown with 2 booking
-
-  @ignoreThis
-  Scenario: As a Organisational Representative, I should be able to filter by date range
-    Given Assigned all bookings to Organisational Representative
-    And One booking has start and end dates as first and last days of next week
-    And I exist as an Organisational Representative
-    And I sign in with valid Organisational Representative credentials
-    When I am on the bookings page
-    Then I will be shown with bookings
-    Then I am shown with 5 booking
-    When I filter booking by date range first and last days of next week
-    Then I am shown with 2 booking
-
   @runThis
   Scenario: As a Administrator, I should be able to search bookings by external ref number and when I remove the external ref number then all bookings should be displayed
     And I sign in with valid Administrator credentials
