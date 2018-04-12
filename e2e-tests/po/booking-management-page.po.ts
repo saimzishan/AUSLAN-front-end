@@ -361,21 +361,32 @@ export class BookingManagementPage extends PageObject {
     }
 
     filterBookingByDateRange = () => {
-        let currentDate = new Date();
-        let dateStart = new Date(new Date(currentDate).setDate(currentDate.getDate() + 12));
-        let dateEnd = new Date(new Date(dateStart).setDate(dateStart.getDate() + 4));
-        let dateFrom = {
+        // Get date.now in milli-seconds from epoch
+        const currentDate = Date.now();
+
+        // 2 bookings have been updated to 2 weeks from now
+        // Set start date as 12 days from now
+        const dateStart = new Date(currentDate + (12 * 24 * 60 * 60 * 1000));
+
+        // Set end date as 16 days from now
+        // When we filter within these params
+        // all booking which have start time and end time as
+        // 2 weeks from now (14 days) should come up
+        const dateEnd = new Date(currentDate + (16 * 24 * 60 * 60 * 1000));
+        const dateFrom = {
             dd: this.prettyDate(dateStart.getDate()),
             mm: this.prettyDate(dateStart.getMonth() + 1),
             yy: dateStart.getFullYear().toString()
         };
-        let dateTo = {
+        const dateTo = {
             dd: this.prettyDate(dateEnd.getDate()),
             mm: this.prettyDate(dateEnd.getMonth() + 1),
             yy: dateEnd.getFullYear().toString()
         };
         this.booking.setDateOnly('date_from', dateFrom);
-        return this.booking.setDateOnly('date_to', dateTo);
+        this.booking.setDateOnly('date_to', dateTo);
+
+        return this.getElementByName('date_to').sendKeys(protractor.Key.ENTER);
     }
 
     filterBookingByCurrentDate = () => {

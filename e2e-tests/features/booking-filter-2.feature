@@ -92,7 +92,7 @@ Feature: Booking Filter
     When I hover on the Type dropdown and select 'All'
     Then I am shown with 5 bookings
 
-  @ignoreThis
+  @runThis
   Scenario: Given 1 verified Booking Officer, I should be able to filter by date range
     Given One booking has start and end dates as first and last days of next week
     Given I exist as an Booking Officer

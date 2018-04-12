@@ -685,7 +685,7 @@ export class Heroku {
     }
 
     static updateBookingStartAndEndDateTime() {
-        let command = 'start_date = DateTime.current + 2.week; end_date = start_date + 2.day;';
+        let command = 'start_date = DateTime.current.utc.beginning_of_day + 2.week; end_date = start_date + 2.hours;';
         command += 'Booking.first.update(start_time: start_date, end_time: end_date);';
         command += 'Booking.last.update(start_time: start_date, end_time: end_date)';
         Heroku.sendCommandToHeroku(command);
