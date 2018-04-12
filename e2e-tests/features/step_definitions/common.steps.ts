@@ -29,7 +29,6 @@ defineSupportCode(({Given, When, Then}) => {
         return Heroku.createBulkUsers(numberOfUser, active, type);
     }
 
-    Given(/^There exists an? (.*)/, Heroku.createFactory);
     Given(/^I click on my name$/, bookingManagementPage.clickOnProfile);
     Given(/^I scroll up$/, () => {
         browser.controlFlow().execute(() => {

@@ -49,21 +49,19 @@ export class BookingManagementPage extends PageObject {
         });
     }
     hoverOnTableHeader = (headerTitle: string, selection: string) => {
-        let headerCss = '.dropdown#' + {
+        const headerCss = '.dropdown#' + {
             'Status': 'booking-status',
             'State': 'booking-state',
-            'Type': 'booking-type',
+            'Nature': 'booking-type',
             'userlist': 'user-roles',
             'Method': 'method',
             'Service Type': 'service-type',
         }[headerTitle];
-        let el = this.getElementByCss(headerCss);
+        const el = this.getElementByCss(headerCss);
         return browser.actions().mouseMove(el).perform().then(() => {
-            let listEl = this.getElementByCSSandText(headerCss + ' ul li a', selection);
-            this.currentPath().then((path) => {
-                browser.wait(protractor.ExpectedConditions.presenceOf(listEl), 10000).then(() => {
-                    return listEl.click();
-                });
+            const listEl = this.getElementByCSSandText(headerCss + ' ul li a', selection);
+            browser.wait(protractor.ExpectedConditions.presenceOf(listEl), 10000).then(() => {
+                return listEl.click();
             });
         });
     }
@@ -221,7 +219,7 @@ export class BookingManagementPage extends PageObject {
     bookingWithTypeExists = (count: string, booking_type: string) => {
         let tblRows = this.getAllElementByCSS('table tbody tr');
         expect(tblRows.count()).to.eventually.be.least(1);
-        let orgNameTd = this.getElementByCss('table tbody tr:first-child td:nth-child(10)');
+        let orgNameTd = this.getElementByCss(`table tbody tr:first-child td:nth-child(${BookingTableHeaders.Nature})`);
         return orgNameTd.getText().then((txt) => {
             return expect(txt).to.be.eq(booking_type);
         });

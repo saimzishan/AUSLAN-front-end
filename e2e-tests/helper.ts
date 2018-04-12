@@ -598,17 +598,9 @@ export class Heroku {
         Heroku.sendCommandToHeroku(command);
     }
 
-    static createFactory(factory: string) {
-        if (factory === 'booking') {
-            return Heroku.createSingleBooking();
-        }
-    }
-
     static updateBookingWithCategory(category: string) {
-        let command = 'AssignmentCategory.create(name: \'' + category
-            + '\'); AssignmentType.create(name: \'Cleveland\', assignment_category: AssignmentCategory.last);'
-        command += 'Booking.last.update(assignment_type: AssignmentType.last);';
-        Heroku.sendCommandToHeroku(command);
+        const task = 'seed:test_data:preload_booking:with_assignment_category[' + category + ']';
+        Heroku.sendTaskToHeroku(task);
     }
 
     private static updateBookingWithStatus(status: string, updateFirst?: boolean) {
