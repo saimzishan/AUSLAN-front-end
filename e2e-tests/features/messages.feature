@@ -36,3 +36,19 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN,  I can send messages and ca
         And I get success message: 'Message sent successfully..'
         #Then I click on button with css '.messages__formButton'
         #And I can see the element with name 'messages__Xtag' is 'not visible'
+
+    @runThis
+    Scenario: Given 1 verified Administrator and INTERPRETER exists I am able to search interpreters in text search box
+        Given I exist as an Administrator
+        And I sign in with valid Administrator credentials
+        And I am on the bookings page
+        Then I click on element by id 'lnkMessages'
+        Then I will be taken to message page
+        Then I fill the field 'search' with value 'Ted'
+        And I click on BUTTON name 'btnSearch'
+        Then I wait for 1000 milli-seconds
+        And I can count the element with css 'section.messages__conversation_active' to be '1'
+        Then I fill the field 'search' with value 'papu'
+        And I click on BUTTON name 'btnSearch'
+        Then I wait for 1000 milli-seconds
+        And I can count the element with css 'section.messages__conversation' to be '0'

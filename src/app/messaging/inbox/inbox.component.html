@@ -8,7 +8,7 @@
             <form #filterBySearch="ngForm" class="common-form compact" (ngSubmit)="searchInterpreter()" novalidate>
                 <input type="text" name="search" id="search" (blur)="searchInterpreter()" [(ngModel)]="searchInterpreterQuery" (click)="'' !== searchInterpreterQuery && clear()" placeholder="Search Interpreter By Name">
             </form>
-            <button>
+            <button name="btnSearch">
                 <i (click)="searchInterpreter()" class="icon-glass"></i>
             </button>
         </section>
