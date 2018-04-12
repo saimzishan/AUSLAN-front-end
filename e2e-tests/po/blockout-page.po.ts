@@ -113,6 +113,15 @@ export class BlockoutPagePo extends PageObject {
             expect(val).to.be.eq('01:02 AM');
         });
     }
+    changeEndTimeWithWrongInput = (value) => {
+        let endTime = this.getElementByCss('input[name="dpEventEndTime"]');
+        endTime.clear();
+        endTime.sendKeys(value);
+        this.clickOutSide();
+        return endTime.getAttribute('value').then((val) => {
+            expect(val).to.be.eq('');
+        });
+    }
     checkEndTime = (value) => {
         let endTime = this.getElementByCss('input[name="dpEventEndTime"]');
         return endTime.getAttribute('value').then((val) => {
