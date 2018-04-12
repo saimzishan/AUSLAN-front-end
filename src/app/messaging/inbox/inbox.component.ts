@@ -143,7 +143,7 @@ export class InboxComponent implements OnInit, OnDestroy {
                     if (res.status === 200) {
                         this.messageThreads = res.data.message_threads;
                         this.totalItems = res.data.message_threads_count;
-                        if (!localStorage.getItem('message')) {
+                        if (!localStorage.getItem('message') && this.totalItems > 0) {
                             this.selectedMessageThread = 0;
                             this.userId = this.messageThreads[this.selectedMessageThread].user_id;
                             this.message_thread_id = this.messageThreads[this.selectedMessageThread].id;
@@ -165,6 +165,7 @@ export class InboxComponent implements OnInit, OnDestroy {
         this.selectedMessageThread = 0;
         this.userId = 0;
         this.message_thread_id = 0;
+        this.messages = []
         this.getAllMessageThreads(this.business_id);
     }
 
