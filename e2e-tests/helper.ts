@@ -453,7 +453,8 @@ export class Heroku {
 
     static createBulkBookings(count: string) {
         let command = 'i=IndividualClient.first;FactoryGirl.create(:ted_individual_client) if !i;';
-        command += 'Time.zone = "Hobart";FactoryGirl.create_list(:booking, ' + count + ', bookable: IndividualClient.first, start_time: 7.business_days.from_now, end_time: 7.business_days.from_now + 2.hours)';
+        command += 'Time.zone = "Hobart";FactoryGirl.create_list(:booking, ' + count
+            + ', bookable: IndividualClient.first, start_time: 7.days.from_now, end_time: 7.days.from_now + 2.hours)';
         Heroku.sendCommandToHeroku(command);
     }
     static setInterpreterType(type: string) {
@@ -531,7 +532,7 @@ export class Heroku {
                 updatableFields = 'disabled: false, verified: true';
                 break;
         }
-        const command = user + '.' + record + '.update_attributes(' + updatableFields + ')'
+        const command = user + '.' + record + '.update_attributes(' + updatableFields + ')';
         Heroku.sendCommandToHeroku(command);
     }
 
@@ -604,7 +605,8 @@ export class Heroku {
     }
 
     static updateBookingWithCategory(category: string) {
-        let command = 'AssignmentCategory.create(name: \'' + category + '\'); AssignmentType.create(name: \'Cleveland\', assignment_category: AssignmentCategory.last);'
+        let command = 'AssignmentCategory.create(name: \'' + category
+            + '\'); AssignmentType.create(name: \'Cleveland\', assignment_category: AssignmentCategory.last);'
         command += 'Booking.last.update(assignment_type: AssignmentType.last);';
         Heroku.sendCommandToHeroku(command);
     }
