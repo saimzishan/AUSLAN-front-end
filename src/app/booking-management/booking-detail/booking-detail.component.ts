@@ -1149,6 +1149,10 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 hour = hh;
             }
             bookingTime = hour + ':' + mm + ' 00';
+            if (isNaN(Date.parse(bookingTime) ) ) {
+                this.start_time = '';
+                return;
+            }
             if (timeControl === 'startTimeControl') {
                 this.bookingStartTime = new Date(bookingTime);
             } else {
