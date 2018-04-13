@@ -49,7 +49,7 @@ export class InboxComponent implements OnInit, OnDestroy {
     constructor(private userService: UserService, private notificationServiceBus: NotificationServiceBus, public platformLocation: PlatformLocation,
                 private messagingService: MessagingService, private _location: Location, public spinnerService: SpinnerService,
                 private rolePermission: RolePermission, private router: Router, private route: ActivatedRoute) {
-                    if (localStorage.getItem('message')) {
+                    if (localStorage.getItem('message') && this.isCurrentUserAdminOrBookingOfficer()) {
                         this.draftMessage = JSON.parse(localStorage.getItem('message'));
                         this.userId = +this.draftMessage.user_id;
                         this.message_body = this.draftMessage.text;
@@ -166,7 +166,7 @@ export class InboxComponent implements OnInit, OnDestroy {
         this.selectedMessageThread = 0;
         this.userId = 0;
         this.message_thread_id = 0;
-        this.messages = []
+        this.messages = [];
         this.getAllMessageThreads(this.business_id);
     }
 
@@ -262,7 +262,9 @@ export class InboxComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         localStorage.setItem('bookingId', '-1');
-        this.saveMessageOfThread();
+        if (this.isCurrentUserAdminOrBookingOfficer()) {
+            this.saveMessageOfThread();
+        }
     }
 
     checkDayIsToday(lastMesgDate) {

@@ -26,7 +26,7 @@
                     *ngFor="let mesg of messageThreads  | paginate: { itemsPerPage: 10, currentPage: messageThreadPage ,totalItems: totalItems } let i = index">
                 <section class="messages__conversation"
                          [ngClass]="{'messages__conversation_active': i === selectedMessageThread}">
-                    <a (click)='showSingleMessageThread(i)'>
+                    <a name="{{mesg.user_name.replace(' ', '-')}}" (click)='showSingleMessageThread(i)'>
                         <div *ngIf='mesg.messages_count > 0'>
                             <span>{{mesg.last_messaging_time | date: 'h:mma' }}</span> |
                             <span>{{mesg.user_name}}</span>
