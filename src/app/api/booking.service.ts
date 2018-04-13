@@ -250,14 +250,13 @@ export class BookingService extends ApiService {
             .catch((err) => { return this.handleError(err); });
     }
 
-    checkClientAvailability(obj = {}) {
+    checkClientAvailability(obj) {
         let headers = new Headers(
             {
                  'Accept': 'application/json',
                  'Content-Type': 'application/json'
              }
          );
-
         let options = new RequestOptions({ headers: headers});
         options = Object.assign(options, { params: obj });
 

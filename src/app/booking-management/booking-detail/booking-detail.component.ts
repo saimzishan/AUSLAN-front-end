@@ -104,6 +104,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     clientAvailability;
     isClientFound = false;
     availabilityMesg = '';
+    start_time;
     repeat_days = [
         {
             display: 'S',
@@ -1122,16 +1123,54 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         this.showPreferred = this.showProfilePreferred = this.showBlocked = this.showProfileBlocked = false;
         this.hasPrefInt = this.hasBlockInt = false;
     }
+    checkMe(event) {
+        this.start_time = event.target.value;
+    }
+
+    assignMe(timeControl) {
+        this.start_time = this.start_time.replace(/\s/g, '');
+        let regularExpression = new RegExp('^([0-9]|0[0-9]|1[0-2]):([0-5][0-9])\s*?([AP]M)?$', 'i');
+        let res = regularExpression.exec(this.start_time);
+        let bookingTime;
+        if (res) {
+            let hh = res[1];
+            let mm = res[2];
+            let amPm = res[3];
+            let hour;
+            if (+hh < 10) {
+                hour = '0' + hh;
+            }
+            if (amPm) {
+               amPm = amPm.toLocaleUpperCase();
+                console.log(amPm);
+                if (amPm === 'PM') {
+                    hour = (+hh) + 12;
+                } else {
+                    hour = hh;
+                }
+            } else {
+                amPm = 'AM';
+                hour = hh;
+            }
+            bookingTime = hour + ':' + mm + ' 00';
+            if (timeControl === 'startTimeControl') {
+                this.bookingStartTime = new Date(bookingTime);
+            } else {
+                this.bookingEndTime = new Date(bookingTime);
+            }
+        }
+        this.start_time = '';
+     }
 
     checkClientAvailability() {
         delete this.bookingModel.deaf_person.photo_url;
         this.spinnerService.requestInProcess(true);
-        const obj = {'user':  {
-                'first_name': this.bookingModel.deaf_person.first_name, 'last_name': this.bookingModel.deaf_person.last_name,
-                'mobile': this.bookingModel.deaf_person.mobile_number, 'email': this.bookingModel.deaf_person.email, 'eaf_id': this.bookingModel.deaf_person.eaf,
-                'ndis_id': this.bookingModel.deaf_person.ndis_id, 'ur_id': this.bookingModel.deaf_person.ur_number
-            } };
-        this.bookingService.checkClientAvailability(obj)
+        const user = {'first_name': this.bookingModel.deaf_person.first_name, 'last_name': this.bookingModel.deaf_person.last_name,
+                        'mobile': this.bookingModel.deaf_person.mobile_number, 'email': this.bookingModel.deaf_person.email,
+                        'eaf_id': this.bookingModel.deaf_person.eaf,
+                        'ndis_id': this.bookingModel.deaf_person.ndis_id, 'ur_id': this.bookingModel.deaf_person.ur_number
+                    };
+        this.bookingService.checkClientAvailability(user)
             .subscribe((res: any) => {
                 this.spinnerService.requestInProcess(false);
                 this.isclientAvailable = true;

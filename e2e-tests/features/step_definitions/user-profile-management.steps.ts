@@ -44,6 +44,7 @@ defineSupportCode(({Given, Then, When}) => {
     Then(/^I check the value of availability is '(.*)'$/, blockoutPage.checkValuOFBlockoutName);
     Then(/^I change the value of end time$/, blockoutPage.changeEndTimeOFBlockout);
     Then(/^I change the value of end time of booking '(.*)'$/, blockoutPage.changeEndTime);
+    Then(/^I change the value of end time of booking with wrong value '(.*)'$/, blockoutPage.changeEndTimeWithWrongInput);
     Then(/^I change the value of end date$/, blockoutPage.changeEndDateOFBlockout);
     Then(/^I enter blockout details with booking time same as booking$/, blockoutPage.createBlockoutWithBookingTime);
 

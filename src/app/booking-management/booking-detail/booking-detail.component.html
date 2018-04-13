@@ -144,7 +144,7 @@
           <div class="form-field">
             <label>START TIME *</label>
             <p-calendar  name='dpEventDate' 
-            [(ngModel)]="bookingStartTime" 
+            [(ngModel)]="bookingStartTime"
             [readonlyInput]="isDisabledForOrgRepIndClient"
             placeholder="STARTING TIME *"
             [timeOnly]="true" hourFormat="12"
@@ -1174,7 +1174,7 @@
                 <i class="inline-icon-tip"></i>
               </span>
             </label>
-            <button (click)='checkClientAvailability()' class="btn btn-success">Search</button>
+            <button (click)='checkClientAvailability()' name="client_availability_search_btn" class="btn btn-success">Search</button>
           </div>
         </div>
     
@@ -1182,7 +1182,7 @@
           <label [ngClass]="{'note_green': isClientFound, 'note_red': !isClientFound}">{{availabilityMesg}}</label>
             <div class="form-field" *ngIf='isClientFound'>
               <label>Do you want to link the client to this.booking?</label>
-              <span mdTooltip="Searching">
+              <span mdTooltip="Client Availability">
                 <i class="inline-icon-tip"></i>
               </span>
               <md-radio-group name="clientAvailability" [(ngModel)]="bookingModel.clientAvailability">

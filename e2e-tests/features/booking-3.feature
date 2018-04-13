@@ -179,6 +179,12 @@ Feature: Booking Management
     Then I wait for 1000 milli-seconds
     Then I change the value of end time of booking '01:02am'
     Then I check the value of endTime should be '01:02 AM'
+    Then I change the value of end time of booking with wrong value 'as:as pm'
+    Then I check the value of endTime should be ''
+    Then I change the value of end time of booking with wrong value 'abcd pm'
+    Then I check the value of endTime should be ''
+    Then I change the value of end time of booking with wrong value '12:as pm'
+    Then I check the value of endTime should be ''
 
 # ---------------------------------------- AUSLAN1-727 -> START ----------------------------------------
 
@@ -235,3 +241,20 @@ Feature: Booking Management
     And I click on BUTTON 'Duplicate'
     Then I will be taken to the 'New Booking' form
     And I will see attachment 'sushi.pdf' is removed
+
+  @runThis
+  Scenario: Given 1 verified Individual Client, Administrator can create a booking, an Organisational Representative
+    Given I exist as an Administrator
+    And I sign in with valid Administrator credentials
+    And I am on the bookings page
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    Then I verify radiobutton name 'IndividualClient' and is checked
+    And I can see the element with name 'client_availability_search_btn' is 'not visible'
+    Then I click on element by name 'OrganisationalRepresentative'
+    Then I verify radiobutton name 'OrganisationalRepresentative' and is checked
+    And I can see the element with name 'client_availability_search_btn' is 'visible'
+    Then I select the bookable for org rep
+    And I can see the input with name 'deaf_person_name' has text 'alana'
+    And I can see the input with name 'deaf_person_email' has text 'alana@auslan.com.au'
+ 
