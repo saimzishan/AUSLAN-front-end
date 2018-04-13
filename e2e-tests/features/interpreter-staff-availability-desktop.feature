@@ -141,3 +141,21 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER STAF
     Then I wait for 1000 milli-seconds
     Then I set the start dateTime with non numeric value 'as/as/asad'
     Then I check the value of start time should be ''
+    Then I set the start dateTime with non numeric value '02:02:1994'
+    Then I check the value of start time should be ''
+    Then I set the start dateTime with non numeric value '02:02/1994'
+    Then I check the value of start time should be ''
+    Then I set the start dateTime with non numeric value '02/02:1994'
+    Then I check the value of start time should be ''
+    Then I set the start dateTime with non numeric value '02:02:19   94'
+    Then I check the value of start time should be ''
+    Then I set the start dateTime with non numeric value '02:     02:1994'
+    Then I check the value of start time should be ''
+    Then I set the start dateTime with non numeric value '02/    02/ 1994'
+    Then I check the value of start time should be ''
+    Then I set the start dateTime with non numeric value '1994/02/22'
+    Then I check the value of start time should be ''
+    Then I set the start dateTime with non numeric value '1994/23/02'
+    Then I check the value of start time should be ''
+    Then I check that the end time is greater then start time
+    
