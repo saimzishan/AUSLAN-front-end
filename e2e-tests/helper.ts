@@ -712,6 +712,11 @@ export class Heroku {
         Heroku.sendCommandToHeroku(command);
     }
 
+    static createBulkMessages(count: string, user_type: string) {
+        let command = 'Time.zone = "Hobart";FactoryGirl.create_list(:message, ' + count
+            + ', message_thread: ' + user_type + '.last.message_thread, sender_id: ' + user_type + '.last.id)';
+        Heroku.sendCommandToHeroku(command);
+    }
 
     private static createBooking(int_required: number) {
 

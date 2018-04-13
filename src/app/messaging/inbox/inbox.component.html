@@ -47,11 +47,11 @@
     <section class="messages__wrapper" [ngClass]="{'messages__wrapper_aside': isCurrentUserAdminOrBookingOfficer()}"
              id="messages-wrapper">
         <div class="text-center">
-            <button *ngIf="showLoadMore === true && messageCount > messagePage * 10"
+            <button name="load_previous_messages_btn" *ngIf="showLoadMore === true && messageCount > messagePage * 10"
                     (click)="loadMore()" class="button inline-block">Load Previous Messages
             </button>
         </div>
-        <perfect-scrollbar (psYReachStart)="scrollReachedAtTop()"  (psYReachEnd)="scrollReachedAtBottom()" [config]="config" [scrollIndicators]="false">
+        <perfect-scrollbar (psYReachStart)="scrollReachedAtTop()" id="perfect_scrollbar"  (psYReachEnd)="scrollReachedAtBottom()" [config]="config" [scrollIndicators]="false">
             <ng-container *ngFor="let message of messages">
 
                 <section class="messages__message" [ngClass]="{ 'messages__message_left' : message.sender.type !== 'Interpreter'

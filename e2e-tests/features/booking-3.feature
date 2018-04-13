@@ -185,6 +185,10 @@ Feature: Booking Management
     Then I check the value of endTime should be ''
     Then I change the value of end time of booking with wrong value '12:as pm'
     Then I check the value of endTime should be ''
+    Then I change the value of end time of booking '01:02       am'
+    Then I check the value of endTime should be '01:02 AM'
+    Then I change the value of end time of booking '1:02am'
+    Then I check the value of endTime should be '01:02 AM'
 
 # ---------------------------------------- AUSLAN1-727 -> START ----------------------------------------
 
