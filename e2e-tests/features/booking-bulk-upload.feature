@@ -54,8 +54,7 @@ Feature: Booking Management with bulk upload
 
   @runThis
   Scenario: Individual Client can not bulk upload with an excel file that has an Organisational Representative
-    Given I exist as an Individual Client
-    And I sign in with valid Individual Client credentials
+    Given I sign in with valid Individual Client credentials
     And I am on the bookings page
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
@@ -64,9 +63,8 @@ Feature: Booking Management with bulk upload
     And I will be taken to the 'New Booking' form
 
   @runThis
-  Scenario: Individual Client can not bulk upload with an excel file that has an Organisational Representative
-    Given I exist as an Organisational Representative
-    And I sign in with valid Organisational Representative credentials
+  Scenario: Organisational Representative can not bulk upload with an excel file that has an Organisational Representative
+    Given I sign in with valid Organisational Representative credentials
     And I am on the bookings page
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
