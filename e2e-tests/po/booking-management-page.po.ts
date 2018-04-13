@@ -172,6 +172,13 @@ export class BookingManagementPage extends PageObject {
         })
     }
 
+    clickAtOneofTheBookingMobileWithIndex = (index: number) => {
+        const allTypeBooking = this.getAllElementByCSS('li.booking-mobile__item');
+        return allTypeBooking.count().then(countNum => {
+            return allTypeBooking.get(index).click();
+        })
+    }
+
     bookingWithStateExists = (count: string, booking_state: string) => {
         if (count === 'one') { count = '1'; }
         return this.getAllByCSSandText('tbody td', booking_state).count().then((cnt) => {

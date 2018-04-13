@@ -203,3 +203,33 @@ Feature: As INTERPRETER, I can login on mobile
     Then I will be shown the bookings page
 
     # ---------------------------------------- AUSLAN 1-67 -> END ----------------------------------------
+
+  @runThis
+  Scenario: As INTERPRETER, I can accept the booking, if a booking is created and INTERPRETER Invited then he can filter bookings with footer buttons
+    And I sign in with valid Interpreter credentials
+    Then I will be shown the bookings page
+    When I click on BUTTON 'Open'
+    Then I am shown with 1 booking in mobile view
+    And  I click on an individual booking in mobile
+    Then I can see the valid header in booking detail page
+    Then I will be shown a valid booking detail page
+    Then I can see the booking state ' IN_PROGRESS - Invited ' in booking detail page
+    Then I click on button with css 'button.icon-back'
+    When I click on BUTTON 'New Invites'
+    Then I am shown with 1 booking in mobile view
+    And  I click on an individual booking in mobile
+    Then I can see the valid header in booking detail page
+    Then I will be shown a valid booking detail page
+    Then I click on button with css 'div.manage-job-buttons > button.button.button-accept'
+    Then I will be shown a popup message
+    Then I click on BUTTON name 'yesBtn'
+    Then I wait for 3000 milli-seconds
+    Then I can see the booking state ' ALLOCATED ' in booking detail page
+    Then I click on button with css 'button.icon-back'
+    And I am on the bookings page
+    When I click on BUTTON 'Allocated'
+    Then I am shown with 1 booking in mobile view
+    When I click on BUTTON 'New Invites'
+    Then I am shown with 0 booking in mobile view
+    When I click on BUTTON 'All'
+    Then I am shown with 1 booking in mobile view
