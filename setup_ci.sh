@@ -6,7 +6,7 @@ apt-get --only-upgrade install google-chrome-stable
 export CHROME_BIN=$(which google-chrome)
 service postgresql restart
 gem install bundler
-git clone  --depth 1 --branch master --verbose git@bitbucket.org:curvetomorrow/booking-system-api.git ../booking-system-api
+git clone  --depth 1 --branch release-1.0 --verbose git@bitbucket.org:curvetomorrow/booking-system-api.git ../booking-system-api
 cd ../booking-system-api
 bundle install --path vendor/cache
 bundle exec rake db:drop

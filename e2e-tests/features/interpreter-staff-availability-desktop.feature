@@ -21,7 +21,7 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER STAF
     And I click on BUTTON 'SAVE'
     And I get success message: 'Staff Availability successfully added'
 
-  @ignoreThis
+  @runThis
   Scenario: As Administrator I can add recurring INTERPRETER STAFF-AVAILABILITY on desktop
     Given I go to the website
     And I am on a computer
@@ -67,7 +67,7 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER STAF
     When I verify material slide-toggle name 'sldRecurring' is disabled 'true'
     And I can see the element with name 'save_blockout' is 'not visible'
 
-  @ignoreThis
+  @runThis
   Scenario: As Administrator I can add INTERPRETER blockouts on desktop
     Given I go to the website
     And I am on a computer
@@ -108,3 +108,54 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN, I can CRUD INTERPRETER STAF
     Then I check the value of endTime is '07:25 AM'
     Then I check the value of availability is 'test-blockout'
     Then I see selected option 'WEEKLY' in dropdown
+
+@runThis
+  Scenario: As Administrator I can add INTERPRETER STAFF-AVAILABILITY on desktop
+    Given I go to the website
+    And I am on a computer
+    And I am shown the login screen, with picture and signup button
+    And I sign in with valid Administrator credentials
+    Then I will be shown the bookings page
+    When I hover on the 'Profile'
+    And I go to the 'User Management' list page
+    Then The valid Interpreter should be in the list
+    When I hover on the 'Actions' of the Interpreter
+    Then I click on edit for an active existing Interpreter
+    And I will be taken to the 'INTERPRETER Signup' page
+    When I click on the option  staff calender
+    When I click on BUTTON 'ADD STAFF AVAILABILITY'
+    Then I will be taken to staff-calendar page
+    Then I check that the start time and end time is 6:25am - 7:25am
+    Then I wait for 1000 milli-seconds
+    Then I set the start dateTime without year '02/02/'
+    Then I check the value of start time should be ''
+    Then I wait for 1000 milli-seconds
+    Then I set the start dateTime with wrong month '02/14/2018'
+    Then I check the value of start time should be ''
+    Then I wait for 1000 milli-seconds
+    Then I set the start dateTime with wrong day '32/04/2018'
+    Then I check the value of start time should be ''
+    Then I wait for 1000 milli-seconds
+    Then I set the start dateTime with non numeric value for year '02/02/abcd'
+    Then I check the value of start time should be ''
+    Then I wait for 1000 milli-seconds
+    Then I set the start dateTime with non numeric value 'as/as/asad'
+    Then I check the value of start time should be ''
+    Then I set the start dateTime with non numeric value '02:02:1994'
+    Then I check the value of start time should be ''
+    Then I set the start dateTime with non numeric value '02:02/1994'
+    Then I check the value of start time should be ''
+    Then I set the start dateTime with non numeric value '02/02:1994'
+    Then I check the value of start time should be ''
+    Then I set the start dateTime with non numeric value '02:02:19   94'
+    Then I check the value of start time should be ''
+    Then I set the start dateTime with non numeric value '02:     02:1994'
+    Then I check the value of start time should be ''
+    Then I set the start dateTime with non numeric value '02/    02/ 1994'
+    Then I check the value of start time should be ''
+    Then I set the start dateTime with non numeric value '1994/02/22'
+    Then I check the value of start time should be ''
+    Then I set the start dateTime with non numeric value '1994/23/02'
+    Then I check the value of start time should be ''
+    Then I check that the end time is greater then start time
+    

@@ -79,7 +79,7 @@
     </section>
     <div *ngIf="totalItems > 10 && isCurrentUserAdminOrBookingOfficer()"
          class="element element_inline messages__pagination">
-        <pagination-controls (pageChange)="getPage($event)" class="my-pagination"></pagination-controls>
+        <pagination-controls (pageChange)="getPage($event)" class="my-pagination ele"></pagination-controls>
     </div>
     <form class="messages__form" [ngClass]="{'messages__form_reduced':isCurrentUserAdminOrBookingOfficer()}"
           style="position: fixed;">

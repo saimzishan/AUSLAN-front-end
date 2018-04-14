@@ -72,6 +72,29 @@ export class BlockoutPagePo extends PageObject {
             expect(val).to.be.eq('09:00 PM');
         });
     }
+
+    changeStartTimeWithWrongInput = (input) => {
+        let startTime = this.getElementByCss('input[name="dpEventDate_st"]');
+
+        const currentDate = input;
+        startTime.clear();
+        startTime.sendKeys(currentDate + ' 08:00 PM');
+        this.clickOutSide();
+        return startTime.getAttribute('value').then((val) => {
+            expect(val).to.be.eq('');
+        });
+    }
+    checkStartTimeShouldBe = (input) => {
+        let startTime = this.getElementByCss('input[name="dpEventDate_st"]');
+
+        const currentDate = input;
+        startTime.clear();
+        startTime.sendKeys(currentDate + ' 08:00 PM');
+        this.clickOutSide();
+        return startTime.getAttribute('value').then((val) => {
+            expect(val).to.be.eq('');
+        });
+    }
     changeEndTimeOFBlockout = () => {
         let endTime = this.getElementByCss('input[name="dpEventDate_endtime"]');
         endTime.clear();
@@ -88,6 +111,15 @@ export class BlockoutPagePo extends PageObject {
         this.clickOutSide();
         return endTime.getAttribute('value').then((val) => {
             expect(val).to.be.eq('01:02 AM');
+        });
+    }
+    changeEndTimeWithWrongInput = (value) => {
+        let endTime = this.getElementByCss('input[name="dpEventEndTime"]');
+        endTime.clear();
+        endTime.sendKeys(value);
+        this.clickOutSide();
+        return endTime.getAttribute('value').then((val) => {
+            expect(val).to.be.eq('');
         });
     }
     checkEndTime = (value) => {
