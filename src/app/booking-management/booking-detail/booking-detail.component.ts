@@ -671,6 +671,9 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             this.notificationServiceBus.launchNotification(true, 'Sorry. The field(s) underneath are filled in incorrectly. END TIME');
             return;
         }
+        if (!this.isRecurringBooking) {
+            this.bookingModel.frequency = null;
+        }
         if (this.isInterpreterLessThanTwo() && this.isMoreInterpreterNeeded()) {
             let message = `This booking might require more than 1 professional. You've only requested 1.
                             Are you sure you want to create this booking?`;
