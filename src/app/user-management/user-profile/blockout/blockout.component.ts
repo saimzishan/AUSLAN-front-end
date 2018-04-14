@@ -436,21 +436,36 @@ export class BlockoutComponent implements OnDestroy, OnInit {
     assignMe(timeControl) {
         if (timeControl === 'startTimeControl') {
             let temp = this.dummy_time.split(' ');
+            this.dummy_time = this.dummy_time.replace(/\s/g, '');
+            let strt_date = temp[0];
             if (temp[0].length !== 10) {
                 return;
             }
+            strt_date = strt_date.split('/');
+            if (+strt_date[1] > 12) {
+                this.start_time = null;
+                return;
+            }
+            if (+strt_date[0] > 31) {
+                this.start_time = null;
+                return;
+            }
             let str;
-            this.dummy_time = this.dummy_time.replace(/\s/g, '');
-            let strt_date = temp[0];
             this.dummy_time = this.dummy_time.substring(10, 17);
-            this.dummy_time = this.dummy_time.replace(/\s/g, '');
-
             let bookingTime = this.correctTimeFormat(this.dummy_time, timeControl);
             if (bookingTime) {
-                bookingTime = strt_date + ' ' + bookingTime;
+                if (isNaN(Date.parse(strt_date.tostring() + ' ' + bookingTime) ) ) {
+                    bookingTime = strt_date[1] + '/' + strt_date[0] + '/' + strt_date[2] + ' ' + bookingTime;
+                    if (isNaN(Date.parse(bookingTime)) ) {
+                        this.dummy_time = this.start_time = this.end_time = null;
+                        return;
+                    }
+                } else {
+                    bookingTime = strt_date + ' ' + bookingTime;
+                }
                 this.start_time = new Date(bookingTime);
             } else {
-                this.start_time = this.dummy_time = null;
+                this.start_time = this.end_time =  this.dummy_time = null;
             }
         } else {
             this.dummy_time = this.dummy_time.replace(/\s/g, '');

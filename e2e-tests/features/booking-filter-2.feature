@@ -92,7 +92,7 @@ Feature: Booking Filter
     When I hover on the Type dropdown and select 'All'
     Then I am shown with 5 bookings
 
-  @runThis
+  @ignoreThis
   Scenario: Given 1 verified Booking Officer, I should be able to filter by date range
     Given One booking has start and end dates as first and last days of next week
     Given I exist as an Booking Officer
@@ -102,7 +102,7 @@ Feature: Booking Filter
     When I filter booking by date range first and last days of next week
     Then I am shown with 2 booking
 
-  @runThis
+  @ignoreThis
   Scenario: As an Individual Client, I should be able to filter by date range
     Given One booking has start and end dates as first and last days of next week
     And I exist as an Individual Client
@@ -112,7 +112,7 @@ Feature: Booking Filter
     When I filter booking by date range first and last days of next week
     Then I am shown with 2 booking
 
-  @runThis
+  @ignoreThis
   Scenario: As a Organisational Representative, I should be able to filter by date range
     Given Assigned all bookings to Organisational Representative
     And One booking has start and end dates as first and last days of next week

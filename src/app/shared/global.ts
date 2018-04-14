@@ -34,8 +34,8 @@ export class GLOBAL {
     public static USER_APPI = GLOBAL.USER_API_ENDPOINT;
 
     public static BOOKING_API = GLOBAL.BOOKING_API_ENDPOINT + '/bookings';
-    public static TITLE = 'Auslan Booking System';
-    public static VERSION = ' => 0.1.9'; // This should be broken into MAJOR and MINOR version?
+    public static TITLE = 'Auslan Connections';
+    public static VERSION = '+'; // This should be broken into MAJOR and MINOR version?
     private static _currentUser: any;
     private static _interpreter: Interpreter;
     public static FAKE_TOKEN = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.' +

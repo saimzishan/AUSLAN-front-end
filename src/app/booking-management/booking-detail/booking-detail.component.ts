@@ -1125,20 +1125,33 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
 
     assignMe(timeControl) {
         this.start_time = this.start_time.replace(/\s/g, '');
-        let bookingTime = '';
-        let str;
-        if (this.start_time.length >= 5) {
-            str = this.start_time.substring(this.start_time.length - 2, this.start_time.length);
-            this.start_time = this.start_time.substring(0, 5);
-            if (str === 'am' || str === 'AM') {
-                bookingTime += this.start_time + ' 00';
-            } else if (str === 'PM' || str === 'pm') {
-                let hh =  this.start_time.substring(0, 2);
-                let mm = this.start_time.substring(3, 5);
-                hh = +hh + 12;
-                bookingTime = hh + ':' + mm + ' 00';
+        let regularExpression = new RegExp('^([0-9]|0[0-9]|1[0-2]):([0-5][0-9])\s*?([AP]M)?$', 'i');
+        let res = regularExpression.exec(this.start_time);
+        let bookingTime;
+        if (res) {
+            let hh = res[1];
+            let mm = res[2];
+            let amPm = res[3];
+            let hour;
+            if (+hh < 10) {
+                hour = '0' + hh;
+            }
+            if (amPm) {
+               amPm = amPm.toLocaleUpperCase();
+                console.log(amPm);
+                if (amPm === 'PM') {
+                    hour = (+hh) + 12;
+                } else {
+                    hour = hh;
+                }
             } else {
-                bookingTime += this.start_time + ' 00';
+                amPm = 'AM';
+                hour = hh;
+            }
+            bookingTime = hour + ':' + mm + ' 00';
+            if (isNaN(Date.parse(bookingTime) ) ) {
+                this.start_time = '';
+                return;
             }
             if (timeControl === 'startTimeControl') {
                 this.bookingStartTime = new Date(bookingTime);
@@ -1147,6 +1160,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
             }
         }
         this.start_time = '';
-    }
+     }
 
 }
