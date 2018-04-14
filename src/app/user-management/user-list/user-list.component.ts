@@ -99,6 +99,7 @@ export class UserListComponent implements OnInit {
             }
         }
         GLOBAL._filterUserVal = this.filterUserParams;
+        this.p = 1;
         this.onPageEmit.emit(this.p);
     }
 
