@@ -36,3 +36,34 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN,  I can send messages and ca
         And I get success message: 'Message sent successfully..'
         #Then I click on button with css '.messages__formButton'
         #And I can see the element with name 'messages__Xtag' is 'not visible'
+
+    @runThis
+    Scenario: Given 1 verified Administrator Booking Officer Individual Client Organisational Representative and INTERPRETER exists
+        Given I exist as an Administrator
+        And I sign in with valid Administrator credentials
+        And I am on the bookings page
+        Then I can see the element with name 'lnkMessages' is 'visible'
+        Then I click on my name in the top corner
+        And I click on logout
+        And I am shown the login screen, with picture and signup button
+        Given I exist as an Interpreter
+        And I sign in with valid Administrator credentials
+        And I am on the bookings page
+        Then I can see the element with name 'lnkMessages' is 'visible'
+        Then I click on my name in the top corner
+        And I click on logout
+        And I am shown the login screen, with picture and signup button
+        Given I exist as an Individual Client
+        And I sign in with valid Individual Client credentials
+        And I am on the bookings page
+        Then I can see the element with name 'lnkMessages' is 'not visible'
+        Then I click on my name in the top corner
+        And I click on logout
+        And I am shown the login screen, with picture and signup button
+        Given I exist as an Organisational Representative
+        And I sign in with valid Organisational Representative credentials
+        And I am on the bookings page
+        Then I can see the element with name 'lnkMessages' is 'not visible'
+        Then I click on my name in the top corner
+        And I click on logout
+        And I am shown the login screen, with picture and signup button

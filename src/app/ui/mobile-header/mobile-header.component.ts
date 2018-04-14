@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {GLOBAL} from '../../shared/global';
+import { Administrator, BookingOfficer, Interpreter } from '../../shared/model/user.entity';
 
 @Component({
   selector: 'app-mobile-header',
@@ -18,5 +19,9 @@ export class MobileHeaderComponent {
 
     getActiveUserId() {
         return GLOBAL.currentUser.id;
+    }
+
+    isCurrentUserNotIndividualClientOrOrg() {
+        return Boolean(GLOBAL.currentUser instanceof Administrator || GLOBAL.currentUser instanceof BookingOfficer || GLOBAL.currentUser instanceof Interpreter);
     }
 }
