@@ -28,7 +28,7 @@ export class BookingComponent  {
 
     setActiveFilter(activeFilter: string) {
         this.activeFilter = activeFilter;
-        this.onPageEmit(this.tempPage);
+        this.onPageEmit(1);
     }
 
     isActiveFilter(activeFilter: string) {
