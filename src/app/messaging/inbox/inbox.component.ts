@@ -162,10 +162,10 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
 
     sendMessage() {
         let id = Boolean(this.userId) ? this.userId : this.loginUserID;
-        let inbox_url = window.location.host + '/#' ;
+        let inbox_url = window.location.host + '/#/' ;
         inbox_url = inbox_url.startsWith('http') === false ? 'http://' + inbox_url : inbox_url;
 
-        inbox_url += id + '/inbox';
+        inbox_url += 'users/' + id + '/inbox';
         this.spinnerService.requestInProcess(true);
         this.message_body = this.message_body.trim();
         let message_tag = '';

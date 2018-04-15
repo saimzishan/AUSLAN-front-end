@@ -52,7 +52,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
                   if (!data.verified) { // show errors
                       this.router.navigate(['/verify/' + data.id]);
                   }else {
-                      let route = this.returnUrl.length > 0 && this.returnUrl.endsWith('job-detail') ?
+                      let route = this.returnUrl.length > 0 && (this.returnUrl.endsWith('job-detail') ||
+                          this.returnUrl.endsWith('inbox')) ?
                           this.returnUrl : this.rolePermission.getDefaultRouteForCurrentUser();
                     this.router.navigate( [route] );
                     LinkHelper.activeLink = LINK.booking;
