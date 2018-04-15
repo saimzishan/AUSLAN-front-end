@@ -67,6 +67,7 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN,  I can send messages and ca
         Then I click on my name in the top corner
         And I click on logout
         And I am shown the login screen, with picture and signup button
+        
     @runThis
     Scenario: Given 1 verified Administrator Booking Officer and INTERPRETER exists, Interpreter and Administrator can see there message history
         Given I exist as an Administrator
