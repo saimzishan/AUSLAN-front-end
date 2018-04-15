@@ -162,9 +162,10 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
 
     sendMessage() {
         let id = Boolean(this.userId) ? this.userId : this.loginUserID;
-        let url = (this.platformLocation as any).location.href;
-        url = url.substr(0, 30);
-        url += id + '/inbox';
+        let inbox_url = window.location.host + '/#' ;
+        inbox_url = inbox_url.startsWith('http') === false ? 'http://' + inbox_url : inbox_url;
+
+        inbox_url += id + '/inbox';
         this.spinnerService.requestInProcess(true);
         this.message_body = this.message_body.trim();
         let message_tag = '';
@@ -178,7 +179,7 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
             message_tag = this.isTagShow && parseInt(this.message_tag, 10) > 0 ?
                 this.message_tag : '';
         }
-        this.messagingService.sendMessages(this.loginUserID, url, this.message_body,
+        this.messagingService.sendMessages(this.loginUserID, inbox_url, this.message_body,
             this.userId, message_tag)
             .subscribe((res: any) => {
                 if (res.status === 200) {
