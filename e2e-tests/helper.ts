@@ -128,7 +128,7 @@ export class User {
                 address_attributes_fields['state'] = type === 'Interpreter1' ? 'WA' : 'VIC';
                 address_attributes_fields['post_code'] = type === 'Interpreter1' ? 3054 : 6064;
                 data_to_sent['address_attributes'] = address_attributes_fields;
-                data_to_sent['skill_level'] = 'Captioning';
+                data_to_sent['skill_level'] = 'Recognised';
                 break;
             case 'Organisational Representative':
                 data_to_sent['business_hours_phone'] = data_to_sent['mobile'];
