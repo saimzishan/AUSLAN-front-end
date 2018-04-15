@@ -145,7 +145,7 @@ export class BookingListComponent implements OnInit, OnChanges {
 
 
             } else if (currentStatus === 'Invited' &&
-                booking.state !== BOOKING_STATE.In_progress) {
+                booking.state !== BOOKING_STATE.Allocated) {
                 res = status === 'gray';
             }
         }
