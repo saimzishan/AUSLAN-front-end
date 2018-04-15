@@ -185,7 +185,7 @@
                                     {{booking.venue.end_time_iso | timeShort : booking.venue.state : booking.venue.post_code}}
                                 </span>
                                 <span>
-                                    {{booking.venue.start_time_iso | date:'EEE d MMM yy'}}
+                                    {{booking.venue.start_time_iso | momentTZDate : booking.venue.state : booking.venue.post_code }}
                                 </span>
                             </span>
                         </span>
