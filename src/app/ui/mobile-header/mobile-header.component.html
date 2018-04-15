@@ -4,7 +4,7 @@
     <h1>{{title}}</h1>
 
     <section>
-        <a [routerLink]="['/users/',getActiveUserId(),'inbox']" class="header__message"><i class="icon-messages"></i></a>
+        <a  *ngIf='isCurrentUserNotIndividualClientOrOrg()' [routerLink]="['/users/',getActiveUserId(),'inbox']" class="header__message"><i class="icon-messages"></i></a>
         <ul class="dropdown menu click-handler" data-disable-hover="true" data-click-open="true" data-dropdown-menu onclick="this.classList.toggle('opened');">
             <li>
                 <a class="header__profile">

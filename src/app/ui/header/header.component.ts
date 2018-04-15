@@ -72,5 +72,10 @@ export class HeaderComponent implements OnDestroy, OnInit {
   isCurrentUserAdminOrBookingOfficer(): boolean {
     return Boolean(GLOBAL.currentUser instanceof Administrator || GLOBAL.currentUser instanceof BookingOfficer);
   }
+
+  isCurrentUserNotIndividualClientOrOrg() {
+    return Boolean(GLOBAL.currentUser instanceof Administrator || GLOBAL.currentUser instanceof BookingOfficer || GLOBAL.currentUser instanceof Interpreter);
+  }
+
 }
 
