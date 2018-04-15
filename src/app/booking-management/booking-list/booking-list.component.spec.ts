@@ -10,6 +10,7 @@ import { FormsModule }   from '@angular/forms';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {DatePipe} from '@angular/common';
 import {ShortTimePipe} from '../../shared/pipe/short-time.pipe';
+import {MomentTZDatePipe} from '../../moment-tzdate.pipe';
 
 describe('BookingListComponent' ,  () => {
   let component:  BookingListComponent;
@@ -46,7 +47,7 @@ describe('BookingListComponent' ,  () => {
   let mock_booking_list: Array<Booking> = [];
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations :  [ BookingListComponent, PrettyIDPipe, ShortTimePipe ],
+      declarations :  [ BookingListComponent, PrettyIDPipe, ShortTimePipe, MomentTZDatePipe ],
       providers: [DatePipe ],
       imports: [RouterTestingModule, FormsModule, NgxPaginationModule]
     }).compileComponents();
