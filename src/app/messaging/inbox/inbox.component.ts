@@ -258,4 +258,8 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
         this.searchInterpreter();
     }
 
+    isCurrentUserNotIndividualClientOrOrg() {
+        return Boolean(GLOBAL.currentUser instanceof Administrator || GLOBAL.currentUser instanceof BookingOfficer || GLOBAL.currentUser instanceof Interpreter);
+    }
+
 }
