@@ -60,16 +60,16 @@
                                         </ng-container>
                                     </ng-container>
                                     </ng-container>
-                                    <ng-container>
-                                        <div *ngFor="let interpreter of otherAcceptedRolesAttributes; let i=index" class="half-opacity">
-                                            <b>{{serviceNameToDisplay}} {{(selectedBookingModel.interpreters_required - selectedBookingModel.interpreters.length)+selectedBookingModel.interpreters.length
-                                                + i + 1}} :</b>
-                                            <span class='interpreter-accepted'>{{interpreter.first_name}} {{interpreter.last_name}}</span>
-                                            <button hidden name="{{'unassingBtn_' + +(i + 1)}}" (click)="unAssignInterpreters(interpreter.id)" *ngIf="isCurrentUserAdminOrBookingOfficer() && (false === isActiveState('Unable_to_service') && false === isActiveState('Cancelled_no_charge')) && interpreter.state === 'Accepted'">
-                                                Unassign
-                                            </button>
-                                        </div>
-                                    </ng-container>
+                                </ng-container>
+                                <ng-container>
+                                    <div *ngFor="let interpreter of otherAcceptedRolesAttributes; let i=index" class="half-opacity">
+                                        <b>{{serviceNameToDisplay}} {{(selectedBookingModel.interpreters_required - selectedBookingModel.interpreters.length)+selectedBookingModel.interpreters.length
+                                            + i + 1}} :</b>
+                                        <span class='interpreter-accepted'>{{interpreter.first_name}} {{interpreter.last_name}}</span>
+                                        <button hidden name="{{'unassingBtn_' + +(i + 1)}}" (click)="unAssignInterpreters(interpreter.id)" *ngIf="isCurrentUserAdminOrBookingOfficer() && (false === isActiveState('Unable_to_service') && false === isActiveState('Cancelled_no_charge')) && interpreter.state === 'Accepted'">
+                                            Unassign
+                                        </button>
+                                    </div>
                                 </ng-container>
                             </section>
                         </section>

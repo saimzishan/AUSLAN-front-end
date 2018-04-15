@@ -801,7 +801,9 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         let toRet = '';
         let sTime = this.interpreterStateTimeZone(avail_block.start_time, state, postCode);
         let startDate = new Date(avail_block.start_time);
-
+        if (startDate.getHours() >= (this.startTime.getHours() - 2 + 12)) {
+            return toRet;
+        }
         let sd = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate(),
                     moment.duration(sTime).get('hours'), moment.duration(sTime).get('minutes'));
 
@@ -832,6 +834,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
             let cellVal = this.endTime.getMinutes() > 29 ? 'half' : '';
             let offsetVal = this.startTime.getMinutes() > 29 ? 'half' : '';
             toRet = cells + cellVal + ' ' + offset + offsetVal + ' ' + color;
+            console.log(toRet + ' ' + startDate + ' ' + endDate);
 
         }
         return toRet;

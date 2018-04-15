@@ -151,4 +151,5 @@ defineSupportCode(({Given, Then, When}) => {
     Then(/^I verify that payroll '(.*)' input fields have zero value$/, bookingPayrollPO.checkInputValues);
     Then(/^I should get a valid payroll save notification$/, bookingPayrollPO.getSuccessNotificationContent);
     Then(/^I can see that the bookable is (not)?\s?set/, createBookingPO.checkPresenceOfBookable);
+    Then(/^I send (.*) messages to '(.*)'$/, Heroku.createBulkMessages);
 });
