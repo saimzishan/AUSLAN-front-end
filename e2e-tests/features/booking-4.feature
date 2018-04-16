@@ -222,21 +222,18 @@ Feature: Booking Management
     Then I get a valid create booking notification
     And I am on the bookings page
     And I am shown with 1 bookings
-    And I wait for 2000 milli-seconds
     When I click on an individual booking
     Then I am on the individual booking page
-    Then I select 2 Interpreter
-    Then I wait for 1000 milli-seconds
+    When I click on the 'Recommended' link
+    And I select 2 Interpreter
     And I click on BUTTON name 'reassingBtn'
     And I click on BUTTON 'Save'
-    Then I wait for 1000 milli-seconds
     Then I get valid message: 'The interpreter have been assigned'
     When I click on link 'Booking details'
     Then I should be on the edit booking page
     And I fill the field 'noteTaker_count' with value '1'
     When I click on BUTTON 'SAVE'
     And If I am shown a popup, I approve it
-    Then I wait for 1000 milli-seconds
     Then I will get an error notification saying "Oops! Too many notetakers already allocated. Please unassign first."
 
   @ignoreThis
