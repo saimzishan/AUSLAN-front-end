@@ -205,7 +205,7 @@ Feature: Booking Management
     #----------------------------------------- AUSLAN1-312 -> END ----------------------------------------
 
     #----------------------------------------- AUSLAN1-977 -> START ----------------------------------------
-  @runThis
+  @ignoreThis
   Scenario: Given 1 verified Individual Client, Booking Officer will get error notification when changing notetakers to less number than assigned. Interpreter and Interpreter1 exists.
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
