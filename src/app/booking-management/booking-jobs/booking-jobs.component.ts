@@ -938,6 +938,9 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     search() {
         this.isRecommended = false;
         GLOBAL._filterInterpreterVal.set('search', this.searchParams);
+        this.checkList = {};
+        this.selectedInterpreterIDs = [];
+        this.reAssignPressed = this.invitePressed = false;
         this.route.params.subscribe(params => {
             this.currentPage = 1;
             let param_id = params['id'] || '';
