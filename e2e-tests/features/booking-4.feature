@@ -239,7 +239,7 @@ Feature: Booking Management
     Then I wait for 1000 milli-seconds
     Then I will get an error notification saying "Oops! Too many notetakers already allocated. Please unassign first."
 
-  @runThis
+  @ignoreThis
   Scenario: Given 1 verified Individual Client, Booking Officer will get error notification when changing captioners to less number than assigned. Interpreter and Interpreter1 exists.
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
