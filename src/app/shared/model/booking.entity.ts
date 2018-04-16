@@ -411,7 +411,8 @@ export class Booking {
             immunisations_required: this.cbImminisations,
             police_check_required: this.cbPoliceCheck,
             from_27a_required: this.cbForm27A,
-            are_you_okay_with_bookings_that_will_be_recorded_or_published: this.isBookingBeRecorded
+            are_you_okay_with_bookings_that_will_be_recorded_or_published: this.isBookingBeRecorded,
+            application_url: document.baseURI
         });
         return o;
     }
