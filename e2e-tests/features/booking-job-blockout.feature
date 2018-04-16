@@ -107,7 +107,7 @@ Feature: Booking Admin Management
     Then I can see the button state 'Assign' is visible
 
 
-  @runThis
+  @ignoreThis
   Scenario: Given 1 verified Booking Officer and INTERPRETER, INTERPRETER1 created, a booking with two Interpreters is created then assign hides when allocated interp is selected
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
