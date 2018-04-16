@@ -17,6 +17,7 @@ import {BookingFilter} from '../../shared/model/booking-filter.interface';
 import {BA, BOOKING_NATURE} from '../../shared/model/booking-nature.enum';
 import {DatePipe} from '@angular/common';
 import * as moment from 'moment';
+import * as $ from 'jquery';
 
 @Component({
     selector: 'app-booking-list',
@@ -33,6 +34,7 @@ export class BookingListComponent implements OnInit, OnChanges {
     @Output() onPageEmit = new EventEmitter<number>();
     @Input() p = 1;
     @Input() totalItems = 0;
+    maxPaginationSize = 7;
     constructor(public router: Router, private datePipe: DatePipe) {
         BA.loadItems();
     }
@@ -53,6 +55,7 @@ export class BookingListComponent implements OnInit, OnChanges {
             this.bookingFilter.date_from = this.datePipe.transform(Date.now(), 'yyyy-MM-dd');
         }
         this.filter('date_from', this.bookingFilter.date_from);
+        this.maxPaginationSize = $(window).width() < 400 ? 5 : 7;
     }
 
     ngOnChanges(changes) { }
