@@ -131,8 +131,6 @@ Feature: Booking Admin Management
     Then I can see the element with css 'span.badge_green' is 'visible'
     Then I can see the button state 'Assign' is visible
     Then I can see the button state 'Invite' is visible
-    Then I wait for 4000 milli-seconds
     Then I select 2 Interpreter
     Then I can see the button state 'Invite' is hidden
     Then I can see the button state 'Assign' is hidden
-

@@ -909,6 +909,8 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     private formatterValueFor(field: string, value: string) {
         if (value !== undefined && value.toLowerCase() === 'all') {
             return '';
+        } else if (value === 'Notetaking') {
+            return 'NoteTaking';
         }
         return value;
     }
