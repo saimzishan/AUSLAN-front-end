@@ -387,7 +387,7 @@
                   <tr *ngFor="let version of selectedBookingModel.versions; let i=index">
                     <td name="data_created_at">
                       {{version.created_at_iso | date:'shortTime'}} on
-                      {{version.created_at_iso | date:'EEE d MMM yy'}}
+                      {{version.created_at_iso | momentTZDate : selectedBookingModel.venue.state : selectedBookingModel.venue.post_code}}
                     </td>
                     <td>
                       <img height="30px" width="30px" src="{{version.photo_url}}" alt="">

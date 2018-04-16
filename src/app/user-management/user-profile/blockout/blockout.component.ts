@@ -140,6 +140,8 @@ export class BlockoutComponent implements OnDestroy, OnInit {
                                 for (let day of this.availabilityBlock.recurring_week_days) {
                                     this.repeat_days[day].selected = true;
                                 }
+                                this.availabilityBlock.end_date = this.interpreterStateDateZone(this.availabilityBlock.end_date);
+                                this.availabilityBlock.start_time = this.interpreterStateDateZone(this.availabilityBlock.start_time);
                                 this.checkIsWeekely();
                                 this.settingTime();
                             }
@@ -510,5 +512,9 @@ export class BlockoutComponent implements OnDestroy, OnInit {
             }
         }
     return false;
+    }
+    interpreterStateDateZone(datetime) {
+        let timeZone = Booking.getNamedTimeZone(this.interpreter.address_attributes.state, this.interpreter.address_attributes.post_code.toString());
+        return momentTimeZone(datetime).tz(timeZone);
     }
 }

@@ -1,8 +1,8 @@
 export class AvailabilityBlock {
     public id = -1;
     public name = '';
-    public start_time = '';
-    public end_date = '';
+    public start_time = null;
+    public end_date = null;
     public end_time = '';
     public recurring = false;
     public frequency = '';

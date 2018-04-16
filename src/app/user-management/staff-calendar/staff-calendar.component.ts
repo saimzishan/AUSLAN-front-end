@@ -115,13 +115,16 @@ export class StaffCalendarComponent implements OnInit {
                 events: []
             };
             for (let avail_block of this.userModel.staff_availabilities_attributes) {
-                let startDate = new Date(avail_block.start_time);
+                let startDate;
+                startDate = this.interpreterStateDateZone(avail_block.start_time);
+                startDate = new Date(startDate);
                 let endDate;
                 if (!avail_block.recurring) {
-                    endDate = new Date(avail_block.start_time);
+                    endDate = this.interpreterStateDateZone(avail_block.start_time);
                 } else {
-                    endDate = new Date(avail_block.end_date || avail_block.start_time);
+                    endDate = this.interpreterStateDateZone((avail_block.end_date || avail_block.start_time));
                 }
+                endDate = new Date(endDate);
                 let startTime = this.interpreterStateTimeZone(avail_block.start_time);
 
                 let endTime = this.interpreterStateTimeZone(avail_block.end_time);
@@ -161,8 +164,6 @@ export class StaffCalendarComponent implements OnInit {
                         }
                     ];
                 }
-
-
                 this.calendarOptions['events'].push(event);
             }
             this.updateCalendar = true;
@@ -179,5 +180,9 @@ export class StaffCalendarComponent implements OnInit {
     interpreterStateTimeZone(time) {
         let timeZone = Booking.getNamedTimeZone(this.interpreter.address_attributes.state, this.interpreter.address_attributes.post_code.toString());
         return momentTimeZone(time).tz(timeZone).format('HH:mm:ss');
+    }
+    interpreterStateDateZone(datetime) {
+        let timeZone = Booking.getNamedTimeZone(this.interpreter.address_attributes.state, this.interpreter.address_attributes.post_code.toString());
+        return momentTimeZone(datetime).tz(timeZone);
     }
 }

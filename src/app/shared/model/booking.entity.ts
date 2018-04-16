@@ -337,7 +337,7 @@ export class Booking {
             requested_by_last_name: this.requested_by.last_name,
             method_type: this.method_type,
             frequency: this.frequency,
-            recurrence_end_date: this.recurrence_end_date,
+            recurrence_end_date: this.interpreterStateDateZone(this.recurrence_end_date),
             recurring: this.recurring,
             repeat_booking_on_days: this.repeat_booking_on_days,
             number_of_auslan_interpreters_required: this.number_of_auslan_interpreters_required,
@@ -433,5 +433,9 @@ export class Booking {
     getDayLightSavings(bookingDate) {
         let timeZone = Booking.getNamedTimeZone(this.venue.state, this.venue.post_code.toString());
         return momentTimeZone(bookingDate).tz(timeZone).format('Z');
+    }
+    interpreterStateDateZone(datetime) {
+        let timeZone = Booking.getNamedTimeZone(this.venue.state, this.venue.post_code.toString());
+        return momentTimeZone(datetime).tz(timeZone);
     }
 }
