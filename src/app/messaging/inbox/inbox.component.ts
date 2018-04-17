@@ -48,20 +48,19 @@ export class InboxComponent implements OnInit, OnDestroy {
 
     constructor(private userService: UserService, private notificationServiceBus: NotificationServiceBus, public platformLocation: PlatformLocation,
                 private messagingService: MessagingService, private _location: Location, public spinnerService: SpinnerService,
-                private rolePermission: RolePermission, private router: Router, private route: ActivatedRoute) {
-                    if (localStorage.getItem('message') && this.isCurrentUserAdminOrBookingOfficer()) {
-                        this.draftMessage = JSON.parse(localStorage.getItem('message'));
-                        this.userId = +this.draftMessage.user_id;
-                        this.message_body = this.draftMessage.text;
-                        this.selectedMessageThread = +this.draftMessage.selected_message_thread;
-                        this.message_thread_id = this.draftMessage.thread_id;
-                        this.messageThreadPage = this.draftMessage.thread_page_no;
-                        this.searchInterpreterQuery = this.draftMessage.interpreter_name;
-                        this.getInterpreterMessage(this.message_thread_id);
-                    }
-    }
+                private rolePermission: RolePermission, private router: Router, private route: ActivatedRoute) {}
 
     ngOnInit() {
+        if (localStorage.getItem('message') && this.isCurrentUserAdminOrBookingOfficer()) {
+            this.draftMessage = JSON.parse(localStorage.getItem('message'));
+            this.userId = +this.draftMessage.user_id;
+            this.message_body = this.draftMessage.text;
+            this.selectedMessageThread = +this.draftMessage.selected_message_thread;
+            this.message_thread_id = this.draftMessage.thread_id;
+            this.messageThreadPage = this.draftMessage.thread_page_no;
+            this.searchInterpreterQuery = this.draftMessage.interpreter_name;
+            this.getInterpreterMessage(this.message_thread_id);
+        }
         this.business_id = GLOBAL.currentUser.business_id;
         this.sub = this.route.params.subscribe(params => {
             this.loginUserID = params['id'] || -1;
