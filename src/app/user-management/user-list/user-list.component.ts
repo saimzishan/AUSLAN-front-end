@@ -78,6 +78,7 @@ export class UserListComponent implements OnInit {
 
     search() {
         GLOBAL._filterUserVal.set('search', this.searchParams);
+        this.p = 1;
         this.onPageEmit.emit(this.p);
     }
 
@@ -99,6 +100,7 @@ export class UserListComponent implements OnInit {
             }
         }
         GLOBAL._filterUserVal = this.filterUserParams;
+        this.p = 1;
         this.onPageEmit.emit(this.p);
     }
 

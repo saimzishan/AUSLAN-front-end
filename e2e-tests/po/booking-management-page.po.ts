@@ -486,13 +486,13 @@ export class BookingManagementPage extends PageObject {
                                 rawDate.match(/[A-Z][a-z]{2}/).index - 1
                             ), // ' - 6:50 PM '
             ''); // 4:50 PM Mon 30 Oct 17
-        let matchData = startTime.match(/(\d+):(\d+)\s(AM|PM)\s[A-Z][a-z]{2}\s(\d+)\s([A-Z][a-z]{2})\s(\d+)/);
+        let matchData = startTime.match(/(\d+):(\d+)\s(AM|PM)\s[A-Za-z]{3}\s([A-Za-z]{3})\s(\d+)(?:st|nd|th|rd)\s(\d+)/);
         // Match Data [1-6] represents various parts of the extracted startTime
         let hh = parseInt(matchData[1], 10),
             mm = parseInt(matchData[2], 10),
             am = matchData[3] === 'AM',
-            dd = parseInt(matchData[4], 10),
-            month = new Date(Date.parse(matchData[5] + ' 1, 2012')).getMonth() + 1,
+            month = new Date(Date.parse(matchData[4] + ' 1, 2012')).getMonth() + 1, // jan is 0
+            dd = parseInt(matchData[5], 10),
             yy = parseInt(matchData[6], 10) + 2000;
         hh = am ? hh : hh + 12;
         return new Date(yy, month, dd, hh, mm);

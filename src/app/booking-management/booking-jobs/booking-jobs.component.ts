@@ -69,7 +69,6 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     totalItems;
     isRequestedProgressOrAllocated = false;
     searchParams: string;
-    serviceNameToDisplay;
     otherAcceptedRolesAttributes;
     counterChek= 0;
     constructor(public dialog: MdDialog,
@@ -158,11 +157,9 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         if (this.dialogSub) {
             this.dialogSub.unsubscribe();
         }
-
-        if (this.isCurrentUserAdminOrBookingOfficer() && this.selectedBookingModel.link_id) {
-            this.linkedBookingConfirmation(isCancel);
-        } else {
-
+        if (this.isCurrentUserAdminOrBookingOfficer() && isCancel && this.selectedBookingModel.link_id) {
+               this.linkedBookingConfirmation(isCancel);
+          } else {
             let config: MdDialogConfig = {
                 disableClose: true
             };
@@ -515,7 +512,6 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                     } else {
                         this.spinnerService.requestInProcess(false);
                     }
-                    this.serviceName();
                 },
                 err => {
                     this.jobAccessError = true;
@@ -803,7 +799,9 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         let toRet = '';
         let sTime = this.interpreterStateTimeZone(avail_block.start_time, state, postCode);
         let startDate = new Date(avail_block.start_time);
-
+        if (startDate.getHours() >= (this.startTime.getHours() - 2 + 12)) {
+            return toRet;
+        }
         let sd = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate(),
                     moment.duration(sTime).get('hours'), moment.duration(sTime).get('minutes'));
 
@@ -834,6 +832,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
             let cellVal = this.endTime.getMinutes() > 29 ? 'half' : '';
             let offsetVal = this.startTime.getMinutes() > 29 ? 'half' : '';
             toRet = cells + cellVal + ' ' + offset + offsetVal + ' ' + color;
+            console.log(toRet + ' ' + startDate + ' ' + endDate);
 
         }
         return toRet;
@@ -910,6 +909,8 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     private formatterValueFor(field: string, value: string) {
         if (value !== undefined && value.toLowerCase() === 'all') {
             return '';
+        } else if (value === 'Notetaking') {
+            return 'NoteTaking';
         }
         return value;
     }
@@ -920,6 +921,9 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                 this.isRecommended = true;
                 this.removeFilters();
         }
+        this.checkList = {};
+        this.selectedInterpreterIDs = [];
+        this.reAssignPressed = this.invitePressed = false;
         this.route.params.subscribe(params => {
             this.currentPage = 1;
             let param_id = params['id'] || '';
@@ -948,6 +952,9 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
 
     filterInterpreters(field: string, value: string) {
         this.isRecommended = false;
+        this.checkList = {};
+        this.selectedInterpreterIDs = [];
+        this.reAssignPressed = this.invitePressed = false;
         const formattedValue = this.formatterValueFor(field, value);
         if (formattedValue && formattedValue.length) {
             this.interpreterFilter[field] = formattedValue;
@@ -1013,35 +1020,21 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         return str.replace(/_/g, ' ');
     }
 
-    serviceName() {
-        let flag = ($(window).width() >= 768);
-        let interpreter = 'Interpreter';
-        this.serviceNameToDisplay = this.selectedBookingModel.number_of_note_takers_required > 0 ? this.desktopOrMobile(flag, 'Notetaker')
-                                    : this.selectedBookingModel.number_of_captioners_required > 0 ?  this.desktopOrMobile(flag, 'Captioner')
-                                    : this.selectedBookingModel.number_of_auslan_interpreters_required > 0 ? this.desktopOrMobile(flag, interpreter)
-                                    : this.selectedBookingModel.number_of_visual_frame_interpreters_required > 0 ?
-                                                                                            this.desktopOrMobile(flag, interpreter + ' (visual frame)')
-                                    : this.selectedBookingModel.number_of_tactile_interpreters_required > 0 ? this.desktopOrMobile(flag, interpreter + ' (tactile)')
-                                    : this.selectedBookingModel.number_of_platform_interpreters_required > 0 ? this.desktopOrMobile(flag, interpreter + ' (platform)')
-                                    : this.selectedBookingModel.number_of_asl_interpreters_required > 0 ? this.desktopOrMobile(flag, interpreter + ' (asl)')
-                                    : this.selectedBookingModel.number_of_bsl_interpreters_required > 0 ? this.desktopOrMobile(flag, interpreter + ' (bsl)')
-                                    : this.selectedBookingModel.number_of_isl_interpreters_required > 0 ? this.desktopOrMobile(flag, interpreter + ' (isl)')
-                                    : this.selectedBookingModel.number_of_signed_english_interpreters_required > 0 ?
-                                                                                            this.desktopOrMobile(flag, interpreter + ' (signed english)')
-                                    : this.selectedBookingModel.number_of_indigenous_sign_interpreters_required > 0 ?
-                                                                                            this.desktopOrMobile(flag, interpreter + ' (indigenous sign)' ) : '';
-                                }
-    desktopOrMobile(flag: boolean, serviceName: string) {
-         serviceName = flag ? serviceName : serviceName.toUpperCase();
-         return serviceName;
-        }
-
+    serviceName(serviceType) {
+        const nameToDisplay = {
+            'Notetaking' : 'Notetaker',
+            'Captioning': 'Captioner',
+            'Auslan': 'Interpreter'
+        }[serviceType] || `Interpreter (${serviceType})`;
+        return nameToDisplay;
+    }
     getInterpreterId() {
         if (Boolean(GLOBAL.currentUser) && GLOBAL.currentUser.id > 0) {
                 return GLOBAL.currentUser.id;
         }
         return -1;
     }
+
     canShowLink(linkName) {
         return this.linkAuth.canShowLink(linkName);
     }
