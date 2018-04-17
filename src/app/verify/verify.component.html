@@ -8,7 +8,7 @@
                                                src="assets/img/auslan-logo.png">
     </a>
 </header>
-<section class="page-white-bg" style="padding-left: 100px;" id="page-signup-organisation">
+<section class="page-white-bg" style="padding: 0px 16px;" id="page-signup-organisation">
 
         <form class="common-form reduced-bottom" #resetForm="ngForm">
 
@@ -24,7 +24,7 @@
                             <p><b>Please check your email and fill in the code. </b></p>
                         </div>
                     </div>
-                    <div class="medium-6 columns">
+                    <div class="small-12 medium-4 columns">
                         <div class="form-field">
                             <label>VERIFICATION CODE * </label> <input type="password" placeholder=""
                                                                        [(ngModel)]='verificationCode'
@@ -46,27 +46,21 @@
             <div class="row small-collapse">
                 <div class="row-wrapper">
 
-                    <div class="medium-6 columns">
+                    <div class="medium-8 columns">
                         <div class="form-field">
 
                             <button name="resend_code"
-                                    class="login button rvc-color"
+                                    class="login rvc-color"
                                     [disabled]="(userID < 1)" (click)="resendVerificationCode()">Resend
                                 Verification
                                 Code
                             </button>
-                        </div>
-                    </div>
-                    <div class="medium-3 columns">
-                        <div class="form-field">
-
                             <button name="verify_user"
-                                    class="login button"
+                                    class="login"
                                     [disabled]="verification_code.errors" (click)="verifyUser()">
                                 Verify User
                             </button>
                         </div>
-
                     </div>
 
                 </div>

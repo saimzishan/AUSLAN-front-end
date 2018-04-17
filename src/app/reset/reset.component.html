@@ -9,7 +9,7 @@
                                                src="assets/img/auslan-logo.png">
     </a>
 </header>
-<section class="page-white-bg" style="padding-left: 100px;" id="page-signup-organisation">
+<section class="page-white-bg" style="padding: 0px 16px;" id="page-signup-organisation">
     <form class="common-form reduced-bottom" #resetForm="ngForm">
 
         <div class="row small-collapse">
@@ -22,7 +22,7 @@
                     </div>
                 </div>
             </div>
-            <div class="medium-6 columns">
+            <div class="small-12 medium-4 columns">
                 <div class="form-field">
 
                     <label><i class="icon-email"></i><span> EMAIL</span></label> <input type="email"
@@ -46,10 +46,10 @@
         <div class="row small-collapse">
             <div class="row-wrapper">
 
-                <div class="medium-6 columns">
+                <div class="medium-8 columns">
                     <div class="form-field">
 
-                        <button name="reset_user" class="login button" [disabled]="email.errors" (click)="resetUser()">
+                        <button name="reset_user" class="login" [disabled]="email.errors" (click)="resetUser()">
                             Reset Password
                         </button>
 
