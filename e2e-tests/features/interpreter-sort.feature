@@ -38,7 +38,7 @@ Feature: Nearby Interpreter Sort by columns
   @runThis
   Scenario: Given 1 verified Administrator Officer, I can sort the list of interp by Lvl column
     Given There exist 5 verified interpreters
-    Given The first 1 interpreters have skill level 'Notetaking'
+    Given The first 1 interpreters have skill level 'NoteTaking'
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
     And I am on the bookings page
@@ -46,7 +46,6 @@ Feature: Nearby Interpreter Sort by columns
     Then I am on the individual booking page
     And I can see a list of 5 verified interpreters
     When I click on the 'Recommended' link
-    And I wait for 2000 milli-seconds
     When I click on the interpreter table header 'Lvl'
     Then I should see the verified interpreters in ascending order of Lvl
     When I click on the interpreter table header 'Lvl'
