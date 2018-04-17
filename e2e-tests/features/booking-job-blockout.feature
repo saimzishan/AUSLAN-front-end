@@ -107,7 +107,7 @@ Feature: Booking Admin Management
     Then I can see the button state 'Assign' is visible
 
 
-  @runThis
+  @ignoreThis
   Scenario: Given 1 verified Booking Officer and INTERPRETER, INTERPRETER1 created, a booking with two Interpreters is created then assign hides when allocated interp is selected
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials
@@ -128,11 +128,9 @@ Feature: Booking Admin Management
     Then I can see the button 'Save' is enabled
     And I click on BUTTON 'Save'
     Then I get valid message: 'The interpreter have been assigned'
-    Then I can see the element with css 'span.cells1.offset2.badge_green' is 'visible'
+    Then I can see the element with css 'span.badge_green' is 'visible'
     Then I can see the button state 'Assign' is visible
     Then I can see the button state 'Invite' is visible
-    Then I wait for 4000 milli-seconds
     Then I select 2 Interpreter
     Then I can see the button state 'Invite' is hidden
     Then I can see the button state 'Assign' is hidden
-

@@ -44,7 +44,7 @@ Feature: Nearby Interpreter Filter
   @runThis
   Scenario: Given 1 verified Administrator Officer, I can filter the list of interp's by Lvl column
     Given There exist 5 verified interpreters
-    Given The first 2 interpreters have skill level 'Notetaking'
+    Given The first 2 interpreters have skill level 'NoteTaking'
     And I sign in with valid Administrator credentials
     And I am on the bookings page
     When I click on an individual booking

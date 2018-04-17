@@ -185,7 +185,7 @@
                                     {{booking.venue.end_time_iso | timeShort : booking.venue.state : booking.venue.post_code}}
                                 </span>
                                 <span>
-                                    {{booking.venue.start_time_iso | date:'EEE d MMM yy'}}
+                                    {{booking.venue.start_time_iso | momentTZDate : booking.venue.state : booking.venue.post_code }}
                                 </span>
                             </span>
                         </span>
@@ -289,13 +289,15 @@
     </section>
 </section>
 <div class="pagination">
-    <div class="element element_inline" id="displayTxt" *ngIf="totalItems > 0">
+    <div class="element element_inline" id="displayTxt" *ngIf="maxPaginationSize > 5 && totalItems > 0">
         {{'Displaying ' + (((p - 1) * 10) + 1) + ' - '
         + ( bookingList.length < 10 ? totalItems : (p * 10)) + ' of ' + totalItems + ' Booking' +
         (bookingList.length > 1 ? 's' : '')}}
     </div>
     <div class="element element_inline">
-        <pagination-controls class="my-pagination" *ngIf="totalItems > 10"
+        <br>
+        <pagination-controls  [maxSize]="maxPaginationSize"
+                              previousLabel="Prev" class="my-pagination" *ngIf="totalItems > 10"
                              (pageChange)="getPage($event)"></pagination-controls>
     </div>
 </div>

@@ -19,7 +19,7 @@
     <div class="form-field">
       <label>STREET NUMBER * <span mdTooltip="Enter the Street Number"><i class="inline-icon-tip"></i></span></label>
       <input type="text" [readonly]="isReadOnly" (click)="fieldClick($event)" (blur)="canCalculateDistance && calculateDistance();" placeholder="Enter the Street Number"
-             [(ngModel)]="address.street_number" name="address_street_number" #address_street_number="ngModel" [rangeLength]="[1, 6]" digit required>
+             [(ngModel)]="address.street_number" name="address_street_number" #address_street_number="ngModel" [rangeLength]="[1, 10]" required>
       <span *ngIf="address_street_number.touched && !address_street_number.errors?.required && !address_street_number.errors?.rangeLength;" class="inline-icon inline-icon-valid valid"></span>
       <span *ngIf="address_street_number.touched && (address_street_number.errors?.required ||address_street_number.errors?.rangeLength);" class="inline-icon error">
         <span>Minimum 1 characters required.</span>!

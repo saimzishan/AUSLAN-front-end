@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {GLOBAL} from '../../shared/global';
+import { Administrator, BookingOfficer, Interpreter } from '../../shared/model/user.entity';
 
 @Component({
   selector: 'app-mobile-header',
@@ -8,15 +9,20 @@ import {GLOBAL} from '../../shared/global';
 })
 export class MobileHeaderComponent {
     @Input() title = '';
-    @Input() backLink = '';
+    @Input() backLink = '/booking-management';
     @Input() showBackLink = true;
   constructor() { }
 
     getPicturePath() {
-        return GLOBAL.currentUser.photo_url;
+        return Boolean(GLOBAL.currentUser)
+            ? GLOBAL.currentUser.photo_url : '';
     }
 
     getActiveUserId() {
         return GLOBAL.currentUser.id;
+    }
+
+    isCurrentUserNotIndividualClientOrOrg() {
+        return Boolean(GLOBAL.currentUser instanceof Administrator || GLOBAL.currentUser instanceof BookingOfficer || GLOBAL.currentUser instanceof Interpreter);
     }
 }
