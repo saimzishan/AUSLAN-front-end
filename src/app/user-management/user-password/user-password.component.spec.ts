@@ -16,6 +16,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {RolePermission} from '../../shared/role-permission/role-permission';
 import {HttpModule} from '@angular/http';
 import { UserPasswordComponent } from './user-password.component';
+import {MobileHeaderComponent} from '../../ui/mobile-header/mobile-header.component';
 
 describe('UserPasswordComponent', () => {
   let component: UserPasswordComponent;
@@ -24,7 +25,7 @@ describe('UserPasswordComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UserPasswordComponent, UserHeaderComponent ],
+      declarations: [ UserPasswordComponent, UserHeaderComponent, MobileHeaderComponent ],
       providers: [LinkHelper, LinkAuth, RolePermission,
         { provide: UserService, useClass: MockUserService}, { provide: AuthHttp, useClass: MockBackend},
         NotificationServiceBus,
