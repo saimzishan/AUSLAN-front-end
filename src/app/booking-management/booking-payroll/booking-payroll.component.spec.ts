@@ -17,6 +17,7 @@ import { MockBackend } from '@angular/http/testing';
 import {BookingHeaderService} from '../booking-header/booking-header.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import {ShortTimePipe} from '../../shared/pipe/short-time.pipe';
+import { MomentTZDatePipe } from '../../moment-tzdate.pipe';
 
 describe('BookingPayrollComponent', () => {
   let component: BookingPayrollComponent;
@@ -25,7 +26,7 @@ describe('BookingPayrollComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ BookingPayrollComponent, BookingHeaderComponent, BookingInfoComponent, PayrollTimeComponent,
-                      PrettyIDPipe, ShortTimePipe ],
+        PrettyIDPipe, ShortTimePipe, MomentTZDatePipe ],
       providers: [SpinnerService, NotificationServiceBus, BookingHeaderService,
         {
           provide: ActivatedRoute,

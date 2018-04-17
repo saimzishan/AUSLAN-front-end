@@ -374,7 +374,7 @@ export class Booking {
             deaf_persons_email: this.deaf_person.email, deaf_persons_eaf_no: this.deaf_person.eaf,
             deaf_persons_ur_id: this.deaf_person.ur_number, deaf_persons_ndis_id: this.deaf_person.ndis_id,
             number_of_people_attending: _expected_attendance,
-            start_time: this.interpreterStateDateZone(this.venue.start_time_iso),
+            start_time: this.venue.start_time_iso,
             end_time: this.venue.end_time_iso,
             billing_account_attributes: {
                 id: this.client.organisation_primary_contact.id,
@@ -434,9 +434,5 @@ export class Booking {
     getDayLightSavings(bookingDate) {
         let timeZone = Booking.getNamedTimeZone(this.venue.state, this.venue.post_code.toString());
         return momentTimeZone(bookingDate).tz(timeZone).format('Z');
-    }
-    interpreterStateDateZone(datetime) {
-        let timeZone = Booking.getNamedTimeZone(this.venue.state, this.venue.post_code.toString());
-        return momentTimeZone(datetime).tz(timeZone);
     }
 }

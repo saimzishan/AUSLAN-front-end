@@ -3,6 +3,7 @@ import {BookingInfoComponent} from './booking-info.component';
 import {PrettyIDPipe} from '../../shared/pipe/pretty-id.pipe';
 import {Booking} from '../../shared/model/booking.entity';
 import {ShortTimePipe} from '../../shared/pipe/short-time.pipe';
+import { MomentTZDatePipe } from '../../moment-tzdate.pipe';
 
 describe('BookingInfoComponent', () => {
   let component: BookingInfoComponent;
@@ -10,7 +11,7 @@ describe('BookingInfoComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BookingInfoComponent, PrettyIDPipe, ShortTimePipe ],
+      declarations: [BookingInfoComponent, PrettyIDPipe, ShortTimePipe, MomentTZDatePipe ],
       imports: []
     })
     .compileComponents();

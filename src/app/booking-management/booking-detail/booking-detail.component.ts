@@ -22,6 +22,7 @@ import {UserService} from '../../api/user.service';
 import * as moment from 'moment';
 import {isNullOrUndefined, debug} from 'util';
 import {AddressComponent} from '../../ui/address/address.component';
+import * as momentTimeZone from 'moment-timezone';
 
 const _ONE_HOUR = 1000 /*milliseconds*/
     * 60 /*seconds*/
@@ -173,7 +174,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                     this.oldDocuments = jsonData.documents_attributes;
                 }
                 this.oldInterpreterPreference = jsonData.preference_allocations_attributes;
-                this.bookingDate = new Date(this.datePipe.transform(this.bookingModel.venue.start_time_iso, 'MM/dd/yyyy'));
+                let temp = this.interpreterStateDateZone(this.bookingModel.venue.start_time_iso);
+                this.bookingDate = new Date(temp.toISOString());
                 this.setTime();
                 this.natureOfApptChange(null);
                 this.checkInterpreterBoxes();
@@ -1161,5 +1163,9 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         }
         this.start_time = '';
      }
+    interpreterStateDateZone(datetime) {
+        let timeZone = Booking.getNamedTimeZone(this.bookingModel.venue.state, this.bookingModel.venue.post_code.toString());
+        return momentTimeZone(datetime).tz(timeZone);
+    }
 
 }
