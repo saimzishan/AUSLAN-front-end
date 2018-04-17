@@ -232,8 +232,8 @@ Feature: As INTERPRETER, I can login on mobile
     When I click on BUTTON 'Allocated'
     Then I am shown with 1 booking in mobile view
     When I click on BUTTON 'New Invites'
-    Then I am shown with 0 booking in mobile view
+    Then I am shown with 2 booking in mobile view
     When I click on BUTTON 'All'
-    Then I am shown with 1 booking in mobile view
+    Then I am shown with 3 booking in mobile view
     When I click on BUTTON 'Open'
-    Then I am shown with 1 booking in mobile view
+    Then I am shown with 2 booking in mobile view
