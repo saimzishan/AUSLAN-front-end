@@ -337,7 +337,7 @@ export class Booking {
             requested_by_last_name: this.requested_by.last_name,
             method_type: this.method_type,
             frequency: this.frequency,
-            recurrence_end_date: this.interpreterStateDateZone(this.recurrence_end_date),
+            recurrence_end_date: this.recurrence_end_date,
             recurring: this.recurring,
             repeat_booking_on_days: this.repeat_booking_on_days,
             number_of_auslan_interpreters_required: this.number_of_auslan_interpreters_required,
@@ -374,7 +374,7 @@ export class Booking {
             deaf_persons_email: this.deaf_person.email, deaf_persons_eaf_no: this.deaf_person.eaf,
             deaf_persons_ur_id: this.deaf_person.ur_number, deaf_persons_ndis_id: this.deaf_person.ndis_id,
             number_of_people_attending: _expected_attendance,
-            start_time: this.venue.start_time_iso,
+            start_time: this.interpreterStateDateZone(this.venue.start_time_iso),
             end_time: this.venue.end_time_iso,
             billing_account_attributes: {
                 id: this.client.organisation_primary_contact.id,
