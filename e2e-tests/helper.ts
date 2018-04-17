@@ -578,6 +578,18 @@ export class Heroku {
         Heroku.sendCommandToHeroku(command);
     }
 
+    static inviteInterpreters() {
+        let command = 'bookings=Booking.all;';
+        command += 'i=Interpreter.ids;';
+        command += 'bookings.each { |b| b.interpreter_ids = i;';
+        command += 'b.add_interpreters_to_booking;';
+        command += 'b.invite_url = "' + browser.baseUrl +
+            '/#/booking-management/#{b.id}/job-detail";';
+        command += 'b.next_state = Booking::STATE_IN_PROGRESS;';
+        command += 'b.save; };';
+        Heroku.sendCommandToHeroku(command);
+    }
+
     static specialOrgRepSetup() {
         let command = 'o=OrganisationalRepresentative.first;';
         command += 'o.special_instructions="I am special";';

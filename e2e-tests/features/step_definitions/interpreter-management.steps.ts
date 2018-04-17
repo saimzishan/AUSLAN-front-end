@@ -9,6 +9,7 @@ defineSupportCode(({Given, Then, When}) => {
     Given(/^The (.*) (\d+) interpreters have preference '(.*)'$/, Heroku.updateInterpretersPreference);
     Given(/^The (.*) (\d+) interpreters have skill level '(.*)'$/, Heroku.updateInterpretersSkillLevel);
     Given(/^The (.*) (\d+) interpreters have travel pay status '(.*)'$/, Heroku.updateInterpretersTravelPayStatus);
+    Given(/^I invite all interpreters to all bookings$/, Heroku.inviteInterpreters);
 
     When(/^I hover on the (.*) dropdown on interpreter table header and select '(.*)'$/, intManagementPO.hoverOnInterpreterTableHeader);
     When(/^I query interpreter by form field (.*) and value '(.*)'$/, intManagementPO.queryInterpreterByFormField);
