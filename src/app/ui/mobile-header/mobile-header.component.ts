@@ -9,7 +9,7 @@ import { Administrator, BookingOfficer, Interpreter } from '../../shared/model/u
 })
 export class MobileHeaderComponent {
     @Input() title = '';
-    @Input() backLink = '';
+    @Input() backLink = '/booking-management';
     @Input() showBackLink = true;
   constructor() { }
 
