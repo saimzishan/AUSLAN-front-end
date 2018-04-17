@@ -196,7 +196,12 @@ export class BookingService extends ApiService {
         let headers = new Headers({'Accept': 'application/json',
             'Content-Type': 'application/json'});
         let options = new RequestOptions({ headers: headers });
-        let obj = { 'bulk_upload_excel_file': base64encodedUploadFile };
+        let obj = {
+            'bulk_upload_excel_file': base64encodedUploadFile,
+            booking: {
+                application_url: document.baseURI
+            }
+        };
 
         return this.http.post(GLOBAL.BOOKING_API + '/bulk_upload' , JSON.stringify(obj), options)
             .map(this.extractData)
