@@ -69,49 +69,28 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN,  I can send messages and ca
         And I am shown the login screen, with picture and signup button
         
     @runThis
-    Scenario: Given 1 verified Administrator Booking Officer and INTERPRETER exists, Interpreter and Administrator can see there message history
-        Given I exist as an Administrator
-        And I sign in with valid Administrator credentials
-        And I am on the bookings page
-        When I click on an individual booking
-        Then I am on the individual booking page
-        Then I select 1 Interpreter
-        And I click on BUTTON name 'reassingBtn'
-        Then I can see the button 'Save' is enabled
-        And I click on BUTTON 'Save'
-        Then I wait for 1000 milli-seconds
-        Then I get valid message: 'The interpreter have been assigned'
+    Scenario: Given 1 verified Administrator Booking Officer and INTERPRETER exists, Interpreter and Administrator can see their message history
+        Given I sign in with valid Interpreter credentials
+        And I click on element by id 'lnkMessages'
+        Then I will be taken to message page
+        When I fill the field 'message_body' with value 'Test message'
+        And I click on BUTTON name 'messages__formSend'
+        Then I get success message: 'Message sent successfully..'
+        And I can count the element with css 'p.messages__text' to be '1'
         Then I click on my name in the top corner
         And I click on logout
         And I am shown the login screen, with picture and signup button
-        Given I exist as an Interpreter
-        When I sign in with valid Interpreter credentials
-        And I am on the bookings page
-        When I click on an individual booking
-        Then I am on the individual booking page
-        Then I click on element by id 'lnkMessages'
-        Then I will be taken to message page
+        When I sign in with valid Administrator credentials
+        Then I am on the bookings page
+        When I click on element by id 'lnkMessages'
+        And I will be taken to message page
         Then I fill the field 'message_body' with value 'Test message'
-        Then I wait for 1000 milli-seconds
-        Then I click on BUTTON name 'messages__formSend'
-        And I get success message: 'Message sent successfully..'
-        When I can count the element with css 'p.messages__text' to be '1'
-        Then I click on my name in the top corner
-        And I click on logout
-        And I am shown the login screen, with picture and signup button
-        And I sign in with valid Administrator credentials
-        And I am on the bookings page
-        Then I click on element by id 'lnkMessages'
-        Then I will be taken to message page
-        Then I fill the field 'message_body' with value 'Test message'
-        Then I wait for 1000 milli-seconds
-        Then I click on BUTTON name 'messages__formSend'
-        And I get success message: 'Message sent successfully..'
-        Then I send 20 messages to 'Interpreter'
-        Then I send 20 messages to 'IndividualClient'
-        Then I refresh
-        Then I wait for 1000 milli-seconds
-        Then I scroll up
+        And I click on BUTTON name 'messages__formSend'
+        Then I get success message: 'Message sent successfully..'
+        Given I send 20 messages to 'Interpreter'
+        Given I send 20 messages to 'IndividualClient'
+        When I click on Bookings
+        And I click on element by id 'lnkMessages'
         Then I can see the element with name 'load_previous_messages_btn' is 'visible'
 
     @runThis
