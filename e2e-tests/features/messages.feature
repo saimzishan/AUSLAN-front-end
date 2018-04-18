@@ -74,18 +74,17 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN,  I can send messages and ca
         When I sign in with valid Interpreter credentials
         Then I click on element by id 'lnkMessages'
         Then I will be taken to message page
-        Then I fill the field 'message_body' with value 'Test message'
-        Then I wait for 1000 milli-seconds
-        Then I click on BUTTON name 'messages__formSend'
-        And I get success message: 'Message sent successfully..'
-        When I can count the element with css 'p.messages__text' to be '1'
+        When I fill the field 'message_body' with value 'Test message'
+        And I click on BUTTON name 'messages__formSend'
+        Then I get success message: 'Message sent successfully..'
+        And I can count the element with css 'p.messages__text' to be '1'
         Then I click on my name in the top corner
         And I click on logout
         And I am shown the login screen, with picture and signup button
-        And I sign in with valid Administrator credentials
-        And I am on the bookings page
-        Then I click on element by id 'lnkMessages'
-        Then I will be taken to message page
+        When I sign in with valid Administrator credentials
+        Then I am on the bookings page
+        When I click on element by id 'lnkMessages'
+        And I will be taken to message page
         Then I fill the field 'message_body' with value 'Test message'
         Then I wait for 1000 milli-seconds
         Then I click on BUTTON name 'messages__formSend'
