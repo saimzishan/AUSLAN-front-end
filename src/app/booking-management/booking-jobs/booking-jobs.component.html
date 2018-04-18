@@ -224,6 +224,20 @@
                         </th>
                         <th width="12%">
                           <span class="">Status</span>
+                          <ul class="dropdown menu custom" id="booking-status" data-dropdown-menu>
+                            <li>
+                                <a href="javascript:void(0)">{{underScoreToSpaces(interpreterFilterStatus())}}</a>
+                                <ul class="menu smaller">
+                                    <li *ngFor="let status of statusList()">
+                                        <a href="javascript:void(0)"
+                                           [ngClass]="isDropdownItemActive('interpreter_status', status)" 
+                                           (click)="filterInterpreters('interpreter_status', status)">
+                                           {{underScoreToSpaces(status)}}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
                         </th>
                         <th width="17%">
                           <span class="order" [ngClass]="getSortOrder('name')" (click)="sortInterpreters('name')">Name</span>

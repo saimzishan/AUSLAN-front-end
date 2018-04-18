@@ -5,4 +5,5 @@ export interface InterpreterFilter {
     skill_level?: string;
     distance?: string;
     travel_pay_status?: string;
+    interpreter_status?: string;
 }

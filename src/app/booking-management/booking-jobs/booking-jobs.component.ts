@@ -1,6 +1,7 @@
 import {Component, OnInit, ViewContainerRef, OnDestroy, ViewChild} from '@angular/core';
 import {BookingService} from '../../api/booking.service';
 import {Booking} from '../../shared/model/booking.entity';
+import {INTERPRETER_STATUS} from '../../shared/model/interpreter-status.enum';
 import {UserService} from '../../api/user.service';
 import {
     Administrator, BookingOfficer, Interpreter, OrganisationalRepresentative,
@@ -395,6 +396,27 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
                     this.checkInterpreterState(user.id, 'Invited') ? 'invited.svg' : '');
         path = path.length > 0 ? '../../../assets/img/svg-icons/' + path : path;
         return path;
+    }
+
+    statusList() {
+        let keys = Object.keys(INTERPRETER_STATUS);
+        return ['All', ...keys.slice(keys.length /2)];
+
+    }
+
+    interpreterFilterStatus() {
+        if (this.interpreterFilter.interpreter_status) {
+            return this.interpreterFilter.interpreter_status.split(',').map(status => {
+                return INTERPRETER_STATUS[status];
+            }).join(',');
+        } else {
+            return 'All';
+        }
+    }
+
+    isDropdownItemActive(field: string, value: string): ('active'|'') {
+        const formattedValue = value !== 'All' && this.formatterValueFor(field, value);
+        return this.interpreterFilter[field] && this.interpreterFilter[field].indexOf(formattedValue) > -1 ? 'active' : '';
     }
 
     checkInterpreterState(interpreter_id: number, state: string) {
