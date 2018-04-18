@@ -28,6 +28,7 @@ import {LinkAuth, LinkHelper} from '../../shared/router/linkhelper';
 import {RolePermission} from '../../shared/role-permission/role-permission';
 import {HttpModule} from '@angular/http';
 import { MomentTZDatePipe } from '../../moment-tzdate.pipe';
+import {MobileHeaderComponent} from '../../ui/mobile-header/mobile-header.component';
 
 describe('BookingJobsComponent', () => {
   let component: BookingJobsComponent;
@@ -36,7 +37,7 @@ describe('BookingJobsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [BookingJobsComponent, BookingHeaderComponent, PrettyIDPipe, BookingInfoComponent, MomentTZDatePipe,
-                     ShortTimePipe],
+                     ShortTimePipe, MobileHeaderComponent],
       providers: [MdDialog, LinkHelper, LinkAuth, RolePermission,
         ViewContainerRef, SpinnerService, NotificationServiceBus, DatePipe, BookingHeaderService,
         {

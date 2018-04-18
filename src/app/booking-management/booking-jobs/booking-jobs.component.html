@@ -1,7 +1,4 @@
-<header id="header-mobile">
-    <button [routerLink]="['/booking-management']" class="icon-back"></button>
-    <h1 *ngIf="!jobAccessError">JOB #{{selectedBookingModel.id | PrettyID}}</h1>
-</header>
+<app-mobile-header title="{{ jobAccessError ? '' : 'JOB #' + (selectedBookingModel.id | PrettyID)}}" [showBackLink]="true"></app-mobile-header>
 
 <ng-container *ngIf="!jobAccessError">
     <section id="page-common">

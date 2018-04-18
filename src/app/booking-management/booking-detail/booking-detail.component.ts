@@ -101,7 +101,6 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     hasPrefInt: Boolean = false;
     duplicatingBookable: number;
     isCertRequired = false;
-    start_time;
     repeat_days = [
         {
             display: 'S',
@@ -1121,25 +1120,30 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
         this.showPreferred = this.showProfilePreferred = this.showBlocked = this.showProfileBlocked = false;
         this.hasPrefInt = this.hasBlockInt = false;
     }
-    checkMe(event) {
-        this.start_time = event.target.value;
-    }
 
-    assignMe(timeControl) {
-        this.start_time = this.start_time.replace(/\s/g, '');
+    assignMe(timeControl, event) {
+        let start_time = event.target.value.replace(/\s/g, '');
         let regularExpression = new RegExp('^([0-9]|0[0-9]|1[0-2]):([0-5][0-9])\s*?([AP]M)?$', 'i');
-        let res = regularExpression.exec(this.start_time);
+        let res = regularExpression.exec(start_time);
         let bookingTime;
         if (res) {
             let hh = res[1];
             let mm = res[2];
             let amPm = res[3];
             let hour;
+            if ((+mm) % 5 !== 0) {
+                let temp_mm = (+mm) % 5;
+                mm = ((+mm) + (5 - temp_mm)).toString();
+                if (+mm === 60) {
+                    mm = '00';
+                    hh = (+hh + 1).toString();
+                }
+            }
             if (+hh < 10) {
                 hour = '0' + hh;
             }
             if (amPm) {
-               amPm = amPm.toLocaleUpperCase();
+                amPm = amPm.toLocaleUpperCase();
                 console.log(amPm);
                 if (amPm === 'PM') {
                     hour = (+hh) + 12;
@@ -1151,17 +1155,20 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
                 hour = hh;
             }
             bookingTime = hour + ':' + mm + ' 00';
-            if (isNaN(Date.parse(bookingTime) ) ) {
-                this.start_time = '';
+            if (isNaN(Date.parse(bookingTime))) {
                 return;
             }
+            const currentDate = new Date(Date.now());
+            bookingTime = new Date(bookingTime);
             if (timeControl === 'startTimeControl') {
-                this.bookingStartTime = new Date(bookingTime);
+                this.bookingStartTime = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(),
+                    bookingTime.getHours(), bookingTime.getMinutes());
             } else {
-                this.bookingEndTime = new Date(bookingTime);
+                this.bookingEndTime = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(),
+                    bookingTime.getHours(), bookingTime.getMinutes());
             }
         }
-        this.start_time = '';
+        start_time = '';
      }
     interpreterStateDateZone(datetime) {
         let timeZone = Booking.getNamedTimeZone(this.bookingModel.venue.state, this.bookingModel.venue.post_code.toString());

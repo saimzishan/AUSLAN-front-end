@@ -435,7 +435,10 @@ export class BlockoutComponent implements OnDestroy, OnInit {
         this.dummy_time = event.target.value;
     }
 
-    assignMe(timeControl) {
+    assignMe(timeControl, event) {
+        if (event) {
+            this.dummy_time = event.target.value;
+        }
         if (timeControl === 'startTimeControl') {
             let temp = this.dummy_time.split(' ');
             this.dummy_time = this.dummy_time.replace(/\s/g, '');
@@ -456,7 +459,7 @@ export class BlockoutComponent implements OnDestroy, OnInit {
             this.dummy_time = this.dummy_time.substring(10, 17);
             let bookingTime = this.correctTimeFormat(this.dummy_time, timeControl);
             if (bookingTime) {
-                if (isNaN(Date.parse(strt_date.tostring() + ' ' + bookingTime) ) ) {
+                if (isNaN(Date.parse(strt_date + ' ' + bookingTime) ) ) {
                     bookingTime = strt_date[1] + '/' + strt_date[0] + '/' + strt_date[2] + ' ' + bookingTime;
                     if (isNaN(Date.parse(bookingTime)) ) {
                         this.dummy_time = this.start_time = this.end_time = null;
@@ -472,6 +475,7 @@ export class BlockoutComponent implements OnDestroy, OnInit {
         } else {
             this.dummy_time = this.dummy_time.replace(/\s/g, '');
             let bookingTime = this.correctTimeFormat(this.dummy_time, timeControl);
+            console.log(bookingTime);
             if (bookingTime) {
                 this.end_time = new Date(bookingTime);
             } else {
@@ -491,6 +495,14 @@ export class BlockoutComponent implements OnDestroy, OnInit {
             hh = res[1];
             mm = res[2];
             amPm = res[3];
+            if ((+mm) % 5 !== 0) {
+                let temp_mm = (+mm) % 5;
+                mm = ((+mm) + (5 - temp_mm)).toString();
+                if (+mm === 60) {
+                    mm = '00';
+                    hh = (+hh + 1).toString();
+                }
+            }
             let hour;
             if (+hh < 10) {
                 hour = '0' + hh;
@@ -503,7 +515,7 @@ export class BlockoutComponent implements OnDestroy, OnInit {
                 amPm = 'AM';
             }
             if (controle === 'endTimeControl') {
-                if (amPm === 'PM') {
+                if (amPm === 'PM' && +hour !== 12) {
                     hour = +hour + 12;
                 }
                 return bookingTime = hour + ':' + mm + ' 00';
