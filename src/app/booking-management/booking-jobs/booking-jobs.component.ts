@@ -419,6 +419,9 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
 
 
     getPage(page: number) {
+        this.checkList = {};
+        this.selectedInterpreterIDs = [];
+        this.reAssignPressed = this.invitePressed = false;
         this.currentPage = page;
         this.route.params.subscribe(params => {
             let param_id = params['id'] || '';
