@@ -38,6 +38,38 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN,  I can send messages and ca
         #And I can see the element with name 'messages__Xtag' is 'not visible'
 
     @runThis
+    Scenario: Given 1 verified Administrator and INTERPRETER exists I am able to search interpreters in text search box
+        Given I exist as an Administrator
+        And I sign in with valid Administrator credentials
+        And I am on the bookings page
+        Then I click on element by id 'lnkMessages'
+        Then I will be taken to message page
+        Then I fill the field 'search' with value 'Ted'
+        And I click on BUTTON name 'btnSearch'
+        Then I wait for 1000 milli-seconds
+        And I can count the element with css 'section.messages__conversation_active' to be '1'
+        Then I fill the field 'search' with value 'papu'
+        And I click on BUTTON name 'btnSearch'
+        Then I wait for 1000 milli-seconds
+        And I can count the element with css 'section.messages__conversation' to be '0'
+
+    @runThis
+    Scenario: Given 1 verified Administrator INTERPRETER and INTERPRETER1 exists I am able to get draft text message as admin if exist when comeback to messaging
+        Given I exist as an Administrator
+        And I sign in with valid Administrator credentials
+        And I am on the bookings page
+        Then I click on element by id 'lnkMessages'
+        Then I will be taken to message page
+        Then I click on element by name 'dragana_2-Interpreter'
+        Then I fill the field 'message_body' with value 'Test message'
+        Then I click on Bookings
+        Then I wait for 500 milli-seconds
+        Then I click on element by id 'lnkMessages'
+        And I can verify the input 'message_body' will have the value 'Test message'
+        Then I click on BUTTON name 'messages__formSend'
+        And I get success message: 'Message sent successfully..'
+
+    @runThis
     Scenario: Given 1 verified Administrator Booking Officer Individual Client Organisational Representative and INTERPRETER exists
         Given I exist as an Administrator
         And I sign in with valid Administrator credentials
@@ -106,4 +138,20 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN,  I can send messages and ca
         Then I click on element by id 'lnkMessages'
         Then I will be taken to message page
         Then I can count the element with css 'span.show-for-sr' to be '5'
+<<<<<<< HEAD
+=======
+
+    @runThis
+    Scenario: Given 1 verified Administrator INTERPRETER and INTERPRETER1 exists if I type in interpreter1 thread and choose 2nd interpreter text of 1st interpreter will remove
+        Given I exist as an Administrator
+        And I sign in with valid Administrator credentials
+        And I am on the bookings page
+        Then I click on element by id 'lnkMessages'
+        Then I will be taken to message page
+        Then I click on element by name 'dragana_2-Interpreter'
+        Then I fill the field 'message_body' with value 'Test message'
+        And I can verify the input 'message_body' will have the value 'Test message'
+        Then I click on element by name 'dragana-Interpreter'
+        And I can verify the input 'message_body' will have the value ''
+>>>>>>> origin/master
         
