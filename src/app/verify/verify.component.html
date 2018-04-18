@@ -1,51 +1,69 @@
 <header id="header">
-	<a style="background: none;" href="/"><img name="auslanLogo" alt="Auslan Connections" width="72" height="46" src="assets/img/auslan-logo.png">
-	</a>
+    <a style="background: none;" href="/"><img name="auslanLogo" alt="Auslan Connections" width="72" height="46"
+                                               src="assets/img/auslan-logo.png">
+    </a>
 </header>
-<section class="page-white-bg" style="padding-left: 100px;">
-<form class="common-form" #resetForm="ngForm">
+<header id="header-mobile">
+    <a style="background: none;" href="/"><img name="auslanLogo" alt="Auslan Connections" width="72" height="46"
+                                               src="assets/img/auslan-logo.png">
+    </a>
+</header>
+<section class="page-white-bg" style="padding: 0px 16px;" id="page-signup-organisation">
 
-		<div class="row small-collapse">
-			<div class="medium-9 medium-centered columns">
-				<div class="heading">
-					<h1 class="title">VERIFY CODE FORM</h1>
-					<p class="subtitle">Thank you for signing up.</p><p> For security purposes, we have sent a verification code to your email address. <p><p><b>Please check your email and fill in the code. </b></p>
-				</div>
-			</div>
-			<div class="medium-4 medium-centered columns">
-				<div class="form-field">
-					<label>VERIFICATION CODE * </label> <input type="password" placeholder="" [(ngModel)]='verificationCode' name="verification_code"
-					 #verification_code="ngModel" [rangeLength]="[4, 8]" required>
-					<span *ngIf="verification_code.touched && (!verification_code.errors?.required && !verification_code.errors?.rangeLength);"
-					 class="inline-icon inline-icon-valid valid"></span>
-					<span *ngIf="(verification_code.dirty || verification_code.touched) && (verification_code.errors?.required || verification_code.errors?.rangeLength);"
-					 class="inline-icon error"> <span>This field is
+        <form class="common-form reduced-bottom" #resetForm="ngForm">
+
+            <div class="row small-collapse">
+                <div class="row-wrapper">
+
+                    <div class="medium-12 columns">
+                        <div class="heading">
+                            <h1 class="title">VERIFY CODE FORM</h1>
+                            <p class="subtitle">Thank you for signing up.</p>
+                            <p> For security purposes, we have sent a verification code to your email address.
+                            <p>
+                            <p><b>Please check your email and fill in the code. </b></p>
+                        </div>
+                    </div>
+                    <div class="small-12 medium-4 columns">
+                        <div class="form-field">
+                            <label>VERIFICATION CODE * </label> <input type="password" placeholder=""
+                                                                       [(ngModel)]='verificationCode'
+                                                                       name="verification_code"
+                                                                       #verification_code="ngModel"
+                                                                       [rangeLength]="[4, 8]" required>
+                            <span *ngIf="verification_code.touched && (!verification_code.errors?.required && !verification_code.errors?.rangeLength);"
+                                  class="inline-icon inline-icon-valid valid"></span>
+                            <span *ngIf="(verification_code.dirty || verification_code.touched) && (verification_code.errors?.required || verification_code.errors?.rangeLength);"
+                                  class="inline-icon error"> <span>This field is
 								required.</span>!
 					</span>
-				</div>
+                        </div>
 
-			</div>
+                    </div>
 
+                </div>
+            </div>
+            <div class="row small-collapse">
+                <div class="row-wrapper">
 
-			<div class="medium-8 medium-centered columns">
-				<div class="form-field">
-					<section id="page-common">
-						<section id="static-flow">
-							<section id="submenu">
-								<div>
-									<button name="resend_code" class="login button rvc-color" [disabled]="(userID < 1)" (click)="resendVerificationCode()">Resend Verification
-					Code</button>
-									<button name="verify_user" class="login button" [disabled]="verification_code.errors" (click)="verifyUser()">
-					Verify User</button>
-								</div>
-							</section>
-						</section>
-					</section>
-				</div>
-			</div>
+                    <div class="medium-8 columns">
+                        <div class="form-field">
 
-		</div>
+                            <button name="resend_code"
+                                    class="login rvc-color"
+                                    [disabled]="(userID < 1)" (click)="resendVerificationCode()">Resend
+                                Verification
+                                Code
+                            </button>
+                            <button name="verify_user"
+                                    class="login"
+                                    [disabled]="verification_code.errors" (click)="verifyUser()">
+                                Verify User
+                            </button>
+                        </div>
+                    </div>
 
-
-	</form>
+                </div>
+            </div>
+        </form>
 </section>
