@@ -15,8 +15,12 @@
           <button md-button>
             <b>Batch Upload</b>
             <!-- span>or drag &amp; drop them here</span -->
-            <input type="file" ng2FileSelect (change)="handleBulkUploadSelect($event)" [uploader]="uploader"
-                   name="bulk-uploader"/>
+            <input type="file"
+                   ng2FileSelect
+                   (change)="handleBulkUploadSelect($event)"
+                   [uploader]="bulkUploader"
+                   name="bulk-uploader"
+                   id='bulk-uploader' />
           </button>
           <!-- section ng2FileDrop
                    [ngClass]="{
