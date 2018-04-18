@@ -475,7 +475,6 @@ export class BlockoutComponent implements OnDestroy, OnInit {
         } else {
             this.dummy_time = this.dummy_time.replace(/\s/g, '');
             let bookingTime = this.correctTimeFormat(this.dummy_time, timeControl);
-            console.log(bookingTime);
             if (bookingTime) {
                 this.end_time = new Date(bookingTime);
             } else {
