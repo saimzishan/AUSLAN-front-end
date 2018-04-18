@@ -119,7 +119,7 @@ export class SkillMatrixComponent implements OnInit {
             this.spinnerService.requestInProcess(true);
             let d = new DatePipe('en-us');
             this.userModel.date_of_birth =
-                d.transform(this.userModel.date_of_birth, 'yyyy-MM-dd');
+                d.transform(this.userModel.date_of_birth.trim().replace(' ', '0'), 'yyyy-MM-dd');
             this.userService.updateUser(this.userModel)
                 .subscribe((res: any) => {
                         if (res.status === 200) {

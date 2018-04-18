@@ -1,7 +1,7 @@
 <header id="header-mobile">
     <button *ngIf="showBackLink" routerLink="{{ [backLink] }}" class="icon-back"></button>
 
-    <h1>{{title}}</h1>
+    <h1 class="align-left" style="padding-left: 50px;">{{title}}</h1>
 
     <section>
         <a  *ngIf='isCurrentUserNotIndividualClientOrOrg()' [routerLink]="['/users/',getActiveUserId(),'inbox']" class="header__message"><i class="icon-messages"></i></a>

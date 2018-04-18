@@ -25,6 +25,7 @@ import 'foundation-sites';
 import {SpinnerService} from '../spinner/spinner.service';
 import { NotificationServiceBus } from '../notification/notification.service';
 import {RolePermission} from '../shared/role-permission/role-permission';
+import {MobileHeaderComponent} from '../ui/mobile-header/mobile-header.component';
 
 describe('UserManagement', () => {
     let component: UserManagementComponent;
@@ -32,7 +33,7 @@ describe('UserManagement', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [UserManagementComponent],
+            declarations: [UserManagementComponent, MobileHeaderComponent],
             imports: [FormsModule, RouterTestingModule, CustomFormsModule, HttpModule],
             providers: [NotificationServiceBus, RolePermission,
             { provide: UserService, useClass: MockUserService }, SpinnerService, { provide: AuthHttp, useClass: MockBackend }]

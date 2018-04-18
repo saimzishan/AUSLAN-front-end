@@ -46,7 +46,7 @@ export class InterpreterComponent implements OnInit , AfterViewInit {
         this.userModel.naati_validity_end_date =
             d.transform(this.userModel.naati_validity_end_date, 'yyyy-MM-dd');
         this.userModel.date_of_birth =
-            d.transform(this.userModel.date_of_birth, 'yyyy-MM-dd');
+            d.transform(this.userModel.date_of_birth.trim().replace(' ', '0'), 'yyyy-MM-dd');
         if (this.isUserAdminORBookOfficer) {
             this.userModel.date_approved =
                 d.transform(this.userModel.date_approved, 'yyyy-MM-dd');
