@@ -32,9 +32,8 @@ defineSupportCode(({Given, When, Then}) => {
     Given(/^There exists an? (.*)/, Heroku.createFactory);
     Given(/^I click on my name$/, bookingManagementPage.clickOnProfile);
     Given(/^I scroll up$/, () => {
-        let scrolldown =  $$('section .messages__message').get(0);
-        browser.controlFlow().execute(function () {
-            browser.executeScript('arguments[0].scrollIntoView(true)', scrolldown.getWebElement());
+        browser.controlFlow().execute(() => {
+            return browser.executeScript("document.querySelectorAll('section .messages__message')[0].scrollIntoView(true)");
         });
     });
     Given(/^I scroll to top$/, () => {
