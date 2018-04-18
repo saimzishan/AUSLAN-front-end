@@ -2,7 +2,7 @@
 set -x #echo on
 set -eo pipefail
 apt-get update
-apt-get --only-upgrade install google-chrome-stable
+apt-get --only-upgrade install -y google-chrome-stable
 export CHROME_BIN=$(which google-chrome)
 service postgresql restart
 gem install bundler
