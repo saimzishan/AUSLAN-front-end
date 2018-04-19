@@ -58,7 +58,7 @@
           selectedBookingModel.deaf_person.last_name}}
         </td>
         <td data-title="ADDRESS">
-          <a target="_blank"
+          <a target="_blank" *ngIf="selectedBookingModel.venue.post_code !== 0"
              href="{{'https://www.google.com.au/maps/place/' + selectedBookingModel.venue.street_number + ' ' + selectedBookingModel.venue.street_name + ' ' + selectedBookingModel.venue.suburb}}">
             {{selectedBookingModel.venue.unit_number? selectedBookingModel.venue.unit_number + '/' : ''}}{{selectedBookingModel.venue.street_number + ' ' + selectedBookingModel.venue.street_name + ' ' + selectedBookingModel.venue.suburb
             + ' ' + selectedBookingModel.venue.state + ' ' + selectedBookingModel.venue.post_code}}

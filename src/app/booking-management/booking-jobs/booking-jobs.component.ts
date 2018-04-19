@@ -817,23 +817,21 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
             let offset = '';
             let st = this.startTime.getHours() - 2;
             if (sd.getHours() >= st) {
-                offset = 'offset' + (sd.getHours() - st);
-
+                let temp = 1 + +(sd.getHours() - st);
+                offset = 'offset' + temp;
             } else if (sd.getHours() < st) {
 
                 offset = 'offset' + (st - sd.getHours() > 1 ? '' : (st - sd.getHours()));
 
             }
-            cells = 'cells' + (edt.getHours() - sd.getHours() >= 10 ?
-                10 : edt.getHours() - sd.getHours());
+                cells = 'cells' + (edt.getHours() - sd.getHours() >= 10 ?
+                    10 : edt.getHours() - sd.getHours());
             // This needs to be double checked
             let color = avail_block.booking_id === null ? 'badge_orange' :
                 avail_block.booking_id === this.selectedBookingModel.id ? 'badge_green' : 'badge_pink';
             let cellVal = this.endTime.getMinutes() > 29 ? 'half' : '';
             let offsetVal = this.startTime.getMinutes() > 29 ? 'half' : '';
             toRet = cells + cellVal + ' ' + offset + offsetVal + ' ' + color;
-            console.log(toRet + ' ' + startDate + ' ' + endDate);
-
         }
         return toRet;
     }
@@ -848,12 +846,13 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
             10 : this.endTime.getHours() - this.startTime.getHours());
         cellVal += this.endTime.getMinutes() > 29 ? 'half' : '';
         let offsetVal = this.startTime.getMinutes() > 29 ? 'half' : '';
-        let toRet = 'cells' + cellVal + ' offset2' + offsetVal;
+        let toRet = 'cells' + cellVal + ' offset3' + offsetVal;
         return toRet;
     }
 
     getTimelineStartTime() {
         let array = [];
+        array.push(' ' + ' ' + ' ' );
         let dt = new Date();
         dt.setTime(this.startTime.getTime());
         dt.setHours(dt.getHours() - 2);
