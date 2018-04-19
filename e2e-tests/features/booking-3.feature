@@ -245,3 +245,32 @@ Feature: Booking Management
     And I click on BUTTON 'Duplicate'
     Then I will be taken to the 'New Booking' form
     And I will see attachment 'sushi.pdf' is removed
+
+  @runThis
+  Scenario: Administrator can create bookings , Organisational Representative exist and Assigned interpreters to booking and check after search
+  Given There exist 2 verified interpreters
+    And I sign in with valid Administrator credentials
+    And I am on the bookings page
+    And I click on 'New Booking'
+    And I will be taken to the 'New Booking' form
+    And I fill New Booking form fields correctly with non-standard time from 07:00 AM to 08:00 AM with 2 'auslanInterpreters_count'
+    And I specify i have special instruction
+    And I select the bookable for org rep
+    Then I move to element name 'tnc'
+    Then I click on checkbox name 'tnc'
+    And I click the create booking button
+    Then I get a valid create booking notification
+    And I am on the bookings page
+    Then I click on an individual booking
+    And I am on the individual booking page
+    Then I select Interpreter 0
+    Then I select Interpreter 1
+    And I click on BUTTON name 'reassingBtn'
+    Then I can see the button 'Save' is enabled
+    And I click on BUTTON 'Save'
+    Then I wait for 1000 milli-seconds
+    Then I get valid message: 'The interpreter have been assigned'
+    Then I click on Booking
+    And I am on the bookings page
+    When I query booking with interpreter name 'Interpreter'
+    Then I can see the element with name 'isAllocated' is 'not visible'
