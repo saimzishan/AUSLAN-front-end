@@ -23,11 +23,10 @@ export class AuthComponent implements OnInit, OnDestroy {
   public vicDeafImg: boolean;
   constructor(public spinnerService: SpinnerService, public notificationServiceBus: NotificationServiceBus, public service: UserService,
      public routes: ActivatedRoute, public router: Router, public platformLocation: PlatformLocation) {
-       this.logout();       
+       this.logout();
   }
 
    ngOnInit() {
-    console.log((this.platformLocation as any).location.hostname.toString());
     this.setImageBasedOnBusiness();
      this.sub = this.routes.url.subscribe( v => {
        if (v.length > 1 && v[1].path === 'logout') {
