@@ -89,7 +89,6 @@ export class UserProfileComponent implements OnInit {
                     if (res.status === 200) {
                         let user ;
                         // UI Notification
-                        this.userModel.photo_url = res.json().photo_url || '';
                         if ( this.userModel instanceof OrganisationalRepresentative
                         || this.userModel instanceof IndividualClient) {
                             this.userModel.prefferedInterpreters =
@@ -98,6 +97,8 @@ export class UserProfileComponent implements OnInit {
                         user = UserFactory.createUser(JSON.parse(res._body));
                         GLOBAL.currentUser = user;
                         AuthGuard.refreshUser(user);
+                        this.userModel = user;
+                        this.userModel.photo_url = user.photo_url || '';
                         this.setGenderIfOther();
                         this.userNameService.setLoggedInUser(user);
                         this.notificationServiceBus.launchNotification(false, 'User details updated Successfully');
