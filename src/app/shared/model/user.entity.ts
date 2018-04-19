@@ -451,7 +451,7 @@ export class Interpreter extends User {
     public naati_validity_start_date: string;
     public naati_validity_end_date: string;
     public business_hours_phone: string;
-    public date_of_birth: string;
+    public date_of_birth = '';
     public date_approved: string;
     public address_attributes: Address = new Address();
     public long_term_availability: interpreter_avalability;

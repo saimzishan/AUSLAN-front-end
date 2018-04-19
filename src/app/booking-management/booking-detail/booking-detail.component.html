@@ -15,8 +15,12 @@
           <button md-button>
             <b>Batch Upload</b>
             <!-- span>or drag &amp; drop them here</span -->
-            <input type="file" ng2FileSelect (change)="handleBulkUploadSelect($event)" [uploader]="uploader"
-                   name="bulk-uploader"/>
+            <input type="file"
+                   ng2FileSelect
+                   (change)="handleBulkUploadSelect($event)"
+                   [uploader]="bulkUploader"
+                   name="bulk-uploader"
+                   id='bulk-uploader' />
           </button>
           <!-- section ng2FileDrop
                    [ngClass]="{
@@ -147,10 +151,10 @@
             [(ngModel)]="bookingStartTime"
             [readonlyInput]="isDisabledForOrgRepIndClient"
             placeholder="STARTING TIME *"
-            [timeOnly]="true" hourFormat="12"
+            [timeOnly]="true"
+            hourFormat="12"
             [stepMinute]="5" [defaultDate]="defaultDateTime"
-            (input)='checkMe($event)'
-             (onBlur)="assignMe('startTimeControl')"
+            (onBlur)="assignMe('startTimeControl', $event)"
             required #dpEventDate="ngModel"></p-calendar>
             <span *ngIf="dpEventDate.touched && !dpEventDate.errors?.required;"
                   class="inline-icon inline-icon-valid valid"></span>
@@ -168,9 +172,11 @@
             [(ngModel)]="bookingEndTime" 
             [readonlyInput]="isDisabledForOrgRepIndClient"
             placeholder="ENDING TIME *"
-            [timeOnly]="true" hourFormat="12"
-            [stepMinute]="5" [defaultDate]="defaultDateTime"
-             (input)='checkMe($event)' (onBlur)="assignMe('endTimeControl')"
+            [timeOnly]="true"
+            hourFormat="12"
+            [stepMinute]="5"
+            [defaultDate]="defaultDateTime"
+            (onBlur)="assignMe('endTimeControl', $event)"
             required #dpEventEndTime="ngModel"></p-calendar>
             <span *ngIf="dpEventEndTime.touched && !dpEventEndTime.errors?.required;"
                   class="inline-icon inline-icon-valid valid"></span>
