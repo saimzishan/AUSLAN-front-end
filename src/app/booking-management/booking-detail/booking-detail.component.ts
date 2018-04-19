@@ -35,6 +35,7 @@ const _ONE_HOUR = 1000 /*milliseconds*/
 })
 export class BookingDetailComponent implements OnInit, OnDestroy {
     private sub: any;
+    public bulkUploader: FileUploader = new FileUploader({url: '', maxFileSize: 20 * 1024 * 1024});
     public uploader: FileUploader = new FileUploader({url: '', maxFileSize: 20 * 1024 * 1024});
     bookingModel: Booking;
     bookable: IndividualClient | OrganisationalRepresentative;
