@@ -138,8 +138,6 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN,  I can send messages and ca
         Then I click on element by id 'lnkMessages'
         Then I will be taken to message page
         Then I can count the element with css 'span.show-for-sr' to be '5'
-<<<<<<< HEAD
-=======
 
     @runThis
     Scenario: Given 1 verified Administrator INTERPRETER and INTERPRETER1 exists if I type in interpreter1 thread and choose 2nd interpreter text of 1st interpreter will remove
@@ -153,5 +151,3 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN,  I can send messages and ca
         And I can verify the input 'message_body' will have the value 'Test message'
         Then I click on element by name 'dragana-Interpreter'
         And I can verify the input 'message_body' will have the value ''
->>>>>>> origin/master
-        
