@@ -110,7 +110,7 @@ export class BlockoutPagePo extends PageObject {
         endTime.sendKeys(value);
         this.clickOutSide();
         return endTime.getAttribute('value').then((val) => {
-            expect(val).to.be.eq('01:02 AM');
+            expect(val).to.be.eq('01:05 AM');
         });
     }
     changeEndTimeWithWrongInput = (value) => {

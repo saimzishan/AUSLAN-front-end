@@ -171,14 +171,14 @@ Feature: Booking Management
     And I am on the bookings page
     And I click on 'New Booking'
     And I will be taken to the 'New Booking' form
-    Then I change the value of end time of booking '01:02'
-    Then I check the value of endTime should be '01:02 AM'
+    Then I change the value of end time of booking '01:05'
+    Then I check the value of endTime should be '01:05 AM'
     Then I wait for 1000 milli-seconds
-    Then I change the value of end time of booking '01:02am'
-    Then I check the value of endTime should be '01:02 AM'
+    Then I change the value of end time of booking '01:05am'
+    Then I check the value of endTime should be '01:05 AM'
     Then I wait for 1000 milli-seconds
-    Then I change the value of end time of booking '01:02am'
-    Then I check the value of endTime should be '01:02 AM'
+    Then I change the value of end time of booking '01:05am'
+    Then I check the value of endTime should be '01:05 AM'
     Then I change the value of end time of booking with wrong value 'as:as pm'
     Then I check the value of endTime should be ''
     Then I change the value of end time of booking with wrong value 'abcd pm'
@@ -186,9 +186,9 @@ Feature: Booking Management
     Then I change the value of end time of booking with wrong value '12:as pm'
     Then I check the value of endTime should be ''
     Then I change the value of end time of booking '01:02       am'
-    Then I check the value of endTime should be '01:02 AM'
+    Then I check the value of endTime should be '01:05 AM'
     Then I change the value of end time of booking '1:02am'
-    Then I check the value of endTime should be '01:02 AM'
+    Then I check the value of endTime should be '01:05 AM'
 
 # ---------------------------------------- AUSLAN1-727 -> START ----------------------------------------
 
