@@ -21,7 +21,7 @@ export class TermandconditionComponent implements OnInit {
     }
 
     setTnCUrl() {
-        if ((this.platformLocation as any).location.hostname.toString() === 'https://auslanconnections.vicdeaf.com.au') {
+        if ((this.platformLocation as any).location.origin.toString() === 'https://auslanconnections.vicdeaf.com.au') {
           this.tNc = 'https://s3-ap-southeast-2.amazonaws.com/auslan-public-bucket/Auslan_Online_Terms_And_Conditions_Vicdeaf.pdf';
         } else {
           this.tNc = 'https://s3-ap-southeast-2.amazonaws.com/auslan-public-bucket/Auslan_Online_Terms_And_Conditions_DSQ.pdf';

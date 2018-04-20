@@ -43,7 +43,7 @@ export class AuthComponent implements OnInit, OnDestroy {
    }
 
    setImageBasedOnBusiness() {
-     if ((this.platformLocation as any).location.hostname.toString() === 'https://auslanconnections.vicdeaf.com.au') {
+     if ((this.platformLocation as any).location.origin.toString() === 'https://auslanconnections.vicdeaf.com.au') {
        this.vicDeafImg = true;
      } else {
        this.vicDeafImg = false;
