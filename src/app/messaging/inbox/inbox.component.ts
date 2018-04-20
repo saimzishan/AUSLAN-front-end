@@ -15,6 +15,7 @@ import {PlatformLocation} from '@angular/common';
 import {Administrator, BookingOfficer} from '../../shared/model/user.entity';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PerfectScrollbarComponent, PerfectScrollbarConfigInterface, PerfectScrollbarDirective} from 'ngx-perfect-scrollbar';
+import { ReplaceLineBreaks } from '../../replaceLineBreaks.pipe';
 
 @Component({
     selector: 'app-inbox',

@@ -75,7 +75,8 @@ import {AutoCompleteModule, CalendarModule as PrimeNgCalendarModule} from 'prime
 import {MobileHeaderComponent} from './ui/mobile-header/mobile-header.component';
 import {BookingInfoComponent} from './booking-management/booking-info/booking-info.component';
 import {ShortTimePipe} from './shared/pipe/short-time.pipe';
-import {MomentTZDatePipe} from './moment-tzdate.pipe';
+import { MomentTZDatePipe } from './moment-tzdate.pipe';
+import { ReplaceLineBreaks} from './replaceLineBreaks.pipe';
 
 describe('AppComponent', () => {
   beforeEach(() => {
@@ -92,7 +93,7 @@ describe('AppComponent', () => {
         SpinnerComponent, OrgRepComponent, InterpreterComponent, AddressComponent,
           IndClientComponent, BillingAccountComponent, AccountantComponent, PreComponent,
           InterpreterBoxComponent, InterpreterPopupComponent, RemoveSpacePipe, BookingInfoComponent,
-          ShortTimePipe, MomentTZDatePipe
+        ShortTimePipe, MomentTZDatePipe, ReplaceLineBreaks
       ],
       imports: [CustomFormsModule, NgxPaginationModule, FileuploaderModule, RouterTestingModule, Md2Module.forRoot(),
       MaterialModule, FormsModule, SimpleNotificationsModule.forRoot(), MobileFooterModule,

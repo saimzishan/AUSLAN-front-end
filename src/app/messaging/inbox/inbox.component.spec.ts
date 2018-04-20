@@ -21,6 +21,8 @@ import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { NgxPaginationModule } from 'ngx-pagination';
 import {MobileHeaderComponent} from '../../ui/mobile-header/mobile-header.component';
+import { ReplaceLineBreaks } from '../../replaceLineBreaks.pipe';
+
 
 const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true
@@ -32,7 +34,7 @@ describe('InboxComponent', () => {
 
   beforeEach(async(() => {
         TestBed.configureTestingModule({
-          declarations: [InboxComponent, MobileHeaderComponent],
+          declarations: [InboxComponent, MobileHeaderComponent, ReplaceLineBreaks],
             providers: [RolePermission, { provide: UserService }, NotificationServiceBus, { provide: MessagingService, useClass: MockMessageService },
                 SpinnerService, { provide: AuthHttp, useClass: MockBackend }],
           imports: [FormsModule, RouterTestingModule, HttpModule,
