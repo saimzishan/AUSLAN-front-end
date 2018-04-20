@@ -506,6 +506,14 @@ defineSupportCode(({Given, When, Then}) => {
         });
     }
 
+    When(/^I verify material checkbox in list of name '(.*)' is checked '(.*)'$/, verifyMaterialCBOfList);
+    function verifyMaterialCBOfList(btnName: string, checkedState: 'True' | 'true') {
+        const checkbox = page.getElementByCss('md-checkbox[ng-reflect-name="' + btnName + '"]');
+        return checkbox.getAttribute('ng-reflect-checked').then(val => {
+            return expect(val).to.be.eq(checkedState.toLowerCase());
+        });
+    }
+
     When(/^I verify material slide-toggle name '(.*)' is disabled '(.*)'$/, verifyMaterialST);
     function verifyMaterialST(btnName: string, checkedState: 'True' | 'true') {
         const checkbox = page.getElementByCss('md-slide-toggle[name="' + btnName + '"]');

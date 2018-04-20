@@ -151,3 +151,4 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN,  I can send messages and ca
         And I can verify the input 'message_body' will have the value 'Test message'
         Then I click on element by name 'dragana-Interpreter'
         And I can verify the input 'message_body' will have the value ''
+        
