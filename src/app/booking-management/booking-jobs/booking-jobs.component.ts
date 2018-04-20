@@ -817,8 +817,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
             let offset = '';
             let st = this.startTime.getHours() - 2;
             if (sd.getHours() >= st) {
-                let temp = 1 + +(sd.getHours() - st);
-                offset = 'offset' + temp;
+                offset = 'offset' + (sd.getHours() - st);
             } else if (sd.getHours() < st) {
 
                 offset = 'offset' + (st - sd.getHours() > 1 ? '' : (st - sd.getHours()));
