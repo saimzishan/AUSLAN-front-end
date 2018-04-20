@@ -16,7 +16,7 @@ Feature: Booking Admin Management
     When I am on the bookings page
     Then I click on an individual booking of type 'Requested'
     Then I will be shown the booking job page
-    Then I can see the element with css 'div.cells2.offset2' is 'visible'
+    Then I can see the element with css 'div.cells2.offset3' is 'visible'
     Then I can see the button 'Save' is disabled
     Then I can see the button state 'Assign' is visible
     Then I can see the button state 'Invite' is visible
@@ -35,7 +35,7 @@ Feature: Booking Admin Management
     When I am on the bookings page
     Then I click on an individual booking of type 'Requested'
     Then I will be shown the booking job page
-    Then I can see the element with css 'div.cells2.offset2' is 'visible'
+    Then I can see the element with css 'div.cells2.offset3' is 'visible'
     Then I can see the button 'Save' is disabled
     Then I can see the button state 'Assign' is visible
     Then I can see the button state 'Invite' is visible
@@ -54,7 +54,7 @@ Feature: Booking Admin Management
     When I am on the bookings page
     Then I click on an individual booking of type 'Requested'
     Then I will be shown the booking job page
-    Then I can see the element with css 'div.cells2.offset2' is 'visible'
+    Then I can see the element with css 'div.cells2.offset3' is 'visible'
     Then I can see the button 'Save' is disabled
     Then I can see the button state 'Assign' is visible
     Then I can see the button state 'Invite' is visible
@@ -72,8 +72,8 @@ Feature: Booking Admin Management
     When I am on the bookings page
     Then I click on an individual booking of type 'Requested'
     Then I will be shown the booking job page
-    Then I can see the element with css 'div.cells2.offset2' is 'visible'
-    Then I can see the element with css 'span.cells2.offset2.pink' is 'visible'
+    Then I can see the element with css 'div.cells2.offset3' is 'visible'
+    Then I can see the element with css 'span.cells2.offset3.pink' is 'visible'
     Then I can see the button 'Save' is disabled
     Then I can see the button state 'Assign' is visible
     Then I can see the button state 'Invite' is visible
@@ -86,7 +86,7 @@ Feature: Booking Admin Management
     Then I click on BUTTON name 'yesBtn'
     Then I wait for 1000 milli-seconds
     Then I get valid message: 'The interpreter have been assigned'
-    Then I can see the element with css 'span.cells2.offset2.pink' is 'visible'
+    Then I can see the element with css 'span.cells2.offset3.pink' is 'visible'
 
   @runThis
   Scenario: Given 1 verified Booking Officer and INTERPRETER, INTERPRETER1 created, a booking is created then assign hides when select more then booking required
@@ -96,7 +96,7 @@ Feature: Booking Admin Management
     Then I see one row with state 'Requested'
     Then I click on an individual booking of type 'Requested'
     Then I will be shown the booking job page
-    Then I can see the element with css 'div.cells1.offset2' is 'visible'
+    Then I can see the element with css 'div.cells1.offset3' is 'visible'
     Then I can see the button 'Save' is disabled
     Then I can see the button state 'Assign' is visible
     Then I can see the button state 'Invite' is visible
@@ -115,7 +115,7 @@ Feature: Booking Admin Management
     Then I see one row with state 'Requested'
     Then I click on an individual booking of type 'Requested'
     Then I will be shown the booking job page
-    Then I can see the element with css 'div.cells1.offset2' is 'visible'
+    Then I can see the element with css 'div.cells1.offset3' is 'visible'
     Then I can see the button 'Save' is disabled
     Then I can see the button state 'Assign' is visible
     Then I can see the button state 'Invite' is visible
