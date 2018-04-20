@@ -150,9 +150,5 @@ Feature: As INTERPRETER OR BOOKING OFFICER OR ADMIN,  I can send messages and ca
         Then I fill the field 'message_body' with value 'Test message'
         And I can verify the input 'message_body' will have the value 'Test message'
         Then I click on element by name 'dragana-Interpreter'
-<<<<<<< HEAD
-        And I can verify the input 'message_body' will have the value ''
-=======
         And I can verify the input 'message_body' will have the value ''
         
->>>>>>> origin/master
