@@ -649,6 +649,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
       Calling this method will create a new booking
     */
     public onCreateBooking(form: any, addressForm: any, billingForm: any, uploader: FileUploader) {
+        this.bookingModel.recurrence_end_date = this.datePipe.transform(this.bookingModel.recurrence_end_date, 'yyyy-MM-dd');
         this.bookingModel.travel_cost_applicable = addressForm.isTravelCostApplicable ? true : false;
 
         if (this.shouldSelectDeafBlindOtherLanguage()) {
