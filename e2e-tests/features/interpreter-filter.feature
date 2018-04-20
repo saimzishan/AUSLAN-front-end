@@ -144,3 +144,30 @@ Feature: Nearby Interpreter Filter
     Then I can see a list of 2 verified interpreters
     When I search interpreters with 'empty'
     Then I can see a list of 10 verified interpreters
+
+  @runThis
+  Scenario: Given 1 verified Administrator, when filter all selected interpreter(s) will unselected
+    Given There exist 10 verified interpreters
+    And I sign in with valid Administrator credentials
+    And I am on the bookings page
+    When I click on an individual booking
+    Then I am on the individual booking page
+    Then I can see a list of 10 verified interpreters
+    Then I select Interpreter 1
+    Then I select Interpreter 2
+    Then I select Interpreter 3
+    And I verify material checkbox in list of name 'Check1' is checked 'true'
+    And I verify material checkbox in list of name 'Check2' is checked 'true'
+    And I verify material checkbox in list of name 'Check3' is checked 'true'
+    When I click on the 'Recommended' link
+    And I wait for 1000 milli-seconds
+    And I verify material checkbox in list of name 'Check1' is checked 'false'
+    And I verify material checkbox in list of name 'Check2' is checked 'false'
+    And I verify material checkbox in list of name 'Check3' is checked 'false'
+    And I search interpreters with 'Preston'
+    Then I can see a list of 2 verified interpreters
+    Then I select Interpreter 1
+    And I verify material checkbox in list of name 'Check1' is checked 'true'
+    When I search interpreters with 'empty'
+    Then I can see a list of 10 verified interpreters
+    And I verify material checkbox in list of name 'Check1' is checked 'false'
