@@ -16,6 +16,24 @@ Feature: Edit Booking
     Then I should be on the edit booking page
 
   @runThis
+  Scenario: Given 1 verified Individual Client, I should be able to set ndis, eaf and ur ids auto if set in my profile
+    Given I exist as an Individual Client
+    And I sign in with valid Individual Client credentials
+    And I am on the bookings page
+    And I click on my name in the top corner
+    When I click on the option  profile
+    And I will be taken to my individual profile page
+    And I fill the field 'ur_id' with value 'UR-123'
+    And I fill the field 'eaf_id' with value 'EAF-567'
+    And I fill the field 'ndis_id' with value 'NDIS-123'
+    And I click on BUTTON 'SAVE'
+    Then I see success notification
+    And I click on 'New Booking'
+    Then I can verify the input 'deaf_person_ndis' will have the value 'NDIS-123'
+    Then I can verify the input 'deaf_person_eaf' will have the value 'EAF-567'
+    Then I can verify the input 'deaf_person_ur' will have the value 'UR-123'
+
+  @runThis
   Scenario: Given 1 verified Booking Officer, I should be able to verify that EAF, NDIS and UR number are being saved properly
     Given I exist as an Booking Officer
     And I sign in with valid Booking Officer credentials

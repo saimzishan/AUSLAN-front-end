@@ -419,6 +419,10 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
 
 
     getPage(page: number) {
+        this.checkList = {};
+        this.selectedInterpreterIDs = [];
+        this.hideAccept = this.selectedInterpreterIDs.length > this.selectedBookingModel.interpreters_required;
+        this.reAssignPressed = this.invitePressed = false;
         this.currentPage = page;
         this.route.params.subscribe(params => {
             let param_id = params['id'] || '';
@@ -923,6 +927,7 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
         }
         this.checkList = {};
         this.selectedInterpreterIDs = [];
+        this.hideAccept = this.selectedInterpreterIDs.length > this.selectedBookingModel.interpreters_required;
         this.reAssignPressed = this.invitePressed = false;
         this.route.params.subscribe(params => {
             this.currentPage = 1;
@@ -938,6 +943,10 @@ export class BookingJobsComponent implements OnInit, OnDestroy {
     search() {
         this.isRecommended = false;
         GLOBAL._filterInterpreterVal.set('search', this.searchParams);
+        this.checkList = {};
+        this.selectedInterpreterIDs = [];
+        this.hideAccept = this.selectedInterpreterIDs.length > this.selectedBookingModel.interpreters_required;
+        this.reAssignPressed = this.invitePressed = false;
         this.route.params.subscribe(params => {
             this.currentPage = 1;
             let param_id = params['id'] || '';

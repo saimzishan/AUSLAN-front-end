@@ -66,7 +66,7 @@ export class Booking {
     public new_link_id_required: boolean;
     public frequency: 'weekly' | 'biweekly' | 'fourweekly';
     public recurring: boolean;
-    public recurrence_end_date: Date;
+    public recurrence_end_date: Date | string;
     public repeat_booking_on_days: Array<string>;
     public method_name: string;
     public cbworkWithChildCheck: boolean;
