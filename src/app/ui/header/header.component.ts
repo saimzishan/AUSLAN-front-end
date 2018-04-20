@@ -8,6 +8,7 @@ import { Location } from '@angular/common';
 import { MessagingService } from '../../api/messaging.service';
 import { NotificationServiceBus } from '../../notification/notification.service';
 import {Administrator, BookingOfficer, Interpreter} from '../../shared/model/user.entity';
+import { AuthGuard } from '../../auth/auth.guard';
 
 @Component({
   selector: 'app-header',
@@ -77,5 +78,8 @@ export class HeaderComponent implements OnDestroy, OnInit {
     return Boolean(GLOBAL.currentUser instanceof Administrator || GLOBAL.currentUser instanceof BookingOfficer || GLOBAL.currentUser instanceof Interpreter);
   }
 
+  userLogout() {
+    AuthGuard.logout();
+    this.router.navigate(['/authenticate/logout']);
+  }
 }
-

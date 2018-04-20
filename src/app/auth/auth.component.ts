@@ -21,16 +21,12 @@ export class AuthComponent implements OnInit, OnDestroy {
   private returnUrl = '';
   constructor(public spinnerService: SpinnerService, public notificationServiceBus: NotificationServiceBus, public service: UserService,
      public routes: ActivatedRoute, public router: Router) {
-       this.logout();
   }
 
    ngOnInit() {
-     this.sub = this.routes.url.subscribe( v => {
-       if (v.length > 1 && v[1].path === 'logout') {
-         this.logout();
-       }
-     });
-
+     if (localStorage.getItem('user')) {
+       this.router.navigate(['booking-management']);
+     }
        this.querySub = this.routes
            .queryParams
            .subscribe(params => {
@@ -63,13 +59,4 @@ export class AuthComponent implements OnInit, OnDestroy {
     },
     () => {});
     }
-
-    logout(): void {
-        this.model.token = null;
-        GLOBAL._extRefVal = new URLSearchParams();
-        GLOBAL._filterVal = new URLSearchParams();
-        // clear token remove user from local storage to log user out
-        AuthGuard.logout();
-    }
-
 }

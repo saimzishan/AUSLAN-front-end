@@ -47,7 +47,7 @@ const appRoutes: Routes = [
     {path: 'users/:id/inbox', component: InboxComponent, canActivate: [AuthGuard, VerifiedGuard]},
     {path: 'users/:id/inbox/:id2', component: InboxComponent, canActivate: [AuthGuard, VerifiedGuard]},
     {path: 'reports', component: ReportsComponent, canActivate: [AuthGuard, VerifiedGuard]},
-    {path: 'authenticate', component: AuthComponent, canActivate: [NoAuthGuard]},
+    {path: 'authenticate', component: AuthComponent},
     {path: 'authenticate/logout', component: AuthComponent},
     {path: '404', component: NotFoundComponent},
     {path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard]},

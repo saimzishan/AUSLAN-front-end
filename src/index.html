@@ -52,7 +52,9 @@
 		console.log('document ready');
 		function storageChange(event) {
 			if (event.key === 'token') {
-				if (!event.newValue) { window.location.href = '/' }
+				window.location.href = '/booking-management'
+			} else {
+				window.location.href = '/'
 			}
 		}
 		window.addEventListener('storage', storageChange, false);
