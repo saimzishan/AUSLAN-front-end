@@ -90,6 +90,7 @@ import { ReportsComponent } from './reports/reports.component';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import {VerifiedGuard} from './auth/verified.guard';
+import { MomentTZDatePipe } from './moment-tzdate.pipe';
 
 const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true
@@ -124,7 +125,7 @@ const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         UserPasswordComponent, PreComponent, BlockoutComponent, TermandconditionComponent,
         InterpreterBoxComponent, InterpreterPopupComponent, RemoveSpacePipe, LinkidPopupComponent, MobileHeaderComponent,
         BookingInfoComponent, BookingPayrollComponent, PayrollTimeComponent, StaffCalendarComponent, ShortTimePipe, UserPayrollBillingComponent, InboxComponent
-        , BookingPayrollComponent, PayrollTimeComponent, StaffCalendarComponent, ShortTimePipe, UserPayrollBillingComponent, ReportsComponent
+        , BookingPayrollComponent, PayrollTimeComponent, StaffCalendarComponent, ShortTimePipe, UserPayrollBillingComponent, ReportsComponent, MomentTZDatePipe
     ],
     entryComponents: [PopupComponent, InterpreterPopupComponent, LinkidPopupComponent],
     imports: [CustomFormsModule, routing, FileUploadModule, MdCheckboxModule,

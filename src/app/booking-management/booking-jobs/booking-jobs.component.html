@@ -1,7 +1,4 @@
-<header id="header-mobile">
-    <button [routerLink]="['/booking-management']" class="icon-back"></button>
-    <h1 *ngIf="!jobAccessError">JOB #{{selectedBookingModel.id | PrettyID}}</h1>
-</header>
+<app-mobile-header title="{{ jobAccessError ? '' : 'JOB #' + (selectedBookingModel.id | PrettyID)}}" [showBackLink]="true"></app-mobile-header>
 
 <ng-container *ngIf="!jobAccessError">
     <section id="page-common">
@@ -29,400 +26,389 @@
         </div>
 
         <section id="job-booking">
-            <main>
-                <app-booking-info [selectedBookingModel]="selectedBookingModel"></app-booking-info>
-                <ng-container *ngIf="anyInterpreterAccepted()">
-                    <div class="manage-interpreters-wrapper">
-                        <section name="manage-interpreters-a" class="manage-interpreters">
-                            <section>
-                                <ng-container
-                                        *ngFor="let interpreter of selectedBookingModel.interpreters; let i=index">
-                                    <div *ngIf="i < selectedBookingModel.interpreters_required">
-                                        <b>{{serviceNameToDisplay}} {{i + 1}} :</b>
-                                        <span *ngIf="interpreter.state === 'Accepted'" class='interpreter-accepted'>{{interpreter.first_name}} {{interpreter.last_name}}</span>
-                                        <span *ngIf="interpreter.state !== 'Accepted'">To be filled</span>
-                                        <button name="{{'unassingBtn_' + +(i + 1)}}"
-                                                (click)="unAssignInterpreters(interpreter.id)"
-                                                *ngIf="isCurrentUserAdminOrBookingOfficer() && (false === isActiveState('Unable_to_service') && false === isActiveState('Cancelled_no_charge')) && interpreter.state === 'Accepted'">
-                                            Unassign
-                                        </button>
-                                    </div>
-                                
-                                <ng-container *ngIf="(selectedBookingModel.interpreters_required - (selectedBookingModel.interpreters.length + otherAcceptedRolesAttributes.length) ) > 0">
-                                    <ng-container *ngFor="let numb of counter(selectedBookingModel.interpreters_required - selectedBookingModel.interpreters.length ); let ii=index">
-                                        <ng-container *ngIf="ii < (selectedBookingModel.interpreters_required - selectedBookingModel.interpreters.length)">
-                                            <div>
-                                                <strong>
-                                                    {{serviceNameToDisplay}} {{selectedBookingModel.interpreters.length + ii + 1}} :
-                                                </strong>
-                                                <span>To be filled</span>
-                                            </div>
-                                        </ng-container>
-                                    </ng-container>
-                                    </ng-container>
-                                </ng-container>
-                                <ng-container>
-                                    <div *ngFor="let interpreter of otherAcceptedRolesAttributes; let i=index" class="half-opacity">
-                                        <b>{{serviceNameToDisplay}} {{(selectedBookingModel.interpreters_required - selectedBookingModel.interpreters.length)+selectedBookingModel.interpreters.length
-                                            + i + 1}} :</b>
-                                        <span class='interpreter-accepted'>{{interpreter.first_name}} {{interpreter.last_name}}</span>
-                                        <button hidden name="{{'unassingBtn_' + +(i + 1)}}" (click)="unAssignInterpreters(interpreter.id)" *ngIf="isCurrentUserAdminOrBookingOfficer() && (false === isActiveState('Unable_to_service') && false === isActiveState('Cancelled_no_charge')) && interpreter.state === 'Accepted'">
-                                            Unassign
-                                        </button>
-                                    </div>
-                                </ng-container>
-                            </section>
-                        </section>
-                    </div>
-                </ng-container>
-
-                <ng-container *ngIf="!anyInterpreterAccepted() && !isCurrentUserInterpreter()">
-                    <div class="manage-interpreters-wrapper">
-                        <section name="manage-interpreters-b"  class="manage-interpreters">
-                            <section>
-                                <div *ngFor="let numb of counter(selectedBookingModel.interpreters_required); let i=index">
-                                    <b id="serviceName" >{{serviceNameToDisplay}} {{i + 1}} :</b>
-                                    <span>To be filled</span>
-                                </div>
-                                    <div *ngFor="let interpreter of otherAcceptedRolesAttributes; let i=index" class="half-opacity">
-                                        <b>{{serviceNameToDisplay}} {{(selectedBookingModel.interpreters_required - selectedBookingModel.interpreters.length)+selectedBookingModel.interpreters.length
-                                            + i + 1}} :</b>
-                                        <span class='interpreter-accepted'>{{interpreter.first_name}} {{interpreter.last_name}}</span>
-                                        <button hidden name="{{'unassingBtn_' + +(i + 1)}}" (click)="unAssignInterpreters(interpreter.id)" *ngIf="isCurrentUserAdminOrBookingOfficer() && (false === isActiveState('Unable_to_service') && false === isActiveState('Cancelled_no_charge')) && interpreter.state === 'Accepted'">
-                                            Unassign
-                                        </button>
-                                    </div>
-                            </section>
-                        </section>
-                    </div>
-                </ng-container>
-                <section class="columns small-padding">
-                    <ng-container *ngIf="anyInterpreterAccepted()">
-                        <ng-container *ngFor="let interpreter of selectedBookingModel.interpreters; let i=index">
-                            <ng-container *ngIf="i < selectedBookingModel.interpreters_required">
-                                <div *ngIf="interpreter.state === 'Accepted'"
-                                     class="row with-border">
-                                    <div>
-                                        {{serviceNameToDisplay}} {{i + 1}}
-                                    </div>
-                                    <span class="with-avatar">
-                                        <img class="img-circle" src="{{interpreter.photo_url}}" alt="">
-                                        {{interpreter.first_name}} {{interpreter.last_name}}
-                                    </span>
-                                </div>
-                                <div *ngIf="interpreter.state !== 'Accepted'"
-                                     class="row with-border">
-                                    <div> {{serviceNameToDisplay}} {{i + 1}}</div>
-                                    <span>To be filled</span>
-                                </div>
-                            </ng-container>
-                        </ng-container>
-                        
-                        <ng-container
-                                *ngIf="(selectedBookingModel.interpreters_required - selectedBookingModel.interpreters.length) > 0">
-                            <ng-container
-                                    *ngFor="let numb of counter(selectedBookingModel.interpreters_required - selectedBookingModel.interpreters.length ); let ii=index">
-                                <ng-container
-                                        *ngIf="ii < (selectedBookingModel.interpreters_required - selectedBookingModel.interpreters.length)">
-                                    <div class="row with-border">
-                                        <div> {{serviceNameToDisplay}} {{selectedBookingModel.interpreters.length + ii + 1}}</div>
-                                        <span>To be filled</span>
-                                    </div>
-                                </ng-container>
-                            </ng-container>
-                        </ng-container>
+          <main>
+            <app-booking-info [selectedBookingModel]="selectedBookingModel"></app-booking-info>
+            <ng-container *ngIf="anyInterpreterAccepted()">
+              <div class="manage-interpreters-wrapper">
+                <section name="manage-interpreters-a" class="manage-interpreters">
+                  <section>
+                    <ng-container *ngFor="let interpreter of selectedBookingModel.interpreters; let i=index">
+                      <div *ngIf="i < selectedBookingModel.interpreters_required">
+                        <b>{{serviceName(selectedBookingModel.service_type)}} {{i + 1}} :</b>
+                        <span *ngIf="interpreter.state === 'Accepted'" class='interpreter-accepted'>{{interpreter.first_name}} {{interpreter.last_name}}</span>
+                        <span *ngIf="interpreter.state !== 'Accepted'">To be filled</span>
+                        <button name="{{'unassingBtn_' + +(i + 1)}}"
+                                (click)="unAssignInterpreters(interpreter.id)"
+                                *ngIf="isCurrentUserAdminOrBookingOfficer() && (false === isActiveState('Unable_to_service') && false === isActiveState('Cancelled_no_charge')) && interpreter.state === 'Accepted'">
+                          Unassign
+                        </button>
+                      </div>
                     </ng-container>
-                    <ng-container *ngIf="!anyInterpreterAccepted()">
-                        <ng-container
-                                *ngFor="let numb of counter(selectedBookingModel.interpreters_required); let i=index">
-                            <ng-container *ngIf="i < selectedBookingModel.interpreters_required">
-                                <div class="row with-border">
-                                    <div> {{serviceNameToDisplay}} {{i + 1}}</div>
-                                    <span>To be filled</span>
-                                </div>
-                            </ng-container>
-                        </ng-container>
+                    <ng-container *ngIf="(selectedBookingModel.interpreters_required - selectedBookingModel.interpreters.length) > 0">
+                      <ng-container *ngFor="let numb of counter(selectedBookingModel.interpreters_required - selectedBookingModel.interpreters.length); let ii=index">
+                        <div>
+                          <strong>
+                            {{serviceName(selectedBookingModel.service_type)}} {{selectedBookingModel.interpreters.length + ii + 1}} :
+                          </strong>
+                          <span>To be filled</span>
+                        </div>
+                      </ng-container>
                     </ng-container>
-
                     <ng-container>
-                        <div class="half-opacity">
-                            <div *ngFor="let interpreter of otherAcceptedRolesAttributes; let i=index">
-                                <div>{{serviceNameToDisplay}} {{(selectedBookingModel.interpreters_required - selectedBookingModel.interpreters.length)+selectedBookingModel.interpreters.length
-                                    + i + 1}} :</div>
-                                <span class='interpreter-accepted'>
-                                    <img class="img-circle" src="{{interpreter.photo_url}}" alt="">
-                                    {{interpreter.first_name}} {{interpreter.last_name}}
-                                </span>
-                                <button hidden name="{{'unassingBtn_' + +(i + 1)}}" (click)="unAssignInterpreters(interpreter.id)" *ngIf="!isCurrentUserInterpreter() && (false === isActiveState('Unable_to_service') && false === isActiveState('Cancelled_no_charge')) && interpreter.state === 'Accepted'">
-                                    Unassign
-                                </button>
-                            </div>
-                        </div>
-                    </ng-container>
-
-                    <div *ngIf="(selectedBookingModel.notes) && selectedBookingModel.notes.length > 0 && isCurrentUserInterpreter()"
-                         class="row job-description">
-                        <span>DESCRIPTION</span>
-                    </div>
-                    <p *ngIf="isCurrentUserInterpreter()">{{selectedBookingModel.notes}}</p>
-                    <div class="row"
-                         *ngIf="selectedBookingModel.documents_attributes.length > 0 && isCurrentUserInterpreter()">
-                        <span>ATTACHMENTS</span>
-                    </div>
-                    <div *ngIf="selectedBookingModel.documents_attributes.length > 0 && isCurrentUserInterpreter()">
-                        <ul class="attachments" *ngIf="selectedBookingModel.documents_attributes.length > 0">
-                            <li *ngFor="let attachment of selectedBookingModel.documents_attributes">
-                                <a download href="{{attachment.url}}">
-                                    <i class="icon-attach"></i>
-                                </a>
-                                <span>{{attachment.file_name}}</span>
-                            </li>
-                        </ul>
-                    </div>
-                    <ng-container *ngIf="showActions()" >
-                    <div class="row" *ngIf="isCurrentUserInterpreter()">
-                        <span>DO YOU WANT TO DO THIS JOB?</span>
-                    </div>
-                    <div class="manage-job-buttons" *ngIf="isCurrentUserInterpreter()">
-                        <button class="button button-accept"
-                                *ngIf="!disableAccept"
-                                [ngClass]="isCurrentUserState('Accepted') ? 'button pushed button-accept' : 'button button-accept'"
-                                (click)="!disableAccept && showDialogBoxInterpreter(false)">
-                            <i class="icon-check-mobile"></i>
+                      <div *ngFor="let interpreter of otherAcceptedRolesAttributes; let i=index" class="half-opacity">
+                        <b>{{serviceName(interpreter.service_type)}} {{i + 1}} :</b>
+                        <span class='interpreter-accepted'>{{interpreter.first_name}} {{interpreter.last_name}}</span>
+                        <button hidden name="{{'unassingBtn_' + +(i + 1)}}" (click)="unAssignInterpreters(interpreter.id)" *ngIf="isCurrentUserAdminOrBookingOfficer() && (false === isActiveState('Unable_to_service') && false === isActiveState('Cancelled_no_charge')) && interpreter.state === 'Accepted'">
+                          Unassign
                         </button>
-
-                        <button class="button button-decline"
-                                *ngIf="!disableReject"
-                                [ngClass]="isCurrentUserState('Rejected') ? 'button pushed button-decline' : 'button button-decline'"
-                                (click)="!disableReject && showDialogBoxInterpreter(true)">
-                            <i class="icon-decline"></i>
-                        </button>
-                    </div>
+                      </div>
                     </ng-container>
+                  </section>
                 </section>
-            <ng-container *ngIf="isCurrentUserAdminOrBookingOfficer() && isRequestedProgressOrAllocated">
-                <h2>
-                    Invite Interpreters
-                    <button class="outside"></button>
-                </h2>
-                <section id="invite-interpreters">
-                    <section id="filters">
-                        <section class="search-bar" style="width:100%">
-                            <form #filterBySearch="ngForm" class="common-form compact" (ngSubmit)="search()" novalidate>
-                                <input type="text" name="search" id="search" (blur)="search()" [(ngModel)]="searchParams" (click)="'' !== searchParams && clearSearch()" placeholder="Search...">
-                            </form>
-                            <button>
-                                <i (click)="search()" class="icon-glass"></i>
-                            </button>
-                        </section>
-                        <section class="filters">
-                            <a style="width:16em" href="javascript:void(0);" class="button" id="lnk-recommended-interpreters"
-                               [ngClass]="isRecommended ? 'active' : ''" (click)="toggleRecommended()">Recommended</a>
-                            <div class="separator"></div>
-                            <button style="width:10em" *ngIf="!hideInvite" class="button active" name='inviteBtn' (click)="inviteInterpreters()">
-                                <i class="icon-shape"></i> Invite
-                            </button>
-                            <button style="width:10em" *ngIf="!hideAccept" class="button red" (click)="reAssignInterpreters()" name="reassingBtn">
-                                <i class="icon-assign"></i> Assign
-                            </button>
-                        </section>
-                    </section>
-                </section>
-
-                <section id="invited-interpreters"  class="interpreters-list">
-                    <section class="section-left">
-                        <table class="custom custom-small-table">
-                            <thead>
-                            <tr>
-                                <th width="10%">
-                                </th>
-                                <th width="12%">
-                                    <span class="">Status</span>
-                                </th>
-                                <th width="17%">
-                                    <span class="order" [ngClass]="getSortOrder('name')" (click)="sortInterpreters('name')">Name</span>
-                                    <form #filterByName="ngForm" class="common-form compact"
-                                          (ngSubmit)="filterInterpreters('name', filterByName.value.name)" novalidate>
-                                        <input type="text" name="name" (blur)="filterInterpreters('name', filterByName.value.name)"
-                                               [(ngModel)]="interpreterFilter.name">
-                                    </form>
-                                </th>
-                                <th width="9%">
-                                    <span class="">Role</span>
-                                </th>
-                                <th width="12%">
-                                    <span class="order" [ngClass]="getSortOrder('skill_level')" (click)="sortInterpreters('skill_level')">Lvl</span>
-                                    <ul class="dropdown menu custom" id="skill-level" data-dropdown-menu>
-                                        <li>
-                                            <a href="javascript:void(0)">{{underScoreToSpaces(filterSkillLevel())}}</a>
-                                            <ul class="menu smaller">
-                                                <li *ngFor="let skill_level of skillLevelList()">
-                                                    <a href="javascript:void(0)" (click)="filterInterpreters('skill_level', skill_level)"><i></i>{{underScoreToSpaces(skill_level)}}</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </th>
-                                <th width="15%">
-                                    <span class="order" [ngClass]="getSortOrder('suburb')" (click)="sortInterpreters('suburb')">Suburb</span>
-                                    <form #filterBySuburb="ngForm" class="common-form compact"
-                                          (ngSubmit)="filterInterpreters('suburb', filterBySuburb.value.suburb)" novalidate>
-                                        <input type="text" name="suburb" (blur)="filterInterpreters('suburb', filterBySuburb.value.suburb)"
-                                               [(ngModel)]="interpreterFilter.suburb">
-                                    </form>
-                                </th>
-                                <th width="9%">
-                                    <span class="order" [ngClass]="getSortOrder('distance')" (click)="sortInterpreters('distance')">Km</span>
-                                </th>
-                                <th width="12%">
-                                    <span>Pay Travel</span>
-                                    <ul class="dropdown menu custom" id="travel-pay-status" data-dropdown-menu>
-                                        <li>
-                                            <a href="javascript:void(0)">{{underScoreToSpaces(filterPayStatus())}}</a>
-                                            <ul class="menu smaller">
-                                                <li *ngFor="let pay_status of travelPayStatuses()">
-                                                    <a href="javascript:void(0)" (click)="filterInterpreters('travel_pay_status', pay_status)"><i></i>{{underScoreToSpaces(pay_status)}}</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </th>
-                                <th width="9%">
-                                    <span class="">Notes</span>
-                                </th>
-                                <th *ngIf="selectedBookingModel.cbworkWithChildCheck" width="11%">
-                                    <span class="">WWCC</span>
-                                </th>
-                                <th *ngIf="selectedBookingModel.cbBlueCard" width="9%">
-                                    <span class="">Blue</span>
-                                </th>
-                                <th *ngIf="selectedBookingModel.cbYellowCard" width="10%">
-                                    <span class="">Yellow</span>
-                                </th>
-                                <th *ngIf="selectedBookingModel.cbImminisations" width="12%">
-                                    <span class="">Immun.</span>
-                                </th>
-                                <th *ngIf="selectedBookingModel.cbPoliceCheck" width="10%">
-                                    <span class="">Police</span>
-                                </th>
-                                <th *ngIf="selectedBookingModel.cbForm27A" width="9%">
-                                    <span class="">27A</span>
-                                </th>
-                                <th *ngIf="selectedBookingModel.isBookingBeRecorded" width="12%">
-                                    <span class="">Publish</span>
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr [ngClass]="(user.blocked || user.booked || user.blockout) ? 'half-opacity' : 'full-opacity'" *ngFor="let user of interpreterList | paginate: { itemsPerPage: 20, currentPage: currentPage, totalItems: totalItems } let ind = index">
-                                <td width="10%">
-                                    <md-checkbox name='{{"Check" + ind}}'
-                                                 [checked]="checkList[ind]===true"
-                                                 (change)="onChange($event,user, ind)">
-                                    </md-checkbox>
-                                </td>
-                                <td align="center">
-                                    <img [src]="getInterpreterIconClass(user)">
-                                </td>
-                                <td class="truncated-text">
-                                    <i class="icon-requested preff-icon" *ngIf="isPreferred(user.id)"></i>
-                                    <a name="lnkEditUser" [routerLink]="['/init']" [queryParams]="{selectedRole:'INTERPRETER', uid: user.id, edit_user: stringifyUser(user)}">
-                                        {{user.full_name}}</a>
-                                </td>
-                                <td>{{isStaff(user) ? 'S' : 'C'}}</td>
-                                <td class="truncated-text">{{user.skill_level}}</td>
-                                <td class="truncated-text">{{getSuburb(user)}}</td>
-                                <td>{{user.distance}}</td>
-                                <td>{{ travelPayStatus(user)}}</td>
-                                <td class="truncated-text" [title]="user.booking_office_notes">{{user.booking_office_notes}}</td>
-                                <td *ngIf="selectedBookingModel.cbworkWithChildCheck" class="truncated-text" [title]="user.working_with_childrens_check">{{user.working_with_childrens_check}}</td>
-                                <td *ngIf="selectedBookingModel.cbBlueCard" class="truncated-text" [title]="user.blue_card">{{user.blue_card}}</td>
-                                <td *ngIf="selectedBookingModel.cbYellowCard" class="truncated-text" [title]="user.yellow_card">{{user.yellow_card}}</td>
-                                <td *ngIf="selectedBookingModel.cbImminisations" class="truncated-text" [title]="user.immunisations">{{user.immunisations}}</td>
-                                <td *ngIf="selectedBookingModel.cbPoliceCheck" class="truncated-text" [title]="user.police_check">{{user.police_check}}</td>
-                                <td *ngIf="selectedBookingModel.cbForm27A" class="truncated-text" [title]="user.from_27a">{{user.from_27a}}</td>
-                                <td *ngIf="selectedBookingModel.isBookingBeRecorded" class="truncated-text" [title]="user.are_you_okay_with_bookings_that_will_be_recorded_or_published">{{user.are_you_okay_with_bookings_that_will_be_recorded_or_published}}</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        <div class="pagination">
-                            <div class="element element_inline ui-grid-col-6 left text-left" id="displayTxt" *ngIf="totalItems > 0">
-                                {{'Displaying ' + (((currentPage - 1) * 20) + 1) + ' - '
-                                + ( interpreterList.length < 20 ? totalItems : (currentPage * 20)) + ' of ' + totalItems + ' Interpreter' +
-                                (interpreterList.length > 1 ? 's' : '')}}
-                            </div>
-                            <div class="element element_inline ui-grid-col-6 right text-right">
-                                <pagination-controls class="my-pagination" *ngIf="totalItems >= 10"
-                                                     (pageChange)="getPage($event)"></pagination-controls>
-                            </div>
-                        </div>
-                    </section>
-
-                    <section *ngIf="showCalendar">
-                        <section id="time">{{ startTime | date}} {{ startTime | date:'shortTime'}} - {{ endTime | date:'shortTime'}}</section>
-                        <section>
-                            <section id="time-range">
-                                <button type="button">&lt;</button>
-                                <section>
-                                    <span *ngFor="let t of getTimelineStartTime()">{{t}}</span>
-                                </section>
-                                <button type="button">&gt;</button>
-                            </section>
-                            <section class="flow">
-                                <div *ngFor="let inte of interpreterList ">
-                                    <section>
-                                        <ng-container *ngFor="let avail_block of inte.availability_blocks_attributes">
-                                            <ng-container *ngIf="getTimelineBlockoutStyle(avail_block,selectedBookingModel.venue.state,selectedBookingModel.venue.post_code).length > 2">
-                                                <span class="{{getTimelineBlockoutStyle(avail_block,selectedBookingModel.venue.state,selectedBookingModel.venue.post_code)}}"></span>
-                                            </ng-container>
-                                        </ng-container>
-                                    </section>
-                                </div>
-                            </section>
-                            <div id="mover">
-                                <div class="{{getTimelineMoverStyle()}}"></div>
-                            </div>
-                        </section>
-                    </section>
-                </section>
+              </div>
             </ng-container>
-                <ng-container *ngIf='!isCurrentUserInterpreter()'>
-                    <h2 class="hidden-mobile">History</h2>
-                    <table id="changes-history" class="custom-small-table">
-                        <thead>
-                        <th width="20%">Date and Time</th>
-                        <th width="30%">Action</th>
-                        <th>Changes</th>
-                        </thead>
-                        <tbody>
-                        <tr *ngFor="let version of selectedBookingModel.versions; let i=index">
-                            <td name="data_created_at">
-                                {{version.created_at_iso | date:'shortTime'}} on
-                                {{version.created_at_iso | date:'EEE d MMM yy'}}
-                            </td>
-                            <td>
-                                <img height="30px" width="30px" src="{{version.photo_url}}" alt="">
-                                <span class="display-flx" name="data_action">
-                                    {{version.booking_event_formatted()}}
-                                    <br/>
-                                    {{version.full_name()}}
-                                </span>
-                            </td>
-                            <td>
-                                <div name="data_changes">
-                                    <div>
-                                        <span style="font-style: oblique; font-weight: bolder">{{version.model}}</span>
-                                    </div>
-                                    <div *ngFor="let change_item_key of version.change_set_formatted_hash()">
-                                        <b>{{change_item_key[0]}}: </b>{{change_item_key[1][0]}} <b>to</b> <span>{{change_item_key[1][1]}}</span>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+
+            <ng-container *ngIf="!anyInterpreterAccepted() && !isCurrentUserInterpreter()">
+              <div class="manage-interpreters-wrapper">
+                <section name="manage-interpreters-b"  class="manage-interpreters">
+                  <section>
+                    <div *ngFor="let numb of counter(selectedBookingModel.interpreters_required); let i=index">
+                      <b id="serviceName" >{{serviceName(selectedBookingModel.service_type)}} {{i + 1}} :</b>
+                      <span>To be filled</span>
+                    </div>
+                    <div *ngFor="let interpreter of otherAcceptedRolesAttributes; let i=index" class="half-opacity">
+                      <b>{{serviceName(interpreter.service_type)}} {{selectedBookingModel.interpreters_required + i + 1}} :</b>
+                      <span class='interpreter-accepted'>{{interpreter.first_name}} {{interpreter.last_name}}</span>
+                      <button hidden name="{{'unassingBtn_' + +(i + 1)}}" (click)="unAssignInterpreters(interpreter.id)" *ngIf="isCurrentUserAdminOrBookingOfficer() && (false === isActiveState('Unable_to_service') && false === isActiveState('Cancelled_no_charge')) && interpreter.state === 'Accepted'">
+                        Unassign
+                      </button>
+                    </div>
+                  </section>
+                </section>
+              </div>
+            </ng-container>
+            <section class="columns small-padding">
+              <ng-container *ngIf="anyInterpreterAccepted()">
+                <ng-container *ngFor="let interpreter of selectedBookingModel.interpreters; let i=index">
+                  <ng-container *ngIf="i < selectedBookingModel.interpreters_required">
+                    <div *ngIf="interpreter.state === 'Accepted'" class="row with-border">
+                      <div>
+                        {{serviceName(selectedBookingModel.service_type)}} {{i + 1}}
+                      </div>
+                      <span class="with-avatar">
+                        <img class="img-circle" src="{{interpreter.photo_url}}" alt="">
+                        {{interpreter.first_name}} {{interpreter.last_name}}
+                      </span>
+                    </div>
+                    <div *ngIf="interpreter.state !== 'Accepted'" class="row with-border">
+                      <div> {{serviceName(selectedBookingModel.service_type)}} {{i + 1}}</div>
+                      <span>To be filled</span>
+                    </div>
+                  </ng-container>
                 </ng-container>
-            </main>
+
+                <ng-container *ngIf="(selectedBookingModel.interpreters_required - selectedBookingModel.interpreters.length) > 0">
+                  <ng-container *ngFor="let numb of counter(selectedBookingModel.interpreters_required - selectedBookingModel.interpreters.length ); let ii=index">
+                    <ng-container *ngIf="ii < (selectedBookingModel.interpreters_required - selectedBookingModel.interpreters.length)">
+                      <div class="row with-border">
+                        <div> {{serviceName(selectedBookingModel.service_type)}} {{selectedBookingModel.interpreters.length + ii + 1}}</div>
+                        <span>To be filled</span>
+                      </div>
+                    </ng-container>
+                  </ng-container>
+                </ng-container>
+              </ng-container>
+              <ng-container *ngIf="!anyInterpreterAccepted()">
+                <ng-container *ngFor="let numb of counter(selectedBookingModel.interpreters_required); let i=index">
+                  <ng-container *ngIf="i < selectedBookingModel.interpreters_required">
+                    <div class="row with-border">
+                      <div> {{serviceName(selectedBookingModel.service_type)}} {{i + 1}}</div>
+                      <span>To be filled</span>
+                    </div>
+                  </ng-container>
+                </ng-container>
+              </ng-container>
+
+              <ng-container>
+                <div class="half-opacity">
+                  <div *ngFor="let interpreter of otherAcceptedRolesAttributes; let i=index">
+                    <div>
+                      {{serviceName(interpreter.service_type)}}
+                      {{(selectedBookingModel.interpreters_required - selectedBookingModel.interpreters.length) + selectedBookingModel.interpreters.length + i + 1}} :
+                    </div>
+                    <span class='interpreter-accepted'>
+                      <img class="img-circle" src="{{interpreter.photo_url}}" alt="">
+                      {{interpreter.first_name}} {{interpreter.last_name}}
+                    </span>
+                    <button hidden name="{{'unassingBtn_' + +(i + 1)}}" (click)="unAssignInterpreters(interpreter.id)" *ngIf="!isCurrentUserInterpreter() && (false === isActiveState('Unable_to_service') && false === isActiveState('Cancelled_no_charge')) && interpreter.state === 'Accepted'">
+                      Unassign
+                    </button>
+                  </div>
+                </div>
+              </ng-container>
+
+              <div *ngIf="(selectedBookingModel.notes) && selectedBookingModel.notes.length > 0 && isCurrentUserInterpreter()" class="row job-description">
+                <span>DESCRIPTION</span>
+              </div>
+              <p *ngIf="isCurrentUserInterpreter()">{{selectedBookingModel.notes}}</p>
+              <div class="row"
+                   *ngIf="selectedBookingModel.documents_attributes.length > 0 && isCurrentUserInterpreter()">
+                <span>ATTACHMENTS</span>
+              </div>
+              <div *ngIf="selectedBookingModel.documents_attributes.length > 0 && isCurrentUserInterpreter()">
+                <ul class="attachments" *ngIf="selectedBookingModel.documents_attributes.length > 0">
+                  <li *ngFor="let attachment of selectedBookingModel.documents_attributes">
+                    <a download href="{{attachment.url}}">
+                      <i class="icon-attach"></i>
+                    </a>
+                    <span>{{attachment.file_name}}</span>
+                  </li>
+                </ul>
+              </div>
+              <ng-container *ngIf="showActions()" >
+                <div class="row" *ngIf="isCurrentUserInterpreter()">
+                  <span>DO YOU WANT TO DO THIS JOB?</span>
+                </div>
+                <div class="manage-job-buttons" *ngIf="isCurrentUserInterpreter()">
+                  <button class="button button-accept"
+                          *ngIf="!disableAccept"
+                          [ngClass]="isCurrentUserState('Accepted') ? 'button pushed button-accept' : 'button button-accept'"
+                          (click)="!disableAccept && showDialogBoxInterpreter(false)">
+                    <i class="icon-check-mobile"></i>
+                  </button>
+
+                  <button class="button button-decline"
+                          *ngIf="!disableReject"
+                          [ngClass]="isCurrentUserState('Rejected') ? 'button pushed button-decline' : 'button button-decline'"
+                          (click)="!disableReject && showDialogBoxInterpreter(true)">
+                    <i class="icon-decline"></i>
+                  </button>
+                </div>
+              </ng-container>
+            </section>
+            <ng-container *ngIf="isCurrentUserAdminOrBookingOfficer() && isRequestedProgressOrAllocated">
+              <h2>
+                Invite Interpreters
+                <button class="outside"></button>
+              </h2>
+              <section id="invite-interpreters">
+                <section id="filters">
+                  <section class="search-bar" style="width:100%">
+                    <form #filterBySearch="ngForm" class="common-form compact" (ngSubmit)="search()" novalidate>
+                      <input type="text" name="search" id="search" (blur)="search()" [(ngModel)]="searchParams" (click)="'' !== searchParams && clearSearch()" placeholder="Search...">
+                    </form>
+                    <button>
+                      <i (click)="search()" class="icon-glass"></i>
+                    </button>
+                  </section>
+                  <section class="filters">
+                    <a style="width:16em" href="javascript:void(0);" class="button" id="lnk-recommended-interpreters"
+                                                                                    [ngClass]="isRecommended ? 'active' : ''" (click)="toggleRecommended()">Recommended</a>
+                    <div class="separator"></div>
+                    <button style="width:10em" *ngIf="!hideInvite" class="button active" name='inviteBtn' (click)="inviteInterpreters()">
+                      <i class="icon-shape"></i> Invite
+                    </button>
+                    <button style="width:10em" *ngIf="!hideAccept" class="button red" (click)="reAssignInterpreters()" name="reassingBtn">
+                      <i class="icon-assign"></i> Assign
+                    </button>
+                  </section>
+                </section>
+              </section>
+
+              <section id="invited-interpreters"  class="interpreters-list">
+                <section class="section-left">
+                  <table class="custom custom-small-table">
+                    <thead>
+                      <tr>
+                        <th width="10%">
+                        </th>
+                        <th width="12%">
+                          <span class="">Status</span>
+                        </th>
+                        <th width="17%">
+                          <span class="order" [ngClass]="getSortOrder('name')" (click)="sortInterpreters('name')">Name</span>
+                          <form #filterByName="ngForm" class="common-form compact"
+                                                       (ngSubmit)="filterInterpreters('name', filterByName.value.name)" novalidate>
+                            <input type="text" name="name" (blur)="filterInterpreters('name', filterByName.value.name)"
+                                               [(ngModel)]="interpreterFilter.name">
+                          </form>
+                        </th>
+                        <th width="9%">
+                          <span class="">Role</span>
+                        </th>
+                        <th width="12%">
+                          <span class="order" [ngClass]="getSortOrder('skill_level')" (click)="sortInterpreters('skill_level')">Lvl</span>
+                          <ul class="dropdown menu custom" id="skill-level" data-dropdown-menu>
+                            <li>
+                              <a href="javascript:void(0)">{{underScoreToSpaces(filterSkillLevel())}}</a>
+                              <ul class="menu smaller">
+                                <li *ngFor="let skill_level of skillLevelList()">
+                                  <a href="javascript:void(0)" (click)="filterInterpreters('skill_level', skill_level)"><i></i>{{underScoreToSpaces(skill_level)}}</a>
+                                </li>
+                              </ul>
+                            </li>
+                          </ul>
+                        </th>
+                        <th width="15%">
+                          <span class="order" [ngClass]="getSortOrder('suburb')" (click)="sortInterpreters('suburb')">Suburb</span>
+                          <form #filterBySuburb="ngForm" class="common-form compact"
+                                                         (ngSubmit)="filterInterpreters('suburb', filterBySuburb.value.suburb)" novalidate>
+                            <input type="text" name="suburb" (blur)="filterInterpreters('suburb', filterBySuburb.value.suburb)"
+                                               [(ngModel)]="interpreterFilter.suburb">
+                          </form>
+                        </th>
+                        <th width="9%">
+                          <span class="order" [ngClass]="getSortOrder('distance')" (click)="sortInterpreters('distance')">Km</span>
+                        </th>
+                        <th width="12%">
+                          <span>Pay Travel</span>
+                          <ul class="dropdown menu custom" id="travel-pay-status" data-dropdown-menu>
+                            <li>
+                              <a href="javascript:void(0)">{{underScoreToSpaces(filterPayStatus())}}</a>
+                              <ul class="menu smaller">
+                                <li *ngFor="let pay_status of travelPayStatuses()">
+                                  <a href="javascript:void(0)" (click)="filterInterpreters('travel_pay_status', pay_status)"><i></i>{{underScoreToSpaces(pay_status)}}</a>
+                                </li>
+                              </ul>
+                            </li>
+                          </ul>
+                        </th>
+                        <th width="9%">
+                          <span class="">Notes</span>
+                        </th>
+                        <th *ngIf="selectedBookingModel.cbworkWithChildCheck" width="11%">
+                          <span class="">WWCC</span>
+                        </th>
+                        <th *ngIf="selectedBookingModel.cbBlueCard" width="9%">
+                          <span class="">Blue</span>
+                        </th>
+                        <th *ngIf="selectedBookingModel.cbYellowCard" width="10%">
+                          <span class="">Yellow</span>
+                        </th>
+                        <th *ngIf="selectedBookingModel.cbImminisations" width="12%">
+                          <span class="">Immun.</span>
+                        </th>
+                        <th *ngIf="selectedBookingModel.cbPoliceCheck" width="10%">
+                          <span class="">Police</span>
+                        </th>
+                        <th *ngIf="selectedBookingModel.cbForm27A" width="9%">
+                          <span class="">27A</span>
+                        </th>
+                        <th *ngIf="selectedBookingModel.isBookingBeRecorded" width="12%">
+                          <span class="">Publish</span>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr [ngClass]="(user.blocked || user.booked || user.blockout) ? 'half-opacity' : 'full-opacity'" *ngFor="let user of interpreterList | paginate: { itemsPerPage: 20, currentPage: currentPage, totalItems: totalItems } let ind = index">
+                        <td width="10%">
+                          <md-checkbox name='{{"Check" + ind}}'
+                                       [checked]="checkList[ind]===true"
+                                       (change)="onChange($event,user, ind)">
+                          </md-checkbox>
+                        </td>
+                        <td align="center">
+                          <img [src]="getInterpreterIconClass(user)">
+                        </td>
+                        <td class="truncated-text">
+                          <i class="icon-requested preff-icon" *ngIf="isPreferred(user.id)"></i>
+                          <a name="lnkEditUser" [routerLink]="['/init']" [queryParams]="{selectedRole:'INTERPRETER', uid: user.id, edit_user: stringifyUser(user)}">
+                            {{user.full_name}}</a>
+                        </td>
+                        <td>{{isStaff(user) ? 'S' : 'C'}}</td>
+                        <td class="truncated-text">{{user.skill_level}}</td>
+                        <td class="truncated-text">{{getSuburb(user)}}</td>
+                        <td>{{user.distance}}</td>
+                        <td>{{ travelPayStatus(user)}}</td>
+                        <td class="truncated-text" [title]="user.booking_office_notes">{{user.booking_office_notes}}</td>
+                        <td *ngIf="selectedBookingModel.cbworkWithChildCheck" class="truncated-text" [title]="user.working_with_childrens_check">{{user.working_with_childrens_check}}</td>
+                        <td *ngIf="selectedBookingModel.cbBlueCard" class="truncated-text" [title]="user.blue_card">{{user.blue_card}}</td>
+                        <td *ngIf="selectedBookingModel.cbYellowCard" class="truncated-text" [title]="user.yellow_card">{{user.yellow_card}}</td>
+                        <td *ngIf="selectedBookingModel.cbImminisations" class="truncated-text" [title]="user.immunisations">{{user.immunisations}}</td>
+                        <td *ngIf="selectedBookingModel.cbPoliceCheck" class="truncated-text" [title]="user.police_check">{{user.police_check}}</td>
+                        <td *ngIf="selectedBookingModel.cbForm27A" class="truncated-text" [title]="user.from_27a">{{user.from_27a}}</td>
+                        <td *ngIf="selectedBookingModel.isBookingBeRecorded" class="truncated-text" [title]="user.are_you_okay_with_bookings_that_will_be_recorded_or_published">{{user.are_you_okay_with_bookings_that_will_be_recorded_or_published}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="pagination">
+                    <div class="element element_inline ui-grid-col-6 left text-left" id="displayTxt" *ngIf="totalItems > 0">
+                      {{'Displaying ' + (((currentPage - 1) * 20) + 1) + ' - '
+                      + ( interpreterList.length < 20 ? totalItems : (currentPage * 20)) + ' of ' + totalItems + ' Interpreter' +
+                                                                                     (interpreterList.length > 1 ? 's' : '')}}
+                    </div>
+                    <div class="element element_inline ui-grid-col-6 right text-right">
+                      <pagination-controls class="my-pagination" *ngIf="totalItems >= 10"
+                                           (pageChange)="getPage($event)"></pagination-controls>
+                    </div>
+                  </div>
+                </section>
+
+                <section *ngIf="showCalendar">
+                  <section id="time">{{ startTime | date}} {{ startTime | date:'shortTime'}} - {{ endTime | date:'shortTime'}}</section>
+                  <section>
+                    <section id="time-range">
+                      <button type="button">&lt;</button>
+                      <section>
+                        <span *ngFor="let t of getTimelineStartTime()">{{t}}</span>
+                      </section>
+                      <button type="button">&gt;</button>
+                    </section>
+                    <section class="flow">
+                      <div *ngFor="let inte of interpreterList ">
+                        <section>
+                          <ng-container *ngFor="let avail_block of inte.availability_blocks_attributes">
+                            <ng-container *ngIf="getTimelineBlockoutStyle(avail_block,selectedBookingModel.venue.state,selectedBookingModel.venue.post_code).length > 2">
+                              <span class="{{getTimelineBlockoutStyle(avail_block,selectedBookingModel.venue.state,selectedBookingModel.venue.post_code)}}"></span>
+                            </ng-container>
+                          </ng-container>
+                        </section>
+                      </div>
+                    </section>
+                    <div id="mover">
+                      <div class="{{getTimelineMoverStyle()}}"></div>
+                    </div>
+                  </section>
+                </section>
+              </section>
+            </ng-container>
+            <ng-container *ngIf='!isCurrentUserInterpreter()'>
+              <h2 class="hidden-mobile">History</h2>
+              <table id="changes-history" class="custom-small-table">
+                <thead>
+                  <th width="20%">Date and Time</th>
+                  <th width="30%">Action</th>
+                  <th>Changes</th>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let version of selectedBookingModel.versions; let i=index">
+                    <td name="data_created_at">
+                      {{version.created_at_iso | date:'shortTime'}} on
+                      {{version.created_at_iso | date:'EEE d MMM yy'}}
+                    </td>
+                    <td>
+                      <img height="30px" width="30px" src="{{version.photo_url}}" alt="">
+                      <span class="display-flx" name="data_action">
+                        {{version.booking_event_formatted()}}
+                        <br/>
+                        {{version.full_name()}}
+                      </span>
+                    </td>
+                    <td>
+                      <div name="data_changes">
+                        <div>
+                          <span style="font-style: oblique; font-weight: bolder">{{version.model}}</span>
+                        </div>
+                        <div *ngFor="let change_item_key of version.change_set_formatted_hash()">
+                          <b>{{change_item_key[0]}}: </b>{{change_item_key[1][0]}} <b>to</b> <span>{{change_item_key[1][1]}}</span>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </ng-container>
+          </main>
         </section>
     </section>
 </ng-container>

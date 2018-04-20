@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy, AfterViewChecked, ViewChild} from '@angular/core';
+import {Component, OnInit, OnDestroy, ViewChild} from '@angular/core';
 import {Location} from '@angular/common';
 import {URLSearchParams} from '@angular/http';
 import {SpinnerService} from '../../spinner/spinner.service';
@@ -21,11 +21,11 @@ import {PerfectScrollbarComponent, PerfectScrollbarConfigInterface, PerfectScrol
     templateUrl: './inbox.component.html',
     styleUrls: ['./inbox.component.css']
 })
-export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
+export class InboxComponent implements OnInit, OnDestroy {
 
     messageThreads = [];
     userId;
-    message_body;
+    message_body = '';
     message_thread_id;
     message_tag = '';
     checked = false;
@@ -41,20 +41,26 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
     messageCount = -1;
     searchInterpreterQuery = '';
     showLoadMore = false;
+    draftMessage;
     public config: PerfectScrollbarConfigInterface = {};
 
     @ViewChild(PerfectScrollbarComponent) componentScroll: PerfectScrollbarComponent;
 
     constructor(private userService: UserService, private notificationServiceBus: NotificationServiceBus, public platformLocation: PlatformLocation,
                 private messagingService: MessagingService, private _location: Location, public spinnerService: SpinnerService,
-                private rolePermission: RolePermission, private router: Router, private route: ActivatedRoute) {
-    }
-
-    ngAfterViewChecked() {
-
-    }
+                private rolePermission: RolePermission, private router: Router, private route: ActivatedRoute) {}
 
     ngOnInit() {
+        if (localStorage.getItem('message') && this.isCurrentUserAdminOrBookingOfficer()) {
+            this.draftMessage = JSON.parse(localStorage.getItem('message'));
+            this.userId = +this.draftMessage.user_id;
+            this.message_body = this.draftMessage.text;
+            this.selectedMessageThread = +this.draftMessage.selected_message_thread;
+            this.message_thread_id = this.draftMessage.thread_id;
+            this.messageThreadPage = this.draftMessage.thread_page_no;
+            this.searchInterpreterQuery = this.draftMessage.interpreter_name;
+            this.getInterpreterMessage(this.message_thread_id);
+        }
         this.business_id = GLOBAL.currentUser.business_id;
         this.sub = this.route.params.subscribe(params => {
             this.loginUserID = params['id'] || -1;
@@ -137,10 +143,12 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
                     if (res.status === 200) {
                         this.messageThreads = res.data.message_threads;
                         this.totalItems = res.data.message_threads_count;
-                        this.selectedMessageThread = 0;
-                        this.userId = this.messageThreads[this.selectedMessageThread].user_id;
-                        this.message_thread_id = this.messageThreads[this.selectedMessageThread].id;
-                        this.getInterpreterMessage(this.message_thread_id);
+                        if (!localStorage.getItem('message') && this.totalItems > 0) {
+                            this.selectedMessageThread = 0;
+                            this.userId = this.messageThreads[this.selectedMessageThread].user_id;
+                            this.message_thread_id = this.messageThreads[this.selectedMessageThread].id;
+                            this.getInterpreterMessage(this.message_thread_id);
+                        }
                     }
                     this.spinnerService.requestInProcess(false);
                 },
@@ -157,14 +165,16 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
         this.selectedMessageThread = 0;
         this.userId = 0;
         this.message_thread_id = 0;
+        this.messages = [];
         this.getAllMessageThreads(this.business_id);
     }
 
     sendMessage() {
         let id = Boolean(this.userId) ? this.userId : this.loginUserID;
-        let url = (this.platformLocation as any).location.href;
-        url = url.substr(0, 30);
-        url += id + '/inbox';
+        let inbox_url = window.location.host + '/#/' ;
+        inbox_url = inbox_url.startsWith('http') === false ? 'http://' + inbox_url : inbox_url;
+
+        inbox_url += 'users/' + id + '/inbox';
         this.spinnerService.requestInProcess(true);
         this.message_body = this.message_body.trim();
         let message_tag = '';
@@ -178,7 +188,7 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
             message_tag = this.isTagShow && parseInt(this.message_tag, 10) > 0 ?
                 this.message_tag : '';
         }
-        this.messagingService.sendMessages(this.loginUserID, url, this.message_body,
+        this.messagingService.sendMessages(this.loginUserID, inbox_url, this.message_body,
             this.userId, message_tag)
             .subscribe((res: any) => {
                 if (res.status === 200) {
@@ -199,11 +209,24 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
     }
 
     showSingleMessageThread(index) {
+        this.message_body = this.selectedMessageThread !== index ? '' : this.message_body;
         this.selectedMessageThread = index;
         this.userId = this.messageThreads[index].user_id;
         this.message_thread_id = this.messageThreads[index].id;
         this.getInterpreterMessage(this.message_thread_id);
 
+    }
+
+    saveMessageOfThread() {
+        if (this.message_body === '' || this.message_body === null) {
+            localStorage.removeItem('message');
+        } else {
+            localStorage.setItem('message',
+            `{"user_id": "` + this.userId + `","text": "` + this.message_body + `",
+            "selected_message_thread": "` + this.selectedMessageThread + `",
+            "thread_id": "` + this.message_thread_id + `","thread_page_no": "` + this.messageThreadPage + `",
+            "interpreter_name": "` + this.searchInterpreterQuery + `"}`);
+        }
     }
 
     checkEmpty() {
@@ -239,6 +262,9 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
 
     ngOnDestroy() {
         localStorage.setItem('bookingId', '-1');
+        if (this.isCurrentUserAdminOrBookingOfficer()) {
+            this.saveMessageOfThread();
+        }
     }
 
     checkDayIsToday(lastMesgDate) {
@@ -255,6 +281,10 @@ export class InboxComponent implements OnInit, AfterViewChecked, OnDestroy {
     clear() {
         this.searchInterpreterQuery = '';
         this.searchInterpreter();
+    }
+
+    isCurrentUserNotIndividualClientOrOrg() {
+        return Boolean(GLOBAL.currentUser instanceof Administrator || GLOBAL.currentUser instanceof BookingOfficer || GLOBAL.currentUser instanceof Interpreter);
     }
 
 }

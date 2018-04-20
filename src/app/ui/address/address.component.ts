@@ -30,7 +30,6 @@ export class AddressComponent implements AfterViewInit, OnInit {
     isTravelCostApplicable = false;
     addressTypes = {
         'floor' : 'short_name',
-        'premise' : 'short_name',
         'subpremise' : 'short_name',
         'street_number' : 'short_name',
         'route' : 'long_name',
@@ -40,9 +39,19 @@ export class AddressComponent implements AfterViewInit, OnInit {
     };
     addressAttrs = {
         'floor' : 'unit_number',
-        'premise' : 'unit_number',
         'subpremise' : 'unit_number',
         'street_number' : 'street_number',
+        'route' : 'street_name',
+        'locality' : 'suburb',
+        'administrative_area_level_1' : 'state',
+        'postal_code' : 'post_code'
+    };
+
+    subpremiseAddressAttrs = {
+        'floor' : 'unit_number',
+        'premise' : 'unit_number',
+        'subpremise' : 'street_number',
+        'street_number' : 'unit_number',
         'route' : 'street_name',
         'locality' : 'suburb',
         'administrative_area_level_1' : 'state',
@@ -76,13 +85,7 @@ export class AddressComponent implements AfterViewInit, OnInit {
                     if (place.geometry !== undefined || place.geometry !== null) {
                         this.address.unit_number = '';
                         this.address.street_number = '';
-                        for (let component of place.address_components) {
-                            let addressType = this.addressTypes[component['types'][0]];
-                            let addressAttr = this.addressAttrs[component['types'][0]];
-                            if (!isNullOrUndefined(addressAttr)) {
-                                this.address[addressAttr] = component[addressType];
-                            }
-                        }
+                        this.setAddressComponents(place);
                         this.calculateDistance();
                     }
                 });
@@ -114,4 +117,39 @@ export class AddressComponent implements AfterViewInit, OnInit {
         }
         return this.isTravelCostApplicable;
     };
+
+    private setAddressComponents(place) {
+        if (place.types[0] === 'subpremise') {
+            for (let component of place.address_components) {
+                let addressType = this.addressTypes[component['types'][0]];
+                let subpremiseAddressAttr = this.subpremiseAddressAttrs[component['types'][0]];
+                if (!isNullOrUndefined(subpremiseAddressAttr)) {
+                    this.address[subpremiseAddressAttr] = component[addressType];
+                }
+            }
+        } else {
+            let firstCompont = place.address_components[0];
+            if (firstCompont['types'][0] === 'street_number' && firstCompont.short_name.indexOf('/') === 1) {
+                this.address.unit_number = firstCompont.short_name.split('/')[0];
+                this.address.street_number = firstCompont.short_name.split('/')[1];
+                for (let component of place.address_components) {
+                    if (component['types'][0] !== 'street_number') {
+                        let addressType = this.addressTypes[component['types'][0]];
+                        let addressAttr = this.addressAttrs[component['types'][0]];
+                        if (!isNullOrUndefined(addressAttr)) {
+                            this.address[addressAttr] = component[addressType];
+                        }
+                    }
+                }
+            } else {
+                for (let component of place.address_components) {
+                    let addressType = this.addressTypes[component['types'][0]];
+                    let addressAttr = this.addressAttrs[component['types'][0]];
+                    if (!isNullOrUndefined(addressAttr)) {
+                        this.address[addressAttr] = component[addressType];
+                    }
+                }
+            }
+        }
+    }
 }

@@ -388,14 +388,18 @@ export class IndividualClient extends User {
         this.disabled = obj.disabled;
         this.phone  = obj.business_hours_phone;
         this.ndis_budget_limit = obj.ndis_budget_limit;
-        this.ndis_validity_start_date = obj.ndis_validity_start_date;
-        this.ndis_validity_end_date = obj.ndis_validity_end_date;
+        this.ndis_validity_start_date = Boolean(obj.ndis_validity_start_date) ?
+            obj.ndis_validity_start_date.trim().replace(' ', '0') : obj.ndis_validity_start_date;
+        this.ndis_validity_end_date = Boolean(obj.ndis_validity_end_date) ?
+            obj.ndis_validity_end_date.trim().replace(' ', '0') : obj.ndis_validity_end_date;
         this.mobile = obj.mobile;
         this.ur_id = obj.ur_id;
         this.eaf_id = obj.eaf_id;
         this.eaf_budget_limit = obj.eaf_budget_limit;
-        this.eaf_start_date = obj.eaf_start_date;
-        this.eaf_end_date = obj.eaf_end_date;
+        this.eaf_start_date = Boolean(obj.eaf_start_date) ?
+            obj.eaf_start_date.trim().replace(' ', '0') : obj.eaf_start_date;
+        this.eaf_end_date = Boolean(obj.eaf_end_date) ?
+            obj.eaf_end_date.trim().replace(' ', '0') : obj.eaf_end_date;
         this.special_instructions = obj.special_instructions;
         this.general_notes = obj.general_notes;
         this.claim_notes = obj.claim_notes;
@@ -447,7 +451,7 @@ export class Interpreter extends User {
     public naati_validity_start_date: string;
     public naati_validity_end_date: string;
     public business_hours_phone: string;
-    public date_of_birth: string;
+    public date_of_birth = '';
     public date_approved: string;
     public address_attributes: Address = new Address();
     public long_term_availability: interpreter_avalability;
