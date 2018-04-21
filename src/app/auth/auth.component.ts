@@ -7,6 +7,7 @@ import { SpinnerService } from '../spinner/spinner.service';
 import {NotificationServiceBus} from '../notification/notification.service';
 import {GLOBAL} from '../shared/global';
 import {URLSearchParams} from '@angular/http';
+import { PlatformLocation } from '@angular/common';
 
 @Component({
   selector: 'app-auth',
@@ -19,12 +20,14 @@ export class AuthComponent implements OnInit, OnDestroy {
   private sub: any;
   private querySub: any;
   private returnUrl = '';
+  public vicDeafImg: boolean;
   constructor(public spinnerService: SpinnerService, public notificationServiceBus: NotificationServiceBus, public service: UserService,
-     public routes: ActivatedRoute, public router: Router) {
+     public routes: ActivatedRoute, public router: Router, public platformLocation: PlatformLocation) {
        this.logout();
   }
 
    ngOnInit() {
+    this.setImageBasedOnBusiness();
      this.sub = this.routes.url.subscribe( v => {
        if (v.length > 1 && v[1].path === 'logout') {
          this.logout();
@@ -37,6 +40,14 @@ export class AuthComponent implements OnInit, OnDestroy {
                // Defaults to 0 if no query param provided.
                this.returnUrl = params['returnUrl'] || '';
            });
+   }
+
+   setImageBasedOnBusiness() {
+     if ((this.platformLocation as any).location.origin.toString() === 'https://auslanconnections.vicdeaf.com.au') {
+       this.vicDeafImg = true;
+     } else {
+       this.vicDeafImg = false;
+     }
    }
 
 
