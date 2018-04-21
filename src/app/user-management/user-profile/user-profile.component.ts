@@ -84,6 +84,9 @@ export class UserProfileComponent implements OnInit {
         this.userModel.disabled = this.selectedStatus === 'Disabled';
         this.selectedStatus = '';
         this.spinnerService.requestInProcess(true);
+        if (this.userModel instanceof Interpreter) {
+            delete this.userModel.assignments_attributes;
+        }
         this.userDataService.updateUser(this.userModel)
             .subscribe((res: any) => {
                     if (res.status === 200) {
