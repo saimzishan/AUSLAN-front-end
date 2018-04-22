@@ -128,7 +128,8 @@ Feature: User Profile Management
 
   @runThis
   Scenario: Be able to update the profile as Interpreter
-    Given I sign in with valid Interpreter credentials
+    Given I exist as an Interpreter
+    And I sign in with valid Interpreter credentials
     And I am on the bookings page
     When I click on my name in the top corner
     When I click on the option  profile
