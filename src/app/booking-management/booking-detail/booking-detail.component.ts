@@ -780,8 +780,12 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     isMoreInterpreterNeeded() {
-        return this.calculateTimeDiff() > _ONE_HOUR;
-        /* One hour */
+        /* One hour for VicDeaf and Two Hour for not Vicdeaf , like DSQ*/
+        const maxLimit =
+            Boolean(GLOBAL.currentUser)
+            && Boolean(GLOBAL.currentUser.business_name) && GLOBAL.currentUser.business_name === 'Vicdeaf' ? _ONE_HOUR :
+                2 * _ONE_HOUR;
+        return this.calculateTimeDiff() > maxLimit;
     }
 
     calculateTimeDiff() {
