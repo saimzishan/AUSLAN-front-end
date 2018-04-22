@@ -67,7 +67,6 @@ jobs:
       - run:
           name: Setup the server and run E2E tests
           environment:
-            TZ: "/usr/share/zoneinfo/Australia/Victoria"
             E2E_ENV: "localhost"
           shell: /bin/bash -l
           command: |
