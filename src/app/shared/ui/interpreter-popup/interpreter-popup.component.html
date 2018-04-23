@@ -7,7 +7,7 @@
     <main>
       <div *ngIf="state_where_most_bookings_occur;then content else other_content"></div>
       <ng-template #content>
-        <p *ngIf="interpreterList.length === 0">The interpreter of the {{state_where_most_bookings_occur}} State is not exist.</p>
+        <p *ngIf="interpreterList.length === 0">There are currently no interpreters for {{state_where_most_bookings_occur}}</p>
       </ng-template>
       <ng-template #other_content>
         <p>Please select the State where most of your bookings occur</p>
