@@ -103,7 +103,7 @@ describe('BookingDetailComponent', () => {
         expect(component.isMoreInterpreterNeeded()).toEqual(true);
     });
 
-    fit('should not raise a warning if not enough interpreters are mentioned', () => {
+    it('should not raise a warning if not enough interpreters are mentioned', () => {
         const nowDate = Date.now();
         component.bookingStartTime = new Date(nowDate);
         component.bookingEndTime = new Date(nowDate + (2 * 1000 * 60 * 60));
