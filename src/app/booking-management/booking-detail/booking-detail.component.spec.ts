@@ -40,6 +40,8 @@ import {RemoveSpacePipe} from '../../shared/pipe/remove-space.pipe';
 import {AutoCompleteModule, CalendarModule as PrimeNgCalendarModule} from 'primeng/primeng';
 import {MapsAPILoader} from '@agm/core';
 import {NgxPaginationModule} from 'ngx-pagination';
+import { GLOBAL } from "../../shared/global";
+import { Administrator } from "../../shared/model/user.entity";
 
 describe('BookingDetailComponent', () => {
     let component: BookingDetailComponent;
@@ -89,5 +91,14 @@ describe('BookingDetailComponent', () => {
         component.fileName = 'test.png';
         component._handleReaderLoaded({ 'target': { 'result': 'BASE64encode'}});
         expect(component.bookingModel.documents_attributes[0]).toEqual({ document: 'BASE64encode', document_file_name: 'test.png' });
+    });
+
+    it('should raise a warning if not enough interpreters are mentioned', () => {
+        const nowDate = Date.now();
+        component.bookingStartTime = new Date(nowDate);
+        component.bookingEndTime = new Date(nowDate + (2 * 1000 * 60 * 60));
+        GLOBAL.currentUser = new Administrator({});
+        GLOBAL.currentUser.business_name = 'Vicdeaf';
+        expect(component.isMoreInterpreterNeeded()).toEqual(true);
     });
 });
