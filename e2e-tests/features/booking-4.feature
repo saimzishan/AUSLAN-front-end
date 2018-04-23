@@ -47,6 +47,22 @@ Feature: Booking Management
     Then I will be shown a popup message 'This booking might require more than 1 professional. You've only requested 1. Are you sure you want to create this booking?'
 
   @runThis
+  Scenario: Given an Individual Client, Administrator should not get a popup when booking of two hour and needed interpreter 1 with business DSQ
+    Given I exist as a Administrator
+    Given The user 'Administrator' is of type dsq
+    Given The user 'IndividualClient' is of type dsq
+    And I sign in with valid Administrator credentials
+    When I am on the bookings page
+    And I click on 'New Booking'
+    Then I will be taken to the 'New Booking' form
+    When I fill New Booking form fields correctly with standard time from 09:00 AM to 11:00 AM with 1 'auslanInterpreters_count'
+    And I select the bookable for client
+    Then I move to element name 'tnc'
+    And I click on checkbox name 'tnc'
+    When I click the create booking button
+    Then I get a valid create booking notification
+
+  @runThis
   Scenario: As an Administrator, I should specify notes when I don't specify what will be discussed
     Given I exist as an Administrator
     And I sign in with valid Administrator credentials
