@@ -18,7 +18,7 @@ Feature: Booking Management
     And I click the create booking button
     Then I will get an error notification saying "Kindly accept Terms and Conditions"
     Then I move to element name 'lnkTC'
-    Then I verify that the link with name 'lnkTC' href is 'https://s3-ap-southeast-2.amazonaws.com/auslan-public-bucket/Auslan_Online_Terms_And_Conditions.pdf'
+    Then I verify that the link with name 'lnkTC' href is 'https://s3-ap-southeast-2.amazonaws.com/auslan-public-bucket/Auslan_Online_Terms_And_Conditions_DSQ.pdf'
     Then I move to element name 'tnc'
     Then I click on checkbox name 'tnc'
     And I click the create booking button
@@ -37,7 +37,7 @@ Feature: Booking Management
     And I click the create booking button
     Then I will get an error notification saying "Kindly accept Terms and Conditions"
     Then I move to element name 'lnkTC'
-    Then I verify that the link with name 'lnkTC' href is 'https://s3-ap-southeast-2.amazonaws.com/auslan-public-bucket/Auslan_Online_Terms_And_Conditions.pdf'
+    Then I verify that the link with name 'lnkTC' href is 'https://s3-ap-southeast-2.amazonaws.com/auslan-public-bucket/Auslan_Online_Terms_And_Conditions_DSQ.pdf'
     Then I move to element name 'tnc'
     Then I click on checkbox name 'tnc'
     And I click the create booking button

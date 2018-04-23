@@ -201,14 +201,14 @@
                       <i (click)="search()" class="icon-glass"></i>
                     </button>
                   </section>
-                  <section class="filters">
-                    <a style="width:16em" href="javascript:void(0);" class="button" id="lnk-recommended-interpreters"
+                  <section class="filters" style="width: unset">
+                    <a style="width:20em" href="javascript:void(0);" class="button" id="lnk-recommended-interpreters"
                                                                                     [ngClass]="isRecommended ? 'active' : ''" (click)="toggleRecommended()">Recommended</a>
                     <div class="separator"></div>
-                    <button style="width:10em" *ngIf="!hideInvite" class="button active" name='inviteBtn' (click)="inviteInterpreters()">
+                    <button style="width:13em" *ngIf="!hideInvite" class="button active" name='inviteBtn' (click)="inviteInterpreters()">
                       <i class="icon-shape"></i> Invite
                     </button>
-                    <button style="width:10em" *ngIf="!hideAccept" class="button red" (click)="reAssignInterpreters()" name="reassingBtn">
+                    <button style="width:13em" *ngIf="!hideAccept" class="button red" (click)="reAssignInterpreters()" name="reassingBtn">
                       <i class="icon-assign"></i> Assign
                     </button>
                   </section>
