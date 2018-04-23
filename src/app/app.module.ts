@@ -137,7 +137,7 @@ const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         ReactiveFormsModule, Md2Module.forRoot(),
         PerfectScrollbarModule.forRoot(PERFECT_SCROLLBAR_CONFIG),
         MaterialModule, CalendarModule, PrimeNgCalendarModule, AgmCoreModule.forRoot({
-            apiKey: 'AIzaSyAhNu-VrvCjd1AliJerDQIy329iPy2vABU',
+            apiKey: 'AIzaSyDWyIbKuXh8VIsDOGGRCWNggmDBAnENo18',
             libraries: ['places']
         }),
         AutoCompleteModule

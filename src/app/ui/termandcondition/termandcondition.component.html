@@ -5,5 +5,5 @@
           [(ngModel)]="termsAndConditionAccepted" (change)="onChange()" name="tnc"
           #tnc="ngModel">
     I agree to the
-  </md-checkbox><a name ="lnkTC" download href="https://s3-ap-southeast-2.amazonaws.com/auslan-public-bucket/Auslan_Online_Terms_And_Conditions.pdf" > Terms & Conditions</a>
+  </md-checkbox><a name ="lnkTC" download [href]="tNc" > Terms & Conditions</a>
 </div>
