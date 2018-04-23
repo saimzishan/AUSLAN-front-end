@@ -1,0 +1,9 @@
+.vicdeaf-img{
+    background: #ffffff url('../../assets/img/login-bg.png') !important;
+    background-size: cover !important;
+}
+
+.other-img{
+    background: #ffffff url('../../assets/img/other-login-bg.png') !important;
+    background-size: cover !important;
+}

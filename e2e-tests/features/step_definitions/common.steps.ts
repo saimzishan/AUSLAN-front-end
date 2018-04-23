@@ -32,9 +32,8 @@ defineSupportCode(({Given, When, Then}) => {
     Given(/^There exists an? (.*)/, Heroku.createFactory);
     Given(/^I click on my name$/, bookingManagementPage.clickOnProfile);
     Given(/^I scroll up$/, () => {
-        let scrolldown =  $$('section .messages__message').get(0);
-        browser.controlFlow().execute(function () {
-            browser.executeScript('arguments[0].scrollIntoView(true)', scrolldown.getWebElement());
+        browser.controlFlow().execute(() => {
+            return browser.executeScript("document.querySelectorAll('section .messages__message')[0].scrollIntoView(true)");
         });
     });
     Given(/^I scroll to top$/, () => {
@@ -503,6 +502,14 @@ defineSupportCode(({Given, When, Then}) => {
     function verifyMaterialCB(btnName: string, checkedState: 'True' | 'true') {
         const checkbox = page.getElementByCss('md-checkbox[ng-reflect-name="' + btnName + '"]');
         return checkbox.getAttribute('ng-reflect-model').then(val => {
+            return expect(val).to.be.eq(checkedState.toLowerCase());
+        });
+    }
+
+    When(/^I verify material checkbox in list of name '(.*)' is checked '(.*)'$/, verifyMaterialCBOfList);
+    function verifyMaterialCBOfList(btnName: string, checkedState: 'True' | 'true') {
+        const checkbox = page.getElementByCss('md-checkbox[ng-reflect-name="' + btnName + '"]');
+        return checkbox.getAttribute('ng-reflect-checked').then(val => {
             return expect(val).to.be.eq(checkedState.toLowerCase());
         });
     }

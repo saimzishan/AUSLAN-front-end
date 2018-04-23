@@ -34,6 +34,7 @@ const _ONE_HOUR = 1000 /*milliseconds*/
 })
 export class BookingDetailComponent implements OnInit, OnDestroy {
     private sub: any;
+    public bulkUploader: FileUploader = new FileUploader({url: '', maxFileSize: 20 * 1024 * 1024});
     public uploader: FileUploader = new FileUploader({url: '', maxFileSize: 20 * 1024 * 1024});
     bookingModel: Booking;
     bookable: IndividualClient | OrganisationalRepresentative;
@@ -397,12 +398,12 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     public onClientSelectionChange() {
         let user = this.isUserAdminORBookOfficer ? this.bookable : GLOBAL.currentUser;
         if (user) {
-            ['first_name', 'last_name', 'email', 'mobile_number', 'ndis_id', 'general_notes', 'claim_notes'].forEach((field) => {
+            ['first_name', 'last_name', 'email', 'mobile_number', 'ndis_id', 'eaf_id', 'ur_id', 'general_notes', 'claim_notes'].forEach((field) => {
                 let currentUserFieldMap = {mobile_number: 'mobile'};
                 let currentUserField = currentUserFieldMap[field] || field;
                 let value = this.currentUserIsClient ? user[currentUserField] : '';
-                let mapForNsid = {ndis_id: 'eaf'};
-                field = mapForNsid[field] || field;
+                let mapForIds = {ndis_id: 'ndis_id', eaf_id: 'eaf', ur_id: 'ur_number'};
+                field = mapForIds[field] || field;
                 this.bookingModel.deaf_person[field] = value;
                 if (field === 'general_notes') {
                     this.bookingModel.general_notes = value;
@@ -648,6 +649,7 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
       Calling this method will create a new booking
     */
     public onCreateBooking(form: any, addressForm: any, billingForm: any, uploader: FileUploader) {
+        this.bookingModel.recurrence_end_date = this.datePipe.transform(this.bookingModel.recurrence_end_date, 'yyyy-MM-dd');
         this.bookingModel.travel_cost_applicable = addressForm.isTravelCostApplicable ? true : false;
 
         if (this.shouldSelectDeafBlindOtherLanguage()) {
@@ -778,8 +780,12 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     isMoreInterpreterNeeded() {
-        return this.calculateTimeDiff() > _ONE_HOUR;
-        /* One hour */
+        /* One hour for VicDeaf and Two Hour for not Vicdeaf , like DSQ*/
+        const maxLimit =
+            Boolean(GLOBAL.currentUser)
+            && Boolean(GLOBAL.currentUser.business_name) && GLOBAL.currentUser.business_name === 'Vicdeaf' ? _ONE_HOUR :
+                2 * _ONE_HOUR;
+        return this.calculateTimeDiff() > maxLimit;
     }
 
     calculateTimeDiff() {
