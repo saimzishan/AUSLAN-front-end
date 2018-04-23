@@ -44,10 +44,10 @@ export class BookingInfoComponent {
     isClientAndBookingInProgress(): boolean {
         return Boolean(GLOBAL.currentUser instanceof IndividualClient && this.isBookingInProgress());
     }
-    isInterpreterStatusInvited(booking: Booking) {
+    isInterpreterStatusAccepted(booking: Booking) {
         if (Boolean(GLOBAL.currentUser instanceof Interpreter)) {
             let r = [];
-            r = booking.interpreters.filter(i => i.id === GLOBAL.currentUser.id && i.state === 'Invited');
+            r = booking.interpreters.filter(i => i.id === GLOBAL.currentUser.id && i.state === 'Accepted');
             return r.length;
         }
         return false;

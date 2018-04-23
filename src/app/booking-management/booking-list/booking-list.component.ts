@@ -125,10 +125,10 @@ export class BookingListComponent implements OnInit, OnChanges {
 
     }
 
-    isInterpreterStatusInvited(booking: Booking) {
+    isInterpreterStatusAccepted(booking: Booking) {
         if (this.isCurrentUserInterpreter()) {
             let r = [];
-            r = booking.interpreters.filter(i => i.id === GLOBAL.currentUser.id && i.state === 'Invited');
+            r = booking.interpreters.filter(i => i.id === GLOBAL.currentUser.id && i.state === 'Accepted');
             return r.length;
         }
         return false;
