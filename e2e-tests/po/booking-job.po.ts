@@ -201,6 +201,13 @@ export class BookingJobPage extends PageObject {
         let el = bookingDetails.get(BookingDetailTableHeaders[tableHeader]);
         return el.getText();
     }
+    checkBookingJobTable = (tableHeader: string, expectedValue: string) => {
+        let bookingDetails = this.getAllElementByCSS('table#job-details-responsive tbody tr td');
+        let el = bookingDetails.get(6);
+        return el.getText().then(value => {
+            expect(expectedValue).to.eq(value);
+        });
+    }
     noteTableDetails = (tableHeader: string) => {
         return this.getBookingDetailsForTableHeader(tableHeader).then(value => {
             this.tableDetails[tableHeader] = value;

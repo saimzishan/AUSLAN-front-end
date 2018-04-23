@@ -193,8 +193,8 @@
                     </div>
                 </td>
                 <td>{{booking.client.organisation_name}}</td>
-                <td>
-                    {{booking.deaf_person.first_name +
+                <td>{{isInterpreterStatusInvited (booking) ? '***** ********' :
+                    booking.deaf_person.first_name +
                     ' ' +
                     booking.deaf_person.last_name}}
                 </td>

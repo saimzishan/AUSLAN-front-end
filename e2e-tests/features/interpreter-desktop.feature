@@ -99,3 +99,23 @@ Feature: As INTERPRETER, I can login on mobile
     And I sign in with valid Interpreter credentials
     Then I will be shown the bookings page
     Then I do not see any booking rows
+
+  @runThis
+  Scenario: As INTERPRETER, the client details are masked, if a booking is created and INTERPRETER Invited then
+    And I sign in with valid Interpreter credentials
+    Then I will be shown the bookings page
+    Then I see one row with state 'In progress'
+    Then I as interpreter, see one row with client name '***** ********'
+    And  I click on an individual booking of type 'In progress'
+    Then I wait for 2000 milli-seconds
+    Then I can see the booking state ' In Progress ' in booking job page
+    Then I can see the button state 'Accept' is visible
+    Then I can see the button state 'Decline' is visible
+    Then I click on BUTTON 'Accept'
+    Then I will be shown a popup message
+    Then I click on BUTTON name 'yesBtn'
+    Then I wait for 1500 milli-seconds
+    Then I can see the booking state ' Allocated ' in booking job page
+    Then I can see the booking header 'Client' value is 'Clifford Waz'
+    Then I click on Bookings
+    Then I as interpreter, see one row with client name 'Clifford Waz'

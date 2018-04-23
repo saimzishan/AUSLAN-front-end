@@ -53,7 +53,8 @@
       </td>
       <ng-container *ngIf='!isClientInterpAndBookInProgress()'>
         <td data-title="CLIENT">
-          {{selectedBookingModel.deaf_person.first_name +
+          {{isInterpreterStatusInvited (selectedBookingModel) ? '***** ********' :
+          selectedBookingModel.deaf_person.first_name +
           ' ' +
           selectedBookingModel.deaf_person.last_name}}
         </td>

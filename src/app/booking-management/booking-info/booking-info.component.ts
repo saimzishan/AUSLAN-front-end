@@ -44,7 +44,14 @@ export class BookingInfoComponent {
     isClientAndBookingInProgress(): boolean {
         return Boolean(GLOBAL.currentUser instanceof IndividualClient && this.isBookingInProgress());
     }
-
+    isInterpreterStatusInvited(booking: Booking) {
+        if (Boolean(GLOBAL.currentUser instanceof Interpreter)) {
+            let r = [];
+            r = booking.interpreters.filter(i => i.id === GLOBAL.currentUser.id && i.state === 'Invited');
+            return r.length;
+        }
+        return false;
+    }
     isAcceptedByCurrentInterpreter(): boolean {
         if (GLOBAL.currentUser instanceof Interpreter && this.selectedBookingModel.interpreters.length > 0) {
             let currentInterpreter: BookingInterpreter = this.selectedBookingModel.interpreters.find(i => i.id === GLOBAL.currentUser.id);
