@@ -99,6 +99,17 @@ describe('BookingDetailComponent', () => {
         component.bookingEndTime = new Date(nowDate + (2 * 1000 * 60 * 60));
         GLOBAL.currentUser = new Administrator({});
         GLOBAL.currentUser.business_name = 'Vicdeaf';
+        component.bookingModel.number_of_auslan_interpreters_required = 1;
         expect(component.isMoreInterpreterNeeded()).toEqual(true);
+    });
+
+    fit('should not raise a warning if not enough interpreters are mentioned', () => {
+        const nowDate = Date.now();
+        component.bookingStartTime = new Date(nowDate);
+        component.bookingEndTime = new Date(nowDate + (2 * 1000 * 60 * 60));
+        GLOBAL.currentUser = new Administrator({});
+        GLOBAL.currentUser.business_name = 'DSQ';
+        component.bookingModel.number_of_auslan_interpreters_required = 1;
+        expect(component.isMoreInterpreterNeeded()).toEqual(false);
     });
 });
