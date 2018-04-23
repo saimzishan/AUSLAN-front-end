@@ -115,6 +115,8 @@ Feature: As INTERPRETER, I can login on mobile
     And I can see the valid header in booking detail page
     And I will be shown a valid booking detail page
     And I store the current url
+    Then I click on element by id 'lnkProfile_mobile'
+    Then I click on element by id 'lnkLogout_mobile'
     And I go to the website
     And I am on a computer
     And I am shown the login screen, with picture and signup button
@@ -143,6 +145,8 @@ Feature: As INTERPRETER, I can login on mobile
     Then I can see the booking state ' IN_PROGRESS - Rejected ' in booking detail page
     Then I click on button with css 'button.icon-back'
     And I am on the bookings page
+    Then I click on element by id 'lnkProfile_mobile'
+    Then I click on element by id 'lnkLogout_mobile'
     And I go to the website
     And I am on a computer
     And I am shown the login screen, with picture and signup button
@@ -159,6 +163,8 @@ Feature: As INTERPRETER, I can login on mobile
     And I click on BUTTON name 'yesBtn'
     Then I wait for 2500 milli-seconds
     Then I can see the booking state ' ALLOCATED ' in booking detail page
+    Then I click on element by id 'lnkProfile_mobile'
+    Then I click on element by id 'lnkLogout_mobile'
     And I go to the website
     And I am on a computer
     And I am shown the login screen, with picture and signup button
@@ -178,6 +184,8 @@ Feature: As INTERPRETER, I can login on mobile
     And I can see the valid header in booking detail page
     And I will be shown a valid booking detail page
     And I store the current url
+    Then I click on element by id 'lnkProfile_mobile'
+    Then I click on element by id 'lnkLogout_mobile'
     And I go to the website
     And I am on a computer
     And I am shown the login screen, with picture and signup button
@@ -194,6 +202,8 @@ Feature: As INTERPRETER, I can login on mobile
     And I click on BUTTON name 'yesBtn'
     Then I wait for 2500 milli-seconds
     Then I can see the booking state ' ALLOCATED ' in booking detail page
+    Then I click on element by id 'lnkProfile_mobile'
+    Then I click on element by id 'lnkLogout_mobile'
     And I go to the website
     And I am on a computer
     And I am shown the login screen, with picture and signup button

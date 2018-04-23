@@ -323,7 +323,7 @@ defineSupportCode(({Given, When, Then}) => {
         const el = page.getElementByCss(css);
         const elPresent = EC.visibilityOf(el);
         const elClickable = EC.elementToBeClickable(el);
-        return browser.wait(EC.and(elPresent, elClickable), 5000).then(() => { el.click(); })
+        return browser.wait(EC.and(elPresent, elClickable), 5000).then(() => { el.click(); });
     }
     When(/^I click on parent of '(.*)' element with css '(.*)'$/, clickOnSingleElementWithCSS);
     function clickOnSingleElementWithCSS(nth_child: number, css: string) {
@@ -502,6 +502,14 @@ defineSupportCode(({Given, When, Then}) => {
     function verifyMaterialCB(btnName: string, checkedState: 'True' | 'true') {
         const checkbox = page.getElementByCss('md-checkbox[ng-reflect-name="' + btnName + '"]');
         return checkbox.getAttribute('ng-reflect-model').then(val => {
+            return expect(val).to.be.eq(checkedState.toLowerCase());
+        });
+    }
+
+    When(/^I verify material checkbox in list of name '(.*)' is checked '(.*)'$/, verifyMaterialCBOfList);
+    function verifyMaterialCBOfList(btnName: string, checkedState: 'True' | 'true') {
+        const checkbox = page.getElementByCss('md-checkbox[ng-reflect-name="' + btnName + '"]');
+        return checkbox.getAttribute('ng-reflect-checked').then(val => {
             return expect(val).to.be.eq(checkedState.toLowerCase());
         });
     }
