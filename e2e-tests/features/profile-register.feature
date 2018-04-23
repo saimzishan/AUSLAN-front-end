@@ -73,7 +73,7 @@ Feature: Create Profile
     When I fill all the details correctly for -> 'INTERPRETER' with the pref communication is 'SMS AND EMAIL'
     Then I will get an error notification saying "Kindly accept Terms and Conditions"
     Then I move to element name 'lnkTC'
-    Then I verify that the link with name 'lnkTC' href is 'https://s3-ap-southeast-2.amazonaws.com/auslan-public-bucket/Auslan_Online_Terms_And_Conditions.pdf'
+    Then I verify that the link with name 'lnkTC' href is 'https://s3-ap-southeast-2.amazonaws.com/auslan-public-bucket/Auslan_Online_Terms_And_Conditions_DSQ.pdf'
     Then I move to element name 'tnc'
     Then I click on checkbox name 'tnc'
     Then I click on BUTTON name 'register_user'
@@ -86,7 +86,7 @@ Feature: Create Profile
     When I fill all the details correctly for -> 'ORGANISATIONALREPRESENTATIVE' with the pref communication is 'SMS AND EMAIL'
     Then I will get an error notification saying "Kindly accept Terms and Conditions"
     Then I move to element name 'lnkTC'
-    Then I verify that the link with name 'lnkTC' href is 'https://s3-ap-southeast-2.amazonaws.com/auslan-public-bucket/Auslan_Online_Terms_And_Conditions.pdf'
+    Then I verify that the link with name 'lnkTC' href is 'https://s3-ap-southeast-2.amazonaws.com/auslan-public-bucket/Auslan_Online_Terms_And_Conditions_DSQ.pdf'
     Then I move to element name 'tnc'
     Then I click on checkbox name 'tnc'
     Then I click on BUTTON name 'register_user'
@@ -100,7 +100,7 @@ Feature: Create Profile
     When I fill all the details correctly for -> 'INDIVIDUALCLIENT' with the pref communication is 'SMS AND EMAIL'
     Then I will get an error notification saying "Kindly accept Terms and Conditions"
     Then I move to element name 'lnkTC'
-    Then I verify that the link with name 'lnkTC' href is 'https://s3-ap-southeast-2.amazonaws.com/auslan-public-bucket/Auslan_Online_Terms_And_Conditions.pdf'
+    Then I verify that the link with name 'lnkTC' href is 'https://s3-ap-southeast-2.amazonaws.com/auslan-public-bucket/Auslan_Online_Terms_And_Conditions_DSQ.pdf'
     Then I move to element name 'tnc'
     Then I click on checkbox name 'tnc'
     Then I click on BUTTON name 'register_user'
