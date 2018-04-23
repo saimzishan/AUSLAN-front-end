@@ -40,8 +40,8 @@ import {RemoveSpacePipe} from '../../shared/pipe/remove-space.pipe';
 import {AutoCompleteModule, CalendarModule as PrimeNgCalendarModule} from 'primeng/primeng';
 import {MapsAPILoader} from '@agm/core';
 import {NgxPaginationModule} from 'ngx-pagination';
-import { GLOBAL } from "../../shared/global";
-import { Administrator } from "../../shared/model/user.entity";
+import { GLOBAL } from '../../shared/global';
+import { Administrator } from '../../shared/model/user.entity';
 
 describe('BookingDetailComponent', () => {
     let component: BookingDetailComponent;
