@@ -145,6 +145,7 @@ defineSupportCode(({Given, When, Then}) => {
     Given(/^I can see the valid header in booking detail page$/, bookingJob.isValidBookingHeader);
     Given(/^I can see the booking state '(.*)' in booking detail page$/, bookingJob.isBookingStateText);
     Given(/^I can see the booking state '(.*)' in booking job page$/, bookingJob.isBookingJOBStateText);
+    Given(/^I can see the booking header '(.*)' value is '(.*)'$/, bookingJob.checkBookingJobTable);
     Given(/^I will be shown the booking job page$/, bookingJob.browse);
     Given(/^I click on booking job detail page$/, bookingJob.onBookingJobDetails);
     Given(/^I get a valid '(.*)' notification for state$/, bookingJob.getSuccessNotificationContentForState);

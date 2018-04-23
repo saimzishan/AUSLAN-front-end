@@ -124,6 +124,15 @@ export class BookingListComponent implements OnInit, OnChanges {
         return ['All', ...keys.slice(keys.length / 2)];
 
     }
+
+    isInterpreterStatusAccepted(booking: Booking) {
+        if (this.isCurrentUserInterpreter()) {
+            let r = [];
+            r = booking.interpreters.filter(i => i.id === GLOBAL.currentUser.id && i.state === 'Accepted');
+            return r.length;
+        }
+        return false;
+    }
     interpreterAllowed(booking: Booking, status) {
         let res = false;
         // Green Tick => Accepted || Allocated
