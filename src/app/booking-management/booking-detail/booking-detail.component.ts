@@ -27,11 +27,6 @@ const _ONE_HOUR = 1000 /*milliseconds*/
     * 60 /*seconds*/
     * 60 /*minutes*/;
 
-const _TWO_HOUR = 1000 /*milliseconds*/
-    * 60 /*seconds*/
-    * 60 /*minutes*/
-    * 2 /*hour*/;
-
 @Component({
     selector: 'app-booking-detail',
     templateUrl: './booking-detail.component.html',
@@ -784,7 +779,8 @@ export class BookingDetailComponent implements OnInit, OnDestroy {
     }
 
     isMoreInterpreterNeeded() {
-        return (this.bookingModel.venue.state === 'QLD') ? (this.calculateTimeDiff() > _TWO_HOUR) : ( this.calculateTimeDiff() > _ONE_HOUR);
+        return this.calculateTimeDiff() > _ONE_HOUR;
+        /* One hour */
     }
 
     calculateTimeDiff() {
