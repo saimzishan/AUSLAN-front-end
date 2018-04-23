@@ -193,7 +193,7 @@
                     </div>
                 </td>
                 <td>{{booking.client.organisation_name}}</td>
-                <td>{{isInterpreterStatusAccepted(booking) ?
+                <td>{{isCurrentUserAdminOrBookingOfficer() || isClientOrOrgRep() || isInterpreterStatusAccepted(booking) ?
                     booking.deaf_person.first_name +
                     ' ' +
                     booking.deaf_person.last_name : '***** ********' }}
