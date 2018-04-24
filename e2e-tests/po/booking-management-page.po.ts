@@ -9,6 +9,10 @@ enum BookingTableHeaders {
     Empty, Job, Status, State, Date, Org,
     Client, Suburb, Interpreter, Nature, Method, 'Service Type', Notice
 }
+enum InterpreterBookingTableHeaders {
+    Empty, Job, State, Date, Org,
+    Client, Suburb, Interpreter, Nature, Method, 'Service Type', Notice
+}
 
 export class BookingManagementPage extends PageObject {
     /*
@@ -413,6 +417,14 @@ export class BookingManagementPage extends PageObject {
         let clientNameTd = this.getElementByCss('table tbody tr:first-child td:nth-child(' + BookingTableHeaders.Client + ')');
         return clientNameTd.getText().then((txt) => {
             return expect(txt.split(' ')[0]).to.be.eq(client_name);
+        });
+    }
+    interpreterBookingExistsWithClientName = (client_name: string) => {
+        let tblRows = this.getAllElementByCSS('table tbody tr');
+        expect(tblRows.count()).to.eventually.be.least(1);
+        let clientNameTd = this.getElementByCss('table tbody tr:first-child td:nth-child(' + InterpreterBookingTableHeaders.Client + ')');
+        return clientNameTd.getText().then((txt) => {
+            return expect(txt).to.be.eq(client_name);
         });
     }
     bookingExistsWithClientLastName = (client_name: string) => {

@@ -118,11 +118,23 @@ export class BookingListComponent implements OnInit, OnChanges {
     didInterpreterAccepted(interpreters: Array<BookingInterpreter>) {
         return interpreters.filter(i => i.state === 'Accepted').slice(0, 3);
     }
+    isClientOrOrgRep(): boolean {
+        return Boolean(GLOBAL.currentUser instanceof IndividualClient || GLOBAL.currentUser instanceof OrganisationalRepresentative);
+    }
 
     statusList() {
         let keys = Object.keys(BOOKING_STATUS);
         return ['All', ...keys.slice(keys.length / 2)];
 
+    }
+
+    isInterpreterStatusAccepted(booking: Booking) {
+        if (this.isCurrentUserInterpreter()) {
+            let r = [];
+            r = booking.interpreters.filter(i => i.id === GLOBAL.currentUser.id && i.state === 'Accepted');
+            return r.length;
+        }
+        return false;
     }
     interpreterAllowed(booking: Booking, status) {
         let res = false;

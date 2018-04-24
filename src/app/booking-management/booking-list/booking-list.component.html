@@ -193,10 +193,10 @@
                     </div>
                 </td>
                 <td>{{booking.client.organisation_name}}</td>
-                <td>
-                    {{booking.deaf_person.first_name +
+                <td>{{isCurrentUserAdminOrBookingOfficer() || isClientOrOrgRep() || isInterpreterStatusAccepted(booking) ?
+                    booking.deaf_person.first_name +
                     ' ' +
-                    booking.deaf_person.last_name}}
+                    booking.deaf_person.last_name : '***** ********' }}
                 </td>
                 <td>{{booking.venue.suburb}}</td>
                 <td class="truncated-text">
