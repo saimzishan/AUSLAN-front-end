@@ -47,6 +47,8 @@
                                     </div>
                                 </section>
                             </section>
+                            <app-payroll-additional-costs [payrollInvoice]="payroll" [index]="i" [parentForm]="payroll_form"
+                                              [isReadOnly]="!payroll.pay_interpreter"></app-payroll-additional-costs>
                             <app-payroll-time [payrollInvoice]="payroll" [index]="i" [parentForm]="payroll_form"
                                               [isReadOnly]="!payroll.pay_interpreter"></app-payroll-time>
                         </section>
